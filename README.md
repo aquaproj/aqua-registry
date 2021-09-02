@@ -4,6 +4,8 @@
 
 ## How to use
 
+[Example](aqua.yaml)
+
 aqua.yaml
 
 ```yaml
