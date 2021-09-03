@@ -14,6 +14,10 @@ registries:
   ref: v0.1.1 # renovate: depName=suzuki-shunsuke/aqua-registry
 ```
 
+## How to contribute
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md)
+
 ## License
 
 [MIT](LICENSE)

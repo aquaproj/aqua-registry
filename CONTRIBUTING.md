@@ -5,6 +5,8 @@
 Please update [aqua.yaml](aqua.yaml) and [registry.yaml](registry.yaml).
 aqua.yaml is used to test registry.yaml in CI.
 
+Packages are sorted in the dictionary order of the package name.
+
 In aqua.yaml, please add the code comment to update tools with [Renovate's Regex Manager](https://docs.renovatebot.com/modules/manager/regex/).
 
 e.g.
