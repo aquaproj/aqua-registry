@@ -4,9 +4,16 @@
   ],
   regexManagers: [
     {
-      fileMatch: ["README.md", "aqua.yaml"],
+      fileMatch: ["README.md"],
       matchStrings: [
-        " (?<currentValue>.*?) # renovate: depName=(?<depName>.*)",
+        "ref: (?<currentValue>.*?) # renovate: depName=(?<depName>.*)",
+      ],
+      datasourceTemplate: "github-releases",
+    },
+    {
+      fileMatch: ["aqua.yaml"],
+      matchStrings: [
+        'version: "?(?<currentValue>.*?)"? # renovate: depName=(?<depName>.*)',
       ],
       datasourceTemplate: "github-releases",
     },
