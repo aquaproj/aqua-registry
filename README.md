@@ -1,6 +1,6 @@
 # aqua-registry
 
-[aqua](https://github.com/suzuki-shunsuke/aqua)'s Official Registry
+[aqua](https://github.com/suzuki-shunsuke/aqua)'s Standard Registry
 
 ## How to use
 
@@ -10,7 +10,7 @@ aqua.yaml
 
 ```yaml
 registries:
-- type: official
+- type: standard
   ref: v0.2.0 # renovate: depName=suzuki-shunsuke/aqua-registry
 ```
 
