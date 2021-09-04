@@ -13,7 +13,7 @@ e.g.
 
 ```yaml
 - name: terraform
-  registry: official
+  registry: standard
   version: v1.0.6 # renovate: depName=hashicorp/terraform
 ```
 
