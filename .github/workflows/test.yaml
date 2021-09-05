@@ -11,6 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: cache ~/.aqua
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.aqua/pkgs
+            ~/.aqua/registries
+          key: ${{ runner.os }}
+
       - uses: suzuki-shunsuke/aqua-installer@main
         with:
           version: v0.5.2 # renovate: depName=suzuki-shunsuke/aqua
