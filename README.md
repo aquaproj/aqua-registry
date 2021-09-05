@@ -18,6 +18,10 @@ registries:
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
+## Change Log
+
+Please see [Releases](https://github.com/suzuki-shunsuke/aqua-registry/releases).
+
 ## License
 
 [MIT](LICENSE)
