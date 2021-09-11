@@ -31,12 +31,15 @@ registries:
 `aqua g` launches the interactive UI and you can search the package by fuzzy search.
 
 ```
-  direnv (standard)
-  consul (standard)
-  conftest (standard)
-> golangci-lint (standard)
-  47/47
->
+  CircleCI-Public/circleci-cli (standard)
+  codeclimate/test-reporter (standard)
+  int128/ghcp (standard)
+  kubectl (standard)
+  peco/peco (standard)
+  tfmigrator/cli (standard)
+> cli/cli (standard)
+  41/78
+> c
 ```
 
 ## Request for new packages
