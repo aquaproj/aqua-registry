@@ -11,9 +11,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: cache ~/.aqua
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.aqua/pkgs
+            ~/.aqua/registries
+          key: ${{ runner.os }}-${{ hashFiles('registry.yaml') }}-${{ hashFiles('aqua.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('registry.yaml') }}-
+            ${{ runner.os }}-
+
       - uses: suzuki-shunsuke/aqua-installer@main
         with:
-          version: v0.5.5 # renovate: depName=suzuki-shunsuke/aqua
+          version: v0.6.0 # renovate: depName=suzuki-shunsuke/aqua
       - run: aqua i --test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
