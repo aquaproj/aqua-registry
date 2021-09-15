@@ -282,12 +282,26 @@ packages:
 - type: github_release
   repo_owner: goreleaser
   repo_name: goreleaser
-  # https://github.com/goreleaser/goreleaser/blob/5a01a10f9bbc60ab75aff0b2971af75d32436bdf/.goreleaser.yml#L98-L104
   asset: 'goreleaser_{{title .OS}}_{{.Arch}}.tar.gz'
   link: https://goreleaser.com/
   description: Deliver Go binaries as fast and easily as possible
   replacements:
     amd64: x86_64
+- type: github_release
+  repo_owner: grafana
+  repo_name: k6
+  asset: 'k6-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}'
+  link: https://k6.io/
+  description: A modern load testing tool, using Go and JavaScript
+  files:
+  - name: k6
+    src: 'k6-{{.Version}}-{{.OS}}-{{.Arch}}/k6'
+  replacements:
+    darwin: macos
+  format: tar.gz
+  format_overrides:
+  - goos: darwin
+    format: zip
 
 # init: h
 - type: github_release
