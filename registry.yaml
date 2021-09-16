@@ -3,10 +3,14 @@ packages:
 - type: github_release
   repo_owner: accurics
   repo_name: terrascan
-  asset: 'terrascan_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.tar.gz'
+  asset: 'terrascan_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   link: https://docs.accurics.com/projects/accurics-terrascan/en/latest/
   description: Detect compliance and security violations across Infrastructure as Code to mitigate risk before provisioning cloud native infrastructure
   replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
     amd64: x86_64
 - type: github_release
   repo_owner: ahmetb
@@ -16,20 +20,30 @@ packages:
 - type: github_release
   repo_owner: ahmetb
   repo_name: kubectx
-  asset: 'kubectx_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'kubectx_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: Faster way to switch between clusters and namespaces in kubectl
   replacements:
+    386: i386
     amd64: x86_64
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
 - name: ahmetb/kubens
   type: github_release
   repo_owner: ahmetb
   repo_name: kubectx
-  asset: 'kubens_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: Faster way to switch between clusters and namespaces in kubectl
   files:
   - name: kubens
   replacements:
+    386: i386
     amd64: x86_64
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
 - type: github_release
   repo_owner: aquasecurity
   repo_name: tfsec
