@@ -7,3 +7,15 @@ tasks:
   description: test with aqua-test.yaml
   usage: test with aqua-test.yaml
   script: aqua -c aqua-test.yaml i --test
+- name: release
+  short: r
+  description: release the new version
+  usage: release the new version
+  script: |
+    git tag "{{.version}}"
+    git push origin "{{.version}}"
+  args:
+  - name: version
+    required: true
+    validate:
+    - regexp: "^v\\d+\\.\\d+.\\d+(-\\d+)?$"
