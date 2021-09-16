@@ -95,6 +95,16 @@ packages:
 
 # init: c
 - type: github_release
+  repo_owner: che-incubator
+  repo_name: chectl
+  asset: 'chectl-{{.OS}}-{{.Arch}}.tar.gz'
+  description: CLI to manage Eclipse Che server and workspaces
+  replacements:
+    amd64: x64
+  files:
+  - name: chectl
+    src: chectl/bin/chectl
+- type: github_release
   repo_owner: CircleCI-Public
   repo_name: circleci-cli
   asset: 'circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
@@ -326,6 +336,11 @@ packages:
   replacements:
     amd64: x86_64
 - type: github_release
+  repo_owner: gotestyourself
+  repo_name: gotestsum
+  asset: 'gotestsum_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  description: "'go test' runner with output optimized for humans, JUnit XML for CI integration, and a summary of the test results"
+- type: github_release
   repo_owner: grafana
   repo_name: k6
   asset: 'k6-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}'
@@ -348,6 +363,19 @@ packages:
   asset: "gomplate_{{.OS}}-{{.Arch}}"
   link: https://docs.gomplate.ca/
   description: A flexible commandline tool for template rendering. Supports lots of local and remote datasources
+- type: github_release
+  repo_owner: harelba
+  repo_name: q
+  asset: 'q-{{.Arch}}-{{.OS}}'
+  link: http://harelba.github.io/q/
+  description: q - Run SQL directly on CSV or TSV files
+  files:
+  - name: q
+    src: 'q-{{.Arch}}-{{.OS}}'
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    amd64: x86_64
 - name: hashicorp/consul
   type: http
   url: 'https://releases.hashicorp.com/consul/{{trimV .Version}}/consul_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip'
@@ -451,6 +479,18 @@ packages:
   - name: istioctl
   replacements:
     darwin: osx
+- type: github_release
+  repo_owner: itchyny
+  repo_name: mmv
+  asset: 'mmv_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  description: rename multiple files with editor
+  format: zip
+  format_overrides:
+  - goos: linux
+    format: tar.gz
+  files:
+  - name: mmv
+    src: 'mmv_{{.Version}}_{{.OS}}_{{.Arch}}/mmv'
 
 # init: j
 - type: github_release
