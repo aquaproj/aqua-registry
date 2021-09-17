@@ -239,6 +239,30 @@ packages:
   asset: 'task_{{.OS}}_{{.Arch}}.tar.gz'
   link: https://taskfile.dev/
   description: A task runner / simpler Make alternative written in Go
+- type: github_release
+  repo_owner: gohugoio
+  repo_name: hugo
+  asset: 'hugo_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}'
+  link: https://gohugo.io
+  description: The world’s fastest framework for building websites
+  files:
+  - name: hugo
+  replacements: # https://github.com/gohugoio/hugo/blob/10f60de89a5a53528f1e3a47a77224e5c7915e4e/goreleaser.yml#L99-L110
+    amd64: 64bit
+    386: 32bit
+    arm: ARM
+    arm64: ARM64
+    darwin: macOS
+    linux: Linux
+    windows: Windows
+    openbsd: OpenBSD
+    netbsd: NetBSD
+    freebsd: FreeBSD
+    dragonfly: DragonFlyBSD
+  format: tar.gz
+  format_overrides:
+    - goos: windows
+      format: zip
 - name: golang/go
   type: http
   url: https://golang.org/dl/go{{.Version}}.{{.OS}}-{{.Arch}}.tar.gz
