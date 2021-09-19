@@ -1,5 +1,7 @@
 # Contributing
 
+About how to write [registry.yaml](registry.yaml), please see [Registry Configuration](https://github.com/suzuki-shunsuke/aqua/blob/main/docs/registry_config.md).
+
 ## Add the packages
 
 Please update [aqua.yaml](aqua.yaml) and [registry.yaml](registry.yaml).
