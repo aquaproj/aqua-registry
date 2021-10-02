@@ -9,16 +9,6 @@ aqua.yaml is used to test registry.yaml in CI.
 
 Packages are sorted in the dictionary order of the package name.
 
-In aqua.yaml, please add the code comment to update tools with [Renovate's Regex Manager](https://docs.renovatebot.com/modules/manager/regex/).
-
-e.g.
-
-```yaml
-- name: terraform
-  registry: standard
-  version: v1.0.6 # renovate: depName=hashicorp/terraform
-```
-
 ## How to test in your localhost
 
 It takes a long time to install all packages with [aqua.yaml](aqua.yaml).
@@ -33,9 +23,7 @@ registries:
   path: registry.yaml
 
 packages:
-- name: accurics/terrascan
-  registry: standard
-  version: v1.10.0 # renovate: depName=accurics/terrascan
+- name: accurics/terrascan@v1.9.0
 ```
 
 And install packages specifying the file by `-c` option. Note that `-c` is a global option.
