@@ -23,7 +23,7 @@ registries:
   path: registry.yaml
 
 packages:
-- name: accurics/terrascan@v1.9.0
+- name: accurics/terrascan@v1.10.0
 ```
 
 And install packages specifying the file by `-c` option. Note that `-c` is a global option.
