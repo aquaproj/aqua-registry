@@ -929,6 +929,21 @@ packages:
   asset: 'tfupdate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   description: Update version constraints in your Terraform configurations
 - type: github_release
+  repo_owner: mongodb
+  repo_name: mongocli
+  asset: 'mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  description: MongoDB CLI enables you to manage your MongoDB in the Cloud
+  replacements:
+    darwin: macos
+    amd64: x86_64
+  format: tar.gz
+  format_overrides:
+  - goos: darwin
+    format: zip
+  files:
+  - name: mongocli
+    src: '{{if eq .GOOS "linux"}}mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/{{end}}bin/mongocli'
+- type: github_release
   repo_owner: mumoshu
   repo_name: variant
   asset: 'variant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
