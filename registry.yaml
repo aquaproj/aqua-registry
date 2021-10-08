@@ -110,6 +110,14 @@ packages:
   - name: argo
     src: 'argo-{{.OS}}-{{.Arch}}'
 - type: github_release
+  repo_owner: armosec
+  repo_name: kubescape
+  asset: 'kubescape-{{.OS}}-latest'
+  replacements:
+    linux: ubuntu
+    darwin: macos
+  description: 'kubescape is the first tool for testing if Kubernetes is deployed securely as defined in Kubernetes Hardening Guidance by to NSA and CISA'
+- type: github_release
   repo_owner: aws
   repo_name: copilot-cli
   asset: 'copilot_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
@@ -354,6 +362,14 @@ packages:
   format: raw
   asset: "mkcert-{{.Version}}-{{.OS}}-{{.Arch}}"
   description: A simple zero-config tool to make locally trusted development certificates with any names you'd like
+- name: fishworks/gofish
+  type: http
+  url: 'https://gofi.sh/releases/gofish-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz'
+  link: https://gofi.sh/
+  description: GoFish is a cross-platform systems package manager, bringing the ease of use of Homebrew to Linux and Windows
+  files:
+  - name: gofish
+    src: '{{.OS}}-{{.Arch}}/gofish'
 - type: github_release
   repo_owner: fluxcd
   repo_name: flux2
@@ -696,6 +712,14 @@ packages:
     netbsd: NetBSD
     freebsd: FreeBSD
 - type: github_release
+  repo_owner: im2nguyen
+  repo_name: rover
+  asset: "rover_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip"
+  description: Interactive Terraform visualization. State and configuration explorer
+  files:
+  - name: rover
+    src: rover_{{.Version}}
+- type: github_release
   repo_owner: incu6us
   repo_name: goimports-reviser
   asset: 'goimports-reviser_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
@@ -764,6 +788,21 @@ packages:
     src: 'mmv_{{.Version}}_{{.OS}}_{{.Arch}}/mmv'
 
 # init: j
+- type: github_release
+  repo_owner: jesseduffield
+  repo_name: lazygit
+  asset: 'lazygit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  description: simple terminal UI for git commands
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: 32-bit
+    amd64: x86_64
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
 - type: github_release
   repo_owner: jonaslu
   repo_name: ain
