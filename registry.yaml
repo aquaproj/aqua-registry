@@ -919,12 +919,19 @@ packages:
 - type: github_release
   repo_owner: kubernetes-sigs
   repo_name: krew
-  asset: krew.tar.gz
+  asset: krew-{{.OS}}_{{.Arch}}.tar.gz
   link: https://krew.sigs.k8s.io/
   description: Find and install kubectl plugins
   files:
   - name: krew
     src: 'krew-{{.OS}}_{{.Arch}}'
+  version_constraint: 'semver(">= 0.4.2")'
+  version_overrides:
+  - version_constraint: 'semver("< 0.4.2")'
+    asset: krew.tar.gz
+    files:
+    - name: krew
+      src: 'krew-{{.OS}}_{{.Arch}}'
 - type: github_release
   repo_owner: kubernetes-sigs
   repo_name: kubebuilder
