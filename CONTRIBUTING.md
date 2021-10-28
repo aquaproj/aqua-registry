@@ -4,14 +4,14 @@ About how to write [registry.yaml](registry.yaml), please see [Registry Configur
 
 ## Add the packages
 
-Please update [aqua.yaml](aqua.yaml) and [registry.yaml](registry.yaml).
+Please update [aqua-all.yaml](aqua-all.yaml) and [registry.yaml](registry.yaml).
 aqua.yaml is used to test registry.yaml in CI.
 
 Packages are sorted in the dictionary order of the package name.
 
 ## How to test in your localhost
 
-It takes a long time to install all packages with [aqua.yaml](aqua.yaml).
+It takes a long time to install all packages with [aqua-all.yaml](aqua-all.yaml).
 So we recommend writing the configuration file `aqua-test.yaml` and specify only packages you add or modify.
 
 e.g.
