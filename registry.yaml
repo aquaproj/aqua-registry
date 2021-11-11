@@ -471,7 +471,6 @@ packages:
 - type: github_release
   repo_owner: ddosify
   repo_name: ddosify
-  asset: 'ddosify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   link: https://ddosify.com/
   description: High-performance load testing tool, written in Golang
   replacements:
@@ -484,6 +483,13 @@ packages:
   format_overrides:
   - goos: windows
     format: zip
+  asset: 'ddosify_{{trimV .Version}}_{{title .OS}}_{{if eq .GOOS "darwin"}}all{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  version_constraint: 'semver(">= 0.5.0")'
+  version_overrides:
+  # https://github.com/goreleaser/goreleaser/pull/2572
+  # macOS Universal binaries
+  - version_constraint: 'semver("< 0.5.0")'
+    asset: 'ddosify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
 - type: github_release
   repo_owner: derailed
   repo_name: k9s
