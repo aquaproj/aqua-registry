@@ -1,10 +1,10 @@
 # aqua-registry
 
-[![Build Status](https://github.com/suzuki-shunsuke/aqua-registry/workflows/test/badge.svg)](https://github.com/suzuki-shunsuke/aqua-registry/actions)
-[![GitHub last commit](https://img.shields.io/github/last-commit/suzuki-shunsuke/aqua-registry.svg)](https://github.com/suzuki-shunsuke/aqua-registry)
-[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/suzuki-shunsuke/aqua-registry/main/LICENSE)
+[![Build Status](https://github.com/aquaproj/aqua-registry/workflows/test/badge.svg)](https://github.com/aquaproj/aqua-registry/actions)
+[![GitHub last commit](https://img.shields.io/github/last-commit/aquaproj/aqua-registry.svg)](https://github.com/aquaproj/aqua-registry)
+[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/aquaproj/aqua-registry/main/LICENSE)
 
-[aqua](https://github.com/suzuki-shunsuke/aqua)'s Standard Registry
+[aqua](https://github.com/aquaproj/aqua)'s Standard Registry
 
 ## How to use
 
@@ -15,7 +15,7 @@ aqua.yaml
 ```yaml
 registries:
 - type: standard
-  ref: v0.10.9 # renovate: depName=suzuki-shunsuke/aqua-registry
+  ref: v0.10.9 # renovate: depName=aquaproj/aqua-registry
 ```
 
 ## Search packages from the Standard Registry by the command `aqua g`
@@ -25,7 +25,7 @@ Please add the Standard Registry to your aqua.yaml's registries, and run `aqua g
 ```yaml
 registries:
 - type: standard
-  ref: v0.10.9 # renovate: depName=suzuki-shunsuke/aqua-registry
+  ref: v0.10.9 # renovate: depName=aquaproj/aqua-registry
 ```
 
 `aqua g` launches the interactive UI and you can search the package by fuzzy search.
@@ -44,7 +44,7 @@ registries:
 
 ## Request for new packages
 
-Please check [registry.yaml](https://github.com/suzuki-shunsuke/aqua-registry/blob/main/registry.yaml) or search packages by `aqua g` command.
+Please check [registry.yaml](https://github.com/aquaproj/aqua-registry/blob/main/registry.yaml) or search packages by `aqua g` command.
 If the packages you want aren't found, please create issues or send pull requests!
 
 By adding various packages to the standard registry, aqua becomes more useful and attractive.
@@ -56,7 +56,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Change Log
 
-Please see [Releases](https://github.com/suzuki-shunsuke/aqua-registry/releases).
+Please see [Releases](https://github.com/aquaproj/aqua-registry/releases).
 
 ## Versioning Policy
 
