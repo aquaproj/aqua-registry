@@ -14,7 +14,7 @@ packages:
   repo_owner: abs-lang
   repo_name: abs
   description: 'Home of the ABS programming language: the joy of shell scripting'
-  asset: abs-{{.OS}}-{{.Arch}}
+  asset: abs-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}
   link: https://www.abs-lang.org/
 - type: github_release
   repo_owner: accurics
@@ -31,7 +31,7 @@ packages:
 - type: github_release
   repo_owner: aelsabbahy
   repo_name: goss
-  asset: 'goss-{{.OS}}-{{.Arch}}'
+  asset: 'goss-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
   description: Quick and Easy server testing/validation
   replacements:
     darwin: alpha-darwin
@@ -122,10 +122,8 @@ packages:
 - type: github_release
   repo_owner: aquasecurity
   repo_name: kubectl-who-can
-  asset: "kubectl-who-can_{{.OS}}_{{.Arch}}.{{.Format}}"
+  asset: "kubectl-who-can_{{.OS}}_x86_64.{{.Format}}"
   description: Show who has RBAC permissions to perform actions on different resources in Kubernetes
-  replacements:
-    amd64: x86_64
   format: tar.gz
   format_overrides:
   - goos: windows
@@ -159,7 +157,7 @@ packages:
 - type: github_release
   repo_owner: argoproj
   repo_name: argo-cd
-  asset: 'argocd-{{.OS}}-{{.Arch}}'
+  asset: 'argocd-{{.OS}}-amd64'
   link: https://argo-cd.readthedocs.io/
   description: Declarative continuous deployment for Kubernetes
   files:
@@ -168,7 +166,7 @@ packages:
 - type: github_release
   repo_owner: argoproj
   repo_name: argo-rollouts
-  asset: 'kubectl-argo-rollouts-{{.OS}}-{{.Arch}}'
+  asset: 'kubectl-argo-rollouts-{{.OS}}-amd64'
   link: https://argoproj.github.io/argo-rollouts/
   description: Progressive Delivery for Kubernetes
   files:
@@ -176,12 +174,12 @@ packages:
 - type: github_release
   repo_owner: argoproj
   repo_name: argo-workflows
-  asset: 'argo-{{.OS}}-{{.Arch}}.gz'
+  asset: 'argo-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.gz'
   link: https://argoproj.github.io/argo-workflows/
   description: 'Argo Worfkflows CLI. Workflow engine for Kubernetes'
   files:
   - name: argo
-    src: 'argo-{{.OS}}-{{.Arch}}'
+    src: 'argo-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
 - type: github_release
   repo_owner: armosec
   repo_name: kubescape
@@ -234,6 +232,7 @@ packages:
   replacements:
     386: i386
     amd64: x86_64
+    arm64: x86_64
 - type: github_release
   repo_owner: b4b4r07
   repo_name: git-bump
@@ -246,6 +245,7 @@ packages:
   replacements:
     386: i386
     amd64: x86_64
+    arm64: x86_64
 - type: github_release
   repo_owner: b4b4r07
   repo_name: github-labeler
@@ -258,6 +258,7 @@ packages:
   replacements:
     386: i386
     amd64: x86_64
+    arm64: x86_64
 - type: github_release
   repo_owner: b4b4r07
   repo_name: gomi
@@ -271,6 +272,7 @@ packages:
   replacements:
     386: i386
     amd64: x86_64
+    arm64: x86_64
 - type: github_release
   repo_owner: b4b4r07
   repo_name: iap_curl
@@ -283,6 +285,7 @@ packages:
   replacements:
     386: i386
     amd64: x86_64
+    arm64: x86_64
 - type: github_release
   repo_owner: b4b4r07
   repo_name: stein
@@ -296,16 +299,17 @@ packages:
   replacements:
     386: i386
     amd64: x86_64
+    arm64: x86_64
 - type: github_release
   repo_owner: bcicen
   repo_name: slackcat
-  asset: 'slackcat-{{.Version}}-{{.OS}}-{{.Arch}}'
+  asset: 'slackcat-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
   description: CLI utility to post files and command output to slack
   format: raw
 - type: github_release
   repo_owner: boz
   repo_name: kail
-  asset: 'kail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'kail_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: kubernetes log viewer
 - type: github_release
   repo_owner: BurntSushi
@@ -327,12 +331,12 @@ packages:
 - type: github_release
   repo_owner: c-bata
   repo_name: kube-prompt
-  asset: 'kube-prompt_{{.Version}}_{{.OS}}_{{.Arch}}.zip'
+  asset: 'kube-prompt_{{.Version}}_{{.OS}}_{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}amd64{{else}}{{.Arch}}{{end}}.zip'
   description: An interactive kubernetes client featuring auto-complete
 - type: github_release
   repo_owner: che-incubator
   repo_name: chectl
-  asset: 'chectl-{{.OS}}-{{.Arch}}.tar.gz'
+  asset: 'chectl-{{.OS}}-{{if eq .GOOS "darwin"}}x64{{else}}{{.Arch}}{{end}}.tar.gz'
   description: CLI to manage Eclipse Che server and workspaces
   replacements:
     amd64: x64
@@ -347,20 +351,20 @@ packages:
 - type: github_release
   repo_owner: CircleCI-Public
   repo_name: circleci-cli
-  asset: 'circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'circleci-cli_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: Use CircleCI from the command line
   files:
   - name: circleci
-    src: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/circleci
+    src: circleci-cli_{{trimV .Version}}_{{.OS}}_amd64/circleci
 - type: github_release
   repo_owner: cli
   repo_name: cli
-  asset: 'gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'gh_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
   link: https://cli.github.com/
   description: GitHub’s official command line tool
   files:
   - name: gh
-    src: 'gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/gh'
+    src: 'gh_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}/bin/gh'
   replacements:
     darwin: macOS
 - type: github_release
@@ -372,7 +376,7 @@ packages:
 - name: codeclimate/test-reporter
   type: http
   format: raw
-  url: https://codeclimate.com/downloads/test-reporter/test-reporter-{{.Version}}-{{.OS}}-{{.Arch}}
+  url: https://codeclimate.com/downloads/test-reporter/test-reporter-{{.Version}}-{{.OS}}-amd64
   link: https://github.com/codeclimate/test-reporter
   description: Code Climate Test Reporter
   files:
@@ -441,7 +445,7 @@ packages:
 - type: github_release
   repo_owner: cue-lang
   repo_name: cue
-  asset: 'cue_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'cue_{{.Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.{{.Format}}'
   description: The new home of the CUE language! Validate and define text-based and dynamic configuration
   link: https://cuelang.org/
   format: tar.gz
@@ -1823,12 +1827,12 @@ packages:
 - type: github_release
   repo_owner: suzuki-shunsuke
   repo_name: cmdx
-  asset: 'cmdx_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'cmdx_{{.OS}}_amd64.tar.gz'
   description: Task runner. It provides useful help messages and supports interactive prompts and validation of arguments
   version_constraint: 'semver(">= 1.6.1")'
   version_overrides:
   - version_constraint: 'semver("< 1.6.1")'
-    asset: 'cmdx_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+    asset: 'cmdx_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
 - type: github_release
   repo_owner: suzuki-shunsuke
   repo_name: dd-time
