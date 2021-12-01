@@ -623,7 +623,7 @@ packages:
   repo_owner: FiloSottile
   repo_name: mkcert
   format: raw
-  asset: "mkcert-{{.Version}}-{{.OS}}-{{.Arch}}"
+  asset: 'mkcert-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
   description: A simple zero-config tool to make locally trusted development certificates with any names you'd like
 - type: github_release
   repo_owner: fishi0x01
@@ -662,11 +662,11 @@ packages:
 - type: github_release
   repo_owner: fujiwara
   repo_name: lambroll
-  asset: 'lambroll_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'lambroll_{{.Version}}_{{.OS}}_amd64.{{.Format}}'
   description: lambroll is a minimal deployment tool for AWS Lambda
   files:
   - name: lambroll
-    src: lambroll_{{.Version}}_{{.OS}}_{{.Arch}}/lambroll
+    src: lambroll_{{.Version}}_{{.OS}}_amd64/lambroll
   format: tar.gz
   format_overrides:
   - goos: darwin
@@ -692,15 +692,15 @@ packages:
 - type: github_release
   repo_owner: ginuerzh
   repo_name: gost
-  asset: 'gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}.gz'
+  asset: 'gost-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}-{{trimV .Version}}.gz'
   description: GO Simple Tunnel - a simple tunnel written in golang
   files:
   - name: gost
-    src: 'gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}'
+    src: 'gost-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}-{{trimV .Version}}'
 - type: github_release
   repo_owner: github
   repo_name: hub
-  asset: 'hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}'
+  asset: 'hub-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}-{{trimV .Version}}.{{.Format}}'
   link: https://hub.github.com/
   description: A command-line tool that makes git easier to use with GitHub.
   format: tgz
@@ -709,7 +709,7 @@ packages:
     format: zip
   files:
   - name: hub
-    src: 'hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}/bin/hub'
+    src: 'hub-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}-{{trimV .Version}}/bin/hub'
 - type: github_release
   repo_owner: git-lfs
   repo_name: git-lfs
@@ -823,20 +823,20 @@ packages:
     src: 'terraformer-aws-{{.OS}}-{{.Arch}}'
 - name: GoogleContainerTools/container-diff
   type: http
-  url: 'https://storage.googleapis.com/container-diff/{{.Version}}/container-diff-{{.OS}}-{{.Arch}}'
+  url: 'https://storage.googleapis.com/container-diff/{{.Version}}/container-diff-{{.OS}}-amd64'
   link: https://github.com/GoogleContainerTools/container-diff
   description: 'container-diff: Diff your Docker containers'
   files:
   - name: container-diff
-    src: 'container-diff-{{.OS}}-{{.Arch}}'
+    src: 'container-diff-{{.OS}}-amd64'
 - name: GoogleContainerTools/container-structure-test
   type: http
-  url: 'https://storage.googleapis.com/container-structure-test/{{.Version}}/container-structure-test-{{.OS}}-{{.Arch}}'
+  url: 'https://storage.googleapis.com/container-structure-test/{{.Version}}/container-structure-test-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
   link: https://github.com/GoogleContainerTools/container-structure-test
   description: validate the structure of your container images
   files:
   - name: container-structure-test
-    src: 'container-structure-test-{{.OS}}-{{.Arch}}'
+    src: 'container-structure-test-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
 - type: github_release
   repo_owner: GoogleContainerTools
   repo_name: kpt
