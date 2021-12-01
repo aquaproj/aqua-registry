@@ -479,7 +479,7 @@ packages:
 - type: github_release
   repo_owner: datreeio
   repo_name: datree
-  asset: 'datree-cli_{{.Version}}_{{.OS}}_{{.Arch}}.zip'
+  asset: 'datree-cli_{{.Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}.zip'
   link: https://datree.io/
   description: Prevent Kubernetes misconfigurations from reaching production! Datree is a CLI tool to ensure K8s manifests and Helm charts follow best practices as well as your organization’s policies
   replacements:
@@ -525,7 +525,7 @@ packages:
 - type: github_release
   repo_owner: dhall-lang
   repo_name: dhall-haskell
-  asset: 'dhall-{{.Version}}-{{.Arch}}-{{.OS}}.tar.bz2'
+  asset: 'dhall-{{.Version}}-x86_64-{{.OS}}.tar.bz2'
   description: Maintainable configuration files
   link: https://dhall-lang.org/
   replacements:
@@ -543,7 +543,8 @@ packages:
 - name: docker-slim/docker-slim
   type: github_release
   type: http
-  url: 'https://downloads.dockerslim.com/releases/1.37.0/dist_{{.OS}}{{if ne .Arch "amd64"}}_{{if eq .OS "darwin"}}m1{{else}}{{.Arch}}{{end}}{{end}}.{{.Format}}'
+    # https://downloads.dockerslim.com/releases/1.37.2/dist_mac_m1.zip
+  url: 'https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}{{if ne .Arch "amd64"}}_{{if eq .GOOS "darwin"}}m1{{else}}{{.Arch}}{{end}}{{end}}.{{.Format}}'
   replacements:
     darwin: mac
   format: tar.gz
@@ -553,9 +554,9 @@ packages:
   description: "DockerSlim (docker-slim): Don't change anything in your Docker container image and minify it by up to 30x (and for compiled languages even more) making it secure too! (free and open source)"
   files:
   - name: docker-slim
-    src: 'dist_{{.OS}}{{if ne .Arch "amd64"}}_{{if eq .OS "darwin"}}m1{{else}}{{.Arch}}{{end}}{{end}}/docker-slim'
+    src: 'dist_{{.OS}}{{if ne .Arch "amd64"}}_{{if eq .GOOS "darwin"}}m1{{else}}{{.Arch}}{{end}}{{end}}/docker-slim'
   - name: docker-slim-sensor
-    src: 'dist_{{.OS}}{{if ne .Arch "amd64"}}_{{if eq .OS "darwin"}}m1{{else}}{{.Arch}}{{end}}{{end}}/docker-slim-sensor'
+    src: 'dist_{{.OS}}{{if ne .Arch "amd64"}}_{{if eq .GOOS "darwin"}}m1{{else}}{{.Arch}}{{end}}{{end}}/docker-slim-sensor'
 - type: github_release
   repo_owner: hidetatz
   repo_name: kubecolor
@@ -574,23 +575,23 @@ packages:
 - type: github_release
   repo_owner: emirozer
   repo_name: kubectl-doctor
-  asset: 'kubectl-doctor_{{.OS}}_{{.Arch}}.zip'
+  asset: 'kubectl-doctor_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.zip'
   description: kubectl cluster triage plugin for k8s - (brew doctor equivalent)
 - type: github_release
   repo_owner: env0
   repo_name: terratag
-  asset: 'terratag_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'terratag_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   link: https://www.terratag.io/
   description: Terratag is a CLI tool that enables users of Terraform to automatically create and maintain tags across their entire set of AWS, Azure, and GCP resources
 - type: github_release
   repo_owner: ernoaapa
   repo_name: kubectl-warp
-  asset: 'kubectl-warp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'kubectl-warp_{{trimV .Version}}_{{.OS}}_{{if eq .GOARCH "arm64"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
   description: Kubernetes CLI plugin for syncing and executing local files in Pod on Kubernetes
 - type: github_release
   repo_owner: erroneousboat
   repo_name: slack-term
-  asset: 'slack-term-{{.OS}}-{{.Arch}}'
+  asset: 'slack-term-{{.OS}}-amd64'
   description: Slack client for your terminal
 
 # init: f
