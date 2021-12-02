@@ -939,14 +939,14 @@ packages:
   - name: drone
 - name: hashicorp/consul
   type: http
-  url: 'https://releases.hashicorp.com/consul/{{trimV .Version}}/consul_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip'
+  url: 'https://releases.hashicorp.com/consul/{{trimV .Version}}/consul_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.zip'
   link: https://www.consul.io/
   description: Consul is a distributed, highly available, and data center aware solution to connect and configure applications across dynamic, distributed infrastructure
   files:
   - name: consul
 - name: hashicorp/nomad
   type: http
-  url: 'https://releases.hashicorp.com/nomad/{{trimV .Version}}/nomad_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip'
+  url: 'https://releases.hashicorp.com/nomad/{{trimV .Version}}/nomad_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.zip'
   link: https://www.nomadproject.io/
   description: Nomad is an easy-to-use, flexible, and performant workload orchestrator that can deploy a mix of microservice, batch, containerized, and non-containerized applications. Nomad is easy to operate and scale and has native Consul and Vault integrations
   files:
@@ -1025,18 +1025,18 @@ packages:
 - type: github_release
   repo_owner: incu6us
   repo_name: goimports-reviser
-  asset: 'goimports-reviser_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'goimports-reviser_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: 'Right imports sorting & code formatting tool (goimports alternative)'
 - type: github_release
   repo_owner: instrumenta
   repo_name: kubeval
-  asset: 'kubeval-{{.OS}}-{{.Arch}}.tar.gz'
+  asset: 'kubeval-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
   link: https://www.kubeval.com/
   description: Validate your Kubernetes configuration files, supports multiple Kubernetes versions
 - type: github_release
   repo_owner: int128
   repo_name: ghcp
-  asset: "ghcp_{{.OS}}_{{.Arch}}.zip"
+  asset: "ghcp_{{.OS}}_amd64.zip"
   description: Tool to fork a repository, commit files, create a pull request and upload assets using GitHub API
 - type: github_release
   repo_owner: int128
@@ -1065,8 +1065,17 @@ packages:
 - type: github_release
   repo_owner: int128
   repo_name: yamlpatch
-  asset: 'yamlpatch_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'yamlpatch_{{.Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
   description: Apply JSON Patch to YAML Document preserving positions and comments
+- type: github_release
+  repo_owner: iovisor
+  repo_name: kubectl-trace
+  asset: 'kubectl-trace_{{.Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  description: Schedule bpftrace programs on your kubernetes cluster using the kubectl
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
 - name: istio/istio/istioctl
   type: github_release
   repo_owner: istio
@@ -1077,15 +1086,6 @@ packages:
   - name: istioctl
   replacements:
     darwin: osx
-- type: github_release
-  repo_owner: iovisor
-  repo_name: kubectl-trace
-  asset: "kubectl-trace_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-  description: Schedule bpftrace programs on your kubernetes cluster using the kubectl
-  format: tar.gz
-  format_overrides:
-  - goos: windows
-    format: zip
 - type: github_release
   repo_owner: itchyny
   repo_name: mmv
@@ -1172,15 +1172,19 @@ packages:
 - type: github_release
   repo_owner: ktr0731
   repo_name: evans
-  asset: evans_{{.OS}}_{{.Arch}}.tar.gz
+  asset: 'evans_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
   description: 'Evans: more expressive universal gRPC client'
 - type: github_release
   repo_owner: kubernetes
   repo_name: kompose
-  asset: 'kompose-{{.OS}}-{{.Arch}}'
   description: Go from Docker Compose to Kubernetes
   link: https://kompose.io/
   format: raw
+  version_constraint: 'semver(">= 1.26.0")'
+  asset: 'kompose-{{.OS}}-{{.Arch}}'
+  version_overrides:
+  - version_constraint: 'semver("< 1.26.0")'
+    asset: 'kompose-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
 - type: github_release
   repo_owner: kubernetes
   repo_name: kops
@@ -1229,7 +1233,7 @@ packages:
 - type: github_release
   repo_owner: kubernetes-sigs
   repo_name: kubebuilder
-  asset: 'kubebuilder_{{.OS}}_{{.Arch}}'
+  asset: 'kubebuilder_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
   description: Kubebuilder - SDK for building Kubernetes APIs using CRDs
 - type: github_release
   repo_owner: kubernetes-sigs
