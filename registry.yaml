@@ -1565,7 +1565,7 @@ packages:
 - type: github_release
   repo_owner: rancher
   repo_name: cli
-  asset: 'rancher-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}'
+  asset: 'rancher-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}-{{.Version}}.{{.Format}}'
   format: tar.gz
   format_overrides:
   - goos: windows
@@ -1629,7 +1629,7 @@ packages:
 - type: github_release
   repo_owner: roboll
   repo_name: helmfile
-  asset: 'helmfile_{{.OS}}_{{.Arch}}'
+  asset: 'helmfile_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
   format: raw
   description: Deploy Kubernetes Helm Charts
 - type: github_release
@@ -1649,11 +1649,11 @@ packages:
   repo_owner: sahilm
   repo_name: yamldiff
   format: raw
-  asset: 'yamldiff-v{{.Version}}-{{.OS}}-{{.Arch}}'
+  asset: 'yamldiff-v{{.Version}}-{{.OS}}-amd64'
   description: A CLI tool to diff two YAML files
   files:
   - name: yamldiff
-    src: 'yamldiff-v{{.Version}}-{{.OS}}-{{.Arch}}'
+    src: 'yamldiff-v{{.Version}}-{{.OS}}-amd64'
 - type: github_release
   repo_owner: schollz
   repo_name: croc
@@ -1696,11 +1696,11 @@ packages:
 - type: github_release
   repo_owner: Songmu
   repo_name: ecschedule
-  asset: 'ecschedule_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'ecschedule_{{.Version}}_{{.OS}}_amd64.{{.Format}}'
   description: ecschedule is a tool to manage ECS Scheduled Tasks
   files:
   - name: ecschedule
-    src: 'ecschedule_{{.Version}}_{{.OS}}_{{.Arch}}/ecschedule'
+    src: 'ecschedule_{{.Version}}_{{.OS}}_amd64/ecschedule'
   format: tar.gz
   format_overrides:
   - goos: darwin
@@ -1708,11 +1708,11 @@ packages:
 - type: github_release
   repo_owner: Songmu
   repo_name: ghch
-  asset: 'ghch_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'ghch_{{.Version}}_{{.OS}}_amd64.{{.Format}}'
   description: Generate changelog from git history, tags and merged pull requests
   files:
   - name: ghch
-    src: 'ghch_{{.Version}}_{{.OS}}_{{.Arch}}/ghch'
+    src: 'ghch_{{.Version}}_{{.OS}}_amd64/ghch'
   format: tar.gz
   format_overrides:
   - goos: darwin
@@ -1720,11 +1720,11 @@ packages:
 - type: github_release
   repo_owner: Songmu
   repo_name: ghg
-  asset: 'ghg_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'ghg_{{.Version}}_{{.OS}}_amd64.{{.Format}}'
   description: Get the executable from github releases easily
   files:
   - name: ghg
-    src: 'ghg_{{.Version}}_{{.OS}}_{{.Arch}}/ghg'
+    src: 'ghg_{{.Version}}_{{.OS}}_amd64/ghg'
   format: tar.gz
   format_overrides:
   - goos: darwin
@@ -1732,11 +1732,11 @@ packages:
 - type: github_release
   repo_owner: Songmu
   repo_name: gocredits
-  asset: 'gocredits_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'gocredits_{{.Version}}_{{.OS}}_amd64.{{.Format}}'
   description: creates CREDITS file from LICENSE files of dependencies
   files:
   - name: gocredits
-    src: 'gocredits_{{.Version}}_{{.OS}}_{{.Arch}}/gocredits'
+    src: 'gocredits_{{.Version}}_{{.OS}}_amd64/gocredits'
   format: tar.gz
   format_overrides:
   - goos: darwin
@@ -1744,11 +1744,11 @@ packages:
 - type: github_release
   repo_owner: Songmu
   repo_name: gotesplit
-  asset: 'gotesplit_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'gotesplit_{{.Version}}_{{.OS}}_amd64.{{.Format}}'
   description: Splits the testing in Go into a subset and run it. It is useful for the CI environment
   files:
   - name: gotesplit
-    src: 'gotesplit_{{.Version}}_{{.OS}}_{{.Arch}}/gotesplit'
+    src: 'gotesplit_{{.Version}}_{{.OS}}_amd64/gotesplit'
   format: tar.gz
   format_overrides:
   - goos: darwin
@@ -1756,11 +1756,11 @@ packages:
 - type: github_release
   repo_owner: Songmu
   repo_name: goxz
-  asset: 'goxz_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'goxz_{{.Version}}_{{.OS}}_amd64.{{.Format}}'
   description: Just do cross building and archiving go tools conventionally
   files:
   - name: goxz
-    src: 'goxz_{{.Version}}_{{.OS}}_{{.Arch}}/goxz'
+    src: 'goxz_{{.Version}}_{{.OS}}_amd64/goxz'
   format: tar.gz
   format_overrides:
   - goos: darwin
@@ -1768,11 +1768,11 @@ packages:
 - type: github_release
   repo_owner: Songmu
   repo_name: horenso
-  asset: 'horenso_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'horenso_{{.Version}}_{{.OS}}_amd64.{{.Format}}'
   description: Command wrapper for reporting the result. It is useful for cron jobs
   files:
   - name: horenso
-    src: 'horenso_{{.Version}}_{{.OS}}_{{.Arch}}/horenso'
+    src: 'horenso_{{.Version}}_{{.OS}}_amd64/horenso'
   format: tar.gz
   format_overrides:
   - goos: darwin
@@ -1797,15 +1797,15 @@ packages:
 - type: github_release
   repo_owner: stern
   repo_name: stern
-  asset: 'stern_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'stern_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
   description: Multi pod and container log tailing for Kubernetes -- Friendly fork of https://github.com/wercker/stern
   files:
   - name: stern
-    src: 'stern_{{trimV .Version}}_{{.OS}}_{{.Arch}}/stern'
+    src: 'stern_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}/stern'
 - type: github_release
   repo_owner: suzuki-shunsuke
   repo_name: akoi
-  asset: 'akoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'akoi_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: binary installer
 - type: github_content
   repo_owner: suzuki-shunsuke
@@ -1817,7 +1817,7 @@ packages:
 - type: github_release
   repo_owner: suzuki-shunsuke
   repo_name: ci-info
-  asset: 'ci-info_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'ci-info_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: CLI tool to get CI related information
 - type: github_content
   repo_owner: suzuki-shunsuke
@@ -1827,7 +1827,7 @@ packages:
 - type: github_release
   repo_owner: suzuki-shunsuke
   repo_name: circleci-config-merge
-  asset: 'circleci-config-merge_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'circleci-config-merge_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: Generate .circleci/config.yml by merging multiple files
 - type: github_release
   repo_owner: suzuki-shunsuke
@@ -1841,27 +1841,27 @@ packages:
 - type: github_release
   repo_owner: suzuki-shunsuke
   repo_name: dd-time
-  asset: 'dd-time_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'dd-time_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: CLI tool to post the command execution time as time-series data to DataDog
 - type: github_release
   repo_owner: suzuki-shunsuke
   repo_name: durl
-  asset: 'durl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'durl_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: CLI to check whether dead urls are included in files
 - type: github_release
   repo_owner: suzuki-shunsuke
   repo_name: git-rm-branch
-  asset: 'git-rm-branch_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'git-rm-branch_{{.Version}}_{{.OS}}_amd64.tar.gz'
   description: cli tool to remove merged branches
 - type: github_release
   repo_owner: suzuki-shunsuke
   repo_name: github-comment
-  asset: 'github-comment_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'github-comment_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: CLI to create a GitHub comment
 - type: github_release
   repo_owner: suzuki-shunsuke
   repo_name: matchfile
-  asset: 'matchfile_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'matchfile_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: CLI tool to check file paths are matched to the condition
 - type: github_release
   repo_owner: suzuki-shunsuke
@@ -1871,7 +1871,7 @@ packages:
 - type: github_release
   repo_owner: swaggo
   repo_name: swag
-  asset: 'swag_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'swag_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}.tar.gz'
   description: Automatically generate RESTful API documentation with Swagger 2.0 for Go
   replacements:
     darwin: Darwin
@@ -1883,7 +1883,7 @@ packages:
 - type: github_release
   repo_owner: sysdiglabs
   repo_name: kube-psp-advisor
-  asset: 'kube-psp-advisor_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'kube-psp-advisor_{{.Version}}_{{.OS}}_amd64.tar.gz'
   description: Help building an adaptive and fine-grained pod security policy
   files:
   - name: kubectl-advise_psp
@@ -1895,11 +1895,11 @@ packages:
 - type: github_release
   repo_owner: tcnksm
   repo_name: ghr
-  asset: 'ghr_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'ghr_{{.Version}}_{{.OS}}_amd64.{{.Format}}'
   description: Upload multiple artifacts to GitHub Release in parallel
   files:
   - name: ghr
-    src: 'ghr_{{.Version}}_{{.OS}}_{{.Arch}}/ghr'
+    src: 'ghr_{{.Version}}_{{.OS}}_amd64/ghr'
   format: tar.gz
   format_overrides:
   - goos: darwin
@@ -1934,7 +1934,7 @@ packages:
 - type: github_release
   repo_owner: tfmigrator
   repo_name: cli
-  asset: tfmigrator_{{.OS}}_{{.Arch}}.tar.gz
+  asset: tfmigrator_{{.OS}}_amd64.tar.gz
   description: CLI to migrate Terraform Configuration and State
   files:
   - name: tfmigrator
@@ -1979,7 +1979,7 @@ packages:
 - type: github_release
   repo_owner: tinygo-org
   repo_name: tinygo
-  asset: 'tinygo{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}'
+  asset: 'tinygo{{trimV .Version}}.{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.{{.Format}}'
   link: https://tinygo.org/
   description: Go compiler for small places. Microcontrollers, WebAssembly, and command-line tools. Based on LLVM
   format: tar.gz
@@ -1992,14 +1992,14 @@ packages:
 - type: github_release
   repo_owner: TomWright
   repo_name: dasel
-  asset: 'dasel_{{.OS}}_{{.Arch}}'
+  asset: 'dasel_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
   format: raw
   link: https://daseldocs.tomwright.me/
   description: Select, put and delete data from JSON, TOML, YAML, XML and CSV files with a single tool. Supports conversion between formats and can be used as a Go package
 - type: github_release
   repo_owner: Trendyol
   repo_name: kink
-  asset: 'kink_{{trimV .Version}}_{{.OS}}-{{.Arch}}.tar.gz'
+  asset: 'kink_{{trimV .Version}}_{{.OS}}-x86_64.tar.gz'
   description: KinK is a helper CLI that facilitates to manage KinD clusters as Kubernetes pods. Designed to ease clusters up for fast testing with batteries included in mind
   replacements:
     darwin: Darwin
@@ -2015,7 +2015,7 @@ packages:
 - type: github_release
   repo_owner: tsenart
   repo_name: vegeta
-  asset: 'vegeta_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'vegeta_{{trimV .Version}}_{{.OS}}_{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
   description: HTTP load testing tool and library. It's over 9000!
 - type: github_release
   repo_owner: twpayne
@@ -2039,7 +2039,7 @@ packages:
 - type: github_release
   repo_owner: wagoodman
   repo_name: dive
-  asset: 'dive_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'dive_{{trimV .Version}}_{{.OS}}_amd64.{{.Format}}'
   description: A tool for exploring each layer in a docker image
   format: tar.gz
   format_overrides:
@@ -2056,7 +2056,7 @@ packages:
 - type: github_release
   repo_owner: XAMPPRocky
   repo_name: tokei
-  asset: 'tokei-{{.Arch}}-{{.OS}}.tar.gz'
+  asset: 'tokei-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}.tar.gz'
   description: Count your code, quickly
   replacements:
     darwin: apple-darwin
@@ -2075,11 +2075,11 @@ packages:
 - type: github_release
   repo_owner: x-motemen
   repo_name: ghq
-  asset: 'ghq_{{.OS}}_{{.Arch}}.zip'
+  asset: 'ghq_{{.OS}}_amd64.zip'
   description: Remote repository management made easy
   files:
   - name: ghq
-    src: ghq_{{.OS}}_{{.Arch}}/ghq
+    src: ghq_{{.OS}}_amd64/ghq
 
 # init: y
 - type: github_release
@@ -2108,6 +2108,7 @@ packages:
     format: zip
   replacements:
     amd64: x64
+    arm64: x64
     386: x32
   version_overrides:
   - version_constraint: 'semver("< 8.0.0")'
