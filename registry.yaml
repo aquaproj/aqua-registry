@@ -1252,7 +1252,7 @@ packages:
 - type: github_release
   repo_owner: lc
   repo_name: gau
-  asset: 'gau_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'gau_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.{{.Format}}'
   description: Fetch known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl
   replacements:
     darwin: macOS
@@ -1287,11 +1287,11 @@ packages:
 - type: github_release
   repo_owner: mattn
   repo_name: gof
-  asset: 'gof_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'gof_{{.Version}}_{{.OS}}_amd64.{{.Format}}'
   description: Go Fuzzy
   files:
   - name: gof
-    src: 'gof_{{.Version}}_{{.OS}}_{{.Arch}}/gof'
+    src: 'gof_{{.Version}}_{{.OS}}_amd64/gof'
   format: zip
   format_overrides:
   - goos: linux
@@ -1311,11 +1311,11 @@ packages:
 - type: github_release
   repo_owner: mattn
   repo_name: memo
-  asset: 'memo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'memo_{{.Version}}_{{.OS}}_amd64.{{.Format}}'
   description: Memo Life For You
   files:
   - name: memo
-    src: 'memo_{{.Version}}_{{.OS}}_{{.Arch}}/memo'
+    src: 'memo_{{.Version}}_{{.OS}}_amd64/memo'
   format: tar.gz
   format_overrides:
   - goos: darwin
@@ -1350,7 +1350,7 @@ packages:
 - type: github_release
   repo_owner: minamijoyo
   repo_name: tfschema
-  asset: 'tfschema_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'tfschema_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: A schema inspector for Terraform providers
 - type: github_release
   repo_owner: minamijoyo
@@ -1375,7 +1375,7 @@ packages:
 - type: github_release
   repo_owner: mumoshu
   repo_name: variant
-  asset: 'variant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'variant_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
   description: Wrap up your bash scripts into a modern CLI today. Graduate to a full-blown golang app tomorrow
 - type: github_release
   repo_owner: mumoshu
@@ -1430,22 +1430,22 @@ packages:
 - type: github_release
   repo_owner: oam-dev
   repo_name: kubevela
-  asset: vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
+  asset: vela-{{.Version}}-{{.OS}}-amd64.tar.gz
   link: https://kubevela.io/
   description: The Modern Application Deployment System Based on OAM
   files:
   - name: vela
-    src: "{{.OS}}-{{.Arch}}/vela"
+    src: "{{.OS}}-amd64/vela"
 - name: oam-dev/kubevela/kubectl-plugin
   type: github_release
   repo_owner: oam-dev
   repo_name: kubevela
-  asset: kubectl-vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
+  asset: kubectl-vela-{{.Version}}-{{.OS}}-amd64.tar.gz
   link: https://kubevela.io/
   description: The Modern Application Deployment System Based on OAM
   files:
   - name: kubectl-vela
-    src: "{{.OS}}-{{.Arch}}/kubectl-vela"
+    src: "{{.OS}}-amd64/kubectl-vela"
 - type: github_release
   repo_owner: ogham
   repo_name: exa
@@ -1468,7 +1468,7 @@ packages:
 - type: github_release
   repo_owner: open-policy-agent
   repo_name: opa
-  asset: "opa_{{.OS}}_{{.Arch}}"
+  asset: "opa_{{.OS}}_amd64"
   link: https://www.openpolicyagent.org/
   description: An open source, general-purpose policy engine
 - type: github_release
@@ -1494,7 +1494,7 @@ packages:
 - type: github_release
   repo_owner: Peltoche
   repo_name: lsd
-  asset: 'lsd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+  asset: 'lsd-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}.{{.Format}}'
   description: The next gen ls command
   format: tar.gz
   format_overrides:
@@ -1506,7 +1506,7 @@ packages:
     linux: unknown-linux-musl # Set musl as default. If architecture matchs, this can be executable without relying on external libraries.
   files:
   - name: lsd
-    src: 'lsd-{{.Version}}-{{.Arch}}-{{.OS}}/lsd'
+    src: 'lsd-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}/lsd'
 - type: github_content
   repo_owner: postfinance
   repo_name: kubectl-sudo
@@ -1515,7 +1515,7 @@ packages:
 - type: github_release
   repo_owner: profclems
   repo_name: glab
-  asset: 'glab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  asset: 'glab_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}.{{.Format}}'
   link: https://glab.readthedocs.io/en/latest/
   description: An open-source GitLab command line tool bringing GitLab's cool features to your command line
   format: tar.gz
