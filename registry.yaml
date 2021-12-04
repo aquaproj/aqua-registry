@@ -1775,6 +1775,25 @@ packages:
   - name: bat
     src: 'bat-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}/bat'
 - type: github_release
+  repo_owner: sharkdp
+  repo_name: fd
+  asset: 'fd-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}.{{.Format}}'
+  description: "A simple, fast and user-friendly alternative to 'find'"
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  replacements:
+    amd64: x86_64
+    arm64: aarch64
+    darwin: apple-darwin
+    linux: unknown-linux-musl
+    windows: pc-windows-msvc
+    386: i686
+  files:
+  - name: fd
+    src: 'fd-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}/fd'
+- type: github_release
   repo_owner: sigstore
   repo_name: cosign
   format: raw
