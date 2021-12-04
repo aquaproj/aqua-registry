@@ -1728,7 +1728,7 @@ packages:
 - type: github_release
   repo_owner: sharkdp
   repo_name: bat
-  asset: 'bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+  asset: 'bat-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}.{{.Format}}'
   description: 'A cat(1) clone with wings.'
   format: tar.gz
   format_overrides:
@@ -1743,7 +1743,7 @@ packages:
     386: i686
   files:
   - name: bat
-    src: 'bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat'
+    src: 'bat-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}/bat'
 - type: github_release
   repo_owner: sigstore
   repo_name: cosign
