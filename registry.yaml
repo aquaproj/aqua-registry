@@ -1488,6 +1488,22 @@ packages:
   format_overrides:
   - goos: windows
     format: zip
+- name: nodejs/node
+  type: http
+  url: 'https://nodejs.org/dist/{{.Version}}/node-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}x64{{else}}{{.Arch}}{{end}}.tar.gz'
+  link: https://nodejs.org/
+  description: Node.js JavaScript runtime
+  replacements:
+    amd64: x64
+  files:
+  - name: corepack
+    src: 'node-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}x64{{else}}{{.Arch}}{{end}}/bin/corepack'
+  - name: node
+    src: 'node-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}x64{{else}}{{.Arch}}{{end}}/bin/node'
+  - name: npm
+    src: 'node-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}x64{{else}}{{.Arch}}{{end}}/bin/npm'
+  - name: npx
+    src: 'node-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}x64{{else}}{{.Arch}}{{end}}/bin/npx'
 
 # init: o
 - type: github_release
