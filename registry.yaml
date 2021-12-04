@@ -307,6 +307,24 @@ packages:
   description: CLI utility to post files and command output to slack
   format: raw
 - type: github_release
+  repo_owner: bootandy
+  repo_name: dust
+  asset: 'dust-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}.{{.Format}}'
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  replacements:
+    amd64: x86_64
+    arm64: aarch64
+    darwin: apple-darwin
+    linux: unknown-linux-musl
+    windows: pc-windows-msvc
+    386: i686
+  files:
+  - name: dust
+    src: 'dust-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}/dust'
+- type: github_release
   repo_owner: boz
   repo_name: kail
   asset: 'kail_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
