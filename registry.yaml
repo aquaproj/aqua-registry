@@ -307,6 +307,25 @@ packages:
   description: CLI utility to post files and command output to slack
   format: raw
 - type: github_release
+  repo_owner: bootandy
+  repo_name: dust
+  description: A more intuitive version of du in rust
+  asset: 'dust-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}.{{.Format}}'
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  replacements:
+    amd64: x86_64
+    arm64: aarch64
+    darwin: apple-darwin
+    linux: unknown-linux-musl
+    windows: pc-windows-msvc
+    386: i686
+  files:
+  - name: dust
+    src: 'dust-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}/dust'
+- type: github_release
   repo_owner: boz
   repo_name: kail
   asset: 'kail_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
@@ -1492,6 +1511,18 @@ packages:
     src: "{{.OS}}-amd64/kubectl-vela"
 - type: github_release
   repo_owner: ogham
+  repo_name: dog
+  asset: 'dog-{{.Version}}-{{.OS}}.zip'
+  description: 'A command-line DNS client.'
+  link: https://dns.lookup.dog
+  replacements:
+    darwin: x86_64-apple-darwin
+    linux: x86_64-unknown-linux-gnu
+  files:
+  - name: dog
+    src: bin/dog
+- type: github_release
+  repo_owner: ogham
   repo_name: exa
   asset: 'exa-{{.OS}}-{{.Version}}.zip'
   description: "A modern replacement for 'ls'"
@@ -1744,6 +1775,25 @@ packages:
   files:
   - name: bat
     src: 'bat-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}/bat'
+- type: github_release
+  repo_owner: sharkdp
+  repo_name: fd
+  asset: 'fd-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}.{{.Format}}'
+  description: "A simple, fast and user-friendly alternative to 'find'"
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  replacements:
+    amd64: x86_64
+    arm64: aarch64
+    darwin: apple-darwin
+    linux: unknown-linux-musl
+    windows: pc-windows-msvc
+    386: i686
+  files:
+  - name: fd
+    src: 'fd-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}/fd'
 - type: github_release
   repo_owner: sigstore
   repo_name: cosign
