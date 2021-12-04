@@ -31,12 +31,3 @@ And install packages specifying the file by `-c` option. Note that `-c` is a glo
 ```console
 $ aqua -c aqua-test.yaml i --test
 ```
-
-## Test on Mac OSX
-
-CI is run on Linux, so it is difficult to test if the registry works well in Mac OSX.
-If you use Max OSX, please check if the registry works well in your localhost.
-
-```console
-$ aqua -c aqua-test.yaml i --test
-```
