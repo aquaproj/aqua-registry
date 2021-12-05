@@ -1546,6 +1546,18 @@ packages:
   replacements:
     amd64: x86_64
 - type: github_release
+  repo_owner: neovim
+  repo_name: neovim
+  asset: 'nvim-{{ .OS }}.tar.gz'
+  description: Hyperextensible Vim-based text editor
+  link: https://github.com/neovim/neovim
+  replacements:
+    linux: linux64
+    darwin: macos
+  files:
+  - name: nvim
+    src: 'nvim-{{ if eq .GOOS "darwin" }}osx64{{ else }}{{ .OS }}{{ end }}/bin/nvim'
+- type: github_release
   repo_owner: newrelic
   repo_name: newrelic-cli
   asset: 'newrelic-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
