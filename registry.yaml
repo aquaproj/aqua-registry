@@ -121,6 +121,12 @@ packages:
   description: Install aqua quickly
 - type: github_release
   repo_owner: aquasecurity
+  repo_name: kube-bench
+  # Support only Linux
+  asset: "kube-bench_{{trimV .Version}}_linux_{{.Arch}}.tar.gz"
+  description: Checks whether Kubernetes is deployed according to security best practices as defined in the CIS Kubernetes Benchmark
+- type: github_release
+  repo_owner: aquasecurity
   repo_name: kubectl-who-can
   asset: "kubectl-who-can_{{.OS}}_x86_64.{{.Format}}"
   description: Show who has RBAC permissions to perform actions on different resources in Kubernetes
@@ -1281,6 +1287,13 @@ packages:
   replacements:
     amd64: x64
     windows: win
+- type: github_release
+  repo_owner: kanisterio
+  repo_name: kanister
+  asset: 'kanister_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  description: An extensible framework for application-level data management on Kubernetes
+  files:
+  - name: kanctl
 - name: kastenhq/external-tools/k10multicluster
   type: github_release
   repo_owner: kastenhq
@@ -1593,7 +1606,7 @@ packages:
 - type: github_release
   repo_owner: neovim
   repo_name: neovim
-  asset: 'nvim-{{ .OS }}.tar.gz'
+  asset: 'nvim-{{.OS}}.tar.gz'
   description: Hyperextensible Vim-based text editor
   link: https://neovim.io/
   replacements:
@@ -1601,7 +1614,7 @@ packages:
     darwin: macos
   files:
   - name: nvim
-    src: 'nvim-{{ if eq .GOOS "darwin" }}osx64{{ else }}{{ .OS }}{{ end }}/bin/nvim'
+    src: 'nvim-{{if eq .GOOS "darwin"}}osx64{{else}}{{.OS}}{{end}}/bin/nvim'
 - type: github_release
   repo_owner: newrelic
   repo_name: newrelic-cli
@@ -1810,6 +1823,12 @@ packages:
   format: raw
   description: Little helper to run Rancher Lab's k3s in Docker
   link: https://k3d.io/
+- type: github_release
+  repo_owner: rancher
+  repo_name: kim
+  asset: 'kim-{{.OS}}-{{.Arch}}'
+  format: raw
+  description: In ur kubernetes, buildin ur imagez
 - type: github_release
   repo_owner: rclone
   repo_name: rclone
@@ -2051,6 +2070,16 @@ packages:
   format_overrides:
   - goos: darwin
     format: zip
+
+- type: github_release
+  repo_owner: squat
+  repo_name: kilo
+  asset: 'kgctl-{{.OS}}-{{.Arch}}'
+  link: https://kilo.squat.ai/docs/kgctl
+  description: 'kgctl - Manage a Kilo network. Kilo is a multi-cloud network overlay built on WireGuard and designed for Kubernetes (k8s + wg = kg)'
+  format: raw
+  files:
+  - name: kgctl
 - type: github_release
   repo_owner: stackrox
   repo_name: kube-linter
