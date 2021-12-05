@@ -1096,6 +1096,17 @@ packages:
   repo_name: goimports-reviser
   asset: 'goimports-reviser_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: 'Right imports sorting & code formatting tool (goimports alternative)'
+- name: influxdata/influx-cli
+  type: http
+  url: 'https://dl.influxdata.com/influxdb/releases/influxdb2-client-{{trimV .Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  description: CLI for managing resources in InfluxDB v2
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  files:
+  - name: influx
+    src: 'influxdb2-client-{{trimV .Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}/influx'
 - type: github_release
   repo_owner: instrumenta
   repo_name: kubeval
