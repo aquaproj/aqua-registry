@@ -580,6 +580,16 @@ packages:
   - name: dhall
     src: bin/dhall
 - type: github_release
+  repo_owner: digitalocean
+  repo_name: doctl
+  asset: 'doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}'
+  description: The official command line interface for the DigitalOcean API
+  link: https://docs.digitalocean.com/reference/doctl/
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+- type: github_release
   repo_owner: direnv
   repo_name: direnv
   asset: 'direnv.{{.OS}}-{{.Arch}}'
@@ -1086,6 +1096,17 @@ packages:
   repo_name: goimports-reviser
   asset: 'goimports-reviser_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: 'Right imports sorting & code formatting tool (goimports alternative)'
+- name: influxdata/influx-cli
+  type: http
+  url: 'https://dl.influxdata.com/influxdb/releases/influxdb2-client-{{trimV .Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  description: CLI for managing resources in InfluxDB v2
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  files:
+  - name: influx
+    src: 'influxdb2-client-{{trimV .Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}/influx'
 - type: github_release
   repo_owner: instrumenta
   repo_name: kubeval
@@ -1370,6 +1391,13 @@ packages:
     src: bin/limactl
   replacements:
     amd64: x86_64
+- type: github_release
+  repo_owner: loft-sh
+  repo_name: devspace
+  asset: 'devspace-{{.OS}}-{{.Arch}}'
+  format: raw
+  description: DevSpace - The Fastest Developer Tool for Kubernetes ⚡ Automate your deployment workflow with DevSpace and develop software directly inside Kubernetes.
+  link: https://devspace.sh/
 - type: github_release
   repo_owner: lotabout
   repo_name: skim
