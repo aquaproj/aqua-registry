@@ -155,6 +155,15 @@ packages:
     freebsd: FreeBSD
     dragonfly: DragonFlyBSD
 - type: github_release
+  repo_owner: argoproj-labs
+  repo_name: argocd-autopilot
+  asset: 'argocd-autopilot-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  link: https://argocd-autopilot.readthedocs.io/en/stable/
+  description: Argo-CD Autopilot
+  files:
+  - name: argocd-autopilot
+    src: 'argocd-autopilot-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+- type: github_release
   repo_owner: argoproj
   repo_name: argo-cd
   asset: 'argocd-{{.OS}}-amd64'
@@ -376,6 +385,17 @@ packages:
   - name: circleci
     src: circleci-cli_{{trimV .Version}}_{{.OS}}_amd64/circleci
 - type: github_release
+  repo_owner: civo
+  repo_name: cli
+  asset: 'civo-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}'
+  description: Our Command Line Interface (CLI) for interacting with your Civo resources
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  files:
+  - name: civo
+- type: github_release
   repo_owner: cli
   repo_name: cli
   asset: 'gh_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
@@ -391,6 +411,12 @@ packages:
   repo_name: atmos
   asset: 'atmos_{{trimV .Version}}_{{.OS}}_{{.Arch}}'
   description: Universal Tool for DevOps and Cloud Automation (works with terraform, helm, helmfile, istioctl, etc)
+  format: raw
+- type: github_release
+  repo_owner: cnrancher
+  repo_name: autok3s
+  asset: 'autok3s_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+  description: Run K3s Everywhere
   format: raw
 - name: codeclimate/test-reporter
   type: http
@@ -1269,6 +1295,15 @@ packages:
   description: Run Kubernetes locally
   files:
   - name: minikube
+- type: github_release
+  repo_owner: kubernetes-sigs
+  repo_name: cluster-api
+  asset: 'clusterctl-{{.OS}}-{{.Arch}}'
+  format: raw
+  description: Home for Cluster API, a subproject of sig-cluster-lifecycle
+  files:
+  - name: clusterctl
+    src: 'clusterctl-{{.OS}}-{{.Arch}}'
 - name: kubernetes-sigs/kind
   type: http
   url: 'https://kind.sigs.k8s.io/dl/{{.Version}}/kind-{{.OS}}-{{.Arch}}'
