@@ -1108,6 +1108,19 @@ packages:
   - name: influx
     src: 'influxdb2-client-{{trimV .Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}/influx'
 - type: github_release
+  repo_owner: inlets
+  repo_name: inlets-pro
+  asset: 'inlets-pro{{if eq .OS "darwin"}}-darwin{{end}}{{if eq .GOARCH "arm64"}}-arm64{{end}}'
+  description: Secure HTTP and TCP tunnels that just work
+- type: github_release
+  repo_owner: inlets
+  repo_name: inletsctl
+  asset: 'inletsctl{{if eq .GOOS "darwin"}}-darwin{{else}}{{if eq .GOARCH "arm64"}}-arm64{{end}}{{end}}.tgz'
+  description: Create inlets servers on the top cloud platforms
+  files:
+  - name: inletsctl
+    src: 'inletsctl{{if eq .GOOS "darwin"}}-darwin{{else}}{{if eq .GOARCH "arm64"}}-arm64{{end}}{{end}}'
+- type: github_release
   repo_owner: instrumenta
   repo_name: kubeval
   asset: 'kubeval-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
@@ -1247,6 +1260,18 @@ packages:
     format: zip
 
 # init: k
+- type: github_release
+  repo_owner: k0sproject
+  repo_name: k0s
+  # support only Linux
+  asset: 'k0s-{{.Version}}-{{.Arch}}'
+  format: raw
+  description: k0s - Zero Friction Kubernetes
+  replacements:
+    x86_64: amd64
+    aarch64: arm64
+    armv7l: arm
+    armv8l: arm
 - type: github_release
   repo_owner: k0sproject
   repo_name: k0sctl
