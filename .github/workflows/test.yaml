@@ -32,6 +32,23 @@ jobs:
       - uses: aquaproj/aqua-installer@main
         with:
           version: v0.8.0 # renovate: depName=aquaproj/aqua
-      - run: aqua -c aqua-all.yaml i --test
+      - run: echo "$HOME/.aqua/bin" >> $GITHUB_PATH
+
+      - run: aqua -c aqua-ci.yaml i --test
+
+      - run: ci-info run | sed -E "s/^export //" >> $GITHUB_ENV
         env:
+          AQUA_CONFIG: aqua-ci.yaml
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: |
+          if grep -E "^tests/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" > /dev/null 2>&1; then
+            grep -E "^tests/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" | sed "s/^/- import: /" >> aqua-ci.yaml
+            echo "[INFO] aqua-ci.yaml" >&2
+            cat aqua-ci.yaml >&2
+            echo "[INFO] + aqua -c aqua-ci.yaml i --test" >&2
+            aqua -c aqua-ci.yaml i --test
+            exit 0
+          fi
+          echo "[INFO] test all packages" >&2
+          aqua -c aqua-all.yaml i --test
