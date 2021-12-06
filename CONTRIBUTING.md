@@ -4,7 +4,7 @@ About how to write [registry.yaml](registry.yaml), please see [Registry Configur
 
 ## Add the packages
 
-Please update [registry.yaml](registry.yaml) and add packages in `tests` for testing.
+Please update [registry.yaml](registry.yaml) and add packages in `pkgs` for testing.
 
 Packages are sorted in the dictionary order of the package name.
 
