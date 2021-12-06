@@ -2252,6 +2252,23 @@ packages:
   format_overrides:
   - goos: darwin
     format: zip
+- type: github_release
+  repo_owner: tektoncd
+  repo_name: cli
+  description: 'A CLI for interacting with Tekton!'
+  asset: 'tkn_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  files:
+  - name: tkn
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
+    amd64: x86_64
 - name: telepresenceio/telepresence
   type: http
   format: raw
