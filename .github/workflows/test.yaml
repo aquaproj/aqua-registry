@@ -37,6 +37,8 @@ jobs:
 
       - name: install ci-info
         run: aqua -c aqua-ci.yaml i --test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: run ci-info and update environment variables
         run: ci-info run | sed -E "s/^export //" >> $GITHUB_ENV
@@ -56,3 +58,5 @@ jobs:
           fi
           echo "[INFO] test all packages" >&2
           aqua -c aqua-all.yaml i --test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
