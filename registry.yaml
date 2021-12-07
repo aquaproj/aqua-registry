@@ -2373,6 +2373,20 @@ packages:
   - name: terraform
     src: tfenv-{{trimV .Version}}/bin/terraform
 - type: github_release
+  repo_owner: thazelart
+  repo_name: terraform-validator
+  asset: 'terraform-validator_{{.OS}}_{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  description: A norms and conventions validator for Terraform
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    386: i386
+    amd64: x86_64
+- type: github_release
   repo_owner: TheZoraiz
   repo_name: ascii-image-converter
   asset: 'ascii-image-converter_{{.OS}}_{{.Arch}}.{{.Format}}'
