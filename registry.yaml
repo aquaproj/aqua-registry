@@ -1314,19 +1314,19 @@ packages:
   type: github_release
   repo_owner: jreleaser
   repo_name: jreleaser
-  asset: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.zip'
+  asset: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}.zip'
   replacements:
     amd64: x86_64
     darwin: osx
   files:
   - name: jreleaser
-    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/jreleaser'
+    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}/bin/jreleaser'
   - name: java
-    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/java'
+    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}/bin/java'
   - name: keytool
-    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/keytool'
+    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}/bin/keytool'
   - name: rmiregistry
-    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/rmiregistry'
+    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}/bin/rmiregistry'
 - type: github_release
   repo_owner: juliosueiras
   repo_name: terraform-lsp
