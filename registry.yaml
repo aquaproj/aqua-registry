@@ -443,8 +443,9 @@ packages:
   repo_name: nerdctl
   asset: 'nerdctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz'
   description: 'contaiNERD CTL - Docker-compatible CLI for containerd, with support for Compose, Rootless, eStargz, OCIcrypt, IPFS, ...'
+  supported_if: GOOS != "darwin"
   replacements:
-    darwin: linux # nerdctl doesn't support macOS
+    darwin: linux # keep for the compatibility
 - type: github_release
   repo_owner: corneliusweig
   repo_name: ketall
@@ -1310,10 +1311,10 @@ packages:
 - type: github_release
   repo_owner: k0sproject
   repo_name: k0s
-  # support only Linux
   asset: 'k0s-{{.Version}}-{{.Arch}}'
   format: raw
   description: k0s - Zero Friction Kubernetes
+  supported_if: GOOS == "linux"
   replacements:
     x86_64: amd64
     aarch64: arm64
