@@ -14,7 +14,8 @@ packages:
   repo_owner: abs-lang
   repo_name: abs
   description: 'Home of the ABS programming language: the joy of shell scripting'
-  asset: abs-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}
+  rosetta2: true
+  asset: abs-{{.OS}}-{{.Arch}}
   link: https://www.abs-lang.org/
 - type: github_release
   repo_owner: accurics
@@ -31,7 +32,8 @@ packages:
 - type: github_release
   repo_owner: aelsabbahy
   repo_name: goss
-  asset: 'goss-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+  rosetta2: true
+  asset: 'goss-{{.OS}}-{{.Arch}}'
   description: Quick and Easy server testing/validation
   replacements:
     darwin: alpha-darwin
@@ -128,9 +130,9 @@ packages:
 - type: github_release
   repo_owner: aquasecurity
   repo_name: kube-bench
-  # Support only Linux
   asset: "kube-bench_{{trimV .Version}}_linux_{{.Arch}}.tar.gz"
   description: Checks whether Kubernetes is deployed according to security best practices as defined in the CIS Kubernetes Benchmark
+  supported_if: GOOS == "linux"
 - type: github_release
   repo_owner: aquasecurity
   repo_name: kubectl-who-can
@@ -169,12 +171,13 @@ packages:
 - type: github_release
   repo_owner: argoproj-labs
   repo_name: argocd-autopilot
-  asset: 'argocd-autopilot-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  asset: 'argocd-autopilot-{{.OS}}-{{.Arch}}.tar.gz'
   link: https://argocd-autopilot.readthedocs.io/en/stable/
   description: Argo-CD Autopilot
   files:
   - name: argocd-autopilot
-    src: 'argocd-autopilot-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+    src: 'argocd-autopilot-{{.OS}}-{{.Arch}}'
 - type: github_release
   repo_owner: argoproj
   repo_name: argo-cd
@@ -195,12 +198,13 @@ packages:
 - type: github_release
   repo_owner: argoproj
   repo_name: argo-workflows
-  asset: 'argo-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.gz'
+  rosetta2: true
+  asset: 'argo-{{.OS}}-{{.Arch}}.gz'
   link: https://argoproj.github.io/argo-workflows/
   description: 'Argo Worfkflows CLI. Workflow engine for Kubernetes'
   files:
   - name: argo
-    src: 'argo-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+    src: 'argo-{{.OS}}-{{.Arch}}'
 - type: github_release
   repo_owner: armosec
   repo_name: kubescape
@@ -324,14 +328,16 @@ packages:
 - type: github_release
   repo_owner: bcicen
   repo_name: slackcat
-  asset: 'slackcat-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+  rosetta2: true
+  asset: 'slackcat-{{.Version}}-{{.OS}}-{{.Arch}}'
   description: CLI utility to post files and command output to slack
   format: raw
 - type: github_release
   repo_owner: bootandy
   repo_name: dust
   description: A more intuitive version of du in rust
-  asset: 'dust-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}.{{.Format}}'
+  rosetta2: true
+  asset: 'dust-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
   format: tar.gz
   format_overrides:
   - goos: windows
@@ -345,7 +351,7 @@ packages:
     386: i686
   files:
   - name: dust
-    src: 'dust-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}/dust'
+    src: 'dust-{{.Version}}-{{.Arch}}-{{.OS}}/dust'
 - type: github_release
   repo_owner: boz
   repo_name: kail
@@ -371,12 +377,14 @@ packages:
 - type: github_release
   repo_owner: c-bata
   repo_name: kube-prompt
-  asset: 'kube-prompt_{{.Version}}_{{.OS}}_{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}amd64{{else}}{{.Arch}}{{end}}.zip'
+  rosetta2: true
+  asset: 'kube-prompt_{{.Version}}_{{.OS}}_{{.Arch}}.zip'
   description: An interactive kubernetes client featuring auto-complete
 - type: github_release
   repo_owner: che-incubator
   repo_name: chectl
-  asset: 'chectl-{{.OS}}-{{if eq .GOOS "darwin"}}x64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  asset: 'chectl-{{.OS}}-{{.Arch}}.tar.gz'
   description: CLI to manage Eclipse Che server and workspaces
   replacements:
     amd64: x64
@@ -410,7 +418,8 @@ packages:
 - type: github_release
   repo_owner: cli
   repo_name: cli
-  asset: 'gh_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  asset: 'gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   link: https://cli.github.com/
   description: GitHub’s official command line tool
   files:
@@ -427,7 +436,8 @@ packages:
 - type: github_release
   repo_owner: cnrancher
   repo_name: autok3s
-  asset: 'autok3s_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+  rosetta2: true
+  asset: 'autok3s_{{.OS}}_{{.Arch}}'
   description: Run K3s Everywhere
   format: raw
 - name: codeclimate/test-reporter
@@ -510,7 +520,8 @@ packages:
 - type: github_release
   repo_owner: cue-lang
   repo_name: cue
-  asset: 'cue_{{.Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  rosetta2: true
+  asset: 'cue_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: The new home of the CUE language! Validate and define text-based and dynamic configuration
   link: https://cuelang.org/
   format: tar.gz
@@ -544,7 +555,8 @@ packages:
 - type: github_release
   repo_owner: datreeio
   repo_name: datree
-  asset: 'datree-cli_{{.Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}.zip'
+  rosetta2: true
+  asset: 'datree-cli_{{.Version}}_{{.OS}}_{{.Arch}}.zip'
   link: https://datree.io/
   description: Prevent Kubernetes misconfigurations from reaching production! Datree is a CLI tool to ensure K8s manifests and Helm charts follow best practices as well as your organization’s policies
   replacements:
@@ -631,7 +643,7 @@ packages:
 - name: docker-slim/docker-slim
   type: github_release
   type: http
-    # https://downloads.dockerslim.com/releases/1.37.2/dist_mac_m1.zip
+  # https://downloads.dockerslim.com/releases/1.37.2/dist_mac_m1.zip
   url: 'https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}{{if ne .Arch "amd64"}}_{{if eq .GOOS "darwin"}}m1{{else}}{{.Arch}}{{end}}{{end}}.{{.Format}}'
   replacements:
     darwin: mac
@@ -663,7 +675,8 @@ packages:
 - type: github_release
   repo_owner: emirozer
   repo_name: kubectl-doctor
-  asset: 'kubectl-doctor_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.zip'
+  rosetta2: true
+  asset: 'kubectl-doctor_{{.OS}}_{{.Arch}}.zip'
   description: kubectl cluster triage plugin for k8s - (brew doctor equivalent)
 - type: github_release
   repo_owner: env0
@@ -674,7 +687,8 @@ packages:
 - type: github_release
   repo_owner: ernoaapa
   repo_name: kubectl-warp
-  asset: 'kubectl-warp_{{trimV .Version}}_{{.OS}}_{{if eq .GOARCH "arm64"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  asset: 'kubectl-warp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   description: Kubernetes CLI plugin for syncing and executing local files in Pod on Kubernetes
 - type: github_release
   repo_owner: erroneousboat
@@ -721,7 +735,8 @@ packages:
   repo_owner: FiloSottile
   repo_name: mkcert
   format: raw
-  asset: 'mkcert-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+  rosetta2: true
+  asset: 'mkcert-{{.Version}}-{{.OS}}-{{.Arch}}'
   description: A simple zero-config tool to make locally trusted development certificates with any names you'd like
 - type: github_release
   repo_owner: fishi0x01
@@ -731,7 +746,8 @@ packages:
   description: vsh - HashiCorp Vault interactive shell and cli tool
 - name: fishworks/gofish
   type: http
-  url: 'https://gofi.sh/releases/gofish-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  url: 'https://gofi.sh/releases/gofish-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz'
   link: https://gofi.sh/
   description: GoFish is a cross-platform systems package manager, bringing the ease of use of Homebrew to Linux and Windows
   files:
@@ -790,7 +806,8 @@ packages:
 - type: github_release
   repo_owner: ginuerzh
   repo_name: gost
-  asset: 'gost-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}-{{trimV .Version}}.gz'
+  rosetta2: true
+  asset: 'gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}.gz'
   description: GO Simple Tunnel - a simple tunnel written in golang
   files:
   - name: gost
@@ -798,7 +815,8 @@ packages:
 - type: github_release
   repo_owner: github
   repo_name: hub
-  asset: 'hub-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}-{{trimV .Version}}.{{.Format}}'
+  rosetta2: true
+  asset: 'hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}'
   link: https://hub.github.com/
   description: A command-line tool that makes git easier to use with GitHub.
   format: tgz
@@ -943,7 +961,8 @@ packages:
     src: 'container-diff-{{.OS}}-amd64'
 - name: GoogleContainerTools/container-structure-test
   type: http
-  url: 'https://storage.googleapis.com/container-structure-test/{{.Version}}/container-structure-test-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+  rosetta2: true
+  url: 'https://storage.googleapis.com/container-structure-test/{{.Version}}/container-structure-test-{{.OS}}-{{.Arch}}'
   link: https://github.com/GoogleContainerTools/container-structure-test
   description: validate the structure of your container images
   files:
@@ -1051,14 +1070,16 @@ packages:
   - name: drone
 - name: hashicorp/consul
   type: http
-  url: 'https://releases.hashicorp.com/consul/{{trimV .Version}}/consul_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.zip'
+  rosetta2: true
+  url: 'https://releases.hashicorp.com/consul/{{trimV .Version}}/consul_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip'
   link: https://www.consul.io/
   description: Consul is a distributed, highly available, and data center aware solution to connect and configure applications across dynamic, distributed infrastructure
   files:
   - name: consul
 - name: hashicorp/nomad
   type: http
-  url: 'https://releases.hashicorp.com/nomad/{{trimV .Version}}/nomad_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.zip'
+  rosetta2: true
+  url: 'https://releases.hashicorp.com/nomad/{{trimV .Version}}/nomad_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip'
   link: https://www.nomadproject.io/
   description: Nomad is an easy-to-use, flexible, and performant workload orchestrator that can deploy a mix of microservice, batch, containerized, and non-containerized applications. Nomad is easy to operate and scale and has native Consul and Vault integrations
   files:
@@ -1146,7 +1167,8 @@ packages:
   description: 'Right imports sorting & code formatting tool (goimports alternative)'
 - name: influxdata/influx-cli
   type: http
-  url: 'https://dl.influxdata.com/influxdb/releases/influxdb2-client-{{trimV .Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  rosetta2: true
+  url: 'https://dl.influxdata.com/influxdb/releases/influxdb2-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}'
   description: CLI for managing resources in InfluxDB v2
   format: tar.gz
   format_overrides:
@@ -1154,7 +1176,7 @@ packages:
     format: zip
   files:
   - name: influx
-    src: 'influxdb2-client-{{trimV .Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}/influx'
+    src: 'influxdb2-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}/influx'
 - type: github_release
   repo_owner: inlets
   repo_name: inlets-pro
@@ -1171,7 +1193,8 @@ packages:
 - type: github_release
   repo_owner: instrumenta
   repo_name: kubeval
-  asset: 'kubeval-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  asset: 'kubeval-{{.OS}}-{{.Arch}}.tar.gz'
   link: https://www.kubeval.com/
   description: Validate your Kubernetes configuration files, supports multiple Kubernetes versions
 - type: github_release
@@ -1206,12 +1229,14 @@ packages:
 - type: github_release
   repo_owner: int128
   repo_name: yamlpatch
-  asset: 'yamlpatch_{{.Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  asset: 'yamlpatch_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   description: Apply JSON Patch to YAML Document preserving positions and comments
 - type: github_release
   repo_owner: iovisor
   repo_name: kubectl-trace
-  asset: 'kubectl-trace_{{.Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  rosetta2: true
+  asset: 'kubectl-trace_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: Schedule bpftrace programs on your kubernetes cluster using the kubectl
   format: tar.gz
   format_overrides:
@@ -1244,7 +1269,8 @@ packages:
 - type: github_release
   repo_owner: jesseduffield
   repo_name: horcrux
-  asset: 'horcrux_{{trimV .Version}}_{{.OS}}_{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  rosetta2: true
+  asset: 'horcrux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: Split your file into encrypted fragments so that you don't need to remember a passcode
   replacements:
     darwin: Darwin
@@ -1259,7 +1285,8 @@ packages:
 - type: github_release
   repo_owner: jesseduffield
   repo_name: lazydocker
-  asset: 'lazydocker_{{trimV .Version}}_{{.OS}}_{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  rosetta2: true
+  asset: 'lazydocker_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: The lazier way to manage everything docker
   replacements:
     darwin: Darwin
@@ -1314,19 +1341,20 @@ packages:
   type: github_release
   repo_owner: jreleaser
   repo_name: jreleaser
-  asset: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}.zip'
+  rosetta2: true
+  asset: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.zip'
   replacements:
     amd64: x86_64
     darwin: osx
   files:
   - name: jreleaser
-    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}/bin/jreleaser'
+    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/jreleaser'
   - name: java
-    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}/bin/java'
+    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/java'
   - name: keytool
-    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}/bin/keytool'
+    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/keytool'
   - name: rmiregistry
-    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}/bin/rmiregistry'
+    src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/rmiregistry'
 - type: github_release
   repo_owner: juliosueiras
   repo_name: terraform-lsp
@@ -1368,7 +1396,8 @@ packages:
 - type: github_release
   repo_owner: kanisterio
   repo_name: kanister
-  asset: 'kanister_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  asset: 'kanister_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   description: An extensible framework for application-level data management on Kubernetes
   files:
   - name: kanctl
@@ -1427,7 +1456,8 @@ packages:
 - type: github_release
   repo_owner: ktr0731
   repo_name: evans
-  asset: 'evans_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  asset: 'evans_{{.OS}}_{{.Arch}}.tar.gz'
   description: 'Evans: more expressive universal gRPC client'
 - type: github_release
   repo_owner: kubernetes
@@ -1439,7 +1469,8 @@ packages:
   asset: 'kompose-{{.OS}}-{{.Arch}}'
   version_overrides:
   - version_constraint: 'semver("< 1.26.0")'
-    asset: 'kompose-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+    rosetta2: true
+    asset: 'kompose-{{.OS}}-{{.Arch}}'
 - type: github_release
   repo_owner: kubernetes
   repo_name: kops
@@ -1497,7 +1528,8 @@ packages:
 - type: github_release
   repo_owner: kubernetes-sigs
   repo_name: kubebuilder
-  asset: 'kubebuilder_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+  rosetta2: true
+  asset: 'kubebuilder_{{.OS}}_{{.Arch}}'
   description: Kubebuilder - SDK for building Kubernetes APIs using CRDs
 - type: github_release
   repo_owner: kubernetes-sigs
@@ -1516,7 +1548,8 @@ packages:
 - type: github_release
   repo_owner: lc
   repo_name: gau
-  asset: 'gau_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  rosetta2: true
+  asset: 'gau_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: Fetch known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl
   replacements:
     darwin: macOS
@@ -1658,7 +1691,8 @@ packages:
 - type: github_release
   repo_owner: mumoshu
   repo_name: variant
-  asset: 'variant_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  asset: 'variant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   description: Wrap up your bash scripts into a modern CLI today. Graduate to a full-blown golang app tomorrow
 - type: github_release
   repo_owner: mumoshu
@@ -1722,20 +1756,21 @@ packages:
     format: zip
 - name: nodejs/node
   type: http
-  url: 'https://nodejs.org/dist/{{.Version}}/node-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}x64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  url: 'https://nodejs.org/dist/{{.Version}}/node-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz'
   link: https://nodejs.org/
   description: Node.js JavaScript runtime
   replacements:
     amd64: x64
   files:
   - name: corepack
-    src: 'node-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}x64{{else}}{{.Arch}}{{end}}/bin/corepack'
+    src: 'node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/corepack'
   - name: node
-    src: 'node-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}x64{{else}}{{.Arch}}{{end}}/bin/node'
+    src: 'node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/node'
   - name: npm
-    src: 'node-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}x64{{else}}{{.Arch}}{{end}}/bin/npm'
+    src: 'node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npm'
   - name: npx
-    src: 'node-{{.Version}}-{{.OS}}-{{if eq .GOOS "darwin"}}x64{{else}}{{.Arch}}{{end}}/bin/npx'
+    src: 'node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npx'
 
 # init: o
 - type: github_release
@@ -1817,7 +1852,8 @@ packages:
 - type: github_release
   repo_owner: Peltoche
   repo_name: lsd
-  asset: 'lsd-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}.{{.Format}}'
+  rosetta2: true
+  asset: 'lsd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
   description: The next gen ls command
   format: tar.gz
   format_overrides:
@@ -1849,7 +1885,8 @@ packages:
 - type: github_release
   repo_owner: profclems
   repo_name: glab
-  asset: 'glab_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  rosetta2: true
+  asset: 'glab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   link: https://glab.readthedocs.io/en/latest/
   description: An open-source GitLab command line tool bringing GitLab's cool features to your command line
   format: tar.gz
@@ -1899,7 +1936,8 @@ packages:
 - type: github_release
   repo_owner: rancher
   repo_name: cli
-  asset: 'rancher-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}-{{.Version}}.{{.Format}}'
+  rosetta2: true
+  asset: 'rancher-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}'
   format: tar.gz
   format_overrides:
   - goos: windows
@@ -1976,7 +2014,8 @@ packages:
 - type: github_release
   repo_owner: roboll
   repo_name: helmfile
-  asset: 'helmfile_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+  rosetta2: true
+  asset: 'helmfile_{{.OS}}_{{.Arch}}'
   format: raw
   description: Deploy Kubernetes Helm Charts
 - type: github_release
@@ -2036,7 +2075,8 @@ packages:
 - type: github_release
   repo_owner: sharkdp
   repo_name: bat
-  asset: 'bat-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}.{{.Format}}'
+  rosetta2: true
+  asset: 'bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
   description: 'A cat(1) clone with wings.'
   format: tar.gz
   format_overrides:
@@ -2055,7 +2095,8 @@ packages:
 - type: github_release
   repo_owner: sharkdp
   repo_name: fd
-  asset: 'fd-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}.{{.Format}}'
+  rosetta2: true
+  asset: 'fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
   description: "A simple, fast and user-friendly alternative to 'find'"
   format: tar.gz
   format_overrides:
@@ -2211,7 +2252,8 @@ packages:
 - type: github_release
   repo_owner: stern
   repo_name: stern
-  asset: 'stern_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  asset: 'stern_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   description: Multi pod and container log tailing for Kubernetes -- Friendly fork of https://github.com/wercker/stern
   files:
   - name: stern
@@ -2285,7 +2327,8 @@ packages:
 - type: github_release
   repo_owner: swaggo
   repo_name: swag
-  asset: 'swag_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  asset: 'swag_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   description: Automatically generate RESTful API documentation with Swagger 2.0 for Go
   replacements:
     darwin: Darwin
@@ -2322,7 +2365,8 @@ packages:
   repo_owner: tektoncd
   repo_name: cli
   description: 'A CLI for interacting with Tekton!'
-  asset: 'tkn_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  rosetta2: true
+  asset: 'tkn_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   files:
   - name: tkn
   format: tar.gz
@@ -2338,7 +2382,8 @@ packages:
 - name: telepresenceio/telepresence
   type: http
   format: raw
-  url: 'https://app.getambassador.io/download/tel2/{{.OS}}/{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}/{{trimV .Version}}/telepresence'
+  rosetta2: true
+  url: 'https://app.getambassador.io/download/tel2/{{.OS}}/{{.Arch}}/{{trimV .Version}}/telepresence'
   link: https://www.telepresence.io/
   description: Local development against a remote Kubernetes or OpenShift cluster
   files:
@@ -2381,7 +2426,8 @@ packages:
 - type: github_release
   repo_owner: thazelart
   repo_name: terraform-validator
-  asset: 'terraform-validator_{{.OS}}_{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}x86_64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  rosetta2: true
+  asset: 'terraform-validator_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: A norms and conventions validator for Terraform
   format: tar.gz
   format_overrides:
@@ -2442,7 +2488,8 @@ packages:
 - type: github_release
   repo_owner: tinygo-org
   repo_name: tinygo
-  asset: 'tinygo{{trimV .Version}}.{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  rosetta2: true
+  asset: 'tinygo{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}'
   link: https://tinygo.org/
   description: Go compiler for small places. Microcontrollers, WebAssembly, and command-line tools. Based on LLVM
   format: tar.gz
@@ -2455,7 +2502,8 @@ packages:
 - type: github_release
   repo_owner: TomWright
   repo_name: dasel
-  asset: 'dasel_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+  rosetta2: true
+  asset: 'dasel_{{.OS}}_{{.Arch}}'
   format: raw
   link: https://daseldocs.tomwright.me/
   description: Select, put and delete data from JSON, TOML, YAML, XML and CSV files with a single tool. Supports conversion between formats and can be used as a Go package
@@ -2478,7 +2526,8 @@ packages:
 - type: github_release
   repo_owner: tsenart
   repo_name: vegeta
-  asset: 'vegeta_{{trimV .Version}}_{{.OS}}_{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}amd64{{else}}{{.Arch}}{{end}}.tar.gz'
+  rosetta2: true
+  asset: 'vegeta_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   description: HTTP load testing tool and library. It's over 9000!
 - type: github_release
   repo_owner: twpayne
@@ -2492,6 +2541,7 @@ packages:
 - type: github_release
   repo_owner: vmware-tanzu
   repo_name: carvel-vendir
+  rosetta2: true
   asset: "vendir-{{.OS}}-{{.Arch}}"
   link: https://carvel.dev/vendir/
   description: Easy way to vendor portions of git repos, github releases, helm charts, docker image contents, etc. declaratively
@@ -2527,7 +2577,8 @@ packages:
 - type: github_release
   repo_owner: XAMPPRocky
   repo_name: tokei
-  asset: 'tokei-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}.tar.gz'
+  rosetta2: true
+  asset: 'tokei-{{.Arch}}-{{.OS}}.tar.gz'
   description: Count your code, quickly
   replacements:
     darwin: apple-darwin
