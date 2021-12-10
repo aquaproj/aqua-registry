@@ -2290,7 +2290,16 @@ packages:
   format_overrides:
   - goos: darwin
     format: zip
-
+- name: spinnaker/spin
+  type: http
+  format: raw
+  rosetta2: true
+  url: 'https://storage.googleapis.com/spinnaker-artifacts/spin/{{trimV .Version}}/{{.OS}}/{{.Arch}}/spin'
+  link: https://github.com/spinnaker/spin
+  description: Spinnaker CLI
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+  files:
+  - name: spin
 - type: github_release
   repo_owner: squat
   repo_name: kilo
