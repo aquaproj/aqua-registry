@@ -113,6 +113,17 @@ packages:
   asset: 'k3sup{{if eq .GOOS "darwin"}}-darwin{{else}}{{if ne .GOARCH "amd64"}}-{{.Arch}}{{end}}{{end}}'
 - type: github_release
   repo_owner: anchore
+  repo_name: grype
+  asset: 'grype_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  description: A vulnerability scanner for container images and filesystems
+  format: tar.gz
+  format_overrides:
+  - goos: darwin
+    format: zip
+  - goos: windows
+    format: zip
+- type: github_release
+  repo_owner: anchore
   repo_name: syft
   asset: 'syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: CLI tool and library for generating a Software Bill of Materials from container images and filesystems
