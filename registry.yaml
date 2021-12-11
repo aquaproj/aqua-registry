@@ -113,6 +113,17 @@ packages:
   asset: 'k3sup{{if eq .GOOS "darwin"}}-darwin{{else}}{{if ne .GOARCH "amd64"}}-{{.Arch}}{{end}}{{end}}'
 - type: github_release
   repo_owner: anchore
+  repo_name: grype
+  asset: 'grype_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  description: A vulnerability scanner for container images and filesystems
+  format: tar.gz
+  format_overrides:
+  - goos: darwin
+    format: zip
+  - goos: windows
+    format: zip
+- type: github_release
+  repo_owner: anchore
   repo_name: syft
   asset: 'syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: CLI tool and library for generating a Software Bill of Materials from container images and filesystems
@@ -848,6 +859,19 @@ packages:
   format_overrides:
   - goos: darwin
     format: zip
+- type: github_release
+  repo_owner: fullstorydev
+  repo_name: grpcurl
+  rosetta2: true
+  asset: 'grpcurl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  description: 'Like cURL, but for gRPC: Command-line tool for interacting with gRPC servers'
+  replacements:
+    amd64: x86_64
+    darwin: osx
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
 
 # init: g
 - type: github_release
@@ -914,6 +938,13 @@ packages:
   - goos: darwin
     format: zip
 - type: github_release
+  repo_owner: go-jira
+  repo_name: jira
+  rosetta2: true
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  asset: 'jira-{{.OS}}-{{.Arch}}'
+  description: simple jira command line client in Go
+- type: github_release
   repo_owner: go-task
   repo_name: task
   asset: 'task_{{.OS}}_{{.Arch}}.tar.gz'
@@ -927,7 +958,7 @@ packages:
   description: The world’s fastest framework for building websites
   files:
   - name: hugo
-  replacements: # https://github.com/gohugoio/hugo/blob/10f60de89a5a53528f1e3a47a77224e5c7915e4e/goreleaser.yml#L99-L110
+  replacements:
     amd64: 64bit
     386: 32bit
     arm: ARM
@@ -986,6 +1017,18 @@ packages:
     files:
     - name: migrate
       src: 'migrate.{{.OS}}-{{.Arch}}'
+- type: github_release
+  repo_owner: GoodwayGroup
+  repo_name: gwvault
+  asset: 'gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  description: ansible-vault CLI reimplemented in go
+  files:
+  - name: gwvault
+    src: 'gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}/gwvault'
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
 - type: github_release
   repo_owner: google
   repo_name: go-containerregistry
@@ -1071,6 +1114,15 @@ packages:
   files:
   - name: skaffold
     src: 'skaffold-{{.OS}}-{{.Arch}}'
+- type: github_release
+  repo_owner: gopasspw
+  repo_name: gopass
+  description: The slightly more awesome standard unix password manager for teams
+  asset: 'gopass-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}'
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
 - type: github_release
   repo_owner: goreleaser
   repo_name: goreleaser
@@ -1186,6 +1238,13 @@ packages:
   description: Consul is a distributed, highly available, and data center aware solution to connect and configure applications across dynamic, distributed infrastructure
   files:
   - name: consul
+- type: github_release
+  repo_owner: hashicorp
+  repo_name: go-getter
+  rosetta2: true
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  asset: 'go-getter_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip'
+  description: Package for downloading things from a string URL using a variety of protocols
 - name: hashicorp/nomad
   type: http
   rosetta2: true
@@ -1227,6 +1286,25 @@ packages:
   description: A tool to build, deploy, and release any application on any platform
   files:
   - name: waypoint
+- type: github_release
+  repo_owner: hasura
+  repo_name: graphql-engine
+  asset: 'cli-hasura-{{.OS}}-{{.Arch}}'
+  format: raw
+  description: Hasura GraphQL Engine CLI
+  files:
+  - name: hasura
+- type: github_release
+  repo_owner: helm
+  repo_name: chart-releaser
+  asset: 'chart-releaser_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  description: Hosting Helm Charts via GitHub Pages and Releases
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  files:
+  - name: cr
 - name: helm/helm
   type: http
   url: 'https://get.helm.sh/helm-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz'
@@ -1362,6 +1440,18 @@ packages:
   - name: istioctl
   replacements:
     darwin: osx
+- type: github_release
+  repo_owner: itchyny
+  repo_name: gojq
+  asset: 'gojq_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  description: Pure Go implementation of jq
+  format: zip
+  format_overrides:
+  - goos: linux
+    format: tar.gz
+  files:
+  - name: gojq
+    src: 'gojq_{{.Version}}_{{.OS}}_{{.Arch}}/gojq'
 - type: github_release
   repo_owner: itchyny
   repo_name: mmv
