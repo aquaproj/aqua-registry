@@ -425,6 +425,14 @@ packages:
   asset: 'kail_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: kubernetes log viewer
 - type: github_release
+  repo_owner: buildpacks
+  repo_name: pack
+  asset: 'pack-{{.Version}}-{{.OS}}{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}-{{.Arch}}{{end}}.tgz'
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  description: CLI for building apps using Cloud Native Buildpacks
+  replacements:
+    darwin: macos
+- type: github_release
   repo_owner: BurntSushi
   repo_name: ripgrep
   asset: 'ripgrep-{{.Version}}-x86_64-{{.OS}}.{{.Format}}'
