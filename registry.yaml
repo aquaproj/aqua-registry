@@ -112,6 +112,14 @@ packages:
   format: raw
   asset: 'k3sup{{if eq .GOOS "darwin"}}-darwin{{else}}{{if ne .GOARCH "amd64"}}-{{.Arch}}{{end}}{{end}}'
 - type: github_release
+  repo_owner: amacneil
+  repo_name: dbmate
+  description: A lightweight, framework-agnostic database migration tool
+  format: raw
+  asset: 'dbmate-{{.OS}}-{{.Arch}}'
+  replacements:
+    darwin: macos
+- type: github_release
   repo_owner: anchore
   repo_name: grype
   asset: 'grype_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
@@ -366,6 +374,13 @@ packages:
     arm64: x86_64
 - type: github_release
   repo_owner: bcicen
+  repo_name: ctop
+  rosetta2: true
+  asset: 'ctop-{{.Version}}-{{.OS}}-{{.Arch}}'
+  description: Top-like interface for container metrics
+  format: raw
+- type: github_release
+  repo_owner: bcicen
   repo_name: slackcat
   rosetta2: true
   asset: 'slackcat-{{.Version}}-{{.OS}}-{{.Arch}}'
@@ -480,6 +495,15 @@ packages:
   replacements:
     darwin: macOS
 - type: github_release
+  repo_owner: cloudfoundry
+  repo_name: credhub-cli
+  asset: 'credhub-{{.OS}}-{{.Version}}.tgz'
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  rosetta2: true
+  description: CredHub CLI provides a command line interface to interact with CredHub servers
+  files:
+  - name: credhub
+- type: github_release
   repo_owner: cloudposse
   repo_name: atmos
   asset: 'atmos_{{trimV .Version}}_{{.OS}}_{{.Arch}}'
@@ -575,6 +599,14 @@ packages:
   format_overrides:
   - goos: windows
     format: zip
+- name: crossplane/crossplane
+  type: http
+  format: raw
+  url: 'https://releases.crossplane.io/stable/{{.Version}}/bin/{{.OS}}_{{.Arch}}/crank'
+  description: The Crossplane CLI extends kubectl with functionality to build, push, and install Crossplane packages
+  link: https://github.com/crossplane/crossplane
+  files:
+  - name: kubectl-crossplane
 - type: github_release
   repo_owner: cue-lang
   repo_name: cue
@@ -1046,6 +1078,27 @@ packages:
   format_overrides:
   - goos: windows
     format: zip
+- type: github_release
+  repo_owner: goodwithtech
+  repo_name: dockle
+  asset: 'dockle_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}'
+  description: Container Image Linter for Security, Helping build the Best-Practice Docker Image, Easy to start
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  replacements:
+    amd64: 64bit
+    386: 32bit
+    arm: ARM
+    arm64: ARM64
+    darwin: macOS
+    linux: Linux
+    windows: Windows
+    openbsd: OpenBSD
+    netbsd: NetBSD
+    freebsd: FreeBSD
+    dragonfly: DragonFlyBSD
 - type: github_release
   repo_owner: google
   repo_name: go-containerregistry
@@ -1687,6 +1740,11 @@ packages:
   files:
   - name: shellcheck
     src: shellcheck-{{.Version}}/shellcheck
+- type: github_release
+  repo_owner: Kong
+  repo_name: deck
+  asset: "deck_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+  description: 'decK: Configuration management and drift detection for Kong'
 - type: github_release
   repo_owner: ktr0731
   repo_name: evans
@@ -2593,6 +2651,11 @@ packages:
   files:
   - name: rekor-cli
 - type: github_release
+  repo_owner: six-ddc
+  repo_name: plow
+  asset: 'plow_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  description: A high-performance HTTP benchmarking tool with real-time web UI and terminal displaying
+- type: github_release
   repo_owner: slackhq
   repo_name: nebula
   asset: 'nebula-{{.OS}}{{if ne .GOOS "darwin"}}-{{.Arch}}{{end}}.{{.Format}}'
@@ -2841,6 +2904,12 @@ packages:
 # init: t
 - type: github_release
   repo_owner: talos-systems
+  repo_name: conform
+  asset: 'conform-{{.OS}}-{{.Arch}}'
+  description: Policy enforcement for your pipelines
+  format: raw
+- type: github_release
+  repo_owner: talos-systems
   repo_name: talos
   asset: 'talosctl-{{.OS}}-{{.Arch}}'
   description: Talos is a modern OS for Kubernetes. talosctl is a CLI for out-of-band management of Kubernetes nodes created by Talos
@@ -2965,6 +3034,19 @@ packages:
   files:
   - name: please
     src: please/please
+- type: github_release
+  repo_owner: tilt-dev
+  repo_name: ctlptl
+  description: Making local Kubernetes clusters fun and easy to set up
+  asset: 'ctlptl.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}'
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  replacements:
+    darwin: mac
+    386: i386
+    amd64: x86_64
 - type: github_release
   repo_owner: tilt-dev
   repo_name: tilt
