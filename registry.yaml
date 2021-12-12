@@ -1,4 +1,13 @@
 packages:
+# init: 9
+- type: github_release
+  repo_owner: 99designs
+  repo_name: aws-vault
+  description: A vault for securely storing and accessing AWS credentials in development environments
+  format: raw
+  asset: "aws-vault-{{.OS}}-{{.Arch}}"
+  supported_if: GOOS == "linux"
+
 # init: a
 - type: github_release
   repo_owner: abiosoft
@@ -290,6 +299,16 @@ packages:
   format_overrides:
   - goos: windows
     format: zip
+- type: github_release
+  repo_owner: Azure
+  repo_name: aks-engine
+  rosetta2: true
+  asset: 'aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz'
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  description: 'AKS Engine deploys and manages Kubernetes clusters in Azure'
+  files:
+  - name: aks-engine
+    src: 'aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}/aks-engine'
 
 # init: b
 - type: github_release
@@ -2559,6 +2578,18 @@ packages:
   replacements:
     darwin: osx
 - type: github_release
+  repo_owner: rebuy-de
+  repo_name: aws-nuke
+  asset: 'aws-nuke-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}'
+  description: Nuke a whole AWS account and delete all its resources
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  files:
+  - name: aws-nuke
+    src: 'aws-nuke-{{.Version}}-{{.OS}}-{{.Arch}}'
+- type: github_release
   repo_owner: replicatedhq
   repo_name: outdated
   asset: 'outdated_{{.OS}}_{{.Arch}}.{{.Format}}'
@@ -3177,6 +3208,13 @@ packages:
   - name: tinygo
     src: tinygo/bin/tinygo
 - type: github_release
+  repo_owner: tkuchiki
+  repo_name: alp
+  rosetta2: true
+  asset: 'alp_{{.OS}}_{{.Arch}}.zip'
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+  description: Access Log Profiler
+- type: github_release
   repo_owner: TomWright
   repo_name: dasel
   rosetta2: true
@@ -3184,6 +3222,11 @@ packages:
   format: raw
   link: https://daseldocs.tomwright.me/
   description: Select, put and delete data from JSON, TOML, YAML, XML and CSV files with a single tool. Supports conversion between formats and can be used as a Go package
+- type: github_release
+  repo_owner: Traackr
+  repo_name: binnacle
+  asset: 'binnacle-{{.OS}}_{{.Arch}}.tar.gz'
+  description: An opinionated tool to interact with Kubernetes' Helm
 - type: github_release
   repo_owner: Trendyol
   repo_name: kink
