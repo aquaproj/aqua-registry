@@ -425,6 +425,24 @@ packages:
   asset: 'kail_{{trimV .Version}}_{{.OS}}_amd64.tar.gz'
   description: kubernetes log viewer
 - type: github_release
+  repo_owner: bufbuild
+  repo_name: buf
+  asset: 'buf-{{.OS}}-{{.Arch}}.tar.gz'
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  description: A new way of working with Protocol Buffers
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    amd64: x86_64
+  files:
+  - name: buf
+    src: buf/bin/buf
+  - name: protoc-gen-buf-breaking
+    src: buf/bin/protoc-gen-buf-breaking
+  - name: protoc-gen-buf-lint
+    src: buf/bin/protoc-gen-buf-lint
+- type: github_release
   repo_owner: buildpacks
   repo_name: pack
   asset: 'pack-{{.Version}}-{{.OS}}{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}-{{.Arch}}{{end}}.tgz'
