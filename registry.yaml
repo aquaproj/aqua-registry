@@ -731,6 +731,14 @@ packages:
   link: https://earthly.dev/
   description: Repeatable builds
 - type: github_release
+  repo_owner: editorconfig-checker
+  repo_name: editorconfig-checker
+  asset: 'ec-{{.OS}}-{{.Arch}}.tar.gz'
+  description: A tool to verify that your files are in harmony with your .editorconfig
+  files:
+  - name: ec
+    src: 'bin/ec-{{.OS}}-{{.Arch}}'
+- type: github_release
   repo_owner: emirozer
   repo_name: kubectl-doctor
   rosetta2: true
@@ -913,6 +921,15 @@ packages:
   files:
   - name: gost
     src: 'gost-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}-{{trimV .Version}}'
+- type: github_release
+  repo_owner: git-chglog
+  repo_name: git-chglog
+  asset: 'git-chglog_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  description: CHANGELOG generator implemented in Go (Golang)
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
 - type: github_release
   repo_owner: github
   repo_name: hub
@@ -2012,6 +2029,20 @@ packages:
   files:
   - name: variant
 - type: github_release
+  repo_owner: muesli
+  repo_name: duf
+  asset: 'duf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  description: Disk Usage/Free Utility - a better 'df' alternative
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  replacements:
+    windows: Windows
+    darwin: Darwin
+    386: i386
+    amd64: x86_64
+- type: github_release
   repo_owner: mvdan
   repo_name: gofumpt
   asset: 'gofumpt_{{.Version}}_{{.OS}}_{{.Arch}}'
@@ -2089,6 +2120,27 @@ packages:
     src: 'node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npm'
   - name: npx
     src: 'node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npx'
+- type: github_release
+  repo_owner: nojima
+  repo_name: httpie-go
+  rosetta2: true
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+  asset: 'httpie-go_{{.OS}}_{{.Arch}}'
+  description: httpie-like HTTP client written in Go
+  files:
+  - name: ht
+- type: github_release
+  repo_owner: norwoodj
+  repo_name: helm-docs
+  rosetta2: true
+  asset: 'helm-docs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  description: A tool for automatically generating markdown documentation for helm charts
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
+    amd64: x86_64
 
 # init: o
 - type: github_release
@@ -2249,6 +2301,13 @@ packages:
   repo_name: kubectl-sudo
   description: Run kubernetes commands with the security privileges of another user
   path: bash/kubectl-sudo
+- type: github_release
+  repo_owner: Praqma
+  repo_name: helmsman
+  rosetta2: true
+  asset: 'helmsman_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+  description: Helmsman is a Helm Charts (k8s applications) as Code tool which allows you to automate the deployment/management of your Helm charts from version controlled code
 - type: github_release
   repo_owner: profclems
   repo_name: glab
@@ -2514,6 +2573,12 @@ packages:
   - name: fd
     src: 'fd-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}/fd'
 - type: github_release
+  repo_owner: Shopify
+  repo_name: ejson
+  format: raw
+  asset: '{{.OS}}-{{.Arch}}'
+  description: EJSON is a small library to manage encrypted secrets using asymmetric encryption
+- type: github_release
   repo_owner: sigstore
   repo_name: cosign
   format: raw
@@ -2546,6 +2611,14 @@ packages:
   description: Easy and simple Prometheus SLO (service level objectives) generator
   link: https://sloth.dev/
   format: raw
+- type: github_release
+  repo_owner: snyk
+  repo_name: driftctl
+  asset: 'driftctl_{{.OS}}_{{.Arch}}'
+  description: Detect, track and alert on infrastructure drift
+  format: raw
+  replacements:
+    armv6: arm
 - type: github_release
   repo_owner: Songmu
   repo_name: ecschedule
@@ -2991,6 +3064,17 @@ packages:
   format_overrides:
   - goos: windows
     format: zip
+- type: github_release
+  repo_owner: vmware-tanzu
+  repo_name: carvel-imgpkg
+  rosetta2: true
+  format: raw
+  asset: "imgpkg-{{.OS}}-{{.Arch}}"
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+  link: https://carvel.dev/imgpkg/
+  description: 'Store application configuration files in Docker/OCI registries'
+  files:
+  - name: imgpkg
 - type: github_release
   repo_owner: vmware-tanzu
   repo_name: carvel-kapp
