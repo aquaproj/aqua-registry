@@ -1144,6 +1144,18 @@ packages:
   - goos: darwin
     format: zip
 - type: github_release
+  repo_owner: gleam-lang
+  repo_name: gleam
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  asset: 'gleam-{{.Version}}-{{.OS}}{{if or (ne .GOOS "darwin") (ne .GOARCH "amd64")}}-{{.Arch}}{{end}}.{{.Format}}'
+  description: 'A friendly language for building type-safe, scalable systems!'
+  replacements:
+    darwin: macos
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+- type: github_release
   repo_owner: go-jira
   repo_name: jira
   rosetta2: true
