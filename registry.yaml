@@ -106,6 +106,20 @@ packages:
   - goos: windows
     format: zip
 - type: github_release
+  repo_owner: ajeetdsouza
+  repo_name: zoxide
+  description: A smarter cd command. Supports all major shells
+  asset: 'zoxide-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  replacements:
+    linux: unknown-linux-musl
+    darwin: apple-darwin
+    amd64: x86_64
+    arm64: aarch64
+- type: github_release
   repo_owner: alexellis
   repo_name: arkade
   description: Open Source Kubernetes Marketplace
@@ -509,6 +523,22 @@ packages:
   asset: 'kube-prompt_{{.Version}}_{{.OS}}_{{.Arch}}.zip'
   description: An interactive kubernetes client featuring auto-complete
 - type: github_release
+  repo_owner: casey
+  repo_name: just
+  rosetta2: true
+  asset: 'just-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+  description: Just a command runner
+  replacements:
+    darwin: apple-darwin
+    linux: unknown-linux-musl
+    amd64: x86_64
+    arm64: aarch64
+    windows: pc-windows-msvc
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+- type: github_release
   repo_owner: che-incubator
   repo_name: chectl
   rosetta2: true
@@ -864,12 +894,23 @@ packages:
   - name: docker-slim-sensor
     src: 'dist_{{.OS}}{{if ne .Arch "amd64"}}_{{if eq .GOOS "darwin"}}m1{{else}}{{.Arch}}{{end}}{{end}}/docker-slim-sensor'
 - type: github_release
-  repo_owner: hidetatz
-  repo_name: kubecolor
-  asset: 'kubecolor_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.tar.gz'
-  description: colorizes kubectl output
+  repo_owner: ducaale
+  repo_name: xh
+  rosetta2: true
+  asset: 'xh-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  description: Friendly and fast tool for sending HTTP requests
+  files:
+  - name: xh
+    src: 'xh-{{.Version}}-{{.Arch}}-{{.OS}}/xh'
   replacements:
+    darwin: apple-darwin
+    linux: unknown-linux-musl
     amd64: x86_64
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
 
 # init: e
 - type: github_release
@@ -1101,6 +1142,18 @@ packages:
   format: tar.gz
   format_overrides:
   - goos: darwin
+    format: zip
+- type: github_release
+  repo_owner: gleam-lang
+  repo_name: gleam
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  asset: 'gleam-{{.Version}}-{{.OS}}{{if or (ne .GOOS "darwin") (ne .GOARCH "amd64")}}-{{.Arch}}{{end}}.{{.Format}}'
+  description: 'A friendly language for building type-safe, scalable systems!'
+  replacements:
+    darwin: macos
+  format: tar.gz
+  format_overrides:
+  - goos: windows
     format: zip
 - type: github_release
   repo_owner: go-jira
@@ -1499,6 +1552,13 @@ packages:
   files:
   - name: helm
     src: "{{.OS}}-{{.Arch}}/helm"
+- type: github_release
+  repo_owner: hidetatz
+  repo_name: kubecolor
+  asset: 'kubecolor_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.tar.gz'
+  description: colorizes kubectl output
+  replacements:
+    amd64: x86_64
 - type: github_release
   repo_owner: homeport
   repo_name: dyff
@@ -2656,6 +2716,24 @@ packages:
     windows: Windows
     386: i386
     amd64: x86_64
+- type: github_release
+  repo_owner: rust-lang
+  repo_name: mdBook
+  rosetta2: true
+  asset: 'mdbook-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+  description: Create book from markdown files. Like Gitbook but implemented in Rust
+  replacements:
+    darwin: apple-darwin
+    linux: unknown-linux-gnu
+    windows: pc-windows-msvc
+    amd64: x86_64
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  files:
+  - name: mdbook
 
 # init: s
 - type: github_release
@@ -2678,6 +2756,12 @@ packages:
   files:
   - name: yamldiff
     src: 'yamldiff-v{{.Version}}-{{.OS}}-amd64'
+- type: github_release
+  repo_owner: sbstp
+  repo_name: kubie
+  asset: 'kubie-{{.OS}}-{{.Arch}}'
+  description: A more powerful alternative to kubectx and kubens
+  format: raw
 - type: github_release
   repo_owner: scaleway
   repo_name: scaleway-cli
@@ -2927,6 +3011,20 @@ packages:
   asset: 'kube-linter-{{.OS}}.tar.gz'
   link: https://docs.kubelinter.io/#/
   description: KubeLinter is a static analysis tool that checks Kubernetes YAML files and Helm charts to ensure the applications represented in them adhere to best practices.
+- type: github_release
+  repo_owner: starship
+  repo_name: starship
+  asset: 'starship-{{.Arch}}-{{.OS}}.{{.Format}}'
+  description: 'The minimal, blazing-fast, and infinitely customizable prompt for any shell!'
+  replacements:
+    darwin: apple-darwin
+    linux: unknown-linux-musl
+    arm64: aarch64
+    amd64: x86_64
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
 - type: github_release
   repo_owner: stedolan
   repo_name: jq
@@ -3295,6 +3393,14 @@ packages:
   - goos: windows
     format: zip
 - type: github_release
+  repo_owner: vi
+  repo_name: websocat
+  rosetta2: true
+  format: raw
+  asset: 'websocat_{{if eq .GOOS "darwin"}}mac{{else}}linux64{{end}}'
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+  description: 'Command-line client for WebSockets, like netcat (or curl) for ws:// with advanced socat-like functions'
+- type: github_release
   repo_owner: vmware-tanzu
   repo_name: carvel-imgpkg
   rosetta2: true
@@ -3371,6 +3477,24 @@ packages:
   format_overrides:
   - goos: windows
     format: zip
+- type: github_release
+  repo_owner: watchexec
+  repo_name: watchexec
+  asset: 'watchexec-{{trimPrefix "cli-v" .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+  description: Executes commands in response to file modifications
+  rosetta2: true
+  format: tar.xz
+  format_overrides:
+  - goos: windows
+    format: zip
+  replacements:
+    darwin: apple-darwin
+    amd64: x86_64
+    arm64: aarch64
+    linux: unknown-linux-musl
+  files:
+  - name: watchexec
+    src: 'watchexec-{{trimPrefix "cli-v" .Version}}-{{.Arch}}-{{.OS}}/watchexec'
 - type: github_release
   repo_owner: weaveworks
   repo_name: eksctl
