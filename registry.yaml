@@ -878,12 +878,23 @@ packages:
   - name: docker-slim-sensor
     src: 'dist_{{.OS}}{{if ne .Arch "amd64"}}_{{if eq .GOOS "darwin"}}m1{{else}}{{.Arch}}{{end}}{{end}}/docker-slim-sensor'
 - type: github_release
-  repo_owner: hidetatz
-  repo_name: kubecolor
-  asset: 'kubecolor_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.tar.gz'
-  description: colorizes kubectl output
+  repo_owner: ducaale
+  repo_name: xh
+  rosetta2: true
+  asset: 'xh-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  description: Friendly and fast tool for sending HTTP requests
+  files:
+  - name: xh
+    src: 'xh-{{.Version}}-{{.Arch}}-{{.OS}}/xh'
   replacements:
+    darwin: apple-darwin
+    linux: unknown-linux-musl
     amd64: x86_64
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
 
 # init: e
 - type: github_release
@@ -1513,6 +1524,13 @@ packages:
   files:
   - name: helm
     src: "{{.OS}}-{{.Arch}}/helm"
+- type: github_release
+  repo_owner: hidetatz
+  repo_name: kubecolor
+  asset: 'kubecolor_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.tar.gz'
+  description: colorizes kubectl output
+  replacements:
+    amd64: x86_64
 - type: github_release
   repo_owner: homeport
   repo_name: dyff
