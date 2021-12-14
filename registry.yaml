@@ -166,6 +166,14 @@ packages:
     format: zip
 - type: github_release
   repo_owner: antonmedv
+  repo_name: llama
+  rosetta2: true
+  format: raw
+  asset: 'llama_{{.OS}}_{{.Arch}}'
+  description: Terminal file manager
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+- type: github_release
+  repo_owner: antonmedv
   repo_name: fx
   asset: 'fx-{{.OS}}.zip'
   description: Command-line tool and terminal JSON viewer
@@ -913,6 +921,19 @@ packages:
   format_overrides:
   - goos: windows
     format: zip
+- type: github_release
+  repo_owner: Dreamacro
+  repo_name: clash
+  asset: 'clash-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}'
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  description: A rule-based tunnel in Go
+  format: gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  files:
+  - name: clash
+    src: 'clash-{{.OS}}-{{.Arch}}-{{.Version}}'
 - type: github_release
   repo_owner: ducaale
   repo_name: xh
@@ -2858,6 +2879,14 @@ packages:
   replacements:
     amd64: x86_64
 - type: github_release
+  repo_owner: Schniz
+  repo_name: fnm
+  rosetta2: true
+  asset: 'fnm-{{if eq .GOOS "linux"}}{{if eq .GOARCH "amd64"}}linux{{else}}{{.Arch}}{{end}}{{else}}{{.OS}}{{end}}.zip'
+  description: Fast and simple Node.js version manager, built in Rust
+  replacements:
+    darwin: macos
+- type: github_release
   repo_owner: schollz
   repo_name: croc
   asset: 'croc_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}'
@@ -3603,6 +3632,14 @@ packages:
   asset: 'eksctl_{{title .OS}}_{{.Arch}}.tar.gz'
   link: https://eksctl.io/
   description: The official CLI for Amazon EKS
+- type: github_release
+  repo_owner: windvalley
+  repo_name: gossh
+  format: raw
+  rosetta2: true
+  asset: 'gossh-{{.Version}}-{{.OS}}-{{.Arch}}'
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+  description: Gossh is a high-performance and high-concurrency ssh tool
 - type: github_release
   repo_owner: wtfutil
   repo_name: wtf
