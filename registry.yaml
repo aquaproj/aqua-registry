@@ -3170,12 +3170,16 @@ packages:
 - type: github_release
   repo_owner: stern
   repo_name: stern
-  rosetta2: true
   asset: 'stern_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   description: Multi pod and container log tailing for Kubernetes -- Friendly fork of https://github.com/wercker/stern
-  files:
-  - name: stern
-    src: 'stern_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}/stern'
+  version_constraint: 'semver(">= 1.21.0")'
+  version_overrides:
+  - version_constraint: 'semver("< 1.21.0")'
+    rosetta2: true
+    files:
+    - name: stern
+      src: 'stern_{{trimV .Version}}_{{.OS}}_{{.Arch}}/stern'
+
 - type: github_release
   repo_owner: suzuki-shunsuke
   repo_name: akoi
