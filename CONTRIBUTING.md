@@ -26,21 +26,8 @@ Please remove spaces in the template `{{ ` and ` }}`.
 
 ## How to test in your localhost
 
-It takes a long time to install all packages.
-So we recommend writing the configuration file `aqua.yaml` and specify only packages you add or modify.
-
-e.g.
-
-```yaml
-registries:
-- name: standard
-  type: local
-  path: registry.yaml
-
-packages:
-- name: accurics/terrascan@v1.12.0
-```
-
 ```console
+$ cp aqua.yaml.tmpl aqua.yaml
+$ vi aqua.yaml # Add new packages
 $ aqua i --test
 ```
