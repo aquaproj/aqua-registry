@@ -1465,6 +1465,21 @@ packages:
   - version_constraint: 'semver("< 0.182.0")'
     asset: 'goreleaser_{{title .OS}}_{{.Arch}}.tar.gz'
 - type: github_release
+  repo_owner: goreleaser
+  repo_name: nfpm
+  description: nFPM is Not FPM - a simple deb, rpm and apk packager written in Go
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
+    amd64: x86_64
+  format: tar.gz
+  format_overrides:
+  - goos: windows
+    format: zip
+  asset: 'nfpm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+- type: github_release
   repo_owner: gotestyourself
   repo_name: gotestsum
   asset: 'gotestsum_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
