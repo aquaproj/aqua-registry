@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         runs-on: ["ubuntu-latest", "macos-11"]
-    runs-on:  ${{ matrix.runs-on }}
+    runs-on: ${{ matrix.runs-on }}
     steps:
       - uses: actions/checkout@v2
 
@@ -32,13 +32,8 @@ jobs:
       - uses: aquaproj/aqua-installer@v0.4.0
         with:
           aqua_version: v0.8.10
-      - name: Add ~/.aqua/bin to PATH
-        run: echo "$HOME/.aqua/bin" >> $GITHUB_PATH
-
-      - name: install ci-info
-        run: aqua -c aqua-ci.yaml i --test
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AQUA_CONFIG: aqua-ci.yaml
 
       - name: run ci-info and update environment variables
         run: ci-info run | sed -E "s/^export //" >> $GITHUB_ENV
@@ -58,5 +53,3 @@ jobs:
           fi
           echo "[INFO] test all packages" >&2
           aqua -c aqua-all.yaml i --test
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
