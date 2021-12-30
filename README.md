@@ -30,16 +30,28 @@ registries:
 
 `aqua g` launches the interactive UI and you can search the package by fuzzy search.
 
-```
-  CircleCI-Public/circleci-cli (standard)
-  codeclimate/test-reporter (standard)
-  int128/ghcp (standard)
-  kubectl (standard)
-  peco/peco (standard)
-  tfmigrator/cli (standard)
-> cli/cli (standard)
-  41/78
-> c
+```console
+  newrelic/newrelic-cli (standard) (newrelic)                   ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
+  pivotal-cf/pivnet-cli (standard) (pivnet)                     │  cli/cli
+  scaleway/scaleway-cli (standard) (scw)                        │
+  tfmigrator/cli (standard) (tfmigrator)                        │  https://cli.github.com/
+  aws/copilot-cli (standard) (copilot)                          │  GitHub’cs official command line tool
+  codeclimate/test-reporter (standard)                          │
+  create-go-app/cli (standard) (cgapp)                          │
+  harness/drone-cli (standard) (drone)                          │
+  sigstore/rekor (standard) (rekor-cli)                         │
+  getsentry/sentry-cli (standard)                               │
+  grafana/loki/logcli (standard)                                │
+  knative/client (standard) (kn)                                │
+  rancher/cli (standard) (rancher)                              │
+  tektoncd/cli (standard) (tkn)                                 │
+  civo/cli (standard) (civo)                                    │
+  dapr/cli (standard) (dapr)                                    │
+  mongodb/mongocli (standard)                                   │
+  openfaas/faas-cli (standard)                                  │
+> cli/cli (standard) (gh)                                       │
+  50/394                                                        │
+> cli                                                           └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
 ```
 
 ## Request for new packages
