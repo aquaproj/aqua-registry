@@ -10,7 +10,7 @@ Packages are sorted in the dictionary order of the package name.
 
 ## Style Guide
 
-Please remove spaces in the template `{{ ` and ` }}`.
+### Remove spaces in the template `{{ ` and ` }}`
 
 :thumbsup:
 
@@ -22,6 +22,20 @@ Please remove spaces in the template `{{ ` and ` }}`.
 
 ```yaml
   asset: 'tfcmt_{{ .OS }}_{{ .Arch }}.tar.gz'
+```
+
+### Remove a period from the end of the description
+
+:thumbsup:
+
+```yaml
+description: A command-line tool that makes git easier to use with GitHub
+```
+
+:thumbsdown:
+
+```yaml
+description: A command-line tool that makes git easier to use with GitHub.
 ```
 
 ## How to test in your localhost
