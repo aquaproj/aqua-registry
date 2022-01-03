@@ -10,6 +10,10 @@ Packages are sorted in the dictionary order of the package name.
 
 ## Style Guide
 
+* Remove spaces in the template `{{ ` and ` }}`
+* Remove a period from the end of the description
+* `link` is unneeded if `repo_owner` and `repo_name` are set
+
 ### Remove spaces in the template `{{ ` and ` }}`
 
 :thumbsup:
