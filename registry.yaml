@@ -2209,7 +2209,7 @@ packages:
 - type: github_release
   repo_owner: lima-vm
   repo_name: lima
-  asset: 'lima-{{trimV .Version}}-{{title .OS}}-{{.Arch}}.tar.gz'
+  asset: 'lima-{{trimV .Version}}-{{title .OS}}-{{if and (eq .GOOS "linux") (eq .GOARCH "arm64")}}aarch64{{else}}{{.Arch}}{{end}}.tar.gz'
   description: 'Linux virtual machines, on macOS (aka "Linux-on-Mac", "macOS subsystem for Linux", "containerd for Mac", unofficially)'
   files:
   - name: lima
@@ -2218,6 +2218,10 @@ packages:
     src: bin/limactl
   replacements:
     amd64: x86_64
+  version_constraint: 'semver("> 0.1.0")'
+  version_overrides:
+  - version_constraint: 'semver("<= 0.1.0")'
+    supported_if: GOOS == "darwin"
 - type: github_release
   repo_owner: loft-sh
   repo_name: devspace
