@@ -2804,9 +2804,7 @@ packages:
   repo_owner: replicatedhq
   repo_name: kots
   description: KOTS provides the framework, tools and integrations that enable the delivery and management of 3rd-party Kubernetes applications, a.k.a. Kubernetes Off-The-Shelf (KOTS) Software
-  rosetta2: true
-  asset: 'kots_{{.OS}}_{{.Arch}}.tar.gz'
-  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+  asset: 'kots_{{.OS}}_{{if eq .GOOS "darwin"}}all{{else}}{{.Arch}}{{end}}.tar.gz'
   files:
   - name: kubectl-kots
     src: kots
