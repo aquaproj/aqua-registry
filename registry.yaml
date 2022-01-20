@@ -174,7 +174,6 @@ packages:
 - type: github_release
   repo_owner: anchore
   repo_name: syft
-  asset: 'syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: CLI tool and library for generating a Software Bill of Materials from container images and filesystems
   format: tar.gz
   format_overrides:
@@ -182,6 +181,13 @@ packages:
     format: zip
   - goos: windows
     format: zip
+  asset: 'syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  version_constraint: 'semver("!= 0.36.0")'
+  version_overrides:
+  - version_constraint: 'semver("= 0.36.0")'
+    replacements:
+      windows: Windows
+      amd64: x86_64
 - type: github_release
   repo_owner: antonmedv
   repo_name: llama
