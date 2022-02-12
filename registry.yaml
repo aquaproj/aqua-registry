@@ -3071,7 +3071,7 @@ packages:
   repo_owner: sharkdp
   repo_name: bat
   rosetta2: true
-  asset: 'bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+  asset: 'bat-{{.Version}}-{{.Arch}}-{{if eq .GOOS "linux"}}{{if eq .GOARCH "amd64"}}unknown-linux-musl{{else}}unknown-linux-gnu{{end}}{{else}}{{.OS}}{{end}}.{{.Format}}'
   description: 'A cat(1) clone with wings.'
   format: tar.gz
   format_overrides:
@@ -3081,17 +3081,16 @@ packages:
     amd64: x86_64
     arm64: aarch64
     darwin: apple-darwin
-    linux: unknown-linux-gnu
     windows: pc-windows-msvc
     386: i686
   files:
   - name: bat
-    src: 'bat-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}/bat'
+    src: 'bat-{{.Version}}-{{.Arch}}-{{if eq .GOOS "linux"}}{{if eq .GOARCH "amd64"}}unknown-linux-musl{{else}}unknown-linux-gnu{{end}}{{else}}{{.OS}}{{end}}/bat'
 - type: github_release
   repo_owner: sharkdp
   repo_name: fd
   rosetta2: true
-  asset: 'fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+  asset: 'fd-{{.Version}}-{{.Arch}}-{{if eq .GOOS "linux"}}{{if eq .GOARCH "amd64"}}unknown-linux-musl{{else}}unknown-linux-gnu{{end}}{{else}}{{.OS}}{{end}}.{{.Format}}'
   description: "A simple, fast and user-friendly alternative to 'find'"
   format: tar.gz
   format_overrides:
@@ -3101,12 +3100,11 @@ packages:
     amd64: x86_64
     arm64: aarch64
     darwin: apple-darwin
-    linux: unknown-linux-gnu
     windows: pc-windows-msvc
     386: i686
   files:
   - name: fd
-    src: 'fd-{{.Version}}-{{if eq .GOOS "darwin"}}x86_64{{else}}{{.Arch}}{{end}}-{{.OS}}/fd'
+    src: 'fd-{{.Version}}-{{.Arch}}-{{if eq .GOOS "linux"}}{{if eq .GOARCH "amd64"}}unknown-linux-musl{{else}}unknown-linux-gnu{{end}}{{else}}{{.OS}}{{end}}/fd'
 - type: github_archive
   repo_owner: shellspec
   repo_name: shellspec
