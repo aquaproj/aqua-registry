@@ -310,6 +310,18 @@ packages:
   - name: argo
     src: 'argo-{{.OS}}-{{.Arch}}'
 - type: github_release
+  repo_owner: aristocratos
+  repo_name: btop
+  asset: 'btop-{{if and (eq .GOOS "linux")}}{{if (eq .GOARCH "arm64")}}aarch64{{else if (eq .GOARCH "amd64")}}x86_64{{end}}{{else}}{{.Arch}}{{end}}-{{.OS}}.tbz'
+  format: tar.bz2
+  description: 'A monitor of resources'
+  replacements:
+    linux: linux-musl
+    darwin: macos-monterey
+  files:
+  - name: btop
+    src: bin/btop
+- type: github_release
   repo_owner: armosec
   repo_name: kubescape
   asset: 'kubescape-{{.OS}}-latest'
