@@ -81,7 +81,7 @@ $ export AQUA_GLOBAL_CONFIG="$PWD/aqua-all.yaml:$AQUA_GLOBAL_CONFIG"
 $ aqua i -l
 ```
 
-Set up cron to checkout the repository and run `aqua i -l` temporarily, you can update packages automatically.
+Set up cron to checkout the repository and run `aqua i -l` periodically, you can update packages automatically.
 
 If you want to change some packages' version, please override them by the other configuration file.
 
