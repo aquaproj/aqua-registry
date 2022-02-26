@@ -72,16 +72,15 @@ You can get over 400 packages in your laptop! By Lazy Install, packages aren't i
 
 1. Check out this repository
 1. Add [aqua-all.yaml](aqua-all.yaml) to the environment variable `AQUA_GLOBAL_CONFIG`
-1. Run `aqua i -l`
+1. Run `aqua i -l -a`
 
 ```console
 $ git clone https://github.com/aquaproj/aqua-registry
-$ cd aqua-registry
-$ export AQUA_GLOBAL_CONFIG="$PWD/aqua-all.yaml:$AQUA_GLOBAL_CONFIG"
-$ aqua i -l
+$ export AQUA_GLOBAL_CONFIG="$PWD/aqua-registry/aqua-all.yaml:$AQUA_GLOBAL_CONFIG"
+$ aqua i -l -a
 ```
 
-Set up cron to checkout the repository and run `aqua i -l` periodically, you can update packages automatically.
+Set up cron to checkout the repository and run `aqua i -l -a` periodically, you can update packages automatically.
 
 If you want to change some packages' version, please override them by the other configuration file.
 
