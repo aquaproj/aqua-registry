@@ -995,6 +995,18 @@ packages:
   - version_constraint: 'semver("< 0.5.0")'
     asset: 'ddosify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
 - type: github_release
+  repo_owner: denoland
+  repo_name: deno
+  asset: 'deno-{{.Arch}}-{{.OS}}.zip'
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+  description: A modern runtime for JavaScript and TypeScript
+  replacements:
+    darwin: apple-darwin
+    linux: unknown-linux-gnu
+    windows: pc-windows-msvc
+    arm64: aarch64
+    amd64: x86_64
+- type: github_release
   repo_owner: derailed
   repo_name: k9s
   asset: 'k9s_{{.OS}}_{{.Arch}}.tar.gz'
@@ -2424,6 +2436,14 @@ packages:
     linux: unknown-linux-musl
   files:
   - name: sk
+- type: github_release
+  repo_owner: LukeChannings
+  repo_name: deno-arm64
+  asset: 'deno-linux-arm64.zip'
+  supported_if: GOOS == "linux" and GOARCH == "arm64"
+  description: A Docker image for Deno
+  files:
+    - name: deno
 
 # init: m
 - type: github_release
