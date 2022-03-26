@@ -92,10 +92,6 @@ $ export AQUA_GLOBAL_CONFIG="<Other aqua.yaml>:$PWD/aqua-all.yaml:$AQUA_GLOBAL_C
 
 Please see [Releases](https://github.com/aquaproj/aqua-registry/releases).
 
-## Versioning Policy
-
-We are Conforming [suzuki-shunsuke/versioning-policy v0.1.0](https://github.com/suzuki-shunsuke/versioning-policy/blob/v0.1.0/POLICY.md), which is compatible with [Semantic Versioning 2.0.0](https://semver.org/).
-
 ## License
 
 [MIT](LICENSE)
