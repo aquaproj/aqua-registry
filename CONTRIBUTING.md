@@ -5,8 +5,7 @@ About how to write [registry.yaml](registry.yaml), please see [Registry Configur
 ## Add the packages
 
 Please update [registry.yaml](registry.yaml) and add packages in `pkgs` for testing.
-
-Packages are sorted in the dictionary order of the package name.
+e.g. [pkgs/cli/cli/pkg.yaml](pkgs/cli/cli/pkg.yaml)
 
 ## Style Guide
 
