@@ -43,11 +43,6 @@ jobs:
 
       - name: install packages for testing
         run: |
-          if grep -E "target:all" "$CI_INFO_TEMP_DIR/labels.txt" > /dev/null 2>&1; then
-            echo "[INFO] test all packages" >&2
-            aqua -c aqua-all.yaml i --test
-            exit 0
-          fi
           empty=true
           if grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" > /dev/null 2>&1; then
             grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" | sed "s|^target:\(.*\)|- import: pkgs/\1/pkg.yaml|" >> aqua-ci.yaml
@@ -57,12 +52,12 @@ jobs:
             grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" | sed "s/^/- import: /" >> aqua-ci.yaml
             empty=false
           fi
-          if [ "$empty" = "false" ]; then
-            echo "[INFO] aqua-ci.yaml" >&2
-            cat aqua-ci.yaml >&2
-            echo "[INFO] + aqua -c aqua-ci.yaml i --test" >&2
-            aqua -c aqua-ci.yaml i --test
-            exit 0
+          if [ "$empty" = "true" ]; then
+            echo "[INFO] Add cli/cli for test" >&2
+            echo "- import: pkgs/cli/cli/pkg.yaml" >> aqua-ci.yaml
           fi
-          echo "[INFO] test all packages" >&2
-          aqua -c aqua-all.yaml i --test
+          echo "[INFO] aqua-ci.yaml" >&2
+          cat aqua-ci.yaml >&2
+          echo "[INFO] + aqua -c aqua-ci.yaml i --test" >&2
+          aqua -c aqua-ci.yaml i --test
+          exit 0
