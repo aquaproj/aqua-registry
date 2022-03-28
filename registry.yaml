@@ -15,11 +15,15 @@ packages:
   description: Docker (and Kubernetes) on MacOS with minimal setup
   format: raw
   version_constraint: 'semver("> 0.3.0")'
-  asset: 'colima-{{.OS}}-{{if and (eq .GOOS "linux") (eq .GOARCH "arm64")}}aarch64{{else}}{{.Arch}}{{end}}'
+  asset: 'colima-{{.OS}}-{{.Arch}}'
   replacements:
     darwin: Darwin
     linux: Linux
     amd64: x86_64
+  replacements_overrides:
+  - goos: linux
+    replacements:
+      arm64: aarch64
   version_overrides:
   - version_constraint: 'semver("< 0.2.0")'
     type: github_content
@@ -316,13 +320,17 @@ packages:
 - type: github_release
   repo_owner: aristocratos
   repo_name: btop
-  asset: 'btop-{{if and (eq .GOOS "linux") (eq .GOARCH "arm64")}}aarch64{{else}}{{.Arch}}{{end}}-{{.OS}}.tbz'
+  asset: 'btop-{{.Arch}}-{{.OS}}.tbz'
   format: tar.bz2
   description: 'A monitor of resources'
   replacements:
     linux: linux-musl
     darwin: macos-monterey
     amd64: x86_64
+  replacements_overrides:
+  - goos: linux
+    replacements:
+      arm64: aarch64
   files:
   - name: btop
     src: bin/btop
@@ -1092,11 +1100,17 @@ packages:
   repo_owner: dotenv-linter
   repo_name: dotenv-linter
   rosetta2: true
-  asset: 'dotenv-linter-{{.OS}}-{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}arm64{{else}}{{if and (eq .GOOS "windows") (eq .GOARCH "amd64")}}x64{{else}}{{.Arch}}{{end}}{{end}}.{{.Format}}'
+  asset: 'dotenv-linter-{{.OS}}-{{.Arch}}.{{.Format}}'
   description: Lightning-fast linter for .env files. Written in Rust
   replacements:
     amd64: x86_64
-    arm64: aarch64
+  replacements_overrides:
+  - goos: linux
+    replacements:
+      arm64: aarch64
+  - goos: windows
+    replacements:
+      amd64: x64
   format: tar.gz
   format_overrides:
   - goos: windows
@@ -2474,7 +2488,7 @@ packages:
 - type: github_release
   repo_owner: lima-vm
   repo_name: lima
-  asset: 'lima-{{trimV .Version}}-{{title .OS}}-{{if and (eq .GOOS "linux") (eq .GOARCH "arm64")}}aarch64{{else}}{{.Arch}}{{end}}.tar.gz'
+  asset: 'lima-{{trimV .Version}}-{{title .OS}}-{{.Arch}}.tar.gz'
   description: 'Linux virtual machines, on macOS (aka "Linux-on-Mac", "macOS subsystem for Linux", "containerd for Mac", unofficially)'
   files:
   - name: lima
@@ -2483,6 +2497,10 @@ packages:
     src: bin/limactl
   replacements:
     amd64: x86_64
+  replacements_overrides:
+  - goos: linux
+    replacements:
+      arm64: aarch64
   version_constraint: 'semver("> 0.1.0")'
   version_overrides:
   - version_constraint: 'semver("<= 0.1.0")'
@@ -3316,7 +3334,7 @@ packages:
   repo_owner: sharkdp
   repo_name: bat
   rosetta2: true
-  asset: 'bat-{{.Version}}-{{.Arch}}-{{if eq .GOOS "linux"}}{{if eq .GOARCH "amd64"}}unknown-linux-musl{{else}}unknown-linux-gnu{{end}}{{else}}{{.OS}}{{end}}.{{.Format}}'
+  asset: 'bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
   description: 'A cat(1) clone with wings.'
   format: tar.gz
   format_overrides:
@@ -3327,15 +3345,20 @@ packages:
     arm64: aarch64
     darwin: apple-darwin
     windows: pc-windows-msvc
+    linux: unknown-linux-gnu
     386: i686
+  replacements_overrides:
+  - goarch: amd64
+    replacements:
+      linux: unknown-linux-musl
   files:
   - name: bat
-    src: 'bat-{{.Version}}-{{.Arch}}-{{if eq .GOOS "linux"}}{{if eq .GOARCH "amd64"}}unknown-linux-musl{{else}}unknown-linux-gnu{{end}}{{else}}{{.OS}}{{end}}/bat'
+    src: 'bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat'
 - type: github_release
   repo_owner: sharkdp
   repo_name: fd
   rosetta2: true
-  asset: 'fd-{{.Version}}-{{.Arch}}-{{if eq .GOOS "linux"}}{{if eq .GOARCH "amd64"}}unknown-linux-musl{{else}}unknown-linux-gnu{{end}}{{else}}{{.OS}}{{end}}.{{.Format}}'
+  asset: 'fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
   description: "A simple, fast and user-friendly alternative to 'find'"
   format: tar.gz
   format_overrides:
@@ -3347,9 +3370,14 @@ packages:
     darwin: apple-darwin
     windows: pc-windows-msvc
     386: i686
+    linux: unknown-linux-gnu
+  replacements_overrides:
+  - goarch: amd64
+    replacements:
+      linux: unknown-linux-musl
   files:
   - name: fd
-    src: 'fd-{{.Version}}-{{.Arch}}-{{if eq .GOOS "linux"}}{{if eq .GOARCH "amd64"}}unknown-linux-musl{{else}}unknown-linux-gnu{{end}}{{else}}{{.OS}}{{end}}/fd'
+    src: 'fd-{{.Version}}-{{.Arch}}-{{.OS}}/fd'
 - type: github_archive
   repo_owner: shellspec
   repo_name: shellspec
