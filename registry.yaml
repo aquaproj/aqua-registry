@@ -774,7 +774,7 @@ packages:
   description: GitHub’s official command line tool
   files:
   - name: gh
-    src: 'gh_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}/bin/gh'
+    src: 'gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/gh'
   replacements:
     darwin: macOS
 - type: github_release
@@ -1292,7 +1292,7 @@ packages:
   description: GoFish is a cross-platform systems package manager, bringing the ease of use of Homebrew to Linux and Windows
   files:
   - name: gofish
-    src: '{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}/gofish'
+    src: '{{.OS}}-{{.Arch}}/gofish'
 - type: github_release
   repo_owner: fission
   repo_name: fission
@@ -1400,11 +1400,12 @@ packages:
   repo_owner: ginuerzh
   repo_name: gost
   rosetta2: true
-  asset: 'gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}.gz'
   description: GO Simple Tunnel - a simple tunnel written in golang
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  asset: 'gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}.gz'
   files:
   - name: gost
-    src: 'gost-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}-{{trimV .Version}}'
+    src: 'gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}'
 - type: github_release
   repo_owner: git-chglog
   repo_name: git-chglog
@@ -1426,7 +1427,7 @@ packages:
     format: zip
   files:
   - name: hub
-    src: 'hub-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}-{{trimV .Version}}/bin/hub'
+    src: 'hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}/bin/hub'
 - type: github_release
   repo_owner: git-lfs
   repo_name: git-lfs
@@ -1637,7 +1638,7 @@ packages:
   description: validate the structure of your container images
   files:
   - name: container-structure-test
-    src: 'container-structure-test-{{.OS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.Arch}}{{end}}'
+    src: 'container-structure-test-{{.OS}}-{{.Arch}}'
 - type: github_release
   repo_owner: GoogleContainerTools
   repo_name: kpt
@@ -3964,9 +3965,11 @@ packages:
 - type: github_release
   repo_owner: vi
   repo_name: websocat
-  rosetta2: true
   format: raw
-  asset: 'websocat_{{if eq .GOOS "darwin"}}mac{{else}}linux64{{end}}'
+  asset: 'websocat_{{.OS}}'
+  replacements:
+    darwin: mac
+    linux: linux64
   supported_if: not (GOOS == "linux" and GOARCH == "arm64")
   description: 'Command-line client for WebSockets, like netcat (or curl) for ws:// with advanced socat-like functions'
 - type: github_release
