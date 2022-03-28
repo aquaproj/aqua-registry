@@ -20,7 +20,7 @@ packages:
     darwin: Darwin
     linux: Linux
     amd64: x86_64
-  replacements_overrides:
+  overrides:
   - goos: linux
     replacements:
       arm64: aarch64
@@ -146,7 +146,16 @@ packages:
   repo_name: arkade
   description: Open Source Kubernetes Marketplace
   format: raw
-  asset: 'arkade{{if eq .GOOS "darwin"}}-darwin{{else}}{{if ne .GOARCH "amd64"}}-{{.Arch}}{{end}}{{end}}'
+  asset: arkade
+  overrides:
+  - goos: linux
+    goarch: arm64
+    asset: 'arkade-{{.Arch}}'
+  - goos: darwin
+    goarch: amd64
+    asset: 'arkade-darwin'
+  - goos: darwin
+    asset: 'arkade-darwin-{{.Arch}}'
   files:
   - name: ark
   - name: arkade
@@ -155,7 +164,12 @@ packages:
   repo_name: k3sup
   description: 'bootstrap Kubernetes with k3s over SSH < 1 min'
   format: raw
-  asset: 'k3sup{{if eq .GOOS "darwin"}}-darwin{{else}}{{if ne .GOARCH "amd64"}}-{{.Arch}}{{end}}{{end}}'
+  asset: 'k3sup-{{.Arch}}'
+  overrides:
+  - goos: darwin
+    asset: k3sup-darwin
+  - goarch: amd64
+    asset: k3sup
 - type: github_release
   repo_owner: amacneil
   repo_name: dbmate
@@ -327,7 +341,7 @@ packages:
     linux: linux-musl
     darwin: macos-monterey
     amd64: x86_64
-  replacements_overrides:
+  overrides:
   - goos: linux
     replacements:
       arm64: aarch64
@@ -651,11 +665,15 @@ packages:
 - type: github_release
   repo_owner: buildpacks
   repo_name: pack
-  asset: 'pack-{{.Version}}-{{.OS}}{{if and (eq .GOOS "darwin") (eq .GOARCH "arm64")}}-{{.Arch}}{{end}}.tgz'
   supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
   description: CLI for building apps using Cloud Native Buildpacks
   replacements:
     darwin: macos
+  asset: 'pack-{{.Version}}-{{.OS}}.tgz'
+  overrides:
+  - goos: darwin
+    goarch: arm64
+    asset: 'pack-{{.Version}}-{{.OS}}-{{.Arch}}.tgz'
 - type: github_release
   repo_owner: BurntSushi
   repo_name: ripgrep
@@ -808,8 +826,11 @@ packages:
   repo_owner: cloudflare
   repo_name: cloudflared
   rosetta2: true
-  asset: 'cloudflared-{{.OS}}-{{.Arch}}{{if eq .GOOS "darwin"}}.tgz{{end}}'
   description: cloudflared connects your machine or user identity to Cloudflare's global network
+  asset: 'cloudflared-{{.OS}}-{{.Arch}}'
+  overrides:
+  - goos: darwin
+    asset: 'cloudflared-{{.OS}}-{{.Arch}}.tgz'
 - type: github_release
   repo_owner: cloudfoundry
   repo_name: bosh-cli
@@ -1008,13 +1029,16 @@ packages:
   format_overrides:
   - goos: windows
     format: zip
-  asset: 'ddosify_{{trimV .Version}}_{{title .OS}}_{{if eq .GOOS "darwin"}}all{{else}}{{.Arch}}{{end}}.{{.Format}}'
+  asset: 'ddosify_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.{{.Format}}'
   version_constraint: 'semver(">= 0.5.0")'
+  overrides:
+  - goos: darwin
+    asset: 'ddosify_{{trimV .Version}}_{{title .OS}}_all.{{.Format}}'
   version_overrides:
   # https://github.com/goreleaser/goreleaser/pull/2572
   # macOS Universal binaries
   - version_constraint: 'semver("< 0.5.0")'
-    asset: 'ddosify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+    overrides: []
 - type: github_release
   repo_owner: denoland
   repo_name: deno
@@ -1082,39 +1106,54 @@ packages:
 - type: http
   repo_owner: docker-slim
   repo_name: docker-slim
-  # https://downloads.dockerslim.com/releases/1.37.2/dist_mac_m1.zip
-  url: 'https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}{{if ne .Arch "amd64"}}_{{if eq .GOOS "darwin"}}m1{{else}}{{.Arch}}{{end}}{{end}}.{{.Format}}'
+  description: "DockerSlim (docker-slim): Don't change anything in your Docker container image and minify it by up to 30x (and for compiled languages even more) making it secure too! (free and open source)"
+  format: tar.gz
   replacements:
     darwin: mac
-  format: tar.gz
+  # https://downloads.dockerslim.com/releases/1.37.2/dist_mac_m1.zip
+  url: 'https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_{{.Arch}}.{{.Format}}'
+  files:
+  - name: docker-slim
+    src: 'dist_{{.OS}}_{{.Arch}}/docker-slim'
+  - name: docker-slim-sensor
+    src: 'dist_{{.OS}}_{{.Arch}}/docker-slim-sensor'
+  overrides:
+  - goarch: amd64
+    url: 'https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}.{{.Format}}'
+    files:
+    - name: docker-slim
+      src: 'dist_{{.OS}}/docker-slim'
+    - name: docker-slim-sensor
+      src: 'dist_{{.OS}}/docker-slim-sensor'
+
+  - goos: darwin
+    url: 'https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_m1.{{.Format}}'
+    files:
+    - name: docker-slim
+      src: 'dist_{{.OS}}_m1/docker-slim'
+    - name: docker-slim-sensor
+      src: 'dist_{{.OS}}_m1/docker-slim-sensor'
+
   format_overrides:
   - goos: darwin
     format: zip
-  description: "DockerSlim (docker-slim): Don't change anything in your Docker container image and minify it by up to 30x (and for compiled languages even more) making it secure too! (free and open source)"
-  files:
-  - name: docker-slim
-    src: 'dist_{{.OS}}{{if ne .Arch "amd64"}}_{{if eq .GOOS "darwin"}}m1{{else}}{{.Arch}}{{end}}{{end}}/docker-slim'
-  - name: docker-slim-sensor
-    src: 'dist_{{.OS}}{{if ne .Arch "amd64"}}_{{if eq .GOOS "darwin"}}m1{{else}}{{.Arch}}{{end}}{{end}}/docker-slim-sensor'
 - type: github_release
   repo_owner: dotenv-linter
   repo_name: dotenv-linter
   rosetta2: true
   asset: 'dotenv-linter-{{.OS}}-{{.Arch}}.{{.Format}}'
   description: Lightning-fast linter for .env files. Written in Rust
+  format: tar.gz
   replacements:
     amd64: x86_64
-  replacements_overrides:
+  overrides:
   - goos: linux
     replacements:
       arm64: aarch64
   - goos: windows
+    format: zip
     replacements:
       amd64: x64
-  format: tar.gz
-  format_overrides:
-  - goos: windows
-    format: zip
 - type: github_release
   repo_owner: Dreamacro
   repo_name: clash
@@ -1316,9 +1355,13 @@ packages:
 - type: github_release
   repo_owner: flosell
   repo_name: iam-policy-json-to-terraform
-  asset: 'iam-policy-json-to-terraform{{if eq .OS "darwin"}}_darwin{{else}}_amd64{{end}}'
   description: Small tool to convert an IAM Policy in JSON format into a Terraform aws_iam_policy_document
   format: raw
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  asset: 'iam-policy-json-to-terraform_amd64'
+  overrides:
+  - goos: darwin
+    asset: iam-policy-json-to-terraform_darwin
 - type: github_release
   repo_owner: fluxcd
   repo_name: flux2
@@ -1454,12 +1497,16 @@ packages:
 - type: github_release
   repo_owner: gleam-lang
   repo_name: gleam
-  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
-  asset: 'gleam-{{.Version}}-{{.OS}}{{if or (ne .GOOS "darwin") (ne .GOARCH "amd64")}}-{{.Arch}}{{end}}.{{.Format}}'
   description: 'A friendly language for building type-safe, scalable systems!'
+  format: tar.gz
   replacements:
     darwin: macos
-  format: tar.gz
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  asset: 'gleam-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}'
+  overrides:
+  - goos: darwin
+    gooarch: amd64
+    asset: 'gleam-{{.Version}}-{{.OS}}.{{.Format}}'
   format_overrides:
   - goos: windows
     format: zip
@@ -1684,13 +1731,16 @@ packages:
   description: Deliver Go binaries as fast and easily as possible
   replacements:
     amd64: x86_64
-  asset: 'goreleaser_{{title .OS}}_{{if eq .GOOS "darwin"}}all{{else}}{{.Arch}}{{end}}.tar.gz'
+  asset: 'goreleaser_{{title .OS}}_{{.Arch}}.tar.gz'
   version_constraint: 'semver(">= 0.182.0")'
+  overrides:
+  - goos: darwin
+    asset: 'goreleaser_{{title .OS}}_all.tar.gz'
   version_overrides:
   # https://github.com/goreleaser/goreleaser/pull/2572
   # macOS Universal binaries
   - version_constraint: 'semver("< 0.182.0")'
-    asset: 'goreleaser_{{title .OS}}_{{.Arch}}.tar.gz'
+    overrides: []
 - type: github_release
   repo_owner: goreleaser
   repo_name: nfpm
@@ -1757,11 +1807,14 @@ packages:
 - type: github_release
   repo_owner: gsamokovarov
   repo_name: jump
-  asset: 'jump_{{.OS}}{{if eq .OS "linux"}}_{{.Arch}}_binary{{end}}'
   format: raw
   description: Jump helps you navigate faster by learning your habits
   replacements:
     darwin: osx
+  asset: 'jump_{{.OS}}'
+  overrides:
+  - goos: linux
+    asset: 'jump_{{.OS}}_{{.Arch}}_binary'
 
 # init: h
 - type: github_release
@@ -1949,16 +2002,32 @@ packages:
 - type: github_release
   repo_owner: inlets
   repo_name: inlets-pro
-  asset: 'inlets-pro{{if eq .OS "darwin"}}-darwin{{end}}{{if eq .GOARCH "arm64"}}-arm64{{end}}'
   description: Secure HTTP and TCP tunnels that just work
+  asset: inlets-pro
+  overrides:
+  - goos: darwin
+    goarch: arm64
+    asset: inlets-pro-darwin-arm64
+  - goos: darwin
+    asset: inlets-pro-darwin
+  - goarch: arm64
+    asset: inlets-pro-arm64
 - type: github_release
   repo_owner: inlets
   repo_name: inletsctl
-  asset: 'inletsctl{{if eq .GOOS "darwin"}}-darwin{{else}}{{if eq .GOARCH "arm64"}}-arm64{{end}}{{end}}.tgz'
   description: Create inlets servers on the top cloud platforms
-  files:
-  - name: inletsctl
-    src: 'inletsctl{{if eq .GOOS "darwin"}}-darwin{{else}}{{if eq .GOARCH "arm64"}}-arm64{{end}}{{end}}'
+  asset: inletsctl.tgz
+  overrides:
+  - goos: darwin
+    asset: 'inletsctl-darwin.tgz'
+    files:
+    - name: inletsctl
+      src: inletsctl-darwin
+  - goarch: arm64
+    asset: 'inletsctl-arm64.tgz'
+    files:
+    - name: inletsctl
+      src: inletsctl-arm64
 - type: github_release
   repo_owner: instrumenta
   repo_name: kubeval
@@ -2014,12 +2083,12 @@ packages:
   type: github_release
   repo_owner: istio
   repo_name: istio
-  asset: 'istioctl-{{.Version}}-{{.OS}}{{if ne .GOOS "darwin"}}-{{.Arch}}{{end}}.tar.gz'
   description: The istioctl tool is a configuration command line utility that allows service operators to debug and diagnose their Istio service mesh deployments
-  files:
-  - name: istioctl
   replacements:
     darwin: osx
+  asset: 'istioctl-{{.Version}}-{{.OS}}{{if ne .GOOS "darwin"}}-{{.Arch}}{{end}}.tar.gz'
+  files:
+  - name: istioctl
 - type: github_release
   repo_owner: itchyny
   repo_name: gojq
@@ -2292,11 +2361,14 @@ packages:
   repo_owner: Kong
   repo_name: deck
   description: 'decK: Configuration management and drift detection for Kong'
+  asset: 'deck_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   version_constraint: 'semver(">= 1.11.0")'
-  asset: 'deck_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}all{{else}}{{.Arch}}{{end}}.tar.gz'
+  overrides:
+  - goos: darwin
+    asset: 'deck_{{trimV .Version}}_{{.OS}}_all.tar.gz'
   version_overrides:
   - version_constraint: 'semver("< 1.11.0")'
-    asset: "deck_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    overrides: []
 - type: github_release
   repo_owner: ktr0731
   repo_name: evans
@@ -2497,7 +2569,7 @@ packages:
     src: bin/limactl
   replacements:
     amd64: x86_64
-  replacements_overrides:
+  overrides:
   - goos: linux
     replacements:
       arm64: aarch64
@@ -2675,18 +2747,22 @@ packages:
 - type: github_release
   repo_owner: mongodb
   repo_name: mongocli
-  asset: 'mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: MongoDB CLI enables you to manage your MongoDB in the Cloud
+  asset: 'mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  format: tar.gz
   replacements:
     darwin: macos
     amd64: x86_64
-  format: tar.gz
-  format_overrides:
-  - goos: darwin
-    format: zip
   files:
   - name: mongocli
-    src: '{{if eq .GOOS "linux"}}mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/{{end}}bin/mongocli'
+    src: 'bin/mongocli'
+  overrides:
+  - goos: linux
+    files:
+    - name: mongocli
+      src: 'mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/mongocli'
+  - goos: darwin
+    format: zip
 - type: github_release
   repo_owner: mozilla
   repo_name: sops
@@ -2763,14 +2839,19 @@ packages:
 - type: github_release
   repo_owner: neovim
   repo_name: neovim
-  asset: 'nvim-{{.OS}}.tar.gz'
   description: Hyperextensible Vim-based text editor
   replacements:
     linux: linux64
     darwin: macos
+  asset: 'nvim-{{.OS}}.tar.gz'
   files:
   - name: nvim
-    src: 'nvim-{{if eq .GOOS "darwin"}}osx64{{else}}{{.OS}}{{end}}/bin/nvim'
+    src: 'nvim-{{.OS}}/bin/nvim'
+  overrides:
+  - goos: darwin
+    files:
+    - name: nvim
+      src: 'nvim-osx64/bin/nvim'
 - type: github_release
   repo_owner: newrelic
   repo_name: newrelic-cli
@@ -2897,9 +2978,14 @@ packages:
 - type: github_release
   repo_owner: openfaas
   repo_name: faas-cli
-  asset: 'faas-cli{{if eq .GOOS "darwin"}}-darwin{{else}}{{if ne .GOARCH "amd64"}}{{.Arch}}{{end}}{{end}}'
   format: raw
   description: Official CLI for OpenFaaS
+  asset: 'faas-cli-{{.Arch}}'
+  overrides:
+  - goos: darwin
+    asset: faas-cli-darwin
+  - goos: amd64
+    asset: faas-cli
 - type: github_release
   repo_owner: operator-framework
   repo_name: operator-sdk
@@ -3150,11 +3236,13 @@ packages:
   - name: kubectl-kots
     src: kots
   version_constraint: 'semver(">= 1.59.2")'
-  asset: 'kots_{{.OS}}_{{if eq .GOOS "darwin"}}all{{else}}{{.Arch}}{{end}}.tar.gz'
+  asset: 'kots_{{.OS}}_{{.Arch}}.tar.gz'
+  overrides:
+  - goos: darwin
+    asset: 'kots_{{.OS}}_all.tar.gz'
   version_overrides:
   - version_constraint: 'semver("< 1.59.2")'
     rosetta2: true
-    asset: 'kots_{{.OS}}_{{.Arch}}.tar.gz'
     supported_if: not (GOOS == "linux" and GOARCH == "arm64")
 - type: github_release
   repo_owner: replicatedhq
@@ -3245,8 +3333,11 @@ packages:
   repo_owner: ryane
   repo_name: kfilt
   format: raw
-  asset: 'kfilt_{{trimV .Version}}_{{.OS}}_{{if eq .GOOS "darwin"}}all{{else}}{{.Arch}}{{end}}'
   description: kfilt can filter Kubernetes resources
+  asset: 'kfilt_{{trimV .Version}}_{{.OS}}_{{.Arch}}'
+  overrides:
+  - goos: darwin
+    asset: 'kfilt_{{trimV .Version}}_{{.OS}}_all'
 
 # init: s
 - type: github_release
@@ -3289,11 +3380,17 @@ packages:
 - type: github_release
   repo_owner: Schniz
   repo_name: fnm
-  rosetta2: true
-  asset: 'fnm-{{if eq .GOOS "linux"}}{{if eq .GOARCH "amd64"}}linux{{else}}{{.Arch}}{{end}}{{else}}{{.OS}}{{end}}.zip'
   description: Fast and simple Node.js version manager, built in Rust
-  replacements:
-    darwin: macos
+  asset: fnm-linux.zip
+  overrides:
+  - goos: darwin
+    asset: fnm-macos.zip
+  - goos: windows
+    asset: fnm-windows.zip
+  - goos: linux
+    goarch: arm64
+    asset: fnm-arm64.zip
+
 - type: github_release
   repo_owner: schollz
   repo_name: croc
@@ -3318,10 +3415,15 @@ packages:
 - type: github_release
   repo_owner: sclevine
   repo_name: yj
-  asset: 'yj-{{.OS}}{{if and (eq .GOOS "linux") (ne .GOARCH "amd64")}}-{{.Arch}}{{end}}'
   description: Convert between YAML, TOML, JSON, and HCL
   replacements:
     darwin: macos
+  asset: 'yj-{{.OS}}'
+  overrides:
+  - goos: linux
+    goarch: arm64
+    asset: yj-linux-arm64
+
 - type: github_release
   repo_owner: segmentio
   repo_name: chamber
@@ -3337,9 +3439,6 @@ packages:
   asset: 'bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
   description: 'A cat(1) clone with wings.'
   format: tar.gz
-  format_overrides:
-  - goos: windows
-    format: zip
   replacements:
     amd64: x86_64
     arm64: aarch64
@@ -3347,10 +3446,12 @@ packages:
     windows: pc-windows-msvc
     linux: unknown-linux-gnu
     386: i686
-  replacements_overrides:
+  overrides:
   - goarch: amd64
     replacements:
       linux: unknown-linux-musl
+  - goos: windows
+    format: zip
   files:
   - name: bat
     src: 'bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat'
@@ -3361,9 +3462,6 @@ packages:
   asset: 'fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
   description: "A simple, fast and user-friendly alternative to 'find'"
   format: tar.gz
-  format_overrides:
-  - goos: windows
-    format: zip
   replacements:
     amd64: x86_64
     arm64: aarch64
@@ -3371,10 +3469,12 @@ packages:
     windows: pc-windows-msvc
     386: i686
     linux: unknown-linux-gnu
-  replacements_overrides:
+  overrides:
   - goarch: amd64
     replacements:
       linux: unknown-linux-musl
+  - goos: windows
+    format: zip
   files:
   - name: fd
     src: 'fd-{{.Version}}-{{.Arch}}-{{.OS}}/fd'
@@ -3413,7 +3513,6 @@ packages:
 - type: github_release
   repo_owner: slackhq
   repo_name: nebula
-  asset: 'nebula-{{.OS}}{{if ne .GOOS "darwin"}}-{{.Arch}}{{end}}.{{.Format}}'
   description: A scalable overlay networking tool with a focus on performance, simplicity and security
   format: zip
   format_overrides:
@@ -3422,6 +3521,10 @@ packages:
   files:
   - name: nebula
   - name: nebula-cert
+  asset: 'nebula-{{.OS}}-{{.Arch}}.{{.Format}}'
+  overrides:
+  - goos: darwin
+    asset: 'nebula-{{.OS}}.{{.Format}}'
 - type: github_release
   repo_owner: slok
   repo_name: sloth
