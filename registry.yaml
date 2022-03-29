@@ -52,6 +52,7 @@ packages:
   repo_owner: aelsabbahy
   repo_name: goss
   rosetta2: true
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
   asset: 'goss-{{.OS}}-{{.Arch}}'
   description: Quick and Easy server testing/validation
   replacements:
@@ -542,6 +543,7 @@ packages:
   repo_owner: bcicen
   repo_name: slackcat
   rosetta2: true
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
   asset: 'slackcat-{{.Version}}-{{.OS}}-{{.Arch}}'
   description: CLI utility to post files and command output to slack
   format: raw
@@ -738,6 +740,7 @@ packages:
   repo_name: chectl
   rosetta2: true
   asset: 'chectl-{{.OS}}-{{.Arch}}.tar.gz'
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
   description: CLI to manage Eclipse Che server and workspaces
   replacements:
     amd64: x64
@@ -895,8 +898,9 @@ packages:
 - type: github_release
   repo_owner: corneliusweig
   repo_name: ketall
-  asset: 'ketall-{{.Arch}}-{{.OS}}.tar.gz'
   description: Like `kubectl get all`, but get really all resources
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  asset: 'ketall-{{.Arch}}-{{.OS}}.tar.gz'
   files:
   - name: ketall
     src: 'ketall-{{.Arch}}-{{.OS}}'
@@ -907,6 +911,7 @@ packages:
   repo_name: rakkess
   asset: 'rakkess-{{.Arch}}-{{.OS}}.tar.gz'
   description: Review Access - kubectl plugin to show an access matrix for k8s server resources
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
   files:
   - name: rakkess
     src: 'rakkess-{{.Arch}}-{{.OS}}'
@@ -914,8 +919,9 @@ packages:
   type: github_release
   repo_owner: corneliusweig
   repo_name: rakkess
-  asset: 'access-matrix-{{.Arch}}-{{.OS}}.tar.gz'
   description: Review Access - kubectl plugin to show an access matrix for k8s server resources
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  asset: 'access-matrix-{{.Arch}}-{{.OS}}.tar.gz'
   files:
   - name: kubectl-access_matrix
     src: 'access-matrix-{{.Arch}}-{{.OS}}'
@@ -940,8 +946,9 @@ packages:
 - type: github_release
   repo_owner: create-go-app
   repo_name: cli
-  asset: 'cgapp_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: Create a new production-ready project with backend, frontend and deploy automation by running one CLI command!
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  asset: 'cgapp_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   files:
   - name: cgapp
   replacements:
@@ -1213,6 +1220,7 @@ packages:
   description: kubectl cluster triage plugin for k8s - (brew doctor equivalent)
   version_constraint: 'semver(">= 0.3.1")'
   asset: 'kubectl-doctor_{{.OS}}_{{.Arch}}'
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
   version_overrides:
   - version_constraint: 'semver("< 0.3.1")'
     rosetta2: true
@@ -1225,9 +1233,10 @@ packages:
 - type: github_release
   repo_owner: ernoaapa
   repo_name: kubectl-warp
-  rosetta2: true
-  asset: 'kubectl-warp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   description: Kubernetes CLI plugin for syncing and executing local files in Pod on Kubernetes
+  rosetta2: true
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  asset: 'kubectl-warp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
 - type: github_release
   repo_owner: errata-ai
   repo_name: vale
@@ -1423,10 +1432,11 @@ packages:
 - type: github_release
   repo_owner: geofffranks
   repo_name: spruce
-  rosetta2: true
-  asset: 'spruce-{{.OS}}-{{.Arch}}'
-  format: raw
   description: Standalone, daemon-less, unprivileged Dockerfile and OCI compatible container image builder
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  rosetta2: true
+  format: raw
+  asset: 'spruce-{{.OS}}-{{.Arch}}'
 - type: github_release
   repo_owner: getsentry
   repo_name: sentry-cli
@@ -1437,6 +1447,10 @@ packages:
     linux: Linux
     windows: Windows
     amd64: x86_64
+  overrides:
+  - goos: linux
+    replacements:
+      arm64: aarch64
 - type: github_release
   repo_owner: getzola
   repo_name: zola
@@ -1807,8 +1821,9 @@ packages:
 - type: github_release
   repo_owner: gsamokovarov
   repo_name: jump
-  format: raw
   description: Jump helps you navigate faster by learning your habits
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  format: raw
   replacements:
     darwin: osx
   asset: 'jump_{{.OS}}'
@@ -1895,8 +1910,9 @@ packages:
 - type: http
   repo_owner: hashicorp
   repo_name: waypoint
-  url: 'https://releases.hashicorp.com/waypoint/{{trimV .Version}}/waypoint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip'
   description: A tool to build, deploy, and release any application on any platform
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  url: 'https://releases.hashicorp.com/waypoint/{{trimV .Version}}/waypoint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip'
 - type: github_release
   repo_owner: hasura
   repo_name: graphql-engine
@@ -2031,9 +2047,10 @@ packages:
 - type: github_release
   repo_owner: instrumenta
   repo_name: kubeval
+  description: Validate your Kubernetes configuration files, supports multiple Kubernetes versions
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
   rosetta2: true
   asset: 'kubeval-{{.OS}}-{{.Arch}}.tar.gz'
-  description: Validate your Kubernetes configuration files, supports multiple Kubernetes versions
 - type: github_release
   repo_owner: int128
   repo_name: ghcp
@@ -2072,9 +2089,10 @@ packages:
 - type: github_release
   repo_owner: iovisor
   repo_name: kubectl-trace
+  description: Schedule bpftrace programs on your kubernetes cluster using the kubectl
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
   rosetta2: true
   asset: 'kubectl-trace_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
-  description: Schedule bpftrace programs on your kubernetes cluster using the kubectl
   format: tar.gz
   format_overrides:
   - goos: windows
@@ -2211,6 +2229,7 @@ packages:
   type: github_release
   repo_owner: jreleaser
   repo_name: jreleaser
+  description: Release projects quickly and easily with JReleaser
   asset: 'jreleaser-{{trimV .Version}}.zip'
   files:
   - name: jreleaser
@@ -2219,11 +2238,14 @@ packages:
   type: github_release
   repo_owner: jreleaser
   repo_name: jreleaser
+  description: Release projects quickly and easily with JReleaser
   rosetta2: true
-  asset: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.zip'
   replacements:
     amd64: x86_64
     darwin: osx
+    linux: linux_musl
+    arm64: aarch64
+  asset: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.zip'
   files:
   - name: jreleaser
     src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/jreleaser'
@@ -2283,9 +2305,10 @@ packages:
 - type: github_release
   repo_owner: kanisterio
   repo_name: kanister
+  description: An extensible framework for application-level data management on Kubernetes
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
   rosetta2: true
   asset: 'kanister_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
-  description: An extensible framework for application-level data management on Kubernetes
   files:
   - name: kanctl
 - name: kastenhq/external-tools/k10multicluster
@@ -2495,18 +2518,20 @@ packages:
 - type: github_release
   repo_owner: Ladicle
   repo_name: kubectl-rolesum
+  description: Summarize Kubernetes RBAC roles for the specified subjects
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
   rosetta2: true
   asset: 'kubectl-rolesum_{{.OS}}-{{.Arch}}.tar.gz'
-  description: Summarize Kubernetes RBAC roles for the specified subjects
   files:
   - name: kubectl-rolesum
     src: 'kubectl-rolesum_{{.OS}}-{{.Arch}}/kubectl-rolesum'
 - type: github_release
   repo_owner: lc
   repo_name: gau
+  description: Fetch known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
   rosetta2: true
   asset: 'gau_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
-  description: Fetch known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl
   replacements:
     darwin: macOS
   format: tar.gz
@@ -3176,13 +3201,14 @@ packages:
 - type: github_release
   repo_owner: rancher
   repo_name: cli
+  description: Rancher CLI
   rosetta2: true
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
   asset: 'rancher-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}'
   format: tar.gz
   format_overrides:
   - goos: windows
     format: zip
-  description: Rancher CLI
   files:
   - name: rancher
     src: rancher-{{.Version}}/rancher
@@ -3864,15 +3890,15 @@ packages:
     windows: Windows
     386: i386
     amd64: x86_64
-- name: telepresenceio/telepresence
-  type: http
-  # repo_owner: telepresenceio
-  # repo_name: telepresence
+- type: http
+  repo_owner: telepresenceio
+  repo_name: telepresence
+  description: Local development against a remote Kubernetes or OpenShift cluster
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
   format: raw
   rosetta2: true
   url: 'https://app.getambassador.io/download/tel2/{{.OS}}/{{.Arch}}/{{trimV .Version}}/telepresence'
   link: https://www.telepresence.io/
-  description: Local development against a remote Kubernetes or OpenShift cluster
   files:
   - name: telepresence
 - type: github_release
@@ -3911,9 +3937,10 @@ packages:
 - type: github_release
   repo_owner: thazelart
   repo_name: terraform-validator
+  description: A norms and conventions validator for Terraform
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
   rosetta2: true
   asset: 'terraform-validator_{{.OS}}_{{.Arch}}.{{.Format}}'
-  description: A norms and conventions validator for Terraform
   format: tar.gz
   format_overrides:
   - goos: windows
@@ -3946,8 +3973,9 @@ packages:
 - type: github_release
   repo_owner: thought-machine
   repo_name: please
-  asset: 'please_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   description: High-performance extensible build system for reproducible multi-language builds
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+  asset: 'please_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   files:
   - name: please
     src: please/please
@@ -3985,6 +4013,7 @@ packages:
   repo_owner: tinygo-org
   repo_name: tinygo
   rosetta2: true
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
   asset: 'tinygo{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}'
   description: Go compiler for small places. Microcontrollers, WebAssembly, and command-line tools. Based on LLVM
   format: tar.gz
@@ -4021,6 +4050,7 @@ packages:
   repo_name: binnacle
   asset: 'binnacle-{{.OS}}_{{.Arch}}.tar.gz'
   description: An opinionated tool to interact with Kubernetes' Helm
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
 - type: github_release
   repo_owner: Trendyol
   repo_name: kink
@@ -4041,6 +4071,7 @@ packages:
   repo_owner: tsenart
   repo_name: vegeta
   rosetta2: true
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
   asset: 'vegeta_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
   description: HTTP load testing tool and library. It's over 9000!
 - type: github_release
@@ -4209,6 +4240,10 @@ packages:
     amd64: x86_64
     arm64: aarch64
     linux: unknown-linux-musl
+  overrides:
+  - goarch: arm64
+    replacements:
+      linux: unknown-linux-gnu
   files:
   - name: watchexec
     src: 'watchexec-{{trimPrefix "cli-v" .Version}}-{{.Arch}}-{{.OS}}/watchexec'
@@ -4268,6 +4303,7 @@ packages:
   repo_name: usql
   description: Universal command-line interface for SQL databases
   rosetta2: true
+  supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
   asset: 'usql-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}'
   format: tar.bz2
   format_overrides:
