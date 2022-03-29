@@ -1447,6 +1447,10 @@ packages:
     linux: Linux
     windows: Windows
     amd64: x86_64
+  overrides:
+  - goos: linux
+    replacements:
+      arm64: aarch64
 - type: github_release
   repo_owner: getzola
   repo_name: zola
@@ -2236,10 +2240,12 @@ packages:
   repo_name: jreleaser
   description: Release projects quickly and easily with JReleaser
   rosetta2: true
-  asset: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.zip'
   replacements:
     amd64: x86_64
     darwin: osx
+    linux: linux_musl
+    arm64: aarch64
+  asset: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.zip'
   files:
   - name: jreleaser
     src: 'jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/jreleaser'
@@ -3884,15 +3890,15 @@ packages:
     windows: Windows
     386: i386
     amd64: x86_64
-- name: telepresenceio/telepresence
-  type: http
-  # repo_owner: telepresenceio
-  # repo_name: telepresence
+- type: http
+  repo_owner: telepresenceio
+  repo_name: telepresence
+  description: Local development against a remote Kubernetes or OpenShift cluster
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
   format: raw
   rosetta2: true
   url: 'https://app.getambassador.io/download/tel2/{{.OS}}/{{.Arch}}/{{trimV .Version}}/telepresence'
   link: https://www.telepresence.io/
-  description: Local development against a remote Kubernetes or OpenShift cluster
   files:
   - name: telepresence
 - type: github_release
@@ -4234,6 +4240,10 @@ packages:
     amd64: x86_64
     arm64: aarch64
     linux: unknown-linux-musl
+  overrides:
+  - goarch: arm64
+    replacements:
+      linux: unknown-linux-gnu
   files:
   - name: watchexec
     src: 'watchexec-{{trimPrefix "cli-v" .Version}}-{{.Arch}}-{{.OS}}/watchexec'
