@@ -2104,7 +2104,11 @@ packages:
   description: The istioctl tool is a configuration command line utility that allows service operators to debug and diagnose their Istio service mesh deployments
   replacements:
     darwin: osx
-  asset: 'istioctl-{{.Version}}-{{.OS}}{{if ne .GOOS "darwin"}}-{{.Arch}}{{end}}.tar.gz'
+  asset: 'istioctl-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz'
+  overrides:
+  - goos: darwin
+    goarch: amd64
+    asset: 'istioctl-{{.Version}}-osx.tar.gz'
   files:
   - name: istioctl
 - type: github_release
