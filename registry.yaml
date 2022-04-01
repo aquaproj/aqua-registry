@@ -993,18 +993,24 @@ packages:
 - type: github_release
   repo_owner: dandavison
   repo_name: delta
-  asset: 'delta-{{.Version}}-x86_64-{{.OS}}.{{.Format}}'
+  asset: 'delta-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
   description: A syntax-highlighting pager for git
   format: tar.gz
-  format_overrides:
-  - goos: windows
-    format: zip
   replacements:
     darwin: apple-darwin
     linux: unknown-linux-musl
+    arm64: aarch64
+    amd64: x86_64
+  overrides:
+  - goos: windows
+    format: zip
+  - goos: linux
+    goarch: arm64
+    replacements:
+      linux: unknown-linux-gnu
   files:
   - name: delta
-    src: 'delta-{{.Version}}-x86_64-{{.OS}}/delta'
+    src: 'delta-{{.Version}}-{{.Arch}}-{{.OS}}/delta'
 - type: github_release
   repo_owner: dapr
   repo_name: cli
@@ -2621,11 +2627,13 @@ packages:
 - type: github_release
   repo_owner: lotabout
   repo_name: skim
-  asset: 'skim-{{.Version}}-x86_64-{{.OS}}.tar.gz'
+  asset: 'skim-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz'
   description: Fuzzy Finder in rust!
+  supported_if: not (GOARCH == "arm64")
   replacements:
     darwin: apple-darwin
     linux: unknown-linux-musl
+    amd64: x86_64
   files:
   - name: sk
 - type: github_release
