@@ -6,6 +6,20 @@ on:
   pull_request:
     branches: [main]
 jobs:
+  generate-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: bash generate-registry.sh
+      - run: git add .
+      - run: git --no-pager diff --cached
+      - run: |
+          if ! git diff --cached --exit-code; then
+            echo "There are diff." >&2
+            echo 'Please run "bash generate-registry.yaml"' >&2
+            exit 1
+          fi
+
   default:
     strategy:
       matrix:
