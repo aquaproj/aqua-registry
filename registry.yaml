@@ -3515,8 +3515,14 @@ packages:
 - type: github_release
   repo_owner: sheepla
   repo_name: qiitaz
-  asset: 'qiitaz_{{.OS}}_{{.Arch}}.tar.gz'
+  asset: 'qiitaz_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: A command line Qiita searcher & viewer with fuzzyfinder UI
+  format: tar.gz
+  overrides:
+  - goos: darwin
+    format: zip
+  - goos: windows
+    format: zip
   files:
   - name: qiitaz
     src: 'qiitaz_{{.OS}}_{{.Arch}}/qiitaz'
@@ -3530,6 +3536,7 @@ packages:
       windows: Windows
       386: i386
       amd64: x86_64
+    overrides: []
     files: []
 - type: github_archive
   repo_owner: shellspec
