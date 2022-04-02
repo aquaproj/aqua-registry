@@ -3508,6 +3508,29 @@ packages:
   files:
   - name: fd
     src: 'fd-{{.Version}}-{{.Arch}}-{{.OS}}/fd'
+- type: github_release
+  repo_owner: sheepla
+  repo_name: fzwiki
+  asset: 'fzwiki_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+- type: github_release
+  repo_owner: sheepla
+  repo_name: qiitaz
+  asset: 'qiitaz_{{.OS}}_{{.Arch}}.tar.gz'
+  description: A command line Qiita searcher & viewer with fuzzyfinder UI
+  files:
+  - name: qiitaz
+    src: 'qiitaz_{{.OS}}_{{.Arch}}/qiitaz'
+  version_constraint: 'semver("> 0.0.4")'
+  version_overrides:
+  - version_constraint: 'semver("<= 0.0.4")'
+    asset: 'qiitaz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    files: []
 - type: github_archive
   repo_owner: shellspec
   repo_name: shellspec
@@ -4042,6 +4065,15 @@ packages:
   rosetta2: true
   asset: 'hcl2json_{{.OS}}_{{.Arch}}'
   supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+- type: github_release
+  repo_owner: tomnomnom
+  repo_name: gron
+  asset: 'gron-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}'
+  description: Make JSON greppable!
+  format: tgz
+  overrides:
+  - goos: windows
+    format: zip
 - type: github_release
   repo_owner: TomWright
   repo_name: dasel
