@@ -8,17 +8,32 @@ on:
 jobs:
   generate-registry:
     runs-on: ubuntu-latest
+    env:
+      AQUA_CONFIG: aqua-ci.yaml
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
+      - uses: aquaproj/aqua-installer@v1.0.0
+        with:
+          aqua_version: v1.3.0
       - run: bash generate-registry.sh
       - run: git add .
       - run: git --no-pager diff --cached
       - run: |
           if ! git diff --cached --exit-code; then
+            github-comment post -k generate-registry
             echo "There are diff." >&2
-            echo 'Please run "bash generate-registry.yaml"' >&2
+            echo 'Please run "bash generate-registry.sh"' >&2
             exit 1
           fi
+        if: github.event_name == 'pull_request'
+      - run: |
+          if ! git diff --cached --exit-code; then
+            echo "There are diff." >&2
+            echo 'Please run "bash generate-registry.sh"' >&2
+            exit 1
+          fi
+        if: "github.event_name != 'pull_request'"
 
   default:
     strategy:
