@@ -3560,14 +3560,18 @@ packages:
 - type: github_release
   repo_owner: scaleway
   repo_name: scaleway-cli
-  format: raw
-  asset: 'scw-{{trimV .Version}}-{{.OS}}-{{.Arch}}'
-  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
   description: Command Line Interface for Scaleway
+  format: raw
   files:
   - name: scw
-  replacements:
-    amd64: x86_64
+  version_constraint: 'semver(">= 2.5.1")'
+  asset: 'scaleway-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}'
+  version_overrides:
+  - version_constraint: 'semver("< 2.5.1")'
+    asset: 'scw-{{trimV .Version}}-{{.OS}}-{{.Arch}}'
+    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    replacements:
+      amd64: x86_64
 - type: github_release
   repo_owner: schollz
   repo_name: croc
