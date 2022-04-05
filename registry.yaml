@@ -617,14 +617,18 @@ packages:
 - type: github_release
   repo_owner: anchore
   repo_name: syft
-  asset: 'syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
   description: CLI tool and library for generating a Software Bill of Materials from container images and filesystems
   format: tar.gz
-  format_overrides:
-  - goos: darwin
-    format: zip
+  asset: 'syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
+  overrides:
   - goos: windows
     format: zip
+  version_constraint: 'semver(">= 0.37.10")'
+  version_overrides:
+  - version_constraint: 'semver("< 0.37.10")'
+    format_overrides:
+    - goos: darwin
+      format: zip
 - type: github_release
   repo_owner: antonmedv
   repo_name: fx
