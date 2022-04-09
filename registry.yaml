@@ -2168,6 +2168,34 @@ packages:
   description: A tool to build, deploy, and release any application on any platform
   supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
   url: 'https://releases.hashicorp.com/waypoint/{{trimV .Version}}/waypoint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip'
+- name: haskell/cabal/cabal-install
+  repo_owner: haskell
+  repo_name: cabal
+  type: http
+  link: https://www.haskell.org/cabal/
+  description: "Cabal: Common Architecture for Building Applications and Libraries"
+  url: https://downloads.haskell.org/~cabal/cabal-install-{{trimPrefix "Cabal-v" .Version | trimPrefix "cabal-install-v"}}/cabal-install-{{trimPrefix "Cabal-v" .Version | trimPrefix "cabal-install-v"}}-{{.Arch}}-{{.OS}}.tar.xz
+  version_filter: 'Version startsWith "cabal-install-v"'
+  replacements:
+    arm64: aarch64
+    amd64: x86_64
+    linux: linux-alpine-static
+  files:
+  - name: cabal
+- type: http
+  repo_owner: haskell
+  repo_name: ghcup-hs
+  url: https://downloads.haskell.org/~ghcup/{{trimV .Version}}/{{.Arch}}-{{.OS}}-ghcup-{{trimV .Version}}
+  format: raw
+  link: https://www.haskell.org/ghcup/
+  description: "GHCup is an installer for the general purpose language Haskell"
+  replacements:
+    arm64: aarch64
+    amd64: x86_64
+    darwin: apple-darwin
+  files:
+  - name: ghcup
+    src: "{{.Arch}}-{{.OS}}-ghcup-{{trimV .Version}}"
 - type: github_release
   repo_owner: hasura
   repo_name: graphql-engine
