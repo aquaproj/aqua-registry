@@ -2168,11 +2168,14 @@ packages:
   description: A tool to build, deploy, and release any application on any platform
   supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
   url: 'https://releases.hashicorp.com/waypoint/{{trimV .Version}}/waypoint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip'
-- name: haskell/cabal-install
+- name: haskell/cabal/cabal-install
+  repo_owner: haskell
+  repo_name: cabal
   type: http
-  url: https://downloads.haskell.org/~cabal/cabal-install-{{trimV .Version}}/cabal-install-{{trimV .Version}}-{{.Arch}}-{{.OS}}.tar.xz
   link: https://www.haskell.org/cabal/
   description: "Cabal: Common Architecture for Building Applications and Libraries"
+  url: https://downloads.haskell.org/~cabal/cabal-install-{{trimPrefix "Cabal-v" .Version | trimPrefix "cabal-install-v"}}/cabal-install-{{trimPrefix "Cabal-v" .Version | trimPrefix "cabal-install-v"}}-{{.Arch}}-{{.OS}}.tar.xz
+  version_filter: 'Version startsWith "Cabal-v" or Version startsWith "cabal-install-v"'
   replacements:
     arm64: aarch64
     amd64: x86_64
