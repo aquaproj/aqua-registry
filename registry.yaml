@@ -3651,11 +3651,15 @@ packages:
   description: Convert between YAML, TOML, JSON, and HCL
   replacements:
     darwin: macos
-  asset: 'yj-{{.OS}}'
-  overrides:
-  - goos: linux
-    goarch: arm64
-    asset: yj-linux-arm64
+  version_constraint: 'semver(">= 5.1.0")'
+  asset: 'yj-{{.OS}}-{{.Arch}}'
+  version_overrides:
+  - version_constraint: 'semver("< 5.1.0")'
+    asset: 'yj-{{.OS}}'
+    overrides:
+    - goos: linux
+      goarch: arm64
+      asset: yj-linux-arm64
 - type: github_release
   repo_owner: segmentio
   repo_name: chamber
