@@ -22,8 +22,9 @@ jobs:
       - run: |
           if ! git diff --cached --exit-code; then
             github-comment post -k generate-registry
-            echo "There are diff." >&2
-            echo 'Please run "bash generate-registry.sh"' >&2
+            ghcp commit -r "$GITHUB_REPOSITORY" -b "$GITHUB_HEAD_REF" \
+              -m "chore: fix registry.yaml" \
+              registry.yaml
             exit 1
           fi
         if: github.event_name == 'pull_request'
