@@ -3,7 +3,7 @@ name: test
 on:
   push:
     branches: [main]
-  pull_request:
+  pull_request_target:
     branches: [main]
 jobs:
   generate-registry:
@@ -12,6 +12,7 @@ jobs:
       AQUA_CONFIG: aqua-ci.yaml
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - run: echo "$GITHUB_SHA"
       - uses: actions/checkout@v3
       - uses: aquaproj/aqua-installer@v1.0.0
         with:
