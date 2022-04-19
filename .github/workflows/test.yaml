@@ -29,10 +29,25 @@ jobs:
   default:
     strategy:
       matrix:
-        runs-on: ["ubuntu-latest", "macos-11"]
-    runs-on: ${{ matrix.runs-on }}
+        env:
+          - runs-on: ubuntu-latest
+          - runs-on: macos-latest
+          - runs-on: ubuntu-latest
+            goarch: arm64
+          - runs-on: ubuntu-latest
+            goos: darwin
+            goarch: arm64
+    runs-on: ${{ matrix.env.runs-on }}
     steps:
       - uses: actions/checkout@v3
+      - run: echo "AQUA_GOOS=$AQUA_GOOS" >> "$GITHUB_ENV"
+        if: matrix.env.goos != ''
+        env:
+          AQUA_GOOS: ${{ matrix.env.goos }}
+      - run: echo "AQUA_GOARCH=$AQUA_GOARCH" >> "$GITHUB_ENV"
+        if: matrix.env.goarch != ''
+        env:
+          AQUA_GOARCH: ${{ matrix.env.goarch }}
 
       # Disable cache
       # The cache size is so huge that it takes a long time for `cache ~/.aqua` and `Post cache ~/.aqua`
@@ -63,18 +78,11 @@ jobs:
 
       - name: install packages for testing
         run: |
-          empty=true
           if grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" > /dev/null 2>&1; then
             grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" | sed "s|^target:\(.*\)|- import: pkgs/\1/pkg.yaml|" >> aqua-ci.yaml
-            empty=false
           fi
           if grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" > /dev/null 2>&1; then
             grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" | sed "s/registry\.yaml/pkg.yaml/" | sort -u | sed "s/^/- import: /" >> aqua-ci.yaml
-            empty=false
-          fi
-          if [ "$empty" = "true" ]; then
-            echo "[INFO] Add cli/cli for test" >&2
-            echo "- import: pkgs/cli/cli/pkg.yaml" >> aqua-ci.yaml
           fi
           echo "[INFO] aqua-ci.yaml" >&2
           cat aqua-ci.yaml >&2
