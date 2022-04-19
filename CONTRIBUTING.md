@@ -67,3 +67,7 @@ $ cp aqua.yaml.tmpl aqua.yaml
 $ vi aqua.yaml # Add tested packages
 $ aqua i --test
 ```
+
+## Change `GOOS` and `GOARCH` for testing
+
+Please see https://aquaproj.github.io/docs/reference/change-os-arch-for-test
