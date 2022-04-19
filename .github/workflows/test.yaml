@@ -40,14 +40,6 @@ jobs:
     runs-on: ${{ matrix.env.runs-on }}
     steps:
       - uses: actions/checkout@v3
-      - run: echo "AQUA_GOOS=$AQUA_GOOS" >> "$GITHUB_ENV"
-        if: matrix.env.goos != ''
-        env:
-          AQUA_GOOS: ${{ matrix.env.goos }}
-      - run: echo "AQUA_GOARCH=$AQUA_GOARCH" >> "$GITHUB_ENV"
-        if: matrix.env.goarch != ''
-        env:
-          AQUA_GOARCH: ${{ matrix.env.goarch }}
 
       # Disable cache
       # The cache size is so huge that it takes a long time for `cache ~/.aqua` and `Post cache ~/.aqua`
@@ -86,6 +78,13 @@ jobs:
           fi
           echo "[INFO] aqua-ci.yaml" >&2
           cat aqua-ci.yaml >&2
-          echo "[INFO] + aqua -c aqua-ci.yaml i --test" >&2
-          aqua -log-level debug -c aqua-ci.yaml i --test
-          exit 0
+          
+      - run: echo "AQUA_GOOS=$AQUA_GOOS" >> "$GITHUB_ENV"
+        if: matrix.env.goos != ''
+        env:
+          AQUA_GOOS: ${{ matrix.env.goos }}
+      - run: echo "AQUA_GOARCH=$AQUA_GOARCH" >> "$GITHUB_ENV"
+        if: matrix.env.goarch != ''
+        env:
+          AQUA_GOARCH: ${{ matrix.env.goarch }}
+      - run: aqua -log-level debug -c aqua-ci.yaml i --test
