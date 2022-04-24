@@ -2,11 +2,15 @@ packages:
 - type: github_release
   repo_owner: antonmedv
   repo_name: fx
-  asset: 'fx-{{.OS}}.zip'
   description: Command-line tool and terminal JSON viewer
-  replacements:
-    darwin: macos
-    windows: win.exe
-  files:
-  - name: fx
-    src: 'fx-{{.OS}}'
+  version_constraint: 'semver(">= 21.0.0")'
+  asset: 'fx_{{.OS}}_{{.Arch}}'
+  version_overrides:
+  - version_constraint: 'semver("< 21.0.0")'
+    asset: 'fx-{{.OS}}.zip'
+    replacements:
+      darwin: macos
+      windows: win.exe
+    files:
+    - name: fx
+      src: 'fx-{{.OS}}'
