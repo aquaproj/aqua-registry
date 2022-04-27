@@ -1,0 +1,24 @@
+packages:
+- type: github_release
+  repo_owner: sharkdp
+  repo_name: hexyl
+  asset: 'hexyl-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+  description: A command-line hex viewer
+  rosetta2: true
+  format: tar.gz
+  replacements:
+    darwin: apple-darwin
+    windows: pc-windows-msvc
+    linux: unknown-linux-musl
+    arm64: aarch64
+    amd64: x86_64
+  overrides:
+  - goos: linux
+    goarch: arm64
+    replacements:
+      linux: unknown-linux-gnu
+  - goos: windows
+    format: zip
+  files:
+  - name: hexyl
+    src: 'hexyl-{{.Version}}-{{.Arch}}-{{.OS}}/hexyl'
