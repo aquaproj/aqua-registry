@@ -1,0 +1,25 @@
+packages:
+- type: github_release
+  repo_owner: rhysd
+  repo_name: hgrep
+  asset: 'hgrep-{{.Version}}-{{.Arch}}-{{.OS}}.zip'
+  supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+  description: Grep with human-friendly search results
+  replacements:
+    darwin: apple-darwin
+    linux: unknown-linux-musl
+    windows: pc-windows-msvc
+    arm64: aarch64
+    amd64: x86_64
+  files:
+  - name: hgrep
+    src: 'hgrep-{{.Version}}-{{.Arch}}-{{.OS}}/hgrep'
+  version_constraint: 'semver("< 0.2.5")'
+  version_overrides:
+  - version_constraint: 'semver(">= 0.2.5")'
+    supported_if: 'true'
+    overrides:
+    - goos: linux
+      goarch: arm64
+      replacements:
+        linux: unknown-linux-gnu
