@@ -12,79 +12,79 @@ jobs:
       AQUA_CONFIG: aqua-ci.yaml
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: aquaproj/aqua-installer@v1.0.0
-        with:
-          aqua_version: v1.4.0
-      - run: bash generate-registry.sh
-      - run: git add .
-      - run: git --no-pager diff --cached
-      - run: |
-          if ! git diff --cached --exit-code; then
-            echo 'Please run "bash generate-registry.sh"' >&2
-            echo 'https://github.com/aquaproj/aqua-registry/blob/main/CONTRIBUTING.md#run-generate-registrysh-to-update-reigstryyaml' >&2
-            exit 1
-          fi
+    - uses: actions/checkout@v3
+    - uses: aquaproj/aqua-installer@v1.0.0
+      with:
+        aqua_version: v1.4.0
+    - run: bash generate-registry.sh
+    - run: git add .
+    - run: git --no-pager diff --cached
+    - run: |
+        if ! git diff --cached --exit-code; then
+          echo 'Please run "bash generate-registry.sh"' >&2
+          echo 'https://github.com/aquaproj/aqua-registry/blob/main/CONTRIBUTING.md#run-generate-registrysh-to-update-reigstryyaml' >&2
+          exit 1
+        fi
 
   default:
     strategy:
       matrix:
         env:
-          - runs-on: ubuntu-latest
-          - runs-on: macos-latest
-          - runs-on: ubuntu-latest
-            goarch: arm64
-          - runs-on: ubuntu-latest
-            goos: darwin
-            goarch: arm64
+        - runs-on: ubuntu-latest
+        - runs-on: macos-latest
+        - runs-on: ubuntu-latest
+          goarch: arm64
+        - runs-on: ubuntu-latest
+          goos: darwin
+          goarch: arm64
     runs-on: ${{ matrix.env.runs-on }}
     steps:
-      - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      # Disable cache
-      # The cache size is so huge that it takes a long time for `cache ~/.aqua` and `Post cache ~/.aqua`
-      # e.g. https://github.com/aquaproj/aqua-registry/runs/4426879327
-      #
-      # - name: cache ~/.aqua
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       ~/.aqua/pkgs
-      #       ~/.aqua/registries
-      #     key: v5-${{ runner.os }}-${{ hashFiles('registry.yaml') }}-${{ hashFiles('aqua-all.yaml') }}
-      #     restore-keys: |
-      #       v5-${{ runner.os }}-${{ hashFiles('registry.yaml') }}-
-      #       v5-${{ runner.os }}-
+    # Disable cache
+    # The cache size is so huge that it takes a long time for `cache ~/.aqua` and `Post cache ~/.aqua`
+    # e.g. https://github.com/aquaproj/aqua-registry/runs/4426879327
+    #
+    # - name: cache ~/.aqua
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: |
+    #       ~/.aqua/pkgs
+    #       ~/.aqua/registries
+    #     key: v5-${{ runner.os }}-${{ hashFiles('registry.yaml') }}-${{ hashFiles('aqua-all.yaml') }}
+    #     restore-keys: |
+    #       v5-${{ runner.os }}-${{ hashFiles('registry.yaml') }}-
+    #       v5-${{ runner.os }}-
 
-      - uses: aquaproj/aqua-installer@v1.0.0
-        with:
-          aqua_version: v1.4.0
-        env:
-          AQUA_CONFIG: aqua-ci.yaml
+    - uses: aquaproj/aqua-installer@v1.0.0
+      with:
+        aqua_version: v1.4.0
+      env:
+        AQUA_CONFIG: aqua-ci.yaml
 
-      - name: run ci-info and update environment variables
-        run: ci-info run | sed -E "s/^export //" >> "$GITHUB_ENV"
-        env:
-          AQUA_CONFIG: aqua-ci.yaml
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: run ci-info and update environment variables
+      run: ci-info run | sed -E "s/^export //" >> "$GITHUB_ENV"
+      env:
+        AQUA_CONFIG: aqua-ci.yaml
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: install packages for testing
-        run: |
-          if grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" > /dev/null 2>&1; then
-            grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" | sed "s|^target:\(.*\)|- import: pkgs/\1/pkg.yaml|" >> aqua-ci.yaml
-          fi
-          if grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" > /dev/null 2>&1; then
-            grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" | sed "s/registry\.yaml/pkg.yaml/" | sort -u | sed "s/^/- import: /" >> aqua-ci.yaml
-          fi
-          echo "[INFO] aqua-ci.yaml" >&2
-          cat aqua-ci.yaml >&2
+    - name: install packages for testing
+      run: |
+        if grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" > /dev/null 2>&1; then
+          grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" | sed "s|^target:\(.*\)|- import: pkgs/\1/pkg.yaml|" >> aqua-ci.yaml
+        fi
+        if grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" > /dev/null 2>&1; then
+          grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" | sed "s/registry\.yaml/pkg.yaml/" | sort -u | sed "s/^/- import: /" >> aqua-ci.yaml
+        fi
+        echo "[INFO] aqua-ci.yaml" >&2
+        cat aqua-ci.yaml >&2
 
-      - run: echo "AQUA_GOOS=$AQUA_GOOS" >> "$GITHUB_ENV"
-        if: matrix.env.goos != ''
-        env:
-          AQUA_GOOS: ${{ matrix.env.goos }}
-      - run: echo "AQUA_GOARCH=$AQUA_GOARCH" >> "$GITHUB_ENV"
-        if: matrix.env.goarch != ''
-        env:
-          AQUA_GOARCH: ${{ matrix.env.goarch }}
-      - run: aqua -log-level debug -c aqua-ci.yaml i --test
+    - run: echo "AQUA_GOOS=$AQUA_GOOS" >> "$GITHUB_ENV"
+      if: matrix.env.goos != ''
+      env:
+        AQUA_GOOS: ${{ matrix.env.goos }}
+    - run: echo "AQUA_GOARCH=$AQUA_GOARCH" >> "$GITHUB_ENV"
+      if: matrix.env.goarch != ''
+      env:
+        AQUA_GOARCH: ${{ matrix.env.goarch }}
+    - run: aqua -log-level debug -c aqua-ci.yaml i --test
