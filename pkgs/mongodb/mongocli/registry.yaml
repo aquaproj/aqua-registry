@@ -1,20 +1,20 @@
 packages:
-- type: github_release
-  repo_owner: mongodb
-  repo_name: mongocli
-  description: MongoDB CLI enables you to manage your MongoDB in the Cloud
-  asset: 'mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}'
-  format: tar.gz
-  replacements:
-    darwin: macos
-    amd64: x86_64
-  files:
-  - name: mongocli
-    src: 'bin/mongocli'
-  overrides:
-  - goos: linux
+  - type: github_release
+    repo_owner: mongodb
+    repo_name: mongocli
+    description: MongoDB CLI enables you to manage your MongoDB in the Cloud
+    asset: "mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    format: tar.gz
+    replacements:
+      darwin: macos
+      amd64: x86_64
     files:
-    - name: mongocli
-      src: 'mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/mongocli'
-  - goos: darwin
-    format: zip
+      - name: mongocli
+        src: "bin/mongocli"
+    overrides:
+      - goos: linux
+        files:
+          - name: mongocli
+            src: "mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/mongocli"
+      - goos: darwin
+        format: zip
