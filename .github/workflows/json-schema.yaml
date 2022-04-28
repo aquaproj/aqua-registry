@@ -4,22 +4,22 @@ on:
   push:
     branches: [main]
     paths:
-    - .github/workflows/json-schema.yaml
-    - registry.yaml
+      - .github/workflows/json-schema.yaml
+      - registry.yaml
   pull_request:
     branches: [main]
     paths:
-    - .github/workflows/json-schema.yaml
-    - registry.yaml
+      - .github/workflows/json-schema.yaml
+      - registry.yaml
 jobs:
   json-schema:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '16'
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
 
-    - run: curl --fail -O -L "https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json"
-    - run: npm install -g ajv-cli
-    - run: ajv --spec=draft2020 -s registry.json -d registry.yaml
+      - run: curl --fail -O -L "https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json"
+      - run: npm install -g ajv-cli
+      - run: ajv --spec=draft2020 -s registry.json -d registry.yaml

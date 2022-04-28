@@ -8,8 +8,8 @@ Please create directories in [pkgs](pkgs) per package and add `pkg.yaml` and `re
 
 e.g. cli/cli
 
-* [pkg.yaml](pkgs/cli/cli/pkg.yaml)
-* [registry.yaml](pkgs/cli/cli/registry.yaml)
+- [pkg.yaml](pkgs/cli/cli/pkg.yaml)
+- [registry.yaml](pkgs/cli/cli/registry.yaml)
 
 And please run `bash generate-registry.sh` to update [registry.yaml](registry.yaml).
 
@@ -28,22 +28,22 @@ $ bash generate-registry.sh
 
 ## Style Guide
 
-* Remove spaces in the template `{{ ` and ` }}`
-* Remove a period from the end of the description
-* `link` is unneeded if `repo_owner` and `repo_name` are set
+- Remove spaces in the template `{{ ` and ` }}`
+- Remove a period from the end of the description
+- `link` is unneeded if `repo_owner` and `repo_name` are set
 
 ### Remove spaces in the template `{{ ` and ` }}`
 
 :thumbsup:
 
 ```yaml
-  asset: 'tfcmt_{{.OS}}_{{.Arch}}.tar.gz'
+asset: "tfcmt_{{.OS}}_{{.Arch}}.tar.gz"
 ```
 
 :thumbsdown:
 
 ```yaml
-  asset: 'tfcmt_{{ .OS }}_{{ .Arch }}.tar.gz'
+asset: "tfcmt_{{ .OS }}_{{ .Arch }}.tar.gz"
 ```
 
 ### Remove a period from the end of the description

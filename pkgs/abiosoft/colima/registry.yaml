@@ -1,23 +1,23 @@
 packages:
-- type: github_release
-  repo_owner: abiosoft
-  repo_name: colima
-  description: Docker (and Kubernetes) on MacOS with minimal setup
-  format: raw
-  version_constraint: 'semver("> 0.3.0")'
-  asset: 'colima-{{.OS}}-{{.Arch}}'
-  replacements:
-    darwin: Darwin
-    linux: Linux
-    amd64: x86_64
-  overrides:
-  - goos: linux
+  - type: github_release
+    repo_owner: abiosoft
+    repo_name: colima
+    description: Docker (and Kubernetes) on MacOS with minimal setup
+    format: raw
+    version_constraint: 'semver("> 0.3.0")'
+    asset: "colima-{{.OS}}-{{.Arch}}"
     replacements:
-      arm64: aarch64
-  version_overrides:
-  - version_constraint: 'semver("< 0.2.0")'
-    type: github_content
-    path: colima
-  - version_constraint: 'semver("< 0.3.0")'
-    asset: "colima-amd64"
-    supported_if: GOOS == "darwin" and GOARCH == "amd64"
+      darwin: Darwin
+      linux: Linux
+      amd64: x86_64
+    overrides:
+      - goos: linux
+        replacements:
+          arm64: aarch64
+    version_overrides:
+      - version_constraint: 'semver("< 0.2.0")'
+        type: github_content
+        path: colima
+      - version_constraint: 'semver("< 0.3.0")'
+        asset: "colima-amd64"
+        supported_if: GOOS == "darwin" and GOARCH == "amd64"

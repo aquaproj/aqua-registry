@@ -14,8 +14,8 @@ aqua.yaml
 
 ```yaml
 registries:
-- type: standard
-  ref: v2.10.0 # renovate: depName=aquaproj/aqua-registry
+  - type: standard
+    ref: v2.10.0 # renovate: depName=aquaproj/aqua-registry
 ```
 
 ## Search packages from the Standard Registry by the command `aqua g`
@@ -24,8 +24,8 @@ Please add the Standard Registry to your aqua.yaml's registries, and run `aqua g
 
 ```yaml
 registries:
-- type: standard
-  ref: v2.10.0 # renovate: depName=aquaproj/aqua-registry
+  - type: standard
+    ref: v2.10.0 # renovate: depName=aquaproj/aqua-registry
 ```
 
 `aqua g` launches the interactive UI and you can search the package by fuzzy search.

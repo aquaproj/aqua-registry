@@ -1,35 +1,35 @@
 packages:
-- type: http
-  repo_owner: docker-slim
-  repo_name: docker-slim
-  description: "DockerSlim (docker-slim): Don't change anything in your Docker container image and minify it by up to 30x (and for compiled languages even more) making it secure too! (free and open source)"
-  format: tar.gz
-  replacements:
-    darwin: mac
-  # https://downloads.dockerslim.com/releases/1.37.2/dist_mac_m1.zip
-  url: 'https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_{{.Arch}}.{{.Format}}'
-  files:
-  - name: docker-slim
-    src: 'dist_{{.OS}}_{{.Arch}}/docker-slim'
-  - name: docker-slim-sensor
-    src: 'dist_{{.OS}}_{{.Arch}}/docker-slim-sensor'
-  overrides:
-  - goarch: amd64
-    url: 'https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}.{{.Format}}'
+  - type: http
+    repo_owner: docker-slim
+    repo_name: docker-slim
+    description: "DockerSlim (docker-slim): Don't change anything in your Docker container image and minify it by up to 30x (and for compiled languages even more) making it secure too! (free and open source)"
+    format: tar.gz
+    replacements:
+      darwin: mac
+    # https://downloads.dockerslim.com/releases/1.37.2/dist_mac_m1.zip
+    url: "https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
-    - name: docker-slim
-      src: 'dist_{{.OS}}/docker-slim'
-    - name: docker-slim-sensor
-      src: 'dist_{{.OS}}/docker-slim-sensor'
+      - name: docker-slim
+        src: "dist_{{.OS}}_{{.Arch}}/docker-slim"
+      - name: docker-slim-sensor
+        src: "dist_{{.OS}}_{{.Arch}}/docker-slim-sensor"
+    overrides:
+      - goarch: amd64
+        url: "https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}.{{.Format}}"
+        files:
+          - name: docker-slim
+            src: "dist_{{.OS}}/docker-slim"
+          - name: docker-slim-sensor
+            src: "dist_{{.OS}}/docker-slim-sensor"
 
-  - goos: darwin
-    url: 'https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_m1.{{.Format}}'
-    files:
-    - name: docker-slim
-      src: 'dist_{{.OS}}_m1/docker-slim'
-    - name: docker-slim-sensor
-      src: 'dist_{{.OS}}_m1/docker-slim-sensor'
+      - goos: darwin
+        url: "https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_m1.{{.Format}}"
+        files:
+          - name: docker-slim
+            src: "dist_{{.OS}}_m1/docker-slim"
+          - name: docker-slim-sensor
+            src: "dist_{{.OS}}_m1/docker-slim-sensor"
 
-  format_overrides:
-  - goos: darwin
-    format: zip
+    format_overrides:
+      - goos: darwin
+        format: zip
