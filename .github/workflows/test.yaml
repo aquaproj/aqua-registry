@@ -71,10 +71,10 @@ jobs:
       - name: install packages for testing
         run: |
           if grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" > /dev/null 2>&1; then
-            grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" | sed "s|^target:\(.*\)|- import: pkgs/\1/pkg.yaml|" >> aqua-ci.yaml
+            grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" | sed "s|^target:\(.*\)|  - import: pkgs/\1/pkg.yaml|" >> aqua-ci.yaml
           fi
           if grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" > /dev/null 2>&1; then
-            grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" | sed "s/registry\.yaml/pkg.yaml/" | sort -u | sed "s/^/- import: /" >> aqua-ci.yaml
+            grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" | sed "s/registry\.yaml/pkg.yaml/" | sort -u | sed "s/^/  - import: /" >> aqua-ci.yaml
           fi
           echo "[INFO] aqua-ci.yaml" >&2
           cat aqua-ci.yaml >&2
