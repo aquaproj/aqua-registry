@@ -28,6 +28,7 @@ $ bash generate-registry.sh
 
 ## Style Guide
 
+- Format with [prettier](https://prettier.io/) ([GitHub Actions](.github/workflows/prettier.yaml))
 - Remove spaces in the template `{{ ` and ` }}`
 - Remove a period from the end of the description
 - `link` is unneeded if `repo_owner` and `repo_name` are set
