@@ -19,7 +19,7 @@ $ bash generate-registry.sh
 
 ## Run generate-registry.sh to update reigstry.yaml
 
-[registry.yaml on the repository root directory](registry.yaml) and [registry.json](registry.json) are generated with [generate-registry.sh](generate-registry.sh).
+[registry.yaml on the repository root directory](registry.yaml) is generated with [generate-registry.sh](generate-registry.sh).
 Don't edit it manually, and if you update `registry.yaml` in [pkgs](pkgs) directory, don't forget to run generate-registry.sh.
 
 ```console
