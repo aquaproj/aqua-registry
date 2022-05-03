@@ -61,6 +61,30 @@ description: A command-line tool that makes git easier to use with GitHub
 description: A command-line tool that makes git easier to use with GitHub.
 ```
 
+## Test multiple versions
+
+If the package has the field [version_overrides](https://aquaproj.github.io/docs/reference/registry-config#version_constraint-version_overrides),
+please add not only the latest version but also old versions in `pkg.yaml` to test if old versions can be installed properly.
+
+e.g. [pkg.yaml](pkgs/scaleway/scaleway-cli/pkg.yaml) [registry.yaml](pkgs/scaleway/scaleway-cli/registry.yaml)
+
+```yaml
+packages:
+  - name: scaleway/scaleway-cli@v2.5.1
+  - name: scaleway/scaleway-cli
+    version: v2.4.0
+```
+
+:warning: Don't use the short syntax `<package name>@<version>` for the old version to prevent Renovate from updating the old version.
+
+:thumbsdown:
+
+```yaml
+packages:
+  - name: scaleway/scaleway-cli@v2.5.1
+  - name: scaleway/scaleway-cli@v2.4.0
+```
+
 ## How to test in your localhost
 
 ```console
