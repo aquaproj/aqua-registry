@@ -31,7 +31,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          diff <(find pkgs -name registry.yaml -print0 | xargs -0 dirname | sort -u) <(find pkgs -name pkg.yaml -print0 | xargs -0 dirname | sort -u)
+          if ! diff <(find pkgs -name registry.yaml -print0 | xargs -0 dirname | sort -u) <(find pkgs -name pkg.yaml -print0 | xargs -0 dirname | sort -u); then
+            echo "" >&2
+            echo "[ERROR] Either pkg.yaml or registry.yaml isn't found. Don't forget to add pkg.yaml for test" >&2
+            exit 1
+          fi
 
   default:
     strategy:
