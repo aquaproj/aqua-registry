@@ -2,5 +2,12 @@ packages:
   - type: github_release
     repo_owner: stackrox
     repo_name: kube-linter
-    asset: "kube-linter-{{.OS}}.tar.gz"
     description: KubeLinter is a static analysis tool that checks Kubernetes YAML files and Helm charts to ensure the applications represented in them adhere to best practices
+    version_constraint: 'semver(">= 0.3.0")'
+    asset: "kube-linter-{{.OS}}"
+    replacements:
+      darwin: mac
+    version_overrides:
+      - version_constraint: 'semver("< 0.3.0")'
+        asset: "kube-linter-{{.OS}}.tar.gz"
+        replacements: {}
