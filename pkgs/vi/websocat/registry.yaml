@@ -2,10 +2,21 @@ packages:
   - type: github_release
     repo_owner: vi
     repo_name: websocat
-    format: raw
-    asset: "websocat_{{.OS}}"
-    replacements:
-      darwin: mac
-      linux: linux64
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     description: "Command-line client for WebSockets, like netcat (or curl) for ws:// with advanced socat-like functions"
+    format: raw
+    rosetta2: true
+    version_constraint: 'semver(">= 1.10.0")'
+    asset: "websocat.{{.Arch}}-{{.OS}}"
+    replacements:
+      darwin: apple-darwin
+      amd64: x86_64
+      windows: pc-windows-gnu
+      linux: unknown-linux-musl
+      arm64: aarch64
+    version_overrides:
+      - version_constraint: 'semver("< 1.10.0")'
+        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        asset: "websocat_{{.OS}}"
+        replacements:
+          darwin: mac
+          linux: linux64
