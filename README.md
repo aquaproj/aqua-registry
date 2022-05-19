@@ -90,9 +90,9 @@ $ export AQUA_GLOBAL_CONFIG="<Other aqua.yaml>:$PWD/aqua-all.yaml:$AQUA_GLOBAL_C
 
 Please see [Releases](https://github.com/aquaproj/aqua-registry/releases).
 
-## Controbutors
+## Contributors
 
-[![controbutors](https://contrib.rocks/image?repo=aquaproj/aqua-registry)](https://github.com/aquaproj/aqua-registry/graphs/contributors)
+[![contributors](https://contrib.rocks/image?repo=aquaproj/aqua-registry)](https://github.com/aquaproj/aqua-registry/graphs/contributors)
 
 ## License
 
