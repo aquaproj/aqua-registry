@@ -1603,6 +1603,27 @@ packages:
       - version_constraint: 'semver("< 0.5.0")'
         overrides: []
   - type: github_release
+    repo_owner: denisidoro
+    repo_name: navi
+    rosetta2: true
+    asset: "navi-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
+    description: An interactive cheatsheet tool for the command-line
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      linux: unknown-linux-musl
+      darwin: apple-darwin
+      windows: pc-windows-gnu
+    overrides:
+      - goos: linux
+        goarch: arm64
+        replacements:
+          linux: unknown-linux-gnu
+  - type: github_release
     repo_owner: denoland
     repo_name: deno
     asset: "deno-{{.Arch}}-{{.OS}}.zip"
