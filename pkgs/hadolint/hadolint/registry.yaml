@@ -1,0 +1,16 @@
+packages:
+  - type: github_release
+    repo_owner: hadolint
+    repo_name: hadolint
+    rosetta2: true
+    asset: "hadolint-{{.OS}}-{{.Arch}}"
+    format: raw
+    description: "Dockerfile linter, validate inline bash, written in Haskell"
+    replacements:
+      amd64: x86_64
+      linux: Linux
+      darwin: Darwin
+    version_constraint: 'semver(">= 2.10.0")'
+    version_overrides:
+      - version_constraint: 'semver("< 2.10.0")'
+        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
