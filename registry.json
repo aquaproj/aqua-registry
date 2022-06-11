@@ -1852,6 +1852,35 @@
       "type": "github_release"
     },
     {
+      "asset": "cli-{{.OS}}-{{.Arch}}",
+      "description": "A command line interface for Buildkite.",
+      "files": [
+        {
+          "name": "bk",
+          "src": "cli"
+        }
+      ],
+      "format": "raw",
+      "repo_name": "cli",
+      "repo_owner": "buildkite",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 1.2.0\")",
+      "version_overrides": [
+        {
+          "asset": "bk-{{.OS}}-{{.Arch}}-{{.Version|trimV}}",
+          "files": [
+            {
+              "name": "bk",
+              "src": "bk"
+            }
+          ],
+          "rosetta2": true,
+          "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
+          "version_constraint": "semver(\"\u003c 1.2.0\")"
+        }
+      ]
+    },
+    {
       "asset": "pack-{{.Version}}-{{.OS}}.tgz",
       "description": "CLI for building apps using Cloud Native Buildpacks",
       "overrides": [
