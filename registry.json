@@ -1343,6 +1343,16 @@
       "type": "github_release"
     },
     {
+      "asset": "gitmux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
+      "description": "Git in your tmux status bar",
+      "replacements": {
+        "darwin": "macOS"
+      },
+      "repo_name": "gitmux",
+      "repo_owner": "arl",
+      "type": "github_release"
+    },
+    {
       "asset": "kubescape-{{.OS}}-latest",
       "description": "kubescape is the first tool for testing if Kubernetes is deployed securely as defined in Kubernetes Hardening Guidance by to NSA and CISA",
       "replacements": {
@@ -1804,6 +1814,13 @@
       "repo_owner": "bronze1man",
       "rosetta2": true,
       "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
+      "type": "github_release"
+    },
+    {
+      "asset": "talhelper_{{.OS}}_{{.Arch}}.tar.gz",
+      "description": "A helper tool to help creating Talos in GitOps repository",
+      "repo_name": "talhelper",
+      "repo_owner": "budimanjojo",
       "type": "github_release"
     },
     {
@@ -3259,12 +3276,14 @@
     },
     {
       "description": "Benchstat computes and compares statistics about benchmarks",
+      "link": "https://pkg.go.dev/golang.org/x/perf/cmd/benchstat",
       "name": "golang.org/x/perf/cmd/benchstat",
       "path": "golang.org/x/perf/cmd/benchstat",
       "type": "go_install"
     },
     {
       "description": "updates your Go import lines, adding missing ones and removing unreferenced ones",
+      "link": "https://pkg.go.dev/golang.org/x/tools/cmd/goimports",
       "name": "golang.org/x/tools/cmd/goimports",
       "path": "golang.org/x/tools/cmd/goimports",
       "type": "go_install"
@@ -3375,6 +3394,30 @@
       },
       "repo_name": "go-containerregistry",
       "repo_owner": "google",
+      "type": "github_release"
+    },
+    {
+      "asset": "go-jsonnet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
+      "description": "Jsonnet - The data templating language",
+      "files": [
+        {
+          "name": "jsonnet"
+        },
+        {
+          "name": "jsonnetfmt"
+        }
+      ],
+      "format": "tar.gz",
+      "replacements": {
+        "386": "i386",
+        "amd64": "x86_64",
+        "darwin": "Darwin",
+        "linux": "Linux",
+        "windows": "Windows"
+      },
+      "repo_name": "go-jsonnet",
+      "repo_owner": "google",
+      "rosetta2": true,
       "type": "github_release"
     },
     {
@@ -4612,6 +4655,48 @@
       "type": "github_release"
     },
     {
+      "asset": "awsu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
+      "description": "Enhanced account switching for AWS, supports Yubikey as MFA source",
+      "replacements": {
+        "amd64": "x86_64",
+        "arm64": "arm",
+        "darwin": "Darwin",
+        "linux": "Linux"
+      },
+      "repo_name": "awsu",
+      "repo_owner": "kreuzwerker",
+      "type": "github_release"
+    },
+    {
+      "asset": "envplate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
+      "description": "Docker-friendly trivial templating for configuration files using environment keys",
+      "files": [
+        {
+          "name": "ep",
+          "src": "envplate"
+        }
+      ],
+      "replacements": {
+        "386": "i386",
+        "amd64": "x86_64",
+        "darwin": "Darwin",
+        "linux": "Linux"
+      },
+      "repo_name": "envplate",
+      "repo_owner": "kreuzwerker",
+      "type": "github_release"
+    },
+    {
+      "asset": "m1-terraform-provider-helper_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz",
+      "description": "CLI to support with downloading and compiling terraform providers for Mac with M1 chip",
+      "replacements": {
+        "darwin": "Darwin"
+      },
+      "repo_name": "m1-terraform-provider-helper",
+      "repo_owner": "kreuzwerker",
+      "type": "github_release"
+    },
+    {
       "asset": "evans_{{.OS}}_{{.Arch}}.tar.gz",
       "description": "Evans: more expressive universal gRPC client",
       "repo_name": "evans",
@@ -4793,6 +4878,15 @@
       "repo_name": "kubectl-node-shell",
       "repo_owner": "kvaps",
       "type": "github_content"
+    },
+    {
+      "asset": "sqlc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
+      "description": "Generate type-safe code from SQL",
+      "repo_name": "sqlc",
+      "repo_owner": "kyleconroy",
+      "rosetta2": true,
+      "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
+      "type": "github_release"
     },
     {
       "asset": "richgo_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
@@ -7165,6 +7259,12 @@
           "goos": "windows"
         }
       ],
+      "overrides": [
+        {
+          "asset": "tkn_{{trimV .Version}}_{{.OS}}_all.{{.Format}}",
+          "goos": "darwin"
+        }
+      ],
       "replacements": {
         "386": "i386",
         "amd64": "x86_64",
@@ -7175,7 +7275,14 @@
       "repo_name": "cli",
       "repo_owner": "tektoncd",
       "rosetta2": true,
-      "type": "github_release"
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 0.24.0\")",
+      "version_overrides": [
+        {
+          "overrides": [],
+          "version_constraint": "semver(\"\u003c 0.24.0\")"
+        }
+      ]
     },
     {
       "description": "Local development against a remote Kubernetes or OpenShift cluster",
@@ -7703,6 +7810,19 @@
       "description": "The official CLI for Amazon EKS",
       "repo_name": "eksctl",
       "repo_owner": "weaveworks",
+      "type": "github_release"
+    },
+    {
+      "asset": "go-crond-{{.Arch}}-{{.OS}}",
+      "description": "Cron daemon written in golang (for eg. usage in docker images)",
+      "format": "raw",
+      "replacements": {
+        "amd64": "64",
+        "darwin": "osx"
+      },
+      "repo_name": "go-crond",
+      "repo_owner": "webdevops",
+      "rosetta2": true,
       "type": "github_release"
     },
     {
