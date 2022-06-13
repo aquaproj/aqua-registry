@@ -103,11 +103,21 @@ packages:
   - type: github_release
     repo_owner: CircleCI-Public
     repo_name: circleci-cli
-    asset: "circleci-cli_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
     description: Use CircleCI from the command line
+    rosetta2: true
+    asset: "circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
     files:
       - name: circleci
-        src: circleci-cli_{{trimV .Version}}_{{.OS}}_amd64/circleci
+        src: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/circleci
+    version_constraint: 'semver(">= 0.1.17554")'
+    version_overrides:
+      - version_constraint: 'semver("< 0.1.17554")'
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
     repo_owner: ClementTsang
     repo_name: bottom
@@ -1991,6 +2001,12 @@ packages:
         format: zip
   - type: github_release
     repo_owner: fujiwara
+    repo_name: tfstate-lookup
+    description: Lookup resource attributes in tfstate
+    asset: "tfstate-lookup_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    supported_if: GOOS != "windows"
+  - type: github_release
+    repo_owner: fujiwara
     repo_name: tracer
     description: ECS task event/log tracer CLI
     asset: "tracer_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
@@ -3526,6 +3542,36 @@ packages:
     replacements:
       darwin: macos
   - type: github_release
+    repo_owner: mgdm
+    repo_name: htmlq
+    asset: "htmlq-{{.Arch}}-{{.OS}}.{{.Format}}"
+    rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    description: Like jq, but for HTML
+    replacements:
+      amd64: x86_64
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+  - type: github_release
+    repo_owner: microsoft
+    repo_name: ripgrep-prebuilt
+    asset: "ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
+    description: Builds ripgrep on Azure Pipelines for multiple platforms and makes the binaries available as Github releases
+    format: tar.gz
+    replacements:
+      darwin: apple-darwin
+      windows: pc-windows-msvc
+      linux: unknown-linux-musl
+      arm64: aarch64
+      amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
+    files:
+      - name: rg
+  - type: github_release
     repo_owner: mikefarah
     repo_name: yq
     asset: "yq_{{.OS}}_{{.Arch}}"
@@ -3919,6 +3965,20 @@ packages:
     format_overrides:
       - goos: darwin
         format: zip
+  - type: github_release
+    repo_owner: pen-lang
+    repo_name: pen
+    asset: "pen-{{trimV .Version}}-{{.Arch}}-{{.OS}}.tar.xz"
+    rosetta2: true
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    description: The programming language for scalable software development
+    replacements:
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      amd64: x86_64
+    files:
+      - name: pen
+        src: target/release/pen
   - type: github_release
     repo_owner: pglet
     repo_name: pglet
@@ -4545,16 +4605,50 @@ packages:
     asset: "fzwiki_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: sheepla
-    repo_name: qiitaz
-    description: A command line Qiita searcher & viewer with fuzzyfinder UI
-    version_constraint: 'semver("> 0.0.5, < 0.0.5")'
-    asset: "qiitaz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    repo_name: longgopher
+    description: ʕ◉ϖ◉ʔ loooooooooooooooooooooong gopher
+    asset: "longgopher_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    format: tar.gz
     replacements:
       darwin: Darwin
       linux: Linux
       windows: Windows
       386: i386
       amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
+  - type: github_release
+    repo_owner: sheepla
+    repo_name: pingu
+    description: 🐧ping command but with pingu
+    asset: "pingu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    format: tar.gz
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
+  - type: github_release
+    repo_owner: sheepla
+    repo_name: qiitaz
+    description: A command line Qiita searcher & viewer with fuzzyfinder UI
+    version_constraint: 'semver("> 0.0.5, < 0.0.5")'
+    asset: "qiitaz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    format: tar.gz
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
     version_overrides:
       - version_constraint: 'semver("= 0.0.5")'
         # It seems that only v0.0.5 wasn't released with goreleaser.
@@ -4569,6 +4663,21 @@ packages:
         files:
           - name: qiitaz
             src: "qiitaz_{{.OS}}_{{.Arch}}/qiitaz"
+  - type: github_release
+    repo_owner: sheepla
+    repo_name: srss
+    description: 📘 A command line RSS/ATOM/JSON feed reader
+    asset: "srss_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    format: tar.gz
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
   - type: github_archive
     repo_owner: shellspec
     repo_name: shellspec

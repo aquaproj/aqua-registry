@@ -137,17 +137,33 @@
       "type": "github_release"
     },
     {
-      "asset": "circleci-cli_{{trimV .Version}}_{{.OS}}_amd64.tar.gz",
+      "asset": "circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "Use CircleCI from the command line",
       "files": [
         {
           "name": "circleci",
-          "src": "circleci-cli_{{trimV .Version}}_{{.OS}}_amd64/circleci"
+          "src": "circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/circleci"
+        }
+      ],
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
         }
       ],
       "repo_name": "circleci-cli",
       "repo_owner": "CircleCI-Public",
-      "type": "github_release"
+      "rosetta2": true,
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 0.1.17554\")",
+      "version_overrides": [
+        {
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 0.1.17554\")"
+        }
+      ]
     },
     {
       "asset": "bottom_{{.Arch}}-{{.OS}}.{{.Format}}",
@@ -2978,6 +2994,14 @@
       "type": "github_release"
     },
     {
+      "asset": "tfstate-lookup_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
+      "description": "Lookup resource attributes in tfstate",
+      "repo_name": "tfstate-lookup",
+      "repo_owner": "fujiwara",
+      "supported_if": "GOOS != \"windows\"",
+      "type": "github_release"
+    },
+    {
       "asset": "tracer_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
       "description": "ECS task event/log tracer CLI",
       "repo_name": "tracer",
@@ -5253,6 +5277,51 @@
       "type": "github_release"
     },
     {
+      "asset": "htmlq-{{.Arch}}-{{.OS}}.{{.Format}}",
+      "description": "Like jq, but for HTML",
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
+      "replacements": {
+        "amd64": "x86_64"
+      },
+      "repo_name": "htmlq",
+      "repo_owner": "mgdm",
+      "rosetta2": true,
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+      "type": "github_release"
+    },
+    {
+      "asset": "ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}",
+      "description": "Builds ripgrep on Azure Pipelines for multiple platforms and makes the binaries available as Github releases",
+      "files": [
+        {
+          "name": "rg"
+        }
+      ],
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
+      "replacements": {
+        "amd64": "x86_64",
+        "arm64": "aarch64",
+        "darwin": "apple-darwin",
+        "linux": "unknown-linux-musl",
+        "windows": "pc-windows-msvc"
+      },
+      "repo_name": "ripgrep-prebuilt",
+      "repo_owner": "microsoft",
+      "type": "github_release"
+    },
+    {
       "asset": "yq_{{.OS}}_{{.Arch}}",
       "description": "yq is a portable command-line YAML processor",
       "repo_name": "yq",
@@ -5834,6 +5903,26 @@
       ],
       "repo_name": "peco",
       "repo_owner": "peco",
+      "type": "github_release"
+    },
+    {
+      "asset": "pen-{{trimV .Version}}-{{.Arch}}-{{.OS}}.tar.xz",
+      "description": "The programming language for scalable software development",
+      "files": [
+        {
+          "name": "pen",
+          "src": "target/release/pen"
+        }
+      ],
+      "replacements": {
+        "amd64": "x86_64",
+        "darwin": "apple-darwin",
+        "linux": "unknown-linux-gnu"
+      },
+      "repo_name": "pen",
+      "repo_owner": "pen-lang",
+      "rosetta2": true,
+      "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
       "type": "github_release"
     },
     {
@@ -6759,8 +6848,57 @@
       "type": "github_release"
     },
     {
-      "asset": "qiitaz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
+      "asset": "longgopher_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
+      "description": "ʕ◉ϖ◉ʔ loooooooooooooooooooooong gopher",
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
+      "replacements": {
+        "386": "i386",
+        "amd64": "x86_64",
+        "darwin": "Darwin",
+        "linux": "Linux",
+        "windows": "Windows"
+      },
+      "repo_name": "longgopher",
+      "repo_owner": "sheepla",
+      "type": "github_release"
+    },
+    {
+      "asset": "pingu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
+      "description": "🐧ping command but with pingu",
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
+      "replacements": {
+        "386": "i386",
+        "amd64": "x86_64",
+        "darwin": "Darwin",
+        "linux": "Linux",
+        "windows": "Windows"
+      },
+      "repo_name": "pingu",
+      "repo_owner": "sheepla",
+      "type": "github_release"
+    },
+    {
+      "asset": "qiitaz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "A command line Qiita searcher \u0026 viewer with fuzzyfinder UI",
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "replacements": {
         "386": "i386",
         "amd64": "x86_64",
@@ -6796,6 +6934,27 @@
           "version_constraint": "semver(\"= 0.0.5\")"
         }
       ]
+    },
+    {
+      "asset": "srss_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
+      "description": "📘 A command line RSS/ATOM/JSON feed reader",
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
+      "replacements": {
+        "386": "i386",
+        "amd64": "x86_64",
+        "darwin": "Darwin",
+        "linux": "Linux",
+        "windows": "Windows"
+      },
+      "repo_name": "srss",
+      "repo_owner": "sheepla",
+      "type": "github_release"
     },
     {
       "description": "A full-featured BDD unit testing framework for bash, ksh, zsh, dash and all POSIX shells",
