@@ -1333,13 +1333,20 @@ packages:
     repo_owner: cli
     repo_name: cli
     rosetta2: true
-    asset: "gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    asset: "gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: GitHub’s official command line tool
     files:
       - name: gh
         src: "gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/gh"
     replacements:
       darwin: macOS
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: gh
+            src: "bin/gh.exe"
   - name: cloudflare/cfssl/mkbundle
     type: github_release
     repo_owner: cloudflare
