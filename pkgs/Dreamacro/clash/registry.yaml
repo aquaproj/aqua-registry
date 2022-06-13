@@ -6,9 +6,12 @@ packages:
     supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
     description: A rule-based tunnel in Go
     format: gz
-    format_overrides:
-      - goos: windows
-        format: zip
     files:
       - name: clash
         src: "clash-{{.OS}}-{{.Arch}}-{{.Version}}"
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: clash
+            src: "clash-windows-{{.Arch}}.exe"
