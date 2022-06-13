@@ -135,17 +135,33 @@
       "type": "github_release"
     },
     {
-      "asset": "circleci-cli_{{trimV .Version}}_{{.OS}}_amd64.tar.gz",
+      "asset": "circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "Use CircleCI from the command line",
       "files": [
         {
           "name": "circleci",
-          "src": "circleci-cli_{{trimV .Version}}_{{.OS}}_amd64/circleci"
+          "src": "circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/circleci"
+        }
+      ],
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
         }
       ],
       "repo_name": "circleci-cli",
       "repo_owner": "CircleCI-Public",
-      "type": "github_release"
+      "rosetta2": true,
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 0.1.17554\")",
+      "version_overrides": [
+        {
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 0.1.17554\")"
+        }
+      ]
     },
     {
       "asset": "bottom_{{.Arch}}-{{.OS}}.{{.Format}}",
