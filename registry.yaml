@@ -2252,8 +2252,9 @@ packages:
   - repo_owner: golang
     repo_name: go
     type: http
-    url: https://golang.org/dl/go{{trimPrefix "go" .Version}}.{{.OS}}-{{.Arch}}.tar.gz
+    url: https://golang.org/dl/go{{trimPrefix "go" .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
     description: The Go programming language
+    format: tar.gz
     version_source: github_tag
     version_filter: 'Version startsWith "go"'
     files:
@@ -2261,6 +2262,9 @@ packages:
         src: go/bin/go
       - name: gofmt
         src: go/bin/gofmt
+    overrides:
+      - goos: windows
+        format: zip
   - type: github_release
     repo_owner: golang
     repo_name: mock
