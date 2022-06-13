@@ -3524,6 +3524,35 @@ packages:
     replacements:
       darwin: macos
   - type: github_release
+    repo_owner: mgdm
+    repo_name: htmlq
+    asset: "htmlq-{{.Arch}}-{{.OS}}.{{.Format}}"
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    description: Like jq, but for HTML
+    replacements:
+      amd64: x86_64
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+  - type: github_release
+    repo_owner: microsoft
+    repo_name: ripgrep-prebuilt
+    asset: "ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
+    description: Builds ripgrep on Azure Pipelines for multiple platforms and makes the binaries available as Github releases
+    format: tar.gz
+    replacements:
+      darwin: apple-darwin
+      windows: pc-windows-msvc
+      linux: unknown-linux-musl
+      arm64: aarch64
+      amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
+    files:
+      - name: rg
+  - type: github_release
     repo_owner: mikefarah
     repo_name: yq
     asset: "yq_{{.OS}}_{{.Arch}}"
@@ -3917,6 +3946,20 @@ packages:
     format_overrides:
       - goos: darwin
         format: zip
+  - type: github_release
+    repo_owner: pen-lang
+    repo_name: pen
+    asset: "pen-{{trimV .Version}}-{{.Arch}}-{.OS}.tar.xz"
+    rosetta2: true
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    description: The programming language for scalable software development
+    replacements:
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      amd64: x86_64
+    files:
+      - name: pen
+        src: target/release/pen
   - type: github_release
     repo_owner: pglet
     repo_name: pglet
