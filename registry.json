@@ -6,6 +6,7 @@
       "repo_name": "pryrite",
       "repo_owner": "1xyz",
       "rosetta2": true,
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -114,7 +115,8 @@
       ],
       "replacements": {
         "darwin": "apple-darwin",
-        "linux": "unknown-linux-musl"
+        "linux": "unknown-linux-musl",
+        "windows": "pc-windows-msvc"
       },
       "repo_name": "ripgrep",
       "repo_owner": "BurntSushi",
@@ -210,8 +212,14 @@
         }
       ],
       "format": "gz",
-      "format_overrides": [
+      "overrides": [
         {
+          "files": [
+            {
+              "name": "clash",
+              "src": "clash-windows-{{.Arch}}.exe"
+            }
+          ],
           "format": "zip",
           "goos": "windows"
         }
@@ -447,10 +455,18 @@
       "type": "github_release"
     },
     {
-      "asset": "kubitect-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz",
+      "asset": "kubitect-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}",
       "description": "Kubitect provides a simple way to set up a highly available Kubernetes cluster across multiple hosts",
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "kubitect",
       "repo_owner": "MusicDin",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
@@ -473,16 +489,18 @@
         "amd64": "x86_64",
         "arm64": "aarch64",
         "darwin": "apple-darwin",
-        "linux": "unknown-linux-musl"
+        "linux": "unknown-linux-musl",
+        "windows": "pc-windows-msvc"
       },
       "repo_name": "lsd",
       "repo_owner": "Peltoche",
       "rosetta2": true,
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release",
       "version_constraint": "semver(\"\u003e= 0.20.1\")",
       "version_overrides": [
         {
-          "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
           "version_constraint": "semver(\"\u003c 0.20.1\")"
         }
       ]
@@ -523,6 +541,7 @@
       "description": "EJSON is a small library to manage encrypted secrets using asymmetric encryption",
       "repo_name": "ejson",
       "repo_owner": "Shopify",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release",
       "version_constraint": "semver(\"\u003e= 1.3.3\")",
       "version_overrides": [
@@ -550,6 +569,7 @@
       ],
       "repo_name": "ecschedule",
       "repo_owner": "Songmu",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -561,11 +581,11 @@
           "src": "ghch_{{.Version}}_{{.OS}}_amd64/ghch"
         }
       ],
-      "format": "tar.gz",
+      "format": "zip",
       "format_overrides": [
         {
-          "format": "zip",
-          "goos": "darwin"
+          "format": "tar.gz",
+          "goos": "linux"
         }
       ],
       "repo_name": "ghch",
@@ -583,11 +603,11 @@
           "src": "ghg_{{.Version}}_{{.OS}}_amd64/ghg"
         }
       ],
-      "format": "tar.gz",
+      "format": "zip",
       "format_overrides": [
         {
-          "format": "zip",
-          "goos": "darwin"
+          "format": "tar.gz",
+          "goos": "linux"
         }
       ],
       "repo_name": "ghg",
@@ -3282,7 +3302,7 @@
         }
       ],
       "format": "tar.gz",
-      "format_overrides": [
+      "overrides": [
         {
           "format": "zip",
           "goos": "windows"
@@ -3373,10 +3393,17 @@
           "src": "go/bin/gofmt"
         }
       ],
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "go",
       "repo_owner": "golang",
       "type": "http",
-      "url": "https://golang.org/dl/go{{trimPrefix \"go\" .Version}}.{{.OS}}-{{.Arch}}.tar.gz",
+      "url": "https://golang.org/dl/go{{trimPrefix \"go\" .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}",
       "version_filter": "Version startsWith \"go\"",
       "version_source": "github_tag"
     },

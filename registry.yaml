@@ -8,6 +8,7 @@ packages:
     description: Pryrite, interactively execute shell code blocks in a markdown file
     rosetta2: true
     asset: "pryrite-{{.OS}}-{{.Arch}}-{{.Version}}.zip"
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: 99designs
     repo_name: aws-vault
@@ -80,6 +81,7 @@ packages:
     replacements:
       darwin: apple-darwin
       linux: unknown-linux-musl
+      windows: pc-windows-msvc
     format: tar.gz
     format_overrides:
       - goos: windows
@@ -147,12 +149,15 @@ packages:
     supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
     description: A rule-based tunnel in Go
     format: gz
-    format_overrides:
-      - goos: windows
-        format: zip
     files:
       - name: clash
         src: "clash-{{.OS}}-{{.Arch}}-{{.Version}}"
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: clash
+            src: "clash-windows-{{.Arch}}.exe"
   - type: github_release
     repo_owner: FairwindsOps
     repo_name: nova
@@ -303,7 +308,12 @@ packages:
     repo_owner: MusicDin
     repo_name: kubitect
     description: Kubitect provides a simple way to set up a highly available Kubernetes cluster across multiple hosts
-    asset: "kubitect-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz"
+    asset: "kubitect-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
   - type: github_release
     repo_owner: Peltoche
     repo_name: lsd
@@ -315,17 +325,19 @@ packages:
       - goos: windows
         format: zip
     replacements:
+      windows: pc-windows-msvc
       amd64: x86_64
       arm64: aarch64
       darwin: apple-darwin
-      linux: unknown-linux-musl # Set musl as default. If architecture matchs, this can be executable without relying on external libraries
+      linux: unknown-linux-musl # Set musl as default. If architecture matches, this can be executable without relying on external libraries
     files:
       - name: lsd
         src: "lsd-{{.Version}}-{{.Arch}}-{{.OS}}/lsd"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     version_constraint: 'semver(">= 0.20.1")'
     version_overrides:
       - version_constraint: 'semver("< 0.20.1")'
-        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
     repo_owner: Praqma
     repo_name: helmsman
@@ -352,6 +364,7 @@ packages:
     description: EJSON is a small library to manage encrypted secrets using asymmetric encryption
     version_constraint: 'semver(">= 1.3.3")'
     asset: "ejson_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    supported_if: GOOS != "windows"
     version_overrides:
       - version_constraint: 'semver("< 1.3.3")'
         asset: "{{.OS}}-{{.Arch}}"
@@ -360,6 +373,7 @@ packages:
     repo_name: ecschedule
     asset: "ecschedule_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
     description: ecschedule is a tool to manage ECS Scheduled Tasks
+    supported_if: GOOS != "windows"
     files:
       - name: ecschedule
         src: "ecschedule_{{.Version}}_{{.OS}}_amd64/ecschedule"
@@ -377,10 +391,10 @@ packages:
     files:
       - name: ghch
         src: "ghch_{{.Version}}_{{.OS}}_amd64/ghch"
-    format: tar.gz
+    format: zip
     format_overrides:
-      - goos: darwin
-        format: zip
+      - goos: linux
+        format: tar.gz
   - type: github_release
     repo_owner: Songmu
     repo_name: ghg
@@ -390,10 +404,10 @@ packages:
     files:
       - name: ghg
         src: "ghg_{{.Version}}_{{.OS}}_amd64/ghg"
-    format: tar.gz
+    format: zip
     format_overrides:
-      - goos: darwin
-        format: zip
+      - goos: linux
+        format: tar.gz
   - type: github_release
     repo_owner: Songmu
     repo_name: gocredits
@@ -2208,7 +2222,7 @@ packages:
       freebsd: FreeBSD
       dragonfly: DragonFlyBSD
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -2251,8 +2265,9 @@ packages:
   - repo_owner: golang
     repo_name: go
     type: http
-    url: https://golang.org/dl/go{{trimPrefix "go" .Version}}.{{.OS}}-{{.Arch}}.tar.gz
+    url: https://golang.org/dl/go{{trimPrefix "go" .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
     description: The Go programming language
+    format: tar.gz
     version_source: github_tag
     version_filter: 'Version startsWith "go"'
     files:
@@ -2260,6 +2275,9 @@ packages:
         src: go/bin/go
       - name: gofmt
         src: go/bin/gofmt
+    overrides:
+      - goos: windows
+        format: zip
   - type: github_release
     repo_owner: golang
     repo_name: mock
