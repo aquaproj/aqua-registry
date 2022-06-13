@@ -4,13 +4,17 @@ packages:
     repo_name: qiitaz
     description: A command line Qiita searcher & viewer with fuzzyfinder UI
     version_constraint: 'semver("> 0.0.5, < 0.0.5")'
-    asset: "qiitaz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    asset: "qiitaz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    format: tar.gz
     replacements:
       darwin: Darwin
       linux: Linux
       windows: Windows
       386: i386
       amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
     version_overrides:
       - version_constraint: 'semver("= 0.0.5")'
         # It seems that only v0.0.5 wasn't released with goreleaser.
