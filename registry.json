@@ -2000,12 +2000,25 @@
       "type": "github_release"
     },
     {
-      "asset": "gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
+      "asset": "gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "GitHub’s official command line tool",
       "files": [
         {
           "name": "gh",
           "src": "gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/gh"
+        }
+      ],
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "files": [
+            {
+              "name": "gh",
+              "src": "bin/gh.exe"
+            }
+          ],
+          "format": "zip",
+          "goos": "windows"
         }
       ],
       "replacements": {
