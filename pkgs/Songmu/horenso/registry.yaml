@@ -2,12 +2,14 @@ packages:
   - type: github_release
     repo_owner: Songmu
     repo_name: horenso
-    asset: "horenso_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
     description: Command wrapper for reporting the result. It is useful for cron jobs
+    rosetta2: true
+    asset: "horenso_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     files:
       - name: horenso
         src: "horenso_{{.Version}}_{{.OS}}_amd64/horenso"
-    format: tar.gz
+    format: zip
     format_overrides:
-      - goos: darwin
-        format: zip
+      - goos: linux
+        format: tar.gz
