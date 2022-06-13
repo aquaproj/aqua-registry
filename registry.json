@@ -489,16 +489,18 @@
         "amd64": "x86_64",
         "arm64": "aarch64",
         "darwin": "apple-darwin",
-        "linux": "unknown-linux-musl"
+        "linux": "unknown-linux-musl",
+        "windows": "pc-windows-msvc"
       },
       "repo_name": "lsd",
       "repo_owner": "Peltoche",
       "rosetta2": true,
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release",
       "version_constraint": "semver(\"\u003e= 0.20.1\")",
       "version_overrides": [
         {
-          "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
           "version_constraint": "semver(\"\u003c 0.20.1\")"
         }
       ]
