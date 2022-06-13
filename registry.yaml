@@ -553,11 +553,16 @@ packages:
     rosetta2: true
     asset: "tokei-{{.Arch}}-{{.OS}}.tar.gz"
     description: Count your code, quickly
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     replacements:
       darwin: apple-darwin
       linux: unknown-linux-gnu
       amd64: x86_64
       arm64: aarch64
+    overrides:
+      - goos: windows
+        asset: "tokei-{{.Arch}}-pc-windows-msvc.exe"
+        format: raw
   - type: github_release
     repo_owner: abiosoft
     repo_name: colima
