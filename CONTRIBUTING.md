@@ -61,6 +61,13 @@ description: A command-line tool that makes git easier to use with GitHub
 description: A command-line tool that makes git easier to use with GitHub.
 ```
 
+## Consideration about Rust
+
+- linux: use the asset for not `gnu` but `musl` if both of them are supported
+  - ref: https://github.com/aquaproj/aqua-registry/pull/2153#discussion_r805116879
+- windows: use the asset for not `gnu` but `msvc` if both of them are supported
+  - ref: https://rust-lang.github.io/rustup/installation/windows.html
+
 ## Test multiple versions
 
 If the package has the field [version_overrides](https://aquaproj.github.io/docs/reference/registry-config#version_constraint-version_overrides),
