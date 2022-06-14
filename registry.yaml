@@ -1280,6 +1280,28 @@ packages:
       - name: protoc-gen-buf-lint
         src: buf/bin/protoc-gen-buf-lint
   - type: github_release
+    repo_owner: buildkite
+    repo_name: agent
+    description: "The Buildkite Agent is an open-source toolkit written in Golang for securely running build jobs on any device or network"
+    asset: "buildkite-agent-{{.OS}}-{{.Arch}}-{{.Version|trimV}}.tar.gz"
+    files:
+      - name: buildkite-agent
+  - type: github_release
+    repo_owner: buildkite
+    repo_name: cli
+    description: "A command line interface for Buildkite."
+    asset: "cli-{{.OS}}-{{.Arch}}"
+    format: raw
+    files:
+      - name: bk
+        src: cli
+    version_constraint: 'semver(">= 1.2.0")'
+    version_overrides:
+      - version_constraint: 'semver("< 1.2.0")'
+        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        rosetta2: true
+        asset: "bk-{{.OS}}-{{.Arch}}-{{.Version|trimV}}"
+  - type: github_release
     repo_owner: buildpacks
     repo_name: pack
     supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
