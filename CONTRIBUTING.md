@@ -61,6 +61,23 @@ description: A command-line tool that makes git easier to use with GitHub
 description: A command-line tool that makes git easier to use with GitHub.
 ```
 
+## Supported OS and CPU Architecture
+
+Please consider the following OS and CPU Architecture.
+
+- OS
+  - windows
+  - darwin
+  - linux
+- CPU Architecture
+  - amd64
+  - arm64
+
+We test the registry in CI on the above environments by GitHub Actions' build matrix.
+
+aqua doesn't support Windows yet, but we are working on it. https://github.com/aquaproj/aqua/issues/850
+So when you add or update packages, please consider Windows too.
+
 ## Consideration about Rust
 
 :warning: The author [@suzuki-shunsuke](https://github.com/suzuki-shunsuke) isn't familiar with Rust. If you have any opinion, please let us know.
