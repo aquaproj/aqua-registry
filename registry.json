@@ -1266,7 +1266,7 @@
       "type": "github_release"
     },
     {
-      "asset": "starboard_{{.OS}}_{{.Arch}}.tar.gz",
+      "asset": "starboard_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "Kubernetes-native security toolkit",
       "files": [
         {
@@ -1290,8 +1290,14 @@
       "repo_name": "starboard",
       "repo_owner": "aquasecurity",
       "rosetta2": true,
-      "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
-      "type": "github_release"
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 0.15.0\")",
+      "version_overrides": [
+        {
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 0.15.0\")"
+        }
+      ]
     },
     {
       "asset": "tfsec-{{.OS}}-{{.Arch}}",
