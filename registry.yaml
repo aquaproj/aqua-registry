@@ -260,6 +260,7 @@ packages:
     repo_name: kpt
     description: A Git-native, schema-aware, extensible client-side tool for packaging, customizing, validating, and applying Kubernetes resources
     asset: "kpt_{{.OS}}_{{.Arch}}"
+    supported_if: GOOS != "windows"
     files:
       - name: kpt
         src: "kpt_{{.OS}}_{{.Arch}}"
@@ -416,6 +417,7 @@ packages:
     description: creates CREDITS file from LICENSE files of dependencies
     rosetta2: true
     asset: "gocredits_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
+    supported_if: GOOS != "windows"
     files:
       - name: gocredits
         src: "gocredits_{{.Version}}_{{.OS}}_amd64/gocredits"
@@ -572,6 +574,7 @@ packages:
     format: raw
     version_constraint: 'semver("> 0.3.0")'
     asset: "colima-{{.OS}}-{{.Arch}}"
+    supported_if: GOOS != "windows"
     replacements:
       darwin: Darwin
       linux: Linux
@@ -866,6 +869,7 @@ packages:
     repo_name: trivy
     description: Scanner for vulnerabilities in container images, file systems, and Git repositories, as well as for configuration issues
     asset: "trivy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.tar.gz"
+    supported_if: GOOS != "windows"
     replacements:
       amd64: 64bit
       386: 32bit
@@ -937,9 +941,10 @@ packages:
   - type: github_release
     repo_owner: aristocratos
     repo_name: btop
+    description: "A monitor of resources"
     asset: "btop-{{.Arch}}-{{.OS}}.tbz"
     format: tar.bz2
-    description: "A monitor of resources"
+    supported_if: GOOS != "windows"
     replacements:
       linux: linux-musl
       darwin: macos-monterey
@@ -956,6 +961,7 @@ packages:
     repo_name: gitmux
     description: Git in your tmux status bar
     asset: "gitmux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    supported_if: GOOS != "windows"
     replacements:
       darwin: macOS
   - type: github_release
@@ -1024,6 +1030,7 @@ packages:
     repo_name: afx
     asset: "afx_{{.OS}}_{{.Arch}}.tar.gz"
     description: Package manager for CLI
+    supported_if: GOOS != "windows"
     replacements:
       386: i386
       amd64: x86_64
@@ -1040,16 +1047,17 @@ packages:
       386: i386
       amd64: x86_64
     version_constraint: 'semver("> 1.2.4")'
+    supported_if: GOOS != "windows"
     version_overrides:
       - version_constraint: 'semver("<= 1.2.4")'
         rosetta2: true
-        supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+        supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
   - type: github_release
     repo_owner: b4b4r07
     repo_name: git-bump
     rosetta2: true
     asset: "git-bump_{{.OS}}_{{.Arch}}.{{.Format}}"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     description: Bump version (git tag) to next one with semver
     format: tar.gz
     format_overrides:
@@ -1064,7 +1072,7 @@ packages:
     rosetta2: true
     asset: "github-labeler_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Declarative way to configure GitHub labels
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     format: tar.gz
     format_overrides:
       - goos: windows
@@ -1078,7 +1086,7 @@ packages:
     rosetta2: true
     asset: "gomi_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Replacement for UNIX rm command!
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     format: tar.gz
     format_overrides:
       - goos: windows
@@ -1089,7 +1097,7 @@ packages:
   - type: github_release
     repo_owner: b4b4r07
     repo_name: iap_curl
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     rosetta2: true
     asset: "iap_curl_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: A CLI that is curl wrapper for making HTTP request to IAP-protected app, more easier than curl
@@ -1103,7 +1111,7 @@ packages:
   - type: github_release
     repo_owner: b4b4r07
     repo_name: stein
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     rosetta2: true
     asset: "stein_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: A linter for config files with a customizable rule set
@@ -1141,10 +1149,10 @@ packages:
   - type: github_release
     repo_owner: bcicen
     repo_name: slackcat
-    rosetta2: true
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
-    asset: "slackcat-{{.Version}}-{{.OS}}-{{.Arch}}"
     description: CLI utility to post files and command output to slack
+    rosetta2: true
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    asset: "slackcat-{{.Version}}-{{.OS}}-{{.Arch}}"
     format: raw
   - type: github_release
     repo_owner: becheran
@@ -1160,21 +1168,21 @@ packages:
   - type: github_release
     repo_owner: benbjohnson
     repo_name: litestream
+    description: Streaming replication for SQLite
     rosetta2: true
     asset: "litestream-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
-    format: tar.gz
+    format: zip
     format_overrides:
-      - goos: windows
-        format: zip
-      - goos: darwin
-        format: zip
-    description: Streaming replication for SQLite
+      - goos: linux
+        format: tar.gz
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: benchkram
     repo_name: bob
     description: A build tool from space, down on earth
     format: raw
     asset: "bob_{{.Version}}_{{.OS}}_{{.Arch}}"
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: bengadbois
     repo_name: pewpew
@@ -1189,7 +1197,7 @@ packages:
     repo_owner: blacknon
     repo_name: hwatch
     description: A modern alternative to the watch command, records the differences in execution results and can check this differences at after
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     replacements:
       amd64: x86_64
       arm64: aarch64
@@ -1269,6 +1277,7 @@ packages:
     repo_name: kail
     asset: "kail_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
     description: kubernetes log viewer
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: brigadecore
     repo_name: brigade
@@ -1290,6 +1299,7 @@ packages:
     repo_name: talhelper
     description: A helper tool to help creating Talos in GitOps repository
     asset: "talhelper_{{.OS}}_{{.Arch}}.tar.gz"
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: bufbuild
     repo_name: buf
@@ -1359,15 +1369,16 @@ packages:
   - type: github_release
     repo_owner: c-bata
     repo_name: kube-prompt
+    description: An interactive kubernetes client featuring auto-complete
     rosetta2: true
     asset: "kube-prompt_{{.Version}}_{{.OS}}_{{.Arch}}.zip"
-    description: An interactive kubernetes client featuring auto-complete
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: caarlos0
     repo_name: fork-cleaner
     description: Quickly clean up unused forks on your github account
-    asset: "fork-cleaner_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    format: tar.gz
+    asset: "fork-cleaner_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: casey
     repo_name: just
@@ -1389,6 +1400,7 @@ packages:
     repo_name: fogg
     description: Manage Infrastructure as Code with less pain
     asset: "fogg_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: charmbracelet
     repo_name: glow
@@ -1406,10 +1418,10 @@ packages:
   - type: github_release
     repo_owner: che-incubator
     repo_name: chectl
+    description: CLI to manage Eclipse Che server and workspaces
     rosetta2: true
     asset: "chectl-{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
-    description: CLI to manage Eclipse Che server and workspaces
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     replacements:
       amd64: x64
     files:
@@ -1528,9 +1540,10 @@ packages:
   - type: http
     repo_owner: codeclimate
     repo_name: test-reporter
+    description: Code Climate Test Reporter
     format: raw
     url: https://codeclimate.com/downloads/test-reporter/test-reporter-{{.Version}}-{{.OS}}-amd64
-    description: Code Climate Test Reporter
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     files:
       - name: cc-test-reporter
         src: test-reporter
@@ -1571,6 +1584,7 @@ packages:
     repo_name: kubesec
     asset: "kubesec_{{.OS}}_{{.Arch}}.tar.gz"
     description: Security risk analysis for Kubernetes resources
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: corneliusweig
     repo_name: ketall
