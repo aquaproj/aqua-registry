@@ -224,6 +224,7 @@ packages:
     repo_name: terraformer
     supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     rosetta2: true
+    complete_windows_exe: false
     asset: "terraformer-aws-{{.OS}}-{{.Arch}}"
     files:
       - name: terraformer
@@ -232,6 +233,7 @@ packages:
     repo_owner: GoogleCloudPlatform
     repo_name: terraformer
     description: CLI tool to generate terraform files from existing infrastructure (reverse Terraform). Infrastructure to Code
+    complete_windows_exe: false
     asset: "terraformer-all-{{.OS}}-{{.Arch}}"
     files:
       - name: terraformer
@@ -258,6 +260,7 @@ packages:
     repo_name: kpt
     description: A Git-native, schema-aware, extensible client-side tool for packaging, customizing, validating, and applying Kubernetes resources
     asset: "kpt_{{.OS}}_{{.Arch}}"
+    supported_if: GOOS != "windows"
     files:
       - name: kpt
         src: "kpt_{{.OS}}_{{.Arch}}"
@@ -414,6 +417,7 @@ packages:
     description: creates CREDITS file from LICENSE files of dependencies
     rosetta2: true
     asset: "gocredits_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
+    supported_if: GOOS != "windows"
     files:
       - name: gocredits
         src: "gocredits_{{.Version}}_{{.OS}}_amd64/gocredits"
@@ -570,6 +574,7 @@ packages:
     format: raw
     version_constraint: 'semver("> 0.3.0")'
     asset: "colima-{{.OS}}-{{.Arch}}"
+    supported_if: GOOS != "windows"
     replacements:
       darwin: Darwin
       linux: Linux
@@ -637,10 +642,11 @@ packages:
     repo_owner: aelsabbahy
     repo_name: goss
     rosetta2: true
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "goss-{{.OS}}-{{.Arch}}"
     description: Quick and Easy server testing/validation
     replacements:
+      windows: alpha-windows
       darwin: alpha-darwin
   - type: github_release
     repo_owner: ahmetb
@@ -699,6 +705,7 @@ packages:
       - goos: windows
         format: zip
     replacements:
+      windows: pc-windows-msvc
       linux: unknown-linux-musl
       darwin: apple-darwin
       amd64: x86_64
@@ -840,12 +847,11 @@ packages:
   - type: github_release
     repo_owner: aquasecurity
     repo_name: starboard
-    asset: "starboard_{{.OS}}_{{.Arch}}.tar.gz"
+    asset: "starboard_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Kubernetes-native security toolkit
     rosetta2: true
     replacements:
       amd64: x86_64
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     format: tar.gz
     format_overrides:
       - goos: windows
@@ -854,6 +860,10 @@ packages:
       - name: starboard
       - name: kubectl-starboard
         src: starboard
+    version_constraint: 'semver(">= 0.15.0")'
+    version_overrides:
+      - version_constraint: 'semver("< 0.15.0")'
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
     repo_owner: aquasecurity
     repo_name: tfsec
@@ -864,6 +874,7 @@ packages:
     repo_name: trivy
     description: Scanner for vulnerabilities in container images, file systems, and Git repositories, as well as for configuration issues
     asset: "trivy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.tar.gz"
+    supported_if: GOOS != "windows"
     replacements:
       amd64: 64bit
       386: 32bit
@@ -879,9 +890,10 @@ packages:
   - type: github_release
     repo_owner: argoproj-labs
     repo_name: argocd-autopilot
-    rosetta2: true
-    asset: "argocd-autopilot-{{.OS}}-{{.Arch}}.tar.gz"
     description: Argo-CD Autopilot
+    rosetta2: true
+    complete_windows_exe: false
+    asset: "argocd-autopilot-{{.OS}}-{{.Arch}}.tar.gz"
     files:
       - name: argocd-autopilot
         src: "argocd-autopilot-{{.OS}}-{{.Arch}}"
@@ -892,6 +904,10 @@ packages:
     format: raw
     version_constraint: 'semver(">= 0.12.0")'
     asset: "argocd-image-updater-{{.OS}}_{{.Arch}}"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    overrides:
+      - goos: windows
+        asset: argocd-image-updater-win64.exe
     version_overrides:
       - version_constraint: 'semver("< 0.12.0")'
         supported_if: GOOS == "linux" and GOARCH == "amd64"
@@ -907,8 +923,11 @@ packages:
   - type: github_release
     repo_owner: argoproj
     repo_name: argo-rollouts
-    asset: "kubectl-argo-rollouts-{{.OS}}-amd64"
     description: Progressive Delivery for Kubernetes
+    rosetta2: true
+    complete_windows_exe: false
+    asset: "kubectl-argo-rollouts-{{.OS}}-{{.Arch}}"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     files:
       - name: kubectl-argo-rollouts
   - type: github_release
@@ -917,15 +936,20 @@ packages:
     rosetta2: true
     asset: "argo-{{.OS}}-{{.Arch}}.gz"
     description: "Argo Worfkflows CLI. Workflow engine for Kubernetes"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    overrides:
+      - goos: windows
+        asset: "argo-{{.OS}}-{{.Arch}}.exe.gz"
     files:
       - name: argo
         src: "argo-{{.OS}}-{{.Arch}}"
   - type: github_release
     repo_owner: aristocratos
     repo_name: btop
+    description: "A monitor of resources"
     asset: "btop-{{.Arch}}-{{.OS}}.tbz"
     format: tar.bz2
-    description: "A monitor of resources"
+    supported_if: GOOS != "windows"
     replacements:
       linux: linux-musl
       darwin: macos-monterey
@@ -942,16 +966,20 @@ packages:
     repo_name: gitmux
     description: Git in your tmux status bar
     asset: "gitmux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    supported_if: GOOS != "windows"
     replacements:
       darwin: macOS
   - type: github_release
     repo_owner: armosec
     repo_name: kubescape
+    description: "kubescape is the first tool for testing if Kubernetes is deployed securely as defined in Kubernetes Hardening Guidance by to NSA and CISA"
+    rosetta2: true
+    complete_windows_exe: false
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "kubescape-{{.OS}}-latest"
     replacements:
       linux: ubuntu
       darwin: macos
-    description: "kubescape is the first tool for testing if Kubernetes is deployed securely as defined in Kubernetes Hardening Guidance by to NSA and CISA"
   - type: github_content
     repo_owner: aws-containers
     repo_name: amazon-ecs-exec-checker
@@ -963,15 +991,21 @@ packages:
   - type: github_release
     repo_owner: aws
     repo_name: amazon-ec2-instance-selector
-    asset: "ec2-instance-selector-{{.OS}}-{{.Arch}}.tar.gz"
     description: A CLI tool and go library which recommends instance types based on resource criteria like vcpus and memory
+    complete_windows_exe: false
+    asset: "ec2-instance-selector-{{.OS}}-{{.Arch}}.tar.gz"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     files:
       - name: ec2-instance-selector
   - type: github_release
     repo_owner: aws
     repo_name: copilot-cli
-    asset: "copilot_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     description: The AWS Copilot CLI is a tool for developers to build, release and operate production ready containerized applications on AWS App Runner, Amazon ECS, and AWS Fargate
+    asset: "copilot_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    overrides:
+      - goos: windows
+        asset: copilot-windows.exe
     replacements:
       darwin: macOS
     files:
@@ -1001,6 +1035,7 @@ packages:
     repo_name: afx
     asset: "afx_{{.OS}}_{{.Arch}}.tar.gz"
     description: Package manager for CLI
+    supported_if: GOOS != "windows"
     replacements:
       386: i386
       amd64: x86_64
@@ -1017,16 +1052,17 @@ packages:
       386: i386
       amd64: x86_64
     version_constraint: 'semver("> 1.2.4")'
+    supported_if: GOOS != "windows"
     version_overrides:
       - version_constraint: 'semver("<= 1.2.4")'
         rosetta2: true
-        supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+        supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
   - type: github_release
     repo_owner: b4b4r07
     repo_name: git-bump
     rosetta2: true
     asset: "git-bump_{{.OS}}_{{.Arch}}.{{.Format}}"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     description: Bump version (git tag) to next one with semver
     format: tar.gz
     format_overrides:
@@ -1041,7 +1077,7 @@ packages:
     rosetta2: true
     asset: "github-labeler_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Declarative way to configure GitHub labels
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     format: tar.gz
     format_overrides:
       - goos: windows
@@ -1055,7 +1091,7 @@ packages:
     rosetta2: true
     asset: "gomi_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Replacement for UNIX rm command!
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     format: tar.gz
     format_overrides:
       - goos: windows
@@ -1066,7 +1102,7 @@ packages:
   - type: github_release
     repo_owner: b4b4r07
     repo_name: iap_curl
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     rosetta2: true
     asset: "iap_curl_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: A CLI that is curl wrapper for making HTTP request to IAP-protected app, more easier than curl
@@ -1080,7 +1116,7 @@ packages:
   - type: github_release
     repo_owner: b4b4r07
     repo_name: stein
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     rosetta2: true
     asset: "stein_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: A linter for config files with a customizable rule set
@@ -1109,17 +1145,19 @@ packages:
   - type: github_release
     repo_owner: bcicen
     repo_name: ctop
-    rosetta2: true
-    asset: "ctop-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
     description: Top-like interface for container metrics
+    complete_windows_exe: false
+    rosetta2: true
     format: raw
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "ctop-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
   - type: github_release
     repo_owner: bcicen
     repo_name: slackcat
-    rosetta2: true
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
-    asset: "slackcat-{{.Version}}-{{.OS}}-{{.Arch}}"
     description: CLI utility to post files and command output to slack
+    rosetta2: true
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    asset: "slackcat-{{.Version}}-{{.OS}}-{{.Arch}}"
     format: raw
   - type: github_release
     repo_owner: becheran
@@ -1135,21 +1173,21 @@ packages:
   - type: github_release
     repo_owner: benbjohnson
     repo_name: litestream
+    description: Streaming replication for SQLite
     rosetta2: true
     asset: "litestream-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
-    format: tar.gz
+    format: zip
     format_overrides:
-      - goos: windows
-        format: zip
-      - goos: darwin
-        format: zip
-    description: Streaming replication for SQLite
+      - goos: linux
+        format: tar.gz
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: benchkram
     repo_name: bob
     description: A build tool from space, down on earth
     format: raw
     asset: "bob_{{.Version}}_{{.OS}}_{{.Arch}}"
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: bengadbois
     repo_name: pewpew
@@ -1164,7 +1202,7 @@ packages:
     repo_owner: blacknon
     repo_name: hwatch
     description: A modern alternative to the watch command, records the differences in execution results and can check this differences at after
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     replacements:
       amd64: x86_64
       arm64: aarch64
@@ -1244,6 +1282,7 @@ packages:
     repo_name: kail
     asset: "kail_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
     description: kubernetes log viewer
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: brigadecore
     repo_name: brigade
@@ -1265,12 +1304,18 @@ packages:
     repo_name: talhelper
     description: A helper tool to help creating Talos in GitOps repository
     asset: "talhelper_{{.OS}}_{{.Arch}}.tar.gz"
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: bufbuild
     repo_name: buf
-    asset: "buf-{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
     description: A new way of working with Protocol Buffers
+    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    asset: "buf-{{.OS}}-{{.Arch}}.tar.gz"
+    overrides:
+      - goos: windows
+        asset: "buf-Windows-{{.Arch}}.exe"
+        files:
+          - name: buf
     replacements:
       darwin: Darwin
       linux: Linux
@@ -1284,9 +1329,30 @@ packages:
       - name: protoc-gen-buf-lint
         src: buf/bin/protoc-gen-buf-lint
   - type: github_release
+    repo_owner: buildkite
+    repo_name: agent
+    description: "The Buildkite Agent is an open-source toolkit written in Golang for securely running build jobs on any device or network"
+    asset: "buildkite-agent-{{.OS}}-{{.Arch}}-{{.Version|trimV}}.tar.gz"
+    files:
+      - name: buildkite-agent
+  - type: github_release
+    repo_owner: buildkite
+    repo_name: cli
+    description: "A command line interface for Buildkite"
+    asset: "cli-{{.OS}}-{{.Arch}}"
+    format: raw
+    files:
+      - name: bk
+        src: cli
+    version_constraint: 'semver(">= 1.2.0")'
+    version_overrides:
+      - version_constraint: 'semver("< 1.2.0")'
+        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        rosetta2: true
+        asset: "bk-{{.OS}}-{{.Arch}}-{{.Version|trimV}}"
+  - type: github_release
     repo_owner: buildpacks
     repo_name: pack
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
     description: CLI for building apps using Cloud Native Buildpacks
     replacements:
       darwin: macos
@@ -1294,19 +1360,30 @@ packages:
     overrides:
       - goos: darwin
         goarch: arm64
-        asset: "pack-{{.Version}}-{{.OS}}-{{.Arch}}.tgz"
+        asset: "pack-{{.Version}}-macos-arm64.tgz"
+      - goos: linux
+        goarch: arm64
+        asset: "pack-{{.Version}}-linux-arm64.tgz"
+      - goos: windows
+        asset: "pack-{{.Version}}-windows.zip"
+    version_constraint: 'semver(">= 0.25.0")'
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    version_overrides:
+      - version_constraint: 'semver("< 0.25.0")'
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
     repo_owner: c-bata
     repo_name: kube-prompt
+    description: An interactive kubernetes client featuring auto-complete
     rosetta2: true
     asset: "kube-prompt_{{.Version}}_{{.OS}}_{{.Arch}}.zip"
-    description: An interactive kubernetes client featuring auto-complete
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: caarlos0
     repo_name: fork-cleaner
     description: Quickly clean up unused forks on your github account
-    asset: "fork-cleaner_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    format: tar.gz
+    asset: "fork-cleaner_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: casey
     repo_name: just
@@ -1328,6 +1405,7 @@ packages:
     repo_name: fogg
     description: Manage Infrastructure as Code with less pain
     asset: "fogg_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: charmbracelet
     repo_name: glow
@@ -1345,10 +1423,10 @@ packages:
   - type: github_release
     repo_owner: che-incubator
     repo_name: chectl
+    description: CLI to manage Eclipse Che server and workspaces
     rosetta2: true
     asset: "chectl-{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
-    description: CLI to manage Eclipse Che server and workspaces
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     replacements:
       amd64: x64
     files:
@@ -1357,16 +1435,19 @@ packages:
   - type: github_release
     repo_owner: cheat
     repo_name: cheat
-    rosetta2: true
-    asset: "cheat-{{.OS}}-{{.Arch}}.{{.Format}}"
     description: "cheat allows you to create and view interactive cheatsheets on the command-line. It was designed to help remind *nix system administrators of options for commands that they use frequently, but not frequently enough to remember"
-    format: gz
-    format_overrides:
-      - goos: windows
-        format: zip
+    rosetta2: true
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "cheat-{{.OS}}-{{.Arch}}.gz"
     files:
       - name: cheat
         src: "cheat-{{.OS}}-{{.Arch}}"
+    overrides:
+      - goos: windows
+        asset: cheat-windows-amd64.exe.zip
+        files:
+          - name: cheat
+            src: dist/cheat-windows-amd64.exe
   - type: github_release
     repo_owner: chriswalz
     repo_name: bit
@@ -1464,9 +1545,10 @@ packages:
   - type: http
     repo_owner: codeclimate
     repo_name: test-reporter
+    description: Code Climate Test Reporter
     format: raw
     url: https://codeclimate.com/downloads/test-reporter/test-reporter-{{.Version}}-{{.OS}}-amd64
-    description: Code Climate Test Reporter
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     files:
       - name: cc-test-reporter
         src: test-reporter
@@ -1474,10 +1556,10 @@ packages:
     repo_owner: coder
     repo_name: coder
     description: Remote development environments on your infrastructure
-    format: tar.gz
+    format: zip
     overrides:
-      - goos: darwin
-        format: zip
+      - goos: linux
+        format: tar.gz
     asset: "coder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
   - type: github_release
     repo_owner: codesenberg
@@ -1491,8 +1573,9 @@ packages:
     repo_name: transporter
     description: Sync data between persistence engines, like ETL only not stodgy
     format: raw
+    complete_windows_exe: false
     asset: "transporter-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
     repo_owner: containerd
     repo_name: nerdctl
@@ -1506,36 +1589,46 @@ packages:
     repo_name: kubesec
     asset: "kubesec_{{.OS}}_{{.Arch}}.tar.gz"
     description: Security risk analysis for Kubernetes resources
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: corneliusweig
     repo_name: ketall
     description: Like `kubectl get all`, but get really all resources
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
-    asset: "ketall-{{.Arch}}-{{.OS}}.tar.gz"
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     files:
       - name: ketall
         src: "ketall-{{.Arch}}-{{.OS}}"
       - name: kubectl-get_all
         src: "ketall-{{.Arch}}-{{.OS}}"
+    asset: "ketall-{{.Arch}}-{{.OS}}.tar.gz"
+    overrides:
+      - goos: windows
+        asset: "ketall-amd64-windows.zip"
   - name: corneliusweig/rakkess/access-matrix
     type: github_release
     repo_owner: corneliusweig
     repo_name: rakkess
     description: Review Access - kubectl plugin to show an access matrix for k8s server resources
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "access-matrix-{{.Arch}}-{{.OS}}.tar.gz"
+    overrides:
+      - goos: windows
+        asset: access-matrix-amd64-windows.zip
     files:
       - name: kubectl-access_matrix
         src: "access-matrix-{{.Arch}}-{{.OS}}"
   - type: github_release
     repo_owner: corneliusweig
     repo_name: rakkess
-    asset: "rakkess-{{.Arch}}-{{.OS}}.tar.gz"
     description: Review Access - kubectl plugin to show an access matrix for k8s server resources
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     files:
       - name: rakkess
         src: "rakkess-{{.Arch}}-{{.OS}}"
+    asset: "rakkess-{{.Arch}}-{{.OS}}.tar.gz"
+    overrides:
+      - goos: windows
+        asset: "rakkess-amd64-windows.zip"
   - type: github_release
     repo_owner: cosmtrek
     repo_name: air
@@ -1608,7 +1701,8 @@ packages:
     description: Read your tfstate or HCL to generate a graph specific for each provider, showing only the resources that are most important/relevant
     rosetta2: true
     asset: "inframap-{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    complete_windows_exe: false
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     files:
       - name: inframap
         src: "inframap-{{.OS}}-{{.Arch}}"
@@ -1627,8 +1721,10 @@ packages:
     rosetta2: true
     asset: "delta-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     description: A syntax-highlighting pager for git
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     format: tar.gz
     replacements:
+      windows: pc-windows-msvc
       darwin: apple-darwin
       linux: unknown-linux-musl
       arm64: aarch64
@@ -1646,8 +1742,13 @@ packages:
   - type: github_release
     repo_owner: dapr
     repo_name: cli
-    asset: "dapr_{{.OS}}_{{.Arch}}.tar.gz"
     description: Command-line tools for Dapr
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "dapr_{{.OS}}_{{.Arch}}.{{.Format}}"
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
     files:
       - name: dapr
   - type: github_release
@@ -3057,6 +3158,14 @@ packages:
     asset: "terraform-lsp_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
     description: Language Server Protocol for Terraform
     supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+  - name: junegunn/fzf/fzf-tmux
+    type: github_content
+    repo_owner: junegunn
+    repo_name: fzf
+    path: bin/fzf-tmux
+    description: starts fzf in a tmux pane
+    files:
+      - name: fzf-tmux
   - type: github_release
     repo_owner: junegunn
     repo_name: fzf

@@ -319,6 +319,7 @@
     },
     {
       "asset": "terraformer-aws-{{.OS}}-{{.Arch}}",
+      "complete_windows_exe": false,
       "description": "CLI tool to generate terraform files from existing infrastructure (reverse Terraform). Infrastructure to Code",
       "files": [
         {
@@ -335,6 +336,7 @@
     },
     {
       "asset": "terraformer-all-{{.OS}}-{{.Arch}}",
+      "complete_windows_exe": false,
       "description": "CLI tool to generate terraform files from existing infrastructure (reverse Terraform). Infrastructure to Code",
       "files": [
         {
@@ -384,6 +386,7 @@
       ],
       "repo_name": "kpt",
       "repo_owner": "GoogleContainerTools",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -634,6 +637,7 @@
       "repo_name": "gocredits",
       "repo_owner": "Songmu",
       "rosetta2": true,
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -862,6 +866,7 @@
       },
       "repo_name": "colima",
       "repo_owner": "abiosoft",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release",
       "version_constraint": "semver(\"\u003e 0.3.0\")",
       "version_overrides": [
@@ -952,12 +957,13 @@
       "asset": "goss-{{.OS}}-{{.Arch}}",
       "description": "Quick and Easy server testing/validation",
       "replacements": {
-        "darwin": "alpha-darwin"
+        "darwin": "alpha-darwin",
+        "windows": "alpha-windows"
       },
       "repo_name": "goss",
       "repo_owner": "aelsabbahy",
       "rosetta2": true,
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
@@ -1047,7 +1053,8 @@
         "amd64": "x86_64",
         "arm64": "aarch64",
         "darwin": "apple-darwin",
-        "linux": "unknown-linux-musl"
+        "linux": "unknown-linux-musl",
+        "windows": "pc-windows-msvc"
       },
       "repo_name": "zoxide",
       "repo_owner": "ajeetdsouza",
@@ -1270,7 +1277,7 @@
       "type": "github_release"
     },
     {
-      "asset": "starboard_{{.OS}}_{{.Arch}}.tar.gz",
+      "asset": "starboard_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "Kubernetes-native security toolkit",
       "files": [
         {
@@ -1294,8 +1301,14 @@
       "repo_name": "starboard",
       "repo_owner": "aquasecurity",
       "rosetta2": true,
-      "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
-      "type": "github_release"
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 0.15.0\")",
+      "version_overrides": [
+        {
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 0.15.0\")"
+        }
+      ]
     },
     {
       "asset": "tfsec-{{.OS}}-{{.Arch}}",
@@ -1322,10 +1335,12 @@
       },
       "repo_name": "trivy",
       "repo_owner": "aquasecurity",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
       "asset": "argocd-autopilot-{{.OS}}-{{.Arch}}.tar.gz",
+      "complete_windows_exe": false,
       "description": "Argo-CD Autopilot",
       "files": [
         {
@@ -1342,8 +1357,15 @@
       "asset": "argocd-image-updater-{{.OS}}_{{.Arch}}",
       "description": "Automatic container image update for Argo CD",
       "format": "raw",
+      "overrides": [
+        {
+          "asset": "argocd-image-updater-win64.exe",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "argocd-image-updater",
       "repo_owner": "argoproj-labs",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release",
       "version_constraint": "semver(\"\u003e= 0.12.0\")",
       "version_overrides": [
@@ -1368,7 +1390,8 @@
       "type": "github_release"
     },
     {
-      "asset": "kubectl-argo-rollouts-{{.OS}}-amd64",
+      "asset": "kubectl-argo-rollouts-{{.OS}}-{{.Arch}}",
+      "complete_windows_exe": false,
       "description": "Progressive Delivery for Kubernetes",
       "files": [
         {
@@ -1377,6 +1400,8 @@
       ],
       "repo_name": "argo-rollouts",
       "repo_owner": "argoproj",
+      "rosetta2": true,
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
@@ -1388,9 +1413,16 @@
           "src": "argo-{{.OS}}-{{.Arch}}"
         }
       ],
+      "overrides": [
+        {
+          "asset": "argo-{{.OS}}-{{.Arch}}.exe.gz",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "argo-workflows",
       "repo_owner": "argoproj",
       "rosetta2": true,
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
@@ -1418,6 +1450,7 @@
       },
       "repo_name": "btop",
       "repo_owner": "aristocratos",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -1428,10 +1461,12 @@
       },
       "repo_name": "gitmux",
       "repo_owner": "arl",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
       "asset": "kubescape-{{.OS}}-latest",
+      "complete_windows_exe": false,
       "description": "kubescape is the first tool for testing if Kubernetes is deployed securely as defined in Kubernetes Hardening Guidance by to NSA and CISA",
       "replacements": {
         "darwin": "macos",
@@ -1439,6 +1474,8 @@
       },
       "repo_name": "kubescape",
       "repo_owner": "armosec",
+      "rosetta2": true,
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
       "type": "github_release"
     },
     {
@@ -1456,6 +1493,7 @@
     },
     {
       "asset": "ec2-instance-selector-{{.OS}}-{{.Arch}}.tar.gz",
+      "complete_windows_exe": false,
       "description": "A CLI tool and go library which recommends instance types based on resource criteria like vcpus and memory",
       "files": [
         {
@@ -1464,6 +1502,7 @@
       ],
       "repo_name": "amazon-ec2-instance-selector",
       "repo_owner": "aws",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
@@ -1474,11 +1513,18 @@
           "name": "copilot"
         }
       ],
+      "overrides": [
+        {
+          "asset": "copilot-windows.exe",
+          "goos": "windows"
+        }
+      ],
       "replacements": {
         "darwin": "macOS"
       },
       "repo_name": "copilot-cli",
       "repo_owner": "aws",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
@@ -1518,6 +1564,7 @@
       },
       "repo_name": "afx",
       "repo_owner": "b4b4r07",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -1536,12 +1583,13 @@
       },
       "repo_name": "gist",
       "repo_owner": "b4b4r07",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release",
       "version_constraint": "semver(\"\u003e 1.2.4\")",
       "version_overrides": [
         {
           "rosetta2": true,
-          "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+          "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
           "version_constraint": "semver(\"\u003c= 1.2.4\")"
         }
       ]
@@ -1563,7 +1611,7 @@
       "repo_name": "git-bump",
       "repo_owner": "b4b4r07",
       "rosetta2": true,
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
       "type": "github_release"
     },
     {
@@ -1583,7 +1631,7 @@
       "repo_name": "github-labeler",
       "repo_owner": "b4b4r07",
       "rosetta2": true,
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
       "type": "github_release"
     },
     {
@@ -1603,7 +1651,7 @@
       "repo_name": "gomi",
       "repo_owner": "b4b4r07",
       "rosetta2": true,
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
       "type": "github_release"
     },
     {
@@ -1623,7 +1671,7 @@
       "repo_name": "iap_curl",
       "repo_owner": "b4b4r07",
       "rosetta2": true,
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
       "type": "github_release"
     },
     {
@@ -1643,7 +1691,7 @@
       "repo_name": "stein",
       "repo_owner": "b4b4r07",
       "rosetta2": true,
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
       "type": "github_release"
     },
     {
@@ -1670,11 +1718,13 @@
     },
     {
       "asset": "ctop-{{trimV .Version}}-{{.OS}}-{{.Arch}}",
+      "complete_windows_exe": false,
       "description": "Top-like interface for container metrics",
       "format": "raw",
       "repo_name": "ctop",
       "repo_owner": "bcicen",
       "rosetta2": true,
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
@@ -1684,7 +1734,7 @@
       "repo_name": "slackcat",
       "repo_owner": "bcicen",
       "rosetta2": true,
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
       "type": "github_release"
     },
     {
@@ -1704,20 +1754,17 @@
     {
       "asset": "litestream-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}",
       "description": "Streaming replication for SQLite",
-      "format": "tar.gz",
+      "format": "zip",
       "format_overrides": [
         {
-          "format": "zip",
-          "goos": "windows"
-        },
-        {
-          "format": "zip",
-          "goos": "darwin"
+          "format": "tar.gz",
+          "goos": "linux"
         }
       ],
       "repo_name": "litestream",
       "repo_owner": "benbjohnson",
       "rosetta2": true,
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -1726,6 +1773,7 @@
       "format": "raw",
       "repo_name": "bob",
       "repo_owner": "benchkram",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -1760,7 +1808,7 @@
       },
       "repo_name": "hwatch",
       "repo_owner": "blacknon",
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
       "type": "github_release",
       "version_constraint": "semver(\"\u003e= 0.3.1\")",
       "version_overrides": [
@@ -1869,6 +1917,7 @@
       "description": "kubernetes log viewer",
       "repo_name": "kail",
       "repo_owner": "boz",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -1899,6 +1948,7 @@
       "description": "A helper tool to help creating Talos in GitOps repository",
       "repo_name": "talhelper",
       "repo_owner": "budimanjojo",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -1918,6 +1968,17 @@
           "src": "buf/bin/protoc-gen-buf-lint"
         }
       ],
+      "overrides": [
+        {
+          "asset": "buf-Windows-{{.Arch}}.exe",
+          "files": [
+            {
+              "name": "buf"
+            }
+          ],
+          "goos": "windows"
+        }
+      ],
       "replacements": {
         "amd64": "x86_64",
         "darwin": "Darwin",
@@ -1930,13 +1991,57 @@
       "type": "github_release"
     },
     {
+      "asset": "buildkite-agent-{{.OS}}-{{.Arch}}-{{.Version|trimV}}.tar.gz",
+      "description": "The Buildkite Agent is an open-source toolkit written in Golang for securely running build jobs on any device or network",
+      "files": [
+        {
+          "name": "buildkite-agent"
+        }
+      ],
+      "repo_name": "agent",
+      "repo_owner": "buildkite",
+      "type": "github_release"
+    },
+    {
+      "asset": "cli-{{.OS}}-{{.Arch}}",
+      "description": "A command line interface for Buildkite",
+      "files": [
+        {
+          "name": "bk",
+          "src": "cli"
+        }
+      ],
+      "format": "raw",
+      "repo_name": "cli",
+      "repo_owner": "buildkite",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 1.2.0\")",
+      "version_overrides": [
+        {
+          "asset": "bk-{{.OS}}-{{.Arch}}-{{.Version|trimV}}",
+          "rosetta2": true,
+          "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
+          "version_constraint": "semver(\"\u003c 1.2.0\")"
+        }
+      ]
+    },
+    {
       "asset": "pack-{{.Version}}-{{.OS}}.tgz",
       "description": "CLI for building apps using Cloud Native Buildpacks",
       "overrides": [
         {
-          "asset": "pack-{{.Version}}-{{.OS}}-{{.Arch}}.tgz",
+          "asset": "pack-{{.Version}}-macos-arm64.tgz",
           "goarch": "arm64",
           "goos": "darwin"
+        },
+        {
+          "asset": "pack-{{.Version}}-linux-arm64.tgz",
+          "goarch": "arm64",
+          "goos": "linux"
+        },
+        {
+          "asset": "pack-{{.Version}}-windows.zip",
+          "goos": "windows"
         }
       ],
       "replacements": {
@@ -1944,8 +2049,15 @@
       },
       "repo_name": "pack",
       "repo_owner": "buildpacks",
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
-      "type": "github_release"
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 0.25.0\")",
+      "version_overrides": [
+        {
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 0.25.0\")"
+        }
+      ]
     },
     {
       "asset": "kube-prompt_{{.Version}}_{{.OS}}_{{.Arch}}.zip",
@@ -1953,14 +2065,15 @@
       "repo_name": "kube-prompt",
       "repo_owner": "c-bata",
       "rosetta2": true,
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
-      "asset": "fork-cleaner_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
+      "asset": "fork-cleaner_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
       "description": "Quickly clean up unused forks on your github account",
-      "format": "tar.gz",
       "repo_name": "fork-cleaner",
       "repo_owner": "caarlos0",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -1990,6 +2103,7 @@
       "description": "Manage Infrastructure as Code with less pain",
       "repo_name": "fogg",
       "repo_owner": "chanzuckerberg",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -2027,11 +2141,11 @@
       "repo_name": "chectl",
       "repo_owner": "che-incubator",
       "rosetta2": true,
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
       "type": "github_release"
     },
     {
-      "asset": "cheat-{{.OS}}-{{.Arch}}.{{.Format}}",
+      "asset": "cheat-{{.OS}}-{{.Arch}}.gz",
       "description": "cheat allows you to create and view interactive cheatsheets on the command-line. It was designed to help remind *nix system administrators of options for commands that they use frequently, but not frequently enough to remember",
       "files": [
         {
@@ -2039,16 +2153,22 @@
           "src": "cheat-{{.OS}}-{{.Arch}}"
         }
       ],
-      "format": "gz",
-      "format_overrides": [
+      "overrides": [
         {
-          "format": "zip",
+          "asset": "cheat-windows-amd64.exe.zip",
+          "files": [
+            {
+              "name": "cheat",
+              "src": "dist/cheat-windows-amd64.exe"
+            }
+          ],
           "goos": "windows"
         }
       ],
       "repo_name": "cheat",
       "repo_owner": "cheat",
       "rosetta2": true,
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
@@ -2204,17 +2324,18 @@
       "format": "raw",
       "repo_name": "test-reporter",
       "repo_owner": "codeclimate",
+      "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
       "type": "http",
       "url": "https://codeclimate.com/downloads/test-reporter/test-reporter-{{.Version}}-{{.OS}}-amd64"
     },
     {
       "asset": "coder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "Remote development environments on your infrastructure",
-      "format": "tar.gz",
+      "format": "zip",
       "overrides": [
         {
-          "format": "zip",
-          "goos": "darwin"
+          "format": "tar.gz",
+          "goos": "linux"
         }
       ],
       "repo_name": "coder",
@@ -2232,11 +2353,12 @@
     },
     {
       "asset": "transporter-{{trimV .Version}}-{{.OS}}-{{.Arch}}",
+      "complete_windows_exe": false,
       "description": "Sync data between persistence engines, like ETL only not stodgy",
       "format": "raw",
       "repo_name": "transporter",
       "repo_owner": "compose",
-      "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
       "type": "github_release"
     },
     {
@@ -2255,6 +2377,7 @@
       "description": "Security risk analysis for Kubernetes resources",
       "repo_name": "kubesec",
       "repo_owner": "controlplaneio",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -2270,9 +2393,15 @@
           "src": "ketall-{{.Arch}}-{{.OS}}"
         }
       ],
+      "overrides": [
+        {
+          "asset": "ketall-amd64-windows.zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "ketall",
       "repo_owner": "corneliusweig",
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
       "type": "github_release"
     },
     {
@@ -2285,9 +2414,15 @@
         }
       ],
       "name": "corneliusweig/rakkess/access-matrix",
+      "overrides": [
+        {
+          "asset": "access-matrix-amd64-windows.zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "rakkess",
       "repo_owner": "corneliusweig",
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
       "type": "github_release"
     },
     {
@@ -2299,9 +2434,15 @@
           "src": "rakkess-{{.Arch}}-{{.OS}}"
         }
       ],
+      "overrides": [
+        {
+          "asset": "rakkess-amd64-windows.zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "rakkess",
       "repo_owner": "corneliusweig",
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
       "type": "github_release"
     },
     {
@@ -2402,6 +2543,7 @@
     },
     {
       "asset": "inframap-{{.OS}}-{{.Arch}}.tar.gz",
+      "complete_windows_exe": false,
       "description": "Read your tfstate or HCL to generate a graph specific for each provider, showing only the resources that are most important/relevant",
       "files": [
         {
@@ -2412,7 +2554,7 @@
       "repo_name": "inframap",
       "repo_owner": "cycloidio",
       "rosetta2": true,
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
       "type": "github_release"
     },
     {
@@ -2456,23 +2598,33 @@
         "amd64": "x86_64",
         "arm64": "aarch64",
         "darwin": "apple-darwin",
-        "linux": "unknown-linux-musl"
+        "linux": "unknown-linux-musl",
+        "windows": "pc-windows-msvc"
       },
       "repo_name": "delta",
       "repo_owner": "dandavison",
       "rosetta2": true,
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
-      "asset": "dapr_{{.OS}}_{{.Arch}}.tar.gz",
+      "asset": "dapr_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "Command-line tools for Dapr",
       "files": [
         {
           "name": "dapr"
         }
       ],
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "cli",
       "repo_owner": "dapr",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
@@ -4575,6 +4727,19 @@
       "repo_owner": "juliosueiras",
       "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
       "type": "github_release"
+    },
+    {
+      "description": "starts fzf in a tmux pane",
+      "files": [
+        {
+          "name": "fzf-tmux"
+        }
+      ],
+      "name": "junegunn/fzf/fzf-tmux",
+      "path": "bin/fzf-tmux",
+      "repo_name": "fzf",
+      "repo_owner": "junegunn",
+      "type": "github_content"
     },
     {
       "asset": "fzf-{{.Version}}-{{.OS}}_{{.Arch}}.{{.Format}}",

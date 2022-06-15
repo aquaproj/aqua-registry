@@ -2,7 +2,12 @@ packages:
   - type: github_release
     repo_owner: dapr
     repo_name: cli
-    asset: "dapr_{{.OS}}_{{.Arch}}.tar.gz"
     description: Command-line tools for Dapr
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "dapr_{{.OS}}_{{.Arch}}.{{.Format}}"
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
     files:
       - name: dapr
