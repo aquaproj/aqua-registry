@@ -914,8 +914,11 @@ packages:
   - type: github_release
     repo_owner: argoproj
     repo_name: argo-rollouts
-    asset: "kubectl-argo-rollouts-{{.OS}}-amd64"
     description: Progressive Delivery for Kubernetes
+    rosetta2: true
+    complete_windows_exe: false
+    asset: "kubectl-argo-rollouts-{{.OS}}-{{.Arch}}"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     files:
       - name: kubectl-argo-rollouts
   - type: github_release
