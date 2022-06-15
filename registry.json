@@ -1345,8 +1345,15 @@
       "asset": "argocd-image-updater-{{.OS}}_{{.Arch}}",
       "description": "Automatic container image update for Argo CD",
       "format": "raw",
+      "overrides": [
+        {
+          "asset": "argocd-image-updater-win64.exe",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "argocd-image-updater",
       "repo_owner": "argoproj-labs",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release",
       "version_constraint": "semver(\"\u003e= 0.12.0\")",
       "version_overrides": [
