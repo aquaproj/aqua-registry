@@ -1604,8 +1604,11 @@ packages:
     repo_owner: corneliusweig
     repo_name: rakkess
     description: Review Access - kubectl plugin to show an access matrix for k8s server resources
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "access-matrix-{{.Arch}}-{{.OS}}.tar.gz"
+    overrides:
+      - goos: windows
+        asset: access-matrix-amd64-windows.zip
     files:
       - name: kubectl-access_matrix
         src: "access-matrix-{{.Arch}}-{{.OS}}"
