@@ -83,6 +83,9 @@ jobs:
 
       - name: run ci-info and update environment variables
         shell: bash
+        # TODO Run the command without `aqua exec`.
+        # We don't know the cause, but `ci-info run | sed -E "s/^export //" >> "$GITHUB_ENV"` doesn't work on Windows.
+        # So we run ci-info via `aqua exec`.
         run: aqua exec -- ci-info run | sed -E "s/^export //" >> "$GITHUB_ENV"
         env:
           AQUA_CONFIG: aqua-ci.yaml
