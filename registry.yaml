@@ -1598,12 +1598,15 @@ packages:
   - type: github_release
     repo_owner: corneliusweig
     repo_name: rakkess
-    asset: "rakkess-{{.Arch}}-{{.OS}}.tar.gz"
     description: Review Access - kubectl plugin to show an access matrix for k8s server resources
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     files:
       - name: rakkess
         src: "rakkess-{{.Arch}}-{{.OS}}"
+    asset: "rakkess-{{.Arch}}-{{.OS}}.tar.gz"
+    overrides:
+      - goos: windows
+        asset: "rakkess-amd64-windows.zip"
   - type: github_release
     repo_owner: cosmtrek
     repo_name: air
