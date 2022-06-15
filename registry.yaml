@@ -1293,9 +1293,14 @@ packages:
   - type: github_release
     repo_owner: bufbuild
     repo_name: buf
-    asset: "buf-{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
     description: A new way of working with Protocol Buffers
+    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    asset: "buf-{{.OS}}-{{.Arch}}.tar.gz"
+    overrides:
+      - goos: windows
+        asset: "buf-Windows-{{.Arch}}.exe"
+        files:
+          - name: buf
     replacements:
       darwin: Darwin
       linux: Linux
