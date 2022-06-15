@@ -2014,9 +2014,18 @@
       "description": "CLI for building apps using Cloud Native Buildpacks",
       "overrides": [
         {
-          "asset": "pack-{{.Version}}-{{.OS}}-{{.Arch}}.tgz",
+          "asset": "pack-{{.Version}}-macos-arm64.tgz",
           "goarch": "arm64",
           "goos": "darwin"
+        },
+        {
+          "asset": "pack-{{.Version}}-linux-arm64.tgz",
+          "goarch": "arm64",
+          "goos": "linux"
+        },
+        {
+          "asset": "pack-{{.Version}}-windows.zip",
+          "goos": "windows"
         }
       ],
       "replacements": {
@@ -2024,8 +2033,15 @@
       },
       "repo_name": "pack",
       "repo_owner": "buildpacks",
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
-      "type": "github_release"
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 0.25.0\")",
+      "version_overrides": [
+        {
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 0.25.0\")"
+        }
+      ]
     },
     {
       "asset": "kube-prompt_{{.Version}}_{{.OS}}_{{.Arch}}.zip",
