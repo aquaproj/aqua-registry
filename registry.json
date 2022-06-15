@@ -893,8 +893,15 @@
       "type": "github_release"
     },
     {
-      "asset": "terrascan_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
+      "asset": "terrascan_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "Detect compliance and security violations across Infrastructure as Code to mitigate risk before provisioning cloud native infrastructure",
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "replacements": {
         "386": "i386",
         "amd64": "x86_64",
@@ -904,6 +911,7 @@
       },
       "repo_name": "terrascan",
       "repo_owner": "accurics",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
@@ -7736,6 +7744,33 @@
       ],
       "repo_name": "temporal",
       "repo_owner": "temporalio",
+      "type": "github_release"
+    },
+    {
+      "aliases": [
+        {
+          "name": "accurics/terrascan"
+        }
+      ],
+      "asset": "terrascan_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
+      "description": "Detect compliance and security violations across Infrastructure as Code to mitigate risk before provisioning cloud native infrastructure",
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
+      "replacements": {
+        "386": "i386",
+        "amd64": "x86_64",
+        "darwin": "Darwin",
+        "linux": "Linux",
+        "windows": "Windows"
+      },
+      "repo_name": "terrascan",
+      "repo_owner": "tenable",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
