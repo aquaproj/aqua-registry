@@ -1418,16 +1418,19 @@ packages:
   - type: github_release
     repo_owner: cheat
     repo_name: cheat
-    rosetta2: true
-    asset: "cheat-{{.OS}}-{{.Arch}}.{{.Format}}"
     description: "cheat allows you to create and view interactive cheatsheets on the command-line. It was designed to help remind *nix system administrators of options for commands that they use frequently, but not frequently enough to remember"
-    format: gz
-    format_overrides:
-      - goos: windows
-        format: zip
+    rosetta2: true
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "cheat-{{.OS}}-{{.Arch}}.gz"
     files:
       - name: cheat
         src: "cheat-{{.OS}}-{{.Arch}}"
+    overrides:
+      - goos: windows
+        asset: cheat-windows-amd64.exe.zip
+        files:
+          - name: cheat
+            src: dist/cheat-windows-amd64.exe
   - type: github_release
     repo_owner: chriswalz
     repo_name: bit

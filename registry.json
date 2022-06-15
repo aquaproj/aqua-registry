@@ -2127,7 +2127,7 @@
       "type": "github_release"
     },
     {
-      "asset": "cheat-{{.OS}}-{{.Arch}}.{{.Format}}",
+      "asset": "cheat-{{.OS}}-{{.Arch}}.gz",
       "description": "cheat allows you to create and view interactive cheatsheets on the command-line. It was designed to help remind *nix system administrators of options for commands that they use frequently, but not frequently enough to remember",
       "files": [
         {
@@ -2135,16 +2135,22 @@
           "src": "cheat-{{.OS}}-{{.Arch}}"
         }
       ],
-      "format": "gz",
-      "format_overrides": [
+      "overrides": [
         {
-          "format": "zip",
+          "asset": "cheat-windows-amd64.exe.zip",
+          "files": [
+            {
+              "name": "cheat",
+              "src": "dist/cheat-windows-amd64.exe"
+            }
+          ],
           "goos": "windows"
         }
       ],
       "repo_name": "cheat",
       "repo_owner": "cheat",
       "rosetta2": true,
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
