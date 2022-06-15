@@ -839,12 +839,11 @@ packages:
   - type: github_release
     repo_owner: aquasecurity
     repo_name: starboard
-    asset: "starboard_{{.OS}}_{{.Arch}}.tar.gz"
+    asset: "starboard_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Kubernetes-native security toolkit
     rosetta2: true
     replacements:
       amd64: x86_64
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     format: tar.gz
     format_overrides:
       - goos: windows
@@ -853,6 +852,10 @@ packages:
       - name: starboard
       - name: kubectl-starboard
         src: starboard
+    version_constraint: 'semver(">= 0.15.0")'
+    version_overrides:
+      - version_constraint: 'semver("< 0.15.0")'
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
     repo_owner: aquasecurity
     repo_name: tfsec
