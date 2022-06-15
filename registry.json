@@ -2600,15 +2600,23 @@
       "type": "github_release"
     },
     {
-      "asset": "dapr_{{.OS}}_{{.Arch}}.tar.gz",
+      "asset": "dapr_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "Command-line tools for Dapr",
       "files": [
         {
           "name": "dapr"
         }
       ],
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "cli",
       "repo_owner": "dapr",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
