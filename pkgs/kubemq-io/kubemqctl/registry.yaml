@@ -3,6 +3,9 @@ packages:
     repo_owner: kubemq-io
     repo_name: kubemqctl
     rosetta2: true
-    asset: "kubemqctl_{{.OS}}_{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     description: Kubemqctl is a command line interface (CLI) for KubeMQ, Kubernetes Message Broker
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "kubemqctl_{{.OS}}_{{.Arch}}"
+    overrides:
+      - goos: windows
+        asset: kubemqctl.exe
