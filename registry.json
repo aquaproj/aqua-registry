@@ -4614,12 +4614,19 @@
       "type": "github_release"
     },
     {
-      "asset": "kubeval-{{.OS}}-{{.Arch}}.tar.gz",
+      "asset": "kubeval-{{.OS}}-{{.Arch}}.{{.Format}}",
       "description": "Validate your Kubernetes configuration files, supports multiple Kubernetes versions",
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "kubeval",
       "repo_owner": "instrumenta",
       "rosetta2": true,
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
       "type": "github_release"
     },
     {
