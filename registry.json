@@ -3687,8 +3687,15 @@
       "type": "github_release"
     },
     {
-      "asset": "migrate.{{.OS}}-{{.Arch}}.tar.gz",
+      "asset": "migrate.{{.OS}}-{{.Arch}}.{{.Format}}",
       "description": "Database migrations. CLI and Golang library",
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "migrate",
       "repo_owner": "golang-migrate",
       "type": "github_release",
@@ -3701,7 +3708,15 @@
               "src": "migrate.{{.OS}}-{{.Arch}}"
             }
           ],
+          "overrides": [
+            {
+              "asset": "migrate.windows-amd64.exe.tar.gz",
+              "format": "tar.gz",
+              "goos": "windows"
+            }
+          ],
           "rosetta2": true,
+          "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
           "version_constraint": "semver(\"\u003c= 4.14.1\")"
         }
       ]
