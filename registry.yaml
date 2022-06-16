@@ -2176,8 +2176,12 @@ packages:
   - type: github_release
     repo_owner: fluxcd
     repo_name: flux2
-    asset: "flux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     description: Open and extensible continuous delivery solution for Kubernetes. Powered by GitOps Toolkit
+    asset: "flux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
     files:
       - name: flux
   - type: github_content
