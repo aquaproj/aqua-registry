@@ -8,6 +8,7 @@ packages:
     format: tar.gz
     replacements:
       amd64: x86_64
+      windows: win
     overrides:
       - goos: linux
         replacements:
@@ -16,3 +17,8 @@ packages:
         format: zip
         replacements:
           amd64: x64
+    version_constraint: 'semver(">= 2.1.0")'
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    version_overrides:
+      - version_constraint: 'semver("< 2.1.0")'
+        supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")

@@ -2970,12 +2970,21 @@
         }
       ],
       "replacements": {
-        "amd64": "x86_64"
+        "amd64": "x86_64",
+        "windows": "win"
       },
       "repo_name": "dotenv-linter",
       "repo_owner": "dotenv-linter",
       "rosetta2": true,
-      "type": "github_release"
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 2.1.0\")",
+      "version_overrides": [
+        {
+          "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
+          "version_constraint": "semver(\"\u003c 2.1.0\")"
+        }
+      ]
     },
     {
       "asset": "xh-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}",
