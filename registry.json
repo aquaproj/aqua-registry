@@ -3945,12 +3945,17 @@
       "type": "github_release"
     },
     {
-      "asset": "goreleaser_{{title .OS}}_{{.Arch}}.tar.gz",
+      "asset": "goreleaser_{{title .OS}}_{{.Arch}}.{{.Format}}",
       "description": "Deliver Go binaries as fast and easily as possible",
+      "format": "tar.gz",
       "overrides": [
         {
           "asset": "goreleaser_{{title .OS}}_all.tar.gz",
           "goos": "darwin"
+        },
+        {
+          "format": "zip",
+          "goos": "windows"
         }
       ],
       "replacements": {
@@ -3962,7 +3967,12 @@
       "version_constraint": "semver(\"\u003e= 0.182.0\")",
       "version_overrides": [
         {
-          "overrides": [],
+          "overrides": [
+            {
+              "format": "zip",
+              "goos": "windows"
+            }
+          ],
           "version_constraint": "semver(\"\u003c 0.182.0\")"
         }
       ]

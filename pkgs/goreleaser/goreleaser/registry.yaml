@@ -5,13 +5,18 @@ packages:
     description: Deliver Go binaries as fast and easily as possible
     replacements:
       amd64: x86_64
-    asset: "goreleaser_{{title .OS}}_{{.Arch}}.tar.gz"
+    asset: "goreleaser_{{title .OS}}_{{.Arch}}.{{.Format}}"
+    format: tar.gz
     version_constraint: 'semver(">= 0.182.0")'
     overrides:
       - goos: darwin
         asset: "goreleaser_{{title .OS}}_all.tar.gz"
+      - goos: windows
+        format: zip
     version_overrides:
       # https://github.com/goreleaser/goreleaser/pull/2572
       # macOS Universal binaries
       - version_constraint: 'semver("< 0.182.0")'
-        overrides: []
+        overrides:
+          - goos: windows
+            format: zip
