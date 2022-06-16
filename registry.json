@@ -4400,13 +4400,21 @@
       "url": "https://get.helm.sh/helm-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz"
     },
     {
-      "asset": "kubecolor_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.tar.gz",
+      "asset": "kubecolor_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.{{.Format}}",
       "description": "colorizes kubectl output",
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "replacements": {
         "amd64": "x86_64"
       },
       "repo_name": "kubecolor",
       "repo_owner": "hidetatz",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
