@@ -3214,19 +3214,56 @@
       "type": "github_release"
     },
     {
-      "asset": "iam-policy-json-to-terraform_amd64",
+      "asset": "iam-policy-json-to-terraform_{{.OS}}_{{.Arch}}",
       "description": "Small tool to convert an IAM Policy in JSON format into a Terraform aws_iam_policy_document",
       "format": "raw",
       "overrides": [
         {
+          "asset": "iam-policy-json-to-terraform.exe",
+          "goos": "windows"
+        },
+        {
+          "asset": "iam-policy-json-to-terraform_amd64",
+          "goos": "linux"
+        },
+        {
           "asset": "iam-policy-json-to-terraform_darwin",
+          "goarch": "amd64",
+          "goos": "darwin"
+        },
+        {
+          "asset": "iam-policy-json-to-terraform_darwin_arm",
+          "goarch": "arm64",
           "goos": "darwin"
         }
       ],
+      "replacements": {
+        "arm64": "arm"
+      },
       "repo_name": "iam-policy-json-to-terraform",
       "repo_owner": "flosell",
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
-      "type": "github_release"
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 1.7.0\")",
+      "version_overrides": [
+        {
+          "overrides": [
+            {
+              "asset": "iam-policy-json-to-terraform.exe",
+              "goos": "windows"
+            },
+            {
+              "asset": "iam-policy-json-to-terraform_amd64",
+              "goos": "linux"
+            },
+            {
+              "asset": "iam-policy-json-to-terraform_darwin",
+              "goos": "darwin"
+            }
+          ],
+          "version_constraint": "semver(\"\u003c 1.7.0\")"
+        }
+      ]
     },
     {
       "asset": "flux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
