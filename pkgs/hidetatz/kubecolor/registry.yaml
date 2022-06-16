@@ -2,7 +2,12 @@ packages:
   - type: github_release
     repo_owner: hidetatz
     repo_name: kubecolor
-    asset: "kubecolor_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.tar.gz"
     description: colorizes kubectl output
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "kubecolor_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.{{.Format}}"
     replacements:
       amd64: x86_64
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
