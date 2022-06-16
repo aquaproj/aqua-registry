@@ -4,6 +4,10 @@ packages:
     repo_name: editorconfig-checker
     asset: "ec-{{.OS}}-{{.Arch}}.tar.gz"
     description: A tool to verify that your files are in harmony with your .editorconfig
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    overrides:
+      - goos: windows
+        asset: ec-windows-amd64.exe.tar.gz
     files:
       - name: ec
         src: "bin/ec-{{.OS}}-{{.Arch}}"
