@@ -2790,10 +2790,11 @@ packages:
     repo_name: q
     description: q - Run SQL directly on CSV or TSV files
     rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     version_constraint: 'semver(">= 3.1.6")'
     asset: "{{.OS}}-q"
     replacements:
+      windows: win
       darwin: macos
     version_overrides:
       - version_constraint: 'semver("< 3.1.6")'
@@ -2802,6 +2803,9 @@ packages:
           darwin: Darwin
           linux: Linux
           amd64: x86_64
+        overrides:
+          - goos: windows
+            asset: q-AMD64-Windows.exe
   - type: github_release
     repo_owner: harness
     repo_name: drone-cli

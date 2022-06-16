@@ -4194,17 +4194,24 @@
       "asset": "{{.OS}}-q",
       "description": "q - Run SQL directly on CSV or TSV files",
       "replacements": {
-        "darwin": "macos"
+        "darwin": "macos",
+        "windows": "win"
       },
       "repo_name": "q",
       "repo_owner": "harelba",
       "rosetta2": true,
-      "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
       "type": "github_release",
       "version_constraint": "semver(\"\u003e= 3.1.6\")",
       "version_overrides": [
         {
           "asset": "q-{{.Arch}}-{{.OS}}",
+          "overrides": [
+            {
+              "asset": "q-AMD64-Windows.exe",
+              "goos": "windows"
+            }
+          ],
           "replacements": {
             "amd64": "x86_64",
             "darwin": "Darwin",
