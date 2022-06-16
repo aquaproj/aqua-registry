@@ -2,12 +2,21 @@ packages:
   - type: github_release
     repo_owner: golang-migrate
     repo_name: migrate
-    asset: "migrate.{{.OS}}-{{.Arch}}.tar.gz"
     description: Database migrations. CLI and Golang library
+    asset: "migrate.{{.OS}}-{{.Arch}}.{{.Format}}"
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
     version_constraint: 'semver("> 4.14.1")'
     version_overrides:
       - version_constraint: 'semver("<= 4.14.1")'
         rosetta2: true
+        supported_if: not (GOOS == "windows" and GOARCH == "arm64")
         files:
           - name: migrate
             src: "migrate.{{.OS}}-{{.Arch}}"
+        overrides:
+          - goos: windows
+            format: tar.gz
+            asset: migrate.windows-amd64.exe.tar.gz
