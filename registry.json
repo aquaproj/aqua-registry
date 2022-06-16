@@ -4560,6 +4560,10 @@
       "description": "Create inlets servers on the top cloud platforms",
       "overrides": [
         {
+          "asset": "inletsctl.exe.tgz",
+          "goos": "windows"
+        },
+        {
           "asset": "inletsctl-darwin.tgz",
           "files": [
             {
@@ -4567,6 +4571,18 @@
               "src": "inletsctl-darwin"
             }
           ],
+          "goarch": "amd64",
+          "goos": "darwin"
+        },
+        {
+          "asset": "inletsctl-darwin-arm64.tgz",
+          "files": [
+            {
+              "name": "inletsctl",
+              "src": "inletsctl-darwin"
+            }
+          ],
+          "goarch": "arm64",
           "goos": "darwin"
         },
         {
@@ -4577,12 +4593,52 @@
               "src": "inletsctl-arm64"
             }
           ],
-          "goarch": "arm64"
+          "goarch": "arm64",
+          "goos": "linux"
         }
       ],
       "repo_name": "inletsctl",
       "repo_owner": "inlets",
-      "type": "github_release"
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 0.8.20\")",
+      "version_overrides": [
+        {
+          "supported_if": "false",
+          "version_constraint": "semver(\"= 0.8.15\")"
+        },
+        {
+          "overrides": [
+            {
+              "asset": "inletsctl.exe.tgz",
+              "goos": "windows"
+            },
+            {
+              "asset": "inletsctl-darwin.tgz",
+              "files": [
+                {
+                  "name": "inletsctl",
+                  "src": "inletsctl-darwin"
+                }
+              ],
+              "goos": "darwin"
+            },
+            {
+              "asset": "inletsctl-arm64.tgz",
+              "files": [
+                {
+                  "name": "inletsctl",
+                  "src": "inletsctl-arm64"
+                }
+              ],
+              "goarch": "arm64",
+              "goos": "linux"
+            }
+          ],
+          "rosetta2": true,
+          "version_constraint": "semver(\"\u003c 0.8.15\")"
+        }
+      ]
     },
     {
       "asset": "kubeval-{{.OS}}-{{.Arch}}.tar.gz",
