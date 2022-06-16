@@ -2772,12 +2772,19 @@
       "type": "github_release"
     },
     {
-      "asset": "dhall-{{.Version}}-x86_64-{{.OS}}.tar.bz2",
+      "asset": "dhall-{{.Version}}-x86_64-{{.OS}}.{{.Format}}",
       "description": "Maintainable configuration files",
       "files": [
         {
           "name": "dhall",
           "src": "bin/dhall"
+        }
+      ],
+      "format": "tar.bz2",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
         }
       ],
       "replacements": {
@@ -2786,7 +2793,48 @@
       },
       "repo_name": "dhall-haskell",
       "repo_owner": "dhall-lang",
-      "type": "github_release"
+      "rosetta2": true,
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 1.40.2\")",
+      "version_overrides": [
+        {
+          "overrides": [
+            {
+              "complete_windows_exe": false,
+              "goos": "windows"
+            }
+          ],
+          "version_constraint": "semver(\"\u003e= 1.40.1\")"
+        },
+        {
+          "overrides": [
+            {
+              "format": "tar.bz2.zip",
+              "goos": "windows"
+            },
+            {
+              "format": "tar.bz2.zip",
+              "goos": "darwin"
+            }
+          ],
+          "version_constraint": "semver(\"\u003e= 1.40.0\")"
+        },
+        {
+          "overrides": [
+            {
+              "files": [
+                {
+                  "name": "dhall"
+                }
+              ],
+              "format": "zip",
+              "goos": "windows"
+            }
+          ],
+          "version_constraint": "semver(\"\u003c= 1.39.0\")"
+        }
+      ]
     },
     {
       "asset": "doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}",

@@ -1859,14 +1859,38 @@ packages:
   - type: github_release
     repo_owner: dhall-lang
     repo_name: dhall-haskell
-    asset: "dhall-{{.Version}}-x86_64-{{.OS}}.tar.bz2"
     description: Maintainable configuration files
+    rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "dhall-{{.Version}}-x86_64-{{.OS}}.{{.Format}}"
+    format: tar.bz2
+    overrides:
+      - goos: windows
+        format: zip
     replacements:
       darwin: macos
       amd64: x86_64
     files:
       - name: dhall
         src: bin/dhall
+    version_constraint: 'semver(">= 1.40.2")'
+    version_overrides:
+      - version_constraint: 'semver(">= 1.40.1")'
+        overrides:
+          - goos: windows
+            complete_windows_exe: false
+      - version_constraint: 'semver(">= 1.40.0")'
+        overrides:
+          - goos: windows
+            format: tar.bz2.zip
+          - goos: darwin
+            format: tar.bz2.zip
+      - version_constraint: 'semver("<= 1.39.0")'
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: dhall
   - type: github_release
     repo_owner: digitalocean
     repo_name: doctl
