@@ -1991,19 +1991,25 @@ packages:
     repo_name: xh
     rosetta2: true
     asset: "xh-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
     description: Friendly and fast tool for sending HTTP requests
     files:
       - name: xh
         src: "xh-{{.Version}}-{{.Arch}}-{{.OS}}/xh"
     replacements:
+      windows: pc-windows-msvc
       darwin: apple-darwin
       linux: unknown-linux-musl
       amd64: x86_64
+      arm64: aarch64
     format: tar.gz
     format_overrides:
       - goos: windows
         format: zip
+    version_constraint: 'semver(">= 0.15.0")'
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    version_overrides:
+      - version_constraint: 'semver("< 0.15.0")'
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
     repo_owner: earthly
     repo_name: earthly
