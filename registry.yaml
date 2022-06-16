@@ -3010,11 +3010,26 @@ packages:
     repo_owner: infracost
     repo_name: infracost
     description: Cloud cost estimates for Terraform in pull requests. Love your cloud bill
-    asset: "infracost-{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    asset: "infracost-{{.OS}}-{{.Arch}}.{{.Format}}"
     files:
       - name: infracost
         src: "infracost-{{.OS}}-{{.Arch}}"
+    format: tar.gz
+    overrides:
+      - goos: windows
+        goarch: amd64
+        files:
+          - name: infracost
+            src: infracost.exe
+      - goos: windows
+        goarch: arm64
+        files:
+          - name: infracost
+            src: infracost-arm64.exe
+    version_constraint: 'semver(">= 0.9.17")'
+    version_overrides:
+      - version_constraint: 'semver("< 0.9.17")'
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
     repo_owner: inlets
     repo_name: inlets-pro
