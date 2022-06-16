@@ -5,10 +5,14 @@ packages:
     rosetta2: true
     asset: "hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}"
     description: A command-line tool that makes git easier to use with GitHub
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     format: tgz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
+        files:
+          - name: hub
+            src: bin/hub.exe
     files:
       - name: hub
         src: "hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}/bin/hub"
