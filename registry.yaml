@@ -2375,17 +2375,17 @@ packages:
     repo_owner: gleam-lang
     repo_name: gleam
     description: "A friendly language for building type-safe, scalable systems!"
-    format: tar.gz
     replacements:
       darwin: macos
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "gleam-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
+    format: tar.gz
     overrides:
       - goos: darwin
         goarch: amd64
         asset: "gleam-{{.Version}}-{{.OS}}.{{.Format}}"
-    format_overrides:
       - goos: windows
+        asset: "gleam-{{.Version}}-windows-64bit.{{.Format}}"
         format: zip
   - type: github_release
     repo_owner: go-jira

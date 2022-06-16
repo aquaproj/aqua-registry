@@ -3573,17 +3573,16 @@
       "asset": "gleam-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}",
       "description": "A friendly language for building type-safe, scalable systems!",
       "format": "tar.gz",
-      "format_overrides": [
-        {
-          "format": "zip",
-          "goos": "windows"
-        }
-      ],
       "overrides": [
         {
           "asset": "gleam-{{.Version}}-{{.OS}}.{{.Format}}",
           "goarch": "amd64",
           "goos": "darwin"
+        },
+        {
+          "asset": "gleam-{{.Version}}-windows-64bit.{{.Format}}",
+          "format": "zip",
+          "goos": "windows"
         }
       ],
       "replacements": {
@@ -3591,7 +3590,7 @@
       },
       "repo_name": "gleam",
       "repo_owner": "gleam-lang",
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
       "type": "github_release"
     },
     {
