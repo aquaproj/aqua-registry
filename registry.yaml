@@ -3020,14 +3020,22 @@ packages:
         format: zip
         files:
           - name: infracost
-            src: "infracost.exe"
+            src: infracost.exe
     version_constraint: 'semver(">= 0.9.18")'
     version_overrides:
       - version_constraint: 'semver("= 0.9.17")'
-        overrides: []
+        overrides:
+          - goos: windows
+            files:
+              - name: infracost
+                src: infracost.exe
       - version_constraint: 'semver("< 0.9.17")'
         supported_if: GOOS == "darwin" or GOARCH == "amd64"
-        overrides: []
+        overrides:
+          - goos: windows
+            files:
+              - name: infracost
+                src: infracost.exe
   - type: github_release
     repo_owner: inlets
     repo_name: inlets-pro
