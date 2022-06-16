@@ -3154,7 +3154,7 @@
       "type": "github_release"
     },
     {
-      "asset": "frp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz",
+      "asset": "frp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet",
       "files": [
         {
@@ -3166,8 +3166,16 @@
           "src": "frp_{{trimV .Version}}_{{.OS}}_{{.Arch}}/frps"
         }
       ],
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "frp",
       "repo_owner": "fatedier",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {

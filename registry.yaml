@@ -2106,8 +2106,13 @@ packages:
   - type: github_release
     repo_owner: fatedier
     repo_name: frp
-    asset: "frp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     description: A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet
+    asset: "frp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     files:
       - name: frpc
         src: "frp_{{trimV .Version}}_{{.OS}}_{{.Arch}}/frpc"
