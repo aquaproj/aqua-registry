@@ -4520,7 +4520,7 @@
       "url": "https://dl.influxdata.com/influxdb/releases/influxdb2-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     },
     {
-      "asset": "infracost-{{.OS}}-{{.Arch}}.tar.gz",
+      "asset": "infracost-{{.OS}}-{{.Arch}}.{{.Format}}",
       "description": "Cloud cost estimates for Terraform in pull requests. Love your cloud bill",
       "files": [
         {
@@ -4528,10 +4528,28 @@
           "src": "infracost-{{.OS}}-{{.Arch}}"
         }
       ],
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "infracost",
       "repo_owner": "infracost",
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
-      "type": "github_release"
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 0.9.18\")",
+      "version_overrides": [
+        {
+          "overrides": [],
+          "version_constraint": "semver(\"= 0.9.17\")"
+        },
+        {
+          "overrides": [],
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 0.9.17\")"
+        }
+      ]
     },
     {
       "asset": "inlets-pro",
