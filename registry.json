@@ -3004,14 +3004,23 @@
       ],
       "replacements": {
         "amd64": "x86_64",
+        "arm64": "aarch64",
         "darwin": "apple-darwin",
-        "linux": "unknown-linux-musl"
+        "linux": "unknown-linux-musl",
+        "windows": "pc-windows-msvc"
       },
       "repo_name": "xh",
       "repo_owner": "ducaale",
       "rosetta2": true,
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
-      "type": "github_release"
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 0.15.0\")",
+      "version_overrides": [
+        {
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 0.15.0\")"
+        }
+      ]
     },
     {
       "asset": "earthly-{{.OS}}-{{.Arch}}",
