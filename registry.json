@@ -3462,7 +3462,7 @@
       "type": "github_release"
     },
     {
-      "asset": "gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}.gz",
+      "asset": "gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}",
       "description": "GO Simple Tunnel - a simple tunnel written in golang",
       "files": [
         {
@@ -3470,11 +3470,24 @@
           "src": "gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}"
         }
       ],
+      "format": "gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "gost",
       "repo_owner": "ginuerzh",
-      "rosetta2": true,
-      "supported_if": "not ((GOOS == \"linux\") and (GOARCH == \"arm64\"))",
-      "type": "github_release"
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 2.11.2\")",
+      "version_overrides": [
+        {
+          "rosetta2": true,
+          "version_constraint": "semver(\"\u003c 2.11.2\")"
+        }
+      ]
     },
     {
       "asset": "git-chglog_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",

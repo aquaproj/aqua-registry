@@ -2,10 +2,17 @@ packages:
   - type: github_release
     repo_owner: ginuerzh
     repo_name: gost
-    rosetta2: true
     description: GO Simple Tunnel - a simple tunnel written in golang
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
-    asset: "gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}.gz"
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}"
+    format: gz
+    overrides:
+      - goos: windows
+        format: zip
     files:
       - name: gost
         src: "gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}"
+    version_constraint: 'semver(">= 2.11.2")'
+    version_overrides:
+      - version_constraint: 'semver("< 2.11.2")'
+        rosetta2: true
