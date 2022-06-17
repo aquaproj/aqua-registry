@@ -4519,10 +4519,13 @@ packages:
   - type: github_release
     repo_owner: pulumi
     repo_name: kubespy
-    rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
-    asset: "kubespy-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz"
     description: Tools for observing Kubernetes resources in real time, powered by Pulumi
+    rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "kubespy-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz"
+    overrides:
+      - goos: windows
+        asset: "kubespy.exe-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: pulumi
     repo_name: pulumi
