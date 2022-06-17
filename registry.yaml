@@ -4962,9 +4962,10 @@ packages:
   - type: github_release
     repo_owner: sharkdp
     repo_name: fd
+    description: "A simple, fast and user-friendly alternative to 'find'"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     asset: "fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-    description: "A simple, fast and user-friendly alternative to 'find'"
     format: tar.gz
     replacements:
       amd64: x86_64
@@ -4974,11 +4975,12 @@ packages:
       386: i686
       linux: unknown-linux-gnu
     overrides:
-      - goarch: amd64
-        replacements:
-          linux: unknown-linux-musl
       - goos: windows
         format: zip
+      - goos: linux
+        goarch: amd64
+        replacements:
+          linux: unknown-linux-musl
     files:
       - name: fd
         src: "fd-{{.Version}}-{{.Arch}}-{{.OS}}/fd"
