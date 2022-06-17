@@ -4604,6 +4604,7 @@ packages:
     repo_owner: replicatedhq
     repo_name: kots
     description: KOTS provides the framework, tools and integrations that enable the delivery and management of 3rd-party Kubernetes applications, a.k.a. Kubernetes Off-The-Shelf (KOTS) Software
+    supported_if: GOOS != "windows"
     files:
       - name: kubectl-kots
         src: kots
@@ -4615,7 +4616,7 @@ packages:
     version_overrides:
       - version_constraint: 'semver("< 1.59.2")'
         rosetta2: true
-        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
         overrides: []
   - type: github_release
     repo_owner: replicatedhq
@@ -4632,11 +4633,16 @@ packages:
   - type: github_release
     repo_owner: restic
     repo_name: restic
-    asset: "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.bz2"
     description: Fast, secure, efficient backup program
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: restic
         src: "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}"
+    format: bz2
+    overrides:
+      - goos: windows
+        format: zip
   - type: github_release
     repo_owner: reviewdog
     repo_name: reviewdog

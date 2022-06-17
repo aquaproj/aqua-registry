@@ -6896,13 +6896,14 @@
       ],
       "repo_name": "kots",
       "repo_owner": "replicatedhq",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release",
       "version_constraint": "semver(\"\u003e= 1.59.2\")",
       "version_overrides": [
         {
           "overrides": [],
           "rosetta2": true,
-          "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
+          "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
           "version_constraint": "semver(\"\u003c 1.59.2\")"
         }
       ]
@@ -6928,7 +6929,7 @@
       "type": "github_release"
     },
     {
-      "asset": "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.bz2",
+      "asset": "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "Fast, secure, efficient backup program",
       "files": [
         {
@@ -6936,8 +6937,16 @@
           "src": "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}"
         }
       ],
+      "format": "bz2",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "restic",
       "repo_owner": "restic",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
