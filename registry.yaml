@@ -5710,10 +5710,17 @@ packages:
   - type: github_release
     repo_owner: up9inc
     repo_name: mizu
+    description: API traffic viewer for Kubernetes. Think TCPDump and Wireshark re-invented for Kubernetes
     format: raw
     asset: "mizu_{{.OS}}_{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
-    description: API traffic viewer for Kubernetes. Think TCPDump and Wireshark re-invented for Kubernetes
+    overrides:
+      - goos: windows
+        asset: mizu.exe
+    version_constraint: 'semver(">= 0.24.0")'
+    supported_if: not (GOOS == "windows" or GOARCH == "arm64")
+    version_overrides:
+      - version_constraint: 'semver("< 0.24.0")'
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
     repo_owner: uptrace
     repo_name: uptrace

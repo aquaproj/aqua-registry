@@ -8500,10 +8500,23 @@
       "asset": "mizu_{{.OS}}_{{.Arch}}",
       "description": "API traffic viewer for Kubernetes. Think TCPDump and Wireshark re-invented for Kubernetes",
       "format": "raw",
+      "overrides": [
+        {
+          "asset": "mizu.exe",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "mizu",
       "repo_owner": "up9inc",
-      "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
-      "type": "github_release"
+      "supported_if": "not (GOOS == \"windows\" or GOARCH == \"arm64\")",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 0.24.0\")",
+      "version_overrides": [
+        {
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 0.24.0\")"
+        }
+      ]
     },
     {
       "asset": "uptrace_{{.OS}}_{{.Arch}}",
