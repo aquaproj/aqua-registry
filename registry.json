@@ -5963,7 +5963,7 @@
       "repo_name": "fac",
       "repo_owner": "mkchoi212",
       "rosetta2": true,
-      "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
+      "supported_if": "GOOS == \"darwin\" or (GOOS == \"linux\" and GOARCH == \"amd64\")",
       "type": "github_release"
     },
     {
@@ -6000,14 +6000,28 @@
       "type": "github_release"
     },
     {
-      "asset": "sops-{{.Version}}.{{.OS}}",
+      "asset": "sops-{{.Version}}.{{.OS}}.{{.Arch}}",
       "description": "Simple and flexible tool for managing secrets",
       "format": "raw",
+      "overrides": [
+        {
+          "asset": "sops-{{.Version}}.exe",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "sops",
       "repo_owner": "mozilla",
-      "rosetta2": true,
-      "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
-      "type": "github_release"
+      "supported_if": "not (GOOS == \"windows\" or GOARCH == \"arm64\")",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 3.7.2\")",
+      "version_overrides": [
+        {
+          "asset": "sops-{{.Version}}.{{.OS}}",
+          "rosetta2": true,
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 3.7.2\")"
+        }
+      ]
     },
     {
       "asset": "codeowners-validator_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
@@ -6056,6 +6070,7 @@
       "repo_name": "variant",
       "repo_owner": "mumoshu",
       "rosetta2": true,
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -6068,6 +6083,7 @@
       ],
       "repo_name": "variant2",
       "repo_owner": "mumoshu",
+      "supported_if": "GOOS != \"windows\"",
       "type": "github_release"
     },
     {
@@ -6076,6 +6092,7 @@
       "format": "raw",
       "repo_name": "gofumpt",
       "repo_owner": "mvdan",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
@@ -6092,8 +6109,15 @@
       "type": "github_release"
     },
     {
-      "asset": "act_{{title .OS}}_{{.Arch}}.tar.gz",
+      "asset": "act_{{title .OS}}_{{.Arch}}.{{.Format}}",
       "description": "Run your GitHub Actions locally",
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "replacements": {
         "amd64": "x86_64"
       },
