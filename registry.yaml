@@ -4824,7 +4824,7 @@ packages:
     description: Monitor your Website and APIs from your Computer. Get Notified through Slack, E-mail when your server is down or response time is more than expected
     rosetta2: true
     asset: "statusok_{{.OS}}.zip"
-    supported_if: GOARCH == "amd64"
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     files:
       - name: statusok
         src: "statusok_{{.OS}}/statusok"
@@ -4833,8 +4833,9 @@ packages:
   - type: github_release
     repo_owner: sbstp
     repo_name: kubie
-    asset: "kubie-{{.OS}}-{{.Arch}}"
     description: A more powerful alternative to kubectx and kubens
+    supported_if: GOOS != "windows"
+    asset: "kubie-{{.OS}}-{{.Arch}}"
     format: raw
   - type: github_release
     repo_owner: scaleway
