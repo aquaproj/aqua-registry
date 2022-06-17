@@ -4633,11 +4633,16 @@ packages:
   - type: github_release
     repo_owner: restic
     repo_name: restic
-    asset: "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.bz2"
     description: Fast, secure, efficient backup program
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: restic
         src: "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}"
+    format: bz2
+    overrides:
+      - goos: windows
+        format: zip
   - type: github_release
     repo_owner: reviewdog
     repo_name: reviewdog

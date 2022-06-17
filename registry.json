@@ -6929,7 +6929,7 @@
       "type": "github_release"
     },
     {
-      "asset": "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.bz2",
+      "asset": "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}",
       "description": "Fast, secure, efficient backup program",
       "files": [
         {
@@ -6937,8 +6937,16 @@
           "src": "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}"
         }
       ],
+      "format": "bz2",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "restic",
       "repo_owner": "restic",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
