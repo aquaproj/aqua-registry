@@ -3839,27 +3839,30 @@ packages:
   - type: github_release
     repo_owner: mattn
     repo_name: goreman
-    asset: "goreman_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: foreman clone written in go language
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "goreman_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: goreman
         src: "goreman_{{.Version}}_{{.OS}}_{{.Arch}}/goreman"
-    format: tar.gz
+    format: zip
     format_overrides:
-      - goos: darwin
-        format: zip
+      - goos: linux
+        format: tar.gz
   - type: github_release
     repo_owner: mattn
     repo_name: memo
-    asset: "memo_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
     description: Memo Life For You
+    rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "memo_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
     files:
       - name: memo
         src: "memo_{{.Version}}_{{.OS}}_amd64/memo"
-    format: tar.gz
+    format: zip
     format_overrides:
-      - goos: darwin
-        format: zip
+      - goos: linux
+        format: tar.gz
   - type: github_release
     repo_owner: megaease
     repo_name: easeprobe
@@ -3871,17 +3874,17 @@ packages:
   - type: github_release
     repo_owner: mercari
     repo_name: tfnotify
-    rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
-    asset: "tfnotify_{{.OS}}_{{.Arch}}.tar.gz"
     description: A CLI command to parse Terraform execution result and notify it to GitHub
+    rosetta2: true
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    asset: "tfnotify_{{.OS}}_{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: mergestat
     repo_name: mergestat
     description: Query git repositories with SQL. Generate reports, perform status checks, analyze codebases
     rosetta2: true
     asset: "mergestat-{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     replacements:
       darwin: macos
   - type: github_release
