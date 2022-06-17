@@ -2,12 +2,14 @@ packages:
   - type: github_release
     repo_owner: tcnksm
     repo_name: ghr
-    asset: "ghr_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
     description: Upload multiple artifacts to GitHub Release in parallel
+    rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "ghr_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
     files:
       - name: ghr
         src: "ghr_{{.Version}}_{{.OS}}_amd64/ghr"
-    format: tar.gz
+    format: zip
     format_overrides:
-      - goos: darwin
-        format: zip
+      - goos: linux
+        format: tar.gz
