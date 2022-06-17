@@ -4210,11 +4210,15 @@ packages:
   - type: github_release
     repo_owner: ogham
     repo_name: dog
-    asset: "dog-{{.Version}}-{{.OS}}.zip"
     description: "A command-line DNS client."
+    rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "dog-{{.Version}}-{{.Arch}}-{{.OS}}.zip"
     replacements:
-      darwin: x86_64-apple-darwin
-      linux: x86_64-unknown-linux-gnu
+      amd64: x86_64
+      windows: pc-windows-msvc
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
     files:
       - name: dog
         src: bin/dog
