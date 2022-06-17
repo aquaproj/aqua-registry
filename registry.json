@@ -6753,14 +6753,20 @@
     {
       "asset": "kubespy-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz",
       "description": "Tools for observing Kubernetes resources in real time, powered by Pulumi",
+      "overrides": [
+        {
+          "asset": "kubespy.exe-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz",
+          "goos": "windows"
+        }
+      ],
       "repo_name": "kubespy",
       "repo_owner": "pulumi",
       "rosetta2": true,
-      "supported_if": "not (GOOS == \"linux\" and GOARCH == \"arm64\")",
+      "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
       "type": "github_release"
     },
     {
-      "asset": "pulumi-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz",
+      "asset": "pulumi-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}",
       "description": "Pulumi - Modern Infrastructure as Code. Any cloud, any language",
       "files": [
         {
@@ -6768,11 +6774,25 @@
           "src": "pulumi/pulumi"
         }
       ],
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "files": [
+            {
+              "name": "pulumi",
+              "src": "pulumi/bin/pulumi.exe"
+            }
+          ],
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "replacements": {
         "amd64": "x64"
       },
       "repo_name": "pulumi",
       "repo_owner": "pulumi",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
