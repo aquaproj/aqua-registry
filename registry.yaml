@@ -4915,8 +4915,9 @@ packages:
     repo_owner: sharkdp
     repo_name: bat
     rosetta2: true
-    asset: "bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     description: "A cat(1) clone with wings."
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
     replacements:
       amd64: x86_64
@@ -4926,11 +4927,12 @@ packages:
       linux: unknown-linux-gnu
       386: i686
     overrides:
-      - goarch: amd64
-        replacements:
-          linux: unknown-linux-musl
       - goos: windows
         format: zip
+      - goos: linux
+        goarch: amd64
+        replacements:
+          linux: unknown-linux-musl
     files:
       - name: bat
         src: "bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat"
