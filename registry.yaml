@@ -4176,19 +4176,33 @@ packages:
     type: github_release
     repo_owner: oam-dev
     repo_name: kubevela
-    asset: kubectl-vela-{{.Version}}-{{.OS}}-amd64.tar.gz
     description: The Modern Application Deployment System Based on OAM
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: kubectl-vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     files:
       - name: kubectl-vela
-        src: "{{.OS}}-amd64/kubectl-vela"
+        src: "{{.OS}}-{{.Arch}}/kubectl-vela"
+    version_constraint: 'semver(">= 1.2.0")'
+    version_overrides:
+      - version_constraint: 'semver("< 1.2.0")'
+        rosetta2: true
+        asset: kubectl-vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
     repo_owner: oam-dev
     repo_name: kubevela
-    asset: vela-{{.Version}}-{{.OS}}-amd64.tar.gz
     description: The Modern Application Deployment System Based on OAM
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     files:
       - name: vela
-        src: "{{.OS}}-amd64/vela"
+        src: "{{.OS}}-{{.Arch}}/vela"
+    version_constraint: 'semver(">= 1.2.0")'
+    version_overrides:
+      - version_constraint: 'semver("< 1.2.0")'
+        rosetta2: true
+        asset: vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
     repo_owner: ogham
     repo_name: dog

@@ -6252,31 +6252,51 @@
       "type": "github_archive"
     },
     {
-      "asset": "kubectl-vela-{{.Version}}-{{.OS}}-amd64.tar.gz",
+      "asset": "kubectl-vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz",
       "description": "The Modern Application Deployment System Based on OAM",
       "files": [
         {
           "name": "kubectl-vela",
-          "src": "{{.OS}}-amd64/kubectl-vela"
+          "src": "{{.OS}}-{{.Arch}}/kubectl-vela"
         }
       ],
       "name": "oam-dev/kubevela/kubectl-plugin",
       "repo_name": "kubevela",
       "repo_owner": "oam-dev",
-      "type": "github_release"
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 1.2.0\")",
+      "version_overrides": [
+        {
+          "asset": "kubectl-vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz",
+          "rosetta2": true,
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 1.2.0\")"
+        }
+      ]
     },
     {
-      "asset": "vela-{{.Version}}-{{.OS}}-amd64.tar.gz",
+      "asset": "vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz",
       "description": "The Modern Application Deployment System Based on OAM",
       "files": [
         {
           "name": "vela",
-          "src": "{{.OS}}-amd64/vela"
+          "src": "{{.OS}}-{{.Arch}}/vela"
         }
       ],
       "repo_name": "kubevela",
       "repo_owner": "oam-dev",
-      "type": "github_release"
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 1.2.0\")",
+      "version_overrides": [
+        {
+          "asset": "vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz",
+          "rosetta2": true,
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 1.2.0\")"
+        }
+      ]
     },
     {
       "asset": "dog-{{.Version}}-{{.OS}}.zip",
