@@ -7281,17 +7281,28 @@
     {
       "asset": "yj-{{.OS}}-{{.Arch}}",
       "description": "Convert between YAML, TOML, JSON, and HCL",
+      "overrides": [
+        {
+          "asset": "yj.exe",
+          "goos": "windows"
+        }
+      ],
       "replacements": {
         "darwin": "macos"
       },
       "repo_name": "yj",
       "repo_owner": "sclevine",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release",
       "version_constraint": "semver(\"\u003e= 5.1.0\")",
       "version_overrides": [
         {
           "asset": "yj-{{.OS}}",
           "overrides": [
+            {
+              "asset": "yj.exe",
+              "goos": "windows"
+            },
             {
               "asset": "yj-linux-arm64",
               "goarch": "arm64",

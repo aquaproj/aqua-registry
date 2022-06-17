@@ -4877,14 +4877,20 @@ packages:
     repo_owner: sclevine
     repo_name: yj
     description: Convert between YAML, TOML, JSON, and HCL
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     replacements:
       darwin: macos
     version_constraint: 'semver(">= 5.1.0")'
     asset: "yj-{{.OS}}-{{.Arch}}"
+    overrides:
+      - goos: windows
+        asset: yj.exe
     version_overrides:
       - version_constraint: 'semver("< 5.1.0")'
         asset: "yj-{{.OS}}"
         overrides:
+          - goos: windows
+            asset: yj.exe
           - goos: linux
             goarch: arm64
             asset: yj-linux-arm64
