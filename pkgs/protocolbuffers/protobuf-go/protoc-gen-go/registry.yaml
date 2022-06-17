@@ -4,8 +4,12 @@ packages:
     repo_owner: protocolbuffers
     repo_name: protobuf-go
     description: Go support for Protocol Buffers
-    asset: "protoc-gen-go.{{.Version}}.{{.OS}}.{{.Arch}}.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     rosetta2: true
+    asset: "protoc-gen-go.{{.Version}}.{{.OS}}.{{.Arch}}.{{.Format}}"
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     files:
       - name: protoc-gen-go
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
