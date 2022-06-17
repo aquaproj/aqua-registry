@@ -4283,10 +4283,11 @@ packages:
   - type: github_release
     repo_owner: operator-framework
     repo_name: operator-sdk
-    asset: "operator-sdk_{{.OS}}_{{.Arch}}"
+    description: SDK for building Kubernetes applications. Provides high level APIs, useful abstractions, and project scaffolding
     rosetta2: true
     format: raw
-    description: SDK for building Kubernetes applications. Provides high level APIs, useful abstractions, and project scaffolding
+    supported_if: GOOS != "windows"
+    asset: "operator-sdk_{{.OS}}_{{.Arch}}"
   - type: github_release
     repo_owner: orf
     repo_name: gping
@@ -4346,8 +4347,9 @@ packages:
   - type: github_release
     repo_owner: particledecay
     repo_name: kconf
-    asset: "kconf-{{.OS}}-{{.Arch}}-{{trimV .Version}}.tar.gz"
     description: Manage multiple kubeconfigs easily
+    supported_if: GOOS != "windows"
+    asset: "kconf-{{.OS}}-{{.Arch}}-{{trimV .Version}}.tar.gz"
     replacements:
       darwin: Darwin
       linux: Linux
@@ -4372,13 +4374,14 @@ packages:
     repo_name: peco
     asset: "peco_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Simplistic interactive filtering tool
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     files:
       - name: peco
         src: "peco_{{.OS}}_{{.Arch}}/peco"
-    format: tar.gz
+    format: zip
     format_overrides:
-      - goos: darwin
-        format: zip
+      - goos: linux
+        format: tar.gz
   - type: github_release
     repo_owner: pen-lang
     repo_name: pen
