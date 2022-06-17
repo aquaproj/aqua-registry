@@ -6126,7 +6126,7 @@
       "type": "github_release"
     },
     {
-      "asset": "nvim-{{.OS}}.tar.gz",
+      "asset": "nvim-{{.OS}}.{{.Format}}",
       "description": "Hyperextensible Vim-based text editor",
       "files": [
         {
@@ -6134,7 +6134,12 @@
           "src": "nvim-{{.OS}}/bin/nvim"
         }
       ],
+      "format": "tar.gz",
       "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        },
         {
           "files": [
             {
@@ -6147,10 +6152,12 @@
       ],
       "replacements": {
         "darwin": "macos",
-        "linux": "linux64"
+        "linux": "linux64",
+        "windows": "win64"
       },
       "repo_name": "neovim",
       "repo_owner": "neovim",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {

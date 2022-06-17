@@ -3,14 +3,19 @@ packages:
     repo_owner: neovim
     repo_name: neovim
     description: Hyperextensible Vim-based text editor
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     replacements:
+      windows: win64
       linux: linux64
       darwin: macos
-    asset: "nvim-{{.OS}}.tar.gz"
+    asset: "nvim-{{.OS}}.{{.Format}}"
+    format: tar.gz
     files:
       - name: nvim
         src: "nvim-{{.OS}}/bin/nvim"
     overrides:
+      - goos: windows
+        format: zip
       - goos: darwin
         files:
           - name: nvim
