@@ -4237,13 +4237,17 @@ packages:
   - type: github_release
     repo_owner: okteto
     repo_name: okteto
-    asset: "okteto-{{.OS}}-{{.Arch}}"
     description: Develop your applications directly in your Kubernetes Cluster
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     format: raw
     replacements:
       amd64: x86_64
       darwin: Darwin
       linux: Linux
+    asset: "okteto-{{.OS}}-{{.Arch}}"
+    overrides:
+      - goos: windows
+        asset: okteto.exe
   - type: github_release
     repo_owner: open-policy-agent
     repo_name: conftest
