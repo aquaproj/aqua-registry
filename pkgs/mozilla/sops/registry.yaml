@@ -2,8 +2,16 @@ packages:
   - type: github_release
     repo_owner: mozilla
     repo_name: sops
-    rosetta2: true
-    format: raw
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
-    asset: "sops-{{.Version}}.{{.OS}}"
     description: Simple and flexible tool for managing secrets
+    format: raw
+    overrides:
+      - goos: windows
+        asset: "sops-{{.Version}}.exe"
+    version_constraint: 'semver(">= 3.7.2")'
+    supported_if: not (GOOS == "windows" or GOARCH == "arm64")
+    asset: "sops-{{.Version}}.{{.OS}}.{{.Arch}}"
+    version_overrides:
+      - version_constraint: 'semver("< 3.7.2")'
+        rosetta2: true
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        asset: "sops-{{.Version}}.{{.OS}}"
