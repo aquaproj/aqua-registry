@@ -4529,13 +4529,18 @@ packages:
   - type: github_release
     repo_owner: pulumi
     repo_name: pulumi
-    asset: "pulumi-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz"
     description: Pulumi - Modern Infrastructure as Code. Any cloud, any language
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "pulumi-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     replacements:
       amd64: x64
     files:
       - name: pulumi
         src: pulumi/pulumi
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
   - type: github_release
     repo_owner: rancher
     repo_name: cli

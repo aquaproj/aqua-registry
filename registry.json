@@ -6766,7 +6766,7 @@
       "type": "github_release"
     },
     {
-      "asset": "pulumi-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz",
+      "asset": "pulumi-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}",
       "description": "Pulumi - Modern Infrastructure as Code. Any cloud, any language",
       "files": [
         {
@@ -6774,11 +6774,19 @@
           "src": "pulumi/pulumi"
         }
       ],
+      "format": "tar.gz",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "replacements": {
         "amd64": "x64"
       },
       "repo_name": "pulumi",
       "repo_owner": "pulumi",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "github_release"
     },
     {
