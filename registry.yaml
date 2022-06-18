@@ -4018,7 +4018,7 @@ packages:
       - goos: windows
         asset: "sops-{{.Version}}.exe"
     version_constraint: 'semver(">= 3.7.2")'
-    supported_if: not (GOOS == "windows" or GOARCH == "arm64")
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "sops-{{.Version}}.{{.OS}}.{{.Arch}}"
     version_overrides:
       - version_constraint: 'semver("< 3.7.2")'
@@ -5607,7 +5607,7 @@ packages:
     repo_owner: thought-machine
     repo_name: please
     description: High-performance extensible build system for reproducible multi-language builds
-    supported_if: GOOS == "darwin" and (GOOS == "linux" and GOARCH == "amd64")
+    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     asset: "please_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     files:
       - name: please
@@ -5729,7 +5729,7 @@ packages:
       - goos: windows
         asset: mizu.exe
     version_constraint: 'semver(">= 0.24.0")'
-    supported_if: not (GOOS == "windows" or GOARCH == "arm64")
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     version_overrides:
       - version_constraint: 'semver("< 0.24.0")'
         supported_if: GOOS == "darwin" or GOARCH == "amd64"
