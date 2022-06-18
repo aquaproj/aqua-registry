@@ -8407,8 +8407,15 @@
       "repo_name": "lwc",
       "repo_owner": "timdp",
       "rosetta2": true,
-      "supported_if": "GOOS != \"darwin\"",
-      "type": "github_release"
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
+      "type": "github_release",
+      "version_constraint": "semver(\"\u003e= 0.4.5\")",
+      "version_overrides": [
+        {
+          "supported_if": "GOOS == \"darwin\" or GOARCH == \"amd64\"",
+          "version_constraint": "semver(\"\u003c 0.4.5\")"
+        }
+      ]
     },
     {
       "asset": "tinygo{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}",
