@@ -112,7 +112,7 @@ e.g. [pkg.yaml](pkgs/scaleway/scaleway-cli/pkg.yaml) [registry.yaml](pkgs/scalew
 
 ```yaml
 packages:
-  - name: scaleway/scaleway-cli@v2.5.2
+  - name: scaleway/scaleway-cli@v2.5.3
   - name: scaleway/scaleway-cli
     version: v2.4.0
 ```
@@ -123,8 +123,8 @@ packages:
 
 ```yaml
 packages:
-  - name: scaleway/scaleway-cli@v2.5.2
-  - name: scaleway/scaleway-cli@v2.5.2
+  - name: scaleway/scaleway-cli@v2.5.3
+  - name: scaleway/scaleway-cli@v2.5.3
 ```
 
 ## How to test in your localhost
