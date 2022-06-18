@@ -5,4 +5,8 @@ packages:
     description: A live-updating version of the UNIX wc command
     rosetta2: true
     asset: "lwc-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: 'GOOS != "darwin"'
+    version_constraint: 'semver(">= 0.4.5")'
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    version_overrides:
+      - version_constraint: 'semver("< 0.4.5")'
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
