@@ -8,20 +8,20 @@ packages:
     description: Pryrite, interactively execute shell code blocks in a markdown file
     rosetta2: true
     asset: "pryrite-{{.OS}}-{{.Arch}}-{{.Version}}.zip"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: 99designs
     repo_name: aws-vault
     description: A vault for securely storing and accessing AWS credentials in development environments
     format: raw
     asset: "aws-vault-{{.OS}}-{{.Arch}}"
-    supported_if: GOOS == "linux"
+    supported_envs: ["linux"]
   - type: github_release
     repo_owner: Aloxaf
     repo_name: silicon
     asset: "silicon-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz"
     rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: Create beautiful image of your source code
     replacements:
       darwin: apple-darwin
@@ -48,7 +48,7 @@ packages:
     repo_name: aks-engine
     description: "AKS Engine deploys and manages Kubernetes clusters in Azure"
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz"
     files:
       - name: aks-engine
@@ -106,7 +106,7 @@ packages:
     description: Use CircleCI from the command line
     rosetta2: true
     asset: "circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     format: tar.gz
     overrides:
       - goos: windows
@@ -117,7 +117,7 @@ packages:
     version_constraint: 'semver(">= 0.1.17554")'
     version_overrides:
       - version_constraint: 'semver("< 0.1.17554")'
-        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        supported_envs: ["darwin", "amd64"]
   - type: github_release
     repo_owner: ClementTsang
     repo_name: bottom
@@ -146,7 +146,7 @@ packages:
     repo_owner: Dreamacro
     repo_name: clash
     asset: "clash-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: A rule-based tunnel in Go
     format: gz
     files:
@@ -222,7 +222,7 @@ packages:
     type: github_release
     repo_owner: GoogleCloudPlatform
     repo_name: terraformer
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     complete_windows_exe: false
     asset: "terraformer-aws-{{.OS}}-{{.Arch}}"
@@ -260,7 +260,7 @@ packages:
     repo_name: kpt
     description: A Git-native, schema-aware, extensible client-side tool for packaging, customizing, validating, and applying Kubernetes resources
     asset: "kpt_{{.OS}}_{{.Arch}}"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     files:
       - name: kpt
         src: "kpt_{{.OS}}_{{.Arch}}"
@@ -293,7 +293,7 @@ packages:
     repo_owner: Ladicle
     repo_name: kubectl-rolesum
     description: Summarize Kubernetes RBAC roles for the specified subjects
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     asset: "kubectl-rolesum_{{.OS}}-{{.Arch}}.tar.gz"
     files:
@@ -303,7 +303,7 @@ packages:
     repo_owner: LukeChannings
     repo_name: deno-arm64
     asset: "deno-linux-arm64.zip"
-    supported_if: GOOS == "linux" and GOARCH == "arm64"
+    supported_envs: ["linux/arm64"]
     description: A Docker image for Deno
     files:
       - name: deno
@@ -312,7 +312,7 @@ packages:
     repo_name: kubitect
     description: Kubitect provides a simple way to set up a highly available Kubernetes cluster across multiple hosts
     asset: "kubitect-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     format: tar.gz
     overrides:
       - goos: windows
@@ -336,17 +336,17 @@ packages:
     files:
       - name: lsd
         src: "lsd-{{.Version}}-{{.Arch}}-{{.OS}}/lsd"
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     version_constraint: 'semver(">= 0.20.1")'
     version_overrides:
       - version_constraint: 'semver("< 0.20.1")'
-        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        supported_envs: ["darwin", "amd64"]
   - type: github_release
     repo_owner: Praqma
     repo_name: helmsman
     rosetta2: true
     asset: "helmsman_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: Helmsman is a Helm Charts (k8s applications) as Code tool which allows you to automate the deployment/management of your Helm charts from version controlled code
   - type: github_release
     repo_owner: Schniz
@@ -367,7 +367,7 @@ packages:
     description: EJSON is a small library to manage encrypted secrets using asymmetric encryption
     version_constraint: 'semver(">= 1.3.3")'
     asset: "ejson_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     version_overrides:
       - version_constraint: 'semver("< 1.3.3")'
         asset: "{{.OS}}-{{.Arch}}"
@@ -376,7 +376,7 @@ packages:
     repo_name: ecschedule
     asset: "ecschedule_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
     description: ecschedule is a tool to manage ECS Scheduled Tasks
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     files:
       - name: ecschedule
         src: "ecschedule_{{.Version}}_{{.OS}}_amd64/ecschedule"
@@ -390,7 +390,7 @@ packages:
     description: Generate changelog from git history, tags and merged pull requests
     rosetta2: true
     asset: "ghch_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     files:
       - name: ghch
         src: "ghch_{{.Version}}_{{.OS}}_amd64/ghch"
@@ -417,7 +417,7 @@ packages:
     description: creates CREDITS file from LICENSE files of dependencies
     rosetta2: true
     asset: "gocredits_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     files:
       - name: gocredits
         src: "gocredits_{{.Version}}_{{.OS}}_amd64/gocredits"
@@ -455,7 +455,7 @@ packages:
     description: Command wrapper for reporting the result. It is useful for cron jobs
     rosetta2: true
     asset: "horenso_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     files:
       - name: horenso
         src: "horenso_{{.Version}}_{{.OS}}_amd64/horenso"
@@ -528,7 +528,7 @@ packages:
     repo_owner: Traackr
     repo_name: binnacle
     description: An opinionated tool to interact with Kubernetes' Helm
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "binnacle-{{.OS}}_{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: Trendyol
@@ -557,7 +557,7 @@ packages:
     rosetta2: true
     asset: "tokei-{{.Arch}}-{{.OS}}.tar.gz"
     description: Count your code, quickly
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     replacements:
       darwin: apple-darwin
       linux: unknown-linux-gnu
@@ -574,7 +574,7 @@ packages:
     format: raw
     version_constraint: 'semver("> 0.3.0")'
     asset: "colima-{{.OS}}-{{.Arch}}"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     replacements:
       darwin: Darwin
       linux: Linux
@@ -590,7 +590,7 @@ packages:
       - version_constraint: 'semver("< 0.3.0")'
         asset: "colima-amd64"
         rosetta2: true
-        supported_if: GOOS == "darwin"
+        supported_envs: ["darwin"]
   - type: github_release
     repo_owner: abs-lang
     repo_name: abs
@@ -598,13 +598,13 @@ packages:
     rosetta2: true
     format: raw
     asset: abs-{{.OS}}-{{.Arch}}
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
   - type: github_release
     repo_owner: accurics
     repo_name: terrascan
     asset: "terrascan_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Detect compliance and security violations across Infrastructure as Code to mitigate risk before provisioning cloud native infrastructure
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     format: tar.gz
     overrides:
       - goos: windows
@@ -643,7 +643,7 @@ packages:
     repo_owner: aelsabbahy
     repo_name: goss
     rosetta2: true
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "goss-{{.OS}}-{{.Arch}}"
     description: Quick and Easy server testing/validation
     replacements:
@@ -752,7 +752,7 @@ packages:
     repo_owner: anchore
     repo_name: grype
     description: A vulnerability scanner for container images and filesystems
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "grype_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
     version_constraint: 'semver(">= 0.33.0")'
@@ -771,7 +771,7 @@ packages:
     repo_name: syft
     description: CLI tool and library for generating a Software Bill of Materials from container images and filesystems
     format: tar.gz
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     overrides:
       - goos: windows
@@ -811,13 +811,13 @@ packages:
     format: raw
     asset: "llama_{{.OS}}_{{.Arch}}"
     description: Terminal file manager
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_release
     repo_owner: apache
     repo_name: camel-k
     asset: "camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz"
     description: Apache Camel K is a lightweight integration platform, born on Kubernetes, with serverless superpowers
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     files:
       - name: kamel
     replacements:
@@ -834,7 +834,7 @@ packages:
     repo_name: kube-bench
     asset: "kube-bench_{{trimV .Version}}_linux_{{.Arch}}.tar.gz"
     description: Checks whether Kubernetes is deployed according to security best practices as defined in the CIS Kubernetes Benchmark
-    supported_if: GOOS == "linux"
+    supported_envs: ["linux"]
   - type: github_release
     repo_owner: aquasecurity
     repo_name: kubectl-who-can
@@ -866,7 +866,7 @@ packages:
     version_constraint: 'semver(">= 0.15.0")'
     version_overrides:
       - version_constraint: 'semver("< 0.15.0")'
-        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        supported_envs: ["darwin", "amd64"]
   - type: github_release
     repo_owner: aquasecurity
     repo_name: tfsec
@@ -877,7 +877,7 @@ packages:
     repo_name: trivy
     description: Scanner for vulnerabilities in container images, file systems, and Git repositories, as well as for configuration issues
     asset: "trivy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     replacements:
       amd64: 64bit
       386: 32bit
@@ -907,13 +907,13 @@ packages:
     format: raw
     version_constraint: 'semver(">= 0.12.0")'
     asset: "argocd-image-updater-{{.OS}}_{{.Arch}}"
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     overrides:
       - goos: windows
         asset: argocd-image-updater-win64.exe
     version_overrides:
       - version_constraint: 'semver("< 0.12.0")'
-        supported_if: GOOS == "linux" and GOARCH == "amd64"
+        supported_envs: ["linux/amd64"]
         asset: "argocd-image-updater_{{.Version}}_{{.OS}}-{{.Arch}}"
   - type: github_release
     repo_owner: argoproj
@@ -930,7 +930,7 @@ packages:
     rosetta2: true
     complete_windows_exe: false
     asset: "kubectl-argo-rollouts-{{.OS}}-{{.Arch}}"
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     files:
       - name: kubectl-argo-rollouts
   - type: github_release
@@ -939,7 +939,7 @@ packages:
     rosetta2: true
     asset: "argo-{{.OS}}-{{.Arch}}.gz"
     description: "Argo Worfkflows CLI. Workflow engine for Kubernetes"
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     overrides:
       - goos: windows
         asset: "argo-{{.OS}}-{{.Arch}}.exe.gz"
@@ -952,7 +952,7 @@ packages:
     description: "A monitor of resources"
     asset: "btop-{{.Arch}}-{{.OS}}.tbz"
     format: tar.bz2
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     replacements:
       linux: linux-musl
       darwin: macos-monterey
@@ -969,7 +969,7 @@ packages:
     repo_name: gitmux
     description: Git in your tmux status bar
     asset: "gitmux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     replacements:
       darwin: macOS
   - type: github_release
@@ -978,7 +978,7 @@ packages:
     description: "kubescape is the first tool for testing if Kubernetes is deployed securely as defined in Kubernetes Hardening Guidance by to NSA and CISA"
     rosetta2: true
     complete_windows_exe: false
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "kubescape-{{.OS}}-latest"
     replacements:
       linux: ubuntu
@@ -997,7 +997,7 @@ packages:
     description: A CLI tool and go library which recommends instance types based on resource criteria like vcpus and memory
     complete_windows_exe: false
     asset: "ec2-instance-selector-{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     files:
       - name: ec2-instance-selector
   - type: github_release
@@ -1005,7 +1005,7 @@ packages:
     repo_name: copilot-cli
     description: The AWS Copilot CLI is a tool for developers to build, release and operate production ready containerized applications on AWS App Runner, Amazon ECS, and AWS Fargate
     asset: "copilot_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     overrides:
       - goos: windows
         asset: copilot-windows.exe
@@ -1038,7 +1038,7 @@ packages:
     repo_name: afx
     asset: "afx_{{.OS}}_{{.Arch}}.tar.gz"
     description: Package manager for CLI
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     replacements:
       386: i386
       amd64: x86_64
@@ -1055,17 +1055,17 @@ packages:
       386: i386
       amd64: x86_64
     version_constraint: 'semver("> 1.2.4")'
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     version_overrides:
       - version_constraint: 'semver("<= 1.2.4")'
         rosetta2: true
-        supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+        supported_envs: ["darwin", "linux/amd64"]
   - type: github_release
     repo_owner: b4b4r07
     repo_name: git-bump
     rosetta2: true
     asset: "git-bump_{{.OS}}_{{.Arch}}.{{.Format}}"
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     description: Bump version (git tag) to next one with semver
     format: tar.gz
     format_overrides:
@@ -1080,7 +1080,7 @@ packages:
     rosetta2: true
     asset: "github-labeler_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Declarative way to configure GitHub labels
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     format: tar.gz
     format_overrides:
       - goos: windows
@@ -1094,7 +1094,7 @@ packages:
     rosetta2: true
     asset: "gomi_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Replacement for UNIX rm command!
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     format: tar.gz
     format_overrides:
       - goos: windows
@@ -1105,7 +1105,7 @@ packages:
   - type: github_release
     repo_owner: b4b4r07
     repo_name: iap_curl
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     rosetta2: true
     asset: "iap_curl_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: A CLI that is curl wrapper for making HTTP request to IAP-protected app, more easier than curl
@@ -1119,7 +1119,7 @@ packages:
   - type: github_release
     repo_owner: b4b4r07
     repo_name: stein
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     rosetta2: true
     asset: "stein_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: A linter for config files with a customizable rule set
@@ -1135,7 +1135,7 @@ packages:
     repo_name: plumber
     rosetta2: true
     asset: "plumber-{{.OS}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: A swiss army knife CLI tool for interacting with Kafka, RabbitMQ and other messaging systems
     format: raw
   - type: github_archive
@@ -1152,14 +1152,14 @@ packages:
     complete_windows_exe: false
     rosetta2: true
     format: raw
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "ctop-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
   - type: github_release
     repo_owner: bcicen
     repo_name: slackcat
     description: CLI utility to post files and command output to slack
     rosetta2: true
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     asset: "slackcat-{{.Version}}-{{.OS}}-{{.Arch}}"
     format: raw
   - type: github_release
@@ -1183,20 +1183,20 @@ packages:
     format_overrides:
       - goos: linux
         format: tar.gz
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: benchkram
     repo_name: bob
     description: A build tool from space, down on earth
     format: raw
     asset: "bob_{{.Version}}_{{.OS}}_{{.Arch}}"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: bengadbois
     repo_name: pewpew
     description: Flexible HTTP command line stress tester for websites and web services
     rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     asset: "{{.OS}}_{{.Arch}}.tar.gz"
     files:
       - name: pewpew
@@ -1205,7 +1205,7 @@ packages:
     repo_owner: blacknon
     repo_name: hwatch
     description: A modern alternative to the watch command, records the differences in execution results and can check this differences at after
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     replacements:
       amd64: x86_64
       arm64: aarch64
@@ -1220,7 +1220,7 @@ packages:
       - version_constraint: 'semver("= 0.3.0")'
         asset: "hwatch_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
         rosetta2: true
-        supported_if: GOOS == "darwin"
+        supported_envs: ["darwin"]
         replacements:
           amd64: amd64
           darwin: darwin
@@ -1229,7 +1229,7 @@ packages:
           - name: hwatch
             src: hwatch/hwatch
       - version_constraint: 'semver("= 0.2.1") || semver("= 0.1.6")'
-        supported_if: "false"
+        supported_envs: []
       - version_constraint: 'semver("= 0.1.0")'
         asset: "hwatch_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
         rosetta2: true
@@ -1285,7 +1285,7 @@ packages:
     repo_name: kail
     asset: "kail_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
     description: kubernetes log viewer
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: brigadecore
     repo_name: brigade
@@ -1301,18 +1301,18 @@ packages:
     format: raw
     rosetta2: true
     asset: "yaml2json_{{.OS}}_{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_release
     repo_owner: budimanjojo
     repo_name: talhelper
     description: A helper tool to help creating Talos in GitOps repository
     asset: "talhelper_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: bufbuild
     repo_name: buf
     description: A new way of working with Protocol Buffers
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     asset: "buf-{{.OS}}-{{.Arch}}.tar.gz"
     overrides:
       - goos: windows
@@ -1350,7 +1350,7 @@ packages:
     version_constraint: 'semver(">= 1.2.0")'
     version_overrides:
       - version_constraint: 'semver("< 1.2.0")'
-        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        supported_envs: ["windows", "darwin", "linux/amd64"]
         rosetta2: true
         asset: "bk-{{.OS}}-{{.Arch}}-{{.Version|trimV}}"
   - type: github_release
@@ -1370,23 +1370,23 @@ packages:
       - goos: windows
         asset: "pack-{{.Version}}-windows.zip"
     version_constraint: 'semver(">= 0.25.0")'
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     version_overrides:
       - version_constraint: 'semver("< 0.25.0")'
-        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        supported_envs: ["darwin", "amd64"]
   - type: github_release
     repo_owner: c-bata
     repo_name: kube-prompt
     description: An interactive kubernetes client featuring auto-complete
     rosetta2: true
     asset: "kube-prompt_{{.Version}}_{{.OS}}_{{.Arch}}.zip"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: caarlos0
     repo_name: fork-cleaner
     description: Quickly clean up unused forks on your github account
     asset: "fork-cleaner_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: casey
     repo_name: just
@@ -1408,7 +1408,7 @@ packages:
     repo_name: fogg
     description: Manage Infrastructure as Code with less pain
     asset: "fogg_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: charmbracelet
     repo_name: glow
@@ -1429,7 +1429,7 @@ packages:
     description: CLI to manage Eclipse Che server and workspaces
     rosetta2: true
     asset: "chectl-{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     replacements:
       amd64: x64
     files:
@@ -1440,7 +1440,7 @@ packages:
     repo_name: cheat
     description: "cheat allows you to create and view interactive cheatsheets on the command-line. It was designed to help remind *nix system administrators of options for commands that they use frequently, but not frequently enough to remember"
     rosetta2: true
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "cheat-{{.OS}}-{{.Arch}}.gz"
     files:
       - name: cheat
@@ -1491,7 +1491,7 @@ packages:
     repo_name: cfssl
     description: "CFSSL: Cloudflare's PKI and TLS toolkit"
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     format: raw
     asset: "mkbundle_{{trimV .Version}}_{{.OS}}_{{.Arch}}"
     files:
@@ -1501,7 +1501,7 @@ packages:
     repo_name: cfssl
     description: "CFSSL: Cloudflare's PKI and TLS toolkit"
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     format: raw
     asset: "cfssl_{{trimV .Version}}_{{.OS}}_{{.Arch}}"
   - type: github_release
@@ -1509,7 +1509,7 @@ packages:
     repo_name: cloudflared
     description: cloudflared connects your machine or user identity to Cloudflare's global network
     rosetta2: true
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "cloudflared-{{.OS}}-{{.Arch}}"
     overrides:
       - goos: darwin
@@ -1520,7 +1520,7 @@ packages:
     description: The bosh CLI is the command line tool used for interacting with all things BOSH, from deployment operations to software release management
     rosetta2: true
     format: raw
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "bosh-cli-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
     files:
       - name: bosh
@@ -1528,7 +1528,7 @@ packages:
     repo_owner: cloudfoundry
     repo_name: credhub-cli
     asset: "credhub-{{.OS}}-{{.Version}}.tgz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     description: CredHub CLI provides a command line interface to interact with CredHub servers
     files:
@@ -1552,7 +1552,7 @@ packages:
     description: Code Climate Test Reporter
     format: raw
     url: https://codeclimate.com/downloads/test-reporter/test-reporter-{{.Version}}-{{.OS}}-amd64
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     files:
       - name: cc-test-reporter
         src: test-reporter
@@ -1579,13 +1579,13 @@ packages:
     format: raw
     complete_windows_exe: false
     asset: "transporter-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
   - type: github_release
     repo_owner: containerd
     repo_name: nerdctl
     asset: "nerdctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz"
     description: "contaiNERD CTL - Docker-compatible CLI for containerd, with support for Compose, Rootless, eStargz, OCIcrypt, IPFS, ..."
-    supported_if: GOOS != "darwin"
+    supported_envs: ["windows", "linux"]
     replacements:
       darwin: linux # keep for the compatibility
   - type: github_release
@@ -1593,12 +1593,12 @@ packages:
     repo_name: kubesec
     asset: "kubesec_{{.OS}}_{{.Arch}}.tar.gz"
     description: Security risk analysis for Kubernetes resources
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: corneliusweig
     repo_name: ketall
     description: Like `kubectl get all`, but get really all resources
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     files:
       - name: ketall
         src: "ketall-{{.Arch}}-{{.OS}}"
@@ -1613,7 +1613,7 @@ packages:
     repo_owner: corneliusweig
     repo_name: rakkess
     description: Review Access - kubectl plugin to show an access matrix for k8s server resources
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "access-matrix-{{.Arch}}-{{.OS}}.tar.gz"
     overrides:
       - goos: windows
@@ -1625,7 +1625,7 @@ packages:
     repo_owner: corneliusweig
     repo_name: rakkess
     description: Review Access - kubectl plugin to show an access matrix for k8s server resources
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     files:
       - name: rakkess
         src: "rakkess-{{.Arch}}-{{.OS}}"
@@ -1649,7 +1649,7 @@ packages:
       - name: modd
         src: "modd-{{.Version|trimV}}-{{.OS}}{{.Arch}}/modd"
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
   - type: github_release
     repo_owner: cosmtrek
     repo_name: air
@@ -1672,7 +1672,7 @@ packages:
     repo_owner: create-go-app
     repo_name: cli
     description: Create a new production-ready project with backend, frontend and deploy automation by running one CLI command!
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "cgapp_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: cgapp
@@ -1699,7 +1699,7 @@ packages:
     description: A kafka command line browser
     rosetta2: true
     asset: "kcli_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     replacements:
       darwin: Darwin
       linux: Linux
@@ -1723,7 +1723,7 @@ packages:
     rosetta2: true
     asset: "inframap-{{.OS}}-{{.Arch}}.tar.gz"
     complete_windows_exe: false
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     files:
       - name: inframap
         src: "inframap-{{.OS}}-{{.Arch}}"
@@ -1742,7 +1742,7 @@ packages:
     rosetta2: true
     asset: "delta-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     description: A syntax-highlighting pager for git
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     format: tar.gz
     replacements:
       windows: pc-windows-msvc
@@ -1764,7 +1764,7 @@ packages:
     repo_owner: dapr
     repo_name: cli
     description: Command-line tools for Dapr
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "dapr_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
@@ -1843,7 +1843,7 @@ packages:
     repo_owner: denoland
     repo_name: deno
     asset: "deno-{{.Arch}}-{{.OS}}.zip"
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     description: A modern runtime for JavaScript and TypeScript
     replacements:
       darwin: apple-darwin
@@ -1882,7 +1882,7 @@ packages:
     repo_name: dhall-haskell
     description: Maintainable configuration files
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "dhall-{{.Version}}-x86_64-{{.OS}}.{{.Format}}"
     format: tar.bz2
     overrides:
@@ -1937,7 +1937,7 @@ packages:
     repo_owner: docker-slim
     repo_name: docker-slim
     description: "DockerSlim (docker-slim): Don't change anything in your Docker container image and minify it by up to 30x (and for compiled languages even more) making it secure too! (free and open source)"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     format: tar.gz
     replacements:
       darwin: mac
@@ -2003,10 +2003,10 @@ packages:
         replacements:
           amd64: x64
     version_constraint: 'semver(">= 2.1.0")'
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     version_overrides:
       - version_constraint: 'semver("< 2.1.0")'
-        supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+        supported_envs: ["darwin", "linux/amd64"]
   - type: github_release
     repo_owner: ducaale
     repo_name: xh
@@ -2027,22 +2027,22 @@ packages:
       - goos: windows
         format: zip
     version_constraint: 'semver(">= 0.15.0")'
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     version_overrides:
       - version_constraint: 'semver("< 0.15.0")'
-        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        supported_envs: ["darwin", "amd64"]
   - type: github_release
     repo_owner: earthly
     repo_name: earthly
     description: Repeatable builds
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "earthly-{{.OS}}-{{.Arch}}"
   - type: github_release
     repo_owner: editorconfig-checker
     repo_name: editorconfig-checker
     asset: "ec-{{.OS}}-{{.Arch}}.tar.gz"
     description: A tool to verify that your files are in harmony with your .editorconfig
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     overrides:
       - goos: windows
         asset: ec-windows-amd64.exe.tar.gz
@@ -2062,7 +2062,7 @@ packages:
     description: kubectl cluster triage plugin for k8s - (brew doctor equivalent)
     version_constraint: 'semver(">= 0.3.1")'
     asset: "kubectl-doctor_{{.OS}}_{{.Arch}}"
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     version_overrides:
       - version_constraint: 'semver("< 0.3.1")'
         rosetta2: true
@@ -2077,14 +2077,14 @@ packages:
     repo_name: kubectl-warp
     description: Kubernetes CLI plugin for syncing and executing local files in Pod on Kubernetes
     rosetta2: true
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     asset: "kubectl-warp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: errata-ai
     repo_name: vale
     rosetta2: true
     description: A syntax-aware linter for prose built with speed and extensibility in mind
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "vale_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
     format_overrides:
@@ -2101,7 +2101,7 @@ packages:
     asset: "slack-term-{{.OS}}-amd64"
     rosetta2: true
     description: Slack client for your terminal
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
   - type: github_release
     repo_owner: evilmartians
     repo_name: lefthook
@@ -2119,7 +2119,7 @@ packages:
     repo_name: gitui
     rosetta2: true
     asset: "gitui-{{.OS}}.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: Blazing fast terminal-ui for git written in rust
     replacements:
       darwin: mac
@@ -2134,7 +2134,7 @@ packages:
     overrides:
       - goos: windows
         format: zip
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     files:
       - name: frpc
         src: "frp_{{trimV .Version}}_{{.OS}}_{{.Arch}}/frpc"
@@ -2158,7 +2158,7 @@ packages:
     format: raw
     asset: vsh_{{.OS}}_{{.Arch}}
     description: vsh - HashiCorp Vault interactive shell and cli tool
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: fission
     repo_name: fission
@@ -2170,7 +2170,7 @@ packages:
     repo_name: iam-policy-json-to-terraform
     description: Small tool to convert an IAM Policy in JSON format into a Terraform aws_iam_policy_document
     format: raw
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "iam-policy-json-to-terraform_{{.OS}}_{{.Arch}}"
     replacements:
       arm64: arm
@@ -2218,7 +2218,7 @@ packages:
     repo_name: lambroll
     description: lambroll is a minimal deployment tool for AWS Lambda
     asset: "lambroll_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     files:
       - name: lambroll
         src: lambroll_{{.Version}}_{{.OS}}_amd64/lambroll
@@ -2231,13 +2231,13 @@ packages:
     repo_name: tfstate-lookup
     description: Lookup resource attributes in tfstate
     asset: "tfstate-lookup_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: fujiwara
     repo_name: tracer
     description: ECS task event/log tracer CLI
     asset: "tracer_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: fullstorydev
     repo_name: grpcurl
@@ -2281,7 +2281,7 @@ packages:
     repo_owner: genuinetools
     repo_name: img
     asset: "img-linux-amd64"
-    supported_if: GOOS == "linux" and GOARCH == "amd64"
+    supported_envs: ["linux/amd64"]
     description: Standalone, daemon-less, unprivileged Dockerfile and OCI compatible container image builder
   - type: github_release
     repo_owner: genuinetools
@@ -2290,12 +2290,12 @@ packages:
     asset: "reg-{{.OS}}-{{.Arch}}"
     description: Docker registry v2 command line client and repo listing generator with security checks
     complete_windows_exe: false
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
   - type: github_release
     repo_owner: geofffranks
     repo_name: spruce
     description: Standalone, daemon-less, unprivileged Dockerfile and OCI compatible container image builder
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     rosetta2: true
     format: raw
     asset: "spruce-{{.OS}}-{{.Arch}}"
@@ -2303,7 +2303,7 @@ packages:
     repo_owner: getsentry
     repo_name: sentry-cli
     description: A command line utility to work with Sentry
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "sentry-cli-{{.OS}}-{{.Arch}}"
     replacements:
       darwin: Darwin
@@ -2319,7 +2319,7 @@ packages:
     repo_name: zola
     description: A fast static site generator in a single binary with everything built-in
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "zola-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     replacements:
       darwin: apple-darwin
@@ -2334,7 +2334,7 @@ packages:
     repo_owner: ginuerzh
     repo_name: gost
     description: GO Simple Tunnel - a simple tunnel written in golang
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "gost-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}"
     format: gz
     overrides:
@@ -2383,7 +2383,7 @@ packages:
     rosetta2: true
     asset: "hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}"
     description: A command-line tool that makes git easier to use with GitHub
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     format: tgz
     overrides:
       - goos: windows
@@ -2400,7 +2400,7 @@ packages:
     description: "A friendly language for building type-safe, scalable systems!"
     replacements:
       darwin: macos
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "gleam-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
@@ -2415,7 +2415,7 @@ packages:
     repo_name: jira
     description: simple jira command line client in Go
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "jira-{{.OS}}-{{.Arch}}"
   - type: github_release
     repo_owner: go-task
@@ -2433,7 +2433,7 @@ packages:
     format: raw
     rosetta2: true
     complete_windows_exe: false
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "jenkins-job-cli-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
     files:
       - name: jj
@@ -2488,7 +2488,7 @@ packages:
     version_overrides:
       - version_constraint: 'semver("<= 4.14.1")'
         rosetta2: true
-        supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+        supported_envs: ["darwin", "linux", "windows/amd64"]
         files:
           - name: migrate
             src: "migrate.{{.OS}}-{{.Arch}}"
@@ -2606,7 +2606,7 @@ packages:
     repo_owner: google
     repo_name: jsonnet
     asset: "jsonnet-bin-{{.Version}}-linux.tar.gz"
-    supported_if: GOOS == "linux" and GOARCH == "amd64"
+    supported_envs: ["linux/amd64"]
     description: Jsonnet - The data templating language
     files:
       - name: jsonnet
@@ -2711,7 +2711,7 @@ packages:
     repo_owner: grafana
     repo_name: tanka
     description: Flexible, reusable and concise configuration for Kubernetes
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "tk-{{.OS}}-{{.Arch}}"
     format: raw
     files:
@@ -2726,7 +2726,7 @@ packages:
     repo_name: grpc-gateway
     description: Generate golang code to reverse proxy Protocol Buffer definitions to RESTful HTTP/1
     asset: "protoc-gen-grpc-gateway-{{.Version}}-{{.OS}}-{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     format: raw
     replacements:
@@ -2739,7 +2739,7 @@ packages:
     repo_name: grpc-gateway
     description: Generate Swagger / OpenAPIv2 JSON file from Protocol Buffer definition
     asset: "protoc-gen-openapiv2-{{.Version}}-{{.OS}}-{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     format: raw
     replacements:
@@ -2760,7 +2760,7 @@ packages:
     repo_name: grpc-go
     description: Generate Go language bindings of services in protobuf definition files for gRPC
     asset: 'protoc-gen-go-grpc.{{trimPrefix "cmd/protoc-gen-go-grpc/" .Version}}.{{.OS}}.{{.Arch}}.tar.gz'
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     version_filter: 'Version startsWith "cmd/protoc-gen-go-grpc/"'
     rosetta2: true
     files:
@@ -2776,12 +2776,12 @@ packages:
     repo_name: terragrunt
     description: Terragrunt is a thin wrapper for Terraform that provides extra tools for working with multiple Terraform modules
     asset: "terragrunt_{{.OS}}_{{.Arch}}"
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
   - type: github_release
     repo_owner: gsamokovarov
     repo_name: jump
     description: Jump helps you navigate faster by learning your habits
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     format: raw
     replacements:
       darwin: osx
@@ -2803,7 +2803,7 @@ packages:
     version_constraint: 'semver(">= 2.10.0")'
     version_overrides:
       - version_constraint: 'semver("< 2.10.0")'
-        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_release
     repo_owner: hairyhenderson
     repo_name: gomplate
@@ -2814,7 +2814,7 @@ packages:
     repo_name: q
     description: q - Run SQL directly on CSV or TSV files
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     version_constraint: 'semver(">= 3.1.6")'
     asset: "{{.OS}}-q"
     replacements:
@@ -2848,7 +2848,7 @@ packages:
     repo_name: go-getter
     description: Package for downloading things from a string URL using a variety of protocols
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "go-getter_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip"
   - type: http
     repo_owner: hashicorp
@@ -2893,7 +2893,7 @@ packages:
     repo_owner: hashicorp
     repo_name: waypoint
     description: A tool to build, deploy, and release any application on any platform
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     url: "https://releases.hashicorp.com/waypoint/{{trimV .Version}}/waypoint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip"
   - name: haskell/cabal/cabal-install
     repo_owner: haskell
@@ -2954,7 +2954,7 @@ packages:
     repo_owner: hidetatz
     repo_name: kubecolor
     description: colorizes kubectl output
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "kubecolor_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.{{.Format}}"
     replacements:
       amd64: x86_64
@@ -2976,7 +2976,7 @@ packages:
     repo_owner: homeport
     repo_name: dyff
     description: A diff tool for YAML files, and sometimes JSON
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "dyff_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: iawia002
@@ -3053,7 +3053,7 @@ packages:
     version_constraint: 'semver(">= 0.9.17")'
     version_overrides:
       - version_constraint: 'semver("< 0.9.17")'
-        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        supported_envs: ["darwin", "amd64"]
   - type: github_release
     repo_owner: inlets
     repo_name: inlets-pro
@@ -3088,7 +3088,7 @@ packages:
     repo_name: kubeval
     description: Validate your Kubernetes configuration files, supports multiple Kubernetes versions
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "kubeval-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
@@ -3133,7 +3133,7 @@ packages:
     repo_owner: iovisor
     repo_name: kubectl-trace
     description: Schedule bpftrace programs on your kubernetes cluster using the kubectl
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     rosetta2: true
     asset: "kubectl-trace_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
@@ -3145,7 +3145,7 @@ packages:
     repo_owner: istio
     repo_name: istio
     description: The istioctl tool is a configuration command line utility that allows service operators to debug and diagnose their Istio service mesh deployments
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     replacements:
       darwin: osx
       windows: win
@@ -3187,7 +3187,7 @@ packages:
     repo_name: lstags
     description: Explore Docker registries and manipulate Docker images
     asset: "lstags-{{.OS}}-{{.Version}}.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_content
     repo_owner: jamesob
     repo_name: desk
@@ -3287,7 +3287,7 @@ packages:
     repo_name: retry
     description: "Rerun a command until it eventually succeeds, or doesn't"
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "retry-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
     format_overrides:
@@ -3330,7 +3330,7 @@ packages:
     rosetta2: true
     asset: "jb-{{.OS}}-{{.Arch}}"
     description: A jsonnet package manager
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     format: raw
     files:
       - name: jb
@@ -3339,7 +3339,7 @@ packages:
     repo_name: terraform-lsp
     asset: "terraform-lsp_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
     description: Language Server Protocol for Terraform
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - name: junegunn/fzf/fzf-tmux
     type: github_content
     repo_owner: junegunn
@@ -3363,7 +3363,7 @@ packages:
     asset: "k0s-{{.Version}}-{{.Arch}}"
     format: raw
     description: k0s - Zero Friction Kubernetes
-    supported_if: GOOS == "linux"
+    supported_envs: ["linux"]
     replacements:
       x86_64: amd64
       aarch64: arm64
@@ -3382,7 +3382,7 @@ packages:
     repo_owner: kanisterio
     repo_name: kanister
     description: An extensible framework for application-level data management on Kubernetes
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     rosetta2: true
     asset: "kanister_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     files:
@@ -3393,7 +3393,7 @@ packages:
     repo_name: external-tools
     description: The k10multicluster tool is used to setup and maintain a multi-cluster setup within K10
     asset: "k10multicluster_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     replacements:
       darwin: macOS
     files:
@@ -3404,7 +3404,7 @@ packages:
     repo_name: external-tools
     description: "The k10tools binary has commands that can help with validating if a cluster is setup correctly before installing K10 and for debugging K10's micro services"
     asset: "k10tools_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     replacements:
       darwin: macOS
     files:
@@ -3448,7 +3448,7 @@ packages:
     repo_name: cob
     description: Continuous Benchmark for Go Project
     rosetta2: true
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "cob_{{trimV .Version}}_{{.OS}}-{{.Arch}}.tar.gz"
     replacements:
       amd64: 64bit
@@ -3476,7 +3476,7 @@ packages:
     repo_name: shellcheck
     description: ShellCheck, a static analysis tool for shell scripts
     rosetta2: true
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     replacements:
       arm64: aarch64
       amd64: x86_64
@@ -3499,7 +3499,7 @@ packages:
     repo_owner: kreuzwerker
     repo_name: awsu
     description: Enhanced account switching for AWS, supports Yubikey as MFA source
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "awsu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     replacements:
       linux: Linux
@@ -3510,7 +3510,7 @@ packages:
     repo_owner: kreuzwerker
     repo_name: envplate
     description: Docker-friendly trivial templating for configuration files using environment keys
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "envplate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     replacements:
       darwin: Darwin
@@ -3524,7 +3524,7 @@ packages:
     repo_owner: kreuzwerker
     repo_name: m1-terraform-provider-helper
     description: CLI to support with downloading and compiling terraform providers for Mac with M1 chip
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "m1-terraform-provider-helper_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     replacements:
       darwin: Darwin
@@ -3538,7 +3538,7 @@ packages:
     repo_owner: kubecost
     repo_name: kubectl-cost
     description: CLI for determining the cost of Kubernetes workloads
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     complete_windows_exe: false
     asset: "kubectl-cost-{{.OS}}-{{.Arch}}.tar.gz"
   - type: github_release
@@ -3546,7 +3546,7 @@ packages:
     repo_name: kubemqctl
     rosetta2: true
     description: Kubemqctl is a command line interface (CLI) for KubeMQ, Kubernetes Message Broker
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "kubemqctl_{{.OS}}_{{.Arch}}"
     overrides:
       - goos: windows
@@ -3566,7 +3566,7 @@ packages:
     description: Kubernetes IN Docker - local clusters for testing Kubernetes
     complete_windows_exe: false
     format: raw
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     url: "https://kind.sigs.k8s.io/dl/{{.Version}}/kind-{{.OS}}-{{.Arch}}"
   - type: github_release
     repo_owner: kubernetes-sigs
@@ -3588,14 +3588,14 @@ packages:
     repo_name: kubebuilder
     description: Kubebuilder - SDK for building Kubernetes APIs using CRDs
     rosetta2: true
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "kubebuilder_{{.OS}}_{{.Arch}}"
   - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: kubefed
     description: kubefedctl controls a Kubernetes Cluster Federation
     rosetta2: true
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     asset: "kubefedctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tgz"
     files:
       - name: kubefedctl
@@ -3625,7 +3625,7 @@ packages:
     repo_name: kops
     description: Kubernetes Operations (kops) - Production Grade K8s Installation, Upgrades, and Management
     complete_windows_exe: false
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "kops-{{.OS}}-{{.Arch}}"
   - name: kubernetes/kubectl
     type: http
@@ -3646,7 +3646,7 @@ packages:
     repo_owner: kudobuilder
     repo_name: kuttl
     description: KUbernetes Test TooL (kuttl)
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "kuttl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     files:
       - name: kubectl-kuttl
@@ -3666,18 +3666,18 @@ packages:
     description: Generate type-safe code from SQL
     rosetta2: true
     asset: "sqlc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_release
     repo_owner: kyoh86
     repo_name: richgo
     description: "Enrich `go test` outputs with text decorations"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "richgo_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: lc
     repo_name: gau
     description: Fetch known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     asset: "gau_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     replacements:
@@ -3699,14 +3699,14 @@ packages:
     description: Leak git repositories from misconfigured websites
     rosetta2: true
     asset: "gitjacker-{{.OS}}-{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_release
     repo_owner: liamg
     repo_name: memit
     asset: "memit-{{.OS}}-{{.Arch}}"
     format: raw
     description: Run binaries straight from memory in Linux
-    supported_if: GOOS == "linux"
+    supported_envs: ["linux"]
   - type: github_release
     repo_owner: liamg
     repo_name: pax
@@ -3714,7 +3714,7 @@ packages:
     description: CLI tool for PKCS7 padding oracle attacks
     rosetta2: true
     asset: "pax-{{.OS}}-{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_release
     repo_owner: liamg
     repo_name: scout
@@ -3722,19 +3722,19 @@ packages:
     description: "Lightweight URL fuzzer and spider: Discover a web server's undisclosed files, directories and VHOSTs"
     rosetta2: true
     asset: "scout-{{.OS}}-{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_release
     repo_owner: liamg
     repo_name: traitor
     asset: "traitor-{{.Arch}}"
     format: raw
     description: Automatic Linux privesc via exploitation of low-hanging fruit e.g. gtfobins, pwnkit, dirty pipe, +w docker.sock
-    supported_if: GOOS == "linux"
+    supported_envs: ["linux"]
   - type: github_release
     repo_owner: lima-vm
     repo_name: lima
     description: 'Linux virtual machines, on macOS (aka "Linux-on-Mac", "macOS subsystem for Linux", "containerd for Mac", unofficially)'
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "lima-{{trimV .Version}}-{{title .OS}}-{{.Arch}}.tar.gz"
     files:
       - name: lima
@@ -3750,12 +3750,12 @@ packages:
     version_constraint: 'semver("> 0.1.0")'
     version_overrides:
       - version_constraint: 'semver("<= 0.1.0")'
-        supported_if: GOOS == "darwin"
+        supported_envs: ["darwin"]
   - type: github_release
     repo_owner: livebud
     repo_name: bud
     description: The Full-Stack Web Framework for Go
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     asset: "bud_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     files:
       - name: bud
@@ -3778,7 +3778,7 @@ packages:
     asset: "skim-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz"
     description: Fuzzy Finder in rust!
     rosetta2: true
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     replacements:
       darwin: apple-darwin
       linux: unknown-linux-musl
@@ -3846,7 +3846,7 @@ packages:
     repo_owner: mattn
     repo_name: goreman
     description: foreman clone written in go language
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "goreman_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: goreman
@@ -3860,7 +3860,7 @@ packages:
     repo_name: memo
     description: Memo Life For You
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "memo_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
     files:
       - name: memo
@@ -3882,7 +3882,7 @@ packages:
     repo_name: tfnotify
     description: A CLI command to parse Terraform execution result and notify it to GitHub
     rosetta2: true
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     asset: "tfnotify_{{.OS}}_{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: mergestat
@@ -3890,7 +3890,7 @@ packages:
     description: Query git repositories with SQL. Generate reports, perform status checks, analyze codebases
     rosetta2: true
     asset: "mergestat-{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     replacements:
       darwin: macos
   - type: github_release
@@ -3898,7 +3898,7 @@ packages:
     repo_name: htmlq
     asset: "htmlq-{{.Arch}}-{{.OS}}.{{.Format}}"
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     description: Like jq, but for HTML
     replacements:
       amd64: x86_64
@@ -3944,12 +3944,12 @@ packages:
     repo_name: hcledit
     asset: "hcledit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     description: A command line editor for HCL
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: minamijoyo
     repo_name: tfmigrate
     description: A Terraform state migration tool for GitOps
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "tfmigrate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: minamijoyo
@@ -3966,7 +3966,7 @@ packages:
     repo_name: minishift
     rosetta2: true
     asset: "minishift-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: Run OpenShift 3.x locally
     format: tgz
     format_overrides:
@@ -3988,7 +3988,7 @@ packages:
     repo_name: fac
     description: Easy-to-use CUI for fixing git conflicts
     rosetta2: true
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     asset: "fac_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: mongodb
@@ -4018,12 +4018,12 @@ packages:
       - goos: windows
         asset: "sops-{{.Version}}.exe"
     version_constraint: 'semver(">= 3.7.2")'
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "sops-{{.Version}}.{{.OS}}.{{.Arch}}"
     version_overrides:
       - version_constraint: 'semver("< 3.7.2")'
         rosetta2: true
-        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        supported_envs: ["darwin", "amd64"]
         asset: "sops-{{.Version}}.{{.OS}}"
   - type: github_release
     repo_owner: mszostok
@@ -4060,13 +4060,13 @@ packages:
     description: Wrap up your bash scripts into a modern CLI today. Graduate to a full-blown golang app tomorrow
     rosetta2: true
     asset: "variant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: mumoshu
     repo_name: variant2
     description: Turn your bash scripts into a modern, single-executable CLI app today
     asset: "variant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     files:
       - name: variant
   - type: github_release
@@ -4074,7 +4074,7 @@ packages:
     repo_name: gofumpt
     description: A stricter gofmt
     format: raw
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "gofumpt_{{.Version}}_{{.OS}}_{{.Arch}}"
   - type: github_release
     repo_owner: mvdan
@@ -4099,7 +4099,7 @@ packages:
     repo_owner: neovim
     repo_name: neovim
     description: Hyperextensible Vim-based text editor
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     replacements:
       windows: win64
       linux: linux64
@@ -4120,7 +4120,7 @@ packages:
     repo_owner: newrelic
     repo_name: newrelic-cli
     description: The New Relic Command Line Interface
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "newrelic-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: newrelic
@@ -4141,7 +4141,7 @@ packages:
     rosetta2: true
     format: raw
     asset: "autosaved_{{.OS}}_{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_release
     repo_owner: noborus
     repo_name: trdsql
@@ -4154,7 +4154,7 @@ packages:
     repo_owner: nojima
     repo_name: httpie-go
     rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     asset: "httpie-go_{{.OS}}_{{.Arch}}"
     description: httpie-like HTTP client written in Go
     files:
@@ -4184,7 +4184,7 @@ packages:
     repo_name: kubevela
     description: The Modern Application Deployment System Based on OAM
     complete_windows_exe: false
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: kubectl-vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     files:
       - name: kubectl-vela
@@ -4195,13 +4195,13 @@ packages:
         rosetta2: true
         complete_windows_exe: true
         asset: kubectl-vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
-        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        supported_envs: ["darwin", "amd64"]
   - type: github_release
     repo_owner: oam-dev
     repo_name: kubevela
     description: The Modern Application Deployment System Based on OAM
     complete_windows_exe: false
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     files:
       - name: vela
@@ -4212,13 +4212,13 @@ packages:
         rosetta2: true
         complete_windows_exe: true
         asset: vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
-        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        supported_envs: ["darwin", "amd64"]
   - type: github_release
     repo_owner: ogham
     repo_name: dog
     description: "A command-line DNS client."
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "dog-{{.Version}}-{{.Arch}}-{{.OS}}.zip"
     replacements:
       amd64: x86_64
@@ -4232,7 +4232,7 @@ packages:
     repo_owner: ogham
     repo_name: exa
     description: "A modern replacement for 'ls'"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "exa-{{.OS}}-{{.Version}}.zip"
     replacements:
       darwin: macos-x86_64
@@ -4244,7 +4244,7 @@ packages:
     repo_owner: okteto
     repo_name: okteto
     description: Develop your applications directly in your Kubernetes Cluster
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     format: raw
     replacements:
       amd64: x86_64
@@ -4269,7 +4269,7 @@ packages:
     version_overrides:
       - version_constraint: 'semver("< 0.28.0")'
         rosetta2: true
-        supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+        supported_envs: ["darwin", "linux", "windows/amd64"]
   - type: github_release
     repo_owner: open-policy-agent
     repo_name: opa
@@ -4292,7 +4292,7 @@ packages:
     description: SDK for building Kubernetes applications. Provides high level APIs, useful abstractions, and project scaffolding
     rosetta2: true
     format: raw
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "operator-sdk_{{.OS}}_{{.Arch}}"
   - type: github_release
     repo_owner: orf
@@ -4347,14 +4347,14 @@ packages:
     rosetta2: true
     format: raw
     asset: "dfg_{{.Version}}_{{.OS}}_{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     files:
       - name: dfg
   - type: github_release
     repo_owner: particledecay
     repo_name: kconf
     description: Manage multiple kubeconfigs easily
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "kconf-{{.OS}}-{{.Arch}}-{{trimV .Version}}.tar.gz"
     replacements:
       darwin: Darwin
@@ -4380,7 +4380,7 @@ packages:
     repo_name: peco
     asset: "peco_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Simplistic interactive filtering tool
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     files:
       - name: peco
         src: "peco_{{.OS}}_{{.Arch}}/peco"
@@ -4393,7 +4393,7 @@ packages:
     repo_name: pen
     asset: "pen-{{trimV .Version}}-{{.Arch}}-{{.OS}}.tar.xz"
     rosetta2: true
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     description: The programming language for scalable software development
     replacements:
       darwin: apple-darwin
@@ -4412,7 +4412,7 @@ packages:
     repo_owner: pivotal-cf
     repo_name: om
     asset: "om-{{.OS}}-{{trimV .Version}}.{{.Format}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     description: General command line utility for working with VMware Tanzu Operations Manager
     format: tar.gz
@@ -4427,7 +4427,7 @@ packages:
     complete_windows_exe: false
     format: raw
     asset: "pivnet-{{.OS}}-{{.Arch}}-{{trimV .Version}}"
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     files:
       - name: pivnet
   - type: github_release
@@ -4437,14 +4437,14 @@ packages:
     rosetta2: true
     complete_windows_exe: false
     format: raw
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "sinker-{{.OS}}-{{.Arch}}"
   - type: github_release
     repo_owner: porter-dev
     repo_name: porter
     asset: "porter_{{.Version}}_{{title .OS}}_x86_64.zip"
     description: Kubernetes powered PaaS that runs in your own cloud
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_content
     repo_owner: postfinance
     repo_name: kubectl-sudo
@@ -4491,7 +4491,7 @@ packages:
     description: A fast port scanner written in go with a focus on reliability and simplicity. Designed to be used in combination with other tools for attack surface discovery in bug bounties and pentests
     rosetta2: true
     asset: "naabu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     replacements:
       darwin: macOS
   - type: github_release
@@ -4515,7 +4515,7 @@ packages:
     description: Go support for Protocol Buffers
     rosetta2: true
     asset: "protoc-gen-go.{{.Version}}.{{.OS}}.{{.Arch}}.{{.Format}}"
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     files:
       - name: protoc-gen-go
     format: tar.gz
@@ -4527,7 +4527,7 @@ packages:
     repo_name: kubespy
     description: Tools for observing Kubernetes resources in real time, powered by Pulumi
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "kubespy-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz"
     overrides:
       - goos: windows
@@ -4536,7 +4536,7 @@ packages:
     repo_owner: pulumi
     repo_name: pulumi
     description: Pulumi - Modern Infrastructure as Code. Any cloud, any language
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "pulumi-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     replacements:
       amd64: x64
@@ -4555,7 +4555,7 @@ packages:
     repo_name: cli
     description: Rancher CLI
     rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     asset: "rancher-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}"
     format: tar.gz
     format_overrides:
@@ -4581,7 +4581,7 @@ packages:
     repo_name: rke
     asset: "rke_{{.OS}}-{{.Arch}}"
     rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     format: raw
     description: Rancher Kubernetes Engine (RKE), an extremely simple, lightning fast Kubernetes distribution that runs entirely within containers
   - type: github_release
@@ -4610,7 +4610,7 @@ packages:
     repo_owner: replicatedhq
     repo_name: kots
     description: KOTS provides the framework, tools and integrations that enable the delivery and management of 3rd-party Kubernetes applications, a.k.a. Kubernetes Off-The-Shelf (KOTS) Software
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     files:
       - name: kubectl-kots
         src: kots
@@ -4622,7 +4622,7 @@ packages:
     version_overrides:
       - version_constraint: 'semver("< 1.59.2")'
         rosetta2: true
-        supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+        supported_envs: ["darwin", "linux/amd64"]
         overrides: []
   - type: github_release
     repo_owner: replicatedhq
@@ -4640,7 +4640,7 @@ packages:
     repo_owner: restic
     repo_name: restic
     description: Fast, secure, efficient backup program
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: restic
@@ -4691,7 +4691,7 @@ packages:
     version_constraint: 'semver(">= 0.2.5")'
     version_overrides:
       - version_constraint: 'semver("< 0.2.5")'
-        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        supported_envs: ["windows", "darwin", "linux/amd64"]
         overrides: []
   - type: github_release
     repo_owner: rikatz
@@ -4707,7 +4707,7 @@ packages:
     repo_name: s3gof3r
     description: Fast, concurrent, streaming access to Amazon S3, including gof3r, a CLI
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     files:
       - name: gof3r
         src: "gof3r_{{trimV .Version}}_{{.OS}}_{{.Arch}}/gof3r"
@@ -4755,7 +4755,7 @@ packages:
     description: A tool to perform Kerberos pre-auth bruteforcing
     format: raw
     rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     asset: "kerbrute_{{.OS}}_{{.Arch}}"
   - type: github_release
     repo_owner: rs
@@ -4768,7 +4768,7 @@ packages:
     repo_name: mdBook
     rosetta2: true
     asset: "mdbook-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: Create book from markdown files. Like Gitbook but implemented in Rust
     replacements:
       darwin: apple-darwin
@@ -4820,7 +4820,7 @@ packages:
     repo_name: yamldiff
     description: A CLI tool to diff two YAML files
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     complete_windows_exe: false
     format: raw
     asset: "yamldiff-v{{.Version}}-{{.OS}}-amd64"
@@ -4830,7 +4830,7 @@ packages:
     description: Monitor your Website and APIs from your Computer. Get Notified through Slack, E-mail when your server is down or response time is more than expected
     rosetta2: true
     asset: "statusok_{{.OS}}.zip"
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     files:
       - name: statusok
         src: "statusok_{{.OS}}/statusok"
@@ -4840,7 +4840,7 @@ packages:
     repo_owner: sbstp
     repo_name: kubie
     description: A more powerful alternative to kubectx and kubens
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "kubie-{{.OS}}-{{.Arch}}"
     format: raw
   - type: github_release
@@ -4855,7 +4855,7 @@ packages:
     version_overrides:
       - version_constraint: 'semver("< 2.5.1")'
         asset: "scw-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
-        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        supported_envs: ["darwin", "amd64"]
         replacements:
           amd64: x86_64
   - type: github_release
@@ -4883,7 +4883,7 @@ packages:
     repo_owner: sclevine
     repo_name: yj
     description: Convert between YAML, TOML, JSON, and HCL
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     replacements:
       darwin: macos
     version_constraint: 'semver(">= 5.1.0")'
@@ -4906,7 +4906,7 @@ packages:
     format: raw
     rosetta2: true
     asset: "chamber-{{.Version}}-{{.OS}}-{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: CLI for managing secrets
   - type: github_release
     repo_owner: sethvargo
@@ -4922,7 +4922,7 @@ packages:
     repo_name: bat
     rosetta2: true
     description: "A cat(1) clone with wings."
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
     replacements:
@@ -4969,7 +4969,7 @@ packages:
     repo_owner: sharkdp
     repo_name: fd
     description: "A simple, fast and user-friendly alternative to 'find'"
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     rosetta2: true
     asset: "fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
@@ -5151,7 +5151,7 @@ packages:
     repo_owner: siderolabs
     repo_name: conform
     description: Policy enforcement for your pipelines
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     format: raw
     asset: "conform-{{.OS}}-{{.Arch}}"
   - type: github_release
@@ -5185,7 +5185,7 @@ packages:
     repo_name: rekor
     description: rekor-cli. Supply Chain Transparency Log
     format: raw
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "rekor-cli-{{.OS}}-{{.Arch}}"
     files:
       - name: rekor-cli
@@ -5231,7 +5231,7 @@ packages:
     rosetta2: true
     url: "https://storage.googleapis.com/spinnaker-artifacts/spin/{{trimV .Version}}/{{.OS}}/{{.Arch}}/spin"
     description: Spinnaker CLI
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     files:
       - name: spin
   - type: github_release
@@ -5241,13 +5241,13 @@ packages:
     format: raw
     rosetta2: true
     asset: "sampler-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_release
     repo_owner: squat
     repo_name: kilo
     description: "kgctl - Manage a Kilo network. Kilo is a multi-cloud network overlay built on WireGuard and designed for Kubernetes (k8s + wg = kg)"
     format: raw
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     complete_windows_exe: false
     asset: "kgctl-{{.OS}}-{{.Arch}}"
     files:
@@ -5257,7 +5257,7 @@ packages:
     repo_name: kube-linter
     description: KubeLinter is a static analysis tool that checks Kubernetes YAML files and Helm charts to ensure the applications represented in them adhere to best practices
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "kube-linter-{{.OS}}.tar.gz"
   - type: github_release
     repo_owner: starship
@@ -5290,7 +5290,7 @@ packages:
     rosetta2: true
     format: raw
     asset: "docuum-x86_64-{{.OS}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: Docuum performs least recently used (LRU) eviction of Docker images
     replacements:
       darwin: apple-darwin
@@ -5327,7 +5327,7 @@ packages:
     repo_owner: suzuki-shunsuke
     repo_name: akoi
     asset: "akoi_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     description: binary installer
   - type: github_release
@@ -5338,7 +5338,7 @@ packages:
     version_constraint: 'semver(">= 0.1.2")'
     version_overrides:
       - version_constraint: 'semver("< 0.1.2")'
-        supported_if: GOOS != "windows"
+        supported_envs: ["darwin", "linux"]
   - type: github_content
     repo_owner: suzuki-shunsuke
     repo_name: checkout-merged-branch-with-ci-info
@@ -5350,7 +5350,7 @@ packages:
     repo_owner: suzuki-shunsuke
     repo_name: ci-info
     asset: "ci-info_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     description: CLI tool to get CI related information
   - type: github_content
@@ -5362,7 +5362,7 @@ packages:
     repo_owner: suzuki-shunsuke
     repo_name: circleci-config-merge
     asset: "circleci-config-merge_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     description: Generate .circleci/config.yml by merging multiple files
   - type: github_release
@@ -5370,7 +5370,7 @@ packages:
     repo_name: cmdx
     rosetta2: true
     asset: "cmdx_{{.OS}}_amd64.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: Task runner. It provides useful help messages and supports interactive prompts and validation of arguments
     version_constraint: 'semver(">= 1.6.1")'
     version_overrides:
@@ -5380,7 +5380,7 @@ packages:
     repo_owner: suzuki-shunsuke
     repo_name: dd-time
     asset: "dd-time_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     description: CLI tool to post the command execution time as time-series data to DataDog
   - type: github_release
@@ -5392,7 +5392,7 @@ packages:
     repo_owner: suzuki-shunsuke
     repo_name: durl
     asset: "durl_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     description: CLI to check whether dead urls are included in files
   - type: github_release
@@ -5400,14 +5400,14 @@ packages:
     repo_name: git-rm-branch
     rosetta2: true
     asset: "git-rm-branch_{{.Version}}_{{.OS}}_amd64.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: cli tool to remove merged branches
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: github-comment
     rosetta2: true
     asset: "github-comment_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: CLI to create a GitHub comment
   - type: github_release
     repo_owner: suzuki-shunsuke
@@ -5415,7 +5415,7 @@ packages:
     rosetta2: true
     asset: "matchfile_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
     description: CLI tool to check file paths are matched to the condition
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: renovate-issue-action
@@ -5429,7 +5429,7 @@ packages:
     version_constraint: 'semver(">= 3.2.5")'
     version_overrides:
       - version_constraint: 'semver("< 3.2.5")'
-        supported_if: GOOS != "windows"
+        supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: yaml2json
@@ -5439,7 +5439,7 @@ packages:
     repo_owner: swaggo
     repo_name: swag
     description: Automatically generate RESTful API documentation with Swagger 2.0 for Go
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "swag_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     version_constraint: 'semver("!= 1.8.2")'
     rosetta2: true
@@ -5485,7 +5485,7 @@ packages:
     repo_name: ghr
     description: Upload multiple artifacts to GitHub Release in parallel
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "ghr_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
     files:
       - name: ghr
@@ -5523,7 +5523,7 @@ packages:
     repo_owner: telepresenceio
     repo_name: telepresence
     description: Local development against a remote Kubernetes or OpenShift cluster
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     format: raw
     rosetta2: true
     url: "https://app.getambassador.io/download/tel2/{{.OS}}/{{.Arch}}/{{trimV .Version}}/telepresence"
@@ -5545,7 +5545,7 @@ packages:
     #   - name: accurics/terrascan
     asset: "terrascan_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Detect compliance and security violations across Infrastructure as Code to mitigate risk before provisioning cloud native infrastructure
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     format: tar.gz
     overrides:
       - goos: windows
@@ -5560,7 +5560,7 @@ packages:
     repo_owner: terraform-docs
     repo_name: terraform-docs
     description: Generate documentation from Terraform modules in various output formats
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "terraform-docs-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
@@ -5591,7 +5591,7 @@ packages:
     repo_owner: thazelart
     repo_name: terraform-validator
     description: A norms and conventions validator for Terraform
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     asset: "terraform-validator_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
@@ -5607,7 +5607,7 @@ packages:
     repo_owner: thought-machine
     repo_name: please
     description: High-performance extensible build system for reproducible multi-language builds
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     asset: "please_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     files:
       - name: please
@@ -5629,7 +5629,7 @@ packages:
     repo_owner: tilt-dev
     repo_name: tilt
     description: Define your dev environment as code. For microservice apps on Kubernetes
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}"
     format: tar.gz
     format_overrides:
@@ -5650,15 +5650,15 @@ packages:
     rosetta2: true
     asset: "lwc-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz"
     version_constraint: 'semver(">= 0.4.5")'
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     version_overrides:
       - version_constraint: 'semver("< 0.4.5")'
-        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        supported_envs: ["darwin", "amd64"]
   - type: github_release
     repo_owner: tinygo-org
     repo_name: tinygo
     rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     asset: "tinygo{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}"
     description: Go compiler for small places. Microcontrollers, WebAssembly, and command-line tools. Based on LLVM
     format: tar.gz
@@ -5673,7 +5673,7 @@ packages:
     repo_name: alp
     rosetta2: true
     asset: "alp_{{.OS}}_{{.Arch}}.zip"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: Access Log Profiler
   - type: github_release
     repo_owner: tmccombs
@@ -5682,7 +5682,7 @@ packages:
     description: Convert hcl2 to json
     rosetta2: true
     asset: "hcl2json_{{.OS}}_{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_release
     repo_owner: tomnomnom
     repo_name: gron
@@ -5697,7 +5697,7 @@ packages:
     repo_name: driftwood
     description: Private key usage verification
     asset: "driftwood_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
   - type: github_release
     repo_owner: trufflesecurity
     repo_name: trufflehog
@@ -5708,7 +5708,7 @@ packages:
     repo_name: vegeta
     description: HTTP load testing tool and library. It's over 9000!
     rosetta2: true
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     asset: "vegeta_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: twpayne
@@ -5729,10 +5729,10 @@ packages:
       - goos: windows
         asset: mizu.exe
     version_constraint: 'semver(">= 0.24.0")'
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     version_overrides:
       - version_constraint: 'semver("< 0.24.0")'
-        supported_if: GOOS == "darwin" or GOARCH == "amd64"
+        supported_envs: ["darwin", "amd64"]
   - type: github_release
     repo_owner: uptrace
     repo_name: uptrace
@@ -5779,7 +5779,7 @@ packages:
       arm64: aarch64
     version_overrides:
       - version_constraint: 'semver("< 1.10.0")'
-        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        supported_envs: ["windows", "darwin", "linux/amd64"]
         asset: "websocat_{{.OS}}"
         replacements:
           darwin: mac
@@ -5790,7 +5790,7 @@ packages:
     rosetta2: true
     format: raw
     asset: "imgpkg-{{.OS}}-{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: "Store application configuration files in Docker/OCI registries"
     files:
       - name: imgpkg
@@ -5817,7 +5817,7 @@ packages:
     rosetta2: true
     format: raw
     asset: "kwt-{{.OS}}-{{.Arch}}"
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     files:
       - name: kwt
   - type: github_release
@@ -5895,7 +5895,7 @@ packages:
     description: Executes commands in response to file modifications
     rosetta2: true
     asset: 'watchexec-{{trimPrefix "cli-v" .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     format: tar.xz
     format_overrides:
       - goos: windows
@@ -5927,7 +5927,7 @@ packages:
     repo_name: go-crond
     description: Cron daemon written in golang (for eg. usage in docker images)
     rosetta2: true
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     format: raw
     asset: "go-crond-{{.Arch}}-{{.OS}}"
     replacements:
@@ -5939,13 +5939,13 @@ packages:
     description: Gossh is a high-performance and high-concurrency ssh tool
     format: raw
     rosetta2: true
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     asset: "gossh-{{.Version}}-{{.OS}}-{{.Arch}}"
   - type: github_release
     repo_owner: wtfutil
     repo_name: wtf
     description: WTF is the personal information dashboard for your terminal
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "wtf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     files:
       - name: wtfutil
@@ -5973,13 +5973,13 @@ packages:
     description: A CLI tool for Kafka
     rosetta2: true
     asset: "trubka_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_envs: ["windows", "darwin", "linux/amd64"]
   - type: github_release
     repo_owner: xo
     repo_name: usql
     description: Universal command-line interface for SQL databases
     rosetta2: true
-    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    supported_envs: ["darwin", "amd64"]
     asset: "usql-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.bz2
     format_overrides:
@@ -6031,7 +6031,7 @@ packages:
     repo_owner: yohamta
     repo_name: dagu
     description: A No-code workflow executor with built-in web UI
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "dagu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     replacements:
       darwin: Darwin
@@ -6053,7 +6053,7 @@ packages:
     repo_owner: zellij-org
     repo_name: zellij
     description: A terminal workspace with batteries included
-    supported_if: GOOS != "windows"
+    supported_envs: ["darwin", "linux"]
     asset: "zellij-{{.Arch}}-{{.OS}}.tar.gz"
     replacements:
       linux: unknown-linux-musl
@@ -6109,12 +6109,12 @@ packages:
     version_overrides:
       - version_constraint: 'semver("< 8.0.0")'
         asset: "gitleaks-{{.OS}}-{{.Arch}}"
-        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        supported_envs: ["windows", "darwin", "linux/amd64"]
         rosetta2: true
         format: raw
         format_overrides: []
         replacements: {}
       - version_constraint: 'semver("<= 8.1.2")'
         rosetta2: true
-        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        supported_envs: ["windows", "darwin", "linux/amd64"]
         format_overrides: []

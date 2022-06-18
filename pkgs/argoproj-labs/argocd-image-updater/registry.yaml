@@ -6,11 +6,11 @@ packages:
     format: raw
     version_constraint: 'semver(">= 0.12.0")'
     asset: "argocd-image-updater-{{.OS}}_{{.Arch}}"
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     overrides:
       - goos: windows
         asset: argocd-image-updater-win64.exe
     version_overrides:
       - version_constraint: 'semver("< 0.12.0")'
-        supported_if: GOOS == "linux" and GOARCH == "amd64"
+        supported_envs: ["linux/amd64"]
         asset: "argocd-image-updater_{{.Version}}_{{.OS}}-{{.Arch}}"

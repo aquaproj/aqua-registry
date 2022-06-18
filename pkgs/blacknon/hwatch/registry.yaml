@@ -3,7 +3,7 @@ packages:
     repo_owner: blacknon
     repo_name: hwatch
     description: A modern alternative to the watch command, records the differences in execution results and can check this differences at after
-    supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
+    supported_envs: ["darwin", "linux/amd64"]
     replacements:
       amd64: x86_64
       arm64: aarch64
@@ -18,7 +18,7 @@ packages:
       - version_constraint: 'semver("= 0.3.0")'
         asset: "hwatch_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
         rosetta2: true
-        supported_if: GOOS == "darwin"
+        supported_envs: ["darwin"]
         replacements:
           amd64: amd64
           darwin: darwin
@@ -27,7 +27,7 @@ packages:
           - name: hwatch
             src: hwatch/hwatch
       - version_constraint: 'semver("= 0.2.1") || semver("= 0.1.6")'
-        supported_if: "false"
+        supported_envs: []
       - version_constraint: 'semver("= 0.1.0")'
         asset: "hwatch_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
         rosetta2: true
