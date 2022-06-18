@@ -46,10 +46,10 @@ packages:
   - type: github_release
     repo_owner: Azure
     repo_name: aks-engine
-    rosetta2: true
-    asset: "aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
     description: "AKS Engine deploys and manages Kubernetes clusters in Azure"
+    rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz"
     files:
       - name: aks-engine
         src: "aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}/aks-engine"
@@ -146,7 +146,7 @@ packages:
     repo_owner: Dreamacro
     repo_name: clash
     asset: "clash-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     description: A rule-based tunnel in Go
     format: gz
     files:
@@ -293,7 +293,7 @@ packages:
     repo_owner: Ladicle
     repo_name: kubectl-rolesum
     description: Summarize Kubernetes RBAC roles for the specified subjects
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     rosetta2: true
     asset: "kubectl-rolesum_{{.OS}}-{{.Arch}}.tar.gz"
     files:
@@ -527,9 +527,9 @@ packages:
   - type: github_release
     repo_owner: Traackr
     repo_name: binnacle
-    asset: "binnacle-{{.OS}}_{{.Arch}}.tar.gz"
     description: An opinionated tool to interact with Kubernetes' Helm
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "binnacle-{{.OS}}_{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: Trendyol
     repo_name: kink
@@ -1134,7 +1134,7 @@ packages:
     repo_name: plumber
     rosetta2: true
     asset: "plumber-{{.OS}}"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     description: A swiss army knife CLI tool for interacting with Kafka, RabbitMQ and other messaging systems
     format: raw
   - type: github_archive
@@ -1311,7 +1311,7 @@ packages:
     repo_owner: bufbuild
     repo_name: buf
     description: A new way of working with Protocol Buffers
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     asset: "buf-{{.OS}}-{{.Arch}}.tar.gz"
     overrides:
       - goos: windows
@@ -1488,21 +1488,21 @@ packages:
     type: github_release
     repo_owner: cloudflare
     repo_name: cfssl
+    description: "CFSSL: Cloudflare's PKI and TLS toolkit"
     rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     format: raw
     asset: "mkbundle_{{trimV .Version}}_{{.OS}}_{{.Arch}}"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
-    description: "CFSSL: Cloudflare's PKI and TLS toolkit"
     files:
       - name: mkbundle
   - type: github_release
     repo_owner: cloudflare
     repo_name: cfssl
+    description: "CFSSL: Cloudflare's PKI and TLS toolkit"
     rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     format: raw
     asset: "cfssl_{{trimV .Version}}_{{.OS}}_{{.Arch}}"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
-    description: "CFSSL: Cloudflare's PKI and TLS toolkit"
   - type: github_release
     repo_owner: cloudflare
     repo_name: cloudflared
@@ -1516,18 +1516,18 @@ packages:
   - type: github_release
     repo_owner: cloudfoundry
     repo_name: bosh-cli
-    format: raw
-    asset: "bosh-cli-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
-    rosetta2: true
     description: The bosh CLI is the command line tool used for interacting with all things BOSH, from deployment operations to software release management
+    rosetta2: true
+    format: raw
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "bosh-cli-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
     files:
       - name: bosh
   - type: github_release
     repo_owner: cloudfoundry
     repo_name: credhub-cli
     asset: "credhub-{{.OS}}-{{.Version}}.tgz"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     rosetta2: true
     description: CredHub CLI provides a command line interface to interact with CredHub servers
     files:
@@ -1671,7 +1671,7 @@ packages:
     repo_owner: create-go-app
     repo_name: cli
     description: Create a new production-ready project with backend, frontend and deploy automation by running one CLI command!
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "cgapp_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: cgapp
@@ -2061,7 +2061,7 @@ packages:
     description: kubectl cluster triage plugin for k8s - (brew doctor equivalent)
     version_constraint: 'semver(">= 0.3.1")'
     asset: "kubectl-doctor_{{.OS}}_{{.Arch}}"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     version_overrides:
       - version_constraint: 'semver("< 0.3.1")'
         rosetta2: true
@@ -2083,8 +2083,8 @@ packages:
     repo_name: vale
     rosetta2: true
     description: A syntax-aware linter for prose built with speed and extensibility in mind
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "vale_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
     format: tar.gz
     format_overrides:
       - goos: windows
@@ -2118,7 +2118,7 @@ packages:
     repo_name: gitui
     rosetta2: true
     asset: "gitui-{{.OS}}.tar.gz"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     description: Blazing fast terminal-ui for git written in rust
     replacements:
       darwin: mac
@@ -2294,7 +2294,7 @@ packages:
     repo_owner: geofffranks
     repo_name: spruce
     description: Standalone, daemon-less, unprivileged Dockerfile and OCI compatible container image builder
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     rosetta2: true
     format: raw
     asset: "spruce-{{.OS}}-{{.Arch}}"
@@ -2316,10 +2316,10 @@ packages:
   - type: github_release
     repo_owner: getzola
     repo_name: zola
-    rosetta2: true
-    asset: "zola-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
     description: A fast static site generator in a single binary with everything built-in
+    rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "zola-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     replacements:
       darwin: apple-darwin
       linux: unknown-linux-gnu
@@ -2412,10 +2412,10 @@ packages:
   - type: github_release
     repo_owner: go-jira
     repo_name: jira
-    rosetta2: true
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
-    asset: "jira-{{.OS}}-{{.Arch}}"
     description: simple jira command line client in Go
+    rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "jira-{{.OS}}-{{.Arch}}"
   - type: github_release
     repo_owner: go-task
     repo_name: task
@@ -2845,10 +2845,10 @@ packages:
   - type: github_release
     repo_owner: hashicorp
     repo_name: go-getter
-    rosetta2: true
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
-    asset: "go-getter_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip"
     description: Package for downloading things from a string URL using a variety of protocols
+    rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "go-getter_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip"
   - type: http
     repo_owner: hashicorp
     repo_name: levant
@@ -2892,7 +2892,7 @@ packages:
     repo_owner: hashicorp
     repo_name: waypoint
     description: A tool to build, deploy, and release any application on any platform
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     url: "https://releases.hashicorp.com/waypoint/{{trimV .Version}}/waypoint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip"
   - name: haskell/cabal/cabal-install
     repo_owner: haskell
@@ -3132,7 +3132,7 @@ packages:
     repo_owner: iovisor
     repo_name: kubectl-trace
     description: Schedule bpftrace programs on your kubernetes cluster using the kubectl
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     rosetta2: true
     asset: "kubectl-trace_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
@@ -3286,8 +3286,8 @@ packages:
     repo_name: retry
     description: "Rerun a command until it eventually succeeds, or doesn't"
     rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "retry-{{.OS}}-{{.Arch}}.{{.Format}}"
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
     format: tar.gz
     format_overrides:
       - goos: windows
@@ -3338,7 +3338,7 @@ packages:
     repo_name: terraform-lsp
     asset: "terraform-lsp_{{trimV .Version}}_{{.OS}}_amd64.tar.gz"
     description: Language Server Protocol for Terraform
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
   - name: junegunn/fzf/fzf-tmux
     type: github_content
     repo_owner: junegunn
@@ -5974,7 +5974,7 @@ packages:
     repo_name: usql
     description: Universal command-line interface for SQL databases
     rosetta2: true
-    supported_if: not ((GOOS == "linux") and (GOARCH == "arm64"))
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "usql-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.bz2
     format_overrides:
