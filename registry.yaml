@@ -750,8 +750,9 @@ packages:
   - type: github_release
     repo_owner: anchore
     repo_name: grype
-    asset: "grype_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: A vulnerability scanner for container images and filesystems
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "grype_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
     version_constraint: 'semver(">= 0.33.0")'
     format_overrides:
@@ -2032,8 +2033,9 @@ packages:
   - type: github_release
     repo_owner: earthly
     repo_name: earthly
-    asset: "earthly-{{.OS}}-{{.Arch}}"
     description: Repeatable builds
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "earthly-{{.OS}}-{{.Arch}}"
   - type: github_release
     repo_owner: editorconfig-checker
     repo_name: editorconfig-checker
@@ -4852,7 +4854,7 @@ packages:
     version_overrides:
       - version_constraint: 'semver("< 2.5.1")'
         asset: "scw-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
-        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        supported_if: GOOS == "darwin" or GOARCH == "amd64"
         replacements:
           amd64: x86_64
   - type: github_release
