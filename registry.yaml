@@ -3070,18 +3070,49 @@ packages:
     repo_owner: inlets
     repo_name: inletsctl
     description: Create inlets servers on the top cloud platforms
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: inletsctl.tgz
     overrides:
+      - goos: windows
+        asset: inletsctl.exe.tgz
       - goos: darwin
-        asset: "inletsctl-darwin.tgz"
+        goarch: amd64
+        asset: inletsctl-darwin.tgz
         files:
           - name: inletsctl
             src: inletsctl-darwin
-      - goarch: arm64
-        asset: "inletsctl-arm64.tgz"
+      - goos: darwin
+        goarch: arm64
+        asset: inletsctl-darwin-arm64.tgz
+        files:
+          - name: inletsctl
+            src: inletsctl-darwin
+      - goos: linux
+        goarch: arm64
+        asset: inletsctl-arm64.tgz
         files:
           - name: inletsctl
             src: inletsctl-arm64
+    version_constraint: 'semver(">= 0.8.20")'
+    version_overrides:
+      - version_constraint: 'semver("= 0.8.15")'
+        supported_if: "false"
+      - version_constraint: 'semver("< 0.8.15")'
+        rosetta2: true
+        overrides:
+          - goos: windows
+            asset: inletsctl.exe.tgz
+          - goos: darwin
+            asset: inletsctl-darwin.tgz
+            files:
+              - name: inletsctl
+                src: inletsctl-darwin
+          - goos: linux
+            goarch: arm64
+            asset: inletsctl-arm64.tgz
+            files:
+              - name: inletsctl
+                src: inletsctl-arm64
   - type: github_release
     repo_owner: instrumenta
     repo_name: kubeval
