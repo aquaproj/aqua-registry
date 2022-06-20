@@ -222,9 +222,8 @@ packages:
     type: github_release
     repo_owner: GoogleCloudPlatform
     repo_name: terraformer
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     rosetta2: true
-    complete_windows_exe: false
     asset: "terraformer-aws-{{.OS}}-{{.Arch}}"
     files:
       - name: terraformer
@@ -233,7 +232,8 @@ packages:
     repo_owner: GoogleCloudPlatform
     repo_name: terraformer
     description: CLI tool to generate terraform files from existing infrastructure (reverse Terraform). Infrastructure to Code
-    complete_windows_exe: false
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    complete_windows_ext: false
     asset: "terraformer-all-{{.OS}}-{{.Arch}}"
     files:
       - name: terraformer
@@ -619,24 +619,27 @@ packages:
     type: github_content
     repo_owner: aelsabbahy
     repo_name: goss
-    path: extras/dcgoss/dcgoss
     description: dcgoss is a convenience wrapper around goss that aims to bring the simplicity of goss to docker-compose managed containers
+    supported_if: GOOS != "windows"
+    path: extras/dcgoss/dcgoss
     files:
       - name: dcgoss
   - name: aelsabbahy/goss/dgoss
     type: github_content
     repo_owner: aelsabbahy
     repo_name: goss
-    path: extras/dgoss/dgoss
     description: dgoss is a convenience wrapper around goss that aims to bring the simplicity of goss to docker containers
+    supported_if: GOOS != "windows"
+    path: extras/dgoss/dgoss
     files:
       - name: dgoss
   - name: aelsabbahy/goss/kgoss
     type: github_content
     repo_owner: aelsabbahy
     repo_name: goss
-    path: extras/kgoss/kgoss
     description: kgoss is a wrapper for goss that aims to bring the simplicity of testing with goss to containers running in pods in Kubernetes
+    supported_if: GOOS != "windows"
+    path: extras/kgoss/kgoss
     files:
       - name: kgoss
   - type: github_release
@@ -829,6 +832,7 @@ packages:
     repo_name: aqua-installer
     path: aqua-installer
     description: Install aqua quickly
+    supported_if: GOOS != "windows"
   - type: github_release
     repo_owner: aquasecurity
     repo_name: kube-bench
@@ -894,8 +898,9 @@ packages:
     repo_owner: argoproj-labs
     repo_name: argocd-autopilot
     description: Argo-CD Autopilot
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
-    complete_windows_exe: false
+    complete_windows_ext: false
     asset: "argocd-autopilot-{{.OS}}-{{.Arch}}.tar.gz"
     files:
       - name: argocd-autopilot
@@ -928,7 +933,7 @@ packages:
     repo_name: argo-rollouts
     description: Progressive Delivery for Kubernetes
     rosetta2: true
-    complete_windows_exe: false
+    complete_windows_ext: false
     asset: "kubectl-argo-rollouts-{{.OS}}-{{.Arch}}"
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     files:
@@ -977,7 +982,7 @@ packages:
     repo_name: kubescape
     description: "kubescape is the first tool for testing if Kubernetes is deployed securely as defined in Kubernetes Hardening Guidance by to NSA and CISA"
     rosetta2: true
-    complete_windows_exe: false
+    complete_windows_ext: false
     supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "kubescape-{{.OS}}-latest"
     replacements:
@@ -986,16 +991,17 @@ packages:
   - type: github_content
     repo_owner: aws-containers
     repo_name: amazon-ecs-exec-checker
+    description: Pre-flight checks for ECS Exec
+    supported_if: GOOS != "windows"
     format: raw
     path: check-ecs-exec.sh
-    description: Pre-flight checks for ECS Exec
     files:
       - name: check-ecs-exec
   - type: github_release
     repo_owner: aws
     repo_name: amazon-ec2-instance-selector
     description: A CLI tool and go library which recommends instance types based on resource criteria like vcpus and memory
-    complete_windows_exe: false
+    complete_windows_ext: false
     asset: "ec2-instance-selector-{{.OS}}-{{.Arch}}.tar.gz"
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     files:
@@ -1016,8 +1022,9 @@ packages:
   - type: github_content
     repo_owner: awslabs
     repo_name: git-secrets
-    path: git-secrets
     description: Prevents you from committing secrets and credentials into git repositories
+    supported_if: GOOS != "windows"
+    path: git-secrets
   - type: github_release
     repo_owner: awslabs
     repo_name: ssosync
@@ -1142,6 +1149,7 @@ packages:
     repo_owner: bats-core
     repo_name: bats-core
     description: Bash Automated Testing System
+    supported_if: GOOS != "windows"
     files:
       - name: bats
         src: "bats-core-{{trimV .Version}}/bin/bats"
@@ -1149,7 +1157,7 @@ packages:
     repo_owner: bcicen
     repo_name: ctop
     description: Top-like interface for container metrics
-    complete_windows_exe: false
+    complete_windows_ext: false
     rosetta2: true
     format: raw
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
@@ -1577,7 +1585,7 @@ packages:
     repo_name: transporter
     description: Sync data between persistence engines, like ETL only not stodgy
     format: raw
-    complete_windows_exe: false
+    complete_windows_ext: false
     asset: "transporter-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
     supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
@@ -1720,7 +1728,7 @@ packages:
     description: Read your tfstate or HCL to generate a graph specific for each provider, showing only the resources that are most important/relevant
     rosetta2: true
     asset: "inframap-{{.OS}}-{{.Arch}}.tar.gz"
-    complete_windows_exe: false
+    complete_windows_ext: false
     supported_if: GOOS == "darwin" or GOARCH == "amd64"
     files:
       - name: inframap
@@ -1897,7 +1905,7 @@ packages:
       - version_constraint: 'semver(">= 1.40.1")'
         overrides:
           - goos: windows
-            complete_windows_exe: false
+            complete_windows_ext: false
       - version_constraint: 'semver(">= 1.40.0")'
         overrides:
           - goos: windows
@@ -2050,8 +2058,9 @@ packages:
   - type: github_content
     repo_owner: ekalinin
     repo_name: github-markdown-toc
-    path: gh-md-toc
     description: Easy TOC creation for GitHub README.md
+    supported_if: GOOS != "windows"
+    path: gh-md-toc
     files:
       - name: gh-md-toc
   - type: github_release
@@ -2207,8 +2216,9 @@ packages:
   - type: github_content
     repo_owner: fsaintjacques
     repo_name: semver-tool
-    path: src/semver
     description: semver bash implementation
+    supported_if: GOOS != "windows"
+    path: src/semver
     files:
       - name: semver
   - type: github_release
@@ -2287,7 +2297,7 @@ packages:
     rosetta2: true
     asset: "reg-{{.OS}}-{{.Arch}}"
     description: Docker registry v2 command line client and repo listing generator with security checks
-    complete_windows_exe: false
+    complete_windows_ext: false
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
   - type: github_release
     repo_owner: geofffranks
@@ -2430,7 +2440,7 @@ packages:
     description: Jenkins-job-CLI - Runs Jenkins job from the Command Line
     format: raw
     rosetta2: true
-    complete_windows_exe: false
+    complete_windows_ext: false
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "jenkins-job-cli-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
     files:
@@ -3310,7 +3320,7 @@ packages:
     repo_owner: jreleaser
     repo_name: jreleaser
     description: Release projects quickly and easily with JReleaser
-    complete_windows_exe: false
+    complete_windows_ext: false
     asset: "jreleaser-{{trimV .Version}}.zip"
     files:
       - name: jreleaser
@@ -3551,7 +3561,7 @@ packages:
     repo_name: kubectl-cost
     description: CLI for determining the cost of Kubernetes workloads
     supported_if: GOOS == "darwin" or GOARCH == "amd64"
-    complete_windows_exe: false
+    complete_windows_ext: false
     asset: "kubectl-cost-{{.OS}}-{{.Arch}}.tar.gz"
   - type: github_release
     repo_owner: kubemq-io
@@ -3576,7 +3586,7 @@ packages:
     repo_owner: kubernetes-sigs
     repo_name: kind
     description: Kubernetes IN Docker - local clusters for testing Kubernetes
-    complete_windows_exe: false
+    complete_windows_ext: false
     format: raw
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     url: "https://kind.sigs.k8s.io/dl/{{.Version}}/kind-{{.OS}}-{{.Arch}}"
@@ -3636,7 +3646,7 @@ packages:
     repo_owner: kubernetes
     repo_name: kops
     description: Kubernetes Operations (kops) - Production Grade K8s Installation, Upgrades, and Management
-    complete_windows_exe: false
+    complete_windows_ext: false
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "kops-{{.OS}}-{{.Arch}}"
   - name: kubernetes/kubectl
@@ -4195,7 +4205,7 @@ packages:
     repo_owner: oam-dev
     repo_name: kubevela
     description: The Modern Application Deployment System Based on OAM
-    complete_windows_exe: false
+    complete_windows_ext: false
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: kubectl-vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     files:
@@ -4205,14 +4215,14 @@ packages:
     version_overrides:
       - version_constraint: 'semver("< 1.2.0")'
         rosetta2: true
-        complete_windows_exe: true
+        complete_windows_ext: true
         asset: kubectl-vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
         supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
     repo_owner: oam-dev
     repo_name: kubevela
     description: The Modern Application Deployment System Based on OAM
-    complete_windows_exe: false
+    complete_windows_ext: false
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     files:
@@ -4222,7 +4232,7 @@ packages:
     version_overrides:
       - version_constraint: 'semver("< 1.2.0")'
         rosetta2: true
-        complete_windows_exe: true
+        complete_windows_ext: true
         asset: vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
         supported_if: GOOS == "darwin" or GOARCH == "amd64"
   - type: github_release
@@ -4436,7 +4446,7 @@ packages:
     repo_name: pivnet-cli
     description: CLI to interact with Tanzu Network API V2 interface
     rosetta2: true
-    complete_windows_exe: false
+    complete_windows_ext: false
     format: raw
     asset: "pivnet-{{.OS}}-{{.Arch}}-{{trimV .Version}}"
     supported_if: GOOS == "darwin" or GOARCH == "amd64"
@@ -4447,7 +4457,7 @@ packages:
     repo_name: sinker
     description: A tool to sync images from one container registry to another
     rosetta2: true
-    complete_windows_exe: false
+    complete_windows_ext: false
     format: raw
     supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "sinker-{{.OS}}-{{.Arch}}"
@@ -4461,6 +4471,7 @@ packages:
     repo_owner: postfinance
     repo_name: kubectl-sudo
     description: Run kubernetes commands with the security privileges of another user
+    supported_if: GOOS != "windows"
     path: bash/kubectl-sudo
   - type: github_release
     repo_owner: pressly
@@ -4833,7 +4844,7 @@ packages:
     description: A CLI tool to diff two YAML files
     rosetta2: true
     supported_if: GOOS == "darwin" or GOARCH == "amd64"
-    complete_windows_exe: false
+    complete_windows_ext: false
     format: raw
     asset: "yamldiff-v{{.Version}}-{{.OS}}-amd64"
   - type: github_release
@@ -5260,7 +5271,7 @@ packages:
     description: "kgctl - Manage a Kilo network. Kilo is a multi-cloud network overlay built on WireGuard and designed for Kubernetes (k8s + wg = kg)"
     format: raw
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
-    complete_windows_exe: false
+    complete_windows_ext: false
     asset: "kgctl-{{.OS}}-{{.Arch}}"
     files:
       - name: kgctl
@@ -5595,6 +5606,7 @@ packages:
     repo_owner: tfutils
     repo_name: tfenv
     description: Terraform version manager
+    supported_if: GOOS != "windows"
     files:
       - name: tfenv
         src: tfenv-{{trimV .Version}}/bin/tfenv
