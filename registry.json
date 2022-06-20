@@ -4352,8 +4352,15 @@
           "name": "cabal"
         }
       ],
+      "format": "tar.xz",
       "link": "https://www.haskell.org/cabal/",
       "name": "haskell/cabal/cabal-install",
+      "overrides": [
+        {
+          "format": "zip",
+          "goos": "windows"
+        }
+      ],
       "replacements": {
         "amd64": "x86_64",
         "arm64": "aarch64",
@@ -4361,8 +4368,9 @@
       },
       "repo_name": "cabal",
       "repo_owner": "haskell",
+      "supported_if": "not (GOOS == \"windows\" and GOARCH == \"arm64\")",
       "type": "http",
-      "url": "https://downloads.haskell.org/~cabal/cabal-install-{{trimPrefix \"Cabal-v\" .Version | trimPrefix \"cabal-install-v\"}}/cabal-install-{{trimPrefix \"Cabal-v\" .Version | trimPrefix \"cabal-install-v\"}}-{{.Arch}}-{{.OS}}.tar.xz",
+      "url": "https://downloads.haskell.org/~cabal/cabal-install-{{trimPrefix \"Cabal-v\" .Version | trimPrefix \"cabal-install-v\"}}/cabal-install-{{trimPrefix \"Cabal-v\" .Version | trimPrefix \"cabal-install-v\"}}-{{.Arch}}-{{.OS}}.{{.Format}}",
       "version_filter": "Version startsWith \"cabal-install-v\""
     },
     {

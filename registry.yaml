@@ -2900,7 +2900,8 @@ packages:
     type: http
     link: https://www.haskell.org/cabal/
     description: "Cabal: Common Architecture for Building Applications and Libraries"
-    url: https://downloads.haskell.org/~cabal/cabal-install-{{trimPrefix "Cabal-v" .Version | trimPrefix "cabal-install-v"}}/cabal-install-{{trimPrefix "Cabal-v" .Version | trimPrefix "cabal-install-v"}}-{{.Arch}}-{{.OS}}.tar.xz
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    url: https://downloads.haskell.org/~cabal/cabal-install-{{trimPrefix "Cabal-v" .Version | trimPrefix "cabal-install-v"}}/cabal-install-{{trimPrefix "Cabal-v" .Version | trimPrefix "cabal-install-v"}}-{{.Arch}}-{{.OS}}.{{.Format}}
     version_filter: 'Version startsWith "cabal-install-v"'
     replacements:
       arm64: aarch64
@@ -2908,6 +2909,10 @@ packages:
       linux: linux-alpine-static
     files:
       - name: cabal
+    format: tar.xz
+    overrides:
+      - goos: windows
+        format: zip
   - type: http
     repo_owner: haskell
     repo_name: ghcup-hs
