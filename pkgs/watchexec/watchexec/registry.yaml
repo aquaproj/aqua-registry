@@ -7,9 +7,6 @@ packages:
     asset: 'watchexec-{{trimPrefix "cli-v" .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     format: tar.xz
-    overrides:
-      - goos: windows
-        format: zip
     replacements:
       windows: pc-windows-msvc
       darwin: apple-darwin
@@ -17,6 +14,8 @@ packages:
       arm64: aarch64
       linux: unknown-linux-musl
     overrides:
+      - goos: windows
+        format: zip
       - goarch: arm64
         replacements:
           linux: unknown-linux-gnu
