@@ -788,6 +788,8 @@ packages:
     version_overrides:
       - version_constraint: 'semver("< 0.37.10")'
         overrides:
+          - goos: windows
+            format: zip
           - goos: darwin
             format: zip
   - type: go
@@ -2264,7 +2266,7 @@ packages:
     description: "Like cURL, but for gRPC: Command-line tool for interacting with gRPC servers"
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
-    asset: "grpcurl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    asset: "grpcurl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     replacements:
       amd64: x86_64
       darwin: osx
@@ -2719,10 +2721,10 @@ packages:
         src: "k6-{{.Version}}-{{.OS}}-{{.Arch}}/k6"
     replacements:
       darwin: macos
-    format: tar.gz
+    format: zip
     overrides:
-      - goos: darwin
-        format: zip
+      - goos: linux
+        format: tar.gz
   - name: grafana/loki/logcli
     type: github_release
     repo_owner: grafana
@@ -4657,6 +4659,9 @@ packages:
     overrides:
       - goos: windows
         format: zip
+        files:
+          - name: aws-nuke
+            src: "aws-nuke-{{.Version}}-windows-{{.Arch}}.exe"
     files:
       - name: aws-nuke
         src: "aws-nuke-{{.Version}}-{{.OS}}-{{.Arch}}"
