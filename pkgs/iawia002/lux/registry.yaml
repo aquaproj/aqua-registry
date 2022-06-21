@@ -18,10 +18,13 @@ packages:
       openbsd: OpenBSD
       netbsd: NetBSD
       freebsd: FreeBSD
-    version_constraint: 'semver(">= 0.12.0")'
+    version_constraint: 'semver(">= 0.14.0")'
     asset: "lux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     version_overrides:
+      - version_constraint: 'semver(">= 0.12.0")'
+        supported_if: not (GOOS == "windows" and GOARCH == "arm64")
       - version_constraint: 'semver("< 0.12.0")'
+        supported_if: not (GOOS == "windows" and GOARCH == "arm64")
         asset: "annie_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
         files:
           - name: annie

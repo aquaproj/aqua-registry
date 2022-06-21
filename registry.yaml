@@ -3025,10 +3025,13 @@ packages:
       openbsd: OpenBSD
       netbsd: NetBSD
       freebsd: FreeBSD
-    version_constraint: 'semver(">= 0.12.0")'
+    version_constraint: 'semver(">= 0.14.0")'
     asset: "lux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     version_overrides:
+      - version_constraint: 'semver(">= 0.12.0")'
+        supported_if: not (GOOS == "windows" and GOARCH == "arm64")
       - version_constraint: 'semver("< 0.12.0")'
+        supported_if: not (GOOS == "windows" and GOARCH == "arm64")
         asset: "annie_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
         files:
           - name: annie
@@ -3269,9 +3272,10 @@ packages:
   - type: github_release
     repo_owner: jesseduffield
     repo_name: lazydocker
+    description: The lazier way to manage everything docker
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     asset: "lazydocker_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    description: The lazier way to manage everything docker
     replacements:
       darwin: Darwin
       linux: Linux
@@ -3285,8 +3289,9 @@ packages:
   - type: github_release
     repo_owner: jesseduffield
     repo_name: lazygit
-    asset: "lazygit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: simple terminal UI for git commands
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "lazygit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     replacements:
       darwin: Darwin
       linux: Linux
@@ -3720,7 +3725,7 @@ packages:
     repo_owner: lc
     repo_name: gau
     description: Fetch known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     rosetta2: true
     asset: "gau_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     replacements:
@@ -4008,10 +4013,10 @@ packages:
   - type: github_release
     repo_owner: minishift
     repo_name: minishift
-    rosetta2: true
-    asset: "minishift-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     description: Run OpenShift 3.x locally
+    rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "minishift-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tgz
     overrides:
       - goos: windows
@@ -4072,8 +4077,9 @@ packages:
   - type: github_release
     repo_owner: mszostok
     repo_name: codeowners-validator
-    asset: "codeowners-validator_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: GitHub CODEOWNERS file validator
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "codeowners-validator_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     replacements:
       darwin: Darwin
       linux: Linux
@@ -4342,6 +4348,7 @@ packages:
     repo_owner: orf
     repo_name: gping
     description: Ping, but with a graph
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "gping-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
@@ -4506,9 +4513,10 @@ packages:
   - type: github_release
     repo_owner: profclems
     repo_name: glab
+    description: An open-source GitLab command line tool bringing GitLab's cool features to your command line
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     asset: "glab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    description: An open-source GitLab command line tool bringing GitLab's cool features to your command line
     format: tar.gz
     overrides:
       - goos: windows
@@ -4599,7 +4607,7 @@ packages:
     repo_name: cli
     description: Rancher CLI
     rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "rancher-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}"
     format: tar.gz
     overrides:
@@ -4641,8 +4649,9 @@ packages:
   - type: github_release
     repo_owner: rebuy-de
     repo_name: aws-nuke
-    asset: "aws-nuke-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     description: Nuke a whole AWS account and delete all its resources
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "aws-nuke-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
       - goos: windows
@@ -4671,8 +4680,9 @@ packages:
   - type: github_release
     repo_owner: replicatedhq
     repo_name: outdated
-    asset: "outdated_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Kubectl plugin to find and report outdated images running in a Kubernetes cluster
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "outdated_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: kubectl-outdated
         src: outdated
@@ -4740,8 +4750,9 @@ packages:
   - type: github_release
     repo_owner: rikatz
     repo_name: kubepug
-    asset: "kubepug_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Kubernetes PreUpGrade (Checker)
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "kubepug_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
       - goos: windows
@@ -4838,6 +4849,7 @@ packages:
     repo_owner: s0md3v
     repo_name: Smap
     description: a drop-in replacement for Nmap powered by shodan.io
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "smap_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.xz
     overrides:
@@ -5061,6 +5073,7 @@ packages:
     repo_owner: sharkdp
     repo_name: hyperfine
     description: A command-line benchmarking tool
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "hyperfine-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
     overrides:
@@ -5241,6 +5254,7 @@ packages:
     repo_owner: slackhq
     repo_name: nebula
     description: A scalable overlay networking tool with a focus on performance, simplicity and security
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     format: zip
     overrides:
       - goos: linux
@@ -5560,7 +5574,9 @@ packages:
     version_constraint: 'semver(">= 0.24.0")'
     version_overrides:
       - version_constraint: 'semver("< 0.24.0")'
-        overrides: []
+        overrides:
+          - goos: windows
+            format: zip
   - type: http
     repo_owner: telepresenceio
     repo_name: telepresence
@@ -5635,7 +5651,7 @@ packages:
     repo_owner: thazelart
     repo_name: terraform-validator
     description: A norms and conventions validator for Terraform
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     rosetta2: true
     asset: "terraform-validator_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
@@ -5660,6 +5676,7 @@ packages:
     repo_owner: tilt-dev
     repo_name: ctlptl
     description: Making local Kubernetes clusters fun and easy to set up
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "ctlptl.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
@@ -5702,7 +5719,7 @@ packages:
     repo_owner: tinygo-org
     repo_name: tinygo
     rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "tinygo{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}"
     description: Go compiler for small places. Microcontrollers, WebAssembly, and command-line tools. Based on LLVM
     format: tar.gz
@@ -6004,8 +6021,9 @@ packages:
   - type: github_release
     repo_owner: xiecat
     repo_name: fofax
-    asset: "fofax_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: "fofaX is a command line query tool based on the API of https://fofa.so/, simple is the best"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "fofax_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
       - goos: windows
