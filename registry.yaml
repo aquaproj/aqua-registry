@@ -122,6 +122,7 @@ packages:
     repo_owner: ClementTsang
     repo_name: bottom
     description: Yet another cross-platform graphical process/system monitor
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "bottom_{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
     overrides:
@@ -186,12 +187,13 @@ packages:
   - type: github_release
     repo_owner: FiloSottile
     repo_name: age
+    description: A simple, modern and secure encryption tool (and Go library) with small explicit keys, no config options, and UNIX-style composability
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
     asset: "age-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
-    description: A simple, modern and secure encryption tool (and Go library) with small explicit keys, no config options, and UNIX-style composability
     files:
       - name: age
         src: age/age
@@ -207,8 +209,9 @@ packages:
   - type: github_release
     repo_owner: GoodwayGroup
     repo_name: gwvault
-    asset: "gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: ansible-vault CLI reimplemented in go
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: gwvault
         src: "gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}/gwvault"
@@ -660,8 +663,9 @@ packages:
     type: github_release
     repo_owner: ahmetb
     repo_name: kubectx
-    asset: "kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Faster way to switch between clusters and namespaces in kubectl
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: kubens
     replacements:
@@ -674,8 +678,9 @@ packages:
   - type: github_release
     repo_owner: ahmetb
     repo_name: kubectx
-    asset: "kubectx_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Faster way to switch between clusters and namespaces in kubectl
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "kubectx_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     replacements:
       386: i386
       amd64: x86_64
@@ -687,8 +692,9 @@ packages:
     type: github_release
     repo_owner: ahmetb
     repo_name: kubectx
-    asset: "kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: DEPRECATED. PLEASE USE ahmetb/kubectx/kubens
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: kubens
     replacements:
@@ -1271,6 +1277,7 @@ packages:
     repo_owner: bootandy
     repo_name: dust
     description: A more intuitive version of du in rust
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     rosetta2: true
     asset: "dust-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
@@ -1397,9 +1404,10 @@ packages:
   - type: github_release
     repo_owner: casey
     repo_name: just
+    description: Just a command runner
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     asset: "just-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-    description: Just a command runner
     replacements:
       darwin: apple-darwin
       linux: unknown-linux-musl
@@ -1420,6 +1428,7 @@ packages:
     repo_owner: charmbracelet
     repo_name: glow
     description: Render markdown on the CLI, with pizzazz
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "glow_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
@@ -1466,8 +1475,9 @@ packages:
   - type: github_release
     repo_owner: civo
     repo_name: cli
-    asset: "civo-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     description: Our Command Line Interface (CLI) for interacting with your Civo resources
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "civo-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
       - goos: windows
@@ -1829,8 +1839,9 @@ packages:
     repo_owner: denisidoro
     repo_name: navi
     rosetta2: true
-    asset: "navi-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     description: An interactive cheatsheet tool for the command-line
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "navi-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
     overrides:
       - goos: windows
@@ -2151,6 +2162,7 @@ packages:
     repo_owner: ffuf
     repo_name: ffuf
     description: Fast web fuzzer written in Go
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     format: tar.gz
     overrides:
@@ -2249,9 +2261,10 @@ packages:
   - type: github_release
     repo_owner: fullstorydev
     repo_name: grpcurl
+    description: "Like cURL, but for gRPC: Command-line tool for interacting with gRPC servers"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     asset: "grpcurl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    description: "Like cURL, but for gRPC: Command-line tool for interacting with gRPC servers"
     replacements:
       amd64: x86_64
       darwin: osx
@@ -2361,8 +2374,9 @@ packages:
   - type: github_release
     repo_owner: git-chglog
     repo_name: git-chglog
-    asset: "git-chglog_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: CHANGELOG generator implemented in Go (Golang)
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "git-chglog_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
       - goos: windows
@@ -2476,8 +2490,9 @@ packages:
   - type: github_release
     repo_owner: gokcehan
     repo_name: lf
-    rosetta2: true
     description: Terminal file manager
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    rosetta2: true
     asset: "lf-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
@@ -2562,8 +2577,9 @@ packages:
   - type: github_release
     repo_owner: goodwithtech
     repo_name: dockle
-    asset: "dockle_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}"
     description: Container Image Linter for Security, Helping build the Best-Practice Docker Image, Easy to start
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "dockle_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
     overrides:
       - goos: windows
@@ -2695,8 +2711,9 @@ packages:
   - type: github_release
     repo_owner: grafana
     repo_name: k6
-    asset: "k6-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     description: A modern load testing tool, using Go and JavaScript
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "k6-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     files:
       - name: k6
         src: "k6-{{.Version}}-{{.OS}}-{{.Arch}}/k6"
@@ -3221,6 +3238,7 @@ packages:
     repo_owner: jenkins-zh
     repo_name: jenkins-cli
     description: Jenkins CLI allows you to manage your Jenkins in an easy way
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "jcli-{{.OS}}-{{.Arch}}.{{.Format}}"
     # There is a binary for darwin arm64, but it doesn't work.
     # > zsh: killed      --help
@@ -3234,9 +3252,10 @@ packages:
   - type: github_release
     repo_owner: jesseduffield
     repo_name: horcrux
+    description: Split your file into encrypted fragments so that you don't need to remember a passcode
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     asset: "horcrux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    description: Split your file into encrypted fragments so that you don't need to remember a passcode
     replacements:
       darwin: Darwin
       linux: Linux
@@ -4793,7 +4812,7 @@ packages:
     repo_name: mdBook
     rosetta2: true
     asset: "mdbook-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darrwin" or GOARCH == "amd64"
     description: Create book from markdown files. Like Gitbook but implemented in Rust
     replacements:
       darwin: apple-darwin
