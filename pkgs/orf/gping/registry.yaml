@@ -3,11 +3,14 @@ packages:
     repo_owner: orf
     repo_name: gping
     description: Ping, but with a graph
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "gping-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
+      - goos: linux
+        asset: "gping-{{.Arch}}-{{.OS}}.{{.Format}}"
     rosetta2: true
     replacements:
       amd64: x86_64
@@ -15,6 +18,3 @@ packages:
       darwin: Darwin
       windows: Windows
       linux: unknown-linux-musl
-    overrides:
-      - goos: linux
-        asset: "gping-{{.Arch}}-{{.OS}}.{{.Format}}"

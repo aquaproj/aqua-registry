@@ -2,9 +2,10 @@ packages:
   - type: github_release
     repo_owner: rikatz
     repo_name: kubepug
-    asset: "kubepug_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Kubernetes PreUpGrade (Checker)
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "kubepug_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip

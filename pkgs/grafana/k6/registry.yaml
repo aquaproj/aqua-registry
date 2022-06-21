@@ -2,14 +2,15 @@ packages:
   - type: github_release
     repo_owner: grafana
     repo_name: k6
-    asset: "k6-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     description: A modern load testing tool, using Go and JavaScript
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "k6-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     files:
       - name: k6
         src: "k6-{{.Version}}-{{.OS}}-{{.Arch}}/k6"
     replacements:
       darwin: macos
-    format: tar.gz
-    format_overrides:
-      - goos: darwin
-        format: zip
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz

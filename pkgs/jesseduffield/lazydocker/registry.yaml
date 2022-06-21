@@ -2,9 +2,10 @@ packages:
   - type: github_release
     repo_owner: jesseduffield
     repo_name: lazydocker
+    description: The lazier way to manage everything docker
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     asset: "lazydocker_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    description: The lazier way to manage everything docker
     replacements:
       darwin: Darwin
       linux: Linux
@@ -12,6 +13,6 @@ packages:
       386: 32-bit
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip

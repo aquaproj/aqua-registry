@@ -3,14 +3,15 @@ packages:
     type: github_release
     repo_owner: ahmetb
     repo_name: kubectx
-    asset: "kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: DEPRECATED. PLEASE USE ahmetb/kubectx/kubens
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: kubens
     replacements:
       386: i386
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip

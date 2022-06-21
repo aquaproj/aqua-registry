@@ -3,20 +3,20 @@ packages:
     repo_owner: denisidoro
     repo_name: navi
     rosetta2: true
-    asset: "navi-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     description: An interactive cheatsheet tool for the command-line
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "navi-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
+      - goos: linux
+        goarch: arm64
+        replacements:
+          linux: unknown-linux-gnu
     replacements:
       amd64: x86_64
       arm64: aarch64
       linux: unknown-linux-musl
       darwin: apple-darwin
       windows: pc-windows-gnu
-    overrides:
-      - goos: linux
-        goarch: arm64
-        replacements:
-          linux: unknown-linux-gnu

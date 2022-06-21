@@ -33,7 +33,7 @@ packages:
     repo_name: db1000n
     description: "simple distributed load generation client written in go"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     version_constraint: 'semver(">= 0.8.20")'
@@ -83,7 +83,7 @@ packages:
       linux: unknown-linux-musl
       windows: pc-windows-msvc
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     files:
@@ -122,11 +122,16 @@ packages:
     repo_owner: ClementTsang
     repo_name: bottom
     description: Yet another cross-platform graphical process/system monitor
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "bottom_{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
+      - goos: linux
+        goarch: arm64
+        replacements:
+          linux: unknown-linux-gnu
     replacements:
       amd64: x86_64
       arm64: aarch64
@@ -134,11 +139,6 @@ packages:
       linux: unknown-linux-musl
       windows: pc-windows-msvc
       386: i686
-    overrides:
-      - goos: linux
-        goarch: arm64
-        replacements:
-          linux: unknown-linux-gnu
     rosetta2: true
     files:
       - name: btm
@@ -187,12 +187,13 @@ packages:
   - type: github_release
     repo_owner: FiloSottile
     repo_name: age
+    description: A simple, modern and secure encryption tool (and Go library) with small explicit keys, no config options, and UNIX-style composability
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     asset: "age-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
-    description: A simple, modern and secure encryption tool (and Go library) with small explicit keys, no config options, and UNIX-style composability
     files:
       - name: age
         src: age/age
@@ -208,13 +209,14 @@ packages:
   - type: github_release
     repo_owner: GoodwayGroup
     repo_name: gwvault
-    asset: "gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: ansible-vault CLI reimplemented in go
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: gwvault
         src: "gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}/gwvault"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - name: GoogleCloudPlatform/terraformer/aws
@@ -324,7 +326,7 @@ packages:
     asset: "lsd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     description: The next gen ls command
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -381,7 +383,7 @@ packages:
       - name: ecschedule
         src: "ecschedule_{{.Version}}_{{.OS}}_amd64/ecschedule"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: darwin
         format: zip
   - type: github_release
@@ -395,7 +397,7 @@ packages:
       - name: ghch
         src: "ghch_{{.Version}}_{{.OS}}_amd64/ghch"
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
   - type: github_release
@@ -408,7 +410,7 @@ packages:
       - name: ghg
         src: "ghg_{{.Version}}_{{.OS}}_amd64/ghg"
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
   - type: github_release
@@ -422,7 +424,7 @@ packages:
       - name: gocredits
         src: "gocredits_{{.Version}}_{{.OS}}_amd64/gocredits"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: darwin
         format: zip
   - type: github_release
@@ -434,7 +436,7 @@ packages:
       - name: gotesplit
         src: "gotesplit_{{.Version}}_{{.OS}}_{{.Arch}}/gotesplit"
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
   - type: github_release
@@ -446,7 +448,7 @@ packages:
       - name: goxz
         src: "goxz_{{.Version}}_{{.OS}}_{{.Arch}}/goxz"
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
   - type: github_release
@@ -460,7 +462,7 @@ packages:
       - name: horenso
         src: "horenso_{{.Version}}_{{.OS}}_amd64/horenso"
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
   - type: github_release
@@ -483,7 +485,7 @@ packages:
       - name: ascii-image-converter
         src: "ascii-image-converter_{{.OS}}_{{.Arch}}/ascii-image-converter"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -548,7 +550,7 @@ packages:
     asset: "saml2aws_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: CLI tool which enables you to login and retrieve AWS temporary credentials using a SAML IDP
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -661,42 +663,45 @@ packages:
     type: github_release
     repo_owner: ahmetb
     repo_name: kubectx
-    asset: "kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Faster way to switch between clusters and namespaces in kubectl
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: kubens
     replacements:
       386: i386
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
     repo_owner: ahmetb
     repo_name: kubectx
-    asset: "kubectx_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Faster way to switch between clusters and namespaces in kubectl
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "kubectx_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     replacements:
       386: i386
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - name: ahmetb/kubens
     type: github_release
     repo_owner: ahmetb
     repo_name: kubectx
-    asset: "kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: DEPRECATED. PLEASE USE ahmetb/kubectx/kubens
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: kubens
     replacements:
       386: i386
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -705,7 +710,7 @@ packages:
     description: A smarter cd command. Supports all major shells
     asset: "zoxide-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -759,12 +764,12 @@ packages:
     asset: "grype_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
     version_constraint: 'semver(">= 0.33.0")'
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     version_overrides:
       - version_constraint: 'semver("< 0.33.0")'
-        format_overrides:
+        overrides:
           - goos: darwin
             format: zip
           - goos: windows
@@ -782,7 +787,9 @@ packages:
     version_constraint: 'semver(">= 0.37.10")'
     version_overrides:
       - version_constraint: 'semver("< 0.37.10")'
-        format_overrides:
+        overrides:
+          - goos: windows
+            format: zip
           - goos: darwin
             format: zip
   - type: go
@@ -845,7 +852,7 @@ packages:
     asset: "kubectl-who-can_{{.OS}}_x86_64.{{.Format}}"
     description: Show who has RBAC permissions to perform actions on different resources in Kubernetes
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     files:
@@ -860,7 +867,7 @@ packages:
     replacements:
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     files:
@@ -1037,7 +1044,7 @@ packages:
       386: i386
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -1055,7 +1062,7 @@ packages:
     asset: "gist_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: A simple gist editor for CLI
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -1075,7 +1082,7 @@ packages:
     supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     description: Bump version (git tag) to next one with semver
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -1089,7 +1096,7 @@ packages:
     description: Declarative way to configure GitHub labels
     supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -1103,7 +1110,7 @@ packages:
     description: Replacement for UNIX rm command!
     supported_if: GOOS == "darwin" or (GOOS == "linux" and GOARCH == "amd64")
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -1117,7 +1124,7 @@ packages:
     asset: "iap_curl_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: A CLI that is curl wrapper for making HTTP request to IAP-protected app, more easier than curl
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -1131,7 +1138,7 @@ packages:
     asset: "stein_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: A linter for config files with a customizable rule set
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -1188,7 +1195,7 @@ packages:
     rosetta2: true
     asset: "litestream-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
     supported_if: GOOS != "windows"
@@ -1272,10 +1279,11 @@ packages:
     repo_owner: bootandy
     repo_name: dust
     description: A more intuitive version of du in rust
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     rosetta2: true
     asset: "dust-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -1398,9 +1406,10 @@ packages:
   - type: github_release
     repo_owner: casey
     repo_name: just
+    description: Just a command runner
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     asset: "just-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-    description: Just a command runner
     replacements:
       darwin: apple-darwin
       linux: unknown-linux-musl
@@ -1408,7 +1417,7 @@ packages:
       arm64: aarch64
       windows: pc-windows-msvc
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -1421,9 +1430,10 @@ packages:
     repo_owner: charmbracelet
     repo_name: glow
     description: Render markdown on the CLI, with pizzazz
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "glow_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -1467,10 +1477,11 @@ packages:
   - type: github_release
     repo_owner: civo
     repo_name: cli
-    asset: "civo-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     description: Our Command Line Interface (CLI) for interacting with your Civo resources
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "civo-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     files:
@@ -1645,7 +1656,7 @@ packages:
     description: "A flexible developer tool that runs processes and responds to filesystem changes"
     asset: "modd-{{.Version|trimV}}-{{.OS}}{{.Arch}}.{{.Format}}"
     format: tgz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -1667,7 +1678,7 @@ packages:
     asset: "typos-{{.Version}}-x86_64-{{.OS}}.{{.Format}}"
     description: Source code spell checker
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -1688,7 +1699,7 @@ packages:
       windows: Windows
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: http
@@ -1719,7 +1730,7 @@ packages:
     asset: "cue_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: The new home of the CUE language! Validate and define text-based and dynamic configuration
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -1807,19 +1818,20 @@ packages:
       386: "386"
       amd64: amd64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
-    asset: "ddosify_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.{{.Format}}"
-    version_constraint: 'semver(">= 0.5.0")'
-    overrides:
       - goos: darwin
         asset: "ddosify_{{trimV .Version}}_{{title .OS}}_all.{{.Format}}"
+    asset: "ddosify_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.{{.Format}}"
+    version_constraint: 'semver(">= 0.5.0")'
     version_overrides:
       # https://github.com/goreleaser/goreleaser/pull/2572
       # macOS Universal binaries
       - version_constraint: 'semver("< 0.5.0")'
-        overrides: []
+        overrides:
+          - goos: windows
+            format: zip
   - type: go_install
     repo_owner: deepmap
     repo_name: oapi-codegen
@@ -1829,23 +1841,23 @@ packages:
     repo_owner: denisidoro
     repo_name: navi
     rosetta2: true
-    asset: "navi-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     description: An interactive cheatsheet tool for the command-line
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "navi-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
+      - goos: linux
+        goarch: arm64
+        replacements:
+          linux: unknown-linux-gnu
     replacements:
       amd64: x86_64
       arm64: aarch64
       linux: unknown-linux-musl
       darwin: apple-darwin
       windows: pc-windows-gnu
-    overrides:
-      - goos: linux
-        goarch: arm64
-        replacements:
-          linux: unknown-linux-gnu
   - type: github_release
     repo_owner: denoland
     repo_name: deno
@@ -1925,7 +1937,7 @@ packages:
     asset: "doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     description: The official command line interface for the DigitalOcean API
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -2030,7 +2042,7 @@ packages:
       amd64: x86_64
       arm64: aarch64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     version_constraint: 'semver(">= 0.15.0")'
@@ -2095,7 +2107,7 @@ packages:
     supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "vale_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -2152,9 +2164,10 @@ packages:
     repo_owner: ffuf
     repo_name: ffuf
     description: Fast web fuzzer written in Go
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -2232,7 +2245,7 @@ packages:
       - name: lambroll
         src: lambroll_{{.Version}}_{{.OS}}_amd64/lambroll
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: darwin
         format: zip
   - type: github_release
@@ -2250,14 +2263,15 @@ packages:
   - type: github_release
     repo_owner: fullstorydev
     repo_name: grpcurl
-    rosetta2: true
-    asset: "grpcurl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     description: "Like cURL, but for gRPC: Command-line tool for interacting with gRPC servers"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    rosetta2: true
+    asset: "grpcurl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     replacements:
       amd64: x86_64
       darwin: osx
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -2336,7 +2350,7 @@ packages:
       windows: pc-windows-msvc
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -2362,10 +2376,11 @@ packages:
   - type: github_release
     repo_owner: git-chglog
     repo_name: git-chglog
-    asset: "git-chglog_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: CHANGELOG generator implemented in Go (Golang)
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "git-chglog_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -2374,7 +2389,7 @@ packages:
     asset: "git-lfs-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}"
     description: Git extension for versioning large files
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
     version_constraint: 'semver(">= 3.2.0")'
@@ -2477,11 +2492,12 @@ packages:
   - type: github_release
     repo_owner: gokcehan
     repo_name: lf
-    rosetta2: true
     description: Terminal file manager
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    rosetta2: true
     asset: "lf-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -2563,10 +2579,11 @@ packages:
   - type: github_release
     repo_owner: goodwithtech
     repo_name: dockle
-    asset: "dockle_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}"
     description: Container Image Linter for Security, Helping build the Best-Practice Docker Image, Easy to start
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "dockle_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -2649,7 +2666,7 @@ packages:
     description: The slightly more awesome standard unix password manager for teams
     asset: "gopass-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -2684,7 +2701,7 @@ packages:
       386: i386
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     asset: "nfpm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
@@ -2696,17 +2713,18 @@ packages:
   - type: github_release
     repo_owner: grafana
     repo_name: k6
-    asset: "k6-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     description: A modern load testing tool, using Go and JavaScript
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "k6-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     files:
       - name: k6
         src: "k6-{{.Version}}-{{.OS}}-{{.Arch}}/k6"
     replacements:
       darwin: macos
-    format: tar.gz
-    format_overrides:
-      - goos: darwin
-        format: zip
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz
   - name: grafana/loki/logcli
     type: github_release
     repo_owner: grafana
@@ -2949,7 +2967,7 @@ packages:
     asset: "chart-releaser_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Hosting Helm Charts via GitHub Pages and Releases
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     files:
@@ -2995,7 +3013,7 @@ packages:
     repo_name: lux
     description: Fast and simple video download library and CLI tool written in Go
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -3009,10 +3027,13 @@ packages:
       openbsd: OpenBSD
       netbsd: NetBSD
       freebsd: FreeBSD
-    version_constraint: 'semver(">= 0.12.0")'
+    version_constraint: 'semver(">= 0.14.0")'
     asset: "lux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     version_overrides:
+      - version_constraint: 'semver(">= 0.12.0")'
+        supported_if: not (GOOS == "windows" and GOARCH == "arm64")
       - version_constraint: 'semver("< 0.12.0")'
+        supported_if: not (GOOS == "windows" and GOARCH == "arm64")
         asset: "annie_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
         files:
           - name: annie
@@ -3032,11 +3053,12 @@ packages:
   - type: http
     repo_owner: influxdata
     repo_name: influx-cli
-    rosetta2: true
-    url: "https://dl.influxdata.com/influxdb/releases/influxdb2-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     description: CLI for managing resources in InfluxDB v2
+    rosetta2: true
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    url: "https://dl.influxdata.com/influxdb/releases/influxdb2-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     files:
@@ -3149,7 +3171,7 @@ packages:
     rosetta2: true
     asset: "kubectl-trace_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -3189,7 +3211,7 @@ packages:
     asset: "gojq_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Pure Go implementation of jq
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
     files:
@@ -3201,7 +3223,7 @@ packages:
     asset: "mmv_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: rename multiple files with editor
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
     files:
@@ -3222,12 +3244,13 @@ packages:
     repo_owner: jenkins-zh
     repo_name: jenkins-cli
     description: Jenkins CLI allows you to manage your Jenkins in an easy way
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "jcli-{{.OS}}-{{.Arch}}.{{.Format}}"
     # There is a binary for darwin arm64, but it doesn't work.
     # > zsh: killed      --help
     rosetta2: true
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     files:
@@ -3235,9 +3258,10 @@ packages:
   - type: github_release
     repo_owner: jesseduffield
     repo_name: horcrux
+    description: Split your file into encrypted fragments so that you don't need to remember a passcode
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     asset: "horcrux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    description: Split your file into encrypted fragments so that you don't need to remember a passcode
     replacements:
       darwin: Darwin
       linux: Linux
@@ -3245,15 +3269,16 @@ packages:
       386: 32-bit
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
     repo_owner: jesseduffield
     repo_name: lazydocker
+    description: The lazier way to manage everything docker
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     asset: "lazydocker_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    description: The lazier way to manage everything docker
     replacements:
       darwin: Darwin
       linux: Linux
@@ -3261,14 +3286,15 @@ packages:
       386: 32-bit
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
     repo_owner: jesseduffield
     repo_name: lazygit
-    asset: "lazygit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: simple terminal UI for git commands
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "lazygit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     replacements:
       darwin: Darwin
       linux: Linux
@@ -3276,7 +3302,7 @@ packages:
       386: 32-bit
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - name: jetstack/cert-manager/cmctl
@@ -3315,7 +3341,7 @@ packages:
     supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "retry-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - name: jreleaser/jreleaser
@@ -3379,7 +3405,7 @@ packages:
     asset: "fzf-{{.Version}}-{{.OS}}_{{.Arch}}.{{.Format}}"
     description: A command-line fuzzy finder
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
   - type: github_release
@@ -3702,13 +3728,13 @@ packages:
     repo_owner: lc
     repo_name: gau
     description: Fetch known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     rosetta2: true
     asset: "gau_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     replacements:
       darwin: macOS
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -3830,7 +3856,7 @@ packages:
       freebsd: FreeBSD
       dragonfly: DragonFlyBSD
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -3865,7 +3891,7 @@ packages:
       - name: gof
         src: "gof_{{.Version}}_{{.OS}}_amd64/gof"
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
   - type: github_release
@@ -3878,7 +3904,7 @@ packages:
       - name: goreman
         src: "goreman_{{.Version}}_{{.OS}}_{{.Arch}}/goreman"
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
   - type: github_release
@@ -3892,7 +3918,7 @@ packages:
       - name: memo
         src: "memo_{{.Version}}_{{.OS}}_amd64/memo"
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
   - type: github_release
@@ -3990,12 +4016,12 @@ packages:
   - type: github_release
     repo_owner: minishift
     repo_name: minishift
-    rosetta2: true
-    asset: "minishift-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     description: Run OpenShift 3.x locally
+    rosetta2: true
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
+    asset: "minishift-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tgz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     files:
@@ -4054,8 +4080,9 @@ packages:
   - type: github_release
     repo_owner: mszostok
     repo_name: codeowners-validator
-    asset: "codeowners-validator_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: GitHub CODEOWNERS file validator
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "codeowners-validator_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     replacements:
       darwin: Darwin
       linux: Linux
@@ -4063,7 +4090,7 @@ packages:
       386: i386
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -4072,7 +4099,7 @@ packages:
     asset: "duf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Disk Usage/Free Utility - a better 'df' alternative
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -4157,7 +4184,7 @@ packages:
       386: i386
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -4324,11 +4351,14 @@ packages:
     repo_owner: orf
     repo_name: gping
     description: Ping, but with a graph
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "gping-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
+      - goos: linux
+        asset: "gping-{{.Arch}}-{{.OS}}.{{.Format}}"
     rosetta2: true
     replacements:
       amd64: x86_64
@@ -4336,9 +4366,6 @@ packages:
       darwin: Darwin
       windows: Windows
       linux: unknown-linux-musl
-    overrides:
-      - goos: linux
-        asset: "gping-{{.Arch}}-{{.OS}}.{{.Format}}"
   - type: github_release
     repo_owner: orisano
     repo_name: dlayer
@@ -4397,7 +4424,7 @@ packages:
       386: 32bit
       amd64: 64bit
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     asset: "s5cmd_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}"
@@ -4411,7 +4438,7 @@ packages:
       - name: peco
         src: "peco_{{.OS}}_{{.Arch}}/peco"
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
   - type: github_release
@@ -4442,7 +4469,7 @@ packages:
     rosetta2: true
     description: General command line utility for working with VMware Tanzu Operations Manager
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -4489,11 +4516,12 @@ packages:
   - type: github_release
     repo_owner: profclems
     repo_name: glab
+    description: An open-source GitLab command line tool bringing GitLab's cool features to your command line
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     rosetta2: true
     asset: "glab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    description: An open-source GitLab command line tool bringing GitLab's cool features to your command line
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -4582,10 +4610,10 @@ packages:
     repo_name: cli
     description: Rancher CLI
     rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "rancher-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     files:
@@ -4624,12 +4652,16 @@ packages:
   - type: github_release
     repo_owner: rebuy-de
     repo_name: aws-nuke
-    asset: "aws-nuke-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     description: Nuke a whole AWS account and delete all its resources
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "aws-nuke-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
+        files:
+          - name: aws-nuke
+            src: "aws-nuke-{{.Version}}-windows-{{.Arch}}.exe"
     files:
       - name: aws-nuke
         src: "aws-nuke-{{.Version}}-{{.OS}}-{{.Arch}}"
@@ -4654,13 +4686,14 @@ packages:
   - type: github_release
     repo_owner: replicatedhq
     repo_name: outdated
-    asset: "outdated_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Kubectl plugin to find and report outdated images running in a Kubernetes cluster
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "outdated_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: kubectl-outdated
         src: outdated
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -4693,7 +4726,7 @@ packages:
     asset: "actionlint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Static checker for GitHub Actions workflow files
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -4723,10 +4756,11 @@ packages:
   - type: github_release
     repo_owner: rikatz
     repo_name: kubepug
-    asset: "kubepug_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Kubernetes PreUpGrade (Checker)
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "kubepug_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -4795,7 +4829,7 @@ packages:
     repo_name: mdBook
     rosetta2: true
     asset: "mdbook-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darrwin" or GOARCH == "amd64"
     description: Create book from markdown files. Like Gitbook but implemented in Rust
     replacements:
       darwin: apple-darwin
@@ -4803,7 +4837,7 @@ packages:
       windows: pc-windows-msvc
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     files:
@@ -4821,9 +4855,10 @@ packages:
     repo_owner: s0md3v
     repo_name: Smap
     description: a drop-in replacement for Nmap powered by shodan.io
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "smap_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.xz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -4891,7 +4926,7 @@ packages:
     asset: "croc_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}"
     description: Easily and securely send things from one computer to another
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -4941,7 +4976,7 @@ packages:
     description: A tool for securing CI/CD workflows with version pinning
     asset: "ratchet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: "windows"
         format: "zip"
   - type: github_release
@@ -5044,11 +5079,16 @@ packages:
     repo_owner: sharkdp
     repo_name: hyperfine
     description: A command-line benchmarking tool
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "hyperfine-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
+      - goos: linux
+        goarch: arm64
+        replacements:
+          linux: unknown-linux-gnu
     rosetta2: true
     replacements:
       amd64: x86_64
@@ -5057,11 +5097,6 @@ packages:
       linux: unknown-linux-musl
       windows: pc-windows-msvc
       386: i686
-    overrides:
-      - goos: linux
-        goarch: arm64
-        replacements:
-          linux: unknown-linux-gnu
     files:
       - name: hyperfine
         src: "hyperfine-{{.Version}}-{{.Arch}}-{{.OS}}/hyperfine"
@@ -5225,17 +5260,17 @@ packages:
     repo_owner: slackhq
     repo_name: nebula
     description: A scalable overlay networking tool with a focus on performance, simplicity and security
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
+      - goos: darwin
+        asset: "nebula-{{.OS}}.{{.Format}}"
     files:
       - name: nebula
       - name: nebula-cert
     asset: "nebula-{{.OS}}-{{.Arch}}.{{.Format}}"
-    overrides:
-      - goos: darwin
-        asset: "nebula-{{.OS}}.{{.Format}}"
   - type: github_release
     repo_owner: slok
     repo_name: sloth
@@ -5298,7 +5333,7 @@ packages:
       arm64: aarch64
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -5519,7 +5554,7 @@ packages:
       - name: ghr
         src: "ghr_{{.Version}}_{{.OS}}_amd64/ghr"
     format: zip
-    format_overrides:
+    overrides:
       - goos: linux
         format: tar.gz
   - type: github_release
@@ -5531,22 +5566,23 @@ packages:
     files:
       - name: tkn
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
+      - goos: darwin
+        asset: "tkn_{{trimV .Version}}_{{.OS}}_all.{{.Format}}"
     replacements:
       darwin: Darwin
       linux: Linux
       windows: Windows
       386: i386
       amd64: x86_64
-    overrides:
-      - goos: darwin
-        asset: "tkn_{{trimV .Version}}_{{.OS}}_all.{{.Format}}"
     version_constraint: 'semver(">= 0.24.0")'
     version_overrides:
       - version_constraint: 'semver("< 0.24.0")'
-        overrides: []
+        overrides:
+          - goos: windows
+            format: zip
   - type: http
     repo_owner: telepresenceio
     repo_name: telepresence
@@ -5621,11 +5657,11 @@ packages:
     repo_owner: thazelart
     repo_name: terraform-validator
     description: A norms and conventions validator for Terraform
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     rosetta2: true
     asset: "terraform-validator_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -5646,9 +5682,10 @@ packages:
     repo_owner: tilt-dev
     repo_name: ctlptl
     description: Making local Kubernetes clusters fun and easy to set up
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "ctlptl.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -5662,7 +5699,7 @@ packages:
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     asset: "tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -5688,11 +5725,11 @@ packages:
     repo_owner: tinygo-org
     repo_name: tinygo
     rosetta2: true
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+    supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "tinygo{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}"
     description: Go compiler for small places. Microcontrollers, WebAssembly, and command-line tools. Based on LLVM
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     files:
@@ -5871,7 +5908,7 @@ packages:
     description: Highly extensible platform for developers to better understand the complexity of Kubernetes clusters
     asset: "octant_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -5900,14 +5937,14 @@ packages:
       darwin: macos
     format: tar.gz
     version_constraint: 'semver(">= 0.0.5")'
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
       - goos: darwin
         format: zip
     version_overrides:
       - version_constraint: 'semver("< 0.0.5")'
-        format_overrides:
+        overrides:
           - goos: windows
             format: zip
   - type: github_release
@@ -5916,7 +5953,7 @@ packages:
     asset: "dive_{{trimV .Version}}_{{.OS}}_amd64.{{.Format}}"
     description: A tool for exploring each layer in a docker image
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -5927,9 +5964,6 @@ packages:
     asset: 'watchexec-{{trimPrefix "cli-v" .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
     supported_if: not (GOOS == "windows" and GOARCH == "arm64")
     format: tar.xz
-    format_overrides:
-      - goos: windows
-        format: zip
     replacements:
       windows: pc-windows-msvc
       darwin: apple-darwin
@@ -5937,6 +5971,8 @@ packages:
       arm64: aarch64
       linux: unknown-linux-musl
     overrides:
+      - goos: windows
+        format: zip
       - goarch: arm64
         replacements:
           linux: unknown-linux-gnu
@@ -5991,10 +6027,11 @@ packages:
   - type: github_release
     repo_owner: xiecat
     repo_name: fofax
-    asset: "fofax_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: "fofaX is a command line query tool based on the API of https://fofa.so/, simple is the best"
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "fofax_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -6012,7 +6049,7 @@ packages:
     supported_if: GOOS == "darwin" or GOARCH == "amd64"
     asset: "usql-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.bz2
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -6054,7 +6091,7 @@ packages:
       386: i386
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -6119,7 +6156,7 @@ packages:
       386: i386
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
   - type: github_release
@@ -6128,7 +6165,7 @@ packages:
     description: Scan git repos (or files) for secrets using regex and entropy
     asset: "gitleaks_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     replacements:
@@ -6142,7 +6179,7 @@ packages:
         supported_if: GOOS == "darwin" or GOARCH == "amd64"
         rosetta2: true
         format: raw
-        format_overrides: []
+        overrides: []
         replacements: {}
       - version_constraint: 'semver("<= 8.1.2")'
         rosetta2: true

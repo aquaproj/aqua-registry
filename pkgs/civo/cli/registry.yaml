@@ -2,10 +2,11 @@ packages:
   - type: github_release
     repo_owner: civo
     repo_name: cli
-    asset: "civo-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     description: Our Command Line Interface (CLI) for interacting with your Civo resources
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "civo-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
     files:

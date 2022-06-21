@@ -2,8 +2,9 @@ packages:
   - type: github_release
     repo_owner: mszostok
     repo_name: codeowners-validator
-    asset: "codeowners-validator_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: GitHub CODEOWNERS file validator
+    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    asset: "codeowners-validator_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     replacements:
       darwin: Darwin
       linux: Linux
@@ -11,6 +12,6 @@ packages:
       386: i386
       amd64: x86_64
     format: tar.gz
-    format_overrides:
+    overrides:
       - goos: windows
         format: zip
