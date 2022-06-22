@@ -21,7 +21,7 @@ packages:
     repo_name: silicon
     asset: "silicon-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz"
     rosetta2: true
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs: ["windows/amd64", "darwin", "linux/amd64"]
     description: Create beautiful image of your source code
     replacements:
       darwin: apple-darwin
@@ -821,7 +821,9 @@ packages:
     format: raw
     asset: "llama_{{.OS}}_{{.Arch}}"
     description: Terminal file manager
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: apache
     repo_name: camel-k
@@ -1211,7 +1213,9 @@ packages:
     repo_name: pewpew
     description: Flexible HTTP command line stress tester for websites and web services
     rosetta2: true
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
     asset: "{{.OS}}_{{.Arch}}.tar.gz"
     files:
       - name: pewpew
@@ -1317,7 +1321,9 @@ packages:
     format: raw
     rosetta2: true
     asset: "yaml2json_{{.OS}}_{{.Arch}}"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: budimanjojo
     repo_name: talhelper
@@ -1358,6 +1364,10 @@ packages:
     repo_owner: buildkite
     repo_name: cli
     description: "A command line interface for Buildkite"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
     asset: "cli-{{.OS}}-{{.Arch}}"
     format: raw
     files:
@@ -1366,7 +1376,9 @@ packages:
     version_constraint: 'semver(">= 1.2.0")'
     version_overrides:
       - version_constraint: 'semver("< 1.2.0")'
-        supported_envs: ["windows", "darwin", "linux/amd64"]
+        supported_envs:
+          - darwin
+          - amd64
         rosetta2: true
         asset: "bk-{{.OS}}-{{.Arch}}-{{.Version|trimV}}"
   - type: github_release
@@ -1716,7 +1728,9 @@ packages:
     description: A kafka command line browser
     rosetta2: true
     asset: "kcli_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
     replacements:
       darwin: Darwin
       linux: Linux
@@ -2766,16 +2780,22 @@ packages:
     repo_name: grpc-gateway
     description: Generate Swagger / OpenAPIv2 JSON file from Protocol Buffer definition
     asset: "protoc-gen-openapiv2-{{.Version}}-{{.OS}}-{{.Arch}}"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
     rosetta2: true
     format: raw
     replacements:
       amd64: x86_64
     files:
       - name: protoc-gen-openapiv2
-    version_constraint: 'semver(">= 2.0.0")'
+    version_constraint: 'semver(">= 2.10.2")'
     version_overrides:
+      - version_constraint: 'semver(">= 2.0.0")'
+        supported_envs:
+          - darwin
+          - amd64
       - version_constraint: 'semver("< 2.0.0")'
+        supported_envs:
+          - darwin
+          - amd64
         # https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.0.0
         # > Rename protoc-gen-swagger to protoc-gen-openapiv2
         asset: "protoc-gen-swagger-{{.Version}}-{{.OS}}-{{.Arch}}"
@@ -2787,7 +2807,9 @@ packages:
     repo_name: grpc-go
     description: Generate Go language bindings of services in protobuf definition files for gRPC
     asset: 'protoc-gen-go-grpc.{{trimPrefix "cmd/protoc-gen-go-grpc/" .Version}}.{{.OS}}.{{.Arch}}.tar.gz'
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
     version_filter: 'Version startsWith "cmd/protoc-gen-go-grpc/"'
     rosetta2: true
     files:
@@ -2820,6 +2842,10 @@ packages:
   - type: github_release
     repo_owner: hadolint
     repo_name: hadolint
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
     rosetta2: true
     asset: "hadolint-{{.OS}}-{{.Arch}}"
     format: raw
@@ -2831,7 +2857,9 @@ packages:
     version_constraint: 'semver(">= 2.10.0")'
     version_overrides:
       - version_constraint: 'semver("< 2.10.0")'
-        supported_envs: ["windows", "darwin", "linux/amd64"]
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: hairyhenderson
     repo_name: gomplate
@@ -3717,7 +3745,9 @@ packages:
     description: Generate type-safe code from SQL
     rosetta2: true
     asset: "sqlc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: kyoh86
     repo_name: richgo
@@ -3750,7 +3780,9 @@ packages:
     description: Leak git repositories from misconfigured websites
     rosetta2: true
     asset: "gitjacker-{{.OS}}-{{.Arch}}"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: liamg
     repo_name: memit
@@ -3765,7 +3797,9 @@ packages:
     description: CLI tool for PKCS7 padding oracle attacks
     rosetta2: true
     asset: "pax-{{.OS}}-{{.Arch}}"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: liamg
     repo_name: scout
@@ -3773,7 +3807,9 @@ packages:
     description: "Lightweight URL fuzzer and spider: Discover a web server's undisclosed files, directories and VHOSTs"
     rosetta2: true
     asset: "scout-{{.OS}}-{{.Arch}}"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: liamg
     repo_name: traitor
@@ -4194,7 +4230,9 @@ packages:
     rosetta2: true
     format: raw
     asset: "autosaved_{{.OS}}_{{.Arch}}"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: noborus
     repo_name: trdsql
@@ -4207,7 +4245,7 @@ packages:
     repo_owner: nojima
     repo_name: httpie-go
     rosetta2: true
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs: ["windows/amd64", "darwin", "linux/amd64"]
     asset: "httpie-go_{{.OS}}_{{.Arch}}"
     description: httpie-like HTTP client written in Go
     files:
@@ -4400,7 +4438,7 @@ packages:
     rosetta2: true
     format: raw
     asset: "dfg_{{.Version}}_{{.OS}}_{{.Arch}}"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs: ["windows/amd64", "darwin", "linux/amd64"]
     files:
       - name: dfg
   - type: github_release
@@ -4636,7 +4674,7 @@ packages:
     repo_name: rke
     asset: "rke_{{.OS}}-{{.Arch}}"
     rosetta2: true
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs: ["windows/amd64", "darwin", "linux/amd64"]
     format: raw
     description: Rancher Kubernetes Engine (RKE), an extremely simple, lightning fast Kubernetes distribution that runs entirely within containers
   - type: github_release
@@ -4732,8 +4770,9 @@ packages:
   - type: github_release
     repo_owner: rhysd
     repo_name: hgrep
-    asset: "hgrep-{{.Version}}-{{.Arch}}-{{.OS}}.zip"
     description: Grep with human-friendly search results
+    supported_envs: ["windows/amd64", "darwin", "linux"]
+    asset: "hgrep-{{.Version}}-{{.Arch}}-{{.OS}}.zip"
     replacements:
       darwin: apple-darwin
       linux: unknown-linux-musl
@@ -4751,7 +4790,7 @@ packages:
     version_constraint: 'semver(">= 0.2.5")'
     version_overrides:
       - version_constraint: 'semver("< 0.2.5")'
-        supported_envs: ["windows", "darwin", "linux/amd64"]
+        supported_envs: ["windows/amd64", "darwin", "linux/amd64"]
         overrides: []
   - type: github_release
     repo_owner: rikatz
@@ -4816,7 +4855,7 @@ packages:
     description: A tool to perform Kerberos pre-auth bruteforcing
     format: raw
     rosetta2: true
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs: ["windows/amd64", "darwin", "linux/amd64"]
     asset: "kerbrute_{{.OS}}_{{.Arch}}"
   - type: github_release
     repo_owner: rs
@@ -4968,7 +5007,9 @@ packages:
     format: raw
     rosetta2: true
     asset: "chamber-{{.Version}}-{{.OS}}-{{.Arch}}"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
     description: CLI for managing secrets
   - type: github_release
     repo_owner: sethvargo
@@ -5303,7 +5344,9 @@ packages:
     format: raw
     rosetta2: true
     asset: "sampler-{{trimV .Version}}-{{.OS}}-{{.Arch}}"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: squat
     repo_name: kilo
@@ -5587,7 +5630,9 @@ packages:
     repo_owner: telepresenceio
     repo_name: telepresence
     description: Local development against a remote Kubernetes or OpenShift cluster
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
     format: raw
     rosetta2: true
     url: "https://app.getambassador.io/download/tel2/{{.OS}}/{{.Arch}}/{{trimV .Version}}/telepresence"
@@ -5749,7 +5794,9 @@ packages:
     description: Convert hcl2 to json
     rosetta2: true
     asset: "hcl2json_{{.OS}}_{{.Arch}}"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: tomnomnom
     repo_name: gron
@@ -5834,6 +5881,10 @@ packages:
     repo_owner: vi
     repo_name: websocat
     description: "Command-line client for WebSockets, like netcat (or curl) for ws:// with advanced socat-like functions"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
     format: raw
     rosetta2: true
     version_constraint: 'semver(">= 1.10.0")'
@@ -5846,7 +5897,9 @@ packages:
       arm64: aarch64
     version_overrides:
       - version_constraint: 'semver("< 1.10.0")'
-        supported_envs: ["windows", "darwin", "linux/amd64"]
+        supported_envs:
+          - darwin
+          - amd64
         asset: "websocat_{{.OS}}"
         replacements:
           darwin: mac
@@ -5857,10 +5910,19 @@ packages:
     rosetta2: true
     format: raw
     asset: "imgpkg-{{.OS}}-{{.Arch}}"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
     description: "Store application configuration files in Docker/OCI registries"
     files:
       - name: imgpkg
+    version_constraint: 'semver(">= 0.28.0")'
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_overrides:
+      - version_constraint: 'semver("< 0.28.0")'
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: vmware-tanzu
     repo_name: carvel-kapp
@@ -6040,7 +6102,9 @@ packages:
     description: A CLI tool for Kafka
     rosetta2: true
     asset: "trubka_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
-    supported_envs: ["windows", "darwin", "linux/amd64"]
+    supported_envs:
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: xo
     repo_name: usql
