@@ -3,6 +3,10 @@ packages:
     repo_owner: vi
     repo_name: websocat
     description: "Command-line client for WebSockets, like netcat (or curl) for ws:// with advanced socat-like functions"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
     format: raw
     rosetta2: true
     version_constraint: 'semver(">= 1.10.0")'
@@ -15,8 +19,11 @@ packages:
       arm64: aarch64
     version_overrides:
       - version_constraint: 'semver("< 1.10.0")'
-        supported_if: not (GOOS == "linux" and GOARCH == "arm64")
+        supported_envs:
+          - darwin
+          - amd64
         asset: "websocat_{{.OS}}"
         replacements:
           darwin: mac
           linux: linux64
+          windows: win64

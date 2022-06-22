@@ -5,7 +5,16 @@ packages:
     rosetta2: true
     format: raw
     asset: "imgpkg-{{.OS}}-{{.Arch}}"
-    supported_if: not (GOOS == "linux" and GOARCH == "arm64")
     description: "Store application configuration files in Docker/OCI registries"
     files:
       - name: imgpkg
+    version_constraint: 'semver(">= 0.28.0")'
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_overrides:
+      - version_constraint: 'semver("< 0.28.0")'
+        supported_envs:
+          - darwin
+          - amd64

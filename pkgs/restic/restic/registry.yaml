@@ -3,7 +3,7 @@ packages:
     repo_owner: restic
     repo_name: restic
     description: Fast, secure, efficient backup program
-    supported_if: not (GOOS == "windows" and GOARCH == "arm64")
+    supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: restic
@@ -12,3 +12,6 @@ packages:
     overrides:
       - goos: windows
         format: zip
+        files:
+          - name: restic
+            src: "restic_{{trimV .Version}}_windows_{{.Arch}}.exe"
