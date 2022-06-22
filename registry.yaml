@@ -601,22 +601,6 @@ packages:
     format: raw
     asset: abs-{{.OS}}-{{.Arch}}
     supported_envs: ["darwin", "linux", "windows/amd64"]
-  - type: github_release
-    repo_owner: accurics
-    repo_name: terrascan
-    asset: "terrascan_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    description: Detect compliance and security violations across Infrastructure as Code to mitigate risk before provisioning cloud native infrastructure
-    supported_envs: ["darwin", "linux", "windows/amd64"]
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
   - name: aelsabbahy/goss/dcgoss
     type: github_content
     repo_owner: aelsabbahy
@@ -660,6 +644,8 @@ packages:
     asset: "kubectl-tree_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     description: kubectl plugin to browse Kubernetes object hierarchies as a tree
   - name: ahmetb/kubectx/kubens
+    aliases:
+      - name: ahmetb/kubens
     type: github_release
     repo_owner: ahmetb
     repo_name: kubectx
@@ -681,22 +667,6 @@ packages:
     description: Faster way to switch between clusters and namespaces in kubectl
     supported_envs: ["darwin", "linux", "windows/amd64"]
     asset: "kubectx_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    replacements:
-      386: i386
-      amd64: x86_64
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-  - name: ahmetb/kubens
-    type: github_release
-    repo_owner: ahmetb
-    repo_name: kubectx
-    description: DEPRECATED. PLEASE USE ahmetb/kubectx/kubens
-    supported_envs: ["darwin", "linux", "windows/amd64"]
-    asset: "kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    files:
-      - name: kubens
     replacements:
       386: i386
       amd64: x86_64
@@ -792,13 +762,10 @@ packages:
             format: zip
           - goos: darwin
             format: zip
-  - type: go
+  - type: go_install
     repo_owner: anqiansong
     repo_name: github-compare
     description: A Command-line statistics tool to compare the GitHub repositories
-    files:
-      - name: github-compare
-        dir: "github-compare-{{trimV .Version}}"
   - type: github_release
     repo_owner: antonmedv
     repo_name: fx
@@ -1762,6 +1729,10 @@ packages:
     repo_owner: dagger
     repo_name: dagger
     description: A portable devkit for CI/CD pipelines
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
     format: tar.gz
     asset: "dagger_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     overrides:
@@ -2543,7 +2514,6 @@ packages:
               - name: migrate
                 src: "migrate.{{.OS}}-{{.Arch}}.exe"
   - type: go_install
-    name: golang.org/x/perf/cmd/benchstat
     path: golang.org/x/perf/cmd/benchstat
     description: Benchstat computes and compares statistics about benchmarks
     link: https://pkg.go.dev/golang.org/x/perf/cmd/benchstat
@@ -2576,15 +2546,15 @@ packages:
     files:
       - name: mockgen
         src: "mock_{{trimV .Version}}_{{.OS}}_{{.Arch}}/mockgen"
-  - type: go
+  - type: go_install
     name: golang/tools/gopls
+    path: golang.org/x/tools/gopls
     repo_owner: golang
     repo_name: tools
     description: Go language server
     version_filter: 'Version startsWith "gopls/"'
     files:
       - name: gopls
-        dir: 'tools-gopls-{{trimPrefix "gopls/" .Version}}/gopls'
   - type: github_release
     repo_owner: golangci
     repo_name: golangci-lint
@@ -2673,14 +2643,11 @@ packages:
     repo_owner: google
     repo_name: pprof
     description: pprof is a tool for visualization and analysis of profiling data
-  - type: go
+  - type: go_install
     repo_owner: google
     repo_name: wire
     description: Compile-time Dependency Injection for Go
-    files:
-      - name: wire
-        src: ./cmd/wire
-        dir: "wire-{{trimV .Version}}"
+    path: github.com/google/wire/cmd/wire
   - type: github_release
     repo_owner: gopasspw
     repo_name: gopass
@@ -3508,13 +3475,10 @@ packages:
       darwin: MacOS
       linux: Linux
       windows: Windows
-  - type: go
+  - type: go_install
     repo_owner: katbyte
     repo_name: terrafmt
     description: Format terraform blocks embedded in files
-    files:
-      - name: terrafmt
-        dir: "terrafmt-{{trimV .Version}}"
   - type: github_release
     repo_owner: kayac
     repo_name: ecspresso
@@ -4074,14 +4038,11 @@ packages:
     files:
       - name: minishift
         src: "minishift-{{trimV .Version}}-{{.OS}}-{{.Arch}}/minishift"
-  - type: go
+  - type: go_install
     repo_owner: mitchellh
     repo_name: gox
     description: A dead simple, no frills Go cross compile tool
     version_source: github_tag
-    files:
-      - name: gox
-        dir: "gox-{{trimV .Version}}"
   - type: github_release
     repo_owner: mkchoi212
     repo_name: fac
@@ -4601,8 +4562,12 @@ packages:
   - type: github_release
     repo_owner: projectdiscovery
     repo_name: nuclei
-    asset: "nuclei_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip"
     description: Fast and customizable vulnerability scanner based on simple YAML based DSL
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: "nuclei_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip"
     replacements:
       darwin: macOS
   - type: github_release
@@ -5267,6 +5232,8 @@ packages:
   - type: github_release
     repo_owner: siderolabs
     repo_name: conform
+    aliases:
+      - name: talos-systems/conform
     description: Policy enforcement for your pipelines
     supported_envs: ["darwin", "linux"]
     format: raw
@@ -5274,8 +5241,14 @@ packages:
   - type: github_release
     repo_owner: siderolabs
     repo_name: talos
-    asset: "talosctl-{{.OS}}-{{.Arch}}"
+    aliases:
+      - name: talos-systems/talos
     description: Talos is a modern OS for Kubernetes. talosctl is a CLI for out-of-band management of Kubernetes nodes created by Talos
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: "talosctl-{{.OS}}-{{.Arch}}"
     files:
       - name: talosctl
     format: raw
@@ -5586,22 +5559,6 @@ packages:
         src: kubectl-advise-psp
       - name: kube-psp-advisor
         src: kubectl-advise-psp
-  # [DEPRECATED] talos-systems was renamed to siderolabs
-  - type: github_release
-    repo_owner: talos-systems
-    repo_name: conform
-    asset: "conform-{{.OS}}-{{.Arch}}"
-    description: Policy enforcement for your pipelines
-    format: raw
-  # [DEPRECATED] talos-systems was renamed to siderolabs
-  - type: github_release
-    repo_owner: talos-systems
-    repo_name: talos
-    asset: "talosctl-{{.OS}}-{{.Arch}}"
-    description: Talos is a modern OS for Kubernetes. talosctl is a CLI for out-of-band management of Kubernetes nodes created by Talos
-    files:
-      - name: talosctl
-    format: raw
   - type: github_release
     repo_owner: tcnksm
     repo_name: ghr
@@ -5666,9 +5623,8 @@ packages:
   - type: github_release
     repo_owner: tenable
     repo_name: terrascan
-    # TODO
-    # aliases:
-    #   - name: accurics/terrascan
+    aliases:
+      - name: accurics/terrascan
     asset: "terrascan_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     description: Detect compliance and security violations across Infrastructure as Code to mitigate risk before provisioning cloud native infrastructure
     supported_envs: ["darwin", "linux", "windows/amd64"]
