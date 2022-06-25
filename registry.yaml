@@ -742,7 +742,6 @@ packages:
     repo_owner: ajeetdsouza
     repo_name: zoxide
     description: A smarter cd command. Supports all major shells
-    asset: "zoxide-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
     format: tar.gz
     overrides:
       - goos: windows
@@ -753,6 +752,11 @@ packages:
       darwin: apple-darwin
       amd64: x86_64
       arm64: aarch64
+    version_constraint: 'semver(">= 0.8.2")'
+    asset: "zoxide-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
+    version_overrides:
+      - version_constraint: 'true'
+        asset: "zoxide-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
   - type: github_release
     repo_owner: alexellis
     repo_name: arkade
