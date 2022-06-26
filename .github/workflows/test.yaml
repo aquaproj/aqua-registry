@@ -9,20 +9,20 @@ jobs:
   generate-registry:
     runs-on: ubuntu-latest
     env:
-      AQUA_CONFIG: aqua-ci.yaml
+      AQUA_CONFIG: clienv-ci.yaml
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
-      - uses: aquaproj/aqua-installer@v1.0.0
+      - uses: clienv/clienv-installer@v1.0.0
         with:
-          aqua_version: v1.14.0
+          clienv_version: v1.14.0
       - run: bash generate-registry.sh
       - run: git add .
       - run: git --no-pager diff --cached
       - run: |
           if ! git diff --cached --exit-code; then
             echo 'Please run "bash generate-registry.sh"' >&2
-            echo 'https://github.com/aquaproj/aqua-registry/blob/main/CONTRIBUTING.md#run-generate-registrysh-to-update-reigstryyaml' >&2
+            echo 'https://github.com/clienv/clienv-registry/blob/main/CONTRIBUTING.md#run-generate-registrysh-to-update-reigstryyaml' >&2
             exit 1
           fi
 
@@ -57,7 +57,7 @@ jobs:
 
       # Disable cache
       # The cache size is so huge that it takes a long time for `cache ~/.aqua` and `Post cache ~/.aqua`
-      # e.g. https://github.com/aquaproj/aqua-registry/runs/4426879327
+      # e.g. https://github.com/clienv/clienv-registry/runs/4426879327
       #
       # - name: cache ~/.aqua
       #   uses: actions/cache@v2
@@ -65,16 +65,16 @@ jobs:
       #     path: |
       #       ~/.aqua/pkgs
       #       ~/.aqua/registries
-      #     key: v5-${{ runner.os }}-${{ hashFiles('registry.yaml') }}-${{ hashFiles('aqua-all.yaml') }}
+      #     key: v5-${{ runner.os }}-${{ hashFiles('registry.yaml') }}-${{ hashFiles('clienv-all.yaml') }}
       #     restore-keys: |
       #       v5-${{ runner.os }}-${{ hashFiles('registry.yaml') }}-
       #       v5-${{ runner.os }}-
 
-      - uses: aquaproj/aqua-installer@v1.0.0
+      - uses: clienv/clienv-installer@v1.0.0
         with:
-          aqua_version: v1.14.0
+          clienv_version: v1.14.0
         env:
-          AQUA_CONFIG: aqua-ci.yaml
+          AQUA_CONFIG: clienv-ci.yaml
 
       - uses: actions/setup-go@v3
         with:
@@ -82,25 +82,25 @@ jobs:
 
       - name: run ci-info and update environment variables
         shell: bash
-        # TODO Run the command without `aqua exec`.
+        # TODO Run the command without `clienv exec`.
         # We don't know the cause, but `ci-info run | sed -E "s/^export //" >> "$GITHUB_ENV"` doesn't work on Windows.
-        # So we run ci-info via `aqua exec`.
-        run: aqua exec -- ci-info run | sed -E "s/^export //" >> "$GITHUB_ENV"
+        # So we run ci-info via `clienv exec`.
+        run: clienv exec -- ci-info run | sed -E "s/^export //" >> "$GITHUB_ENV"
         env:
-          AQUA_CONFIG: aqua-ci.yaml
+          AQUA_CONFIG: clienv-ci.yaml
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: install packages for testing
         shell: bash
         run: |
           if grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" > /dev/null 2>&1; then
-            grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" | sed "s|^target:\(.*\)|  - import: pkgs/\1/pkg.yaml|" >> aqua-ci.yaml
+            grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" | sed "s|^target:\(.*\)|  - import: pkgs/\1/pkg.yaml|" >> clienv-ci.yaml
           fi
           if grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" > /dev/null 2>&1; then
-            grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" | sed "s/registry\.yaml/pkg.yaml/" | sort -u | sed "s/^/  - import: /" >> aqua-ci.yaml
+            grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" | sed "s/registry\.yaml/pkg.yaml/" | sort -u | sed "s/^/  - import: /" >> clienv-ci.yaml
           fi
-          echo "[INFO] aqua-ci.yaml" >&2
-          cat aqua-ci.yaml >&2
+          echo "[INFO] clienv-ci.yaml" >&2
+          cat clienv-ci.yaml >&2
 
       - run: echo "AQUA_GOOS=$AQUA_GOOS" >> "$GITHUB_ENV"
         shell: bash
@@ -112,5 +112,5 @@ jobs:
         if: matrix.env.goarch != ''
         env:
           AQUA_GOARCH: ${{ matrix.env.goarch }}
-      - run: aqua -log-level debug -c aqua-ci.yaml i --test
+      - run: clienv -log-level debug -c clienv-ci.yaml i --test
         shell: bash

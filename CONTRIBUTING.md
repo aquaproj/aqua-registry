@@ -1,6 +1,6 @@
 # Contributing
 
-About how to write [registry.yaml](registry.yaml), please see [Registry Configuration](https://aquaproj.github.io/docs/reference/registry-config).
+About how to write [registry.yaml](registry.yaml), please see [Registry Configuration](https://clienv.github.io/docs/reference/registry-config).
 
 ## Add packages
 
@@ -96,7 +96,7 @@ We test the registry in CI on the above environments by GitHub Actions' build ma
 :warning: The author [@suzuki-shunsuke](https://github.com/suzuki-shunsuke) isn't familiar with Rust. If you have any opinion, please let us know.
 
 - linux: use the asset for not `gnu` but `musl` if both of them are supported
-  - ref: https://github.com/aquaproj/aqua-registry/pull/2153#discussion_r805116879
+  - ref: https://github.com/clienv/clienv-registry/pull/2153#discussion_r805116879
 - windows: use the asset for not `gnu` but `msvc` if both of them are supported
   - ref: https://rust-lang.github.io/rustup/installation/windows.html
 
@@ -118,7 +118,7 @@ replacements:
 
 ## Test multiple versions
 
-If the package has the field [version_overrides](https://aquaproj.github.io/docs/reference/registry-config#version_constraint-version_overrides),
+If the package has the field [version_overrides](https://clienv.github.io/docs/reference/registry-config#version_constraint-version_overrides),
 please add not only the latest version but also old versions in `pkg.yaml` to test if old versions can be installed properly.
 
 e.g. [pkg.yaml](pkgs/scaleway/scaleway-cli/pkg.yaml) [registry.yaml](pkgs/scaleway/scaleway-cli/registry.yaml)
@@ -143,11 +143,11 @@ packages:
 ## How to test in your localhost
 
 ```console
-$ cp aqua.yaml.tmpl aqua.yaml
-$ vi aqua.yaml # Add tested packages
-$ aqua i --test
+$ cp clienv.yaml.tmpl clienv.yaml
+$ vi clienv.yaml # Add tested packages
+$ clienv i --test
 ```
 
 ## Change `GOOS` and `GOARCH` for testing
 
-Please see https://aquaproj.github.io/docs/reference/change-os-arch-for-test
+Please see https://clienv.github.io/docs/reference/change-os-arch-for-test
