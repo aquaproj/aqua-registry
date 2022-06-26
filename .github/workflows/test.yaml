@@ -13,7 +13,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
-      - uses: aquaproj/aqua-installer@v1.0.0
+      - uses: clivm/clivm-installer@v1.0.0
         with:
           aqua_version: v1.14.0
       - run: bash generate-registry.sh
@@ -22,7 +22,7 @@ jobs:
       - run: |
           if ! git diff --cached --exit-code; then
             echo 'Please run "bash generate-registry.sh"' >&2
-            echo 'https://github.com/aquaproj/aqua-registry/blob/main/CONTRIBUTING.md#run-generate-registrysh-to-update-reigstryyaml' >&2
+            echo 'https://github.com/clivm/clivm-registry/blob/main/CONTRIBUTING.md#run-generate-registrysh-to-update-reigstryyaml' >&2
             exit 1
           fi
 
@@ -57,7 +57,7 @@ jobs:
 
       # Disable cache
       # The cache size is so huge that it takes a long time for `cache ~/.aqua` and `Post cache ~/.aqua`
-      # e.g. https://github.com/aquaproj/aqua-registry/runs/4426879327
+      # e.g. https://github.com/clivm/clivm-registry/runs/4426879327
       #
       # - name: cache ~/.aqua
       #   uses: actions/cache@v2
@@ -70,7 +70,7 @@ jobs:
       #       v5-${{ runner.os }}-${{ hashFiles('registry.yaml') }}-
       #       v5-${{ runner.os }}-
 
-      - uses: aquaproj/aqua-installer@v1.0.0
+      - uses: clivm/clivm-installer@v1.0.0
         with:
           aqua_version: v1.14.0
         env:

@@ -1,8 +1,8 @@
 # aqua-registry
 
-[![Build Status](https://github.com/aquaproj/aqua-registry/workflows/test/badge.svg)](https://github.com/aquaproj/aqua-registry/actions) [![GitHub last commit](https://img.shields.io/github/last-commit/aquaproj/aqua-registry.svg)](https://github.com/aquaproj/aqua-registry) [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/aquaproj/aqua-registry/main/LICENSE)
+[![Build Status](https://github.com/clivm/clivm-registry/workflows/test/badge.svg)](https://github.com/clivm/clivm-registry/actions) [![GitHub last commit](https://img.shields.io/github/last-commit/clivm/clivm-registry.svg)](https://github.com/clivm/clivm-registry) [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/clivm/clivm-registry/main/LICENSE)
 
-[aqua](https://github.com/aquaproj/aqua)'s Standard Registry
+[aqua](https://github.com/clivm/clivm)'s Standard Registry
 
 ## How to use
 
@@ -13,7 +13,7 @@ aqua.yaml
 ```yaml
 registries:
   - type: standard
-    ref: v3.3.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v3.3.0 # renovate: depName=clivm/clivm-registry
 ```
 
 ## Search packages from the Standard Registry by the command `aqua g`
@@ -23,7 +23,7 @@ Please add the Standard Registry to your aqua.yaml's registries, and run `aqua g
 ```yaml
 registries:
   - type: standard
-    ref: v3.3.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v3.3.0 # renovate: depName=clivm/clivm-registry
 ```
 
 `aqua g` launches the interactive UI and you can search the package by fuzzy search.
@@ -54,7 +54,7 @@ registries:
 
 ## Request for new packages
 
-Please check [registry.yaml](https://github.com/aquaproj/aqua-registry/blob/main/registry.yaml) or search packages by `aqua g` command.
+Please check [registry.yaml](https://github.com/clivm/clivm-registry/blob/main/registry.yaml) or search packages by `aqua g` command.
 If the packages you want aren't found, please create issues or send pull requests!
 
 By adding various packages to the standard registry, aqua becomes more useful and attractive.
@@ -73,7 +73,7 @@ You can get over 400 packages in your laptop! By Lazy Install, packages aren't i
 1. Run `aqua i -l -a`
 
 ```console
-$ git clone https://github.com/aquaproj/aqua-registry
+$ git clone https://github.com/clivm/clivm-registry
 $ export AQUA_GLOBAL_CONFIG="$PWD/aqua-registry/aqua-all.yaml:$AQUA_GLOBAL_CONFIG"
 $ aqua i -l -a
 ```
@@ -88,11 +88,11 @@ $ export AQUA_GLOBAL_CONFIG="<Other aqua.yaml>:$PWD/aqua-all.yaml:$AQUA_GLOBAL_C
 
 ## Change Log
 
-Please see [Releases](https://github.com/aquaproj/aqua-registry/releases).
+Please see [Releases](https://github.com/clivm/clivm-registry/releases).
 
 ## Contributors
 
-[![contributors](https://contrib.rocks/image?repo=aquaproj/aqua-registry)](https://github.com/aquaproj/aqua-registry/graphs/contributors)
+[![contributors](https://contrib.rocks/image?repo=clivm/clivm-registry)](https://github.com/clivm/clivm-registry/graphs/contributors)
 
 ## License
 
