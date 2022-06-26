@@ -2,7 +2,7 @@
 
 About how to write [registry.yaml](registry.yaml), please see [Registry Configuration](https://aquaproj.github.io/docs/reference/registry-config).
 
-## Add the packages
+## Add packages
 
 Please create directories in [pkgs](pkgs) per package and add `pkg.yaml` and `registry.yaml`.
 
@@ -25,6 +25,22 @@ Don't edit it manually, and if you update `registry.yaml` in [pkgs](pkgs) direct
 ```console
 $ bash generate-registry.sh
 ```
+
+## Scaffold configuration
+
+aqua >= v1.14.0 is required.
+
+```console
+$ bash scaffold.sh <package name>
+```
+
+e.g.
+
+```console
+$ bash scaffold.sh cli/cli
+```
+
+Then please update generated files.
 
 ## Style Guide
 
