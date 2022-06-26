@@ -1,6 +1,6 @@
 # Contributing
 
-About how to write [registry.yaml](registry.yaml), please see [Registry Configuration](https://aquaproj.github.io/docs/reference/registry-config).
+About how to write [registry.yaml](registry.yaml), please see [Registry Configuration](https://clivm.github.io/docs/reference/registry-config).
 
 ## Add packages
 
@@ -118,7 +118,7 @@ replacements:
 
 ## Test multiple versions
 
-If the package has the field [version_overrides](https://aquaproj.github.io/docs/reference/registry-config#version_constraint-version_overrides),
+If the package has the field [version_overrides](https://clivm.github.io/docs/reference/registry-config#version_constraint-version_overrides),
 please add not only the latest version but also old versions in `pkg.yaml` to test if old versions can be installed properly.
 
 e.g. [pkg.yaml](pkgs/scaleway/scaleway-cli/pkg.yaml) [registry.yaml](pkgs/scaleway/scaleway-cli/registry.yaml)
@@ -150,4 +150,4 @@ $ aqua i --test
 
 ## Change `GOOS` and `GOARCH` for testing
 
-Please see https://aquaproj.github.io/docs/reference/change-os-arch-for-test
+Please see https://clivm.github.io/docs/reference/change-os-arch-for-test
