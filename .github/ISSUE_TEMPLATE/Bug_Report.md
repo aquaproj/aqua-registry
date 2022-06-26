@@ -9,12 +9,12 @@ e.g. `suzuki-shunsuke/github-comment`
 
 -
 
-## aqua version
+## clivm version
 
 Please use the latest version.
 
 ```console
-$ aqua -v
+$ clivm -v
 
 ```
 
@@ -27,14 +27,14 @@ $ aqua -v
 
 ## How to reproduce
 
-- aqua.yaml
+- clivm.yaml
 - executed command and output
 
-> aqua.yaml should be not partial but complete configuration.
+> clivm.yaml should be not partial but complete configuration.
 > Please remove unneeded configuration to reproduce the issue.
 
 ```yaml
-# aqua.yaml
+# clivm.yaml
 ```
 
 ```console
@@ -43,7 +43,7 @@ $
 
 ## Debug Output
 
-Please set the environment variable `AQUA_LOG_LEVEL=debug` and run aqua and tell us the debug output.
+Please set the environment variable `AQUA_LOG_LEVEL=debug` and run clivm and tell us the debug output.
 
 ```console
 $

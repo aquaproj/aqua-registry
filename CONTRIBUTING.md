@@ -28,7 +28,7 @@ $ bash generate-registry.sh
 
 ## Scaffold configuration
 
-aqua >= v1.14.0 is required.
+clivm >= v1.14.0 is required.
 
 ```console
 $ bash scaffold.sh <package name>
@@ -143,9 +143,9 @@ packages:
 ## How to test in your localhost
 
 ```console
-$ cp aqua.yaml.tmpl aqua.yaml
-$ vi aqua.yaml # Add tested packages
-$ aqua i --test
+$ cp clivm.yaml.tmpl clivm.yaml
+$ vi clivm.yaml # Add tested packages
+$ clivm i --test
 ```
 
 ## Change `GOOS` and `GOARCH` for testing
