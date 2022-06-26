@@ -1,0 +1,19 @@
+packages:
+  - type: github_release
+    repo_owner: johnkerl
+    repo_name: miller
+    asset: miller-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Miller is like awk, sed, cut, join, and sort for name-indexed data such as CSV, TSV, and tabular JSON
+    replacements:
+      darwin: macos
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    files:
+      - name: mlr
+        src: miller-{{trimV .Version}}-{{.OS}}-{{.Arch}}/mlr
