@@ -12,10 +12,10 @@ fi
 pkg=$1
 
 mkdir -p "pkgs/$pkg"
-aqua gr "$pkg" > "pkgs/$pkg/registry.yaml"
+clivm gr "$pkg" > "pkgs/$pkg/registry.yaml"
 bash generate-registry.sh
-aqua g -i "$pkg"
+clivm g -i "$pkg"
 echo "packages:" > "pkgs/$pkg/pkg.yaml"
-echo "  $(aqua g "$pkg")" >> "pkgs/$pkg/pkg.yaml"
-test -f aqua.yaml || cp aqua.yaml.tmpl aqua.yaml
-aqua i
+echo "  $(clivm g "$pkg")" >> "pkgs/$pkg/pkg.yaml"
+test -f clivm.yaml || cp clivm.yaml.tmpl clivm.yaml
+clivm i
