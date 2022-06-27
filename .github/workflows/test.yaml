@@ -9,7 +9,7 @@ jobs:
   generate-registry:
     runs-on: ubuntu-latest
     env:
-      AQUA_CONFIG: clivm-ci.yaml
+      CLIVM_CONFIG: clivm-ci.yaml
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
@@ -74,7 +74,7 @@ jobs:
         with:
           clivm_version: v1.14.0
         env:
-          AQUA_CONFIG: clivm-ci.yaml
+          CLIVM_CONFIG: clivm-ci.yaml
 
       - uses: actions/setup-go@v3
         with:
@@ -87,7 +87,7 @@ jobs:
         # So we run ci-info via `clivm exec`.
         run: clivm exec -- ci-info run | sed -E "s/^export //" >> "$GITHUB_ENV"
         env:
-          AQUA_CONFIG: clivm-ci.yaml
+          CLIVM_CONFIG: clivm-ci.yaml
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: install packages for testing
@@ -102,15 +102,15 @@ jobs:
           echo "[INFO] clivm-ci.yaml" >&2
           cat clivm-ci.yaml >&2
 
-      - run: echo "AQUA_GOOS=$AQUA_GOOS" >> "$GITHUB_ENV"
+      - run: echo "CLIVM_GOOS=$CLIVM_GOOS" >> "$GITHUB_ENV"
         shell: bash
         if: matrix.env.goos != ''
         env:
-          AQUA_GOOS: ${{ matrix.env.goos }}
-      - run: echo "AQUA_GOARCH=$AQUA_GOARCH" >> "$GITHUB_ENV"
+          CLIVM_GOOS: ${{ matrix.env.goos }}
+      - run: echo "CLIVM_GOARCH=$CLIVM_GOARCH" >> "$GITHUB_ENV"
         shell: bash
         if: matrix.env.goarch != ''
         env:
-          AQUA_GOARCH: ${{ matrix.env.goarch }}
+          CLIVM_GOARCH: ${{ matrix.env.goarch }}
       - run: clivm -log-level debug -c clivm-ci.yaml i --test
         shell: bash

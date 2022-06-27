@@ -43,7 +43,7 @@ $
 
 ## Debug Output
 
-Please set the environment variable `AQUA_LOG_LEVEL=debug` and run clivm and tell us the debug output.
+Please set the environment variable `CLIVM_LOG_LEVEL=debug` and run clivm and tell us the debug output.
 
 ```console
 $

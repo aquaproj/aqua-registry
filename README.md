@@ -69,12 +69,12 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 You can get over 400 packages in your laptop! By Lazy Install, packages aren't installed until they are really needed.
 
 1. Check out this repository
-1. Add [clivm-all.yaml](clivm-all.yaml) to the environment variable `AQUA_GLOBAL_CONFIG`
+1. Add [clivm-all.yaml](clivm-all.yaml) to the environment variable `CLIVM_GLOBAL_CONFIG`
 1. Run `clivm i -l -a`
 
 ```console
 $ git clone https://github.com/clivm/clivm-registry
-$ export AQUA_GLOBAL_CONFIG="$PWD/clivm-registry/clivm-all.yaml:$AQUA_GLOBAL_CONFIG"
+$ export CLIVM_GLOBAL_CONFIG="$PWD/clivm-registry/clivm-all.yaml:$CLIVM_GLOBAL_CONFIG"
 $ clivm i -l -a
 ```
 
@@ -83,7 +83,7 @@ Set up cron to checkout the repository and run `clivm i -l -a` periodically, you
 If you want to change some packages' version, please override them by the other configuration file.
 
 ```console
-$ export AQUA_GLOBAL_CONFIG="<Other clivm.yaml>:$PWD/clivm-all.yaml:$AQUA_GLOBAL_CONFIG"
+$ export CLIVM_GLOBAL_CONFIG="<Other clivm.yaml>:$PWD/clivm-all.yaml:$CLIVM_GLOBAL_CONFIG"
 ```
 
 ## Change Log
