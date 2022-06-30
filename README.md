@@ -66,7 +66,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## :bulb: Tips: Get all packages in your laptop
 
-You can get over 400 packages in your laptop! By Lazy Install, packages aren't installed until they are really needed.
+You can get over 600 packages in your laptop! By Lazy Install, packages aren't installed until they are really needed.
 
 1. Check out this repository
 1. Add [aqua-all.yaml](aqua-all.yaml) to the environment variable `AQUA_GLOBAL_CONFIG`
