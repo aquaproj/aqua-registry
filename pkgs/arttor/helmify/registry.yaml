@@ -2,23 +2,17 @@ packages:
   - type: github_release
     repo_owner: arttor
     repo_name: helmify
-    asset: helmify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: Creates Helm chart from Kubernetes yaml
+    asset: helmify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     replacements:
       darwin: macOS
       linux: Linux
       windows: Windows
+      amd64: 64-bit
+    format: tar.gz
     overrides:
-      - goos: linux
-        goarch: amd64
-        asset: helmify_{{trimV .Version}}_{{.OS}}_32-bit.{{.Format}}
-      - goos: darwin
-        goarch: amd64
-        asset: helmify_{{trimV .Version}}_{{.OS}}_64-bit.{{.Format}}
       - goos: windows
         format: zip
-        asset: helmify_{{trimV .Version}}_{{.OS}}_32-bit.{{.Format}}
     supported_envs:
       - darwin
       - linux
