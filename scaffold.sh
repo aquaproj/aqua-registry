@@ -14,8 +14,8 @@ pkg=$1
 mkdir -p "pkgs/$pkg"
 aqua gr "$pkg" > "pkgs/$pkg/registry.yaml"
 bash generate-registry.sh
+test -f aqua.yaml || cp aqua.yaml.tmpl aqua.yaml
 aqua g -i "$pkg"
 echo "packages:" > "pkgs/$pkg/pkg.yaml"
 echo "  $(aqua g "$pkg")" >> "pkgs/$pkg/pkg.yaml"
-test -f aqua.yaml || cp aqua.yaml.tmpl aqua.yaml
 aqua i
