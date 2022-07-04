@@ -2,14 +2,16 @@ packages:
   - type: github_release
     repo_owner: b4b4r07
     repo_name: gomi
-    rosetta2: true
-    asset: "gomi_{{.OS}}_{{.Arch}}.{{.Format}}"
-    description: Replacement for UNIX rm command!
-    supported_envs: ["darwin", "linux/amd64"]
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
+    asset: "gomi_{{.OS}}_{{.Arch}}.tar.gz"
+    description: Replacement for UNIX rm command
     replacements:
-      386: i386
       amd64: x86_64
+    supported_envs:
+      - linux
+      - darwin
+    version_constraint: 'semver(">= 1.1.3")'
+    version_overrides:
+      - version_constraint: 'semver("< 1.1.3")'
+        supported_envs:
+          - linux/amd64
+          - darwin
