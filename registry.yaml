@@ -1268,17 +1268,28 @@ packages:
   - type: github_release
     repo_owner: b4b4r07
     repo_name: gomi
-    rosetta2: true
-    asset: "gomi_{{.OS}}_{{.Arch}}.{{.Format}}"
-    description: Replacement for UNIX rm command!
-    supported_envs: ["darwin", "linux/amd64"]
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
+    asset: "gomi_{{.OS}}_{{.Arch}}.tar.gz"
+    description: Replacement for UNIX rm command
     replacements:
-      386: i386
       amd64: x86_64
+    supported_envs:
+      - linux
+      - darwin
+    version_constraint: 'semver(">= 1.1.3")'
+    version_overrides:
+      - version_constraint: 'semver(">= 1.0.0")'
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: 'semver("< 1.0.0")'
+        asset: "gomi_{{.OS}}_{{.Arch}}"
+        format: raw
+        replacements: {}
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
   - type: github_release
     repo_owner: b4b4r07
     repo_name: iap_curl
@@ -5413,12 +5424,19 @@ packages:
   - type: github_release
     repo_owner: ogham
     repo_name: exa
-    description: "A modern replacement for 'ls'"
-    supported_envs: ["darwin", "linux"]
-    asset: "exa-{{.OS}}-{{.Version}}.zip"
+    asset: "exa-{{.OS}}-{{.Arch}}-musl-{{.Version}}.{{.Format}}"
+    format: zip
+    description: A modern replacement for ‘ls’
     replacements:
-      darwin: macos-x86_64
-      linux: linux-x86_64-musl
+      amd64: x86_64
+      darwin: macos
+    overrides:
+      - goos: darwin
+        asset: "exa-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}"
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
     files:
       - name: exa
         src: bin/exa
@@ -7527,11 +7545,16 @@ packages:
   - type: github_release
     repo_owner: x-motemen
     repo_name: ghq
-    asset: "ghq_{{.OS}}_amd64.zip"
+    asset: "ghq_{{.OS}}_{{.Arch}}.zip"
     description: Remote repository management made easy
     files:
       - name: ghq
-        src: ghq_{{.OS}}_amd64/ghq
+        src: "ghq_{{.OS}}_{{.Arch}}/ghq"
+    version_constraint: 'semver(">= 1.3.0")'
+    version_overrides:
+      - version_constraint: 'semver("< 1.3.0")'
+        supported_envs:
+          - amd64
   - type: github_release
     repo_owner: xiecat
     repo_name: fofax
