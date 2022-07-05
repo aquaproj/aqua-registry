@@ -48,19 +48,33 @@ Then please update generated files.
 - Remove spaces in the template `{{ ` and ` }}`
 - Remove a period from the end of the description
 - `link` is unneeded if `repo_owner` and `repo_name` are set
+- Avoid `if` and `for` statement in templates
+- `version_overrides` Style Guide
+
+### Format with prettier
+
+https://prettier.io/
+
+```console
+$ npm i -g prettier
+```
+
+```console
+$ prettier -w .
+```
 
 ### Remove spaces in the template `{{ ` and ` }}`
 
 :thumbsup:
 
 ```yaml
-asset: "tfcmt_{{.OS}}_{{.Arch}}.tar.gz"
+asset: tfcmt_{{.OS}}_{{.Arch}}.tar.gz
 ```
 
 :thumbsdown:
 
 ```yaml
-asset: "tfcmt_{{ .OS }}_{{ .Arch }}.tar.gz"
+asset: tfcmt_{{ .OS }}_{{ .Arch }}.tar.gz
 ```
 
 ### Remove a period from the end of the description
@@ -75,6 +89,39 @@ description: A command-line tool that makes git easier to use with GitHub
 
 ```yaml
 description: A command-line tool that makes git easier to use with GitHub.
+```
+
+### Avoid `if` and `for` statement in templates
+
+:thumbsup:
+
+```yaml
+asset: foo.{{.Format}}
+format: tar.gz
+overrides:
+  - goos: windows
+    format: zip
+```
+
+:thumbsdown:
+
+```yaml
+asset: 'foo.{{if eq .GOOS "windows"}}zip{{else}}tar.gz{{end}}'
+```
+
+### `version_overrides` Style Guide
+
+e.g.
+
+```yaml
+# Latest setting
+version_constraint: semver(">= 5.0.0")
+version_overrides:
+  - version_constraint: semver(">= 4.0.0")
+    # ...
+  - version_constraint: semver(">= 3.0.0")
+    # ...
+  - version_constraint: "true" # Oldest setting
 ```
 
 ## Supported OS and CPU Architecture
