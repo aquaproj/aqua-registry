@@ -1592,10 +1592,18 @@ packages:
   - type: github_release
     repo_owner: buildkite
     repo_name: agent
-    description: "The Buildkite Agent is an open-source toolkit written in Golang for securely running build jobs on any device or network"
-    asset: "buildkite-agent-{{.OS}}-{{.Arch}}-{{.Version|trimV}}.tar.gz"
+    description: The Buildkite Agent is an open-source toolkit written in Golang for securely running build jobs on any device or network
+    asset: buildkite-agent-{{.OS}}-{{.Arch}}-{{.Version|trimV}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
     files:
       - name: buildkite-agent
+    supported_envs:
+      - linux
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: buildkite
     repo_name: cli
