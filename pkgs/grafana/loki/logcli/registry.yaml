@@ -3,8 +3,15 @@ packages:
     type: github_release
     repo_owner: grafana
     repo_name: loki
-    asset: "logcli-{{.OS}}-{{.Arch}}.zip"
     description: LogCLI is the command-line interface to Grafana Loki
+    supported_envs:
+      - linux
+      - darwin
+      - amd64
+    asset: logcli-{{.OS}}-{{.Arch}}.zip
+    overrides:
+      - goos: windows
+        asset: logcli-{{.OS}}-{{.Arch}}.exe.zip
     files:
       - name: logcli
-        src: "logcli-{{.OS}}-{{.Arch}}"
+        src: logcli-{{.OS}}-{{.Arch}}
