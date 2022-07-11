@@ -81,7 +81,7 @@ packages:
 ```yaml
 packages:
   - name: scaleway/scaleway-cli@v2.5.4
-  - name: scaleway/scaleway-cli@v2.5.4
+  - name: scaleway/scaleway-cli@v2.4.0
 ```
 
 ## How to test in your localhost
