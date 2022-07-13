@@ -2,6 +2,18 @@
 
 About how to write [registry.yaml](registry.yaml), please see [Registry Configuration](https://aquaproj.github.io/docs/reference/registry-config).
 
+## Requirements
+
+- Go
+
+You can install Go with aqua.
+
+```console
+$ aqua g -i golang/go
+$ aqua i -l
+$ go version
+```
+
 ## Add packages
 
 Please create directories in [pkgs](pkgs) per package and add `pkg.yaml` and `registry.yaml`.
@@ -11,28 +23,16 @@ e.g. cli/cli
 - [pkg.yaml](pkgs/cli/cli/pkg.yaml)
 - [registry.yaml](pkgs/cli/cli/registry.yaml)
 
-And please run `bash generate-registry.sh` to update [registry.yaml](registry.yaml).
-
-```console
-$ bash generate-registry.sh
-```
-
-Instead of `generate-registry.sh`, you can also use Go.
+And please run `go run ./cmd/generate-registry` to update [registry.yaml](registry.yaml).
 
 ```console
 $ go run ./cmd/generate-registry
 ```
 
-## Run generate-registry.sh to update reigstry.yaml
+## Run generate-registry to update reigstry.yaml
 
-[registry.yaml on the repository root directory](registry.yaml) is generated with [generate-registry.sh](generate-registry.sh).
-Don't edit it manually, and if you update `registry.yaml` in [pkgs](pkgs) directory, don't forget to run generate-registry.sh.
-
-```console
-$ bash generate-registry.sh
-```
-
-Instead of `generate-registry.sh`, you can also use Go.
+[registry.yaml on the repository root directory](registry.yaml) is generated with [cmd/generate-registry/main.go](cmd/generate-registry/main.go).
+Don't edit it manually, and if you update `registry.yaml` in [pkgs](pkgs) directory, don't forget to run generate-registry.
 
 ```console
 $ go run ./cmd/generate-registry
