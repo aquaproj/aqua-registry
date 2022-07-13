@@ -11,20 +11,19 @@ jobs:
   generate-registry:
     runs-on: ubuntu-latest
     env:
-      AQUA_CONFIG: aqua-ci.yaml
+      AQUA_CONFIG: aqua-all.yaml
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
       - uses: aquaproj/aqua-installer@v1.0.0
         with:
           aqua_version: v1.17.0
-      - run: bash generate-registry.sh
+      - run: go run ./cmd/generate-registry
       - run: git add .
       - run: git --no-pager diff --cached
       - run: |
           if ! git diff --cached --exit-code; then
-            echo 'Please run "bash generate-registry.sh"' >&2
-            echo 'https://github.com/aquaproj/aqua-registry/blob/main/CONTRIBUTING.md#run-generate-registrysh-to-update-reigstryyaml' >&2
+            echo "::error file=registry.yaml,title=Please run 'go run ./cmd/generate-registry'::https://github.com/aquaproj/aqua-registry/blob/main/CONTRIBUTING.md#run-generate-registrysh-to-update-reigstryyaml"
             exit 1
           fi
 
