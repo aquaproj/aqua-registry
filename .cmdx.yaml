@@ -46,12 +46,17 @@ tasks:
     short: gr
     description: Merge registry.yaml
     usage: Merge registry.yaml
-    script: bash generate-registry.sh
+    script: go run ./cmd/generate-registry
   - name: scaffold
     short: s
     description: scaffold
     usage: scaffold
-    script: bash scaffold.sh "{{.pkg}}"
+    script: go run ./cmd/scaffold "{{.pkg}}"
     args:
       - name: pkg
         required: true
+  - name: lint
+    short: l
+    description: lint the go code
+    usage: lint the go code
+    script: golangci-lint run
