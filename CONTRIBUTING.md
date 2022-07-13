@@ -43,16 +43,10 @@ $ go run ./cmd/generate-registry
 aqua >= v1.14.0 is required.
 
 ```console
-$ bash scaffold.sh <package name>
+$ go run ./cmd/scaffold <package name>
 ```
 
 e.g.
-
-```console
-$ bash scaffold.sh cli/cli
-```
-
-Instead of `scaffold.sh`, you can also use Go.
 
 ```console
 $ go run ./cmd/scaffold cli/cli
