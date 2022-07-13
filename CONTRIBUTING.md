@@ -17,6 +17,12 @@ And please run `bash generate-registry.sh` to update [registry.yaml](registry.ya
 $ bash generate-registry.sh
 ```
 
+Instead of `generate-registry.sh`, you can also use Go.
+
+```console
+$ go run ./cmd/generate-registry
+```
+
 ## Run generate-registry.sh to update reigstry.yaml
 
 [registry.yaml on the repository root directory](registry.yaml) is generated with [generate-registry.sh](generate-registry.sh).
@@ -24,6 +30,12 @@ Don't edit it manually, and if you update `registry.yaml` in [pkgs](pkgs) direct
 
 ```console
 $ bash generate-registry.sh
+```
+
+Instead of `generate-registry.sh`, you can also use Go.
+
+```console
+$ go run ./cmd/generate-registry
 ```
 
 ## Scaffold configuration
@@ -38,6 +50,12 @@ e.g.
 
 ```console
 $ bash scaffold.sh cli/cli
+```
+
+Instead of `scaffold.sh`, you can also use Go.
+
+```console
+$ go run ./cmd/scaffold cli/cli
 ```
 
 Then please update generated files.
