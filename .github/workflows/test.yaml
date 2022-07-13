@@ -23,7 +23,8 @@ jobs:
       - run: git --no-pager diff --cached
       - run: |
           if ! git diff --cached --exit-code; then
-            echo "::error file=registry.yaml,title=Please run 'go run ./cmd/generate-registry'::https://github.com/aquaproj/aqua-registry/blob/main/CONTRIBUTING.md#run-generate-registrysh-to-update-reigstryyaml"
+            echo "Please run 'go run ./cmd/generate-registry'" >&2
+            echo "::error file=registry.yaml,title=Please run 'go run ./cmd/generate-registry'::https://github.com/aquaproj/aqua-registry/blob/main/CONTRIBUTING.md#run-generate-registry-to-update-reigstryyaml"
             exit 1
           fi
 
