@@ -66,7 +66,9 @@ func listRegistryFiles() ([]string, error) {
 	}); err != nil {
 		return nil, fmt.Errorf("find registry.yaml in the directory pkgs: %w", err)
 	}
-	sort.Strings(registryFilePaths)
+	sort.Slice(registryFilePaths, func(i, j int) bool {
+		return filepath.ToSlash(filepath.Dir(registryFilePaths[i])) < filepath.ToSlash(filepath.Dir(registryFilePaths[j]))
+	})
 	return registryFilePaths, nil
 }
 
