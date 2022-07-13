@@ -25,7 +25,7 @@ const dirPermission os.FileMode = 0o775
 
 func core() error {
 	ctx := context.Background()
-	if len(os.Args) != 2 {
+	if len(os.Args) != 2 { //nolint:gomnd
 		return errors.New(`usage: $ bash scaffold.sh <pkgname>
 e.g. $ bash scaffold.sh cli/cli`)
 	}
@@ -41,7 +41,7 @@ e.g. $ bash scaffold.sh cli/cli`)
 	}
 	fmt.Fprintln(os.Stderr, "Update registry.yaml")
 	if err := api.GenerateRegistry(); err != nil {
-		return err
+		return fmt.Errorf("update registry.yaml: %w", err)
 	}
 	if err := createAquaYAML(); err != nil {
 		return err
@@ -61,7 +61,7 @@ e.g. $ bash scaffold.sh cli/cli`)
 func aquaGR(ctx context.Context, pkgName, rgFilePath string) error {
 	outFile, err := os.Create(rgFilePath)
 	if err != nil {
-		return err
+		return fmt.Errorf("create a file %s: %w", rgFilePath, err)
 	}
 	defer outFile.Close()
 	fmt.Fprintf(os.Stderr, "+ aqua gr %s\n", pkgName)
@@ -69,7 +69,7 @@ func aquaGR(ctx context.Context, pkgName, rgFilePath string) error {
 	cmd.Stdout = outFile
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
-		return err
+		return fmt.Errorf("execute a command: %w", err)
 	}
 	return nil
 }
@@ -80,16 +80,16 @@ func createAquaYAML() error {
 	}
 	outFile, err := os.Create("aqua.yaml")
 	if err != nil {
-		return err
+		return fmt.Errorf("create aqua.yaml: %w", err)
 	}
 	defer outFile.Close()
 	srcFile, err := os.Open("aqua.yaml.tmpl")
 	if err != nil {
-		return err
+		return fmt.Errorf("open aqua.yaml.tmpl: %w", err)
 	}
 	defer srcFile.Close()
 	if _, err := io.Copy(outFile, srcFile); err != nil {
-		return err
+		return fmt.Errorf("copy aqua.yaml.tmpl to aqua.yaml: %w", err)
 	}
 	return nil
 }
@@ -101,7 +101,7 @@ func aquaG(ctx context.Context, pkgName string) error {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
-		return err
+		return fmt.Errorf("execute a command: %w", err)
 	}
 	return nil
 }
@@ -113,7 +113,7 @@ func aquaI(ctx context.Context) error {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
-		return err
+		return fmt.Errorf("execute a command: aqua i: %w", err)
 	}
 	return nil
 }
@@ -121,11 +121,11 @@ func aquaI(ctx context.Context) error {
 func createPkgFile(ctx context.Context, pkgName, pkgFilePath string) error {
 	outFile, err := os.Create(pkgFilePath)
 	if err != nil {
-		return err
+		return fmt.Errorf("create a file %s: %w", pkgFilePath, err)
 	}
 	defer outFile.Close()
 	if _, err := outFile.WriteString("packages:\n"); err != nil {
-		return err
+		return fmt.Errorf("write a string to file %s: %w", pkgFilePath, err)
 	}
 	buf := &bytes.Buffer{}
 	fmt.Fprintf(os.Stderr, "+ aqua g %s\n", pkgName)
@@ -133,14 +133,14 @@ func createPkgFile(ctx context.Context, pkgName, pkgFilePath string) error {
 	cmd.Stdout = buf
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
-		return err
+		return fmt.Errorf("execute a command: aqua g %s: %w", pkgName, err)
 	}
 	txt := ""
 	for _, line := range strings.Split(strings.TrimSpace(buf.String()), "\n") {
 		txt += fmt.Sprintf("  %s\n", line)
 	}
 	if _, err := outFile.WriteString(txt); err != nil {
-		return err
+		return fmt.Errorf("write a string to file %s: %w", pkgFilePath, err)
 	}
 	return nil
 }
