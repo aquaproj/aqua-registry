@@ -1,0 +1,17 @@
+packages:
+  - type: github_release
+    repo_owner: temporalio
+    repo_name: tctl
+    asset: tctl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Temporal CLI
+    overrides:
+      - goos: windows
+        format: zip
+    version_constraint: semver(">= 1.16.2")
+    version_overrides:
+      - version_constraint: "true"
+        repo_name: temporal
+        asset: temporal_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: tctl
