@@ -26,8 +26,8 @@ const dirPermission os.FileMode = 0o775
 func core() error {
 	ctx := context.Background()
 	if len(os.Args) != 2 { //nolint:gomnd
-		return errors.New(`usage: $ bash scaffold.sh <pkgname>
-e.g. $ bash scaffold.sh cli/cli`)
+		return errors.New(`usage: $ go run ./cmd/scaffold <pkgname>
+e.g. $ go run ./cmd/scaffold cli/cli`)
 	}
 	pkgName := os.Args[1]
 	pkgDir := filepath.Join(append([]string{"pkgs"}, strings.Split(pkgName, "/")...)...)
