@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 
-	"github.com/aquaproj/aqua-registry/internal/api"
+	genrg "github.com/aquaproj/aqua-registry/internal/generate-registry"
 )
 
 func main() {
-	if err := api.GenerateRegistry(); err != nil {
+	if err := genrg.GenerateRegistry(); err != nil {
 		log.Fatal(err)
 	}
 }
