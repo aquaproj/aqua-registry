@@ -1,0 +1,43 @@
+packages:
+  - type: http
+    repo_owner: docker
+    repo_name: cli
+    description: Docker CE CLI
+    version_source: github_tag
+    version_filter: not (Version contains "beta" or Version contains "rc")
+    url: https://download.docker.com/{{.OS}}/static/stable/{{.Arch}}/docker-{{trimV .Version}}.{{.Format}}
+    format: tgz
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - name: docker
+        src: docker/docker
+    overrides:
+      - goos: linux
+        files:
+          - name: containerd
+            src: docker/containerd
+          - name: containerd-shim
+            src: docker/containerd-shim
+          - name: containerd-shim-runc-v2
+            src: docker/containerd-shim-runc-v2
+          - name: ctr
+            src: docker/ctr
+          - name: docker-init
+            src: docker/docker-init
+          - name: docker-proxy
+            src: docker/docker-proxy
+          - name: dockerd
+            src: docker/dockerd
+          - name: runc
+            src: docker/runc
+    replacements:
+      darwin: mac
+      windows: win
+      amd64: x86_64
+      arm64: aarch64
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
