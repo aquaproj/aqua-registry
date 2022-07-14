@@ -4,6 +4,7 @@ About how to write [registry.yaml](registry.yaml), please see [Registry Configur
 
 ## Requirements
 
+- aqua
 - Go
 
 You can install Go with aqua.

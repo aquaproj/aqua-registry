@@ -61,7 +61,7 @@ e.g. $ go run ./cmd/create-pr-new-pkg cli/cli`)
 	if err := command(ctx, "git", "push", "origin", branch); err != nil {
 		return err
 	}
-	if err := command(ctx, "gh", "pr", "create", "-w", "-t", "feat: add "+pkgName, "-b", body); err != nil {
+	if err := command(ctx, "aqua", "-c", "aqua-all.yaml", "exec", "--", "gh", "pr", "create", "-w", "-t", "feat: add "+pkgName, "-b", body); err != nil {
 		return err
 	}
 	return nil
