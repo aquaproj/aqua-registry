@@ -2581,6 +2581,24 @@ packages:
     format_overrides:
       - goos: darwin
         format: zip
+  - type: http
+    repo_owner: docker
+    repo_name: cli
+    description: Docker CE CLI
+    version_source: github_tag
+    url: https://download.docker.com/{{.OS}}/static/stable/{{.Arch}}/docker-{{trimV .Version}}.tgz
+    files:
+      - name: docker
+        src: docker/docker
+    replacements:
+      darwin: mac
+      windows: win
+      amd64: x86_64
+      arm64: aarch64
+    supported_envs:
+      - darwin
+      - linux
+      - windows
   - type: github_release
     repo_owner: doitintl
     repo_name: kube-no-trouble
