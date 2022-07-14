@@ -18,9 +18,9 @@ $ go version
 
 We provide helper tools written in Go.
 
-* scaffold: Scaffold a package configuration
-* generate-registry
-* create-pr-new-pkg
+- scaffold: Scaffold a package configuration
+- generate-registry
+- create-pr-new-pkg
 
 ### scaffold
 
