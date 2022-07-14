@@ -69,27 +69,13 @@ func Test_getBody(t *testing.T) {
 			name:    "normal",
 			pkgName: "cli/cli",
 			desc:    "GitHub’s official command line tool",
-			exp: strings.Join([]string{
-				"[cli/cli](https://github.com/cli/cli): GitHub’s official command line tool",
-				"",
-				"```",
-				"aqua g -i cli/cli",
-				"```",
-				"",
-			}, "\n"),
+			exp:     "[cli/cli](https://github.com/cli/cli): GitHub’s official command line tool",
 		},
 		{
 			name:    "no link",
 			pkgName: "foo",
 			desc:    "GitHub’s official command line tool",
-			exp: strings.Join([]string{
-				"foo: GitHub’s official command line tool",
-				"",
-				"```",
-				"aqua g -i foo",
-				"```",
-				"",
-			}, "\n"),
+			exp:     "foo: GitHub’s official command line tool",
 		},
 	}
 	for _, d := range data {
