@@ -1,0 +1,24 @@
+packages:
+  - name: docker/cli/rootless
+    type: http
+    repo_owner: docker
+    repo_name: cli
+    description: Docker CE CLI for Rootless mode
+    version_source: github_tag
+    url: https://download.docker.com/{{.OS}}/static/stable/{{.Arch}}/docker-rootless-extras-{{trimV .Version}}.tgz
+    files:
+      - name: dockerd-rootless-setuptool.sh
+        src: docker-rootless-extras/dockerd-rootless-setuptool.sh
+      - name: dockerd-rootless.sh
+        src: docker-rootless-extras/dockerd-rootless.sh
+      - name: rootlesskit
+        src: docker-rootless-extras/rootlesskit
+      - name: rootlesskit-docker-proxy
+        src: docker-rootless-extras/rootlesskit-docker-proxy
+      - name: vpnkit
+        src: docker-rootless-extras/vpnkit
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+    supported_envs:
+      - linux
