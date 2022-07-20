@@ -3,18 +3,21 @@ packages:
     repo_owner: mongodb
     repo_name: mongocli
     description: MongoDB CLI enables you to manage your MongoDB in the Cloud
-    asset: "mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    format: tar.gz
+    asset: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
     replacements:
       darwin: macos
       amd64: x86_64
     files:
       - name: mongocli
-        src: "bin/mongocli"
+        src: bin/mongocli
     overrides:
       - goos: linux
+        format: tar.gz
         files:
           - name: mongocli
-            src: "mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/mongocli"
-      - goos: darwin
-        format: zip
+            src: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/mongocli
+    supported_envs:
+      - darwin
+      - linux
+      - amd64

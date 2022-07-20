@@ -998,9 +998,13 @@ packages:
     repo_name: dbmate
     description: A lightweight, framework-agnostic database migration tool
     format: raw
-    asset: "dbmate-{{.OS}}-{{.Arch}}"
+    asset: dbmate-{{.OS}}-{{.Arch}}
     replacements:
       darwin: macos
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
   - type: github_release
     repo_owner: anchore
     repo_name: grype
@@ -1009,7 +1013,7 @@ packages:
       - darwin
       - linux
       - amd64
-    asset: "grype_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    asset: grype_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     version_constraint: 'semver(">= 0.33.0")'
     overrides:
@@ -1031,7 +1035,7 @@ packages:
       - darwin
       - linux
       - amd64
-    asset: "syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    asset: syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     overrides:
       - goos: windows
         format: zip
@@ -1063,10 +1067,10 @@ packages:
     repo_name: fx
     description: Command-line tool and terminal JSON viewer
     version_constraint: 'semver(">= 21.0.0")'
-    asset: "fx_{{.OS}}_{{.Arch}}"
+    asset: fx_{{.OS}}_{{.Arch}}
     version_overrides:
       - version_constraint: 'semver("< 21.0.0")'
-        asset: "fx-{{.OS}}.zip"
+        asset: fx-{{.OS}}.zip
         replacements:
           darwin: macos
           windows: win.exe
@@ -1078,7 +1082,7 @@ packages:
     repo_name: llama
     rosetta2: true
     format: raw
-    asset: "llama_{{.OS}}_{{.Arch}}"
+    asset: llama_{{.OS}}_{{.Arch}}
     description: Terminal file manager
     supported_envs:
       - darwin
@@ -1086,7 +1090,7 @@ packages:
   - type: github_release
     repo_owner: apache
     repo_name: camel-k
-    asset: "camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz"
+    asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz
     description: Apache Camel K is a lightweight integration platform, born on Kubernetes, with serverless superpowers
     supported_envs:
       - darwin
@@ -1139,14 +1143,14 @@ packages:
   - type: github_release
     repo_owner: aquasecurity
     repo_name: kube-bench
-    asset: "kube-bench_{{trimV .Version}}_linux_{{.Arch}}.tar.gz"
+    asset: kube-bench_{{trimV .Version}}_linux_{{.Arch}}.tar.gz
     description: Checks whether Kubernetes is deployed according to security best practices as defined in the CIS Kubernetes Benchmark
     supported_envs:
        - linux
   - type: github_release
     repo_owner: aquasecurity
     repo_name: kubectl-who-can
-    asset: "kubectl-who-can_{{.OS}}_x86_64.{{.Format}}"
+    asset: kubectl-who-can_{{.OS}}_x86_64.{{.Format}}
     description: Show who has RBAC permissions to perform actions on different resources in Kubernetes
     format: tar.gz
     overrides:
@@ -1158,7 +1162,7 @@ packages:
   - type: github_release
     repo_owner: aquasecurity
     repo_name: starboard
-    asset: "starboard_{{.OS}}_{{.Arch}}.{{.Format}}"
+    asset: starboard_{{.OS}}_{{.Arch}}.{{.Format}}
     description: Kubernetes-native security toolkit
     rosetta2: true
     replacements:
@@ -1180,7 +1184,7 @@ packages:
   - type: github_release
     repo_owner: aquasecurity
     repo_name: tfsec
-    asset: "tfsec-{{.OS}}-{{.Arch}}"
+    asset: tfsec-{{.OS}}-{{.Arch}}
     description: A static analysis security scanner for your Terraform code
   - type: github_release
     repo_owner: aquasecurity
@@ -5032,13 +5036,13 @@ packages:
     asset: "jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.zip"
     files:
       - name: jreleaser
-        src: "jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/jreleaser"
+        src: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/jreleaser
       - name: java
-        src: "jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/java"
+        src: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/java
       - name: keytool
-        src: "jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/keytool"
+        src: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/keytool
       - name: rmiregistry
-        src: "jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/rmiregistry"
+        src: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/rmiregistry
   - type: github_release
     repo_owner: jsonnet-bundler
     repo_name: jsonnet-bundler
@@ -5406,14 +5410,18 @@ packages:
     description: Find and install kubectl plugins
     files:
       - name: krew
-        src: "krew-{{.OS}}_{{.Arch}}"
-    version_constraint: 'semver(">= 0.4.2")'
+        src: krew-{{.OS}}_{{.Arch}}
+    version_constraint: semver(">= 0.4.2")
     version_overrides:
-      - version_constraint: 'semver("< 0.4.2")'
+      - version_constraint: "true"
         asset: krew.tar.gz
         files:
           - name: krew
-            src: "krew-{{.OS}}_{{.Arch}}"
+            src: krew-{{.OS}}_{{.Arch}}
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
   - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: kubebuilder
@@ -5704,7 +5712,7 @@ packages:
     asset: "bud_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
     files:
       - name: bud
-        src: "bud_{{.Version}}_{{.OS}}_{{.Arch}}/bud"
+        src: bud_{{.Version}}_{{.OS}}_{{.Arch}}/bud
   - type: github_release
     repo_owner: loft-sh
     repo_name: devspace
@@ -5826,7 +5834,7 @@ packages:
     description: Go Fuzzy
     files:
       - name: gof
-        src: "gof_{{.Version}}_{{.OS}}_amd64/gof"
+        src: gof_{{.Version}}_{{.OS}}_amd64/gof
     format: zip
     overrides:
       - goos: linux
@@ -5842,7 +5850,7 @@ packages:
     asset: "goreman_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: goreman
-        src: "goreman_{{.Version}}_{{.OS}}_{{.Arch}}/goreman"
+        src: goreman_{{.Version}}_{{.OS}}_{{.Arch}}/goreman
     format: zip
     overrides:
       - goos: linux
@@ -5858,7 +5866,7 @@ packages:
     asset: "memo_{{.Version}}_{{.OS}}_amd64.{{.Format}}"
     files:
       - name: memo
-        src: "memo_{{.Version}}_{{.OS}}_amd64/memo"
+        src: memo_{{.Version}}_{{.OS}}_amd64/memo
     format: zip
     overrides:
       - goos: linux
@@ -6011,7 +6019,7 @@ packages:
         format: zip
     files:
       - name: minishift
-        src: "minishift-{{trimV .Version}}-{{.OS}}-{{.Arch}}/minishift"
+        src: minishift-{{trimV .Version}}-{{.OS}}-{{.Arch}}/minishift
   - type: go_install
     repo_owner: mitchellh
     repo_name: gox
@@ -6030,21 +6038,24 @@ packages:
     repo_owner: mongodb
     repo_name: mongocli
     description: MongoDB CLI enables you to manage your MongoDB in the Cloud
-    asset: "mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
-    format: tar.gz
+    asset: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
     replacements:
       darwin: macos
       amd64: x86_64
     files:
       - name: mongocli
-        src: "bin/mongocli"
+        src: bin/mongocli
     overrides:
       - goos: linux
+        format: tar.gz
         files:
           - name: mongocli
-            src: "mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/mongocli"
-      - goos: darwin
-        format: zip
+            src: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/mongocli
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
   - type: github_release
     repo_owner: mozilla
     repo_name: sops
@@ -6237,7 +6248,7 @@ packages:
     format: tar.gz
     files:
       - name: nvim
-        src: "nvim-{{.OS}}/bin/nvim"
+        src: nvim-{{.OS}}/bin/nvim
     overrides:
       - goos: windows
         format: zip
@@ -6250,7 +6261,7 @@ packages:
           - goos: darwin
             files:
               - name: nvim
-                src: "nvim-osx64/bin/nvim"
+                src: nvim-osx64/bin/nvim
   - type: github_release
     repo_owner: newrelic
     repo_name: newrelic-cli
@@ -6297,11 +6308,15 @@ packages:
   - type: github_release
     repo_owner: noborus
     repo_name: trdsql
-    asset: "trdsql_{{.Version}}_{{.OS}}_{{.Arch}}.zip"
+    asset: trdsql_{{.Version}}_{{.OS}}_{{.Arch}}.zip
     description: CLI tool that can execute SQL queries on CSV, LTSV, JSON and TBLN. Can output to various formats
     files:
       - name: trdsql
-        src: "trdsql_{{.Version}}_{{.OS}}_{{.Arch}}/trdsql"
+        src: trdsql_{{.Version}}_{{.OS}}_{{.Arch}}/trdsql
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
   - type: github_release
     repo_owner: nojima
     repo_name: httpie-go
