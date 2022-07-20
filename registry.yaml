@@ -7,7 +7,7 @@ packages:
     repo_name: pryrite
     description: Pryrite, interactively execute shell code blocks in a markdown file
     rosetta2: true
-    asset: "pryrite-{{.OS}}-{{.Arch}}-{{.Version}}.zip"
+    asset: pryrite-{{.OS}}-{{.Arch}}-{{.Version}}.zip
     supported_envs:
       - darwin
       - linux
@@ -16,13 +16,13 @@ packages:
     repo_name: aws-vault
     description: A vault for securely storing and accessing AWS credentials in development environments
     format: raw
-    asset: "aws-vault-{{.OS}}-{{.Arch}}"
+    asset: aws-vault-{{.OS}}-{{.Arch}}
     supported_envs:
        - linux
   - type: github_release
     repo_owner: Aloxaf
     repo_name: silicon
-    asset: "silicon-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz"
+    asset: silicon-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz
     rosetta2: true
     supported_envs:
       - darwin
@@ -36,54 +36,58 @@ packages:
   - type: github_release
     repo_owner: Arriven
     repo_name: db1000n
-    description: "simple distributed load generation client written in go"
+    description: simple distributed load generation client written in go
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
     version_constraint: 'semver(">= 0.8.20")'
-    asset: "db1000n_{{.OS}}_{{.Arch}}.{{.Format}}"
+    asset: db1000n_{{.OS}}_{{.Arch}}.{{.Format}}
     version_overrides:
       - version_constraint: 'semver("< 0.8.20")'
         # https://github.com/Arriven/db1000n/commit/5860df0
         # remove version number from goreleaser archives
-        asset: "db1000n_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+        asset: db1000n_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
   - type: github_release
     repo_owner: Azure
     repo_name: aks-engine
-    description: "AKS Engine deploys and manages Kubernetes clusters in Azure"
+    description: AKS Engine deploys and manages Kubernetes clusters in Azure
     rosetta2: true
     supported_envs:
       - darwin
       - amd64
-    asset: "aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz"
+    asset: aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     files:
       - name: aks-engine
-        src: "aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}/aks-engine"
+        src: aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}/aks-engine
   - type: github_release
     repo_owner: Azure
     repo_name: aztfy
     description: A tool to bring existing Azure resources under Terraform's management
-    version_constraint: 'semver(">= 0.0.6")'
-    asset: "aztfy_{{.Version}}_{{.OS}}_{{.Arch}}.zip"
+    version_constraint: semver(">= 0.0.6")
+    asset: aztfy_{{.Version}}_{{.OS}}_{{.Arch}}.zip
     version_overrides:
-      - version_constraint: 'semver("< 0.0.6")'
-        asset: "aztfy_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+      - version_constraint: "true"
+        asset: aztfy_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
         replacements:
           darwin: Darwin
           linux: Linux
           windows: Windows
           386: i386
           amd64: x86_64
+    supported_envs:
+      - darwin
+      - linux
+      - windows/amd64
   - type: github_release
     repo_owner: BeryJu
     repo_name: korb
     description: Move Kubernetes PVCs between Storage Classes and Namespaces
-    asset: "korb_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    asset: korb_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
   - type: github_release
     repo_owner: BurntSushi
     repo_name: ripgrep
-    asset: "ripgrep-{{.Version}}-x86_64-{{.OS}}.{{.Format}}"
+    asset: ripgrep-{{.Version}}-x86_64-{{.OS}}.{{.Format}}
     description: ripgrep recursively searches directories for a regex pattern while respecting your gitignore
     replacements:
       darwin: apple-darwin
@@ -95,11 +99,11 @@ packages:
         format: zip
     files:
       - name: rg
-        src: "ripgrep-{{.Version}}-x86_64-{{.OS}}/rg"
+        src: ripgrep-{{.Version}}-x86_64-{{.OS}}/rg
   - type: github_release
     repo_owner: Cian911
     repo_name: switchboard
-    asset: "switchboard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    asset: switchboard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: Auto-magic file organisation for your machines
     replacements:
       darwin: Darwin
@@ -112,7 +116,7 @@ packages:
     repo_name: circleci-cli
     description: Use CircleCI from the command line
     rosetta2: true
-    asset: "circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     supported_envs:
       - darwin
       - linux
@@ -169,13 +173,13 @@ packages:
     format: gz
     files:
       - name: clash
-        src: "clash-{{.OS}}-{{.Arch}}-{{.Version}}"
+        src: clash-{{.OS}}-{{.Arch}}-{{.Version}}
     overrides:
       - goos: windows
         format: zip
         files:
           - name: clash
-            src: "clash-windows-{{.Arch}}.exe"
+            src: clash-windows-{{.Arch}}.exe
   - type: github_release
     repo_owner: FairwindsOps
     repo_name: nova
@@ -238,7 +242,7 @@ packages:
     asset: "gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
     files:
       - name: gwvault
-        src: "gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}/gwvault"
+        src: gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}/gwvault
     format: tar.gz
     overrides:
       - goos: windows
@@ -254,7 +258,7 @@ packages:
     asset: "terraformer-all-{{.OS}}-{{.Arch}}"
     files:
       - name: terraformer
-        src: "terraformer-all-{{.OS}}-{{.Arch}}"
+        src: terraformer-all-{{.OS}}-{{.Arch}}
   - name: GoogleCloudPlatform/terraformer/aws
     description: CLI tool to generate terraform files from existing infrastructure (reverse Terraform). Infrastructure to Code
     type: github_release
@@ -267,24 +271,28 @@ packages:
     asset: "terraformer-aws-{{.OS}}-{{.Arch}}"
     files:
       - name: terraformer
-        src: "terraformer-aws-{{.OS}}-{{.Arch}}"
+        src: terraformer-aws-{{.OS}}-{{.Arch}}
   - type: http
     repo_owner: GoogleContainerTools
     repo_name: container-diff
-    url: "https://storage.googleapis.com/container-diff/{{.Version}}/container-diff-{{.OS}}-amd64"
+    url: https://storage.googleapis.com/container-diff/{{.Version}}/container-diff-{{.OS}}-amd64
     description: "container-diff: Diff your Docker containers"
     files:
       - name: container-diff
-        src: "container-diff-{{.OS}}-amd64"
+        src: container-diff-{{.OS}}-amd64
   - type: http
     repo_owner: GoogleContainerTools
     repo_name: container-structure-test
     rosetta2: true
-    url: "https://storage.googleapis.com/container-structure-test/{{.Version}}/container-structure-test-{{.OS}}-{{.Arch}}"
+    url: https://storage.googleapis.com/container-structure-test/{{.Version}}/container-structure-test-{{.OS}}-{{.Arch}}
     description: validate the structure of your container images
     files:
       - name: container-structure-test
-        src: "container-structure-test-{{.OS}}-{{.Arch}}"
+        src: container-structure-test-{{.OS}}-{{.Arch}}
+    supported_envs:
+      - darwin
+      - linux
+      - windows/amd64
   - type: github_release
     repo_owner: GoogleContainerTools
     repo_name: kpt
@@ -295,7 +303,7 @@ packages:
       - linux
     files:
       - name: kpt
-        src: "kpt_{{.OS}}_{{.Arch}}"
+        src: kpt_{{.OS}}_{{.Arch}}
   - type: http
     repo_owner: GoogleContainerTools
     repo_name: skaffold
@@ -303,7 +311,7 @@ packages:
     url: "https://storage.googleapis.com/skaffold/releases/{{.Version}}/skaffold-{{.OS}}-{{.Arch}}"
     files:
       - name: skaffold
-        src: "skaffold-{{.OS}}-{{.Arch}}"
+        src: skaffold-{{.OS}}-{{.Arch}}
     supported_envs:
       - darwin
       - linux
@@ -1222,7 +1230,7 @@ packages:
   - type: github_release
     repo_owner: argoproj-labs
     repo_name: argocd-image-updater
-    description: "Automatic container image update for Argo CD"
+    description: Automatic container image update for Argo CD
     format: raw
     version_constraint: 'semver(">= 0.12.0")'
     asset: "argocd-image-updater-{{.OS}}_{{.Arch}}"
@@ -1264,7 +1272,7 @@ packages:
     repo_name: argo-workflows
     rosetta2: true
     asset: "argo-{{.OS}}-{{.Arch}}.gz"
-    description: "Argo Worfkflows CLI. Workflow engine for Kubernetes"
+    description: Argo Worfkflows CLI. Workflow engine for Kubernetes
     supported_envs:
       - darwin
       - linux
@@ -1278,7 +1286,7 @@ packages:
   - type: github_release
     repo_owner: aristocratos
     repo_name: btop
-    description: "A monitor of resources"
+    description: A monitor of resources
     asset: "btop-{{.Arch}}-{{.OS}}.tbz"
     format: tar.bz2
     supported_envs:
@@ -1308,7 +1316,7 @@ packages:
   - type: github_release
     repo_owner: armosec
     repo_name: kubescape
-    description: "kubescape is the first tool for testing if Kubernetes is deployed securely as defined in Kubernetes Hardening Guidance by to NSA and CISA"
+    description: kubescape is the first tool for testing if Kubernetes is deployed securely as defined in Kubernetes Hardening Guidance by to NSA and CISA
     rosetta2: true
     complete_windows_ext: false
     supported_envs:
@@ -1872,7 +1880,7 @@ packages:
   - type: github_release
     repo_owner: buildkite
     repo_name: cli
-    description: "A command line interface for Buildkite"
+    description: A command line interface for Buildkite
     supported_envs:
       - darwin
       - linux
