@@ -1001,6 +1001,10 @@ packages:
     asset: dbmate-{{.OS}}-{{.Arch}}
     replacements:
       darwin: macos
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
   - type: github_release
     repo_owner: anchore
     repo_name: grype
@@ -5407,13 +5411,17 @@ packages:
     files:
       - name: krew
         src: krew-{{.OS}}_{{.Arch}}
-    version_constraint: 'semver(">= 0.4.2")'
+    version_constraint: semver(">= 0.4.2")
     version_overrides:
-      - version_constraint: 'semver("< 0.4.2")'
+      - version_constraint: "true"
         asset: krew.tar.gz
         files:
           - name: krew
             src: krew-{{.OS}}_{{.Arch}}
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
   - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: kubebuilder
@@ -6030,7 +6038,7 @@ packages:
     repo_owner: mongodb
     repo_name: mongocli
     description: MongoDB CLI enables you to manage your MongoDB in the Cloud
-    asset: "mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    asset: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     replacements:
       darwin: macos
@@ -6045,6 +6053,10 @@ packages:
             src: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/mongocli
       - goos: darwin
         format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
   - type: github_release
     repo_owner: mozilla
     repo_name: sops
@@ -6297,11 +6309,15 @@ packages:
   - type: github_release
     repo_owner: noborus
     repo_name: trdsql
-    asset: "trdsql_{{.Version}}_{{.OS}}_{{.Arch}}.zip"
+    asset: trdsql_{{.Version}}_{{.OS}}_{{.Arch}}.zip
     description: CLI tool that can execute SQL queries on CSV, LTSV, JSON and TBLN. Can output to various formats
     files:
       - name: trdsql
         src: trdsql_{{.Version}}_{{.OS}}_{{.Arch}}/trdsql
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
   - type: github_release
     repo_owner: nojima
     repo_name: httpie-go
