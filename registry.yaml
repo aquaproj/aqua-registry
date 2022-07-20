@@ -745,7 +745,7 @@ packages:
   - type: github_release
     repo_owner: Trendyol
     repo_name: kink
-    asset: "kink_{{trimV .Version}}_{{.OS}}-x86_64.tar.gz"
+    asset: kink_{{trimV .Version}}_{{.OS}}-x86_64.tar.gz
     description: KinK is a helper CLI that facilitates to manage KinD clusters as Kubernetes pods. Designed to ease clusters up for fast testing with batteries included in mind
     replacements:
       darwin: Darwin
@@ -757,7 +757,7 @@ packages:
     repo_owner: Versent
     repo_name: saml2aws
     rosetta2: true
-    asset: "saml2aws_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    asset: saml2aws_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     description: CLI tool which enables you to login and retrieve AWS temporary credentials using a SAML IDP
     format: tar.gz
     overrides:
@@ -795,7 +795,7 @@ packages:
     repo_owner: XAMPPRocky
     repo_name: tokei
     rosetta2: true
-    asset: "tokei-{{.Arch}}-{{.OS}}.tar.gz"
+    asset: tokei-{{.Arch}}-{{.OS}}.tar.gz
     description: Count your code, quickly
     supported_envs:
       - darwin
@@ -808,7 +808,7 @@ packages:
       arm64: aarch64
     overrides:
       - goos: windows
-        asset: "tokei-{{.Arch}}-pc-windows-msvc.exe"
+        asset: tokei-{{.Arch}}-pc-windows-msvc.exe
         format: raw
   - type: github_release
     repo_owner: abiosoft
@@ -816,7 +816,7 @@ packages:
     description: Docker (and Kubernetes) on MacOS with minimal setup
     format: raw
     version_constraint: 'semver("> 0.3.0")'
-    asset: "colima-{{.OS}}-{{.Arch}}"
+    asset: colima-{{.OS}}-{{.Arch}}
     supported_envs:
       - darwin
       - linux
@@ -833,7 +833,7 @@ packages:
         type: github_content
         path: colima
       - version_constraint: 'semver("< 0.3.0")'
-        asset: "colima-amd64"
+        asset: colima-amd64
         rosetta2: true
         supported_envs:
           - darwin
@@ -856,7 +856,7 @@ packages:
       - darwin
       - linux
       - amd64
-    asset: "goss-{{.OS}}-{{.Arch}}"
+    asset: goss-{{.OS}}-{{.Arch}}
     description: Quick and Easy server testing/validation
     replacements:
       windows: alpha-windows
@@ -897,8 +897,13 @@ packages:
   - type: github_release
     repo_owner: ahmetb
     repo_name: kubectl-tree
-    asset: "kubectl-tree_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    asset: kubectl-tree_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: kubectl plugin to browse Kubernetes object hierarchies as a tree
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+
   - type: github_release
     repo_owner: ahmetb
     repo_name: kubectx
@@ -907,7 +912,7 @@ packages:
       - darwin
       - linux
       - amd64
-    asset: "kubectx_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    asset: kubectx_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     replacements:
       386: i386
       amd64: x86_64
@@ -926,7 +931,7 @@ packages:
       - darwin
       - linux
       - amd64
-    asset: "kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}"
+    asset: kubens_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     files:
       - name: kubens
     replacements:
@@ -951,10 +956,10 @@ packages:
       amd64: x86_64
       arm64: aarch64
     version_constraint: 'semver(">= 0.8.2")'
-    asset: "zoxide-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
+    asset: zoxide-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     version_overrides:
       - version_constraint: 'true'
-        asset: "zoxide-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
+        asset: zoxide-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
   - type: github_release
     repo_owner: alexellis
     repo_name: arkade
@@ -964,12 +969,12 @@ packages:
     overrides:
       - goos: linux
         goarch: arm64
-        asset: "arkade-{{.Arch}}"
+        asset: arkade-{{.Arch}}
       - goos: darwin
         goarch: amd64
-        asset: "arkade-darwin"
+        asset: arkade-darwin
       - goos: darwin
-        asset: "arkade-darwin-{{.Arch}}"
+        asset: arkade-darwin-{{.Arch}}
     files:
       - name: ark
       - name: arkade
@@ -3769,14 +3774,14 @@ packages:
           - amd64
         files:
           - name: migrate
-            src: "migrate.{{.OS}}-{{.Arch}}"
+            src: migrate.{{.OS}}-{{.Arch}}
         overrides:
           - goos: windows
             format: tar.gz
             asset: migrate.windows-amd64.exe.tar.gz
             files:
               - name: migrate
-                src: "migrate.{{.OS}}-{{.Arch}}.exe"
+                src: migrate.{{.OS}}-{{.Arch}}.exe
   - type: go_install
     path: golang.org/x/perf/cmd/benchstat
     description: Benchstat computes and compares statistics about benchmarks
@@ -3805,11 +3810,16 @@ packages:
   - type: github_release
     repo_owner: golang
     repo_name: mock
-    asset: "mock_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+    asset: mock_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: GoMock is a mocking framework for the Go programming language
     files:
       - name: mockgen
-        src: "mock_{{trimV .Version}}_{{.OS}}_{{.Arch}}/mockgen"
+        src: mock_{{trimV .Version}}_{{.OS}}_{{.Arch}}/mockgen
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+
   - type: go_install
     name: golang/tools/gopls
     path: golang.org/x/tools/gopls
@@ -3826,7 +3836,7 @@ packages:
     asset: "golangci-lint-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     files:
       - name: golangci-lint
-        src: "golangci-lint-{{trimV .Version}}-{{.OS}}-{{.Arch}}/golangci-lint"
+        src: golangci-lint-{{trimV .Version}}-{{.OS}}-{{.Arch}}/golangci-lint
     format: tar.gz
     overrides:
       - goos: windows
@@ -4011,7 +4021,7 @@ packages:
     asset: "k6-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}"
     files:
       - name: k6
-        src: "k6-{{.Version}}-{{.OS}}-{{.Arch}}/k6"
+        src: k6-{{.Version}}-{{.OS}}-{{.Arch}}/k6
     replacements:
       darwin: macos
     format: zip
@@ -4573,7 +4583,7 @@ packages:
         format: zip
     files:
       - name: influx
-        src: "influxdb2-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}/influx"
+        src: influxdb2-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}/influx
   - type: github_release
     repo_owner: infracost
     repo_name: infracost
@@ -4581,7 +4591,7 @@ packages:
     asset: "infracost-{{.OS}}-{{.Arch}}.{{.Format}}"
     files:
       - name: infracost
-        src: "infracost-{{.OS}}-{{.Arch}}"
+        src: infracost-{{.OS}}-{{.Arch}}
     format: tar.gz
     overrides:
       - goos: windows
@@ -4752,7 +4762,7 @@ packages:
         format: tar.gz
     files:
       - name: gojq
-        src: "gojq_{{.Version}}_{{.OS}}_{{.Arch}}/gojq"
+        src: gojq_{{.Version}}_{{.OS}}_{{.Arch}}/gojq
   - type: github_release
     repo_owner: itchyny
     repo_name: mmv
@@ -4764,7 +4774,7 @@ packages:
         format: tar.gz
     files:
       - name: mmv
-        src: "mmv_{{.Version}}_{{.OS}}_{{.Arch}}/mmv"
+        src: mmv_{{.Version}}_{{.OS}}_{{.Arch}}/mmv
   - type: github_release
     repo_owner: ivanilves
     repo_name: lstags
@@ -4960,7 +4970,7 @@ packages:
     description: An HTTP API client for the terminal
     files:
       - name: ain
-        src: "ain_{{trimV .Version}}_{{.OS}}_{{.Arch}}/ain"
+        src: ain_{{trimV .Version}}_{{.OS}}_{{.Arch}}/ain
     replacements:
       darwin: mac_os
       amd64: x86_64
@@ -5007,7 +5017,7 @@ packages:
     asset: "jreleaser-{{trimV .Version}}.zip"
     files:
       - name: jreleaser
-        src: "jreleaser-{{trimV .Version}}/bin/jreleaser"
+        src: jreleaser-{{trimV .Version}}/bin/jreleaser
   - name: jreleaser/jreleaser/standalone
     type: github_release
     repo_owner: jreleaser
