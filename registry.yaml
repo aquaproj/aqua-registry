@@ -64,10 +64,10 @@ packages:
     repo_owner: Azure
     repo_name: aztfy
     description: A tool to bring existing Azure resources under Terraform's management
-    version_constraint: 'semver(">= 0.0.6")'
+    version_constraint: semver(">= 0.0.6")
     asset: aztfy_{{.Version}}_{{.OS}}_{{.Arch}}.zip
     version_overrides:
-      - version_constraint: 'semver("< 0.0.6")'
+      - version_constraint: "true"
         asset: aztfy_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
         replacements:
           darwin: Darwin
@@ -75,6 +75,10 @@ packages:
           windows: Windows
           386: i386
           amd64: x86_64
+    supported_envs:
+      - darwin
+      - linux
+      - windows/amd64
   - type: github_release
     repo_owner: BeryJu
     repo_name: korb
@@ -280,11 +284,15 @@ packages:
     repo_owner: GoogleContainerTools
     repo_name: container-structure-test
     rosetta2: true
-    url: "https://storage.googleapis.com/container-structure-test/{{.Version}}/container-structure-test-{{.OS}}-{{.Arch}}"
+    url: https://storage.googleapis.com/container-structure-test/{{.Version}}/container-structure-test-{{.OS}}-{{.Arch}}
     description: validate the structure of your container images
     files:
       - name: container-structure-test
         src: container-structure-test-{{.OS}}-{{.Arch}}
+    supported_envs:
+      - darwin
+      - linux
+      - windows/amd64
   - type: github_release
     repo_owner: GoogleContainerTools
     repo_name: kpt
