@@ -4145,13 +4145,13 @@ packages:
       amd64: x86_64
     files:
       - name: protoc-gen-openapiv2
-    version_constraint: 'semver(">= 2.10.2")'
+    version_constraint: semver(">= 2.10.2")
     version_overrides:
-      - version_constraint: 'semver(">= 2.0.0")'
+      - version_constraint: semver(">= 2.0.0")
         supported_envs:
           - darwin
           - amd64
-      - version_constraint: 'semver("< 2.0.0")'
+      - version_constraint: "true"
         supported_envs:
           - darwin
           - amd64
@@ -4236,9 +4236,9 @@ packages:
       amd64: x86_64
       linux: Linux
       darwin: Darwin
-    version_constraint: 'semver(">= 2.10.0")'
+    version_constraint: semver(">= 2.10.0")
     version_overrides:
-      - version_constraint: 'semver("< 2.10.0")'
+      - version_constraint: "true"
         supported_envs:
           - darwin
           - amd64
@@ -4259,13 +4259,13 @@ packages:
     supported_envs:
       - darwin
       - amd64
-    version_constraint: 'semver(">= 3.1.6")'
+    version_constraint: semver(">= 3.1.6")
     asset: "{{.OS}}-q"
     replacements:
       windows: win
       darwin: macos
     version_overrides:
-      - version_constraint: 'semver("< 3.1.6")'
+      - version_constraint: "true"
         asset: q-{{.Arch}}-{{.OS}}
         replacements:
           darwin: Darwin
@@ -4582,15 +4582,15 @@ packages:
       openbsd: OpenBSD
       netbsd: NetBSD
       freebsd: FreeBSD
-    version_constraint: 'semver(">= 0.14.0")'
+    version_constraint: semver(">= 0.14.0")
     asset: lux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     version_overrides:
-      - version_constraint: 'semver(">= 0.12.0")'
+      - version_constraint: semver(">= 0.12.0")
         supported_envs:
           - darwin
           - linux
           - amd64
-      - version_constraint: 'semver("< 0.12.0")'
+      - version_constraint: "true"
         supported_envs:
           - darwin
           - linux
@@ -4648,9 +4648,9 @@ packages:
         files:
           - name: infracost
             src: infracost-arm64.exe
-    version_constraint: 'semver(">= 0.9.17")'
+    version_constraint: semver(">= 0.9.17")
     version_overrides:
-      - version_constraint: 'semver("< 0.9.17")'
+      - version_constraint: "true"
         supported_envs:
           - darwin
           - amd64
@@ -5514,12 +5514,25 @@ packages:
     repo_owner: kubernetes-sigs
     repo_name: kustomize
     description: Customization of kubernetes YAML configurations
-    asset: 'kustomize_{{trimPrefix "kustomize/" .Version}}_{{.OS}}_{{.Arch}}.tar.gz'
-    version_filter: 'Version startsWith "kustomize/"'
-    version_constraint: 'semverWithVersion(">= 4.2.0", trimPrefix(Version, "kustomize/"))'
+    asset: kustomize_{{trimPrefix "kustomize/" .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    version_filter: Version startsWith "kustomize/"
+    version_constraint: semverWithVersion(">= 4.5.4", trimPrefix(Version, "kustomize/"))
     version_overrides:
-      - version_constraint: 'semverWithVersion("< 4.2.0", trimPrefix(Version, "kustomize/"))'
+      - version_constraint: semverWithVersion(">= 4.4.1", trimPrefix(Version, "kustomize/"))
+        supported_envs:
+          - linux
+          - darwin
+          - amd64
+      - version_constraint: semverWithVersion(">= 4.2.0", trimPrefix(Version, "kustomize/"))
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semverWithVersion("< 4.2.0", trimPrefix(Version, "kustomize/"))
         rosetta2: true
+        supported_envs:
+          - linux
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: kubernetes
     repo_name: kompose
@@ -5768,9 +5781,9 @@ packages:
       - goos: linux
         replacements:
           arm64: aarch64
-    version_constraint: 'semver("> 0.1.0")'
+    version_constraint: semver(">= 0.1.1")
     version_overrides:
-      - version_constraint: 'semver("<= 0.1.0")'
+      - version_constraint: "true"
         supported_envs:
           - darwin
   - type: github_release
@@ -6143,14 +6156,14 @@ packages:
     overrides:
       - goos: windows
         asset: sops-{{.Version}}.exe
-    version_constraint: 'semver(">= 3.7.2")'
+    version_constraint: semver(">= 3.7.2")
     supported_envs:
       - darwin
       - linux
       - amd64
     asset: sops-{{.Version}}.{{.OS}}.{{.Arch}}
     version_overrides:
-      - version_constraint: 'semver("< 3.7.2")'
+      - version_constraint: "true"
         rosetta2: true
         supported_envs:
           - darwin
@@ -6335,9 +6348,9 @@ packages:
     overrides:
       - goos: windows
         format: zip
-    version_constraint: 'semver(">= 0.7.2")'
+    version_constraint: semver(">= 0.7.2")
     version_overrides:
-      - version_constraint: 'true'
+      - version_constraint: "true"
         overrides:
           - goos: windows
             format: zip
