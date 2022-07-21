@@ -12,9 +12,19 @@ packages:
       amd64: x64
       arm64: x64
       386: x32
-    version_constraint: 'semver(">= 8.3.0")'
+    version_constraint: semver(">= 8.3.0")
     version_overrides:
-      - version_constraint: 'semver("< 8.0.0")'
+      - version_constraint: semver(">= 8.1.3")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 8.0.0")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
         asset: gitleaks-{{.OS}}-{{.Arch}}
         supported_envs:
           - darwin
@@ -23,13 +33,3 @@ packages:
         format: raw
         overrides: []
         replacements: {}
-      - version_constraint: 'semver("<= 8.1.2")'
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - amd64
-      - version_constraint: 'semver("< 8.3.0")'
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
