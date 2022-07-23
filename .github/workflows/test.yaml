@@ -54,6 +54,9 @@ jobs:
           - runs-on: windows-latest
             goarch: arm64
     runs-on: ${{ matrix.env.runs-on }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v3
 
@@ -78,12 +81,7 @@ jobs:
         env:
           AQUA_CONFIG: aqua-ci.yaml
 
-      - uses: actions/setup-go@v3
-        with:
-          go-version: "1.18.3"
-
-      - name: run ci-info and update environment variables
-        shell: bash
+      - name: Run ci-info and update environment variables
         # TODO Run the command without `aqua exec`.
         # We don't know the cause, but `ci-info run | sed -E "s/^export //" >> "$GITHUB_ENV"` doesn't work on Windows.
         # So we run ci-info via `aqua exec`.
@@ -92,8 +90,7 @@ jobs:
           AQUA_CONFIG: aqua-ci.yaml
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: install packages for testing
-        shell: bash
+      - name: Update aqua-ci.yaml
         run: |
           if grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" > /dev/null 2>&1; then
             grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" | sed "s|^target:\(.*\)|  - import: pkgs/\1/pkg.yaml|" >> aqua-ci.yaml
@@ -104,15 +101,30 @@ jobs:
           echo "[INFO] aqua-ci.yaml" >&2
           cat aqua-ci.yaml >&2
 
-      - run: echo "AQUA_GOOS=$AQUA_GOOS" >> "$GITHUB_ENV"
-        shell: bash
+      - name: Check if go is required
+        id: go_required
+        run: |
+          if grep '\- import:' aqua-ci.yaml | sed 's|  - import: \(.*\)/pkg.yaml|\1/registry.yaml|' | xargs cat | grep "type: go" > /dev/null 2>&1; then
+            echo "::set-output name=value::true"
+          else
+            echo "::set-output name=value::false"
+          fi
+
+      - name: Install Go
+        if: steps.go_required.outputs.value == 'true'
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.18.3"
+
+      - name: Set AQUA_GOOS
+        run: echo "AQUA_GOOS=$AQUA_GOOS" >> "$GITHUB_ENV"
         if: matrix.env.goos != ''
         env:
           AQUA_GOOS: ${{ matrix.env.goos }}
-      - run: echo "AQUA_GOARCH=$AQUA_GOARCH" >> "$GITHUB_ENV"
-        shell: bash
+      - name: Set AQUA_GOARCH
+        run: echo "AQUA_GOARCH=$AQUA_GOARCH" >> "$GITHUB_ENV"
         if: matrix.env.goarch != ''
         env:
           AQUA_GOARCH: ${{ matrix.env.goarch }}
-      - run: aqua -log-level debug -c aqua-ci.yaml i --test
-        shell: bash
+      - name: Install packages for testing
+        run: aqua -log-level debug -c aqua-ci.yaml i --test
