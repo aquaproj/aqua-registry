@@ -1,4 +1,4 @@
-module github.com/aquaproj/aqua-registry
+module github.com/aquaproj/aqua-registry/v3
 
 go 1.18
 

@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	newpkg "github.com/aquaproj/aqua-registry/internal/create-pr-new-pkg"
+	newpkg "github.com/aquaproj/aqua-registry/v3/internal/create-pr-new-pkg"
 )
 
 func main() {

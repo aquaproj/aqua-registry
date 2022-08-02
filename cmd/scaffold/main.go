@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/aquaproj/aqua-registry/internal/scaffold"
+	"github.com/aquaproj/aqua-registry/v3/internal/scaffold"
 )
 
 func main() {
