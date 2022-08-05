@@ -1,0 +1,18 @@
+packages:
+  - type: github_release
+    repo_owner: acorn-io
+    repo_name: acorn
+    asset: acorn-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: A simple application deployment framework for Kubernetes
+    replacements:
+      darwin: macOS
+    overrides:
+      - goos: darwin
+        asset: acorn-{{.Version}}-{{.OS}}-universal.{{.Format}}
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
