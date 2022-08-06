@@ -8,38 +8,7 @@ on:
 env:
   AQUA_LOG_COLOR: always
 jobs:
-  generate-registry:
-    runs-on: ubuntu-latest
-    env:
-      AQUA_CONFIG: aqua-all.yaml
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: aquaproj/aqua-installer@v1.1.1-0
-        with:
-          aqua_version: v1.19.0-3
-      - run: go run ./cmd/generate-registry
-      - run: git add .
-      - run: git --no-pager diff --cached
-      - run: |
-          if ! git diff --cached --exit-code; then
-            echo "Please run 'go run ./cmd/generate-registry'" >&2
-            echo "::error file=registry.yaml,title=Please run 'go run ./cmd/generate-registry'::https://github.com/aquaproj/aqua-registry/blob/main/CONTRIBUTING.md#generate-registry"
-            exit 1
-          fi
-
-  check-files:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: |
-          if ! diff <(find pkgs -name registry.yaml -print0 | xargs -0 dirname | sort -u) <(find pkgs -name pkg.yaml -print0 | xargs -0 dirname | sort -u); then
-            echo "" >&2
-            echo "::error::Either pkg.yaml or registry.yaml isn't found. Don't forget to add pkg.yaml for test" >&2
-            exit 1
-          fi
-
-  default:
+  test:
     strategy:
       matrix:
         env:
@@ -57,74 +26,35 @@ jobs:
     defaults:
       run:
         shell: bash
+    env:
+      AQUA_CONFIG: aqua/test.yaml
     steps:
       - uses: actions/checkout@v3
 
-      # Disable cache
-      # The cache size is so huge that it takes a long time for `cache ~/.aqua` and `Post cache ~/.aqua`
-      # e.g. https://github.com/aquaproj/aqua-registry/runs/4426879327
-      #
-      # - name: cache ~/.aqua
-      #   uses: actions/cache@v2
+      # - name: Generate token
+      #   id: generate_token
+      #   uses: tibdex/github-app-token@v1
       #   with:
-      #     path: |
-      #       ~/.aqua/pkgs
-      #       ~/.aqua/registries
-      #     key: v5-${{ runner.os }}-${{ hashFiles('registry.yaml') }}-${{ hashFiles('aqua-all.yaml') }}
-      #     restore-keys: |
-      #       v5-${{ runner.os }}-${{ hashFiles('registry.yaml') }}-
-      #       v5-${{ runner.os }}-
+      #     app_id: ${{ secrets.APP_ID }}
+      #     private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
-      - uses: aquaproj/aqua-installer@v1.1.1-0
+      - uses: aquaproj/aqua-installer@v1.1.1
         with:
-          aqua_version: v1.19.0-3
-        env:
-          AQUA_CONFIG: aqua-ci.yaml
+          aqua_version: v1.18.0
 
-      - name: Run ci-info and update environment variables
-        # TODO Run the command without `aqua exec`.
-        # We don't know the cause, but `ci-info run | sed -E "s/^export //" >> "$GITHUB_ENV"` doesn't work on Windows.
-        # So we run ci-info via `aqua exec`.
-        run: aqua exec -- ci-info run | sed -E "s/^export //" >> "$GITHUB_ENV"
-        env:
-          AQUA_CONFIG: aqua-ci.yaml
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Update aqua-ci.yaml
-        run: |
-          if grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" > /dev/null 2>&1; then
-            grep -E "target:" "$CI_INFO_TEMP_DIR/labels.txt" | sed "s|^target:\(.*\)|  - import: pkgs/\1/pkg.yaml|" >> aqua-ci.yaml
-          fi
-          if grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" > /dev/null 2>&1; then
-            grep -E "^pkgs/.*\.yaml" < "$CI_INFO_TEMP_DIR/pr_all_filenames.txt" | sed "s/registry\.yaml/pkg.yaml/" | sort -u | sed "s/^/  - import: /" >> aqua-ci.yaml
-          fi
-          echo "[INFO] aqua-ci.yaml" >&2
-          cat aqua-ci.yaml >&2
-
-      - name: Check if go is required
-        id: go_required
-        run: |
-          if grep '\- import:' aqua-ci.yaml | sed 's|  - import: \(.*\)/pkg.yaml|\1/registry.yaml|' | xargs cat | grep "type: go" > /dev/null 2>&1; then
-            echo "::set-output name=value::true"
-          else
-            echo "::set-output name=value::false"
-          fi
-
-      - name: Install Go
-        if: steps.go_required.outputs.value == 'true'
-        uses: actions/setup-go@v3
+      - uses: aquaproj/registry-action/test@v0.1.1
         with:
-          go-version: "1.18.3"
+          goos: ${{ matrix.env.goos }}
+          goarch: ${{ matrix.env.goarch }}
+          go_version: "1.18.5"
+        # env:
+        #   GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
 
-      - name: Set AQUA_GOOS
-        run: echo "AQUA_GOOS=$AQUA_GOOS" >> "$GITHUB_ENV"
-        if: matrix.env.goos != ''
-        env:
-          AQUA_GOOS: ${{ matrix.env.goos }}
-      - name: Set AQUA_GOARCH
-        run: echo "AQUA_GOARCH=$AQUA_GOARCH" >> "$GITHUB_ENV"
-        if: matrix.env.goarch != ''
-        env:
-          AQUA_GOARCH: ${{ matrix.env.goarch }}
-      - name: Install packages for testing
-        run: aqua -log-level debug -c aqua-ci.yaml i --test
+  # This job is used for branch protection rule
+  # Add this job to `Status checks that are required`
+  status-check:
+    runs-on: ubuntu-latest
+    needs: [test]
+    if: failure()
+    steps:
+      - run: exit 1

@@ -1,0 +1,26 @@
+---
+name: Generate registry.yaml
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/generate-registry.yaml
+      - aqua/generate-registry.yaml
+      - registry.yaml
+      - pkgs/**/registry.yaml
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/generate-registry.yaml
+      - aqua/generate-registry.yaml
+      - registry.yaml
+      - pkgs/**/registry.yaml
+jobs:
+  generate-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aquaproj/aqua-installer@v1.1.1
+        with:
+          aqua_version: v1.18.0
+      - uses: aquaproj/registry-action/generate-registry@v0.1.1
