@@ -14,3 +14,11 @@ packages:
         # https://github.com/Arriven/db1000n/commit/5860df0
         # remove version number from goreleaser archives
         asset: db1000n_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    checksum:
+      type: github_release
+      asset: db1000n_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+(\\S+)$"

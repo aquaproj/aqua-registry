@@ -4,3 +4,11 @@ packages:
     repo_name: benthos
     asset: benthos_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: Fancy stream processing made operationally mundane
+    checksum:
+      type: github_release
+      asset: benthos_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+(\\S+)$"

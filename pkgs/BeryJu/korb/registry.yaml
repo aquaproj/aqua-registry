@@ -4,3 +4,11 @@ packages:
     repo_name: korb
     description: Move Kubernetes PVCs between Storage Classes and Namespaces
     asset: korb_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    checksum:
+      type: github_release
+      asset: korb_{{trimV .Version}}_SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+(\\S+)$"
