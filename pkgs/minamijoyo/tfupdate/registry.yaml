@@ -4,3 +4,10 @@ packages:
     repo_name: tfupdate
     asset: tfupdate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: Update version constraints in your Terraform configurations
+    checksum:
+      type: github_release
+      path: tfupdate_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+(\\S*)$"

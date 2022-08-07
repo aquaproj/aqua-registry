@@ -13,3 +13,10 @@ packages:
     version_overrides:
       - version_constraint: "true"
         asset: cmdx_{{trimV .Version}}_{{.OS}}_amd64.tar.gz
+    checksum:
+      type: github_release
+      path: cmdx_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+(\\S*)$"
