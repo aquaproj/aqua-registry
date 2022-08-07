@@ -8,3 +8,10 @@ packages:
       - goos: linux
         format: tar.gz
     asset: coder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    checksum:
+      type: github_release
+      path: coder_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+(\\S*)$"
