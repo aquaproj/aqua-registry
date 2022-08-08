@@ -1,0 +1,22 @@
+packages:
+  - type: github_release
+    repo_owner: wtetsu
+    repo_name: gaze
+    asset: gaze_{{.OS}}_{{.Version}}.{{.Format}}
+    format: zip
+    description: Executes commands for you
+    replacements:
+      darwin: macos
+    overrides:
+      - goos: darwin
+        asset: gaze_{{.OS}}_amd_{{.Version}}.{{.Format}}
+        files:
+          - name: gaze
+            src: gaze_{{.OS}}_amd_{{.Version}}/gaze
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    files:
+      - name: gaze
+        src: gaze_{{.OS}}_{{.Version}}/gaze
