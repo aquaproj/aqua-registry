@@ -6083,14 +6083,17 @@ packages:
     asset: sshocker-{{.OS}}-{{.Arch}}
     format: raw
     description: ssh + reverse sshfs + port forwarder, in Docker-like CLI (predecessor of Lima)
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: Darwin
-      linux: Linux
     supported_envs:
       - linux
       - darwin
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+    overrides:
+      - goos: linux
+        replacements:
+          arm64: aarch64
+          linux: Linux
   - type: github_release
     repo_owner: livebud
     repo_name: bud
