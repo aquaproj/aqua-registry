@@ -3,7 +3,6 @@ packages:
     repo_owner: sheepla
     repo_name: qiitaz
     description: A command line Qiita searcher & viewer with fuzzyfinder UI
-    version_constraint: semver("!= 0.0.5")
     asset: qiitaz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     replacements:
@@ -15,6 +14,15 @@ packages:
     overrides:
       - goos: windows
         format: zip
+    version_constraint: semver("!= 0.0.5")
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+(\\S+)$"
     version_overrides:
       - version_constraint: semver("= 0.0.5")
         # It seems that only v0.0.5 wasn't released with goreleaser.
@@ -29,11 +37,5 @@ packages:
         files:
           - name: qiitaz
             src: qiitaz_{{.OS}}_{{.Arch}}/qiitaz
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
+        checksum:
+          disabled: true
