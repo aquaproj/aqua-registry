@@ -3491,6 +3491,30 @@ packages:
     files:
       - name: fastly
   - type: github_release
+    repo_owner: fastly
+    repo_name: terrctl
+    asset: terrctl-{{.OS}}_{{.Arch}}-{{.Version}}.{{.Format}}
+    format: tar.gz
+    description: A command-line client for Fastly Terrarium. https://wasm.fastlylabs.com
+    replacements:
+      amd64: x86_64
+      darwin: macos
+      windows: win
+    overrides:
+      - goos: darwin
+        goarch: amd64
+        asset: terrctl-{{.OS}}-{{.Version}}.{{.Format}}
+      - goos: windows
+        format: zip
+        asset: terrctl-{{.OS}}32-{{.Version}}.{{.Format}}
+    files:
+      - name: terrctl
+        src: "{{.OS}}/terrctl"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+  - type: github_release
     repo_owner: fatedier
     repo_name: frp
     description: A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet
