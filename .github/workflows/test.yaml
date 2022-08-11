@@ -5,9 +5,21 @@ on:
     branches: [main]
 env:
   AQUA_LOG_COLOR: always
-  AQUA_GITHUB_TOKEN: ${{ github.token }}
+  GITHUB_TOKEN: ${{ github.token }}
 jobs:
+  ci-info:
+    runs-on: ubuntu-latest
+    env:
+      AQUA_CONFIG: aqua/ci-info.yaml
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aquaproj/aqua-installer@v1.1.1
+        with:
+          aqua_version: v1.19.1
+      - uses: suzuki-shunsuke/ci-info-action/store@v0.1.0-0
+
   test:
+    needs: ci-info
     strategy:
       matrix:
         env:
@@ -29,6 +41,8 @@ jobs:
       AQUA_CONFIG: aqua/test.yaml
     steps:
       - uses: actions/checkout@v3
+
+      - uses: suzuki-shunsuke/ci-info-action/restore@v0.1.0-0
 
       # - name: Generate token
       #   id: generate_token
