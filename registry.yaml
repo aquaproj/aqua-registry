@@ -693,6 +693,21 @@ packages:
     rosetta2: true
     files:
       - name: spt
+    checksum:
+      type: github_release
+      asset: spotify-tui-{{.OS}}.sha256
+      algorithm: sha256
+      file_format: regexp
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+(\\S+)$"
+    overrides:
+      - goos: windows
+        checksum:
+          type: github_release
+          asset: spotify-tui-{{.OS}}.sha256
+          algorithm: sha256
+          file_format: raw
   - type: github_release
     repo_owner: Schniz
     repo_name: fnm
@@ -1078,7 +1093,7 @@ packages:
     repo_name: colima
     description: Docker (and Kubernetes) on MacOS with minimal setup
     format: raw
-    version_constraint: semver(">= 0.3.1")
+    version_constraint: semver(">= 0.3.0")
     asset: colima-{{.OS}}-{{.Arch}}
     supported_envs:
       - darwin
@@ -1087,6 +1102,14 @@ packages:
       darwin: Darwin
       linux: Linux
       amd64: x86_64
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256sum"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+\\*(\\S+)$"
     overrides:
       - goos: linux
         replacements:
@@ -1095,19 +1118,15 @@ packages:
       - version_constraint: semver(">= 0.2.0")
         asset: colima-amd64
         rosetta2: true
+        checksum:
+          enabled: false
         supported_envs:
           - darwin
       - version_constraint: "true"
         type: github_content
         path: colima
-    checksum:
-      type: github_release
-      asset: colima-Linux-x86_64.sha256sum
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: abs-lang
     repo_name: abs
@@ -1159,7 +1178,7 @@ packages:
       darwin: alpha-darwin
     checksum:
       type: github_release
-      asset: goss-linux-arm64.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -1680,12 +1699,9 @@ packages:
         src: argocd-autopilot-{{.OS}}-{{.Arch}}
     checksum:
       type: github_release
-      asset: argocd-autopilot-windows-amd64.sha256
-      file_format: regexp
+      asset: argocd-autopilot-{{.OS}}-{{.Arch}}.sha256
+      file_format: raw
       algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
   - type: github_release
     repo_owner: argoproj-labs
     repo_name: argocd-image-updater
@@ -1705,6 +1721,8 @@ packages:
         supported_envs:
           - linux/amd64
         asset: argocd-image-updater_{{.Version}}_{{.OS}}-{{.Arch}}
+        checksum:
+          enabled: false
     checksum:
       type: github_release
       asset: release-{{.Version}}.sha256
@@ -1716,19 +1734,20 @@ packages:
   - type: github_release
     repo_owner: argoproj
     repo_name: argo-cd
-    asset: argocd-{{.OS}}-amd64
     description: Declarative continuous deployment for Kubernetes
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: argocd-{{.OS}}-{{.Arch}}
     files:
       - name: argocd
         src: argocd-{{.OS}}-{{.Arch}}
     checksum:
       type: github_release
-      asset: argocd-windows-amd64.exe.sha256
-      file_format: regexp
+      asset: "{{.Asset}}.sha256"
+      file_format: raw
       algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
   - type: github_release
     repo_owner: argoproj
     repo_name: argo-rollouts
@@ -1760,12 +1779,9 @@ packages:
         src: argo-{{.OS}}-{{.Arch}}
     checksum:
       type: github_release
-      asset: argo-windows-amd64.exe.gz.sha256
-      file_format: regexp
+      asset: "{{.Asset}}.sha256"
+      file_format: raw
       algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
   - type: github_release
     repo_owner: aristocratos
     repo_name: btop
@@ -1819,12 +1835,9 @@ packages:
       darwin: macos
     checksum:
       type: github_release
-      asset: kubescape-windows-latest-sha256
-      file_format: regexp
+      asset: kubescape-{{.OS}}-latest-sha256
+      file_format: raw
       algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
   - type: github_release
     repo_owner: arrow2nd
     repo_name: nekome
@@ -2147,6 +2160,8 @@ packages:
           - darwin
           - amd64
         rosetta2: true
+        checksum:
+          enabled: false
     checksum:
       type: github_release
       asset: gomi_{{trimV .Version}}_checksums.txt
@@ -2446,12 +2461,9 @@ packages:
     rosetta2: true
     checksum:
       type: github_release
-      asset: ghz-windows-x86_64.zip.sha256
-      file_format: regexp
+      asset: ghz-{{.OS}}-{{.Arch}}.{{.Format}}.sha256
+      file_format: raw
       algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
   - type: github_release
     repo_owner: bootandy
     repo_name: dust
@@ -2574,7 +2586,7 @@ packages:
         src: buf/bin/protoc-gen-buf-lint
     checksum:
       type: github_release
-      asset: sha256.txt.minisig
+      asset: sha256.txt
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -2648,7 +2660,7 @@ packages:
           - amd64
     checksum:
       type: github_release
-      asset: pack-{{.Version}}-windows.zip.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -3222,7 +3234,7 @@ packages:
         asset: ketall-amd64-windows.zip
     checksum:
       type: github_release
-      asset: ketall-arm64-darwin.tar.gz.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -3244,7 +3256,7 @@ packages:
         asset: rakkess-amd64-windows.zip
     checksum:
       type: github_release
-      asset: rakkess-arm64-darwin.tar.gz.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -3267,7 +3279,7 @@ packages:
         src: access-matrix-{{.Arch}}-{{.OS}}
     checksum:
       type: github_release
-      asset: rakkess-arm64-darwin.tar.gz.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -3533,12 +3545,12 @@ packages:
       - name: dapr
     checksum:
       type: github_release
-      asset: dapr_windows_amd64.zip.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
+        file: "^.{64}\\s+\\*(\\S+)$"
   - type: github_release
     repo_owner: databricks
     repo_name: click
@@ -4021,12 +4033,12 @@ packages:
       - amd64
     checksum:
       type: github_release
-      asset: docker-compose-windows-x86_64.exe.sha256
+      asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
+        file: "^.{64}\\s+\\*(\\S+)$"
   - type: github_release
     repo_owner: doitintl
     repo_name: kube-no-trouble
@@ -4072,7 +4084,7 @@ packages:
       - amd64
     checksum:
       type: github_release
-      asset: staticcheck_windows_amd64.tar.gz.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -4551,12 +4563,9 @@ packages:
       - linux
     checksum:
       type: github_release
-      asset: firecracker-{{.Version}}-x86_64.tgz.sha256.txt
-      file_format: regexp
+      asset: "{{.Asset}}.sha256.txt"
+      file_format: raw
       algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
   - type: github_release
     repo_owner: fishi0x01
     repo_name: vsh
@@ -4799,7 +4808,7 @@ packages:
       - amd64
     checksum:
       type: github_release
-      asset: reg-windows-amd64.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -4913,13 +4922,7 @@ packages:
           - name: git-lfs
             src: git-lfs
     checksum:
-      type: github_release
-      asset: sha256sums
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
+      enabled: false
   - name: github.com/zeromicro/go-zero/tools/goctl
     type: go_install
     repo_owner: zeromicro
@@ -4980,12 +4983,12 @@ packages:
         format: zip
     checksum:
       type: github_release
-      asset: gleam-{{.Version}}-windows-64bit.zip.sha512
+      asset: "{{.Asset}}.sha512"
       file_format: regexp
       algorithm: sha512
       pattern:
         checksum: ^(.{128})
-        file: "^.{128}\\s+(\\S+)$"
+        file: "^.{128}\\s+\\*(\\S+)$"
   - type: github_release
     repo_owner: go-jira
     repo_name: jira
@@ -6254,6 +6257,14 @@ packages:
         asset: annie_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         files:
           - name: annie
+        checksum:
+          type: github_release
+          asset: annie_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(.{64})
+            file: "^.{64}\\s+(\\S+)$"
     checksum:
       type: github_release
       asset: lux_{{trimV .Version}}_checksums.txt
@@ -6328,15 +6339,20 @@ packages:
         files:
           - name: infracost
             src: infracost-arm64.exe
-    version_constraint: semver(">= 0.9.17")
+    version_constraint: semver(">= 0.9.18")
     version_overrides:
+      - version_constraint: semver(">= 0.9.17")
+        checksum:
+          enabled: false
       - version_constraint: "true"
+        checksum:
+          enabled: false
         supported_envs:
           - darwin
           - amd64
     checksum:
       type: github_release
-      asset: infracost-windows-arm64.zip.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -6415,12 +6431,12 @@ packages:
     description: Tool to fork a repository, commit files, create a pull request and upload assets using GitHub API
     checksum:
       type: github_release
-      asset: ghcp_windows_amd64.zip.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
+        file: "^.{64}\\s+\\*(\\S+)$"
   - type: github_release
     repo_owner: int128
     repo_name: kauthproxy
@@ -6436,12 +6452,12 @@ packages:
       - amd64
     checksum:
       type: github_release
-      asset: kauthproxy_windows_amd64.zip.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
+        file: "^.{64}\\s+\\*(\\S+)$"
   - type: github_release
     repo_owner: int128
     repo_name: kubectl-external-forward
@@ -6455,12 +6471,12 @@ packages:
       - amd64
     checksum:
       type: github_release
-      asset: kubectl-external_forward_windows_amd64.zip.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
+        file: "^.{64}\\s+\\*(\\S+)$"
   - type: github_release
     repo_owner: int128
     repo_name: kubelogin
@@ -6475,12 +6491,12 @@ packages:
       - amd64
     checksum:
       type: github_release
-      asset: kubelogin_windows_amd64.zip.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
+        file: "^.{64}\\s+\\*(\\S+)$"
   - type: github_release
     repo_owner: int128
     repo_name: yamlpatch
@@ -6547,7 +6563,7 @@ packages:
             src: go-ipfs/ipfs
     checksum:
       type: github_release
-      asset: kubo_{{.Version}}_windows-amd64.zip.sha512
+      asset: "{{.Asset}}.sha512"
       file_format: regexp
       algorithm: sha512
       pattern:
@@ -6576,7 +6592,7 @@ packages:
         asset: istioctl-{{.Version}}-win.zip
     checksum:
       type: github_release
-      asset: istioctl-{{.Version}}-win.zip.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -6969,11 +6985,8 @@ packages:
     checksum:
       type: github_release
       asset: jreleaser-{{trimV .Version}}.zip.sha256
-      file_format: regexp
+      file_format: raw
       algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
   - name: jreleaser/jreleaser/standalone
     type: github_release
     repo_owner: jreleaser
@@ -7115,7 +7128,7 @@ packages:
       algorithm: sha256
       pattern:
         checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
+        file: "^.{64}\\s+\\*(\\S+)$"
   - type: github_release
     repo_owner: kanisterio
     repo_name: kanister
@@ -7484,7 +7497,7 @@ packages:
       - linux
     checksum:
       type: github_release
-      asset: buildg-{{.Version}}-linux-arm64.tar.gz.sha256sum
+      asset: "{{.Asset}}.sha256sum"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -7580,12 +7593,9 @@ packages:
       - amd64
     checksum:
       type: github_release
-      asset: krew.exe.sha256
-      file_format: regexp
+      asset: "{{.Asset}}.sha256"
+      file_format: raw
       algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
   - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: kubebuilder
@@ -7671,12 +7681,9 @@ packages:
     asset: kops-{{.OS}}-{{.Arch}}
     checksum:
       type: github_release
-      asset: protokube-linux-arm64.sha256
-      file_format: regexp
+      asset: "{{.Asset}}.sha256"
+      file_format: raw
       algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
   - name: kubernetes/kubectl
     type: http
     repo_owner: kubernetes
@@ -8025,7 +8032,7 @@ packages:
     description: DevSpace - The Fastest Developer Tool for Kubernetes. Automate your deployment workflow with DevSpace and develop software directly inside Kubernetes
     checksum:
       type: github_release
-      asset: ui.tar.gz.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -8041,6 +8048,11 @@ packages:
       - amd64
     format: raw
     asset: vcluster-{{.OS}}-{{.Arch}}
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: raw
+      algorithm: sha256
   - type: github_release
     repo_owner: lotabout
     repo_name: skim
@@ -8448,6 +8460,11 @@ packages:
     files:
       - name: minishift
         src: minishift-{{trimV .Version}}-{{.OS}}-{{.Arch}}/minishift
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: raw
+      algorithm: sha256
   - type: go_install
     repo_owner: mitchellh
     repo_name: gox
@@ -8916,12 +8933,9 @@ packages:
         format: zip
     checksum:
       type: github_release
-      asset: treefmt-x86_64-unknown-linux-musl.tar.gz.sha256
-      file_format: regexp
+      asset: "{{.Asset}}.sha256"
+      file_format: raw
       algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
   - type: github_release
     repo_owner: nushell
     repo_name: nushell
@@ -9119,11 +9133,18 @@ packages:
   - type: github_release
     repo_owner: open-policy-agent
     repo_name: opa
-    asset: opa_{{.OS}}_amd64
     description: An open source, general-purpose policy engine
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: opa_{{.OS}}_amd64
+    overrides:
+      - goarch: arm64
+        asset: opa_{{.OS}}_arm64_static
     checksum:
       type: github_release
-      asset: opa_windows_amd64.exe.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -9246,6 +9267,8 @@ packages:
     overrides:
       - goos: windows
         format: zip
+        checksum:
+          enabled: false
     supported_envs:
       - darwin
       - amd64
@@ -9255,7 +9278,7 @@ packages:
         src: git-cliff-{{trimV .Version}}/git-cliff
     checksum:
       type: github_release
-      asset: git-cliff-{{trimV .Version}}-x86_64-unknown-linux-musl.tar.gz.sha512
+      asset: "{{.Asset}}.sha512"
       file_format: regexp
       algorithm: sha512
       pattern:
@@ -9673,12 +9696,14 @@ packages:
           - linux/amd64
     checksum:
       type: github_release
-      asset: naabu-windows-checksums.txt
+      asset: naabu-{{.OS}}-checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: ^(.{64})
         file: "^.{64}\\s+(\\S+)$"
+      replacements:
+        darwin: mac
   - type: github_release
     repo_owner: projectdiscovery
     repo_name: nuclei
@@ -9840,7 +9865,7 @@ packages:
         src: kdigger-{{.OS}}-{{.Arch}}
     checksum:
       type: github_release
-      asset: kdigger-linux-arm64.sha256
+      asset: kdigger-{{.OS}}-{{.Arch}}.sha256
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -10844,7 +10869,7 @@ packages:
           - name: qiitaz
             src: qiitaz_{{.OS}}_{{.Arch}}/qiitaz
         checksum:
-          disabled: true
+          enabled: false
   - type: github_release
     repo_owner: sheepla
     repo_name: srss
@@ -11192,6 +11217,11 @@ packages:
     overrides:
       - goos: windows
         format: zip
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: raw
+      algorithm: sha256
   - type: github_release
     repo_owner: stedolan
     repo_name: jq
@@ -11866,7 +11896,7 @@ packages:
         src: please/please
     checksum:
       type: github_release
-      asset: please_tools_{{trimV .Version}}_linux_amd64.tar.xz.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -12121,6 +12151,14 @@ packages:
     overrides:
       - goos: windows
         asset: mizu.exe
+        checksum:
+          type: github_release
+          asset: "mizu_{{.OS}}_{{.Arch}}.sha256"
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(.{64})
+            file: "^.{64}\\s+(\\S+)$"
     version_constraint: semver(">= 0.24.0")
     supported_envs:
       - darwin
@@ -12133,7 +12171,7 @@ packages:
           - amd64
     checksum:
       type: github_release
-      asset: mizu_windows_amd64.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -12407,7 +12445,7 @@ packages:
       - version_constraint: "true"
         rosetta2: true
         checksum:
-          disabled: true
+          enabled: false
   - type: github_release
     repo_owner: vmware-tanzu
     repo_name: carvel-ytt
@@ -12825,7 +12863,7 @@ packages:
       arm64: aarch64
     checksum:
       type: github_release
-      asset: zellij-x86_64-unknown-linux-musl.sha256sum
+      asset: zellij-{{.Arch}}-{{.OS}}.sha256sum
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -12929,4 +12967,4 @@ packages:
         overrides: []
         replacements: {}
         checksum:
-          disabled: true
+          enabled: false

@@ -8,6 +8,14 @@ packages:
     overrides:
       - goos: windows
         asset: mizu.exe
+        checksum:
+          type: github_release
+          asset: "mizu_{{.OS}}_{{.Arch}}.sha256"
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(.{64})
+            file: "^.{64}\\s+(\\S+)$"
     version_constraint: semver(">= 0.24.0")
     supported_envs:
       - darwin
@@ -20,7 +28,7 @@ packages:
           - amd64
     checksum:
       type: github_release
-      asset: mizu_windows_amd64.sha256
+      asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:

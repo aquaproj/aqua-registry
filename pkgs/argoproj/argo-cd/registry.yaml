@@ -2,16 +2,17 @@ packages:
   - type: github_release
     repo_owner: argoproj
     repo_name: argo-cd
-    asset: argocd-{{.OS}}-amd64
     description: Declarative continuous deployment for Kubernetes
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: argocd-{{.OS}}-{{.Arch}}
     files:
       - name: argocd
         src: argocd-{{.OS}}-{{.Arch}}
     checksum:
       type: github_release
-      asset: argocd-windows-amd64.exe.sha256
-      file_format: regexp
+      asset: "{{.Asset}}.sha256"
+      file_format: raw
       algorithm: sha256
-      pattern:
-        checksum: ^(.{64})
-        file: "^.{64}\\s+(\\S+)$"
