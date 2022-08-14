@@ -13,6 +13,8 @@ packages:
     overrides:
       - goos: windows
         format: zip
+        checksum:
+          enabled: false
     supported_envs:
       - darwin
       - amd64
@@ -20,3 +22,11 @@ packages:
     files:
       - name: git-cliff
         src: git-cliff-{{trimV .Version}}/git-cliff
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha512"
+      file_format: regexp
+      algorithm: sha512
+      pattern:
+        checksum: ^(.{128})
+        file: "^.{128}\\s+(\\S+)$"

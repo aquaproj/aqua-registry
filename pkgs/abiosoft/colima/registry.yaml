@@ -4,7 +4,7 @@ packages:
     repo_name: colima
     description: Docker (and Kubernetes) on MacOS with minimal setup
     format: raw
-    version_constraint: semver(">= 0.3.1")
+    version_constraint: semver(">= 0.3.0")
     asset: colima-{{.OS}}-{{.Arch}}
     supported_envs:
       - darwin
@@ -13,6 +13,14 @@ packages:
       darwin: Darwin
       linux: Linux
       amd64: x86_64
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256sum"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+\\*(\\S+)$"
     overrides:
       - goos: linux
         replacements:
@@ -21,8 +29,12 @@ packages:
       - version_constraint: semver(">= 0.2.0")
         asset: colima-amd64
         rosetta2: true
+        checksum:
+          enabled: false
         supported_envs:
           - darwin
       - version_constraint: "true"
         type: github_content
         path: colima
+        checksum:
+          enabled: false

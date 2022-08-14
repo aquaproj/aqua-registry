@@ -2,5 +2,20 @@ packages:
   - type: github_release
     repo_owner: open-policy-agent
     repo_name: opa
-    asset: opa_{{.OS}}_amd64
     description: An open source, general-purpose policy engine
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: opa_{{.OS}}_amd64
+    overrides:
+      - goarch: arm64
+        asset: opa_{{.OS}}_arm64_static
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+(\\S+)$"

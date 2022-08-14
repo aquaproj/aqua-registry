@@ -5,3 +5,11 @@ packages:
     asset: atmos_{{trimV .Version}}_{{.OS}}_{{.Arch}}
     description: Universal Tool for DevOps and Cloud Automation (works with terraform, helm, helmfile, istioctl, etc)
     format: raw
+    checksum:
+      type: github_release
+      asset: atmos_{{trimV .Version}}_SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+(\\S+)$"

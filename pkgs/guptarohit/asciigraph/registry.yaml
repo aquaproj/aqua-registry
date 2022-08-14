@@ -5,7 +5,7 @@ packages:
     description: make lightweight ASCII line graph in command line apps
     asset: asciigraph_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     replacements:
-      '386': i386
+      "386": i386
       darwin: Darwin
       linux: Linux
       windows: Windows
@@ -14,3 +14,11 @@ packages:
     overrides:
       - goos: windows
         format: zip
+    checksum:
+      type: github_release
+      asset: asciigraph_{{trimV .Version}}_sha512-checksums.txt
+      algorithm: sha512
+      file_format: regexp
+      pattern:
+        checksum: ^(.{128})
+        file: "^.{128}\\s+(\\S+)$"
