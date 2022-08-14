@@ -1042,6 +1042,12 @@ packages:
         checksum: ^(.{64})
         file: "^.{64}\\s+(\\S+)$"
   - type: github_release
+    repo_owner: ViRb3
+    repo_name: wgcf
+    asset: wgcf_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    format: raw
+    description: Cross-platform, unofficial CLI for Cloudflare Warp
+  - type: github_release
     repo_owner: Wilfred
     repo_name: difftastic
     asset: difft-{{.Arch}}-{{.OS}}.{{.Format}}
@@ -1937,6 +1943,19 @@ packages:
       - amd64
     files:
       - name: ec2-instance-selector
+  - type: github_release
+    repo_owner: aws
+    repo_name: amazon-ec2-spot-interrupter
+    asset: ec2-spot-interrupter_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: The ec2-spot-interrupter is a simple CLI tool that triggers Amazon EC2 Spot Interruption Notifications and Rebalance Recommendations
+    replacements:
+      darwin: Darwin
+      linux: Linux
+    supported_envs:
+      - linux/amd64
+      - darwin
+    files:
+      - name: ec2-spot-interrupter
   - type: http
     repo_owner: aws
     repo_name: aws-cli
@@ -3326,7 +3345,7 @@ packages:
   - type: github_release
     repo_owner: crate-ci
     repo_name: typos
-    asset: typos-{{.Version}}-x86_64-{{.OS}}.{{.Format}}
+    asset: typos-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     description: Source code spell checker
     format: tar.gz
     overrides:
@@ -3336,6 +3355,11 @@ packages:
       darwin: apple-darwin
       linux: unknown-linux-musl
       windows: pc-windows-msvc
+      amd64: x86_64
+    rosetta2: true
+    supported_envs:
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: create-go-app
     repo_name: cli
@@ -4489,6 +4513,47 @@ packages:
         checksum: ^(.{64})
         file: "^.{64}\\s+(\\S+)$"
   - type: github_release
+    repo_owner: fastly
+    repo_name: cli
+    asset: fastly_{{.Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: A CLI for interacting with the Fastly platform
+    overrides:
+      - goos: windows
+        format: zip
+    files:
+      - name: fastly
+  - type: github_release
+    repo_owner: fastly
+    repo_name: terrctl
+    description: A command-line client for Fastly Terrarium. https://wasm.fastlylabs.com
+    asset: terrctl-{{.OS}}_{{.Arch}}-{{.Version}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      darwin: macos
+      windows: win64
+    files:
+      - name: terrctl
+        src: "{{.OS}}-{{.Arch}}/terrctl"
+    overrides:
+      - goos: darwin
+        goarch: amd64
+        asset: terrctl-{{.OS}}-{{.Version}}.{{.Format}}
+        files:
+          - name: terrctl
+            src: "{{.OS}}/terrctl"
+      - goos: windows
+        format: zip
+        asset: terrctl-{{.OS}}-{{.Version}}.{{.Format}}
+        files:
+          - name: terrctl
+            src: "{{.OS}}/terrctl.exe"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+  - type: github_release
     repo_owner: fatedier
     repo_name: frp
     description: A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet
@@ -5170,7 +5235,9 @@ packages:
     description: Benchstat computes and compares statistics about benchmarks
     link: https://pkg.go.dev/golang.org/x/perf/cmd/benchstat
   - type: go_install
-    name: golang.org/x/tools/cmd/goimports
+    name: golang/tools/goimports
+    aliases: # Set aliases to keep the compatibility
+      - name: golang.org/x/tools/cmd/goimports
     path: golang.org/x/tools/cmd/goimports
     repo_owner: golang
     repo_name: tools
@@ -5306,6 +5373,14 @@ packages:
       pattern:
         checksum: ^(.{64})
         file: "^.{64}\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: google
+    repo_name: gke-policy-automation
+    asset: gke-policy-automation_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+    files:
+      - name: gke-policy
+        src: gke-policy
+    description: Tool and policy library for reviewing Google Kubernetes Engine clusters against best practices
   - type: github_release
     repo_owner: google
     repo_name: go-containerregistry
@@ -6368,6 +6443,10 @@ packages:
     repo_owner: inlets
     repo_name: inlets-pro
     description: Secure HTTP and TCP tunnels that just work
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
     asset: inlets-pro
     overrides:
       - goos: darwin
@@ -6618,6 +6697,18 @@ packages:
     supported_envs:
       - linux
       - darwin
+  - type: github_release
+    repo_owner: itchyny
+    repo_name: bed
+    asset: bed_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    description: Binary editor written in Go
+    overrides:
+      - goos: linux
+        format: tar.gz
+    files:
+      - name: bed
+        src: bed_{{.Version}}_{{.OS}}_{{.Arch}}/bed
   - type: github_release
     repo_owner: itchyny
     repo_name: gojo
@@ -7360,6 +7451,27 @@ packages:
         checksum: ^(.{64})
         file: "^.{64}\\s+(\\S+)$"
   - type: github_release
+    name: ko1nksm/getoptions
+    repo_owner: ko1nksm
+    repo_name: getoptions
+    asset: getoptions
+    description: An elegant option/argument parser for shell scripts (full support for bash and all POSIX shells)
+    supported_envs:
+      - linux
+      - darwin
+
+  - type: github_release
+    name: ko1nksm/getoptions/gengetoptions
+    repo_owner: ko1nksm
+    repo_name: getoptions
+    asset: gengetoptions
+    description: An elegant option/argument parser for shell scripts (full support for bash and all POSIX shells)
+    supported_envs:
+      - linux
+      - darwin
+    files:
+      - name: gengetoptions
+  - type: github_release
     repo_owner: ko1nksm
     repo_name: shdotenv
     description: dotenv for shells with support for POSIX-compliant and multiple .env file syntax
@@ -7753,20 +7865,7 @@ packages:
   - type: github_release
     repo_owner: kurehajime
     repo_name: dajarep
-    asset: dajarep_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: ダジャレを検索するコマンド
-    replacements:
-      amd64: x86_64
-      darwin: macos
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    rosetta2: true
     checksum:
       type: github_release
       asset: dajarep_{{trimV .Version}}_checksums.txt
@@ -7775,6 +7874,23 @@ packages:
       pattern:
         checksum: ^(.{64})
         file: "^.{64}\\s+(\\S+)$"
+    version_constraint: semver(">= 1.9.8")
+    asset: dajarep_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        asset: dajarep_{{.OS}}_{{.Arch}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
   - type: github_release
     repo_owner: kurehajime
     repo_name: kuzusi
@@ -7789,16 +7905,24 @@ packages:
   - type: github_release
     repo_owner: kurehajime
     repo_name: pong-command
-    asset: '{{.OS}}_{{.Arch}}.zip'
-    description: pong is not ping.   pong is CLI game
-    replacements:
-      darwin: macos
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
+    description: pong is not ping. pong is CLI game
     files:
       - name: pong
+    version_constraint: semver(">= 2.0.8")
+    asset: pong-command_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+    replacements:
+      amd64: x86_64
+    version_overrides:
+      - version_constraint: semver(">= 2.0.5")
+        supported_envs: []
+      - version_constraint: "true"
+        rosetta2: true
+        asset: '{{.OS}}_{{.Arch}}.zip'
+        supported_envs:
+          - darwin
+          - amd64
+        replacements:
+          darwin: macos
   - type: github_content
     repo_owner: kvaps
     repo_name: kubectl-node-shell
@@ -8010,6 +8134,23 @@ packages:
         checksum: ^(.{64})
         file: "^.{64}\\s+(\\S+)$"
   - type: github_release
+    repo_owner: lima-vm
+    repo_name: sshocker
+    asset: sshocker-{{.OS}}-{{.Arch}}
+    format: raw
+    description: ssh + reverse sshfs + port forwarder, in Docker-like CLI (predecessor of Lima)
+    supported_envs:
+      - linux
+      - darwin
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+    overrides:
+      - goos: linux
+        replacements:
+          arm64: aarch64
+          linux: Linux
+  - type: github_release
     repo_owner: livebud
     repo_name: bud
     description: The Full-Stack Web Framework for Go
@@ -8185,6 +8326,21 @@ packages:
     rosetta2: true
   - type: github_release
     repo_owner: mattn
+    repo_name: cho
+    asset: cho_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    files:
+      - name: cho
+        src: cho_{{.Version}}_{{.OS}}_{{.Arch}}/cho
+  - type: github_release
+    repo_owner: mattn
     repo_name: efm-langserver
     asset: efm-langserver_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: zip
@@ -8198,15 +8354,22 @@ packages:
   - type: github_release
     repo_owner: mattn
     repo_name: gof
-    asset: gof_{{.Version}}_{{.OS}}_amd64.{{.Format}}
+    asset: gof_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     description: Go Fuzzy
-    files:
-      - name: gof
-        src: gof_{{.Version}}_{{.OS}}_amd64/gof
     format: zip
     overrides:
       - goos: linux
         format: tar.gz
+    files:
+      - name: gof
+        src: gof_{{.Version}}_{{.OS}}_{{.Arch}}/gof
+    version_constraint: semver(">= 0.0.12")
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: mattn
     repo_name: goreman
@@ -8309,6 +8472,18 @@ packages:
       - linux/amd64
     replacements:
       darwin: macos
+  - type: github_release
+    repo_owner: metalbear-co
+    repo_name: mirrord
+    description: By mirroring traffic to and from your machine, mirrord surrounds your local service with a mirror image of its cloud environment
+    supported_envs:
+      - linux/amd64
+      - darwin
+    format: raw
+    asset: mirrord_linux_x86_64
+    overrides:
+      - goos: darwin
+        asset: mirrord_mac_universal
   - type: github_release
     repo_owner: mgdm
     repo_name: htmlq
@@ -9111,6 +9286,16 @@ packages:
       pattern:
         checksum: ^(.{64})
         file: "^.{64}\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: omrikiei
+    repo_name: ktunnel
+    asset: ktunnel_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: A cli that exposes your local resources to kubernetes
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
   - type: github_release
     repo_owner: open-policy-agent
     repo_name: conftest
@@ -11053,6 +11238,16 @@ packages:
         checksum: ^(.{64})
         file: "^.{64}\\s+(\\S+)$"
   - type: github_release
+    repo_owner: simeji
+    repo_name: jid
+    asset: jid_{{.OS}}_{{.Arch}}.zip
+    description: json incremental digger
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    rosetta2: true
+  - type: github_release
     repo_owner: six-ddc
     repo_name: plow
     asset: plow_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
@@ -11076,6 +11271,32 @@ packages:
     description: Small utility to create JSON objects
     replacements:
       darwin: MacOS
+      linux: Linux
+      windows: Windows
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+  - type: github_release
+    repo_owner: skanehira
+    repo_name: rtty
+    asset: rtty_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Terminal on browser via websocket
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+    supported_envs:
+      - linux
+      - darwin
+  - type: github_release
+    repo_owner: sl1pm4t
+    repo_name: k2tf
+    asset: k2tf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Kubernetes YAML to Terraform HCL converter
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
       linux: Linux
       windows: Windows
     supported_envs:
@@ -11313,6 +11534,15 @@ packages:
     files:
       - name: lua-language-server
         src: bin/lua-language-server
+  - type: github_release
+    repo_owner: superbrothers
+    repo_name: ksort
+    asset: ksort-{{.OS}}-{{.Arch}}.zip
+    description: Sort manfest files in a proper order by Kind
+    files:
+      - name: ksort
+      - name: kubectl-sort_manifests
+        src: ksort
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: akoi
@@ -12647,6 +12877,28 @@ packages:
       - linux/amd64
     asset: gossh-{{.Version}}-{{.OS}}-{{.Arch}}
   - type: github_release
+    repo_owner: wtetsu
+    repo_name: gaze
+    asset: gaze_{{.OS}}_{{.Version}}.{{.Format}}
+    format: zip
+    description: Executes commands for you
+    replacements:
+      darwin: macos
+      arm64: arm
+      amd64: amd
+    overrides:
+      - goos: darwin
+        asset: gaze_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+        files:
+          - name: gaze
+            src: gaze_{{.OS}}_{{.Arch}}_{{.Version}}/gaze
+    supported_envs:
+      - darwin
+      - amd64
+    files:
+      - name: gaze
+        src: gaze_{{.OS}}_{{.Version}}/gaze
+  - type: github_release
     repo_owner: wtfutil
     repo_name: wtf
     description: WTF is the personal information dashboard for your terminal
@@ -12932,6 +13184,17 @@ packages:
       pattern:
         checksum: ^(.{64})
         file: "^.{64}\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: zquestz
+    repo_name: s
+    asset: s-{{.OS}}_{{.Arch}}.zip
+    description: Open a web search in your terminal
+    supported_envs:
+      - darwin
+      - amd64
+    files:
+      - name: s
+        src: s-{{.OS}}_{{.Arch}}/s
   - type: github_release
     repo_owner: zricethezav
     repo_name: gitleaks
