@@ -6895,6 +6895,30 @@ packages:
     path: desk
     description: A lightweight workspace manager for the shell
   - type: github_release
+    repo_owner: jckuester
+    repo_name: terradozer
+    description: Terraform destroy without configuration files
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    asset: terradozer_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    files:
+      - name: terradozer
+        src: terradozer_{{trimV .Version}}_{{.OS}}_{{.Arch}}/terradozer
+    checksum:
+      type: github_release
+      asset: terradozer_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: jenkins-zh
     repo_name: jenkins-cli
     description: Jenkins CLI allows you to manage your Jenkins in an easy way
