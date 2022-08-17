@@ -1,0 +1,23 @@
+packages:
+  - type: github_release
+    name: weaveworks/tf-controller/tfctl
+    repo_owner: weaveworks
+    repo_name: tf-controller
+    description: A GitOps Terraform controller for Kubernetes
+    asset: tfctl_{{.OS}}_{{.Arch}}.tar.gz
+    replacements:
+      darwin: Darwin
+      linux: Linux
+    supported_envs:
+      - linux
+      - darwin
+    files:
+      - name: tfctl
+    checksum:
+      type: github_release
+      asset: tf-controller_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(tfctl_\\S+)$"
