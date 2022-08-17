@@ -1,0 +1,21 @@
+packages:
+  - type: github_release
+    repo_owner: k1LoW
+    repo_name: tbls
+    asset: tbls_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    description: tbls is a CI-Friendly tool for document a database, written in Go
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - darwin
+      - amd64
+    checksum:
+      type: github_release
+      asset: "checksums-${{.OS}}.txt"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(.{64})
+        file: "^.{64}\\s+(\\S+)$"
