@@ -1,0 +1,19 @@
+packages:
+  - type: github_release
+    repo_owner: LGUG2Z
+    repo_name: komorebi
+    asset: komorebi-{{trimV .Version}}-{{.Arch}}-{{.OS}}.zip
+    description: A tiling window manager for Windows
+    replacements:
+      amd64: x86_64
+      windows: pc-windows-msvc
+    supported_envs:
+      - windows/amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
