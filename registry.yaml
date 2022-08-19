@@ -4567,6 +4567,27 @@ packages:
       - darwin
       - linux/amd64
   - type: github_release
+    repo_owner: estesp
+    repo_name: manifest-tool
+    description: Command line tool to create and query container image manifest list/indexes
+    format: tar.gz
+    asset: binaries-manifest-tool-{{trimV .Version}}.{{.Format}}
+    files:
+      - name: manifest-tool
+        src: manifest-tool-{{.OS}}-{{.Arch}}
+    supported_envs:
+      - darwin
+      - linux
+      - windows/amd64
+    checksum:
+      type: github_release
+      asset: binaries-manifest-tool-{{trimV .Version}}.tar.gz.sha256sum
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: evilmartians
     repo_name: lefthook
     description: Fast and powerful Git hooks manager for any type of projects
