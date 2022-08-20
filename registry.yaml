@@ -8388,6 +8388,23 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: ldez
+    repo_name: prm
+    asset: prm_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Pull Request Manager for Maintainers
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: prm_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: liamg
     repo_name: comet
     description: Command line tool to help you use conventional commit messages
