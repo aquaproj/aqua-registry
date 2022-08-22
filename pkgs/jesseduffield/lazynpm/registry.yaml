@@ -1,0 +1,22 @@
+packages:
+  - type: github_release
+    repo_owner: jesseduffield
+    repo_name: lazynpm
+    asset: lazynpm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: terminal UI for npm
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+    supported_envs:
+      - linux
+      - darwin
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
