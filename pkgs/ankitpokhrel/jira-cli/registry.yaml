@@ -1,0 +1,28 @@
+packages:
+  - type: github_release
+    repo_owner: ankitpokhrel
+    repo_name: jira-cli
+    asset: jira_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Feature-rich interactive Jira command line
+    replacements:
+      amd64: x86_64
+      darwin: macOS
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    files:
+      - name: jira
+        src: jira_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/jira
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
