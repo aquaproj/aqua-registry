@@ -9358,14 +9358,7 @@ packages:
       - darwin
       - linux
       - amd64
-    checksum:
-      type: github_release
-      asset: extract-checksum.sh
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    # https://github.com/mikefarah/yq/issues/801#issuecomment-853523411
   - type: github_release
     repo_owner: miku
     repo_name: zek
@@ -10548,6 +10541,21 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: pachyderm
+    repo_name: pachyderm
+    asset: pachctl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    description: Data-Centric Pipelines and Data Versioning
+    overrides:
+      - goos: linux
+        format: tar.gz
+    files:
+      - name: pachctl
+        src: pachctl_{{trimV .Version}}_{{.OS}}_{{.Arch}}/pachctl
+    supported_envs:
+      - linux
+      - darwin
   - type: github_release
     repo_owner: pan-net-security
     repo_name: kcount
@@ -13371,6 +13379,24 @@ packages:
       amd64: x86_64
     supported_envs:
       - linux/amd64
+  - type: github_release
+    repo_owner: thestormforge
+    repo_name: optimize-controller
+    asset: stormforge-{{.OS}}-{{.Arch}}.tar.gz
+    description: Release with Confidence
+    supported_envs:
+      - linux/amd64
+      - darwin
+    files:
+      - name: stormforge
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: thought-machine
     repo_name: please
