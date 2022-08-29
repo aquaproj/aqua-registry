@@ -5632,9 +5632,6 @@ packages:
       freebsd: FreeBSD
       dragonfly: DragonFlyBSD
     format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
     checksum:
       type: github_release
       asset: hugo_{{trimV .Version}}_checksums.txt
@@ -5643,6 +5640,17 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.102.0")
+    overrides:
+      - goos: windows
+        format: zip
+      - goos: darwin
+        asset: hugo_{{trimV .Version}}_macOS-universal.tar.gz
+    version_overrides:
+      - version_constraint: "true"
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: gojuno
     repo_name: minimock
