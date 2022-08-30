@@ -1,0 +1,34 @@
+packages:
+  - type: github_release
+    repo_owner: linkerd
+    repo_name: linkerd2
+    asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
+    format: raw
+    description: Ultralight, security-first service mesh for Kubernetes. Main repo for Linkerd 2.x
+    overrides:
+      - goos: darwin
+        goarch: amd64
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}
+        checksum:
+          type: github_release
+          asset: linkerd2-cli-{{.Version}}-{{.OS}}.sha256
+          file_format: raw
+          algorithm: sha256
+      - goos: windows
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}
+        checksum:
+          type: github_release
+          asset: linkerd2-cli-{{.Version}}-{{.OS}}.exe.sha256
+          file_format: raw
+          algorithm: sha256
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    files:
+      - name: linkerd
+    checksum:
+      type: github_release
+      asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}.sha256
+      file_format: raw
+      algorithm: sha256
