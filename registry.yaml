@@ -2580,6 +2580,39 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: binwiederhier
+    repo_name: ntfy
+    asset: ntfy_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Send push notifications to your phone or desktop using PUT/POST
+    replacements:
+      amd64: x86_64
+      darwin: macOS
+    overrides:
+      - goos: darwin
+        asset: ntfy_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+        files:
+          - name: ntfy
+            src: ntfy_{{trimV .Version}}_{{.OS}}_all/ntfy
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    files:
+      - name: ntfy
+        src: ntfy_{{trimV .Version}}_{{.OS}}_{{.Arch}}/ntfy
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: bitnami-labs
     repo_name: sealed-secrets
     asset: kubeseal-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz
