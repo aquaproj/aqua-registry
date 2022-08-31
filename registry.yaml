@@ -7443,6 +7443,23 @@ packages:
     files:
       - name: mask
         src: mask-{{.Version}}-{{.Arch}}-{{.OS}}/mask
+  - type: github_release
+    repo_owner: jamesWoolfenden
+    repo_name: pike
+    asset: pike_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Pike is a tool for determining the permissions or policy required for IAC code
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: pike_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_content
     repo_owner: jamesob
     repo_name: desk
