@@ -5746,6 +5746,29 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: gogs
+    repo_name: gogs
+    asset: gogs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    description: Gogs is a painless self-hosted Git service
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - darwin
+      - amd64
+    files:
+      - name: gogs
+        src: gogs/gogs
+    checksum:
+      type: github_release
+      asset: checksum_sha256.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: gohugoio
     repo_name: hugo
     asset: hugo_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
