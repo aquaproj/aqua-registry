@@ -1,0 +1,25 @@
+packages:
+  - type: github_release
+    repo_owner: commercialhaskell
+    repo_name: stack
+    asset: stack-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: The Haskell Tool Stack
+    replacements:
+      amd64: x86_64
+      darwin: osx
+    overrides:
+      - goos: linux
+        asset: stack-{{trimV .Version}}-{{.OS}}-{{.Arch}}-static.{{.Format}}
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: stack-{{trimV .Version}}-windows-x86_64.zip.sha256
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
