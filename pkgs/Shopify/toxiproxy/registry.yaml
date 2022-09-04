@@ -1,0 +1,21 @@
+packages:
+  - type: github_release
+    repo_owner: Shopify
+    repo_name: toxiproxy
+    asset: toxiproxy_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: A TCP proxy to simulate network and system conditions for chaos and resiliency testing
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    files:
+      - name: toxiproxy-cli
+      - name: toxiproxy-server
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
