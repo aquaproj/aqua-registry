@@ -3490,9 +3490,6 @@ packages:
     repo_owner: cloudquery
     repo_name: cloudquery
     description: The open-source data integration platform for security and infrastructure teams
-    format: raw
-    asset: cloudquery_{{.OS}}_{{.Arch}}
-    version_filter: not (Version contains "plugins")
     replacements:
       darwin: Darwin
       linux: Linux
@@ -3501,10 +3498,7 @@ packages:
     supported_envs:
       - darwin
       - linux
-      - windows/amd64
-    overrides:
-      - goos: windows
-        asset: cloudquery_{{.OS}}_{{.Arch}}.exe
+      - amd64
     checksum:
       type: github_release
       asset: checksums.txt
@@ -3513,6 +3507,16 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_filter: not (Version contains "plugins")
+    version_constraint: semverWithVersion("0.32.7", trimPrefix(Version, "cli/"))
+    asset: cloudquery_{{.OS}}_{{.Arch}}.zip
+    version_overrides:
+      - version_constraint: semverWithVersion("0.32.5", trimPrefix(Version, "cli/"))
+        asset: cli_{{.OS}}_{{.Arch}}.zip
+        files:
+          - name: cloudquery
+            src: cli
+      - version_constraint: "true"
   - type: github_release
     repo_owner: cloudspannerecosystem
     repo_name: wrench
