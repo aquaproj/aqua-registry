@@ -3487,6 +3487,29 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: cloudquery
+    repo_name: cloudquery
+    description: The open-source data integration platform for security and infrastructure teams
+    format: raw
+    asset: cloudquery_{{.OS}}_{{.Arch}}
+    version_filter: not (Version contains "plugins")
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      amd64: x86_64
+      windows: Windows
+    overrides:
+      - goos: windows
+        asset: cloudquery_{{.OS}}_{{.Arch}}.exe
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: cloudspannerecosystem
     repo_name: wrench
     asset: wrench_{{.OS}}_{{.Arch}}
