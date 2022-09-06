@@ -927,6 +927,29 @@ packages:
       - goos: linux
         format: tar.gz
   - type: github_release
+    repo_owner: Songmu
+    repo_name: tagpr
+    description: The tagpr automatically creates and updates a pull request for unreleased items, tag them when they are merged, and create releases
+    asset: tagpr_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - linux
+      - darwin
+    files:
+      - name: tagpr
+        src: tagpr_{{.Version}}_{{.OS}}_{{.Arch}}/tagpr
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: SpectralOps
     repo_name: teller
     description: A secrets management tool for developers built in Go - never leave your command line for secrets
