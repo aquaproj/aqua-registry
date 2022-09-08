@@ -11538,9 +11538,6 @@ packages:
       - darwin
       - amd64
     asset: kubespy-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
-    overrides:
-      - goos: windows
-        asset: kubespy.exe-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     checksum:
       type: github_release
       asset: checksums.txt
@@ -11549,6 +11546,12 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.6.1")
+    version_overrides:
+      - version_constraint: "true"
+        overrides:
+          - goos: windows
+            asset: kubespy.exe-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
   - type: github_release
     repo_owner: pulumi
     repo_name: pulumi
