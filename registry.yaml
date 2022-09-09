@@ -234,6 +234,29 @@ packages:
           - name: clash
             src: clash-windows-{{.Arch}}.exe
   - type: github_release
+    repo_owner: EdenEast
+    repo_name: repo
+    asset: repo-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    description: Repository Management utility
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+      windows: pc-windows-msvc
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: raw
+      algorithm: sha256
+  - type: github_release
     repo_owner: FairwindsOps
     repo_name: nova
     asset: nova_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
@@ -603,6 +626,19 @@ packages:
         overrides:
           - goos: windows
             format: zip
+  - type: github_release
+    repo_owner: NathanBaulch
+    repo_name: rainbow-roads
+    asset: rainbow-roads-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Animate your exercise maps
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
   - type: github_release
     repo_owner: PaulJuliusMartinez
     repo_name: jless
@@ -11560,9 +11596,6 @@ packages:
       - darwin
       - amd64
     asset: kubespy-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
-    overrides:
-      - goos: windows
-        asset: kubespy.exe-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     checksum:
       type: github_release
       asset: checksums.txt
@@ -11571,6 +11604,12 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.6.1")
+    version_overrides:
+      - version_constraint: "true"
+        overrides:
+          - goos: windows
+            asset: kubespy.exe-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
   - type: github_release
     repo_owner: pulumi
     repo_name: pulumi
@@ -13637,18 +13676,28 @@ packages:
   - type: github_release
     repo_owner: svenstaro
     repo_name: genact
-    asset: genact-{{.Version}}-{{.OS}}-{{.Arch}}
     format: raw
     description: A nonsense activity generator
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: macos
     supported_envs:
       - darwin
       - linux
       - amd64
     rosetta2: true
+    version_constraint: semver(">= 1.0.0")
+    asset: genact-{{trimV .Version}}-{{.Arch}}-{{.OS}}
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+      windows: pc-windows-msvc
+    version_overrides:
+      - version_constraint: "true"
+        asset: genact-{{.Version}}-{{.OS}}-{{.Arch}}
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
   - type: github_release
     repo_owner: swaggo
     repo_name: swag
