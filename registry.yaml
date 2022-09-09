@@ -859,6 +859,28 @@ packages:
         format: zip
   - type: github_release
     repo_owner: Songmu
+    repo_name: gh2changelog
+    asset: gh2changelog_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - linux
+      - darwin
+    files:
+      - name: gh2changelog
+        src: gh2changelog_{{.Version}}_{{.OS}}_{{.Arch}}/gh2changelog
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: Songmu
     repo_name: ghch
     description: Generate changelog from git history, tags and merged pull requests
     rosetta2: true
