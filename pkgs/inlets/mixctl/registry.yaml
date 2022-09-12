@@ -1,0 +1,31 @@
+packages:
+  - type: github_release
+    repo_owner: inlets
+    repo_name: mixctl
+    description: A tiny TCP load balancer
+    format: raw
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: mixctl
+    overrides:
+      - goos: linux
+        goarch: arm64
+        asset: mixctl-arm64
+      - goos: darwin
+        goarch: amd64
+        asset: mixctl-darwin
+      - goos: darwin
+        goarch: arm64
+        asset: mixctl-darwin-arm64
+      - goos: windows
+        asset: mixctl.exe
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+bin/(\\S+)$"
