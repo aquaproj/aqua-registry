@@ -20,17 +20,32 @@ packages:
         files:
           - name: pulumi
             src: pulumi/bin/pulumi.exe
-    version_constraint: semver("!= 3.37.0")
+    version_constraint: semver(">= 3.40.0")
+    checksum:
+      type: github_release
+      asset: SHA512SUMS
+      file_format: regexp
+      algorithm: sha512
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{128}\\b)"
+        file: "^\\b[A-Fa-f0-9]{128}\\b\\s+(\\S+)$"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver(">= 3.39.4")
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 3.37.1")
+        checksum: &pulumi_checksum_1
+          type: github_release
+          asset: pulumi-{{trimV .Version}}-checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: semver("= 3.37.0")
         overrides:
           - goos: windows
             format: zip
-    checksum:
-      type: github_release
-      asset: pulumi-{{trimV .Version}}-checksums.txt
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+        checksum: *pulumi_checksum_1
+      - version_constraint: "true"
+        checksum: *pulumi_checksum_1
