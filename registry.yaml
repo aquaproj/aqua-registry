@@ -760,6 +760,30 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: Pluralith
+    repo_name: pluralith-cli
+    asset: pluralith_cli_tap_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+    format: tar.gz
+    description: A tool for Terraform state visualisation and automated generation of infrastructure documentation
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    files:
+      - name: pluralith
+        src: "{{.OS}}/pluralith"
+    checksum:
+      type: github_release
+      asset: pluralith_checksums_{{.Version}}.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: Praqma
     repo_name: helmsman
     rosetta2: true
