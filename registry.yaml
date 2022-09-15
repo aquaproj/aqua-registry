@@ -14041,6 +14041,27 @@ packages:
       - goos: linux
         format: tar.gz
   - type: github_release
+    repo_owner: tdewolff
+    repo_name: minify
+    asset: minify_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Go minifiers for web formats
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: tektoncd
     repo_name: cli
     description: A CLI for interacting with Tekton
