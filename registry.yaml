@@ -13562,7 +13562,15 @@ packages:
     supported_envs:
       - darwin
       - amd64
-    asset: kube-linter-{{.OS}}.tar.gz
+    version_constraint: semver(">= 0.5.0")
+    asset: kube-linter-{{.OS}}
+    overrides:
+      - goos: windows
+        asset: kube-linter.exe
+    version_overrides:
+      - version_constraint: "true"
+        asset: kube-linter-{{.OS}}.tar.gz
+        overrides: []
   - type: github_release
     repo_owner: starship
     repo_name: starship
