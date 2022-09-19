@@ -15239,15 +15239,19 @@ packages:
     repo_owner: webdevops
     repo_name: go-crond
     description: Cron daemon written in golang (for eg. usage in docker images)
-    rosetta2: true
     supported_envs:
       - darwin
       - linux
     format: raw
-    asset: go-crond-{{.Arch}}-{{.OS}}
-    replacements:
-      amd64: "64"
-      darwin: osx
+    version_constraint: semver(">= 22.9.0")
+    asset: go-crond.{{.OS}}.{{.Arch}}
+    version_overrides:
+      - version_constraint: "true"
+        asset: go-crond-{{.Arch}}-{{.OS}}
+        rosetta2: true
+        replacements:
+          amd64: "64"
+          darwin: osx
   - type: github_release
     repo_owner: whalebrew
     repo_name: whalebrew
