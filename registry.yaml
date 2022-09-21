@@ -13641,19 +13641,31 @@ packages:
   - type: github_release
     repo_owner: snyk
     repo_name: cli
-    asset: snyk-{{.OS}}
     description: Snyk CLI scans and monitors your projects for security vulnerabilities
     format: raw
+    rosetta2: true
     supported_envs:
       - linux
       - darwin
+      - amd64
     replacements:
       darwin: macos
+      windows: win
+    asset: snyk-{{.OS}}
+    overrides:
+      - goos: linux
+        goarch: arm64
+        asset: snyk-linux-arm64
+    files:
+      - name: snyk
     checksum:
       type: github_release
       asset: "{{.Asset}}.sha256"
-      file_format: raw
       algorithm: sha256
+      file_format: regexp
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: snyk
     repo_name: driftctl
