@@ -2,6 +2,12 @@
 
 About how to write [registry.yaml](registry.yaml), please see [Registry Configuration](https://aquaproj.github.io/docs/reference/registry-config).
 
+## OSS Contribution Guide
+
+Please read the following document.
+
+- https://github.com/suzuki-shunsuke/oss-contribution-guide
+
 ## Requirements
 
 - [aqua](https://aquaproj.github.io/docs/reference/install) >= [v1.14.0](https://github.com/aquaproj/aqua/releases/tag/v1.14.0)
