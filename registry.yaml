@@ -1052,6 +1052,26 @@ packages:
         format: tar.gz
   - type: github_release
     repo_owner: Songmu
+    repo_name: maltmill
+    asset: maltmill_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    description: create and update Homebrew thrid party Formulae
+    overrides:
+      - goos: linux
+        format: tar.gz
+    files:
+      - name: maltmill
+        src: maltmill_{{.Version}}_{{.OS}}_{{.Arch}}/maltmill
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: Songmu
     repo_name: tagpr
     description: The tagpr automatically creates and updates a pull request for unreleased items, tag them when they are merged, and create releases
     asset: tagpr_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
