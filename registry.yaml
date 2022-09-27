@@ -5150,16 +5150,19 @@ packages:
     repo_name: editorconfig-checker
     asset: ec-{{.OS}}-{{.Arch}}.tar.gz
     description: A tool to verify that your files are in harmony with your .editorconfig
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    overrides:
-      - goos: windows
-        asset: ec-windows-amd64.exe.tar.gz
     files:
       - name: ec
         src: bin/ec-{{.OS}}-{{.Arch}}
+    version_constraint: semver(">= 2.6.0")
+    version_overrides:
+      - version_constraint: "true"
+        overrides:
+          - goos: windows
+            asset: ec-windows-amd64.exe.tar.gz
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
   - type: github_content
     repo_owner: ekalinin
     repo_name: github-markdown-toc
