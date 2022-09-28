@@ -14,8 +14,17 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
     version_overrides:
-      - version_constraint: semver(">= 0.0.7")
+      - version_constraint: semver("= 0.0.7")
         supported_envs: []
+      - version_constraint: semver("= 0.0.6")
+        checksum:
+          enabled: false
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        asset: json2hcl_{{.Version}}_{{.OS}}_{{.Arch}}
+        format: raw
       - version_constraint: "true"
         checksum:
           enabled: false
@@ -23,3 +32,14 @@ packages:
         supported_envs:
           - darwin
           - amd64
+        asset: json2hcl_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: windows
+            files:
+              - name: json2hcl
+        files:
+          - name: json2hcl
+            src: json2hcl_{{.OS}}_{{.Arch}}/json2hcl
