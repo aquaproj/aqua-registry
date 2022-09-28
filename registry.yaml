@@ -9430,6 +9430,14 @@ packages:
     repo_name: kustomize
     description: Customization of kubernetes YAML configurations
     asset: kustomize_{{trimPrefix "kustomize/" .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
     version_filter: Version startsWith "kustomize/"
     version_constraint: semverWithVersion(">= 4.5.4", trimPrefix(Version, "kustomize/"))
     version_overrides:
@@ -9509,7 +9517,13 @@ packages:
           file_format: raw
     version_constraint: semver(">= 1.23.0")
     version_overrides:
+      - version_constraint: semver(">= 1.21.0")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
       - version_constraint: "true"
+        rosetta2: true
         supported_envs:
           - darwin
           - linux
