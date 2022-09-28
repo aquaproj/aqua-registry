@@ -9604,6 +9604,7 @@ packages:
     repo_name: json2hcl
     asset: json2hcl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: Convert JSON to HCL, and vice versa. We don't use json2hcl anymore ourselves, so we can't invest time into it. However, we're still welcoming PRs
+    version_constraint: semver(">= 0.1.1")
     checksum:
       type: github_release
       asset: json2hcl_{{trimV .Version}}_checksums.txt
@@ -9612,6 +9613,16 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: semver(">= 0.0.7")
+        supported_envs: []
+      - version_constraint: "true"
+        checksum:
+          enabled: false
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: kyleconroy
     repo_name: sqlc
