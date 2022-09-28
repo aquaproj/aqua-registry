@@ -9,3 +9,15 @@ packages:
     description: The kubectl command line tool lets you control Kubernetes clusters
     files:
       - name: kubectl
+    checksum:
+      type: http
+      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.sha256
+      algorithm: sha256
+      file_format: raw
+    overrides:
+      - goos: windows
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.exe.sha256
+          algorithm: sha256
+          file_format: raw
