@@ -21,5 +21,12 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
     version_constraint: semver(">= 3.6.0")
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver(">= 3.1.0")
         rosetta2: true
+      - version_constraint: semver("< 3.1.0")
+        rosetta2: true
+        checksum:
+          type: http
+          url: https://get.helm.sh/helm-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz.sha256
+          file_format: raw
+          algorithm: sha256
