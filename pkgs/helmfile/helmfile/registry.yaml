@@ -1,0 +1,14 @@
+packages:
+  - type: github_release
+    repo_owner: helmfile
+    repo_name: helmfile
+    asset: helmfile_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Declaratively deploy your Kubernetes manifests, Kustomize configs, and Charts as Helm releases in one shot
+    checksum:
+      type: github_release
+      asset: helmfile_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
