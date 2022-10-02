@@ -7401,6 +7401,34 @@ packages:
           file_format: raw
           algorithm: sha256
   - type: github_release
+    repo_owner: helmfile
+    repo_name: helmfile
+    aliases:
+      - name: roboll/helmfile
+    asset: helmfile_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Declaratively deploy your Kubernetes manifests, Kustomize configs, and Charts as Helm releases in one shot
+    checksum:
+      type: github_release
+      asset: helmfile_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.145.0")
+    version_overrides:
+      - version_constraint: "true"
+        repo_owner: roboll
+        rosetta2: true
+        asset: helmfile_{{.OS}}_{{.Arch}}
+        format: raw
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        checksum:
+          enabled: false
+  - type: github_release
     repo_owner: helmwave
     repo_name: helmwave
     asset: helmwave_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -12743,17 +12771,6 @@ packages:
         asset: gof3r.exe
       - goos: darwin
         format: zip
-  - type: github_release
-    repo_owner: roboll
-    repo_name: helmfile
-    rosetta2: true
-    asset: helmfile_{{.OS}}_{{.Arch}}
-    format: raw
-    description: Deploy Kubernetes Helm Charts
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
   - type: github_release
     repo_owner: robscott
     repo_name: kube-capacity
