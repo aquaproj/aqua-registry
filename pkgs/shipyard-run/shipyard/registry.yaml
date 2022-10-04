@@ -12,16 +12,28 @@ packages:
       - darwin
       - linux
       - amd64
-    version_constraint: semver(">= 0.3.20")
+    version_constraint: semver(">= 0.4.12")
     checksum:
-      # In addition to https://github.com/shipyard-run/shipyard/issues/181,
-      # the checksum of shipyard_0.3.18_Darwin_arm64.zip in checksums.txt is wrong.
-      # We couldn't trust this package's checksums.txt, so we disable the checksum verification.
-      enabled: false
+      # https://github.com/shipyard-run/shipyard/issues/181
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
     replacements:
       amd64: x86_64
     version_overrides:
+      - version_constraint: semver(">= 0.3.20")
+        checksum:
+          # In addition to https://github.com/shipyard-run/shipyard/issues/181,
+          # the checksum of shipyard_0.3.18_Darwin_arm64.zip in checksums.txt is wrong.
+          # We couldn't trust this package's checksums.txt, so we disable the checksum verification.
+          enabled: false
       - version_constraint: "true"
+        checksum:
+          enabled: false
         replacements:
           amd64: x86_64
           darwin: Darwin
