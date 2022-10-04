@@ -5,8 +5,6 @@ packages:
     asset: shipyard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: zip
     description: Modern cloud native development environments
-    replacements:
-      amd64: x86_64
     overrides:
       - goos: linux
         format: tar.gz
@@ -14,11 +12,23 @@ packages:
       - darwin
       - linux
       - amd64
+    version_constraint: semver(">= 0.3.20")
     checksum:
-      type: github_release
-      asset: checksums.txt
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      enabled: false
+    replacements:
+      amd64: x86_64
+    version_overrides:
+      - version_constraint: "true"
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
