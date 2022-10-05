@@ -2,20 +2,18 @@ packages:
   - type: github_release
     repo_owner: particledecay
     repo_name: kconf
-    description: Manage multiple kubeconfigs easily
-    supported_envs:
-      - darwin
-      - linux
     asset: kconf-{{.OS}}-{{.Arch}}-{{trimV .Version}}.tar.gz
+    description: Manage multiple kubeconfigs easily
     replacements:
-      darwin: Darwin
-      linux: Linux
       amd64: x86_64
+    supported_envs:
+      - linux
+      - darwin
     checksum:
       type: github_release
       asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
