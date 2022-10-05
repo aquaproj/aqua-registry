@@ -3,23 +3,16 @@ packages:
     repo_owner: anchore
     repo_name: syft
     description: CLI tool and library for generating a Software Bill of Materials from container images and filesystems
-    format: tar.gz
     supported_envs:
       - darwin
       - linux
       - amd64
     asset: syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_constraint: semver(">= 0.37.10")
+    format: tar.gz
     overrides:
       - goos: windows
         format: zip
-    version_constraint: semver(">= 0.37.10")
-    version_overrides:
-      - version_constraint: "true"
-        overrides:
-          - goos: windows
-            format: zip
-          - goos: darwin
-            format: zip
     checksum:
       type: github_release
       asset: syft_{{trimV .Version}}_checksums.txt
@@ -28,3 +21,31 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: semver(">= 0.36.0")
+        overrides:
+          - goos: windows
+            format: zip
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
+      - version_constraint: semver(">= 0.35.0")
+        # https://github.com/anchore/syft/issues/739
+        overrides:
+          - goos: windows
+            format: zip
+            checksum:
+              enabled: false
+          - goos: darwin
+            format: zip
+            checksum:
+              enabled: false
+      - version_constraint: "true"
+        overrides:
+          - goos: windows
+            format: zip
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
+          - goos: darwin
+            format: zip
