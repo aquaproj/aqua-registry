@@ -14144,6 +14144,26 @@ packages:
     supported_envs:
       - linux/amd64
   - type: github_release
+    repo_owner: smallstep
+    repo_name: cli
+    asset: step_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: step
+        src: step_{{trimV .Version}}/bin/step
+    description: A zero trust swiss army knife for working with X509, OAuth, JWT, OATH OTP, etc
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: snyk
     repo_name: cli
     description: Snyk CLI scans and monitors your projects for security vulnerabilities
