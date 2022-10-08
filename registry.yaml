@@ -15185,6 +15185,22 @@ packages:
     supported_envs:
       - darwin
       - amd64
+    overrides:
+      - goos: windows
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}-sha256.txt"
+          file_format: raw
+          algorithm: sha256
+      - goos: darwin
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}-sha256.txt"
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\./(\\S+)$"
     checksum:
       type: github_release
       asset: "{{.Asset}}-sha256.txt"
@@ -15192,7 +15208,7 @@ packages:
       algorithm: sha256
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\./(\\S+)$"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
     link: https://docs.delinea.com/dsv/current/cli-ref/syntax.md
     description: Delinea DevOps Secrets Vault is a secret vault automation tool for the management of credentials for applications, databases, CI/CD tools, and services
     search_words:
