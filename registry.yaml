@@ -6079,6 +6079,22 @@ packages:
             src: git-lfs
     checksum:
       enabled: false
+  - type: github_release
+    repo_owner: git-town
+    repo_name: git-town
+    asset: git-town_{{trimV .Version}}_{{.OS}}_arm_64.{{.Format}}
+    format: tar.gz
+    description: Generic, high-level Git workflow support
+    replacements:
+      darwin: macos
+    overrides:
+      - goos: windows
+        format: zip
+        asset: git-town_{{trimV .Version}}_{{.OS}}_intel_64.{{.Format}}
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
   - name: github.com/zeromicro/go-zero/tools/goctl
     type: go_install
     repo_owner: zeromicro
@@ -7016,6 +7032,25 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: grpc-ecosystem
+    repo_name: grpc-health-probe
+    asset: grpc_health_probe-{{.OS}}-{{.Arch}}
+    format: raw
+    description: A command-line tool to perform health-checks for gRPC applications in Kubernetes etc
+    supported_envs:
+      - linux
+      - darwin
+    files:
+      - name: grpc_health_probe
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - name: grpc/grpc-go/protoc-gen-go-grpc
     type: github_release
     repo_owner: grpc
@@ -7243,6 +7278,14 @@ packages:
       - darwin
       - linux
       - amd64
+  - name: hashicorp/packer-plugin-sdk/packer-sdc
+    type: go_install
+    path: github.com/hashicorp/packer-plugin-sdk/cmd/packer-sdc
+    repo_owner: hashicorp
+    repo_name: packer-plugin-sdk
+    description: The packer software development command is meant for plugin maintainers and Packer maintainers, it helps generate docs and code
+    files:
+      - name: packer-sdc
   - type: http
     repo_owner: hashicorp
     repo_name: terraform
@@ -9068,16 +9111,28 @@ packages:
     type: github_release
     repo_owner: kcp-dev
     repo_name: kcp
+    description: kubectl plugins for kcp
+    format: tar.gz
     asset: kubectl-kcp-plugin_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_constraint: semver(">= 0.9.0")
     files:
       - name: kubectl-kcp
         src: bin/kubectl-kcp
+      - name: kubectl-workspace
+        src: bin/kubectl-workspace
       - name: kubectl-ws
-        src: bin/kubectl-ws
+        src: bin/kubectl-workspace
       - name: kubectl-workspaces
-        src: bin/kubectl-workspaces
-    format: tar.gz
-    description: kubectl plugins for kcp
+        src: bin/kubectl-workspace
+    version_overrides:
+      - version_constraint: "true"
+        files:
+          - name: kubectl-kcp
+            src: bin/kubectl-kcp
+          - name: kubectl-ws
+            src: bin/kubectl-ws
+          - name: kubectl-workspaces
+            src: bin/kubectl-workspaces
   - type: github_content
     repo_owner: kdabir
     repo_name: has
@@ -14113,6 +14168,26 @@ packages:
     supported_envs:
       - linux/amd64
   - type: github_release
+    repo_owner: smallstep
+    repo_name: cli
+    asset: step_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: step
+        src: step_{{trimV .Version}}/bin/step
+    description: A zero trust swiss army knife for working with X509, OAuth, JWT, OATH OTP, etc
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: snyk
     repo_name: cli
     description: Snyk CLI scans and monitors your projects for security vulnerabilities
@@ -15106,6 +15181,48 @@ packages:
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
+  - type: github_release
+    repo_owner: thycotic
+    repo_name: dsv-cli
+    asset: dsv-{{.OS}}-{{.Arch}}
+    format: raw
+    replacements:
+      amd64: x64
+      windows: win
+    supported_envs:
+      - darwin
+      - amd64
+    overrides:
+      - goos: windows
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}-sha256.txt"
+          file_format: raw
+          algorithm: sha256
+      - goos: darwin
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}-sha256.txt"
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\./(\\S+)$"
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}-sha256.txt"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    link: https://docs.delinea.com/dsv/current/cli-ref
+    description: Delinea DevOps Secrets Vault is a secret vault automation tool for the management of credentials for applications, databases, CI/CD tools, and services
+    search_words:
+      - secrets
+      - vault
+    files:
+      - name: dsv
   - type: github_release
     repo_owner: tilt-dev
     repo_name: ctlptl
