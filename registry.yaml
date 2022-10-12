@@ -12521,6 +12521,27 @@ packages:
       - goos: windows
         format: zip
   - type: github_release
+    name: protocolbuffers/protobuf/protoc
+    repo_owner: protocolbuffers
+    repo_name: protobuf
+    asset: protoc-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: zip
+    files:
+      - name: protoc
+        src: bin/protoc
+    description: Protocol Buffers - Google's data interchange format
+    replacements:
+      amd64: x86_64
+      darwin: osx
+      windows: win64
+    overrides:
+      - goos: windows
+        asset: protoc-{{trimV .Version}}-{{.OS}}.{{.Format}}
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+  - type: github_release
     repo_owner: pseudomuto
     repo_name: protoc-gen-doc
     asset: protoc-gen-doc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
