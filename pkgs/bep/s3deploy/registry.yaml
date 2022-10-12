@@ -2,15 +2,9 @@ packages:
   - type: github_release
     repo_owner: bep
     repo_name: s3deploy
-    asset: s3deploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
     format: tar.gz
     description: A simple tool to deploy static websites to Amazon S3 and CloudFront with Gzip and custom headers support (e.g. "Cache-Control")
-    replacements:
-      amd64: 64bit
-      arm64: ARM64
-      darwin: macOS
-      linux: Linux
-      windows: Windows
+    asset: s3deploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
     overrides:
       - goos: windows
         format: zip
@@ -22,3 +16,16 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver("> 2.9.0")
+    version_overrides:
+      - version_constraint: semver("= 2.9.0")
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: "true"
+        replacements:
+          amd64: 64bit
+          arm64: ARM64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
