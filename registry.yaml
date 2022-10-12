@@ -12504,6 +12504,26 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: protocolbuffers
+    repo_name: protobuf
+    asset: protoc-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: zip
+    files:
+      - name: protoc
+        src: bin/protoc
+    description: Protocol Buffers - Google's data interchange format
+    replacements:
+      amd64: x86_64
+      darwin: osx
+      windows: win64
+    overrides:
+      - goos: windows
+        asset: protoc-{{trimV .Version}}-{{.OS}}.{{.Format}}
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
   - name: protocolbuffers/protobuf-go/protoc-gen-go
     type: github_release
     repo_owner: protocolbuffers
