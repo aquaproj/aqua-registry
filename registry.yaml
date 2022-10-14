@@ -3961,6 +3961,34 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: containers
+    repo_name: crun
+    asset: crun-{{.Version}}-{{.OS}}-{{.Arch}}
+    format: raw
+    description: A fast and lightweight fully featured OCI runtime and C library for running containers
+    supported_envs:
+      - linux
+  - type: github_release
+    repo_owner: containers
+    repo_name: fuse-overlayfs
+    description: An implementation of overlay+shiftfs in FUSE for rootless containers
+    asset: fuse-overlayfs-{{.Arch}}
+    format: raw
+    replacements:
+      amd64: x86_64
+      arm: armv7l
+      arm64: aarch64
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    supported_envs:
+      - linux
+  - type: github_release
     repo_owner: controlplaneio
     repo_name: kubesec
     asset: kubesec_{{.OS}}_{{.Arch}}.tar.gz
@@ -13084,6 +13112,30 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: rootless-containers
+    repo_name: rootlesskit
+    description: Linux-native fakeroot using user namespaces
+    asset: rootlesskit-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      arm: armv7l
+      arm64: aarch64
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    supported_envs:
+      - linux
+    files:
+      - name: rootlessctl
+      - name: rootlesskit
+      - name: rootlesskit-docker-proxy
   - type: github_release
     repo_owner: rootless-containers
     repo_name: slirp4netns
