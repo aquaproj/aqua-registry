@@ -3946,6 +3946,26 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: containerd
+    repo_name: fuse-overlayfs-snapshotter
+    description: fuse-overlayfs plugin for rootless containerd
+    asset: containerd-fuse-overlayfs-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      arm: arm-v7
+    supported_envs:
+      - linux
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    files:
+      - name: containerd-fuse-overlayfs-grpc
+  - type: github_release
+    repo_owner: containerd
     repo_name: nerdctl
     description: contaiNERD CTL - Docker-compatible CLI for containerd, with support for Compose, Rootless, eStargz, OCIcrypt, IPFS, ...
     supported_envs:
