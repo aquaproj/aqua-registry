@@ -4,19 +4,21 @@ packages:
     repo_owner: dominikh
     repo_name: go-tools
     description: Go static analysis, detecting bugs, performance issues, and much more
-    asset: staticcheck_{{.OS}}_{{.Arch}}.tar.gz
+    asset: staticcheck_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    rosetta2: true
     files:
       - name: staticcheck
         src: staticcheck/staticcheck
     supported_envs:
-      - darwin
+      - darwin/amd64
       - linux
-      - amd64
+      - windows/amd64
     checksum:
       type: github_release
       asset: "{{.Asset}}.sha256"
       file_format: regexp
       algorithm: sha256
       pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        checksum: "^(\b[A-Fa-f0-9]{64}\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
