@@ -1,0 +1,14 @@
+packages:
+  - type: http
+    repo_owner: hashicorp
+    repo_name: boundary
+    description: Boundary enables identity-based access management for dynamic infrastructure
+    url: https://releases.hashicorp.com/boundary/{{trimV .Version}}/boundary_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+    checksum:
+      type: http
+      url: https://releases.hashicorp.com/boundary/{{trimV .Version}}/boundary_{{trimV .Version}}_SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
