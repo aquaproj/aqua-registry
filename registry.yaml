@@ -3946,6 +3946,47 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: containerd
+    repo_name: containerd
+    description: An open and reliable container runtime
+    asset: containerd-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - linux
+      - windows/amd64
+    checksum:
+      type: github_release
+      asset: containerd-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}.sha256sum
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    files:
+      - name: containerd
+        src: bin/containerd
+      - name: containerd-stress
+        src: bin/containerd-stress
+      - name: ctr
+        src: bin/ctr
+      - name: containerd-shim
+        src: bin/containerd-shim
+      - name: containerd-shim-runc-v1
+        src: bin/containerd-shim-runc-v1
+      - name: containerd-shim-runc-v2
+        src: bin/containerd-shim-runc-v2
+    overrides:
+      - goos: windows
+        files:
+          - name: ctr
+            src: bin/ctr.exe
+          - name: containerd
+            src: bin/containerd.exe
+          - name: containerd-shim-runhcs-v1
+            src: bin/containerd-shim-runhcs-v1.exe
+          - name: containerd-stress
+            src: bin/containerd-stress.exe
+  - type: github_release
+    repo_owner: containerd
     repo_name: nerdctl
     description: contaiNERD CTL - Docker-compatible CLI for containerd, with support for Compose, Rootless, eStargz, OCIcrypt, IPFS, ...
     supported_envs:
@@ -9841,6 +9882,30 @@ packages:
       asset: "{{.Asset}}.sha256"
       file_format: raw
       algorithm: sha256
+  - name: kubernetes/kubeadm
+    type: http
+    repo_owner: kubernetes
+    repo_name: kubernetes
+    description: Kubeadm is a tool built to provide best-practice "fast paths" for creating Kubernetes clusters
+    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm
+    format: raw
+    files:
+      - name: kubeadm
+    checksum:
+      type: http
+      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.sha256
+      algorithm: sha256
+      file_format: raw
+    supported_envs:
+      - linux
+      - windows/amd64
+    overrides:
+      - goos: windows
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.sha256
+          algorithm: sha256
+          file_format: raw
   - name: kubernetes/kubectl
     type: http
     repo_owner: kubernetes
@@ -9867,6 +9932,34 @@ packages:
           - darwin
           - linux
           - windows/amd64
+  - name: kubernetes/kubectl-convert
+    type: http
+    repo_owner: kubernetes
+    repo_name: kubernetes
+    description: A plugin for Kubernetes command-line tool kubectl, which allows you to convert manifests between different API versions
+    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert
+    format: raw
+    files:
+      - name: kubectl-convert
+    checksum:
+      type: http
+      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert.sha256
+      algorithm: sha256
+      file_format: raw
+    overrides:
+      - goos: windows
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert.exe.sha256
+          algorithm: sha256
+          file_format: raw
+    version_constraint: semver(">= 1.23.0")
+    version_overrides:
+    - version_constraint: "true"
+      supported_envs:
+        - darwin
+        - linux
+        - windows/amd64
   - type: http
     repo_owner: kubernetes
     repo_name: minikube
@@ -11794,6 +11887,22 @@ packages:
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: opencontainers
+    repo_name: runc
+    description: CLI tool for spawning and running containers according to the OCI specification
+    asset: runc.{{.Arch}}
+    format: raw
+    supported_envs:
+      - linux
+    checksum:
+      type: github_release
+      asset: runc.sha256sum
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: openfaas
