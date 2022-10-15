@@ -1,10 +1,8 @@
 packages:
   - type: github_release
     repo_owner: stateful
-    repo_name: rdme
-    asset: rdme_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: Execute commands directly from a README
+    format: tar.gz
     replacements:
       amd64: x86_64
     overrides:
@@ -18,3 +16,11 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.2.0")
+    # https://github.com/stateful/runme/pull/35
+    repo_name: runme
+    asset: runme_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_overrides:
+      - version_constraint: "true"
+        repo_name: rdme
+        asset: rdme_{{.OS}}_{{.Arch}}.{{.Format}}

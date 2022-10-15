@@ -1,0 +1,42 @@
+packages:
+  - type: github_release
+    repo_owner: containerd
+    repo_name: containerd
+    description: An open and reliable container runtime
+    asset: containerd-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - linux
+      - windows/amd64
+    checksum:
+      type: github_release
+      asset: containerd-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}.sha256sum
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    files:
+      - name: containerd
+        src: bin/containerd
+      - name: containerd-stress
+        src: bin/containerd-stress
+      - name: ctr
+        src: bin/ctr
+      - name: containerd-shim
+        src: bin/containerd-shim
+      - name: containerd-shim-runc-v1
+        src: bin/containerd-shim-runc-v1
+      - name: containerd-shim-runc-v2
+        src: bin/containerd-shim-runc-v2
+    overrides:
+      - goos: windows
+        files:
+          - name: ctr
+            src: bin/ctr.exe
+          - name: containerd
+            src: bin/containerd.exe
+          - name: containerd-shim-runhcs-v1
+            src: bin/containerd-shim-runhcs-v1.exe
+          - name: containerd-stress
+            src: bin/containerd-stress.exe

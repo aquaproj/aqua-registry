@@ -30,17 +30,29 @@ packages:
   - type: github_release
     repo_owner: Aloxaf
     repo_name: silicon
+    description: Create beautiful image of your source code
     asset: silicon-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz
     rosetta2: true
+    replacements:
+      darwin: apple-darwin
+      windows: pc-windows-msvc
+      linux: unknown-linux-gnu
+      amd64: x86_64
+    version_constraint: semver("> 0.5.0")
     supported_envs:
       - darwin
       - amd64
-    description: Create beautiful image of your source code
-    replacements:
-      darwin: apple-darwin
-      windows: pc-windows-gnu
-      linux: unknown-linux-gnu
-      amd64: x86_64
+    version_overrides:
+      - version_constraint: semver("= 0.5.0")
+        supported_envs:
+          - darwin
+          - linux/amd64
+      - version_constraint: "true"
+        replacements:
+          darwin: apple-darwin
+          windows: pc-windows-gnu
+          linux: unknown-linux-gnu
+          amd64: x86_64
   - type: github_release
     repo_owner: Arriven
     repo_name: db1000n
@@ -3302,9 +3314,9 @@ packages:
       - name: sshproxyctl
         src: sshproxy_{{trimV .Version}}_{{.OS}}_{{.Arch}}/sshproxyctl
   - type: github_release
+    name: cert-manager/cert-manager/cmctl
     repo_owner: cert-manager
     repo_name: cert-manager
-    name: jetstack/cert-manager/cmctl
     aliases:
       - name: jetstack/cert-manager/cmctl
     description: cmctl is a CLI tool that can help you to manage cert-manager resources inside your cluster
@@ -3952,6 +3964,47 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: containerd
+    repo_name: containerd
+    description: An open and reliable container runtime
+    asset: containerd-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - linux
+      - windows/amd64
+    checksum:
+      type: github_release
+      asset: containerd-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}.sha256sum
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    files:
+      - name: containerd
+        src: bin/containerd
+      - name: containerd-stress
+        src: bin/containerd-stress
+      - name: ctr
+        src: bin/ctr
+      - name: containerd-shim
+        src: bin/containerd-shim
+      - name: containerd-shim-runc-v1
+        src: bin/containerd-shim-runc-v1
+      - name: containerd-shim-runc-v2
+        src: bin/containerd-shim-runc-v2
+    overrides:
+      - goos: windows
+        files:
+          - name: ctr
+            src: bin/ctr.exe
+          - name: containerd
+            src: bin/containerd.exe
+          - name: containerd-shim-runhcs-v1
+            src: bin/containerd-shim-runhcs-v1.exe
+          - name: containerd-stress
+            src: bin/containerd-stress.exe
+  - type: github_release
+    repo_owner: containerd
     repo_name: nerdctl
     description: contaiNERD CTL - Docker-compatible CLI for containerd, with support for Compose, Rootless, eStargz, OCIcrypt, IPFS, ...
     supported_envs:
@@ -3966,6 +4019,34 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: containers
+    repo_name: crun
+    asset: crun-{{.Version}}-{{.OS}}-{{.Arch}}
+    format: raw
+    description: A fast and lightweight fully featured OCI runtime and C library for running containers
+    supported_envs:
+      - linux
+  - type: github_release
+    repo_owner: containers
+    repo_name: fuse-overlayfs
+    description: An implementation of overlay+shiftfs in FUSE for rootless containers
+    asset: fuse-overlayfs-{{.Arch}}
+    format: raw
+    replacements:
+      amd64: x86_64
+      arm: armv7l
+      arm64: aarch64
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    supported_envs:
+      - linux
   - type: github_release
     repo_owner: controlplaneio
     repo_name: kubesec
@@ -9819,6 +9900,30 @@ packages:
       asset: "{{.Asset}}.sha256"
       file_format: raw
       algorithm: sha256
+  - name: kubernetes/kubeadm
+    type: http
+    repo_owner: kubernetes
+    repo_name: kubernetes
+    description: Kubeadm is a tool built to provide best-practice "fast paths" for creating Kubernetes clusters
+    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm
+    format: raw
+    files:
+      - name: kubeadm
+    checksum:
+      type: http
+      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.sha256
+      algorithm: sha256
+      file_format: raw
+    supported_envs:
+      - linux
+      - windows/amd64
+    overrides:
+      - goos: windows
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.sha256
+          algorithm: sha256
+          file_format: raw
   - name: kubernetes/kubectl
     type: http
     repo_owner: kubernetes
@@ -9854,6 +9959,34 @@ packages:
           - darwin
           - linux
           - amd64
+  - name: kubernetes/kubectl-convert
+    type: http
+    repo_owner: kubernetes
+    repo_name: kubernetes
+    description: A plugin for Kubernetes command-line tool kubectl, which allows you to convert manifests between different API versions
+    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert
+    format: raw
+    files:
+      - name: kubectl-convert
+    checksum:
+      type: http
+      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert.sha256
+      algorithm: sha256
+      file_format: raw
+    overrides:
+      - goos: windows
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert.exe.sha256
+          algorithm: sha256
+          file_format: raw
+    version_constraint: semver(">= 1.23.0")
+    version_overrides:
+    - version_constraint: "true"
+      supported_envs:
+        - darwin
+        - linux
+        - windows/amd64
   - type: http
     repo_owner: kubernetes
     repo_name: minikube
@@ -11783,6 +11916,22 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: opencontainers
+    repo_name: runc
+    description: CLI tool for spawning and running containers according to the OCI specification
+    asset: runc.{{.Arch}}
+    format: raw
+    supported_envs:
+      - linux
+    checksum:
+      type: github_release
+      asset: runc.sha256sum
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: openfaas
     repo_name: faas-cli
     format: raw
@@ -13090,6 +13239,50 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: rootless-containers
+    repo_name: rootlesskit
+    description: Linux-native fakeroot using user namespaces
+    asset: rootlesskit-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      arm: armv7l
+      arm64: aarch64
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    supported_envs:
+      - linux
+    files:
+      - name: rootlessctl
+      - name: rootlesskit
+      - name: rootlesskit-docker-proxy
+  - type: github_release
+    repo_owner: rootless-containers
+    repo_name: slirp4netns
+    description: User-mode networking for unprivileged network namespaces
+    asset: slirp4netns-{{.Arch}}
+    format: raw
+    replacements:
+      amd64: x86_64
+      arm: armv7l
+      arm64: aarch64
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    supported_envs:
+      - linux
   - type: github_release
     repo_owner: ropnop
     repo_name: kerbrute
@@ -14399,10 +14592,8 @@ packages:
       algorithm: sha256
   - type: github_release
     repo_owner: stateful
-    repo_name: rdme
-    asset: rdme_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: Execute commands directly from a README
+    format: tar.gz
     replacements:
       amd64: x86_64
     overrides:
@@ -14416,6 +14607,14 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.2.0")
+    # https://github.com/stateful/runme/pull/35
+    repo_name: runme
+    asset: runme_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_overrides:
+      - version_constraint: "true"
+        repo_name: rdme
+        asset: rdme_{{.OS}}_{{.Arch}}.{{.Format}}
   - type: github_release
     repo_owner: stedolan
     repo_name: jq
