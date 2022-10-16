@@ -5,6 +5,7 @@ packages:
     repo_name: go-tools
     description: Go static analysis, detecting bugs, performance issues, and much more
     asset: staticcheck_{{.OS}}_{{.Arch}}.tar.gz
+    rosetta2: true
     files:
       - name: staticcheck
         src: staticcheck/staticcheck
@@ -18,5 +19,12 @@ packages:
       file_format: regexp
       algorithm: sha256
       pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver("< 2000.0.0")
+    # versioning was changed from v0.3.3
+    # https://github.com/dominikh/go-tools/releases/tag/v0.3.3
+    # https://github.com/dominikh/go-tools/releases/tag/2022.1.2
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: false
