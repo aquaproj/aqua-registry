@@ -10133,18 +10133,30 @@ packages:
     files:
       - name: vela
         src: "{{.OS}}-{{.Arch}}/vela"
-    version_constraint: semver(">= 1.2.0")
+    version_constraint: semver(">= 1.5.7")
+    checksum:
+      type: github_release
+      asset: sha256sums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
     version_overrides:
+      - version_constraint: semver(">= 1.2.0")
+        checksum:
+          # https://github.com/kubevela/kubevela/issues/4822
+          enabled: false
       - version_constraint: "true"
+        checksum:
+          # https://github.com/kubevela/kubevela/issues/4822
+          enabled: false
         rosetta2: true
         complete_windows_ext: true
         asset: vela-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
         supported_envs:
           - darwin
           - amd64
-    checksum:
-      # https://github.com/kubevela/kubevela/issues/4822
-      enabled: false
   - name: kubevela/kubevela/kubectl-plugin
     type: github_release
     repo_owner: kubevela
