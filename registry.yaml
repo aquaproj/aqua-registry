@@ -2112,11 +2112,22 @@ packages:
     files:
       - name: argocd
         src: argocd-{{.OS}}-{{.Arch}}
+    version_constraint: semver(">= 2.4.15")
     checksum:
       type: github_release
-      asset: "{{.Asset}}.sha256"
-      file_format: raw
+      asset: argocd-{{trimV .Version}}-checksums.txt
+      file_format: regexp
       algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: "true"
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          file_format: raw
+          algorithm: sha256
   - type: github_release
     repo_owner: argoproj
     repo_name: argo-rollouts
