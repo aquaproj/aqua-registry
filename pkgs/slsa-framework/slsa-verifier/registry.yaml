@@ -1,9 +1,12 @@
 packages:
-  - type: github_release
+  - type: go_install
     repo_owner: slsa-framework
     repo_name: slsa-verifier
     description: The implementation for verifying SLSA provenance
-    asset: slsa-verifier-{{.OS}}-{{.Arch}}
-    format: raw
-    supported_envs:
-      - linux/amd64
+    path: github.com/slsa-framework/slsa-verifier/cli/slsa-verifier
+    overrides:
+      - goos: linux
+        goarch: amd64
+        type: github_release
+        asset: slsa-verifier-{{.OS}}-{{.Arch}}
+        format: raw

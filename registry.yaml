@@ -14578,14 +14578,17 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-  - type: github_release
+  - type: go_install
     repo_owner: slsa-framework
     repo_name: slsa-verifier
     description: The implementation for verifying SLSA provenance
-    asset: slsa-verifier-{{.OS}}-{{.Arch}}
-    format: raw
-    supported_envs:
-      - linux/amd64
+    path: github.com/slsa-framework/slsa-verifier/cli/slsa-verifier
+    overrides:
+      - goos: linux
+        goarch: amd64
+        type: github_release
+        asset: slsa-verifier-{{.OS}}-{{.Arch}}
+        format: raw
   - type: github_release
     repo_owner: smallstep
     repo_name: cli
