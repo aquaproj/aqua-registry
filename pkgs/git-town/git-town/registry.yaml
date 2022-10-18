@@ -15,5 +15,19 @@ packages:
         asset: git-town_{{trimV .Version}}_{{.OS}}_intel_64.{{.Format}}
     supported_envs:
       - darwin
+      - linux
       - amd64
-    rosetta2: true
+    version_constraint: semver(">= 7.7.0")
+    version_overrides:
+      - version_constraint: semver(">= 7.4.0")
+        # In v7.7.0, darwin/arm64 was supported
+        rosetta2: true
+      - version_constraint: "true"
+        # In v7.4.0, linux/arm64 was supported and asset name formats were changed
+        rosetta2: true
+        replacements: {}
+        asset: git-town-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - darwin
+          - amd64
