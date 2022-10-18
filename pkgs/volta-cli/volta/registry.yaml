@@ -1,0 +1,20 @@
+packages:
+  - type: github_release
+    repo_owner: volta-cli
+    repo_name: volta
+    asset: volta-{{trimV .Version}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    description: "Volta: JS Toolchains as Code"
+    link: https://volta.sh
+    replacements:
+      arm64: aarch64
+      darwin: macos
+    overrides:
+      - goos: darwin
+        goarch: arm64
+        asset: volta-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - amd64
