@@ -4433,7 +4433,6 @@ packages:
   - type: github_release
     repo_owner: dalance
     repo_name: procs
-    asset: procs-{{.Version}}-{{.Arch}}-{{.OS}}.zip
     description: A modern replacement for ps written in Rust
     replacements:
       amd64: x86_64
@@ -4442,11 +4441,19 @@ packages:
       - darwin
       - amd64
     rosetta2: true
-    overrides:
-      - goos: windows
-        files:
-          - name: procs
-            src: target/x86_64-pc-windows-msvc/release/procs.exe
+    asset: procs-{{.Version}}-{{.Arch}}-{{.OS}}.zip
+    version_constraint: semver(">= 0.13.3")
+    version_overrides:
+      - version_constraint: "true"
+        # https://github.com/aquaproj/aqua-registry/pull/7156
+        # windows zip structure was changed from 0.13.3.
+        # https://github.com/dalance/procs/blob/master/CHANGELOG.md#v0133---2022-10-18
+        # > [Changed] Release zip for Windows has the exe at toplevel
+        overrides:
+          - goos: windows
+            files:
+              - name: procs
+                src: target/x86_64-pc-windows-msvc/release/procs.exe
   - type: github_release
     repo_owner: dandavison
     repo_name: delta
