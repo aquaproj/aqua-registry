@@ -14578,6 +14578,23 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - name: slsa-framework/slsa-github-generator/slsa-builder-go
+    repo_owner: slsa-framework
+    repo_name: slsa-github-generator
+    description: Language-agnostic SLSA provenance generation for Github Actions
+    link: https://github.com/slsa-framework/slsa-github-generator/tree/main/internal/builders/go
+    # Officially only an asset for linux/amd64 is released.
+    # So we support other platforms by `go_install` package.
+    type: go_install
+    path: github.com/slsa-framework/slsa-github-generator/internal/builders/go
+    files:
+      - name: slsa-builder-go
+    overrides:
+      - goos: linux
+        goarch: amd64
+        type: github_release
+        asset: slsa-builder-go-{{.OS}}-{{.Arch}}
+        format: raw
   - type: github_release
     repo_owner: slsa-framework
     repo_name: slsa-verifier
