@@ -2,11 +2,8 @@ packages:
   - type: github_release
     repo_owner: aquasecurity
     repo_name: starboard
-    asset: starboard_{{.OS}}_{{.Arch}}.{{.Format}}
     description: Kubernetes-native security toolkit
-    rosetta2: true
-    replacements:
-      amd64: x86_64
+    asset: starboard_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
@@ -15,12 +12,6 @@ packages:
       - name: starboard
       - name: kubectl-starboard
         src: starboard
-    version_constraint: semver(">= 0.15.0")
-    version_overrides:
-      - version_constraint: "true"
-        supported_envs:
-          - darwin
-          - amd64
     checksum:
       type: github_release
       asset: checksums.txt
@@ -29,3 +20,15 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.15.0")
+    replacements:
+      amd64: x86_64
+      arm64: ARM64
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        replacements:
+          amd64: x86_64
