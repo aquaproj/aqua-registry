@@ -14,7 +14,7 @@ e.g. `suzuki-shunsuke/github-comment`
 Please use the latest version.
 
 ```console
-$ aqua -v
+aqua -v
 
 ```
 
@@ -38,7 +38,7 @@ $ aqua -v
 ```
 
 ```console
-$
+
 ```
 
 ## Debug Output
@@ -46,7 +46,7 @@ $
 Please set the environment variable `AQUA_LOG_LEVEL=debug` and run aqua and tell us the debug output.
 
 ```console
-$
+
 ```
 
 ## Expected Behaviour
