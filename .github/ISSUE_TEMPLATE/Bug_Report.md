@@ -34,7 +34,7 @@ aqua -v
 > Please remove unneeded configuration to reproduce the issue.
 
 ```yaml
-aqua.yaml
+# aqua.yaml
 ```
 
 ```console
