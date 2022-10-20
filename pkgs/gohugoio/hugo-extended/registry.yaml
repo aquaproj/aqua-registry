@@ -6,9 +6,10 @@ packages:
     asset: hugo_extended_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
     description: The world’s fastest framework for building websites
     supported_envs:
-      - linux
+      - linux/amd64
+      - linux/arm64
+      - windows/amd64
       - darwin
-      - windows
     files:
       - name: hugo
     format: tar.gz
@@ -25,26 +26,20 @@ packages:
       - goos: windows
         format: zip
       - goos: darwin
-        asset: hugo_extended_{{trimV .Version}}_darwin-universal.tar.gz
+        asset: hugo_extended_{{trimV .Version}}_{{.OS}}-universal.tar.gz
     version_overrides:
       - version_constraint: semver(">= 0.102.0")
         overrides:
           - goos: windows
             format: zip
           - goos: darwin
-            asset: hugo_extended_{{trimV .Version}}_macOS-universal.tar.gz
+            asset: hugo_extended_{{trimV .Version}}_{{.OS}}-universal.tar.gz
         replacements: &hugo_replacements_1
           amd64: 64bit
-          386: 32bit
-          arm: ARM
           arm64: ARM64
           darwin: macOS
           linux: Linux
           windows: Windows
-          openbsd: OpenBSD
-          netbsd: NetBSD
-          freebsd: FreeBSD
-          dragonfly: DragonFlyBSD
       - version_constraint: "true"
         replacements: *hugo_replacements_1
         overrides:
