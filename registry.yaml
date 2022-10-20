@@ -1969,11 +1969,8 @@ packages:
   - type: github_release
     repo_owner: aquasecurity
     repo_name: starboard
-    asset: starboard_{{.OS}}_{{.Arch}}.{{.Format}}
     description: Kubernetes-native security toolkit
-    rosetta2: true
-    replacements:
-      amd64: x86_64
+    asset: starboard_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
@@ -1982,12 +1979,6 @@ packages:
       - name: starboard
       - name: kubectl-starboard
         src: starboard
-    version_constraint: semver(">= 0.15.0")
-    version_overrides:
-      - version_constraint: "true"
-        supported_envs:
-          - darwin
-          - amd64
     checksum:
       type: github_release
       asset: checksums.txt
@@ -1996,6 +1987,18 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.15.0")
+    replacements:
+      amd64: x86_64
+      arm64: ARM64
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        replacements:
+          amd64: x86_64
   - type: github_release
     repo_owner: aquasecurity
     repo_name: tfsec
@@ -4619,6 +4622,40 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: dbrgn
+    repo_name: tealdeer
+    description: A very fast implementation of tldr in Rust
+    format: raw
+    asset: tealdeer-{{.OS}}-{{.Arch}}-musl
+    replacements:
+      amd64: x86_64
+      darwin: macos
+    overrides:
+      - goos: darwin
+        asset: tealdeer-{{.OS}}-{{.Arch}}
+      - goos: windows
+        asset: tealdeer-{{.OS}}-{{.Arch}}-msvc.exe
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.5.0")
+    version_overrides:
+      - version_constraint: "true"
+        # https://github.com/dbrgn/tealdeer/releases/tag/v1.5.0 supports checksum, macOS, and windows.
+        checksum:
+          enabled: false
+        supported_envs:
+          - linux/amd64
+  - type: github_release
     repo_owner: ddddddO
     repo_name: gtree
     asset: gtree_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -5947,6 +5984,24 @@ packages:
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: folbricht
+    repo_name: desync
+    asset: desync_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Alternative casync implementation
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: fortio
@@ -9181,6 +9236,26 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\*(\\S+)$"
   - type: github_release
     repo_owner: k1LoW
+    repo_name: awsdo
+    asset: awsdo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    description: awsdo is a tool to do anything using AWS temporary credentials
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - linux/amd64
+      - darwin
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: k1LoW
     repo_name: ndiag
     asset: ndiag_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: zip
@@ -10456,6 +10531,25 @@ packages:
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: kyverno
+    repo_name: kyverno
+    asset: kyverno-cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Kubernetes Native Policy Management
+    replacements:
+      amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: lc

@@ -1,0 +1,35 @@
+packages:
+  - type: github_release
+    repo_owner: dbrgn
+    repo_name: tealdeer
+    description: A very fast implementation of tldr in Rust
+    format: raw
+    asset: tealdeer-{{.OS}}-{{.Arch}}-musl
+    replacements:
+      amd64: x86_64
+      darwin: macos
+    overrides:
+      - goos: darwin
+        asset: tealdeer-{{.OS}}-{{.Arch}}
+      - goos: windows
+        asset: tealdeer-{{.OS}}-{{.Arch}}-msvc.exe
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.5.0")
+    version_overrides:
+      - version_constraint: "true"
+        # https://github.com/dbrgn/tealdeer/releases/tag/v1.5.0 supports checksum, macOS, and windows.
+        checksum:
+          enabled: false
+        supported_envs:
+          - linux/amd64
