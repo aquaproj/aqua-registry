@@ -6693,7 +6693,12 @@ packages:
         supported_envs:
           - amd64
           - darwin
-        replacements: *hugo_replacements_1
+        replacements: &hugo_extended_replacements_1
+          amd64: 64bit
+          arm64: ARM64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
         overrides:
           - goos: windows
             format: zip
@@ -6703,14 +6708,9 @@ packages:
             format: zip
           - goos: darwin
             asset: hugo_extended_{{trimV .Version}}_{{.OS}}-universal.tar.gz
-        replacements: &hugo_replacements_1
-          amd64: 64bit
-          arm64: ARM64
-          darwin: macOS
-          linux: Linux
-          windows: Windows
+        replacements: *hugo_extended_replacements_1
       - version_constraint: "true"
-        replacements: *hugo_replacements_1
+        replacements: *hugo_extended_replacements_1
         overrides:
           - goos: windows
             format: zip
