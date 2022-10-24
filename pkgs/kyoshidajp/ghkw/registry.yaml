@@ -1,0 +1,20 @@
+packages:
+  - type: github_release
+    repo_owner: kyoshidajp
+    repo_name: ghkw
+    asset: ghkw_{{.OS}}_{{.Arch}}.tar.gz
+    description: Search how many keywords in GitHub Code tool
+    replacements:
+      amd64: x86_64
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: ghkw_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
