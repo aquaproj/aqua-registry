@@ -1,0 +1,17 @@
+packages:
+  - type: github_release
+    repo_owner: minamijoyo
+    repo_name: myaws
+    asset: myaws_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: A human friendly AWS CLI written in Go
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: myaws_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
