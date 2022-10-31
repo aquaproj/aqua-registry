@@ -20,3 +20,42 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.0.20")
+    # support darwin/arm64
+    version_overrides:
+      - version_constraint: semver(">= 1.0.19")
+        rosetta2: true
+        # support linux/arm64
+      - version_constraint: semver(">= 1.0.6")
+        # change release filename templates to allow matching by selfupdate.
+        # see: https://github.com/rhysd/go-github-selfupdate/blob/master/selfupdate/detect.go#L95
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.1.4")
+        # Publish the archives for Nancy, for homebrew
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        asset: nancy-{{.OS}}.{{.Arch}}-{{.Version}}.{{.Format}}
+      - version_constraint: semver(">= 0.1.0")
+        rosetta2: true
+        format: raw
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+        asset: nancy-{{.OS}}.{{.Arch}}-{{.Version}}
+        # provide checksum file
+      - version_constraint: "true"
+        rosetta2: true
+        format: raw
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+        asset: nancy-{{.OS}}.{{.Arch}}-{{.Version}}
+        checksum:
+          enabled: false
