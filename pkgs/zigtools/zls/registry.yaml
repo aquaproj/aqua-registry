@@ -2,15 +2,24 @@ packages:
   - type: github_release
     repo_owner: zigtools
     repo_name: zls
-    asset: "{{.Arch}}-{{.OS}}.tar.xz"
     description: Zig LSP implementation + Zig Language Server
+    asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
     replacements:
       amd64: x86_64
+      arm64: aarch64
       darwin: macos
     supported_envs:
       - darwin
       - amd64
-    rosetta2: true
     files:
       - name: zls
         src: bin/zls
+    version_constraint: semver(">= 0.10.0")
+    # Archive format was changed from xz to zst
+    # https://github.com/aquaproj/aqua-registry/pull/7540#issuecomment-1299556748
+    # darwin/arm64 was supported
+    format: tar.zst
+    version_overrides:
+      - version_constraint: "true"
+        format: tar.xz
+        rosetta2: true
