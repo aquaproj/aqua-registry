@@ -6576,6 +6576,23 @@ packages:
           - goos: windows
             asset: gleam-{{.Version}}-windows-64bit.{{.Format}}
             format: zip
+  - name: go-gitea/tea
+    type: http
+    description: Command line tool to interact with Gitea servers
+    link: https://gitea.com/gitea/tea
+    format: xz
+    url: https://dl.gitea.io/tea/{{.Version}}/tea-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    files:
+      - name: tea
+        src: tea-{{.Version}}-{{.OS}}-{{.Arch}}
+    checksum:
+      type: http
+      url: https://dl.gitea.io/tea/{{.Version}}/tea-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}.sha256
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: go-jira
     repo_name: jira
