@@ -9550,6 +9550,34 @@ packages:
         supported_envs:
           - darwin
           - linux/amd64
+  - type: github_release
+    repo_owner: kashav
+    repo_name: fsql
+    asset: fsql-{{trimV .Version}}-fsql-{{.OS}}-{{.Arch}}.tar.gz
+    description: Search for files using a fun query language
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    files:
+      - name: fsql
+        src: fsql-{{.OS}}-{{.Arch}}/fsql
+    version_constraint: semver(">= 0.5.1")
+    version_overrides:
+      - version_constraint: semver("<= 0.2.1")
+        rosetta2: true
+        asset: "{{.OS}}_{{.Arch}}.tar.gz"
+        overrides:
+          - goos: windows
+            asset: "{{.OS}}_{{.Arch}}.zip"
+        files:
+          - name: fsql
+      - version_constraint: "true"
+        rosetta2: true
+        asset: fsql-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz
+        files:
+          - name: fsql
+            src: "{{.OS}}-{{.Arch}}/fsql"
   - name: kastenhq/external-tools/k10multicluster
     type: github_release
     repo_owner: kastenhq
