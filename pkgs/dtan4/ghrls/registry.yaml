@@ -1,0 +1,27 @@
+packages:
+  - type: github_release
+    repo_owner: dtan4
+    repo_name: ghrls
+    asset: ghrls_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: List & Describe GitHub Releases
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
