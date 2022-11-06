@@ -7,10 +7,6 @@ packages:
     overrides:
       - goos: windows
         format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
     version_constraint: semver("> 0.1.0")
     asset: ghrls_{{.OS}}_{{.Arch}}.{{.Format}}
     replacements:
@@ -18,6 +14,10 @@ packages:
       darwin: Darwin
       linux: Linux
       windows: Windows
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
     checksum:
       type: github_release
       asset: checksums.txt
@@ -31,8 +31,11 @@ packages:
         rosetta2: true
         asset: ghrls-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         replacements: {}
-        checksum:
-          enabled: false
         files:
           - name: ghrls
             src: "{{.OS}}-{{.Arch}}/ghrls"
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          enabled: false
