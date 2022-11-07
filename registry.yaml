@@ -1392,6 +1392,23 @@ packages:
       - linux
       - amd64
   - type: github_release
+    repo_owner: abhimanyu003
+    repo_name: sttr
+    asset: sttr_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: cross-platform, cli app to perform various operations on string
+    overrides:
+      - goos: darwin
+        asset: sttr_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+    checksum:
+      type: github_release
+      asset: sttr_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: abiosoft
     repo_name: colima
     description: Docker (and Kubernetes) on MacOS with minimal setup
