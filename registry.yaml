@@ -13076,6 +13076,33 @@ packages:
       - name: pen
         src: target/release/pen
   - type: github_release
+    repo_owner: pfnet-research
+    repo_name: git-ghost
+    asset: git-ghost_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Synchronize your working directory efficiently to a remote place without committing the changes
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: git-ghost_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.1.5")
+    version_overrides:
+      - version_constraint: "true"
+        asset: git-ghost-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          enabled: false
+  - type: github_release
     repo_owner: pglet
     repo_name: pglet
     asset: pglet-{{trimV .Version}}-{{.OS}}-{{.Arch}}
