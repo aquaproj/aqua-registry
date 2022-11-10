@@ -12198,8 +12198,13 @@ packages:
         file: "^\\b[A-Fa-f0-9]{128}\\b\\s+(\\S+)$"
     version_constraint: semver(">= 0.0.12")
     version_overrides:
+        # arm64 wasn't supported
+      - version_constraint: semver("= 0.0.11")
+        rosetta2: true
+        # asset name was changed
       - version_constraint: "true"
         rosetta2: true
+        asset: tfcw_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
   - type: github_release
     repo_owner: naggie
     repo_name: dstask
