@@ -1,0 +1,22 @@
+packages:
+  - name: cloudflare/cfssl/cfssl-bundle
+    type: github_release
+    repo_owner: cloudflare
+    repo_name: cfssl
+    description: "CFSSL: Cloudflare's PKI and TLS toolkit"
+    rosetta2: true
+    supported_envs:
+      - darwin
+      - amd64
+    format: raw
+    asset: cfssl-bundle_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    files:
+      - name: cfssl-bundle
+    checksum:
+      type: github_release
+      asset: cfssl_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
