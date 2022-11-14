@@ -134,6 +134,16 @@ packages:
             file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
         supported_envs: []
   - type: github_release
+    repo_owner: Azure
+    repo_name: draft
+    asset: draft-{{.OS}}-{{.Arch}}
+    format: raw
+    description: A day 0 tool for getting your app on k8s fast
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+  - type: github_release
     repo_owner: BeryJu
     repo_name: korb
     description: Move Kubernetes PVCs between Storage Classes and Namespaces
@@ -1426,6 +1436,23 @@ packages:
       - linux
       - amd64
   - type: github_release
+    repo_owner: abhimanyu003
+    repo_name: sttr
+    asset: sttr_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: cross-platform, cli app to perform various operations on string
+    overrides:
+      - goos: darwin
+        asset: sttr_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+    checksum:
+      type: github_release
+      asset: sttr_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: abiosoft
     repo_name: colima
     description: Docker (and Kubernetes) on MacOS with minimal setup
@@ -2013,11 +2040,8 @@ packages:
   - type: github_release
     repo_owner: aquasecurity
     repo_name: starboard
-    asset: starboard_{{.OS}}_{{.Arch}}.{{.Format}}
     description: Kubernetes-native security toolkit
-    rosetta2: true
-    replacements:
-      amd64: x86_64
+    asset: starboard_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
@@ -2026,12 +2050,6 @@ packages:
       - name: starboard
       - name: kubectl-starboard
         src: starboard
-    version_constraint: semver(">= 0.15.0")
-    version_overrides:
-      - version_constraint: "true"
-        supported_envs:
-          - darwin
-          - amd64
     checksum:
       type: github_release
       asset: checksums.txt
@@ -2040,6 +2058,18 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.15.0")
+    replacements:
+      amd64: x86_64
+      arm64: ARM64
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        replacements:
+          amd64: x86_64
   - type: github_release
     repo_owner: aquasecurity
     repo_name: tfsec
@@ -2236,9 +2266,15 @@ packages:
       - goos: linux
         replacements:
           arm64: aarch64
+    version_constraint: semver(">= 1.2.13")
     files:
       - name: btop
-        src: bin/btop
+        src: btop/bin/btop
+    version_overrides:
+      - version_constraint: "true"
+        files:
+          - name: btop
+            src: bin/btop
   - type: github_release
     repo_owner: arl
     repo_name: gitmux
@@ -2973,6 +3009,22 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: bitwarden
+    repo_name: clients
+    asset: bw-{{.OS}}-{{trimPrefix "cli-v" .Version}}.zip
+    version_filter: Version startsWith "cli-"
+    files:
+    - name: bw
+      src:  bw
+    description: Bitwarden CLI
+    replacements:
+      darwin: macos
+    checksum:
+      type: github_release
+      asset: bw-{{.OS}}-sha256-{{trimPrefix "cli-v" .Version}}.txt
+      file_format: raw
+      algorithm: sha256
+  - type: github_release
     repo_owner: blacknon
     repo_name: hwatch
     description: A modern alternative to the watch command, records the differences in execution results and can check this differences at after
@@ -3526,6 +3578,32 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: charmbracelet
+    repo_name: vhs
+    asset: vhs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Your CLI home video recorder
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: che-incubator
     repo_name: chectl
     description: CLI to manage Eclipse Che server and workspaces
@@ -3595,6 +3673,18 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: citrusframework
+    repo_name: yaks
+    asset: yaks-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz
+    description: YAKS is a platform to enable Cloud Native BDD testing on Kubernetes
+    replacements:
+      amd64: 64bit
+      darwin: mac
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
   - type: github_release
     repo_owner: civo
     repo_name: cli
@@ -3786,6 +3876,171 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - name: cloudflare/cfssl/cfssl-bundle
+    type: github_release
+    repo_owner: cloudflare
+    repo_name: cfssl
+    description: "CFSSL: Cloudflare's PKI and TLS toolkit"
+    rosetta2: true
+    supported_envs:
+      - darwin
+      - amd64
+    format: raw
+    files:
+      - name: cfssl-bundle
+    checksum:
+      type: github_release
+      asset: cfssl_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.3.1")
+    asset: cfssl-bundle_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    version_overrides:
+      - version_constraint: "true"
+        asset: cfssl-bundle_{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - name: cloudflare/cfssl/cfssl-certinfo
+    type: github_release
+    repo_owner: cloudflare
+    repo_name: cfssl
+    description: "CFSSL: Cloudflare's PKI and TLS toolkit"
+    rosetta2: true
+    supported_envs:
+      - darwin
+      - amd64
+    format: raw
+    files:
+      - name: cfssl-certinfo
+    checksum:
+      type: github_release
+      asset: cfssl_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.3.1")
+    asset: cfssl-certinfo_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    version_overrides:
+      - version_constraint: "true"
+        asset: cfssl-certinfo_{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - name: cloudflare/cfssl/cfssl-newkey
+    type: github_release
+    repo_owner: cloudflare
+    repo_name: cfssl
+    description: "CFSSL: Cloudflare's PKI and TLS toolkit"
+    rosetta2: true
+    supported_envs:
+      - darwin
+      - amd64
+    format: raw
+    files:
+      - name: cfssl-newkey
+    checksum:
+      type: github_release
+      asset: cfssl_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.3.1")
+    asset: cfssl-newkey_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    version_overrides:
+      - version_constraint: "true"
+        asset: cfssl-newkey_{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - name: cloudflare/cfssl/cfssl-scan
+    type: github_release
+    repo_owner: cloudflare
+    repo_name: cfssl
+    description: "CFSSL: Cloudflare's PKI and TLS toolkit"
+    rosetta2: true
+    supported_envs:
+      - darwin
+      - amd64
+    format: raw
+    files:
+      - name: cfssl-scan
+    checksum:
+      type: github_release
+      asset: cfssl_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.3.1")
+    asset: cfssl-scan_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    version_overrides:
+      - version_constraint: "true"
+        asset: cfssl-scan_{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - name: cloudflare/cfssl/cfssljson
+    type: github_release
+    repo_owner: cloudflare
+    repo_name: cfssl
+    description: "CFSSL: Cloudflare's PKI and TLS toolkit"
+    rosetta2: true
+    supported_envs:
+      - darwin
+      - amd64
+    format: raw
+    files:
+      - name: cfssljson
+    checksum:
+      type: github_release
+      asset: cfssl_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.3.1")
+    asset: cfssljson_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    version_overrides:
+      - version_constraint: "true"
+        asset: cfssljson_{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - name: cloudflare/cfssl/mkbundle
     type: github_release
     repo_owner: cloudflare
@@ -3807,6 +4062,39 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - name: cloudflare/cfssl/multirootca
+    type: github_release
+    repo_owner: cloudflare
+    repo_name: cfssl
+    description: "CFSSL: Cloudflare's PKI and TLS toolkit"
+    rosetta2: true
+    supported_envs:
+      - darwin
+      - amd64
+    format: raw
+    files:
+      - name: multirootca
+    checksum:
+      type: github_release
+      asset: cfssl_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.3.1")
+    asset: multirootca_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    version_overrides:
+      - version_constraint: "true"
+        asset: multirootca_{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: cloudflare
     repo_name: cloudflared
@@ -4663,6 +4951,40 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: dbrgn
+    repo_name: tealdeer
+    description: A very fast implementation of tldr in Rust
+    format: raw
+    asset: tealdeer-{{.OS}}-{{.Arch}}-musl
+    replacements:
+      amd64: x86_64
+      darwin: macos
+    overrides:
+      - goos: darwin
+        asset: tealdeer-{{.OS}}-{{.Arch}}
+      - goos: windows
+        asset: tealdeer-{{.OS}}-{{.Arch}}-msvc.exe
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.5.0")
+    version_overrides:
+      - version_constraint: "true"
+        # https://github.com/dbrgn/tealdeer/releases/tag/v1.5.0 supports checksum, macOS, and windows.
+        checksum:
+          enabled: false
+        supported_envs:
+          - linux/amd64
+  - type: github_release
     repo_owner: ddddddO
     repo_name: gtree
     asset: gtree_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -4743,6 +5065,28 @@ packages:
       linux: unknown-linux-musl
       darwin: apple-darwin
       windows: pc-windows-gnu
+  - type: github_release
+    repo_owner: denizgursoy
+    repo_name: gotouch
+    asset: gotouch_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Customizable Project Creator
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: denoland
     repo_name: deno
@@ -5265,6 +5609,29 @@ packages:
           - darwin
           - amd64
   - type: github_release
+    repo_owner: drud
+    repo_name: ddev
+    asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+    format: tar.gz
+    description: "DDEV: a local web development environment system for PHP"
+    replacements:
+      darwin: macos
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: dstotijn
     repo_name: hetty
     asset: hetty_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -5286,6 +5653,46 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: dtan4
+    repo_name: ghrls
+    description: List & Describe GitHub Releases
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    version_constraint: semver("> 0.1.0")
+    asset: ghrls_{{.OS}}_{{.Arch}}.{{.Format}}
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        asset: ghrls-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        replacements: {}
+        files:
+          - name: ghrls
+            src: "{{.OS}}-{{.Arch}}/ghrls"
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: dtan4
     repo_name: k8sec
@@ -5993,6 +6400,24 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: folbricht
+    repo_name: desync
+    asset: desync_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Alternative casync implementation
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: fortio
     repo_name: fortio
     asset: fortio-{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
@@ -6206,6 +6631,21 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: genuinetools
+    repo_name: amicontained
+    asset: amicontained-{{.OS}}-{{.Arch}}
+    format: raw
+    description: Container introspection tool. Find out what container runtime is being used as well as features available
+    supported_envs:
+      - linux/amd64
+    checksum:
+      type: github_release
+      asset: amicontained-linux-amd64.sha256
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
   - type: github_release
     repo_owner: genuinetools
     repo_name: img
@@ -6650,6 +7090,71 @@ packages:
         overrides:
           - goos: windows
             format: zip
+  - type: github_release
+    name: gohugoio/hugo/hugo-extended
+    repo_owner: gohugoio
+    repo_name: hugo
+    description: The world’s fastest framework for building websites
+    files:
+      - name: hugo
+    format: tar.gz
+    asset: hugo_extended_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+    supported_envs:
+      - linux
+      - amd64
+      - darwin
+    checksum:
+      type: github_release
+      asset: hugo_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.103.0")
+    # Since v0.103.0, replacements was changed.
+    overrides:
+      - goos: windows
+        format: zip
+      - goos: darwin
+        asset: hugo_extended_{{trimV .Version}}_{{.OS}}-universal.tar.gz
+    version_overrides:
+      - version_constraint: semver(">= 0.102.0")
+        # Since v0.102.0, macOS archives have replaced with universal binaries, and linux/arm64 has been supported
+        replacements: &hugo_extended_replacements_1
+          amd64: 64bit
+          arm64: ARM64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+      - version_constraint: semver("= 0.88.0")
+        # In v0.88.0, macOS/arm64 was missing
+        rosetta2: true
+        overrides:
+          - goos: windows
+            format: zip
+        replacements: *hugo_extended_replacements_1
+        supported_envs:
+          - amd64
+          - darwin
+      - version_constraint: semver(">= 0.81.0")
+        # Since v0.81.0, macOS/arm64 has been supported
+        overrides:
+          - goos: windows
+            format: zip
+        replacements: *hugo_extended_replacements_1
+        supported_envs:
+          - amd64
+          - darwin
+      - version_constraint: "true"
+        rosetta2: true
+        replacements: *hugo_extended_replacements_1
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - amd64
+          - darwin
   - type: github_release
     repo_owner: gojuno
     repo_name: minimock
@@ -7482,6 +7987,18 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{128}\\b)"
         file: "^\\b[A-Fa-f0-9]{128}\\b\\s+bin/(\\S+)$"
   - type: github_release
+    repo_owner: handlename
+    repo_name: ssmwrap
+    asset: ssmwrap_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    description: Exec command with environment variables loaded from AWS SSM
+    overrides:
+      - goos: linux
+        format: tar.gz
+    files:
+      - name: ssmwrap
+        src: ssmwrap_{{.Version}}_{{.OS}}_{{.Arch}}/ssmwrap
+  - type: github_release
     repo_owner: harelba
     repo_name: q
     description: q - Run SQL directly on CSV or TSV files
@@ -7965,6 +8482,20 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: hirosassa
+    repo_name: ksnotify
+    asset: ksnotify-{{.Arch}}-{{.OS}}
+    format: raw
+    description: A CLI command to parse kubectl diff result and notify it to GitLab
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+  - type: github_release
+    repo_owner: hirosassa
     repo_name: tfcmt-gitlab
     asset: tfcmt-gitlab_{{.OS}}_{{.Arch}}.tar.gz
     description: tfcmt-gitlab is a CLI command to parse and notify Terraform execution results. This command supports GitLab as a CI and notification platform
@@ -8176,6 +8707,12 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: go_install
+    repo_owner: in-toto
+    repo_name: in-toto-golang
+    description: A Go implementation of in-toto. in-toto is a framework to protect software supply chain integrity
+    files:
+      - name: in-toto
   - type: github_release
     repo_owner: incu6us
     repo_name: goimports-reviser
@@ -8648,6 +9185,15 @@ packages:
     repo_name: desk
     path: desk
     description: A lightweight workspace manager for the shell
+  - type: github_release
+    repo_owner: jamietsao
+    repo_name: random-winner
+    asset: random-winner-{{.Version}}-{{.OS}}-{{.Arch}}.zip
+    description: Wrote a silly program to select a random winner from my team
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
   - type: github_release
     repo_owner: jckuester
     repo_name: terradozer
@@ -9225,6 +9771,26 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\*(\\S+)$"
   - type: github_release
     repo_owner: k1LoW
+    repo_name: awsdo
+    asset: awsdo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    description: awsdo is a tool to do anything using AWS temporary credentials
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - linux/amd64
+      - darwin
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: k1LoW
     repo_name: ndiag
     asset: ndiag_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: zip
@@ -9318,10 +9884,6 @@ packages:
     repo_owner: kanisterio
     repo_name: kanister
     description: An extensible framework for application-level data management on Kubernetes
-    supported_envs:
-      - darwin
-      - linux/amd64
-    rosetta2: true
     asset: kanister_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     files:
       - name: kanctl
@@ -9333,6 +9895,65 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.84.0")
+    # The darwin support was removed.
+    # https://github.com/aquaproj/aqua-registry/pull/7537#issuecomment-1299550841
+    supported_envs:
+      - linux/amd64
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
+  - type: github_release
+    repo_owner: kashav
+    repo_name: fsql
+    description: Search for files using a fun query language
+    version_constraint: semver(">= 0.5.1")
+    # asset name was changed
+    asset: fsql-{{trimV .Version}}-fsql-{{.OS}}-{{.Arch}}.tar.gz
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    # asset structure was changed
+    files:
+      - name: fsql
+        src: fsql-{{.OS}}-{{.Arch}}/fsql
+    version_overrides:
+      - version_constraint: semver("= 0.5.0")
+        # No asset was released
+        type: go_install
+        path: github.com/kashav/fsql/cmd/fsql
+        files:
+          - name: fsql
+      - version_constraint: semver("= 0.4.0")
+        asset: fsql-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz
+        # arm64 wasn't supported
+        rosetta2: true
+        files:
+          - name: fsql
+            src: "{{.OS}}-{{.Arch}}/fsql"
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.3.0")
+        # asset name was changed
+        asset: fsql-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz
+        rosetta2: true
+        # asset structure was changed
+        files:
+          - name: fsql
+            src: "{{.OS}}-{{.Arch}}/fsql"
+      - version_constraint: "true"
+        asset: "{{.OS}}_{{.Arch}}.tar.gz"
+        rosetta2: true
+        overrides:
+          - goos: windows
+            asset: "{{.OS}}_{{.Arch}}.zip"
+        files:
+          - name: fsql
   - name: kastenhq/external-tools/k10multicluster
     type: github_release
     repo_owner: kastenhq
@@ -10502,6 +11123,44 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: kyoshidajp
+    repo_name: ghkw
+    asset: ghkw_{{.OS}}_{{.Arch}}.tar.gz
+    description: Search how many keywords in GitHub Code tool
+    replacements:
+      amd64: x86_64
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: ghkw_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: kyverno
+    repo_name: kyverno
+    asset: kyverno-cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Kubernetes Native Policy Management
+    replacements:
+      amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: lc
     repo_name: gau
     description: Fetch known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl
@@ -10642,6 +11301,26 @@ packages:
     description: Automatic Linux privesc via exploitation of low-hanging fruit e.g. gtfobins, pwnkit, dirty pipe, +w docker.sock
     supported_envs:
        - linux
+  - type: github_release
+    repo_owner: librespeed
+    repo_name: speedtest-cli
+    asset: librespeed-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: librespeed-cli
+        src: librespeed-cli
+    description: Command line client for LibreSpeed
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: liggitt
     repo_name: audit2rbac
@@ -10897,6 +11576,22 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: making
+    repo_name: rsc
+    asset: rsc-{{.Arch}}-pc-{{.OS}}
+    format: raw
+    description: RSocket Client CLI (RSC) that aims to be a curl for RSocket
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+    overrides:
+      - goos: darwin
+        asset: rsc-{{.Arch}}-{{.OS}}
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+  - type: github_release
     repo_owner: mantil-io
     repo_name: mantil
     description: Build your AWS Lambda-based Go backends quicker than ever
@@ -11075,6 +11770,25 @@ packages:
     overrides:
       - goos: linux
         format: tar.gz
+  - type: github_release
+    repo_owner: mattn
+    repo_name: twty
+    asset: twty_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    description: command-line twitter client written in golang
+    overrides:
+      - goos: linux
+        format: tar.gz
+    files:
+      - name: twty
+        src: twty_{{.Version}}_{{.OS}}_{{.Arch}}/twty
+    version_constraint: semver(">= 0.0.13")
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: maxpert
     repo_name: marmot
@@ -11258,6 +11972,47 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: minamijoyo
+    repo_name: myaws
+    asset: myaws_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: A human friendly AWS CLI written in Go
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: myaws_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">=0.4.2")
+    version_overrides:
+        # arm64 wasn't supported
+      - version_constraint: semver(">= 0.3.5")
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+        # checksum file not provided
+      - version_constraint: semver(">= 0.0.4")
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+        checksum:
+          enabled: false
+        # format was changed from zip to tar.gz
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+        checksum:
+          enabled: false
+        asset: myaws_{{.Version}}_{{.OS}}_{{.Arch}}.zip
+  - type: github_release
+    repo_owner: minamijoyo
     repo_name: tfedit
     asset: tfedit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: A refactoring tool for Terraform
@@ -11352,6 +12107,16 @@ packages:
       asset: "{{.Asset}}.sha256"
       file_format: raw
       algorithm: sha256
+  - type: github_release
+    repo_owner: mitchellh
+    repo_name: gon
+    asset: gon_{{.OS}}.zip
+    description: Sign, notarize, and package macOS CLI tools and applications written in any language. Available as both a CLI and a Go library
+    replacements:
+      darwin: macos
+    supported_envs:
+      - darwin
+    rosetta2: true
   - type: go_install
     repo_owner: mitchellh
     repo_name: gox
@@ -11694,6 +12459,157 @@ packages:
     files:
       - name: shfmt
   - type: github_release
+    repo_owner: mvisonneau
+    repo_name: gpcd
+    asset: gpcd_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: GoPro Cloud Downloader
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: gpcd_{{.Version}}_sha512sums.txt
+      file_format: regexp
+      algorithm: sha512
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{128}\\b)"
+        file: "^\\b[A-Fa-f0-9]{128}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: mvisonneau
+    repo_name: s5
+    description: Safely Store Super Sensitive Stuff
+    asset: s5_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: s5_{{.Version}}_sha512sums.txt
+      file_format: regexp
+      algorithm: sha512
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{128}\\b)"
+        file: "^\\b[A-Fa-f0-9]{128}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.1.11")
+    # darwin/arm64 was supported
+    version_overrides:
+      - version_constraint: semver("= 0.1.10")
+        # checksum file and asset were changed
+        rosetta2: true
+      - version_constraint: semver("= 0.1.9")
+        # checksum file was changed
+        asset: s5_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: s5_{{trimV .Version}}_SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: semver(">= 0.1.4")
+        # assets and checksum were changed
+        asset: s5_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: semver("= 0.1.3")
+        # linux/arm64 was supported
+        format: raw
+        rosetta2: true
+        asset: s5_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: windows
+            asset: s5_{{.OS}}_{{.Arch}}.exe
+        checksum:
+          enabled: false
+      - version_constraint: "true"
+        format: raw
+        rosetta2: true
+        asset: s5_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: windows
+            asset: s5_{{.OS}}_{{.Arch}}.exe
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          enabled: false
+  - type: github_release
+    repo_owner: mvisonneau
+    repo_name: tfcw
+    description: Terraform Cloud Wrapper
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    version_constraint: semver(">= 0.0.12")
+    asset: tfcw_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    checksum:
+      type: github_release
+      asset: tfcw_{{.Version}}_sha512sums.txt
+      file_format: regexp
+      algorithm: sha512
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{128}\\b)"
+        file: "^\\b[A-Fa-f0-9]{128}\\b\\s+(\\S+)$"
+    version_overrides:
+        # arm64 wasn't supported
+      - version_constraint: semver("= 0.0.11")
+        rosetta2: true
+        # asset name was changed
+        supported_envs:
+          - amd64
+          - darwin
+          - linux
+      - version_constraint: semver("= 0.0.10")
+        rosetta2: true
+        asset: tfcw_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - amd64
+          - darwin
+          - linux
+        checksum:
+          type: github_release
+          asset: tfcw_{{trimV .Version}}_SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: "true"
+        rosetta2: true
+        asset: tfcw_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - amd64
+          - darwin
+          - linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: naggie
     repo_name: dstask
     description: Git powered terminal-based todo manager -- markdown note page per task. Single binary
@@ -11999,12 +12915,21 @@ packages:
           linux: unknown-linux-gnu
       - goos: windows
         format: zip
+        files:
+          - name: nu
+            src: nu.exe
     supported_envs:
       - darwin
       - linux
       - amd64
+    version_constraint: semver(">= 0.71.0")
     files:
       - name: nu
+        src: nu-{{.Version}}-{{.Arch}}-{{.OS}}/nu
+    version_overrides:
+      - version_constraint: "true"
+        files:
+          - name: nu
   - type: github_release
     repo_owner: o2sh
     repo_name: onefetch
@@ -12615,6 +13540,33 @@ packages:
       - name: pen
         src: target/release/pen
   - type: github_release
+    repo_owner: pfnet-research
+    repo_name: git-ghost
+    asset: git-ghost_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Synchronize your working directory efficiently to a remote place without committing the changes
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: git-ghost_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.1.5")
+    version_overrides:
+      - version_constraint: "true"
+        asset: git-ghost-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          enabled: false
+  - type: github_release
     repo_owner: pglet
     repo_name: pglet
     asset: pglet-{{trimV .Version}}-{{.OS}}-{{.Arch}}
@@ -13071,6 +14023,25 @@ packages:
     checksum:
       type: github_release
       asset: tf2pulumi_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: purpleclay
+    repo_name: dns53
+    asset: dns53_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Dynamic DNS within Amazon Route53. Expose your EC2 quickly, easily and privately
+    replacements:
+      amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
@@ -13575,6 +14546,42 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: runatlantis
+    repo_name: atlantis
+    description: Terraform Pull Request Automation
+    asset: atlantis_{{.OS}}_{{.Arch}}.zip
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.17.4")
+    # support windows/amd64 and darwin/arm64
+    # provide a checksum file
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_overrides:
+      - version_constraint: semver(">= 0.16.0")
+        checksum:
+          enabled: false
+        rosetta2: true
+        # support linux/arm64
+        supported_envs:
+          - darwin
+          - linux
+      - version_constraint: "true"
+        checksum:
+          enabled: false
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
   - type: github_release
     repo_owner: rust-lang
     repo_name: mdBook
@@ -14483,6 +15490,10 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: go_install
+    repo_owner: sigstore
+    repo_name: sget
+    description: sget is command for safer, automatic verification of signatures and integration with Sigstore's binary transparency log, Rekor
   - type: github_release
     repo_owner: simeji
     repo_name: jid
@@ -14721,6 +15732,22 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: smartxworks
+    repo_name: knest
+    description: Kubernetes-in-Kubernetes Made Simple
+    format: raw
+    version_constraint: semver(">= 0.2.0")
+    asset: knest-{{.OS}}-{{.Arch}}
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_overrides:
+      - version_constraint: "true"
+        asset: knest
+        supported_envs:
+          - linux/amd64
+  - type: github_release
     repo_owner: snyk
     repo_name: cli
     description: Snyk CLI scans and monitors your projects for security vulnerabilities
@@ -14764,6 +15791,66 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: sonatype-nexus-community
+    repo_name: nancy
+    asset: nancy-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: A tool to check for vulnerabilities in your Golang dependencies, powered by Sonatype OSS Index
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: nancychecksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.0.20")
+    # support darwin/arm64
+    version_overrides:
+      - version_constraint: semver(">= 1.0.19")
+        rosetta2: true
+        # support linux/arm64
+      - version_constraint: semver(">= 1.0.6")
+        # change release filename templates to allow matching by selfupdate.
+        # see: https://github.com/rhysd/go-github-selfupdate/blob/master/selfupdate/detect.go#L95
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.1.4")
+        # Publish the archives for Nancy, for homebrew
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        asset: nancy-{{.OS}}.{{.Arch}}-{{.Version}}.{{.Format}}
+      - version_constraint: semver(">= 0.1.0")
+        rosetta2: true
+        format: raw
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+        asset: nancy-{{.OS}}.{{.Arch}}-{{.Version}}
+        # provide checksum file
+      - version_constraint: "true"
+        rosetta2: true
+        format: raw
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+        asset: nancy-{{.OS}}.{{.Arch}}-{{.Version}}
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: soywod
     repo_name: himalaya
@@ -16440,6 +17527,22 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: wakatime
+    repo_name: wakatime-cli
+    asset: wakatime-cli-{{.OS}}-{{.Arch}}.zip
+    description: Command line interface used by all WakaTime text editor plugins
+    files:
+    - name: wakatime-cli
+      src: wakatime-cli-{{.OS}}-{{.Arch}}
+    checksum:
+      type: github_release
+      asset: checksums_sha256.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: wallix
     repo_name: awless
     description: A Mighty CLI for AWS
@@ -16570,6 +17673,26 @@ packages:
       - darwin
       - linux/amd64
     asset: gossh-{{.Version}}-{{.OS}}-{{.Arch}}
+  - type: github_release
+    name: woodpecker-ci/woodpecker/woodpecker-cli
+    repo_owner: woodpecker-ci
+    repo_name: woodpecker
+    asset: woodpecker-cli_{{.OS}}_{{.Arch}}.tar.gz
+    files:
+      - name: woodpecker-cli
+    description: Command line tool for Woodpecker CI
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: wtetsu
     repo_name: gaze
@@ -16785,6 +17908,53 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: yinheli
+    repo_name: sshw
+    asset: sshw_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: ssh client wrapper for automatic login
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: sshw_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.1.1")
+    version_overrides:
+      - version_constraint: semver(">= 1.0.8")
+        # asset name was changed
+        asset: sshw-{{.OS}}-{{.Arch}}-{{.Version}}.tar.gz
+        files:
+          - name: sshw
+            src: sshw-{{.OS}}-{{.Arch}}-{{.Version}}/sshw
+        overrides: []
+        # arm64 wasn't supported
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        checksum:
+          # SHA1 is used for algorithm of checksum
+          enabled: false
+      - version_constraint: "true"
+        # asset name was changed
+        asset: sshw-{{.OS}}-{{.Arch}}.tar.gz
+        overrides: []
+        rosetta2: true
+        # windows wasn't supported
+        supported_envs:
+          - darwin
+          - linux/amd64
+        checksum:
+          # checksum file not provided
+          enabled: false
+  - type: github_release
     repo_owner: yohamta
     repo_name: dagu
     description: A No-code workflow executor with built-in web UI
@@ -16826,6 +17996,19 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: ysugimoto
+    repo_name: falco
+    asset: falco-{{.OS}}-{{.Arch}}
+    format: raw
+    description: falco is a VCL parser and linter optimized for Fastly
+    supported_envs:
+      - linux/amd64
+      - darwin
+    version_constraint: semver(">= 0.9.2")
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
   - type: github_release
     repo_owner: yudai
     repo_name: gotty
@@ -16911,18 +18094,27 @@ packages:
   - type: github_release
     repo_owner: zigtools
     repo_name: zls
-    asset: "{{.Arch}}-{{.OS}}.tar.xz"
     description: Zig LSP implementation + Zig Language Server
+    asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
     replacements:
       amd64: x86_64
+      arm64: aarch64
       darwin: macos
     supported_envs:
       - darwin
       - amd64
-    rosetta2: true
     files:
       - name: zls
         src: bin/zls
+    version_constraint: semver(">= 0.10.0")
+    # Archive format was changed from xz to zst
+    # https://github.com/aquaproj/aqua-registry/pull/7540#issuecomment-1299556748
+    # darwin/arm64 was supported
+    format: tar.zst
+    version_overrides:
+      - version_constraint: "true"
+        format: tar.xz
+        rosetta2: true
   - type: github_release
     repo_owner: zix99
     repo_name: rare
@@ -17001,3 +18193,32 @@ packages:
         replacements: {}
         checksum:
           enabled: false
+  - type: github_release
+    repo_owner: zyedidia
+    repo_name: micro
+    asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    description: A modern and intuitive terminal-based text editor
+    replacements:
+      darwin: osx
+      windows: win64
+    overrides:
+      - goos: linux
+        goarch: amd64
+        asset: micro-{{trimV .Version}}-{{.OS}}64.{{.Format}}
+      - goos: linux
+        goarch: arm64
+        asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - goos: windows
+        format: zip
+    rosetta2: true
+    files:
+      - name: micro
+        src: micro-{{trimV .Version}}/micro
+    version_constraint: semver(">= 2.0.0")
+    version_overrides:
+      - version_constraint: "true"
+        supported_envs:
+          - darwin
+          - windows
+          - amd64

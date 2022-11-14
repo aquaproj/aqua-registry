@@ -8,6 +8,19 @@ Please read the following document.
 
 - https://github.com/suzuki-shunsuke/oss-contribution-guide
 
+## Should you create an Issue before sending a Pull Request?
+
+Basically, you don't have to create an Issue before sending a Pull Request.
+But if the pull request requires the discussion before reviewing, you have to create an Issue in advance.
+
+For example, you don't have to create an Issue in the following cases.
+
+- Add a package
+- Fix a typo
+
+On the other hand, for example if you want to change the directory structure in `pkgs` or the workflow adding a package,
+you have to create an Issue and describe what is changed and why the change is needed.
+
 ## Requirements
 
 - [aqua](https://aquaproj.github.io/docs/reference/install) >= [v1.14.0](https://github.com/aquaproj/aqua/releases/tag/v1.14.0)
@@ -62,7 +75,7 @@ e.g. [pkg.yaml](pkgs/scaleway/scaleway-cli/pkg.yaml) [registry.yaml](pkgs/scalew
 
 ```yaml
 packages:
-  - name: scaleway/scaleway-cli@v2.6.0
+  - name: scaleway/scaleway-cli@v2.6.2
   - name: scaleway/scaleway-cli
     version: v2.4.0
 ```
@@ -73,8 +86,8 @@ packages:
 
 ```yaml
 packages:
-  - name: scaleway/scaleway-cli@v2.6.0
-  - name: scaleway/scaleway-cli@v2.6.0
+  - name: scaleway/scaleway-cli@v2.6.2
+  - name: scaleway/scaleway-cli@v2.6.2
 ```
 
 ## Change `GOOS` and `GOARCH` for testing

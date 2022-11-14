@@ -1,0 +1,74 @@
+packages:
+  - type: github_release
+    repo_owner: mvisonneau
+    repo_name: s5
+    description: Safely Store Super Sensitive Stuff
+    asset: s5_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: s5_{{.Version}}_sha512sums.txt
+      file_format: regexp
+      algorithm: sha512
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{128}\\b)"
+        file: "^\\b[A-Fa-f0-9]{128}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.1.11")
+    # darwin/arm64 was supported
+    version_overrides:
+      - version_constraint: semver("= 0.1.10")
+        # checksum file and asset were changed
+        rosetta2: true
+      - version_constraint: semver("= 0.1.9")
+        # checksum file was changed
+        asset: s5_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: s5_{{trimV .Version}}_SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: semver(">= 0.1.4")
+        # assets and checksum were changed
+        asset: s5_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: semver("= 0.1.3")
+        # linux/arm64 was supported
+        format: raw
+        rosetta2: true
+        asset: s5_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: windows
+            asset: s5_{{.OS}}_{{.Arch}}.exe
+        checksum:
+          enabled: false
+      - version_constraint: "true"
+        format: raw
+        rosetta2: true
+        asset: s5_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: windows
+            asset: s5_{{.OS}}_{{.Arch}}.exe
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          enabled: false

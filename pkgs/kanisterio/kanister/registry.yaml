@@ -3,10 +3,6 @@ packages:
     repo_owner: kanisterio
     repo_name: kanister
     description: An extensible framework for application-level data management on Kubernetes
-    supported_envs:
-      - darwin
-      - linux/amd64
-    rosetta2: true
     asset: kanister_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     files:
       - name: kanctl
@@ -18,3 +14,14 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.84.0")
+    # The darwin support was removed.
+    # https://github.com/aquaproj/aqua-registry/pull/7537#issuecomment-1299550841
+    supported_envs:
+      - linux/amd64
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
