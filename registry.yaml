@@ -268,6 +268,50 @@ packages:
     files:
       - name: btm
   - type: github_release
+    repo_owner: DelineaXPM
+    repo_name: dsv-cli
+    aliases:
+      - name: thycotic/dsv-cli
+    link: https://docs.delinea.com/dsv/current/cli-ref
+    description: Delinea DevOps Secrets Vault is a secret vault automation tool for the management of credentials for applications, databases, CI/CD tools, and services
+    search_words:
+      - secrets
+      - vault
+    files:
+      - name: dsv
+    supported_envs:
+      - darwin
+      - amd64
+    asset: dsv-{{.OS}}-{{.Arch}}
+    format: raw
+    replacements:
+      amd64: x64
+      windows: win
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}-sha256.txt"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    overrides:
+      - goos: windows
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}-sha256.txt"
+          file_format: raw
+          algorithm: sha256
+      - goos: darwin
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}-sha256.txt"
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\./(\\S+)$"
+  - type: github_release
     repo_owner: Dreamacro
     repo_name: clash
     asset: clash-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
@@ -16763,48 +16807,6 @@ packages:
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
-  - type: github_release
-    repo_owner: thycotic
-    repo_name: dsv-cli
-    asset: dsv-{{.OS}}-{{.Arch}}
-    format: raw
-    replacements:
-      amd64: x64
-      windows: win
-    supported_envs:
-      - darwin
-      - amd64
-    overrides:
-      - goos: windows
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}-sha256.txt"
-          file_format: raw
-          algorithm: sha256
-      - goos: darwin
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}-sha256.txt"
-          file_format: regexp
-          algorithm: sha256
-          pattern:
-            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
-            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\./(\\S+)$"
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}-sha256.txt"
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-    link: https://docs.delinea.com/dsv/current/cli-ref
-    description: Delinea DevOps Secrets Vault is a secret vault automation tool for the management of credentials for applications, databases, CI/CD tools, and services
-    search_words:
-      - secrets
-      - vault
-    files:
-      - name: dsv
   - type: github_release
     repo_owner: tilt-dev
     repo_name: ctlptl
