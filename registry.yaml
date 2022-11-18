@@ -1274,6 +1274,14 @@ packages:
       amd64: x86_64
     version_constraint: semver(">= 0.8.6")
     asset: skm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
     version_overrides:
       - version_constraint: "true"
         rosetta2: true
@@ -1285,14 +1293,8 @@ packages:
           - goos: linux
             goarch: arm64
             asset: skm-arm64-{{trimV .Version}}.tar.gz
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: TomWright
     repo_name: dasel
