@@ -10033,6 +10033,57 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: kayac
+    repo_name: go-katsubushi
+    asset: go-katsubushi_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: ID generator server
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    files:
+      - name: katsubushi
+    version_constraint: semver(">= 2.0.0")
+    version_overrides:
+      # checksum file not provided & tag style was changed
+      - version_constraint: semver(">= 1.6.1")
+        asset: go-katsubushi_v{{.Version}}_{{.OS}}_{{.Arch}}.zip
+        overrides:
+          - goos: linux
+            asset: go-katsubushi_v{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
+        checksum:
+          enabled: false
+        files:
+          - name: katsubushi
+            src: go-katsubushi_v{{.Version}}_{{.OS}}_{{.Arch}}/katsubushi
+      # asset name was changed
+      - version_constraint: semver(">= 0.1.0")
+        asset: katsubushi-{{.Version}}-{{.OS}}-{{.Arch}}.zip
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
+        checksum:
+          enabled: false
+      # linux only support
+      - version_constraint: "true"
+        asset: katsubushi-{{.Version}}-{{.OS}}-{{.Arch}}.zip
+        supported_envs:
+          - linux/amd64
+        checksum:
+          enabled: false
+        files:
+          - name: katsubushi
+            src: katsubushi-{{.Version}}-{{.OS}}-{{.Arch}}
+  - type: github_release
     repo_owner: kcp-dev
     repo_name: kcp
     asset: kcp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
