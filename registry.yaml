@@ -1015,18 +1015,47 @@ packages:
   - type: github_release
     repo_owner: Songmu
     repo_name: ecschedule
-    asset: ecschedule_{{.Version}}_{{.OS}}_amd64.{{.Format}}
     description: ecschedule is a tool to manage ECS Scheduled Tasks
+    asset: ecschedule_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     supported_envs:
       - darwin
       - linux
     files:
       - name: ecschedule
-        src: ecschedule_{{.Version}}_{{.OS}}_amd64/ecschedule
-    format: tar.gz
+        src: ecschedule_{{.Version}}_{{.OS}}_{{.Arch}}/ecschedule
     overrides:
       - goos: darwin
         format: zip
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.7.0")
+    version_overrides:
+      # darwin/amd64 wasn't supported
+      - version_constraint: semver("= 0.5.1")
+        checksum:
+          enabled: false
+        supported_envs:
+          - linux
+          - darwin/arm64
+      # checksum file not provided
+      - version_constraint: semver(">= 0.3.2")
+        checksum:
+          enabled: false
+      # arm64 wasn't supported
+      - version_constraint: "true"
+        supported_envs:
+          - darwin
+          - linux/amd64
+        rosetta2: true
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: Songmu
     repo_name: gh2changelog
