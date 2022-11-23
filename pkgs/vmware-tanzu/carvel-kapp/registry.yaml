@@ -11,6 +11,8 @@ packages:
       - darwin
       - linux
       - amd64
+    version_constraint: semver(">= 0.46.0")
+    # support checksum
     checksum:
       type: github_release
       asset: checksums.txt
@@ -18,4 +20,21 @@ packages:
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\./(\\S+)$"
+    version_overrides:
+      # support darwin/arm64
+      - version_constraint: semver(">= 0.39.0")
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.35.0")
+        # support linux/arm64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: "true"
+        rosetta2: true
+        checksum:
+          enabled: false
+        supported_envs:
+          - darwin
+          - amd64
