@@ -11789,6 +11789,33 @@ packages:
       - darwin
     rosetta2: true
   - type: github_release
+    repo_owner: makiuchi-d
+    repo_name: arelo
+    description: a simple auto reload (live reload) utility
+    asset: arelo_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: arelo_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.10.2")
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
+          - windows/amd64
+  - type: github_release
     repo_owner: mantil-io
     repo_name: mantil
     description: Build your AWS Lambda-based Go backends quicker than ever
