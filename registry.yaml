@@ -16775,15 +16775,33 @@ packages:
         format: zip
       - goos: darwin
         asset: tkn_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+    version_constraint: semver(">= 0.28.0")
+    # https://github.com/tektoncd/cli/pull/1745
+    # arm64 was replaced to aarch64
     replacements:
       darwin: Darwin
       linux: Linux
       windows: Windows
       386: i386
       amd64: x86_64
-    version_constraint: semver(">= 0.24.0")
+      arm64: aarch64
     version_overrides:
+      # darwin universal binary
+      # https://github.com/tektoncd/cli/pull/1528
+      - version_constraint: semver(">= 0.24.0")
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+          386: i386
+          amd64: x86_64
       - version_constraint: "true"
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+          386: i386
+          amd64: x86_64
         overrides:
           - goos: windows
             format: zip
