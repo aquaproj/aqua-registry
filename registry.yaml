@@ -1015,18 +1015,47 @@ packages:
   - type: github_release
     repo_owner: Songmu
     repo_name: ecschedule
-    asset: ecschedule_{{.Version}}_{{.OS}}_amd64.{{.Format}}
     description: ecschedule is a tool to manage ECS Scheduled Tasks
+    asset: ecschedule_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     supported_envs:
       - darwin
       - linux
     files:
       - name: ecschedule
-        src: ecschedule_{{.Version}}_{{.OS}}_amd64/ecschedule
-    format: tar.gz
+        src: ecschedule_{{.Version}}_{{.OS}}_{{.Arch}}/ecschedule
     overrides:
       - goos: darwin
         format: zip
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.7.0")
+    version_overrides:
+      # darwin/amd64 wasn't supported
+      - version_constraint: semver("= 0.5.1")
+        checksum:
+          enabled: false
+        supported_envs:
+          - linux
+          - darwin/arm64
+      # checksum file not provided
+      - version_constraint: semver(">= 0.3.2")
+        checksum:
+          enabled: false
+      # arm64 wasn't supported
+      - version_constraint: "true"
+        supported_envs:
+          - darwin
+          - linux/amd64
+        rosetta2: true
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: Songmu
     repo_name: gh2changelog
@@ -5462,6 +5491,40 @@ packages:
             file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
       - version_constraint: "true"
   - type: github_release
+    repo_owner: docker
+    repo_name: hub-tool
+    asset: hub-tool-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Docker Hub experimental CLI tool
+    files:
+      - name: hub-tool
+        src: hub-tool/hub-tool
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: hub-tool
+            src: hub-tool.exe
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_constraint: semver(">= 0.4.1")
+    # darwin/arm64 was supported
+    version_overrides:
+      - version_constraint: semver(">= 0.1.1")
+        # linux/arm64 was supported
+        # asset name and format were changed
+        rosetta2: true
+      - version_constraint: "true"
+        asset: hub-tool_{{.OS}}_{{.Arch}}
+        overrides: []
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+  - type: github_release
     repo_owner: doitintl
     repo_name: kube-no-trouble
     description: Easily check your clusters for use of deprecated APIs
@@ -9737,6 +9800,92 @@ packages:
       - name: fzf-tmux
     checksum:
       enabled: false
+  - name: k0kubun/sqldef/mssqldef
+    type: github_release
+    repo_owner: k0kubun
+    repo_name: sqldef
+    description: Idempotent schema management for Microsoft SQL Server
+    asset: mssqldef_{{.OS}}_{{.Arch}}.{{.Format}}
+    files:
+      - name: mssqldef
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - darwin
+      - linux
+      - windows/amd64
+  - name: k0kubun/sqldef/mysqldef
+    type: github_release
+    repo_owner: k0kubun
+    repo_name: sqldef
+    description: Idempotent schema management for MySQL
+    asset: mysqldef_{{.OS}}_{{.Arch}}.{{.Format}}
+    files:
+      - name: mysqldef
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz
+    version_constraint: semver(">= 0.9.1")
+    # darwin/arm64 is supported
+    supported_envs:
+      - darwin
+      - linux
+      - windows/amd64
+    version_overrides:
+      - version_constraint: semver(">= 0.1.1")
+        rosetta2: true
+        # windows/amd64 is supported
+        # linux/arm64 is supported
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
+  - name: k0kubun/sqldef/psqldef
+    type: github_release
+    repo_owner: k0kubun
+    repo_name: sqldef
+    description: Idempotent schema management for MySQL, PostgreSQL, and more
+    asset: psqldef_{{.OS}}_{{.Arch}}.{{.Format}}
+    files:
+      - name: psqldef
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz
+    version_constraint: semver(">= 0.9.1")
+    # darwin/arm64 is supported
+    supported_envs:
+      - darwin
+      - linux
+    version_overrides:
+      - version_constraint: semver(">= 0.1.1")
+        rosetta2: true
+        # linux/arm64 is supported
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
+  - name: k0kubun/sqldef/sqlite3def
+    type: github_release
+    repo_owner: k0kubun
+    repo_name: sqldef
+    description: Idempotent schema management for MySQL, PostgreSQL, and more
+    asset: sqlite3def_{{.OS}}_{{.Arch}}.{{.Format}}
+    files:
+      - name: sqlite3def
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - darwin
+      - linux
+      - windows/amd64
   - type: github_release
     repo_owner: k0sproject
     repo_name: k0s
@@ -10254,6 +10403,77 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: knative
+    repo_name: func
+    description: Knative Functions client API and CLI
+    format: raw
+    asset: func_{{.OS}}_{{.Arch}}
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semverWithVersion(">= 1.7.0", trimPrefix(Version, "knative-")) or semver(">= 0.26.0")
+    # support linux/arm64
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_overrides:
+      - version_constraint: semver(">= 0.23.1")
+        # support darwin/arm64
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.20.0")
+        # support checksum
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          type: github_release
+          asset: checksum.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: semver(">= 0.9.0")
+        # rename faas to function
+        asset: func_{{.OS}}_{{.Arch}}.gz
+        overrides:
+          - goos: windows
+            asset: func_{{.OS}}_{{.Arch}}.exe.gz
+        format: gz
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          enabled: false
+        files:
+          - name: func
+            src: func_{{.OS}}_{{.Arch}}
+      - version_constraint: "true"
+        asset: faas_{{.OS}}_{{.Arch}}.gz
+        overrides:
+          - goos: windows
+            asset: faas_{{.OS}}_{{.Arch}}.exe.gz
+        format: gz
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          enabled: false
+        files:
+          - name: faas
+            src: faas_{{.OS}}_{{.Arch}}
+  - type: github_release
     repo_owner: knqyf263
     repo_name: cob
     description: Continuous Benchmark for Go Project
@@ -10749,6 +10969,15 @@ packages:
           - linux
           - darwin
           - amd64
+  - name: kubernetes-sigs/kwok/kwokctl
+    type: github_release
+    repo_owner: kubernetes-sigs
+    repo_name: kwok
+    description: Kubernetes WithOut Kubelet -  Simulates thousands of Nodes and Clusters
+    asset: kwokctl-{{.OS}}-{{.Arch}}
+    format: raw
+    files:
+      - name: kwokctl
   - type: github_release
     repo_owner: kubernetes
     repo_name: kompose
@@ -11645,6 +11874,33 @@ packages:
       - darwin
     rosetta2: true
   - type: github_release
+    repo_owner: makiuchi-d
+    repo_name: arelo
+    description: a simple auto reload (live reload) utility
+    asset: arelo_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: arelo_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.10.2")
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
+          - windows/amd64
+  - type: github_release
     repo_owner: mantil-io
     repo_name: mantil
     description: Build your AWS Lambda-based Go backends quicker than ever
@@ -12228,11 +12484,14 @@ packages:
     files:
       - name: authy
         src: authy-{{.OS}}-{{.Arch}}
-  - type: github_release
+  - name: mongodb/mongodb-atlas-cli/mongocli
+    type: github_release
     repo_owner: mongodb
-    repo_name: mongocli
-    description: MongoDB CLI enables you to manage your MongoDB in the Cloud
-    asset: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    repo_name: mongodb-atlas-cli
+    description: MongoDB Atlas CLI and MongoDB CLI enable you to manage your MongoDB in the Cloud
+    aliases:
+      - name: mongodb/mongocli
+    asset: mongocli_{{trimPrefix "mongocli/v" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: zip
     replacements:
       darwin: macos
@@ -12245,11 +12504,12 @@ packages:
         format: tar.gz
         files:
           - name: mongocli
-            src: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/mongocli
+            src: mongocli_{{trimPrefix "mongocli/v" .Version}}_{{.OS}}_{{.Arch}}/bin/mongocli
     supported_envs:
       - darwin
       - linux
-      - amd64
+    version_filter: Version startsWith "mongocli/" or semver("< 1.23.0")
+    version_constraint: semverWithVersion(">= 1.23.0", trimPrefix(Version, "mongocli/"))
     checksum:
       type: github_release
       asset: checksums.txt
@@ -12258,6 +12518,34 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      # asset style was changed
+      - version_constraint: semver(">= 1.15.0")
+        asset: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - linux
+        overrides:
+          - goos: linux
+            format: tar.gz
+            files:
+              - name: mongocli
+                src: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/mongocli
+      # arm64 wasn't supported
+      - version_constraint: "true"
+        asset: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - amd64
+          - darwin
+        rosetta2: true
+        files:
+          - name: mongocli
+        overrides:
+          - goos: linux
+            format: tar.gz
+            files:
+              - name: mongocli
+                src: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/mongocli
   - type: github_release
     repo_owner: mozilla
     repo_name: sops
@@ -13322,6 +13610,19 @@ packages:
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: orlangure
+    repo_name: gocovsh
+    asset: gocovsh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: "Go Coverage in your terminal: a tool for exploring Go Coverage reports from the command line"
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: ory
@@ -16591,15 +16892,33 @@ packages:
         format: zip
       - goos: darwin
         asset: tkn_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+    version_constraint: semver(">= 0.28.0")
+    # https://github.com/tektoncd/cli/pull/1745
+    # arm64 was replaced to aarch64
     replacements:
       darwin: Darwin
       linux: Linux
       windows: Windows
       386: i386
       amd64: x86_64
-    version_constraint: semver(">= 0.24.0")
+      arm64: aarch64
     version_overrides:
+      # darwin universal binary
+      # https://github.com/tektoncd/cli/pull/1528
+      - version_constraint: semver(">= 0.24.0")
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+          386: i386
+          amd64: x86_64
       - version_constraint: "true"
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+          386: i386
+          amd64: x86_64
         overrides:
           - goos: windows
             format: zip
@@ -17394,6 +17713,8 @@ packages:
       - darwin
       - linux
       - amd64
+    version_constraint: semver(">= 0.46.0")
+    # support checksum
     checksum:
       type: github_release
       asset: checksums.txt
@@ -17401,7 +17722,24 @@ packages:
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\./(\\S+)$"
+    version_overrides:
+      # support darwin/arm64
+      - version_constraint: semver(">= 0.39.0")
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.35.0")
+        # support linux/arm64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: "true"
+        rosetta2: true
+        checksum:
+          enabled: false
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: vmware-tanzu
     repo_name: carvel-kbld
