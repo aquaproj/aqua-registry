@@ -786,6 +786,46 @@ packages:
           - name: tridentctl
             src: trident-installer/extras/macos/bin/tridentctl
   - type: github_release
+    repo_owner: Orange-OpenSource
+    repo_name: hurl
+    asset: hurl-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    description: Hurl, run and test HTTP requests with plain text
+    files:
+      - name: hurl
+        src: hurl-{{.Version}}/hurl
+      - name: hurlfmt
+        src: hurl-{{.Version}}/hurlfmt
+    replacements:
+      amd64: x86_64
+      darwin: macos
+      windows: win64
+    overrides:
+      - goos: windows
+        format: zip
+        asset: hurl-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: hurl
+            src: hurl.exe
+          - name: hurlfmt
+            src: hurlfmt.exe
+    supported_envs:
+      - darwin
+      - amd64
+    version_constraint: semver(">= 1.7.0")
+    version_overrides:
+      - version_constraint: semver(">= 1.6.1")
+        replacements:
+          amd64: x86_64
+          darwin: osx
+          windows: win64
+      - version_constraint: "true"
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: osx
+          windows: win64
+  - type: github_release
     repo_owner: PaulJuliusMartinez
     repo_name: jless
     asset: jless-{{.Version}}-{{.Arch}}-{{.OS}}.zip
@@ -2275,11 +2315,22 @@ packages:
     files:
       - name: argo
         src: argo-{{.OS}}-{{.Arch}}
+    version_constraint: semver(">= 3.4.4")
     checksum:
       type: github_release
-      asset: "{{.Asset}}.sha256"
-      file_format: raw
+      asset: argo-workflows-cli-checksums.txt
+      file_format: regexp
       algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: "true"
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          file_format: raw
+          algorithm: sha256
   - type: github_release
     repo_owner: aristocratos
     repo_name: btop
@@ -12485,6 +12536,38 @@ packages:
     files:
       - name: authy
         src: authy-{{.OS}}-{{.Arch}}
+  - name: mongodb/mongodb-atlas-cli/atlascli
+    type: github_release
+    repo_owner: mongodb
+    repo_name: mongodb-atlas-cli
+    description: MongoDB Atlas CLI and MongoDB CLI enable you to manage your MongoDB in the Cloud
+    asset: mongodb-atlas-cli_{{trimPrefix "atlascli/v" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    replacements:
+      darwin: macos
+      amd64: x86_64
+    files:
+      - name: atlas
+        src: bin/atlas
+    overrides:
+      - goos: linux
+        format: tar.gz
+        files:
+          - name: atlas
+            src: mongodb-atlas-cli_{{trimPrefix "atlascli/v" .Version}}_{{.OS}}_{{.Arch}}/bin/atlas
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_filter: Version startsWith "atlascli/"
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - name: mongodb/mongodb-atlas-cli/mongocli
     type: github_release
     repo_owner: mongodb
