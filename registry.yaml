@@ -6612,6 +6612,22 @@ packages:
         format: zip
   - type: github_release
     repo_owner: fujiwara
+    repo_name: riex
+    asset: riex_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: AWS RI expiration detector
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: fujiwara
     repo_name: tfstate-lookup
     description: Lookup resource attributes in tfstate
     asset: tfstate-lookup_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
