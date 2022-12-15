@@ -13,11 +13,24 @@ packages:
     overrides:
       - goos: windows
         format: zip
+    # TODO support signature verification with Cosign
+    # https://github.com/updatecli/updatecli/releases/tag/v0.40.2
     checksum:
       type: github_release
-      asset: updatecli_{{trimV .Version}}_checksums.txt
+      asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.40.2")
+    version_overrides:
+      - version_constraint: "true"
+        checksum:
+          type: github_release
+          asset: updatecli_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
