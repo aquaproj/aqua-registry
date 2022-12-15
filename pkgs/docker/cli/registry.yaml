@@ -7,9 +7,6 @@ packages:
     version_filter: not (Version contains "beta" or Version contains "rc")
     url: https://download.docker.com/{{.OS}}/static/stable/{{.Arch}}/docker-{{trimV .Version}}.{{.Format}}
     format: tgz
-    format_overrides:
-      - goos: windows
-        format: zip
     files:
       - name: docker
         src: docker/docker
@@ -34,6 +31,8 @@ packages:
             src: docker/dockerd
           - name: runc
             src: docker/runc
+      - goos: windows
+        format: zip
     replacements:
       darwin: mac
       windows: win
