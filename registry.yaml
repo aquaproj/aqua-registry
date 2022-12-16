@@ -4625,6 +4625,22 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+out/(\\S+)$"
   - type: github_release
+    repo_owner: corrupt952
+    repo_name: closest
+    asset: closest_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: The command that searches the current directory or parent directories for a specific file and returns the closest path
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: closest_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: cortesi
     repo_name: modd
     description: A flexible developer tool that runs processes and responds to filesystem changes
@@ -5467,9 +5483,6 @@ packages:
     version_filter: not (Version contains "beta" or Version contains "rc")
     url: https://download.docker.com/{{.OS}}/static/stable/{{.Arch}}/docker-{{trimV .Version}}.{{.Format}}
     format: tgz
-    format_overrides:
-      - goos: windows
-        format: zip
     files:
       - name: docker
         src: docker/docker
@@ -5494,6 +5507,8 @@ packages:
             src: docker/dockerd
           - name: runc
             src: docker/runc
+      - goos: windows
+        format: zip
     replacements:
       darwin: mac
       windows: win
@@ -13451,6 +13466,16 @@ packages:
       - amd64
     rosetta2: true
   - type: github_release
+    repo_owner: octohelm
+    repo_name: cuemod
+    description: experimental cuelang mod tool
+    supported_envs:
+      - linux
+      - darwin
+    asset: cuem_{{.OS}}_{{.Arch}}.tar.gz
+    files:
+      - name: cuem
+  - type: github_release
     repo_owner: ogham
     repo_name: dog
     description: A command-line DNS client
@@ -14433,6 +14458,22 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: prometheus
+    repo_name: promlens
+    asset: promlens-{{trimV .Version}}.{{.OS}}-{{.Arch}}.tar.gz
+    description: PromLens – The query builder, analyzer, and explainer for PromQL
+    checksum:
+      type: github_release
+      asset: sha256sums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    files:
+      - name: promlens
+        src: promlens-{{trimV .Version}}.{{.OS}}-{{.Arch}}/promlens
   - name: protocolbuffers/protobuf-go/protoc-gen-go
     type: github_release
     repo_owner: protocolbuffers
@@ -17779,14 +17820,27 @@ packages:
     overrides:
       - goos: windows
         format: zip
+    # TODO support signature verification with Cosign
+    # https://github.com/updatecli/updatecli/releases/tag/v0.40.2
     checksum:
       type: github_release
-      asset: updatecli_{{trimV .Version}}_checksums.txt
+      asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.40.2")
+    version_overrides:
+      - version_constraint: "true"
+        checksum:
+          type: github_release
+          asset: updatecli_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: uptrace
     repo_name: uptrace
