@@ -1,0 +1,52 @@
+---
+name: Release
+on:
+  push:
+    tags: ["*"]
+permissions:
+  contents: write # required to create a release
+  id-token: write # required for cosign
+jobs:
+  generate_hashes:
+    runs-on: ubuntu-latest
+    outputs:
+      hashes: ${{ steps.hash.outputs.hashes }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3.1.0
+      - name: Generate hashes
+        id: hash
+        run: |
+          # sha256sum generates sha256 hash for all artifacts.
+          # base64 -w0 encodes to base64 and outputs on a single line.
+          # sha256sum artifact1 artifact2 ... | base64 -w0
+          echo "hashes=$(sha256sum registry.yaml | base64 -w0)" >> "$GITHUB_OUTPUT"
+  provenance:
+    needs: [generate_hashes]
+    permissions:
+      actions: read # Needed for detection of GitHub Actions environment.
+      id-token: write # Needed for provenance signing and ID
+      contents: write # Needed for release uploads
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.4.0
+    with:
+      base64-subjects: "${{ needs.generate_hashes.outputs.hashes }}"
+      # Upload provenance to a new release
+      upload-assets: false
+
+  release:
+    needs: [provenance]
+    runs-on: ubuntu-latest
+    steps:
+      - run: mkdir -p dist/provenance
+      - name: Download the provenance
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.provenance.outputs.provenance-name }}
+          path: dist/provenance/${{ needs.provenance.outputs.provenance-name }}
+
+      - name: Release
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v0.1.15
+        with:
+          prerelease: true
+          files: |
+            dist/**/*
