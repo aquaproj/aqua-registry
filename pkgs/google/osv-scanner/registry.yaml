@@ -1,0 +1,22 @@
+packages:
+  - type: github_release
+    repo_owner: google
+    repo_name: osv-scanner
+    asset: osv-scanner_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    format: raw
+    description: Vulnerability scanner written in Go which uses the data provided by https://osv.dev
+    checksum:
+      type: github_release
+      asset: osv-scanner_{{trimV .Version}}_SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.0.1")
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
