@@ -1,0 +1,38 @@
+packages:
+  - type: github_release
+    repo_owner: chenjiandongx
+    repo_name: kubectl-images
+    asset: kubectl-images_{{.OS}}_{{.Arch}}.tar.gz
+    description: Show container images used in the cluster
+    version_constraint: semver(">= 0.3.6")
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: kubectl-images_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: semver(">= 0.3.4")
+        # linux/arm64 is supported
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.3.3")
+        # darwin/arm64 is supported
+        checksum:
+          enabled: false
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
+        checksum:
+          enabled: false
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
