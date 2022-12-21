@@ -1,0 +1,18 @@
+packages:
+  - type: github_release
+    repo_owner: chenjiandongx
+    repo_name: kubectl-images
+    asset: kubectl-images_{{.OS}}_{{.Arch}}.tar.gz
+    description: Show container images used in the cluster
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: kubectl-images_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
