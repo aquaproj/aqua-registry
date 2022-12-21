@@ -3750,6 +3750,7 @@ packages:
     repo_name: kubectl-images
     asset: kubectl-images_{{.OS}}_{{.Arch}}.tar.gz
     description: Show container images used in the cluster
+    version_constraint: semver(">= 0.3.6")
     supported_envs:
       - darwin
       - linux
@@ -3762,6 +3763,25 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: semver(">= 0.3.4")
+        # linux/arm64 is supported
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.3.3")
+        # darwin/arm64 is supported
+        checksum:
+          enabled: false
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
+        checksum:
+          enabled: false
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: chmln
     repo_name: sd
