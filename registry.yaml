@@ -2060,6 +2060,22 @@ packages:
       - linux
   - type: github_release
     repo_owner: aquaproj
+    repo_name: example-go-slsa-provenance
+    asset: example-go-slsa-provenance_{{.OS}}_{{.Arch}}.tar.gz
+    description: Example Go Application with SLSA Provenance
+    slsa_provenance:
+      type: github_release
+      asset: multiple.intoto.jsonl
+    version_constraint: semver(">= 0.1.1")
+    version_overrides:
+      - version_constraint: "true"
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+          # repository was transferred from suzuki-shunsuke to aquaproj
+          source_uri: github.com/suzuki-shunsuke/example-go-slsa-provenance
+  - type: github_release
+    repo_owner: aquaproj
     repo_name: registry-tool
     description: CLI to develop aqua Registry
     asset: registry-tool_{{.OS}}_{{.Arch}}.tar.gz
@@ -17421,6 +17437,24 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/terraform-linters/tflint/releases/download/{{.Version}}/checksums.txt.keyless.sig
+          - --certificate
+          - https://github.com/terraform-linters/tflint/releases/download/{{.Version}}/checksums.txt.pem
+    version_constraint: semver(">= 0.36.0")
+    version_overrides:
+      - version_constraint: "true"
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: tfmigrator
     repo_name: cli
