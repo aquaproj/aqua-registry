@@ -16,3 +16,21 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/terraform-linters/tflint/releases/download/{{.Version}}/checksums.txt.keyless.sig
+          - --certificate
+          - https://github.com/terraform-linters/tflint/releases/download/{{.Version}}/checksums.txt.pem
+    version_constraint: semver(">= 0.36.0")
+    version_overrides:
+      - version_constraint: "true"
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
