@@ -3444,6 +3444,28 @@ packages:
     files:
       - name: protoc-gen-connect-go
   - type: github_release
+    repo_owner: bufbuild
+    repo_name: protoc-gen-validate
+    asset: protoc-gen-validate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: protoc plugin to generate polyglot message validators
+    supported_envs:
+      - linux
+      - darwin
+    files:
+      - name: protoc-gen-validate
+      # 2022-12-29 @suzuki-shunsuke I wasn't sure if we should install protoc-gen-validate-* in $PATH, so I commented out them at the moment
+      # - name: protoc-gen-validate-cpp
+      # - name: protoc-gen-validate-go
+      # - name: protoc-gen-validate-java
+    checksum:
+      type: github_release
+      asset: protoc-gen-validate_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: buildkite
     repo_name: agent
     description: The Buildkite Agent is an open-source toolkit written in Golang for securely running build jobs on any device or network
