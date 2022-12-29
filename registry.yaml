@@ -18337,6 +18337,41 @@ packages:
     repo_owner: vburenin
     repo_name: ifacemaker
     description: Generate interfaces from structure methods
+    version_constraint: semver(">= 1.2.0")
+    version_overrides:
+      - version_constraint: "true"
+        type: github_release
+        rosetta2: true
+        asset: ifacemaker_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+        overrides:
+          - goos: linux
+            goarch: arm64
+            type: go_install
+            asset: ""
+            replacements: {}
+            checksum:
+              enabled: false
+          - goos: windows
+            goarch: arm64
+            type: go_install
+            asset: ""
+            replacements: {}
+            checksum:
+              enabled: false
   - type: github_release
     repo_owner: vektra
     repo_name: mockery
