@@ -9662,6 +9662,38 @@ packages:
       - name: mmv
         src: mmv_{{.Version}}_{{.OS}}_{{.Arch}}/mmv
   - type: github_release
+    repo_owner: ivaaaan
+    repo_name: smug
+    asset: smug_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Session manager and task runner for tmux. Start your development environment within one command
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.2.5")
+    version_overrides:
+      # added support for linux/arm64
+      - version_constraint: semver(">=0.2.3")
+        supported_envs:
+          - amd64
+          - linux
+        rosetta2: true
+      # only supported amd64
+      - version_constraint: "true"
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+  - type: github_release
     repo_owner: ivanilves
     repo_name: lstags
     description: Explore Docker registries and manipulate Docker images
