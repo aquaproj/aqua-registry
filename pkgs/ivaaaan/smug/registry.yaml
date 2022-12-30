@@ -1,0 +1,19 @@
+packages:
+  - type: github_release
+    repo_owner: ivaaaan
+    repo_name: smug
+    asset: smug_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Session manager and task runner for tmux. Start your development environment within one command
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
