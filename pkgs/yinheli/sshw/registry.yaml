@@ -30,7 +30,13 @@ packages:
           - amd64
         checksum:
           # SHA1 is used for algorithm of checksum
-          enabled: false
+          type: github_release
+          asset: checksum.txt
+          file_format: regexp
+          algorithm: sha1
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{40}\b)
+            file: "^\\b[A-Fa-f0-9]{40}\\b\\s+(\\S+)$"
       - version_constraint: "true"
         # asset name was changed
         asset: sshw-{{.OS}}-{{.Arch}}.tar.gz
