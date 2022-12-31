@@ -1,0 +1,17 @@
+packages:
+  - type: github_release
+    repo_owner: prometheus
+    repo_name: prom2json
+    asset: prom2json-{{trimV .Version}}.{{.OS}}-{{.Arch}}.tar.gz
+    description: A tool to scrape a Prometheus client and dump the result as JSON
+    checksum:
+      type: github_release
+      asset: sha256sums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    files:
+      - name: prom2json
+        src: prom2json-{{trimV .Version}}.{{.OS}}-{{.Arch}}/prom2json
