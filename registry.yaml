@@ -268,6 +268,18 @@ packages:
     files:
       - name: btm
   - type: github_release
+    repo_owner: CycloneDX
+    repo_name: cyclonedx-cli
+    asset: cyclonedx-{{.OS}}-{{.Arch}}
+    format: raw
+    description: CycloneDX CLI tool for SBOM analysis, merging, diffs and format conversions
+    replacements:
+      amd64: x64
+      darwin: osx
+      windows: win
+    files:
+      - name: cyclonedx
+  - type: github_release
     repo_owner: DelineaXPM
     repo_name: dsv-cli
     aliases:
@@ -338,6 +350,19 @@ packages:
       asset: "{{.Asset}}.sha256"
       file_format: raw
       algorithm: sha256
+  - type: github_release
+    repo_owner: FairwindsOps
+    repo_name: gonogo
+    description: Tool to evaluate upgrade confidence for Kubernetes cluster addons
+    asset: gonogo_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: FairwindsOps
     repo_name: nova
@@ -720,6 +745,22 @@ packages:
       - darwin
       - amd64
     rosetta2: true
+  - type: github_release
+    repo_owner: MordechaiHadad
+    repo_name: bob
+    asset: bob-{{.OS}}-{{.Arch}}.zip
+    description: A version manager for neovim
+    replacements:
+      amd64: x86_64
+      darwin: macos
+      arm64: arm
+    supported_envs:
+      - amd64
+      - darwin
+    version_constraint: semver(">= 1.2.1")
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
   - type: github_release
     repo_owner: MusicDin
     repo_name: kubitect
@@ -1134,6 +1175,18 @@ packages:
         format: tar.gz
   - type: github_release
     repo_owner: Songmu
+    repo_name: gitsemvers
+    description: Retrieve semvers from git tags
+    asset: gitsemvers_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz
+    files:
+      - name: git-semvers
+        src: gitsemvers_{{.Version}}_{{.OS}}_{{.Arch}}/git-semvers
+  - type: github_release
+    repo_owner: Songmu
     repo_name: gocredits
     description: creates CREDITS file from LICENSE files of dependencies
     rosetta2: true
@@ -1251,6 +1304,22 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: Songmu
+    repo_name: timeout
+    asset: timeout_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    description: Timeout invocation. Go porting of GNU timeout and able to use as Go package
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    files:
+      - name: go-timeout
+        src: timeout_{{.Version}}_{{.OS}}_{{.Arch}}/go-timeout
   - type: github_release
     repo_owner: TaKO8Ki
     repo_name: frum
@@ -2045,6 +2114,22 @@ packages:
       - linux
   - type: github_release
     repo_owner: aquaproj
+    repo_name: example-go-slsa-provenance
+    asset: example-go-slsa-provenance_{{.OS}}_{{.Arch}}.tar.gz
+    description: Example Go Application with SLSA Provenance
+    slsa_provenance:
+      type: github_release
+      asset: multiple.intoto.jsonl
+    version_constraint: semver(">= 0.1.1")
+    version_overrides:
+      - version_constraint: "true"
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+          # repository was transferred from suzuki-shunsuke to aquaproj
+          source_uri: github.com/suzuki-shunsuke/example-go-slsa-provenance
+  - type: github_release
+    repo_owner: aquaproj
     repo_name: registry-tool
     description: CLI to develop aqua Registry
     asset: registry-tool_{{.OS}}_{{.Arch}}.tar.gz
@@ -2330,6 +2415,12 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      cosign:
+        opts:
+          - --signature
+          - https://github.com/argoproj/argo-workflows/releases/download/{{.Version}}/argo-workflows-cli-checksums.sig
+          - --key
+          - https://github.com/argoproj/argo-workflows/releases/download/{{.Version}}/argo-workflows-cosign.pub
     version_overrides:
       - version_constraint: "true"
         checksum:
@@ -3102,11 +3193,13 @@ packages:
     asset: bw-{{.OS}}-{{trimPrefix "cli-v" .Version}}.zip
     version_filter: Version startsWith "cli-"
     files:
-    - name: bw
-      src:  bw
+      - name: bw
     description: Bitwarden CLI
     replacements:
       darwin: macos
+    supported_envs:
+      - darwin
+      - amd64
     checksum:
       type: github_release
       asset: bw-{{.OS}}-sha256-{{trimPrefix "cli-v" .Version}}.txt
@@ -3354,6 +3447,36 @@ packages:
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: go_install
+    name: bufbuild/connect-go/protoc-gen-connect-go
+    repo_owner: bufbuild
+    repo_name: connect-go
+    description: A better gRPC
+    path: github.com/bufbuild/connect-go/cmd/protoc-gen-connect-go
+    files:
+      - name: protoc-gen-connect-go
+  - type: github_release
+    repo_owner: bufbuild
+    repo_name: protoc-gen-validate
+    asset: protoc-gen-validate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: protoc plugin to generate polyglot message validators
+    supported_envs:
+      - linux
+      - darwin
+    files:
+      - name: protoc-gen-validate
+      # 2022-12-29 @suzuki-shunsuke I wasn't sure if we should install protoc-gen-validate-* in $PATH, so I commented out them at the moment
+      # - name: protoc-gen-validate-cpp
+      # - name: protoc-gen-validate-go
+      # - name: protoc-gen-validate-java
+    checksum:
+      type: github_release
+      asset: protoc-gen-validate_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: buildkite
@@ -3730,6 +3853,43 @@ packages:
             files:
               - name: cheat
                 src: dist/cheat-windows-amd64.exe
+  - type: github_release
+    repo_owner: chenjiandongx
+    repo_name: kubectl-images
+    asset: kubectl-images_{{.OS}}_{{.Arch}}.tar.gz
+    description: Show container images used in the cluster
+    version_constraint: semver(">= 0.3.6")
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: kubectl-images_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: semver(">= 0.3.4")
+        # linux/arm64 is supported
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.3.3")
+        # darwin/arm64 is supported
+        checksum:
+          enabled: false
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
+        checksum:
+          enabled: false
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: chmln
     repo_name: sd
@@ -4319,6 +4479,21 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+dist/(\\S+)$"
+  - type: github_release
+    repo_owner: cocogitto
+    repo_name: cocogitto
+    asset: cocogitto-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz
+    description: The Conventional Commits toolbox
+    replacements:
+      amd64: x86_64
+      darwin: osx
+      linux: unknown-linux-musl
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+    files:
+      - name: cog
   - type: http
     repo_owner: codeclimate
     repo_name: test-reporter
@@ -4399,6 +4574,43 @@ packages:
     supported_envs:
       - darwin
       - amd64
+  - name: concourse/concourse/concourse
+    type: github_release
+    repo_owner: concourse
+    repo_name: concourse
+    asset: concourse-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tgz
+    description: Concourse is a container-based continuous thing-doer written in Go
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    # TODO checksum: support sha1
+    # https://github.com/aquaproj/aqua/issues/1216
+    files:
+      - name: concourse
+        src: concourse/bin/concourse
+  - name: concourse/concourse/fly
+    type: github_release
+    repo_owner: concourse
+    repo_name: concourse
+    asset: fly-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tgz
+    description: Concourse is a container-based continuous thing-doer written in Go
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    # TODO checksum: support sha1
+    # https://github.com/aquaproj/aqua/issues/1216
+    files:
+      - name: fly
   - type: github_release
     repo_owner: container-tools
     repo_name: spectrum
@@ -7676,6 +7888,30 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: google
+    repo_name: osv-scanner
+    asset: osv-scanner_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    format: raw
+    description: Vulnerability scanner written in Go which uses the data provided by https://osv.dev
+    checksum:
+      type: github_release
+      asset: osv-scanner_{{trimV .Version}}_SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    slsa_provenance:
+      type: github_release
+      asset: multiple.intoto.jsonl
+    version_constraint: semver(">= 1.0.1")
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
   - type: go_install
     repo_owner: google
     repo_name: pprof
@@ -8592,6 +8828,14 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver("!= 0.0.23")
+    version_overrides:
+      - version_constraint: semver("= 0.0.23")
+        # Windows build was excluded temporarily.
+        # https://github.com/hidetatz/kubecolor/commit/30802265cfd3819d8fc771edaf5dae353cf15f17
+        supported_envs:
+          - darwin
+          - linux
   - type: github_release
     repo_owner: high-moctane
     repo_name: mocword
@@ -9175,6 +9419,194 @@ packages:
       algorithm: sha512
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{128}\b)
+  - type: github_release
+    repo_owner: ipinfo
+    repo_name: cli
+    description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
+    version_filter: Version startsWith "ipinfo-"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: ipinfo_{{trimPrefix "ipinfo-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: ipinfo
+            src: ipinfo_{{trimPrefix "ipinfo-" .Version}}_{{.OS}}_{{.Arch}}.exe
+    files:
+      - name: ipinfo
+        src: ipinfo_{{trimPrefix "ipinfo-" .Version}}_{{.OS}}_{{.Arch}}
+  - type: github_release
+    name: ipinfo/cli/cidr2ip
+    repo_owner: ipinfo
+    repo_name: cli
+    description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
+    version_filter: Version startsWith "cidr2ip-"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: cidr2ip_{{trimPrefix "cidr2ip-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: cidr2ip
+            src: cidr2ip_{{trimPrefix "cidr2ip-" .Version}}_{{.OS}}_{{.Arch}}.exe
+    files:
+      - name: cidr2ip
+        src: cidr2ip_{{trimPrefix "cidr2ip-" .Version}}_{{.OS}}_{{.Arch}}
+  - type: github_release
+    name: ipinfo/cli/cidr2range
+    repo_owner: ipinfo
+    repo_name: cli
+    description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
+    version_filter: Version startsWith "cidr2range-"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: cidr2range_{{trimPrefix "cidr2range-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: cidr2range
+            src: cidr2range_{{trimPrefix "cidr2range-" .Version}}_{{.OS}}_{{.Arch}}.exe
+    files:
+      - name: cidr2range
+        src: cidr2range_{{trimPrefix "cidr2range-" .Version}}_{{.OS}}_{{.Arch}}
+  - type: github_release
+    name: ipinfo/cli/grepip
+    repo_owner: ipinfo
+    repo_name: cli
+    description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
+    version_filter: Version startsWith "grepip-"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: grepip_{{trimPrefix "grepip-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: grepip
+            src: grepip_{{trimPrefix "grepip-" .Version}}_{{.OS}}_{{.Arch}}.exe
+    files:
+      - name: grepip
+        src: grepip_{{trimPrefix "grepip-" .Version}}_{{.OS}}_{{.Arch}}
+  - type: github_release
+    name: ipinfo/cli/prips
+    repo_owner: ipinfo
+    repo_name: cli
+    description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
+    version_filter: Version startsWith "prips-"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: prips_{{trimPrefix "prips-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: prips
+            src: prips_{{trimPrefix "prips-" .Version}}_{{.OS}}_{{.Arch}}.exe
+    files:
+      - name: prips
+        src: prips_{{trimPrefix "prips-" .Version}}_{{.OS}}_{{.Arch}}
+  - type: github_release
+    name: ipinfo/cli/randip
+    repo_owner: ipinfo
+    repo_name: cli
+    description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
+    version_filter: Version startsWith "randip-"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: randip_{{trimPrefix "randip-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: randip
+            src: randip_{{trimPrefix "randip-" .Version}}_{{.OS}}_{{.Arch}}.exe
+    files:
+      - name: randip
+        src: randip_{{trimPrefix "randip-" .Version}}_{{.OS}}_{{.Arch}}
+  - type: github_release
+    name: ipinfo/cli/range2cidr
+    repo_owner: ipinfo
+    repo_name: cli
+    description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
+    version_filter: Version startsWith "range2cidr-"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: range2cidr_{{trimPrefix "range2cidr-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: range2cidr
+            src: range2cidr_{{trimPrefix "range2cidr-" .Version}}_{{.OS}}_{{.Arch}}.exe
+    files:
+      - name: range2cidr
+        src: range2cidr_{{trimPrefix "range2cidr-" .Version}}_{{.OS}}_{{.Arch}}
+  - type: github_release
+    name: ipinfo/cli/range2ip
+    repo_owner: ipinfo
+    repo_name: cli
+    description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
+    version_filter: Version startsWith "range2ip-"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: range2ip_{{trimPrefix "range2ip-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: range2ip
+            src: range2ip_{{trimPrefix "range2ip-" .Version}}_{{.OS}}_{{.Arch}}.exe
+    files:
+      - name: range2ip
+        src: range2ip_{{trimPrefix "range2ip-" .Version}}_{{.OS}}_{{.Arch}}
+  - type: github_release
+    name: ipinfo/cli/splitcidr
+    repo_owner: ipinfo
+    repo_name: cli
+    description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
+    version_filter: Version startsWith "splitcidr-"
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: splitcidr_{{trimPrefix "splitcidr-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: splitcidr
+            src: splitcidr_{{trimPrefix "splitcidr-" .Version}}_{{.OS}}_{{.Arch}}.exe
+    files:
+      - name: splitcidr
+        src: splitcidr_{{trimPrefix "splitcidr-" .Version}}_{{.OS}}_{{.Arch}}
   - name: istio/istio/istioctl
     type: github_release
     repo_owner: istio
@@ -9290,6 +9722,38 @@ packages:
     files:
       - name: mmv
         src: mmv_{{.Version}}_{{.OS}}_{{.Arch}}/mmv
+  - type: github_release
+    repo_owner: ivaaaan
+    repo_name: smug
+    asset: smug_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Session manager and task runner for tmux. Start your development environment within one command
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.2.5")
+    version_overrides:
+      # added support for linux/arm64
+      - version_constraint: semver(">=0.2.3")
+        supported_envs:
+          - amd64
+          - linux
+        rosetta2: true
+      # only supported amd64
+      - version_constraint: "true"
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
   - type: github_release
     repo_owner: ivanilves
     repo_name: lstags
@@ -9590,6 +10054,11 @@ packages:
       - darwin
       - amd64
     rosetta2: true
+  - type: go_install
+    repo_owner: jmattheis
+    repo_name: goverter
+    description: Generate type-safe Go converters by simply defining an interface
+    path: github.com/jmattheis/goverter/cmd/goverter
   - type: github_release
     repo_owner: joehillen
     repo_name: sysz
@@ -12733,6 +13202,19 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: mr-karan
+    repo_name: doggo
+    asset: doggo_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Command-line DNS Client for Humans. Written in Golang
+    checksum:
+      type: github_release
+      asset: doggo_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: mrtazz
     repo_name: checkmake
     asset: checkmake-{{.Version}}.{{.OS}}.{{.Arch}}
@@ -13539,6 +14021,11 @@ packages:
       darwin: Darwin
       linux: Linux
       windows: Windows
+    files:
+      - name: kubectl-tunnel
+        src: ktunnel
+      - name: ktunnel
+        src: ktunnel
     checksum:
       type: github_release
       asset: checksums.txt
@@ -14443,6 +14930,66 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: prometheus
+    repo_name: alertmanager
+    asset: alertmanager-{{trimV .Version}}.{{.OS}}-{{.Arch}}.tar.gz
+    description: Prometheus Alertmanager
+    checksum:
+      type: github_release
+      asset: sha256sums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    files:
+      - name: alertmanager
+        src: alertmanager-{{trimV .Version}}.{{.OS}}-{{.Arch}}/alertmanager
+      - name: amtool
+        src: alertmanager-{{trimV .Version}}.{{.OS}}-{{.Arch}}/amtool
+  - type: github_release
+    repo_owner: prometheus
+    repo_name: prom2json
+    asset: prom2json-{{trimV .Version}}.{{.OS}}-{{.Arch}}.tar.gz
+    description: A tool to scrape a Prometheus client and dump the result as JSON
+    checksum:
+      type: github_release
+      asset: sha256sums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    files:
+      - name: prom2json
+        src: prom2json-{{trimV .Version}}.{{.OS}}-{{.Arch}}/prom2json
+    version_constraint: semver(">= 1.3.1")
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+  - type: github_release
+    repo_owner: prometheus
+    repo_name: prometheus
+    asset: prometheus-{{trimV .Version}}.{{.OS}}-{{.Arch}}.tar.gz
+    description: The Prometheus monitoring system and time series database
+    checksum:
+      type: github_release
+      asset: sha256sums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    files:
+      - name: prometheus
+        src: prometheus-{{trimV .Version}}.{{.OS}}-{{.Arch}}/prometheus
+      - name: promtool
+        src: prometheus-{{trimV .Version}}.{{.OS}}-{{.Arch}}/promtool
   - type: github_release
     repo_owner: prometheus
     repo_name: promlens
@@ -16281,13 +16828,19 @@ packages:
     repo_owner: slsa-framework
     repo_name: slsa-verifier
     description: The implementation for verifying SLSA provenance
-    path: github.com/slsa-framework/slsa-verifier/cli/slsa-verifier
+    # TODO support template in path: https://github.com/aquaproj/aqua/issues/1084
+    # path: github.com/slsa-framework/slsa-verifier/v{{(semver (trimV .Version)).Major}}/cli/slsa-verifier
+    path: github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier
     overrides:
       - goos: linux
         goarch: amd64
         type: github_release
         asset: slsa-verifier-{{.OS}}-{{.Arch}}
         format: raw
+    version_constraint: semver(">= 2.0.0")
+    version_overrides:
+      - version_constraint: "true"
+        path: github.com/slsa-framework/slsa-verifier/cli/slsa-verifier
   - type: github_release
     repo_owner: smallstep
     repo_name: cli
@@ -16439,6 +16992,10 @@ packages:
       - darwin
       - amd64
     rosetta2: true
+  - type: go_install
+    repo_owner: spf13
+    repo_name: cobra-cli
+    description: Cobra CLI tool to generate applications and commands
   - name: spinnaker/spin
     type: http
     format: raw
@@ -17337,6 +17894,44 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/terraform-linters/tflint/releases/download/{{.Version}}/checksums.txt.keyless.sig
+          - --certificate
+          - https://github.com/terraform-linters/tflint/releases/download/{{.Version}}/checksums.txt.pem
+    version_constraint: semver(">= 0.36.0")
+    version_overrides:
+      - version_constraint: "true"
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: terrastruct
+    repo_name: d2
+    asset: d2-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
+    description: D2 is a modern diagram scripting language that turns text to diagrams
+    replacements:
+      darwin: macos
+    files:
+      - name: d2
+        src: d2-{{.Version}}/bin/d2
+  - type: github_release
+    repo_owner: terrastruct
+    repo_name: tala
+    asset: tala-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
+    description: A diagram layout engine designed specifically for software architecture diagrams
+    replacements:
+      darwin: macos
+    files:
+      - name: d2plugin-tala
+        src: tala-{{.Version}}/bin/d2plugin-tala
   - type: github_release
     repo_owner: tfmigrator
     repo_name: cli
@@ -17805,8 +18400,6 @@ packages:
     overrides:
       - goos: windows
         format: zip
-    # TODO support signature verification with Cosign
-    # https://github.com/updatecli/updatecli/releases/tag/v0.40.2
     checksum:
       type: github_release
       asset: checksums.txt
@@ -17815,6 +18408,13 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/updatecli/updatecli/releases/download/{{.Version}}/checksums.txt.sig
+          - --certificate
+          - https://github.com/updatecli/updatecli/releases/download/{{.Version}}/checksums.txt.pem
     version_constraint: semver(">= 0.40.2")
     version_overrides:
       - version_constraint: "true"
@@ -17911,6 +18511,45 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: go_install
+    repo_owner: vburenin
+    repo_name: ifacemaker
+    description: Generate interfaces from structure methods
+    version_constraint: semver(">= 1.2.0")
+    version_overrides:
+      - version_constraint: "true"
+        type: github_release
+        rosetta2: true
+        asset: ifacemaker_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+        overrides:
+          - goos: linux
+            goarch: arm64
+            type: go_install
+            asset: ""
+            replacements: {}
+            checksum:
+              enabled: false
+          - goos: windows
+            goarch: arm64
+            type: go_install
+            asset: ""
+            replacements: {}
+            checksum:
+              enabled: false
   - type: github_release
     repo_owner: vektra
     repo_name: mockery
@@ -18276,6 +18915,29 @@ packages:
       - darwin
       - amd64
   - type: github_release
+    repo_owner: wasmerio
+    repo_name: wapm-cli
+    asset: wapm-cli-{{.OS}}-{{.Arch}}.tar.gz
+    description: WebAssembly Package Manager (CLI)
+    replacements:
+      arm64: aarch64
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    files:
+      - name: wapm
+        src: bin/wapm
+      - name: wax
+        src: bin/wax
+    overrides:
+      - goos: windows
+        files:
+          - name: wapm
+            src: bin/wapm.exe
+          - name: wax
+            src: bin/wax.cmd
+  - type: github_release
     repo_owner: watchexec
     repo_name: watchexec
     description: Executes commands in response to file modifications
@@ -18463,13 +19125,20 @@ packages:
     overrides:
       - goos: linux
         format: tar.gz
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
     files:
       - name: blogsync
         src: blogsync_{{.Version}}_{{.OS}}_{{.Arch}}/blogsync
+    version_constraint: semver(">= 0.12.3")
+    version_overrides:
+      - version_constraint: semver("= 0.12.2")
+        supported_envs:
+          - darwin
+          - linux
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: x-motemen
     repo_name: ghq
