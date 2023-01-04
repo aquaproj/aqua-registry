@@ -299,30 +299,31 @@ packages:
     replacements:
       amd64: x64
       windows: win
+    version_constraint: semver(">= 1.39.9")
     checksum:
       type: github_release
-      asset: "{{.Asset}}-sha256.txt"
+      asset: checksums-sha256.txt
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-    overrides:
-      - goos: windows
+    version_overrides:
+      - version_constraint: semver(">= 1.39.5")
         checksum:
-          type: github_release
-          asset: "{{.Asset}}-sha256.txt"
-          file_format: raw
-          algorithm: sha256
-      - goos: darwin
+          enabled: false
+      - version_constraint: semver(">= 1.39.1")
         checksum:
-          type: github_release
-          asset: "{{.Asset}}-sha256.txt"
-          file_format: regexp
-          algorithm: sha256
-          pattern:
-            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
-            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\./(\\S+)$"
+          enabled: false
+        replacements:
+          windows: win
+      - version_constraint: semver(">= 1.33.0")
+        checksum:
+          enabled: false
+      - version_constraint: "true"
+        rosetta2: true
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: Dreamacro
     repo_name: clash
