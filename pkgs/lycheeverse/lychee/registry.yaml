@@ -1,0 +1,22 @@
+packages:
+  - type: github_release
+    repo_owner: lycheeverse
+    repo_name: lychee
+    asset: lychee-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    description: Fast, async, stream-based link checker written in Rust. Finds broken URLs and mail addresses inside Markdown, HTML, reStructuredText, websites and more
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      linux: unknown-linux-musl
+    overrides:
+      - goos: linux
+        goarch: arm64
+        replacements:
+          linux: unknown-linux-gnu
+      - goos: windows
+        format: raw
+        asset: lychee-{{.Version}}-{{.OS}}-{{.Arch}}
+    supported_envs:
+      - linux
+      - windows/amd64
