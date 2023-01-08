@@ -17796,13 +17796,17 @@ packages:
   - type: github_release
     repo_owner: tamasfe
     repo_name: taplo
-    asset: taplo-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: gz
     description: A TOML toolkit written in Rust
-    version_filter: 'Version contains "CLI"'
+    version_constraint: not (Version startsWith "release-taplo-cli-") and not (Version startsWith "release-cli-") and semver(">= 0.8.0")
+    asset: taplo-{{.OS}}-{{.Arch}}.{{.Format}}
     replacements:
       amd64: x86_64
       arm64: aarch64
+    supported_envs:
+      - darwin
+      - linux
+      - windows/amd64
+    format: gz
     files:
       - name: taplo
         src: taplo-{{.OS}}-{{.Arch}}
@@ -17812,39 +17816,36 @@ packages:
         files:
           - name: taplo
             src: taplo.exe
-    supported_envs:
-      - darwin
-      - linux
-      - windows/amd64
-    version_constraint: semverWithVersion(">= 0.8.0", trimPrefix(Version, "release-taplo-cli-"))
     version_overrides:
-      - version_constraint: semverWithVersion(">= 0.6.7", trimPrefix(Version, "release-taplo-cli-"))
+      - version_constraint: Version startsWith "release-taplo-cli-"
         asset: taplo-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
-        format: tar.gz
         rosetta2: true
+        format: tar.gz
+        supported_envs:
+          - darwin
+          - linux/amd64
         replacements:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux
+        overrides: []
         files:
           - name: taplo
-        supported_envs:
-          - darwin/amd64
-          - linux/amd64
-      - version_constraint: semverWithVersion("< 0.6.7, >= 0.6.0", trimPrefix(Version, "release-cli-"))
+      - version_constraint: Version startsWith "release-cli-" and semverWithVersion(">= 0.6.0", trimPrefix(Version, "release-cli-"))
         asset: taplo-{{trimPrefix "release-cli-" .Version}}-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
-        format: tar.gz
         rosetta2: true
+        format: tar.gz
+        supported_envs:
+          - darwin
+          - linux/amd64
         replacements:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux
+        overrides: []
         files:
           - name: taplo
-        supported_envs:
-          - darwin/amd64
-          - linux/amd64
-      - version_constraint: semverWithVersion("<= 0.5.0", trimPrefix(Version, "release-cli-"))
+      - version_constraint: Version startsWith "release-cli-" and semverWithVersion("<= 0.5.0", trimPrefix(Version, "release-cli-"))
         asset: taplo-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
         format: tar.gz
         rosetta2: true
@@ -17855,10 +17856,12 @@ packages:
           windows: pc-windows
         files:
           - name: taplo
+        overrides:
+          - goos: windows
+            format: zip
         supported_envs:
-          - darwin/amd64
-          - linux/amd64
-          - windows/amd64
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: taskctl
     repo_name: taskctl
