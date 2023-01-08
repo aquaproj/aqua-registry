@@ -1,0 +1,67 @@
+packages:
+  - type: github_release
+    repo_owner: tamasfe
+    repo_name: taplo
+    asset: taplo-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: gz
+    description: A TOML toolkit written in Rust
+    version_filter: 'Version contains "CLI"'
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+    files:
+      - name: taplo
+        src: taplo-{{.OS}}-{{.Arch}}
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: taplo
+            src: taplo.exe
+    supported_envs:
+      - darwin
+      - linux
+      - windows/amd64
+    version_constraint: semverWithVersion(">= 0.8.0", trimPrefix(Version, "release-taplo-cli-"))
+    version_overrides:
+      - version_constraint: semverWithVersion(">= 0.6.7", trimPrefix(Version, "release-taplo-cli-"))
+        asset: taplo-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux
+        files:
+          - name: taplo
+        supported_envs:
+          - darwin/amd64
+          - linux/amd64
+      - version_constraint: semverWithVersion("< 0.6.7, >= 0.6.0", trimPrefix(Version, "release-cli-"))
+        asset: taplo-{{trimPrefix "release-cli-" .Version}}-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux
+        files:
+          - name: taplo
+        supported_envs:
+          - darwin/amd64
+          - linux/amd64
+      - version_constraint: semverWithVersion("<= 0.5.0", trimPrefix(Version, "release-cli-"))
+        asset: taplo-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux
+          windows: pc-windows
+        files:
+          - name: taplo
+        supported_envs:
+          - darwin/amd64
+          - linux/amd64
+          - windows/amd64
