@@ -3,19 +3,19 @@ packages:
     repo_owner: ipinfo
     repo_name: cli
     description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
-    version_filter: Version startsWith "ipinfo-"
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: ipinfo_{{trimPrefix "ipinfo-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_prefix: ipinfo-
+    asset: ipinfo_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
         files:
           - name: ipinfo
-            src: ipinfo_{{trimPrefix "ipinfo-" .Version}}_{{.OS}}_{{.Arch}}.exe
+            src: ipinfo_{{.SemVer}}_{{.OS}}_{{.Arch}}.exe
     files:
       - name: ipinfo
-        src: ipinfo_{{trimPrefix "ipinfo-" .Version}}_{{.OS}}_{{.Arch}}
+        src: ipinfo_{{.SemVer}}_{{.OS}}_{{.Arch}}

@@ -21,12 +21,14 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
     version_filter: not (Version contains "plugins")
-    version_constraint: semverWithVersion("0.32.7", trimPrefix(Version, "cli/"))
+    version_prefix: cli/
+    version_constraint: semver("0.32.7")
     asset: cloudquery_{{.OS}}_{{.Arch}}.zip
     version_overrides:
-      - version_constraint: semverWithVersion("0.32.5", trimPrefix(Version, "cli/"))
+      - version_constraint: semver("0.32.5")
         asset: cli_{{.OS}}_{{.Arch}}.zip
         files:
           - name: cloudquery
             src: cli
       - version_constraint: "true"
+        version_prefix: ""

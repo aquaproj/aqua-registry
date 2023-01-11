@@ -4,19 +4,19 @@ packages:
     repo_owner: ipinfo
     repo_name: cli
     description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
-    version_filter: Version startsWith "prips-"
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: prips_{{trimPrefix "prips-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_prefix: prips-
+    asset: prips_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
         files:
           - name: prips
-            src: prips_{{trimPrefix "prips-" .Version}}_{{.OS}}_{{.Arch}}.exe
+            src: prips_{{.SemVer}}_{{.OS}}_{{.Arch}}.exe
     files:
       - name: prips
-        src: prips_{{trimPrefix "prips-" .Version}}_{{.OS}}_{{.Arch}}
+        src: prips_{{.SemVer}}_{{.OS}}_{{.Arch}}
