@@ -7137,11 +7137,11 @@ packages:
     description: Standalone, daemon-less, unprivileged Dockerfile and OCI compatible container image builder
     supported_envs:
       - darwin
+      - linux
       - amd64
-    rosetta2: true
     format: raw
-    version_constraint: semver(">= 1.30.0")
-    asset: spruce_{{.OS}}_{{.Arch}}
+    version_constraint: semver(">= 1.30.1")
+    asset: spruce-{{.OS}}-{{.Arch}}
     complete_windows_ext: false
     checksum:
       type: github_release
@@ -7150,13 +7150,20 @@ packages:
       algorithm: sha1
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{40}\b)
-        file: "^\\b[A-Fa-f0-9]{40}\\b\\s+(\\S+)$"
     version_overrides:
+      - version_constraint: semver("= 1.30.0")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
       - version_constraint: "true"
-        asset: spruce-{{.OS}}-{{.Arch}}
         complete_windows_ext: true
         checksum:
           enabled: false
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: getgauge
     repo_name: gauge
