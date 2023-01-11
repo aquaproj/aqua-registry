@@ -3269,11 +3269,11 @@ packages:
   - type: github_release
     repo_owner: bitwarden
     repo_name: clients
-    asset: bw-{{.OS}}-{{trimPrefix "cli-v" .Version}}.zip
-    version_filter: Version startsWith "cli-"
+    description: Bitwarden CLI
+    version_prefix: cli-v
+    asset: bw-{{.OS}}-{{.SemVer}}.zip
     files:
       - name: bw
-    description: Bitwarden CLI
     replacements:
       darwin: macos
     supported_envs:
@@ -3281,7 +3281,7 @@ packages:
       - amd64
     checksum:
       type: github_release
-      asset: bw-{{.OS}}-sha256-{{trimPrefix "cli-v" .Version}}.txt
+      asset: bw-{{.OS}}-sha256-{{.SemVer}}.txt
       file_format: raw
       algorithm: sha256
   - type: github_release
@@ -4504,15 +4504,17 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
     version_filter: not (Version contains "plugins")
-    version_constraint: semverWithVersion("0.32.7", trimPrefix(Version, "cli/"))
+    version_prefix: cli/
+    version_constraint: semver("0.32.7")
     asset: cloudquery_{{.OS}}_{{.Arch}}.zip
     version_overrides:
-      - version_constraint: semverWithVersion("0.32.5", trimPrefix(Version, "cli/"))
+      - version_constraint: semver("0.32.5")
         asset: cli_{{.OS}}_{{.Arch}}.zip
         files:
           - name: cloudquery
             src: cli
       - version_constraint: "true"
+        version_prefix: ""
   - type: github_release
     repo_owner: cloudspannerecosystem
     repo_name: wrench
@@ -8395,11 +8397,11 @@ packages:
     repo_owner: grpc
     repo_name: grpc-go
     description: Generate Go language bindings of services in protobuf definition files for gRPC
-    asset: 'protoc-gen-go-grpc.{{trimPrefix "cmd/protoc-gen-go-grpc/" .Version}}.{{.OS}}.{{.Arch}}.tar.gz'
+    version_prefix: cmd/protoc-gen-go-grpc/
+    asset: protoc-gen-go-grpc.{{.SemVer}}.{{.OS}}.{{.Arch}}.tar.gz
     supported_envs:
       - darwin
       - amd64
-    version_filter: 'Version startsWith "cmd/protoc-gen-go-grpc/"'
     rosetta2: true
     files:
       - name: protoc-gen-go-grpc
@@ -9561,190 +9563,190 @@ packages:
     repo_owner: ipinfo
     repo_name: cli
     description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
-    version_filter: Version startsWith "ipinfo-"
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: ipinfo_{{trimPrefix "ipinfo-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_prefix: ipinfo-
+    asset: ipinfo_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
         files:
           - name: ipinfo
-            src: ipinfo_{{trimPrefix "ipinfo-" .Version}}_{{.OS}}_{{.Arch}}.exe
+            src: ipinfo_{{.SemVer}}_{{.OS}}_{{.Arch}}.exe
     files:
       - name: ipinfo
-        src: ipinfo_{{trimPrefix "ipinfo-" .Version}}_{{.OS}}_{{.Arch}}
+        src: ipinfo_{{.SemVer}}_{{.OS}}_{{.Arch}}
   - type: github_release
     name: ipinfo/cli/cidr2ip
     repo_owner: ipinfo
     repo_name: cli
     description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
-    version_filter: Version startsWith "cidr2ip-"
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: cidr2ip_{{trimPrefix "cidr2ip-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_prefix: cidr2ip-
+    asset: cidr2ip_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
         files:
           - name: cidr2ip
-            src: cidr2ip_{{trimPrefix "cidr2ip-" .Version}}_{{.OS}}_{{.Arch}}.exe
+            src: cidr2ip_{{.SemVer}}_{{.OS}}_{{.Arch}}.exe
     files:
       - name: cidr2ip
-        src: cidr2ip_{{trimPrefix "cidr2ip-" .Version}}_{{.OS}}_{{.Arch}}
+        src: cidr2ip_{{.SemVer}}_{{.OS}}_{{.Arch}}
   - type: github_release
     name: ipinfo/cli/cidr2range
     repo_owner: ipinfo
     repo_name: cli
     description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
-    version_filter: Version startsWith "cidr2range-"
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: cidr2range_{{trimPrefix "cidr2range-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_prefix: cidr2range-
+    asset: cidr2range_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
         files:
           - name: cidr2range
-            src: cidr2range_{{trimPrefix "cidr2range-" .Version}}_{{.OS}}_{{.Arch}}.exe
+            src: cidr2range_{{.SemVer}}_{{.OS}}_{{.Arch}}.exe
     files:
       - name: cidr2range
-        src: cidr2range_{{trimPrefix "cidr2range-" .Version}}_{{.OS}}_{{.Arch}}
+        src: cidr2range_{{.SemVer}}_{{.OS}}_{{.Arch}}
   - type: github_release
     name: ipinfo/cli/grepip
     repo_owner: ipinfo
     repo_name: cli
     description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
-    version_filter: Version startsWith "grepip-"
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: grepip_{{trimPrefix "grepip-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_prefix: grepip-
+    asset: grepip_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
         files:
           - name: grepip
-            src: grepip_{{trimPrefix "grepip-" .Version}}_{{.OS}}_{{.Arch}}.exe
+            src: grepip_{{.SemVer}}_{{.OS}}_{{.Arch}}.exe
     files:
       - name: grepip
-        src: grepip_{{trimPrefix "grepip-" .Version}}_{{.OS}}_{{.Arch}}
+        src: grepip_{{.SemVer}}_{{.OS}}_{{.Arch}}
   - type: github_release
     name: ipinfo/cli/prips
     repo_owner: ipinfo
     repo_name: cli
     description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
-    version_filter: Version startsWith "prips-"
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: prips_{{trimPrefix "prips-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_prefix: prips-
+    asset: prips_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
         files:
           - name: prips
-            src: prips_{{trimPrefix "prips-" .Version}}_{{.OS}}_{{.Arch}}.exe
+            src: prips_{{.SemVer}}_{{.OS}}_{{.Arch}}.exe
     files:
       - name: prips
-        src: prips_{{trimPrefix "prips-" .Version}}_{{.OS}}_{{.Arch}}
+        src: prips_{{.SemVer}}_{{.OS}}_{{.Arch}}
   - type: github_release
     name: ipinfo/cli/randip
     repo_owner: ipinfo
     repo_name: cli
     description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
-    version_filter: Version startsWith "randip-"
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: randip_{{trimPrefix "randip-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_prefix: randip-
+    asset: randip_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
         files:
           - name: randip
-            src: randip_{{trimPrefix "randip-" .Version}}_{{.OS}}_{{.Arch}}.exe
+            src: randip_{{.SemVer}}_{{.OS}}_{{.Arch}}.exe
     files:
       - name: randip
-        src: randip_{{trimPrefix "randip-" .Version}}_{{.OS}}_{{.Arch}}
+        src: randip_{{.SemVer}}_{{.OS}}_{{.Arch}}
   - type: github_release
     name: ipinfo/cli/range2cidr
     repo_owner: ipinfo
     repo_name: cli
     description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
-    version_filter: Version startsWith "range2cidr-"
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: range2cidr_{{trimPrefix "range2cidr-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_prefix: range2cidr-
+    asset: range2cidr_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
         files:
           - name: range2cidr
-            src: range2cidr_{{trimPrefix "range2cidr-" .Version}}_{{.OS}}_{{.Arch}}.exe
+            src: range2cidr_{{.SemVer}}_{{.OS}}_{{.Arch}}.exe
     files:
       - name: range2cidr
-        src: range2cidr_{{trimPrefix "range2cidr-" .Version}}_{{.OS}}_{{.Arch}}
+        src: range2cidr_{{.SemVer}}_{{.OS}}_{{.Arch}}
   - type: github_release
     name: ipinfo/cli/range2ip
     repo_owner: ipinfo
     repo_name: cli
     description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
-    version_filter: Version startsWith "range2ip-"
+    version_prefix: range2ip-
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: range2ip_{{trimPrefix "range2ip-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    asset: range2ip_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
         files:
           - name: range2ip
-            src: range2ip_{{trimPrefix "range2ip-" .Version}}_{{.OS}}_{{.Arch}}.exe
+            src: range2ip_{{.SemVer}}_{{.OS}}_{{.Arch}}.exe
     files:
       - name: range2ip
-        src: range2ip_{{trimPrefix "range2ip-" .Version}}_{{.OS}}_{{.Arch}}
+        src: range2ip_{{.SemVer}}_{{.OS}}_{{.Arch}}
   - type: github_release
     name: ipinfo/cli/splitcidr
     repo_owner: ipinfo
     repo_name: cli
     description: Official Command Line Interface for the IPinfo API (IP geolocation and other types of IP data)
-    version_filter: Version startsWith "splitcidr-"
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: splitcidr_{{trimPrefix "splitcidr-" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_prefix: splitcidr-
+    asset: splitcidr_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
         files:
           - name: splitcidr
-            src: splitcidr_{{trimPrefix "splitcidr-" .Version}}_{{.OS}}_{{.Arch}}.exe
+            src: splitcidr_{{.SemVer}}_{{.OS}}_{{.Arch}}.exe
     files:
       - name: splitcidr
-        src: splitcidr_{{trimPrefix "splitcidr-" .Version}}_{{.OS}}_{{.Arch}}
+        src: splitcidr_{{.SemVer}}_{{.OS}}_{{.Arch}}
   - name: istio/istio/istioctl
     type: github_release
     repo_owner: istio
@@ -11657,7 +11659,6 @@ packages:
     repo_owner: kubernetes-sigs
     repo_name: kustomize
     description: Customization of kubernetes YAML configurations
-    asset: kustomize_{{trimPrefix "kustomize/" .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     checksum:
       type: github_release
       asset: checksums.txt
@@ -11666,19 +11667,20 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-    version_filter: Version startsWith "kustomize/"
-    version_constraint: semverWithVersion(">= 4.5.4", trimPrefix(Version, "kustomize/"))
+    asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.tar.gz
+    version_prefix: kustomize/
+    version_constraint: semver(">= 4.5.4")
     version_overrides:
-      - version_constraint: semverWithVersion(">= 4.4.1", trimPrefix(Version, "kustomize/"))
+      - version_constraint: semver(">= 4.4.1")
         supported_envs:
           - linux
           - darwin
           - amd64
-      - version_constraint: semverWithVersion(">= 4.2.0", trimPrefix(Version, "kustomize/"))
+      - version_constraint: semver(">= 4.2.0")
         supported_envs:
           - linux
           - darwin
-      - version_constraint: semverWithVersion("< 4.2.0", trimPrefix(Version, "kustomize/"))
+      - version_constraint: "true"
         rosetta2: true
         supported_envs:
           - linux
@@ -13277,7 +13279,8 @@ packages:
     repo_owner: mongodb
     repo_name: mongodb-atlas-cli
     description: MongoDB Atlas CLI and MongoDB CLI enable you to manage your MongoDB in the Cloud
-    asset: mongodb-atlas-cli_{{trimPrefix "atlascli/v" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_prefix: atlascli/v
+    asset: mongodb-atlas-cli_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: zip
     replacements:
       darwin: macos
@@ -13290,12 +13293,11 @@ packages:
         format: tar.gz
         files:
           - name: atlas
-            src: mongodb-atlas-cli_{{trimPrefix "atlascli/v" .Version}}_{{.OS}}_{{.Arch}}/bin/atlas
+            src: mongodb-atlas-cli_{{.SemVer}}_{{.OS}}_{{.Arch}}/bin/atlas
     supported_envs:
       - darwin
       - linux
       - amd64
-    version_filter: Version startsWith "atlascli/"
     checksum:
       type: github_release
       asset: checksums.txt

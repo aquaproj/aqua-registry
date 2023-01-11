@@ -4,7 +4,8 @@ packages:
     repo_owner: mongodb
     repo_name: mongodb-atlas-cli
     description: MongoDB Atlas CLI and MongoDB CLI enable you to manage your MongoDB in the Cloud
-    asset: mongodb-atlas-cli_{{trimPrefix "atlascli/v" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_prefix: atlascli/v
+    asset: mongodb-atlas-cli_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: zip
     replacements:
       darwin: macos
@@ -17,12 +18,11 @@ packages:
         format: tar.gz
         files:
           - name: atlas
-            src: mongodb-atlas-cli_{{trimPrefix "atlascli/v" .Version}}_{{.OS}}_{{.Arch}}/bin/atlas
+            src: mongodb-atlas-cli_{{.SemVer}}_{{.OS}}_{{.Arch}}/bin/atlas
     supported_envs:
       - darwin
       - linux
       - amd64
-    version_filter: Version startsWith "atlascli/"
     checksum:
       type: github_release
       asset: checksums.txt
