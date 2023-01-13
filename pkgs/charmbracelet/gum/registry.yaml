@@ -2,13 +2,9 @@ packages:
   - type: github_release
     repo_owner: charmbracelet
     repo_name: gum
+    description: A tool for glamorous shell scripts
     asset: gum_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
-    description: A tool for glamorous shell scripts
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      windows: Windows
     overrides:
       - goos: windows
         format: zip
@@ -24,3 +20,22 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/charmbracelet/gum/releases/download/{{.Version}}/checksums.txt.sig
+          - --certificate
+          - https://github.com/charmbracelet/gum/releases/download/{{.Version}}/checksums.txt.pem
+    version_constraint: semver(">= 0.9.0")
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      windows: Windows
+      linux: Linux
+    version_overrides:
+      - version_constraint: "true"
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          windows: Windows
