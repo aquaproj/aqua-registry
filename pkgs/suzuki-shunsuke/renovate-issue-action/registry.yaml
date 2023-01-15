@@ -2,11 +2,12 @@ packages:
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: renovate-issue-action
-    asset: renovate-issue-action_{{.OS}}_{{.Arch}}.tar.gz
     description: Create, update, and close GitHub Issues with GitHub Actions according to Renovate Pull Requests
+    asset: renovate-issue-action_{{.OS}}_{{.Arch}}.tar.gz
     supported_envs:
       - darwin
       - linux
+    version_constraint: semver(">= 1.1.2")
     checksum:
       type: github_release
       asset: renovate-issue-action_{{trimV .Version}}_checksums.txt
@@ -15,3 +16,22 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/suzuki-shunsuke/renovate-issue-action/releases/download/{{.Version}}/renovate-issue-action_{{trimV .Version}}_checksums.txt.sig
+          - --certificate
+          - https://github.com/suzuki-shunsuke/renovate-issue-action/releases/download/{{.Version}}/renovate-issue-action_{{trimV .Version}}_checksums.txt.pem
+    version_overrides:
+      - version_constraint: "true"
+        slsa_provenance:
+          enabled: false
+        checksum:
+          type: github_release
+          asset: renovate-issue-action_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
