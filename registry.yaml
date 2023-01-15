@@ -17551,13 +17551,12 @@ packages:
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: circleci-config-merge
-    asset: circleci-config-merge_{{trimV .Version}}_{{.OS}}_amd64.tar.gz
-    supported_envs:
-      - windows
-      - darwin
-      - linux/amd64
-    rosetta2: true
     description: Generate .circleci/config.yml by merging multiple files
+    asset: circleci-config-merge_{{trimV .Version}}_{{.OS}}_amd64.tar.gz
+    version_constraint: semver(">= 1.1.2")
+    slsa_provenance:
+      type: github_release
+      asset: multiple.intoto.jsonl
     checksum:
       type: github_release
       asset: circleci-config-merge_{{trimV .Version}}_checksums.txt
@@ -17566,6 +17565,30 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/suzuki-shunsuke/circleci-config-merge/releases/download/{{.Version}}/circleci-config-merge_{{trimV .Version}}_checksums.txt.sig
+          - --certificate
+          - https://github.com/suzuki-shunsuke/circleci-config-merge/releases/download/{{.Version}}/circleci-config-merge_{{trimV .Version}}_checksums.txt.pem
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        slsa_provenance:
+          enabled: false
+        checksum:
+          type: github_release
+          asset: circleci-config-merge_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+        supported_envs:
+          - windows
+          - darwin
+          - linux/amd64
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: cmdx
