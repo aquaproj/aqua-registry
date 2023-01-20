@@ -1,0 +1,42 @@
+packages:
+  - type: github_release
+    repo_owner: carvel-dev
+    repo_name: imgpkg
+    aliases:
+      - name: vmware-tanzu/carvel-imgpkg
+    description: Store application configuration files in Docker/OCI registries
+    rosetta2: true
+    format: raw
+    asset: imgpkg-{{.OS}}-{{.Arch}}
+    version_constraint: semver(">= 0.35.0")
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksum.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\./(\\S+)$"
+    version_overrides:
+      - version_constraint: semver(">= 0.28.0")
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: "true"
+        checksum:
+          enabled: false
+        supported_envs:
+          - darwin
+          - amd64
