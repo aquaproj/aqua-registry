@@ -1,0 +1,24 @@
+packages:
+  - type: github_release
+    repo_owner: suzuki-shunsuke
+    repo_name: ghalint
+    asset: ghalint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: GitHub Actions linter
+    slsa_provenance:
+      type: github_release
+      asset: multiple.intoto.jsonl
+    checksum:
+      type: github_release
+      asset: ghalint_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/suzuki-shunsuke/ghalint/releases/download/{{.Version}}/ghalint_{{trimV .Version}}_checksums.txt.sig
+          - --certificate
+          - https://github.com/suzuki-shunsuke/ghalint/releases/download/{{.Version}}/ghalint_{{trimV .Version}}_checksums.txt.pem
