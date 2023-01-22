@@ -2612,12 +2612,6 @@ packages:
     repo_owner: arttor
     repo_name: helmify
     description: Creates Helm chart from Kubernetes yaml
-    asset: helmify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    replacements:
-      darwin: macOS
-      linux: Linux
-      windows: Windows
-      amd64: 64-bit
     format: tar.gz
     overrides:
       - goos: windows
@@ -2626,14 +2620,30 @@ packages:
       - darwin
       - linux
       - amd64
+    version_constraint: semver("!= 0.3.0")
+    asset: helmify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    replacements:
+      amd64: 64-bit
+      darwin: macOS
+      linux: Linux
+      windows: Windows
     checksum:
       type: github_release
       asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: semver("= 0.3.0")
+        asset: helmify-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        replacements: {}
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          file_format: raw
+          algorithm: md5
   - type: github_release
     repo_owner: asciimoo
     repo_name: wuzz
