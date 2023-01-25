@@ -3,11 +3,12 @@ packages:
     repo_owner: open-policy-agent
     repo_name: opa
     description: An open source, general-purpose policy engine
+    asset: opa_{{.OS}}_amd64
+    version_constraint: semver(">= 0.37.0")
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: opa_{{.OS}}_amd64
     overrides:
       - goarch: arm64
         asset: opa_{{.OS}}_arm64_static
@@ -19,3 +20,22 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: semver("= 0.36.1")
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver("= 0.36.0")
+        rosetta2: true
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
+        rosetta2: true
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          enabled: false
