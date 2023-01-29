@@ -11637,6 +11637,22 @@ packages:
       - goos: windows
         asset: kubemqctl.exe
   - type: github_release
+    repo_owner: kubermatic
+    repo_name: kubeone
+    asset: kubeone_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+    description: Kubermatic KubeOne automate cluster operations on all your cloud, on-prem, edge, and IoT environments
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: kubeone_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: aws-iam-authenticator
     asset: aws-iam-authenticator_{{trimV .Version}}_{{.OS}}_{{.Arch}}
