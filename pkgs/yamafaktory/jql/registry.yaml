@@ -1,0 +1,26 @@
+packages:
+  - type: github_release
+    repo_owner: yamafaktory
+    repo_name: jql
+    asset: jql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: zip
+    description: A JSON Query Language CLI tool
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: jql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}.sha256
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
