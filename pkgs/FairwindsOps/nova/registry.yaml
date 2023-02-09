@@ -2,12 +2,13 @@ packages:
   - type: github_release
     repo_owner: FairwindsOps
     repo_name: nova
-    asset: nova_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    asset: nova_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: Find outdated or deprecated Helm charts running in your cluster
     supported_envs:
       - darwin
       - linux
       - windows/amd64
+    version_constraint: semver(">= 3.6.2")
     checksum:
       type: github_release
       asset: checksums.txt
@@ -16,3 +17,6 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: "true"
+        asset: nova_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
