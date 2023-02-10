@@ -382,7 +382,7 @@ packages:
   - type: github_release
     repo_owner: FairwindsOps
     repo_name: nova
-    asset: nova_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    asset: nova_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: Find outdated or deprecated Helm charts running in your cluster
     supported_envs:
       - darwin
@@ -6151,6 +6151,56 @@ packages:
       - darwin
       - amd64
     rosetta2: true
+  - name: domoritz/arrow-tools/json2arrow
+    type: github_release
+    repo_owner: domoritz
+    repo_name: arrow-tools
+    asset: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    description: Convert JSON files to Apache Arrow. This package is part of Arrow CLI tools
+    files:
+      - name: json2arrow
+        src: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/json2arrow
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: json2arrow
+            src: json2arrow.exe
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+  - name: domoritz/arrow-tools/json2parquet
+    type: github_release
+    repo_owner: domoritz
+    repo_name: arrow-tools
+    asset: json2parquet-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    description: Convert JSON files to Apache Parquet. This package is part of Arrow CLI tools
+    files:
+      - name: json2parquet
+        src: json2parquet-{{.Version}}-{{.Arch}}-{{.OS}}/json2parquet
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: json2parquet
+            src: json2parquet.exe
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
   - type: github_release
     repo_owner: dotenv-linter
     repo_name: dotenv-linter
@@ -10633,6 +10683,19 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: juan-leon
+    repo_name: lowcharts
+    asset: lowcharts-{{trimV .Version}}-{{.Arch}}-{{.OS}}.tar.gz
+    description: Tool to draw low-resolution graphs in terminal
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
   - type: github_release
     repo_owner: juicedata
     repo_name: juicefs
@@ -20225,6 +20288,31 @@ packages:
       - darwin
       - linux
       - amd64
+  - type: github_release
+    repo_owner: yamafaktory
+    repo_name: jql
+    asset: jql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: zip
+    description: A JSON Query Language CLI tool
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: yannh
     repo_name: kubeconform
