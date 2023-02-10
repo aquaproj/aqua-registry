@@ -1,0 +1,26 @@
+packages:
+  - name: domoritz/arrow-tools/json2parquet
+    type: github_release
+    repo_owner: domoritz
+    repo_name: arrow-tools
+    asset: json2parquet-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    description: Convert JSON files to Apache Parquet. This package is part of Arrow CLI tools
+    files:
+      - name: json2parquet
+        src: json2parquet-{{.Version}}-{{.Arch}}-{{.OS}}/json2parquet
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: json2parquet
+            src: json2parquet.exe
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
