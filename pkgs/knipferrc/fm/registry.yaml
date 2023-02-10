@@ -1,0 +1,42 @@
+packages:
+  - type: github_release
+    repo_owner: knipferrc
+    repo_name: fm
+    description: A terminal based file manager
+    asset: fm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: fm_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.13.1")
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_overrides:
+      - version_constraint: Version == "v0.13.0"
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          windows: Windows
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.9.1")
+        overrides: []
+      - version_constraint: semver(">= 0.4.1")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        overrides: []
+      - version_constraint: "true"

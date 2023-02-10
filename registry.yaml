@@ -382,7 +382,7 @@ packages:
   - type: github_release
     repo_owner: FairwindsOps
     repo_name: nova
-    asset: nova_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    asset: nova_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: Find outdated or deprecated Helm charts running in your cluster
     supported_envs:
       - darwin
@@ -1611,20 +1611,34 @@ packages:
   - type: github_release
     repo_owner: a8m
     repo_name: envsubst
-    asset: envsubst-{{.OS}}-{{.Arch}}
-    format: raw
     description: Environment variables substitution for Go
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-    overrides:
-      - goos: windows
-        asset: envsubst
+    version_constraint: semver(">= 1.4.1")
+    asset: envsubst-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     supported_envs:
-      - darwin
       - linux
-      - amd64
+      - darwin
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.md5"
+      file_format: raw
+      algorithm: md5
+    version_overrides:
+      - version_constraint: "true"
+        asset: envsubst-{{.OS}}-{{.Arch}}
+        format: raw
+        overrides:
+          - goos: windows
+            asset: envsubst
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: abhimanyu003
     repo_name: sttr
@@ -2612,12 +2626,6 @@ packages:
     repo_owner: arttor
     repo_name: helmify
     description: Creates Helm chart from Kubernetes yaml
-    asset: helmify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    replacements:
-      darwin: macOS
-      linux: Linux
-      windows: Windows
-      amd64: 64-bit
     format: tar.gz
     overrides:
       - goos: windows
@@ -2626,14 +2634,30 @@ packages:
       - darwin
       - linux
       - amd64
+    version_constraint: semver("!= 0.3.0")
+    asset: helmify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    replacements:
+      amd64: 64-bit
+      darwin: macOS
+      linux: Linux
+      windows: Windows
     checksum:
       type: github_release
       asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: semver("= 0.3.0")
+        asset: helmify-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        replacements: {}
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          file_format: raw
+          algorithm: md5
   - type: github_release
     repo_owner: asciimoo
     repo_name: wuzz
@@ -3756,6 +3780,24 @@ packages:
           - darwin
           - amd64
   - type: github_release
+    repo_owner: carvel-dev
+    repo_name: kbld
+    aliases:
+      - name: vmware-tanzu/carvel-kbld
+    description: kbld seamlessly incorporates image building and image pushing into your development and deployment workflows
+    format: raw
+    asset: kbld-{{.OS}}-{{.Arch}}
+    files:
+      - name: kbld
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(?:\\./)?(\\S+)$"
+  - type: github_release
     repo_owner: casey
     repo_name: just
     description: Just a command runner
@@ -3862,11 +3904,6 @@ packages:
     overrides:
       - goos: windows
         format: zip
-    replacements:
-      windows: Windows
-      darwin: Darwin
-      386: i386
-      amd64: x86_64
     checksum:
       type: github_release
       asset: checksums.txt
@@ -3875,6 +3912,20 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.5.0")
+    replacements:
+      windows: Windows
+      darwin: Darwin
+      linux: Linux
+      386: i386
+      amd64: x86_64
+    version_overrides:
+      - version_constraint: "true"
+        replacements:
+          windows: Windows
+          darwin: Darwin
+          386: i386
+          amd64: x86_64
   - type: github_release
     repo_owner: charmbracelet
     repo_name: gum
@@ -5609,7 +5660,6 @@ packages:
       bit: Arm
       bitv6: Arm6
       bitv7: Arm7
-      amd64: x86_64
     checksum:
       type: github_release
       asset: checksums.txt
@@ -5618,6 +5668,17 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.27.0")
+    version_overrides:
+      - version_constraint: "true"
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+          bit: Arm
+          bitv6: Arm6
+          bitv7: Arm7
+          amd64: x86_64
   - type: github_release
     repo_owner: derailed
     repo_name: popeye
@@ -6065,6 +6126,106 @@ packages:
     version_overrides:
       - version_constraint: "true"
         rosetta2: false
+  - name: domoritz/arrow-tools/csv2arrow
+    type: github_release
+    repo_owner: domoritz
+    repo_name: arrow-tools
+    asset: csv2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    description: Convert CSV files to Apache Arrow. This package is part of Arrow CLI tools
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: csv2arrow
+            src: csv2arrow.exe
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    files:
+      - name: csv2arrow
+        src: csv2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/csv2arrow
+  - name: domoritz/arrow-tools/csv2parquet
+    type: github_release
+    repo_owner: domoritz
+    repo_name: arrow-tools
+    asset: csv2parquet-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    description: Convert CSV files to Apache Parquet. This package is part of Arrow CLI tools
+    files:
+      - name: csv2parquet
+        src: csv2parquet-{{.Version}}-{{.Arch}}-{{.OS}}/csv2parquet
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: csv2parquet
+            src: csv2parquet.exe
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+  - name: domoritz/arrow-tools/json2arrow
+    type: github_release
+    repo_owner: domoritz
+    repo_name: arrow-tools
+    asset: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    description: Convert JSON files to Apache Arrow. This package is part of Arrow CLI tools
+    files:
+      - name: json2arrow
+        src: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/json2arrow
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: json2arrow
+            src: json2arrow.exe
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+  - name: domoritz/arrow-tools/json2parquet
+    type: github_release
+    repo_owner: domoritz
+    repo_name: arrow-tools
+    asset: json2parquet-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    description: Convert JSON files to Apache Parquet. This package is part of Arrow CLI tools
+    files:
+      - name: json2parquet
+        src: json2parquet-{{.Version}}-{{.Arch}}-{{.OS}}/json2parquet
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: json2parquet
+            src: json2parquet.exe
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
   - type: github_release
     repo_owner: dotenv-linter
     repo_name: dotenv-linter
@@ -6471,6 +6632,49 @@ packages:
     format: raw
     supported_envs:
       - linux/amd64
+  - type: github_release
+    repo_owner: elsesiy
+    repo_name: kubectl-view-secret
+    description: Kubernetes CLI plugin to decode Kubernetes secrets
+    files:
+      - name: kubectl-view_secret
+        src: kubectl-view-secret
+    version_constraint: semver(">= 0.8.0")
+    asset: kubectl-view-secret_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: kubectl-view-secret_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: semver("= 0.7.0")
+        rosetta2: true
+      - version_constraint: "true"
+        asset: kubectl-view-secret_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        replacements:
+          darwin: Darwin
+          windows: Windows
+          linux: Linux
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: emirozer
     repo_name: kubectl-doctor
@@ -10525,6 +10729,19 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: juan-leon
+    repo_name: lowcharts
+    asset: lowcharts-{{trimV .Version}}-{{.Arch}}-{{.OS}}.tar.gz
+    description: Tool to draw low-resolution graphs in terminal
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+  - type: github_release
     repo_owner: juicedata
     repo_name: juicefs
     asset: juicefs-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz
@@ -11289,6 +11506,47 @@ packages:
           - name: faas
             src: faas_{{.OS}}_{{.Arch}}
   - type: github_release
+    repo_owner: knipferrc
+    repo_name: fm
+    description: A terminal based file manager
+    asset: fm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: fm_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.13.1")
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_overrides:
+      - version_constraint: Version == "v0.13.0"
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          windows: Windows
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.9.1")
+        overrides: []
+      - version_constraint: semver(">= 0.4.1")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        overrides: []
+      - version_constraint: "true"
+  - type: github_release
     repo_owner: knqyf263
     repo_name: cob
     description: Continuous Benchmark for Go Project
@@ -11628,6 +11886,29 @@ packages:
       - goos: windows
         asset: kubemqctl.exe
   - type: github_release
+    repo_owner: kubermatic
+    repo_name: kubeone
+    asset: kubeone_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+    description: Kubermatic KubeOne automate cluster operations on all your cloud, on-prem, edge, and IoT environments
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: kubeone_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.4.2")
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+  - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: aws-iam-authenticator
     asset: aws-iam-authenticator_{{trimV .Version}}_{{.OS}}_{{.Arch}}
@@ -11958,7 +12239,7 @@ packages:
     repo_name: kubescape
     aliases:
       - name: armosec/kubescape
-    description: kubescape is the first tool for testing if Kubernetes is deployed securely as defined in Kubernetes Hardening Guidance by to NSA and CISA
+    description: Kubescape is an open-source Kubernetes security platform for your IDE, CI/CD pipelines, and clusters. It includes risk analysis, security, compliance, and misconfiguration scanning, saving Kubernetes users and administrators precious time, effort, and resources
     rosetta2: true
     complete_windows_ext: false
     supported_envs:
@@ -11968,11 +12249,19 @@ packages:
     replacements:
       linux: ubuntu
       darwin: macos
+    version_constraint: semver(">= 2.1.2")
     checksum:
       type: github_release
-      asset: kubescape-{{.OS}}-latest-sha256
+      asset: kubescape-{{.OS}}-latest.sha256
       file_format: raw
       algorithm: sha256
+    version_overrides:
+      - version_constraint: "true"
+        checksum:
+          type: github_release
+          asset: kubescape-{{.OS}}-latest-sha256
+          file_format: raw
+          algorithm: sha256
   - type: github_release
     repo_owner: kubesphere
     repo_name: kubeeye
@@ -13381,6 +13670,24 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: mmalcek
+    repo_name: bafi
+    asset: bafi_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tgz
+    description: Universal JSON, BSON, YAML, CSV, XML converter with templates
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: bafi_{{.Version}}_{{.OS}}_{{.Arch}}_checksum.txt
+      file_format: raw
+      algorithm: md5
+  - type: github_release
     repo_owner: mmarkdown
     repo_name: mmark
     asset: mmark_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tgz
@@ -13569,6 +13876,31 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: ms-jpq
+    repo_name: sad
+    description: CLI search and replace | Space Age seD
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+      windows: pc-windows-msvc
+    asset: "{{.Arch}}-{{.OS}}.zip"
+    version_constraint: semver(">= 0.4.17")
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - linux
+          - darwin
+          - amd64
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+  - type: github_release
     repo_owner: msoap
     repo_name: shell2http
     asset: shell2http_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -13729,6 +14061,19 @@ packages:
     repo_name: mutagen
     asset: mutagen_{{.OS}}_{{.Arch}}_{{.Version}}.tar.gz
     description: Fast file synchronization and network forwarding for remote development
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: mutagen-io
+    repo_name: mutagen-compose
+    asset: mutagen-compose_{{.OS}}_{{.Arch}}_{{.Version}}.tar.gz
+    description: Compose with Mutagen integration
     checksum:
       type: github_release
       asset: SHA256SUMS
@@ -14401,11 +14746,12 @@ packages:
     repo_owner: open-policy-agent
     repo_name: opa
     description: An open source, general-purpose policy engine
+    asset: opa_{{.OS}}_amd64
+    version_constraint: semver(">= 0.37.0")
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: opa_{{.OS}}_amd64
     overrides:
       - goarch: arm64
         asset: opa_{{.OS}}_arm64_static
@@ -14417,6 +14763,25 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: semver("= 0.36.1")
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver("= 0.36.0")
+        rosetta2: true
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
+        rosetta2: true
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: opencontainers
     repo_name: runc
@@ -15234,6 +15599,26 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: projectdiscovery
+    repo_name: pdtm
+    description: ProjectDiscovery's Open Source Tool Manager
+    asset: pdtm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+    replacements:
+      darwin: macOS
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: pdtm_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+
+  - type: github_release
+    repo_owner: projectdiscovery
     repo_name: subfinder
     asset: subfinder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
     description: Subfinder is a subdomain discovery tool that discovers valid subdomains for websites. Designed as a passive framework to be useful for bug bounties and safe for penetration testing
@@ -15790,6 +16175,19 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: rhysd
+    repo_name: dotfiles
+    asset: dotfiles_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    description: dotfiles symbolic links management CLI
+    overrides:
+      - goos: windows
+        asset: dotfiles_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
   - type: github_release
     repo_owner: rhysd
     repo_name: hgrep
@@ -17258,6 +17656,22 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: soh335
+    repo_name: shukujitsu
+    description: shukujitsu determines japanese holiday. Holidays are collected from https://www8.cao.go.jp/chosei/shukujitsu/shukujitsu.csv
+    asset: shukujitsu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: sonatype-nexus-community
     repo_name: nancy
     asset: nancy-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
@@ -17554,6 +17968,47 @@ packages:
       - name: lua-language-server
         src: bin/lua-language-server
   - type: github_release
+    repo_owner: sunny0826
+    repo_name: kubecm
+    description: Manage your kubeconfig more easily
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.19.3")
+    asset: kubecm_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_overrides:
+      - version_constraint: semver(">= 0.15.3")
+        asset: kubecm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+      - version_constraint: semver(">= 0.14.0")
+        asset: kubecm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+        rosetta2: true
+      - version_constraint: semver(">= 0.3.2")
+        asset: kubecm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
+        asset: kubecm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
+  - type: github_release
     repo_owner: superbrothers
     repo_name: ksort
     asset: ksort-{{.OS}}-{{.Arch}}.zip
@@ -17778,6 +18233,29 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: suzuki-shunsuke
+    repo_name: ghalint
+    asset: ghalint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: GitHub Actions linter
+    slsa_provenance:
+      type: github_release
+      asset: multiple.intoto.jsonl
+    checksum:
+      type: github_release
+      asset: ghalint_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/suzuki-shunsuke/ghalint/releases/download/{{.Version}}/ghalint_{{trimV .Version}}_checksums.txt.sig
+          - --certificate
+          - https://github.com/suzuki-shunsuke/ghalint/releases/download/{{.Version}}/ghalint_{{trimV .Version}}_checksums.txt.pem
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: git-rm-branch
@@ -19322,22 +19800,6 @@ packages:
           - amd64
   - type: github_release
     repo_owner: vmware-tanzu
-    repo_name: carvel-kbld
-    format: raw
-    asset: kbld-{{.OS}}-{{.Arch}}
-    description: kbld seamlessly incorporates image building and image pushing into your development and deployment workflows
-    files:
-      - name: kbld
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-  - type: github_release
-    repo_owner: vmware-tanzu
     repo_name: carvel-kwt
     description: Kubernetes Workstation Tools CLI
     rosetta2: true
@@ -19871,6 +20333,31 @@ packages:
       - darwin
       - linux
       - amd64
+  - type: github_release
+    repo_owner: yamafaktory
+    repo_name: jql
+    asset: jql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: zip
+    description: A JSON Query Language CLI tool
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+    overrides:
+      - goos: linux
+        format: tar.gz
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: yannh
     repo_name: kubeconform

@@ -13,7 +13,7 @@ aqua.yaml
 ```yaml
 registries:
   - type: standard
-    ref: v3.122.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v3.129.0 # renovate: depName=aquaproj/aqua-registry
 ```
 
 ## Search packages from the Standard Registry by the command `aqua g`
@@ -23,33 +23,34 @@ Please add the Standard Registry to your aqua.yaml's registries, and run `aqua g
 ```yaml
 registries:
   - type: standard
-    ref: v3.122.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v3.129.0 # renovate: depName=aquaproj/aqua-registry
 ```
 
 `aqua g` launches the interactive UI and you can search the package by fuzzy search.
 
 ```console
-  newrelic/newrelic-cli (standard) (newrelic)                   ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
-  pivotal-cf/pivnet-cli (standard) (pivnet)                     │  cli/cli
-  scaleway/scaleway-cli (standard) (scw)                        │
-  tfmigrator/cli (standard) (tfmigrator)                        │  https://cli.github.com/
-  aws/copilot-cli (standard) (copilot)                          │  GitHub’cs official command line tool
-  codeclimate/test-reporter (standard)                          │
-  create-go-app/cli (standard) (cgapp)                          │
-  harness/drone-cli (standard) (drone)                          │
-  sigstore/rekor (standard) (rekor-cli)                         │
-  getsentry/sentry-cli (standard)                               │
-  grafana/loki/logcli (standard)                                │
-  knative/client (standard) (kn)                                │
-  rancher/cli (standard) (rancher)                              │
-  tektoncd/cli (standard) (tkn)                                 │
-  civo/cli (standard) (civo)                                    │
-  dapr/cli (standard) (dapr)                                    │
-  mongodb/mongocli (standard)                                   │
-  openfaas/faas-cli (standard)                                  │
-> cli/cli (standard) (gh)                                       │
-  50/394                                                        │
-> cli                                                           └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─
+  koki-develop/clive                    ┌──────────────────────────────────────┐
+  tektoncd/cli [tkn]                    │ climech/grit                         │
+  ipinfo/cli/grepip                     │                                      │
+  ipinfo/cli/randip                     │ https://github.com/climech/grit      │
+  openfaas/faas-cli                     │ Multitree-based personal task m      │
+  yitsushi/totp-cli                     │ anager                               │
+  databricks/click                      │                                      │
+  ipinfo/cli/prips                      │                                      │
+  civo/cli [civo]                       │                                      │
+  dapr/cli [dapr]                       │                                      │
+  goark/gimei-cli                       │                                      │
+  orhun/git-cliff                       │                                      │
+  snyk/cli [snyk]                       │                                      │
+  spf13/cobra-cli                       │                                      │
+  volta-cli/volta                       │                                      │
+  barnybug/cli53                        │                                      │
+  cli/cli [gh]: github                  │                                      │
+  nuclio/nuclio                         │                                      │
+  cswank/kcli                           │                                      │
+> climech/grit                          │                                      │
+  140/1017                              │                                      │
+> cli
 ```
 
 ## Request for new packages

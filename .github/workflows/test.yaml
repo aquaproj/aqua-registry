@@ -6,7 +6,6 @@ on:
 permissions: {}
 env:
   AQUA_LOG_COLOR: always
-  GITHUB_TOKEN: ${{ github.token }}
   AQUA_POLICY_CONFIG: ${{ github.workspace }}/aqua-policy.yaml
 jobs:
   ci-info:
@@ -18,7 +17,11 @@ jobs:
       - uses: aquaproj/aqua-installer@61e2563dfe7674cbf74fe6ec212e444198a3bb00 # v2.0.2
         with:
           aqua_version: v2.0.0-2
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
       - uses: suzuki-shunsuke/ci-info-action/store@7391f36724cb763007703086b65f19ed532c7838 # v0.1.1
+        env:
+          GITHUB_TOKEN: ${{github.token}}
       - run: echo "https://github.com/aquaproj/aqua-registry/pull/$CI_INFO_PR_NUMBER" >> "$GITHUB_STEP_SUMMARY"
 
   test:
@@ -57,12 +60,16 @@ jobs:
       - uses: aquaproj/aqua-installer@61e2563dfe7674cbf74fe6ec212e444198a3bb00 # v2.0.2
         with:
           aqua_version: v2.0.0-2
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
 
       - uses: aquaproj/registry-action/test@39773065a44549758440b90a9e25f713c7e1db34 # tag=v0.1.4
         with:
           goos: ${{ matrix.env.goos }}
           goarch: ${{ matrix.env.goarch }}
           go_version: "1.18.5"
+        env:
+          GITHUB_TOKEN: ${{github.token}}
 
   # This job is used for branch protection rule
   # Add this job to `Status checks that are required`
