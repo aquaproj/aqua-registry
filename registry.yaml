@@ -15060,6 +15060,35 @@ packages:
       - name: bun
         src: bun-{{.OS}}-{{.Arch}}/bun
   - type: github_release
+    repo_owner: owenrumney
+    repo_name: squealer
+    description: Telling tales on you for leaking secrets
+    format: raw
+    version_constraint: semver(">= 1.1.0")
+    asset: squealer.{{.OS}}.{{.Arch}}
+    checksum:
+      type: github_release
+      asset: squealer_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: semver(">= 0.2.23")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        asset: squealer.{{.OS}}.{{.Arch}}.{{.Version}}
+        checksum:
+          enabled: false
+  - type: github_release
     repo_owner: owenthereal
     repo_name: upterm
     asset: upterm_{{.OS}}_{{.Arch}}.tar.gz
