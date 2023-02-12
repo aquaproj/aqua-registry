@@ -1,0 +1,24 @@
+packages:
+  - type: github_release
+    repo_owner: kdash-rs
+    repo_name: kdash
+    asset: kdash-{{.OS}}.{{.Format}}
+    format: tar.gz
+    description: A simple and fast dashboard for Kubernetes
+    replacements:
+      darwin: macos
+    overrides:
+      - goos: linux
+        asset: kdash-{{.OS}}-musl.{{.Format}}
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: kdash-{{.OS}}.sha256
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
