@@ -12407,6 +12407,26 @@ packages:
           file_format: raw
           algorithm: sha256
   - type: github_release
+    repo_owner: kubeshark
+    repo_name: kubeshark
+    asset: kubeshark_{{.OS}}_{{.Arch}}
+    description: The API traffic viewer for Kubernetes providing real-time, protocol-aware visibility into Kubernetes internal network capturing, dissecting and monitoring all traffic and payloads going in, out and across containers, pods, nodes and clusters.
+    supported_envs:
+      - windows/amd64
+      - darwin
+      - linux
+    overrides:
+      - goos: windows
+        goarch: amd64
+        asset: kubeshark.exe
+    checksum:
+      type: github_release
+      asset: kubeshark_{{.OS}}_{{.Arch}}.sha256
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+  - type: github_release
     repo_owner: kubesphere
     repo_name: kubeeye
     asset: kubeeye-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
