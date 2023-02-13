@@ -11406,15 +11406,9 @@ packages:
   - type: github_release
     repo_owner: kdash-rs
     repo_name: kdash
+    description: A simple and fast dashboard for Kubernetes
     asset: kdash-{{.OS}}.{{.Format}}
     format: tar.gz
-    description: A simple and fast dashboard for Kubernetes
-    replacements:
-      darwin: macos
-      linux: linux-musl
-    supported_envs:
-      - darwin
-      - amd64
     overrides:
       - goos: windows
         checksum:
@@ -11422,6 +11416,17 @@ packages:
           asset: kdash-{{.OS}}.sha256
           algorithm: sha256
           file_format: raw
+      - goos: linux
+        goarch: arm64
+        asset: kdash-aarch64-musl.tar.gz
+        checksum:
+          type: github_release
+          asset: kdash-aarch64-musl.sha256
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
     rosetta2: true
     checksum:
       type: github_release
@@ -11431,6 +11436,29 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.3.3")
+    replacements:
+      darwin: macos
+      linux: linux-musl
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_overrides:
+      - version_constraint: semver(">= 0.0.4")
+        supported_envs:
+          - darwin
+          - amd64
+        replacements:
+          darwin: macos
+          linux: linux-musl
+      - version_constraint: semver("< 0.0.4")
+        supported_envs:
+          - darwin
+          - amd64
+        replacements:
+          darwin: macos
+      - version_constraint: "true"
   - type: github_release
     repo_owner: kentaro-m
     repo_name: md2confl
