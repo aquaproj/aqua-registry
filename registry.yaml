@@ -16451,14 +16451,19 @@ packages:
   - type: github_release
     repo_owner: robscott
     repo_name: kube-capacity
-    asset: kube-capacity_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    asset: kube-capacity_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: A simple CLI that provides an overview of the resource requests, limits, and utilization in a Kubernetes cluster
     replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
       amd64: x86_64
+    version_constraint: semver(">= 0.7.4")
+    version_overrides:
+      - version_constraint: true
+        asset: kube-capacity_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+          amd64: x86_64
     checksum:
       type: github_release
       asset: checksums.txt
