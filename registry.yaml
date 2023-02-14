@@ -19665,6 +19665,38 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: tsl0922
+    repo_name: ttyd
+    description: Share your terminal over the web
+    asset: ttyd.{{.Arch}}
+    format: raw
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      windows: win32
+    overrides:
+      - goos: windows
+        goarch: amd64
+        asset: ttyd.{{.OS}}.exe
+    supported_envs:
+      - linux
+      - windows/amd64
+    version_constraint: semver(">= 1.7.3")
+    version_overrides:
+      - version_constraint: semver(">= 1.7.0")
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          windows: win10
+        overrides:
+          - goos: windows
+            goarch: amd64
+            asset: ttyd.{{.OS}}.exe
+      - version_constraint: semver("< 1.7.0") 
+        supported_envs:
+          - linux
+      - version_constraint: "true"
+  - type: github_release
     repo_owner: turbot
     repo_name: steampipe
     asset: steampipe_{{.OS}}_{{.Arch}}.{{.Format}}
