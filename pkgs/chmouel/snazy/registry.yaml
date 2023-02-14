@@ -1,0 +1,23 @@
+packages:
+  - type: github_release
+    repo_owner: chmouel
+    repo_name: snazy
+    asset: snazy_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: A snazzy json log viewer
+    replacements:
+      darwin: macOS
+    overrides:
+      - goos: darwin
+        asset: snazy_{{.Version}}_{{.OS}}_all.{{.Format}}
+    supported_envs:
+      - linux/amd64
+      - darwin
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
