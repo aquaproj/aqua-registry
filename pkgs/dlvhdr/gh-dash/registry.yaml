@@ -1,0 +1,28 @@
+packages:
+  - type: github_release
+    repo_owner: dlvhdr
+    repo_name: gh-dash
+    asset: "{{.OS}}-{{.Arch}}"
+    format: raw
+    description: A beautiful CLI dashboard for GitHub
+    version_constraint: semver(">= 3.7.5")
+    version_overrides:
+      - version_constraint: semver(">= 3.7.3")
+        format: tar.gz
+        asset: gh-dash_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: "{{.OS}}-{{.Arch}}"
+        format: raw
+        checksum:
+          enabled: false
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
