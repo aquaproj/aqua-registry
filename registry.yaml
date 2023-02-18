@@ -5976,6 +5976,83 @@ packages:
     files:
       - name: registry
   - type: github_release
+    repo_owner: dlvhdr
+    repo_name: gh-dash
+    description: A beautiful CLI dashboard for GitHub
+    version_constraint: semver(">= 3.7.6")
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    asset: "{{.OS}}-{{.Arch}}"
+    format: raw
+    version_overrides:
+      - version_constraint: semver("= 3.7.5")
+        asset: "{{.OS}}_{{.Arch}}.{{.Format}}"
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("= 3.7.4")
+        asset: gh-dash_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v3.7.3-next"
+        asset: gh-dash_{{title .OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("= 1.2.3")
+        checksum:
+          enabled: false
+        supported_envs:
+          - darwin
+          - amd64
+        complete_windows_ext: false
+      - version_constraint: semver("= 1.2.2")
+        checksum:
+          enabled: false
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - darwin
+          - amd64
+        complete_windows_ext: false
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: amd64
+      - version_constraint: semver("= 1.2.1")
+        checksum:
+          enabled: false
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - darwin
+          - amd64
+        complete_windows_ext: false
+      - version_constraint: semver("= 1.0.3")
+        checksum:
+          enabled: false
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("<= 3.7.0")
+        checksum:
+          enabled: false
+      - version_constraint: "true"
+  - type: github_release
     repo_owner: dnnrly
     repo_name: abbreviate
     description: Supporting your devops by shortening your strings using common abbreviations and clever guesswork
