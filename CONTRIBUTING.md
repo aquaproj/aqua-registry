@@ -30,7 +30,7 @@ you have to create an Issue and describe what is changed and why the change is n
 Checkout the repository and install [aqua-registry CLI](https://github.com/aquaproj/registry-tool).
 
 ```console
-$ git checkout https://github.com/aquaproj/aqua-registry
+$ git clone https://github.com/aquaproj/aqua-registry
 $ cd aqua-registry
 $ aqua i -l # Install aqua-registry CLI
 ```
@@ -75,7 +75,7 @@ e.g. [pkg.yaml](pkgs/scaleway/scaleway-cli/pkg.yaml) [registry.yaml](pkgs/scalew
 
 ```yaml
 packages:
-  - name: scaleway/scaleway-cli@v2.6.1
+  - name: scaleway/scaleway-cli@v2.10.0
   - name: scaleway/scaleway-cli
     version: v2.4.0
 ```
@@ -86,8 +86,8 @@ packages:
 
 ```yaml
 packages:
-  - name: scaleway/scaleway-cli@v2.6.1
-  - name: scaleway/scaleway-cli@v2.6.1
+  - name: scaleway/scaleway-cli@v2.10.0
+  - name: scaleway/scaleway-cli@v2.10.0
 ```
 
 ## Change `GOOS` and `GOARCH` for testing

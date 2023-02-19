@@ -15,8 +15,25 @@ packages:
     files:
       - name: argo
         src: argo-{{.OS}}-{{.Arch}}
+    version_constraint: semver(">= 3.4.4")
     checksum:
       type: github_release
-      asset: "{{.Asset}}.sha256"
-      file_format: raw
+      asset: argo-workflows-cli-checksums.txt
+      file_format: regexp
       algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      cosign:
+        opts:
+          - --signature
+          - https://github.com/argoproj/argo-workflows/releases/download/{{.Version}}/argo-workflows-cli-checksums.sig
+          - --key
+          - https://github.com/argoproj/argo-workflows/releases/download/{{.Version}}/argo-workflows-cosign.pub
+    version_overrides:
+      - version_constraint: "true"
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          file_format: raw
+          algorithm: sha256
