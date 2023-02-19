@@ -5,13 +5,18 @@ packages:
     link: https://gitea.com/gitea/tea
     format: xz
     url: https://dl.gitea.io/tea/{{.Version}}/tea-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    rosetta2: true
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
     files:
       - name: tea
         src: tea-{{.Version}}-{{.OS}}-{{.Arch}}
     overrides:
       - goos: windows
-        asset: https://dl.gitea.io/tea/{{.Version}}/tea-{{.Version}}-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+        goarch: amd64
+        replacements:
+          amd64: amd64.exe
     checksum:
       type: http
       url: https://dl.gitea.io/tea/{{.Version}}/tea-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}.sha256
