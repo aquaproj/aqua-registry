@@ -1,0 +1,21 @@
+packages:
+  - type: github_release
+    repo_owner: projectdiscovery
+    repo_name: pdtm
+    description: ProjectDiscovery's Open Source Tool Manager
+    asset: pdtm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+    replacements:
+      darwin: macOS
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: pdtm_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+

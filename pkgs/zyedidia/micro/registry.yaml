@@ -1,0 +1,30 @@
+packages:
+  - type: github_release
+    repo_owner: zyedidia
+    repo_name: micro
+    asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    description: A modern and intuitive terminal-based text editor
+    replacements:
+      darwin: osx
+      windows: win64
+    overrides:
+      - goos: linux
+        goarch: amd64
+        asset: micro-{{trimV .Version}}-{{.OS}}64.{{.Format}}
+      - goos: linux
+        goarch: arm64
+        asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - goos: windows
+        format: zip
+    rosetta2: true
+    files:
+      - name: micro
+        src: micro-{{trimV .Version}}/micro
+    version_constraint: semver(">= 2.0.0")
+    version_overrides:
+      - version_constraint: "true"
+        supported_envs:
+          - darwin
+          - windows
+          - amd64

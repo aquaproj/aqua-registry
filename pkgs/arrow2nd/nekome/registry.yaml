@@ -2,9 +2,8 @@ packages:
   - type: github_release
     repo_owner: arrow2nd
     repo_name: nekome
-    asset: nekome_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: TUI Twitter client
+    format: tar.gz
     replacements:
       amd64: x86_64
       darwin: Darwin
@@ -21,3 +20,8 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 2.2.0")
+    asset: nekome_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_overrides:
+      - version_constraint: "true"
+        asset: nekome_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}

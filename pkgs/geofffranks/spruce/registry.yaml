@@ -5,7 +5,30 @@ packages:
     description: Standalone, daemon-less, unprivileged Dockerfile and OCI compatible container image builder
     supported_envs:
       - darwin
+      - linux
       - amd64
-    rosetta2: true
     format: raw
+    version_constraint: semver(">= 1.30.1")
     asset: spruce-{{.OS}}-{{.Arch}}
+    complete_windows_ext: false
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha1"
+      file_format: regexp
+      algorithm: sha1
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{40}\b)
+    version_overrides:
+      - version_constraint: semver("= 1.30.0")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
+        complete_windows_ext: true
+        checksum:
+          enabled: false
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64

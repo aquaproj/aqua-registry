@@ -1,0 +1,41 @@
+packages:
+  - type: github_release
+    repo_owner: Orange-OpenSource
+    repo_name: hurl
+    asset: hurl-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    description: Hurl, run and test HTTP requests with plain text
+    files:
+      - name: hurl
+        src: hurl-{{.Version}}/hurl
+      - name: hurlfmt
+        src: hurl-{{.Version}}/hurlfmt
+    replacements:
+      amd64: x86_64
+      darwin: macos
+      windows: win64
+    overrides:
+      - goos: windows
+        format: zip
+        asset: hurl-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: hurl
+            src: hurl.exe
+          - name: hurlfmt
+            src: hurlfmt.exe
+    supported_envs:
+      - darwin
+      - amd64
+    version_constraint: semver(">= 1.7.0")
+    version_overrides:
+      - version_constraint: semver(">= 1.6.1")
+        replacements:
+          amd64: x86_64
+          darwin: osx
+          windows: win64
+      - version_constraint: "true"
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: osx
+          windows: win64
