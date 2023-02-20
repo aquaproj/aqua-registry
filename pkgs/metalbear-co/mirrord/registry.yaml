@@ -3,11 +3,27 @@ packages:
     repo_owner: metalbear-co
     repo_name: mirrord
     description: By mirroring traffic to and from your machine, mirrord surrounds your local service with a mirror image of its cloud environment
+    replacements:
+      darwin: mac
+      amd64: x86_64
+      arm64: aarch64
+    version_constraint: semver(">= 2.2.1")
     supported_envs:
-      - linux/amd64
+      - linux
       - darwin
-    format: raw
-    asset: mirrord_linux_x86_64
+    rosetta2: true
+    format: zip
+    asset: mirrord_{{.OS}}_{{.Arch}}.{{.Format}}
     overrides:
       - goos: darwin
-        asset: mirrord_mac_universal
+        replacements:
+          amd64: universal
+    version_overrides:
+      - version_constraint: semver("< 2.2.1")
+        rosetta2: false
+        asset: mirrord_{{.OS}}_{{.Arch}}
+        format: raw
+        overrides: []
+        supported_envs:
+          - linux/amd64
+          - darwin
