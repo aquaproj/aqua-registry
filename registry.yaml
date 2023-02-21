@@ -3874,6 +3874,47 @@ packages:
           - amd64
   - type: github_release
     repo_owner: carvel-dev
+    repo_name: kapp
+    aliases:
+      - name: vmware-tanzu/carvel-kapp
+    format: raw
+    asset: kapp-{{.OS}}-{{.Arch}}
+    description: 'kapp is a simple deployment tool focused on the concept of "Kubernetes application" — a set of resources with the same label'
+    files:
+      - name: kapp
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_constraint: semver(">= 0.46.0")
+    # support checksum
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\./(\\S+)$"
+    version_overrides:
+      # support darwin/arm64
+      - version_constraint: semver(">= 0.39.0")
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.35.0")
+        # support linux/arm64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: "true"
+        rosetta2: true
+        checksum:
+          enabled: false
+        supported_envs:
+          - darwin
+          - amd64
+  - type: github_release
+    repo_owner: carvel-dev
     repo_name: kbld
     aliases:
       - name: vmware-tanzu/carvel-kbld
@@ -3890,6 +3931,64 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(?:\\./)?(\\S+)$"
+  - type: github_release
+    repo_owner: carvel-dev
+    repo_name: kwt
+    aliases:
+      - name: vmware-tanzu/carvel-kwt
+    description: Kubernetes Workstation Tools CLI
+    rosetta2: true
+    format: raw
+    asset: kwt-{{.OS}}-{{.Arch}}
+    supported_envs:
+      - darwin
+      - linux/amd64
+    files:
+      - name: kwt
+  - type: github_release
+    repo_owner: carvel-dev
+    repo_name: vendir
+    aliases:
+      - name: vmware-tanzu/carvel-vendir
+    asset: vendir-{{.OS}}-{{.Arch}}
+    description: Easy way to vendor portions of git repos, github releases, helm charts, docker image contents, etc. declaratively
+    files:
+      - name: vendir
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_constraint: semver(">= 0.25.0")
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        checksum:
+          enabled: false
+  - type: github_release
+    repo_owner: carvel-dev
+    repo_name: ytt
+    aliases:
+      - name: vmware-tanzu/carvel-ytt
+    asset: ytt-{{.OS}}-{{.Arch}}
+    description: YAML templating tool that works on YAML structure instead of text
+    files:
+      - name: ytt
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: casey
     repo_name: just
@@ -20428,97 +20527,6 @@ packages:
     checksum:
       type: github_release
       asset: confused_{{trimV .Version}}_checksums.txt
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-  - type: github_release
-    repo_owner: vmware-tanzu
-    repo_name: carvel-kapp
-    format: raw
-    asset: kapp-{{.OS}}-{{.Arch}}
-    description: 'kapp is a simple deployment tool focused on the concept of "Kubernetes application" — a set of resources with the same label'
-    files:
-      - name: kapp
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    version_constraint: semver(">= 0.46.0")
-    # support checksum
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\./(\\S+)$"
-    version_overrides:
-      # support darwin/arm64
-      - version_constraint: semver(">= 0.39.0")
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 0.35.0")
-        # support linux/arm64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: "true"
-        rosetta2: true
-        checksum:
-          enabled: false
-        supported_envs:
-          - darwin
-          - amd64
-  - type: github_release
-    repo_owner: vmware-tanzu
-    repo_name: carvel-kwt
-    description: Kubernetes Workstation Tools CLI
-    rosetta2: true
-    format: raw
-    asset: kwt-{{.OS}}-{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux/amd64
-    files:
-      - name: kwt
-  - type: github_release
-    repo_owner: vmware-tanzu
-    repo_name: carvel-vendir
-    asset: vendir-{{.OS}}-{{.Arch}}
-    description: Easy way to vendor portions of git repos, github releases, helm charts, docker image contents, etc. declaratively
-    files:
-      - name: vendir
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    version_constraint: semver(">= 0.25.0")
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-    version_overrides:
-      - version_constraint: "true"
-        rosetta2: true
-        checksum:
-          enabled: false
-  - type: github_release
-    repo_owner: vmware-tanzu
-    repo_name: carvel-ytt
-    asset: ytt-{{.OS}}-{{.Arch}}
-    description: YAML templating tool that works on YAML structure instead of text
-    files:
-      - name: ytt
-    checksum:
-      type: github_release
-      asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
