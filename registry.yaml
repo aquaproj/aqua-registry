@@ -9325,19 +9325,32 @@ packages:
     version_overrides:
       - version_constraint: "true"
         rosetta2: true
-  - type: github_release
+  - type: http
     repo_owner: hashicorp
     repo_name: terraform-ls
-    asset: terraform-ls_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
     description: Terraform Language Server
+    url: https://releases.hashicorp.com/terraform-ls/{{trimV .Version}}/terraform-ls_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
     checksum:
-      type: github_release
-      asset: terraform-ls_{{trimV .Version}}_SHA256SUMS
+      type: http
+      url: https://releases.hashicorp.com/terraform-ls/{{trimV .Version}}/terraform-ls_{{trimV .Version}}_SHA256SUMS
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.30.2")
+    version_overrides:
+      - version_constraint: semver("<= 0.30.1")
+        type: github_release
+        asset: terraform-ls_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+        checksum:
+          type: github_release
+          asset: terraform-ls_{{trimV .Version}}_SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: hashicorp
     repo_name: terraform-plugin-docs
@@ -16714,7 +16727,7 @@ packages:
     format: raw
     files:
       - name: regbot
-    description: A scripting tool on top of the regclient (Docker and OCI Registry Client) API 
+    description: A scripting tool on top of the regclient (Docker and OCI Registry Client) API
     supported_envs:
       - darwin
       - linux
@@ -20151,7 +20164,7 @@ packages:
           - goos: windows
             goarch: amd64
             asset: ttyd.{{.OS}}.exe
-      - version_constraint: semver("< 1.7.0") 
+      - version_constraint: semver("< 1.7.0")
         supported_envs:
           - linux
       - version_constraint: "true"
