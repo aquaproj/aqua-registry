@@ -9325,10 +9325,10 @@ packages:
     version_overrides:
       - version_constraint: "true"
         rosetta2: true
-  - type: http
-    repo_owner: hashicorp
+  - repo_owner: hashicorp
     repo_name: terraform-ls
     description: Terraform Language Server
+    type: http
     url: https://releases.hashicorp.com/terraform-ls/{{trimV .Version}}/terraform-ls_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
     checksum:
       type: http
@@ -9338,6 +9338,44 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.23.0")
+    # 0.23.0: Support windows/arm64
+    version_overrides:
+      - version_constraint: semver(">= 0.14.0")
+        # 0.14.0: Support darwin/arm64
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.12.0")
+        # 0.12.0: Support linux/arm64
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.2.1")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver("< 0.2.1")
+        # 0.1.0 and 0.2.0 were released only at GitHub Releases
+        type: github_release
+        asset: terraform-ls_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: terraform-ls_{{trimV .Version}}_SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: "true"
   - type: github_release
     repo_owner: hashicorp
     repo_name: terraform-plugin-docs
