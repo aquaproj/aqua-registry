@@ -4161,13 +4161,14 @@ packages:
   - type: github_release
     repo_owner: charmbracelet
     repo_name: skate
-    asset: skate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: A personal key value store
+    asset: skate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     replacements:
       amd64: x86_64
+      linux: Linux
       darwin: Darwin
       windows: Windows
+    format: tar.gz
     overrides:
       - goos: windows
         format: zip
@@ -4183,6 +4184,15 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.2.2")
+    # 0.2.2: linux was capitalized. linux => Linux
+    version_overrides:
+      - version_constraint: semver("< 0.2.2")
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          windows: Windows
+      - version_constraint: "true"
   - type: github_release
     repo_owner: charmbracelet
     repo_name: vhs
