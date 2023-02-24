@@ -48,6 +48,18 @@ $ aqua i -l # Install aqua-registry CLI
 
 :warning: When you update `pkgs/**/registry.yaml`, you have to run `aqua-registry gr` to reflect the update to `registry.yaml` on the repository root directory.
 
+## :bulb: Generate `version_overrides`
+
+:warning: `aqua >= v1.34.0-1` and `registry-tool >= v0.1.8-2` is required.
+:warning: `--deep` calls GitHub API per GitHub Release, so it may cause GitHub API rate limiting if there are many GitHub Releases. You can set GitHub access token via environment variables `GITHUB_TOKEN` or `AQUA_GITHUB_TOKEN`.
+
+By default, `aqua-registry scaffold` doesn't generate `version_overrides`.
+You can generate `version_overrides` by `--deep` option.
+
+```console
+$ aqua-registry scaffold --deep <package name>
+```
+
 ## Style Guide
 
 https://aquaproj.github.io/docs/reference/registry-style-guide
