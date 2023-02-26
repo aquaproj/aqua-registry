@@ -50,7 +50,7 @@ $ aqua i -l # Install aqua-registry CLI
 
 ## :bulb: Generate `version_overrides`
 
-:warning: `aqua >= v1.34.0-1` and `registry-tool >= v0.1.8-2` is required.
+:warning: `aqua >= v1.34.0` and `registry-tool >= v0.1.8` is required.
 
 https://aquaproj.github.io/docs/reference/scaffold-registry#generate-version_overrides-by---deep-option
 
