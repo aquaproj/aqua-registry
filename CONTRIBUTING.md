@@ -52,7 +52,7 @@ $ aqua i -l # Install aqua-registry CLI
 
 :warning: `aqua >= v1.34.0` and `registry-tool >= v0.1.8` is required.
 
-https://aquaproj.github.io/docs/reference/scaffold-registry#generate-version_overrides-by---deep-option
+https://aquaproj.github.io/docs/reference/create-private-registry/#generate-version_overrides-by---deep-option
 
 ## Style Guide
 
