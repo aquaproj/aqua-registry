@@ -1,0 +1,19 @@
+packages:
+  - type: github_release
+    repo_owner: Azure
+    repo_name: kubelogin
+    asset: kubelogin-{{.OS}}-{{.Arch}}.zip
+    description: A Kubernetes credential (exec) plugin implementing azure authentication
+    replacements:
+      windows: win
+    files:
+      - name: kubelogin
+        src: bin/{{.OS}}_{{.Arch}}/kubelogin
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
