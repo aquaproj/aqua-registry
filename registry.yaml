@@ -218,8 +218,9 @@ packages:
   - type: github_release
     repo_owner: Azure
     repo_name: kubelogin
-    asset: kubelogin-{{.OS}}-{{.Arch}}.zip
     description: A Kubernetes credential (exec) plugin implementing azure authentication
+    asset: kubelogin-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: zip
     replacements:
       windows: win
     files:
@@ -233,6 +234,34 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.0.27")
+    version_overrides:
+      - version_constraint: semver(">= 0.0.11")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.0.10")
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.0.5")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.0.5")
+        asset: kubelogin.zip
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: BeryJu
     repo_name: korb
