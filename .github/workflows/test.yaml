@@ -8,6 +8,127 @@ env:
   AQUA_LOG_COLOR: always
   AQUA_POLICY_CONFIG: ${{ github.workspace }}/aqua-policy.yaml
 jobs:
+  path-filter:
+    # Get changed files to filter jobs
+    outputs:
+      update-aqua-checksums: ${{steps.changes.outputs.update-aqua-checksums}}
+      renovate-config-validator: ${{steps.changes.outputs.renovate-config-validator}}
+      check-files: ${{steps.changes.outputs.check-files}}
+      generate-registry: ${{steps.changes.outputs.generate-registry}}
+      json-schema: ${{steps.changes.outputs.json-schema}}
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            update-aqua-checksums:
+              - aqua.yaml
+              - aqua/*.yaml
+              - aqua-checksums.json
+              - .github/workflows/test.yaml
+            renovate-config-validator:
+              - renovate.json5
+            check-files:
+              - pkgs/**/pkg.yaml
+              - pkgs/**/registry.yaml
+            generate-registry:
+              - aqua/generate-registry.yaml
+              - registry.yaml
+              - pkgs/**/registry.yaml
+            json-schema:
+              - registry.yaml
+
+  status-check:
+    # This job is used for main branch's branch protection rule's status check.
+    # If all dependent jobs succeed or are skipped this job succeeds.
+    runs-on: ubuntu-latest
+    needs:
+      - approve-and-enable-automerge-renovate
+      - renovate-config-validator
+      - check-files
+      - generate-registry
+      - json-schema
+      - prettier
+      - test
+    permissions: {}
+    if: failure()
+    steps:
+      - run: exit 1
+
+  approve-and-enable-automerge-renovate:
+    runs-on: ubuntu-latest
+    environment: renovate
+    if: |
+      github.event.pull_request.user.login == 'renovate[bot]' && contains(github.event.pull_request.body, ' **Automerge**: Enabled.')
+    steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@021a2405c7f990db57f5eae5397423dcc554159c # v1
+        with:
+          app_id: ${{secrets.APP_ID}}
+          private_key: ${{secrets.APP_PRIVATE_KEY}}
+      - name: Enable auto-merge
+        run: gh -R "$GITHUB_REPOSITORY" pr merge --merge --auto --delete-branch "$PR_NUMBER"
+        env:
+          # github.token is unavailable, because github.token doesn't have a permission to delete a branch `renovate/*`
+          # pull-requests: write and contents: write are required
+          GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
+          PR_NUMBER: ${{github.event.pull_request.number}}
+      # https://github.com/cli/cli/issues/6680
+      # HTTP 401: Personal access tokens with fine grained access do not support the GraphQL API (https://api.github.com/graphql)
+      # - run: gh -R aquaproj/example-update-checksum pr review -a "$PR_NUMBER"
+      - name: Approve a pull request
+        run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews" \
+            -f event='APPROVE'
+        env:
+          PR_NUMBER: ${{github.event.pull_request.number}}
+          GITHUB_TOKEN: ${{secrets.GH_TOKEN_APPROVE_RENOVATE_PR}}
+
+  renovate-config-validator:
+    # Validate Renovate Configuration by renovate-config-validator.
+    uses: suzuki-shunsuke/renovate-config-validator-workflow/.github/workflows/validate.yaml@1a2fd7b15d99b1c434124b0bd2d8bd55b54ed869 # v0.2.0
+    needs: path-filter
+    if: ${{needs.path-filter.outputs.renovate-config-validator == 'true'}}
+    permissions:
+      contents: read
+
+  check-files:
+    runs-on: ubuntu-latest
+    needs: path-filter
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+      - uses: aquaproj/registry-action/check-files@39773065a44549758440b90a9e25f713c7e1db34 # tag=v0.1.4
+
+  generate-registry:
+    runs-on: ubuntu-latest
+    needs: path-filter
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+      - uses: aquaproj/aqua-installer@61e2563dfe7674cbf74fe6ec212e444198a3bb00 # v2.0.2
+        with:
+          aqua_version: v2.0.0-3
+      - uses: aquaproj/registry-action/generate-registry@39773065a44549758440b90a9e25f713c7e1db34 # tag=v0.1.4
+
+  json-schema:
+    runs-on: ubuntu-latest
+    needs: path-filter
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+      - uses: aquaproj/registry-action/validate-json-schema@39773065a44549758440b90a9e25f713c7e1db34 # tag=v0.1.4
+
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+      - run: npm i -g prettier
+      - run: prettier -c .
+
   ci-info:
     runs-on: ubuntu-latest
     env:
@@ -70,12 +191,3 @@ jobs:
           go_version: "1.18.5"
         env:
           GITHUB_TOKEN: ${{github.token}}
-
-  # This job is used for branch protection rule
-  # Add this job to `Status checks that are required`
-  status-check:
-    runs-on: ubuntu-latest
-    needs: [test]
-    if: failure()
-    steps:
-      - run: exit 1
