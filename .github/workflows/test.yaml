@@ -11,7 +11,6 @@ jobs:
   path-filter:
     # Get changed files to filter jobs
     outputs:
-      update-aqua-checksums: ${{steps.changes.outputs.update-aqua-checksums}}
       renovate-config-validator: ${{steps.changes.outputs.renovate-config-validator}}
       check-files: ${{steps.changes.outputs.check-files}}
       generate-registry: ${{steps.changes.outputs.generate-registry}}
@@ -23,11 +22,6 @@ jobs:
         id: changes
         with:
           filters: |
-            update-aqua-checksums:
-              - aqua.yaml
-              - aqua/*.yaml
-              - aqua-checksums.json
-              - .github/workflows/test.yaml
             renovate-config-validator:
               - renovate.json5
             check-files:
@@ -101,6 +95,7 @@ jobs:
   check-files:
     runs-on: ubuntu-latest
     needs: path-filter
+    if: ${{needs.path-filter.outputs.check-files == 'true'}}
     steps:
       - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - uses: aquaproj/registry-action/check-files@39773065a44549758440b90a9e25f713c7e1db34 # tag=v0.1.4
@@ -108,6 +103,7 @@ jobs:
   generate-registry:
     runs-on: ubuntu-latest
     needs: path-filter
+    if: ${{needs.path-filter.outputs.generate-registry == 'true'}}
     steps:
       - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - uses: aquaproj/aqua-installer@61e2563dfe7674cbf74fe6ec212e444198a3bb00 # v2.0.2
@@ -118,6 +114,7 @@ jobs:
   json-schema:
     runs-on: ubuntu-latest
     needs: path-filter
+    if: ${{needs.path-filter.outputs.json-schema == 'true'}}
     steps:
       - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - uses: aquaproj/registry-action/validate-json-schema@39773065a44549758440b90a9e25f713c7e1db34 # tag=v0.1.4
