@@ -1,0 +1,36 @@
+packages:
+  - type: github_release
+    repo_owner: imuxin
+    repo_name: kubectl-watch
+    description: A kubectl plugin to provide a pretty delta change view of being watched kubernetes resources
+    asset: kubectl-watch-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+    version_constraint: semver(">= 0.1.6")
+    version_overrides:
+      - version_constraint: semver("< 0.1.6")
+        asset: kubectl-watch_{{.Version}}_{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          type: github_release
+          asset: kubectl-watch_{{.Version}}_{{.Arch}}-{{.OS}}.zip.sha256sum
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
