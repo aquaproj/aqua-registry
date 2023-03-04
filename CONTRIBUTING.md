@@ -96,6 +96,32 @@ packages:
   - name: scaleway/scaleway-cli@v2.11.1
 ```
 
+## Test in your laptop with Eartly
+
+Using [Earthly](https://docs.earthly.dev/), you can do a test against a specific platform in your laptop.
+You can test quickly without pushing a commit and waiting for CI.
+Compared with running `aqua i --test` in your laptop directly, you can keep your laptop clean and can test against other platform than your laptop.
+
+Please see [Earthfile](Earthfile) too.
+
+After creating and updating a package's `pkg.yaml` and `registry.yaml`, please run `earthly +test`.
+
+```console
+$ earthly +test --pkg=<package name> [--os=linux|darwin|windows] [--arch=amd64|arm64]
+```
+
+e.g.
+
+```console
+$ earthly +test --pkg=suzuki-shunsuke/github-comment --os=windows --arch=amd64
+```
+
+There are three args.
+
+- `--pkg`: (Required): package name. e.g. `suzuki-shunsuke/tfcmt`
+- `--os`: (Default: `linux`): [AQUA_GOOS](https://aquaproj.github.io/docs/reference/change-os-arch-for-test)
+- `--arch`: (Default: `amd64`): [AQUA_GOARCH](https://aquaproj.github.io/docs/reference/change-os-arch-for-test)
+
 ## Change `GOOS` and `GOARCH` for testing
 
 Please see https://aquaproj.github.io/docs/reference/change-os-arch-for-test
