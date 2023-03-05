@@ -8487,6 +8487,73 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: goark
+    repo_name: gnkf
+    description: Network Kanji Filter by Golang
+    asset: gnkf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: 64bit
+      arm64: ARM64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: gnkf_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.7.5")
+    version_overrides:
+      - version_constraint: semver(">= 0.7.4")
+        asset: gnkf_.{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+      - version_constraint: semver(">= 0.6.0")
+        replacements:
+          amd64: 64bit
+          arm64: ARM64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+      - version_constraint: semver(">= 0.4.0")
+        overrides:
+          - goos: windows
+            format: zip
+            replacements:
+              arm64: arm64
+        replacements:
+          amd64: 64bit
+          arm64: ARM64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver("< 0.4.0")
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: ARM64
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: 64bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+  - type: github_release
     repo_owner: goccy
     repo_name: bigquery-emulator
     asset: bigquery-emulator-{{.OS}}-{{.Arch}}
