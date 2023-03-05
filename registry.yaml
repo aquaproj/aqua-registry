@@ -12173,6 +12173,48 @@ packages:
           darwin: macos
       - version_constraint: "true"
   - type: github_release
+    repo_owner: keisku
+    repo_name: kubectl-explore
+    description: A better kubectl explain with the fuzzy finder
+    asset: kubectl-explore_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: kubectl-explore_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.3.2")
+    version_overrides:
+      - version_constraint: semver(">= 0.3.0")
+        asset: kubectl-explore_{{.OS}}_{{.Arch}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("< 0.3.0")
+        asset: kubectl-explore_{{.OS}}_{{.Arch}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux
+          - darwin
+        checksum:
+          type: github_release
+          asset: kubectl-explore_{{.Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: kentaro-m
     repo_name: md2confl
     asset: md2confl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
