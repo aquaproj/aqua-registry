@@ -17,6 +17,7 @@ test:
 	ENV AQUA_GOOS=$os
 	ENV AQUA_GOARCH=$arch
 	ENV AQUA_LOG_COLOR=always
+	ENV PATH=$AQUA_ROOT_DIR/bin:$PATH
 	COPY pkgs/$pkg/pkg.yaml pkg.yaml
 	COPY pkgs/$pkg/registry.yaml registry.yaml
 	RUN "$AQUA_ROOT_DIR/bin/aqua" i --test

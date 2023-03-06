@@ -109,7 +109,7 @@ Please run `aqua i -l` in this repository, then Earthly is installed by aqua.
 After creating and updating a package's `pkg.yaml` and `registry.yaml`, please run `earthly +test`.
 
 ```console
-$ earthly +test --pkg=<package name> [--os=linux|darwin|windows] [--arch=amd64|arm64]
+$ earthly [-i] +test --pkg=<package name> [--os=linux|darwin|windows] [--arch=amd64|arm64]
 ```
 
 e.g.
@@ -123,6 +123,10 @@ There are three args.
 - `--pkg`: (Required): package name. e.g. `suzuki-shunsuke/tfcmt`
 - `--os`: (Default: `linux`): [AQUA_GOOS](https://aquaproj.github.io/docs/reference/change-os-arch-for-test)
 - `--arch`: (Default: `amd64`): [AQUA_GOARCH](https://aquaproj.github.io/docs/reference/change-os-arch-for-test)
+
+[earthly's `-i` option is useful for debug](https://docs.earthly.dev/best-practices#technique-use-earthly-i-to-debug-failures).
+
+https://docs.earthly.dev/docs/earthly-command
 
 ## Change `GOOS` and `GOARCH` for testing
 
