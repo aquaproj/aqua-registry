@@ -124,9 +124,19 @@ There are three args.
 - `--os`: (Default: `linux`): [AQUA_GOOS](https://aquaproj.github.io/docs/reference/change-os-arch-for-test)
 - `--arch`: (Default: `amd64`): [AQUA_GOARCH](https://aquaproj.github.io/docs/reference/change-os-arch-for-test)
 
+### Debug with earthly's `-i` option
+
 [earthly's `-i` option is useful for debug](https://docs.earthly.dev/best-practices#technique-use-earthly-i-to-debug-failures).
 
 https://docs.earthly.dev/docs/earthly-command
+
+You can install tools for debug in a container.
+
+e.g.
+
+```console
+$ apk add tree
+```
 
 ## Change `GOOS` and `GOARCH` for testing
 
