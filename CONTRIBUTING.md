@@ -104,6 +104,8 @@ Compared with running `aqua i --test` in your laptop directly, you can keep your
 
 Please see [Earthfile](Earthfile) too.
 
+Please run `aqua i -l` in this repository, then Earthly is installed by aqua.
+
 After creating and updating a package's `pkg.yaml` and `registry.yaml`, please run `earthly +test`.
 
 ```console
