@@ -5093,24 +5093,50 @@ packages:
     repo_owner: cloudspannerecosystem
     repo_name: wrench
     description: wrench - Schema management tool for Cloud Spanner -
-    asset: wrench_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    asset: wrench-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
     checksum:
       type: github_release
-      asset: wrench_{{trimV .Version}}_checksums.txt
+      asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-    version_constraint: semver(">= 1.3.3")
+    version_constraint: semver(">= 1.4.1")
     version_overrides:
+      - version_constraint: semver(">= 1.3.3")
+        asset: wrench_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        checksum:
+          type: github_release
+          asset: wrench_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
       - version_constraint: semver(">= 1.3.0")
+        asset: wrench_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
         supported_envs:
           - linux
           - darwin
+        checksum:
+          type: github_release
+          asset: wrench_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
       - version_constraint: semver(">= 1.1.0")
         asset: wrench_{{.OS}}_{{.Arch}}
         format: raw
+        overrides: []
         supported_envs:
           - linux
           - darwin
@@ -5119,6 +5145,7 @@ packages:
       - version_constraint: semver("< 1.1.0")
         asset: wrench_{{.OS}}_{{.Arch}}
         format: raw
+        overrides: []
         supported_envs:
           - linux/amd64
           - darwin
