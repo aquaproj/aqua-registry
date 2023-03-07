@@ -1059,6 +1059,39 @@ packages:
           - name: tridentctl
             src: trident-installer/extras/macos/bin/tridentctl
   - type: github_release
+    repo_owner: NimbleArchitect
+    repo_name: kubectl-ice
+    description: A kubectl plugin that allows you to easily view advanced configuration of all containers that are running inside pods
+    asset: kubectl-ice_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: kubectl-ice_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.0.2")
+    version_overrides:
+      - version_constraint: semver("< 0.0.2")
+        asset: ice_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: kubectl-ice
+            src: ice
+          - name: ice
+        checksum:
+          type: github_release
+          asset: ice_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: Orange-OpenSource
     repo_name: hurl
     asset: hurl-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
