@@ -11546,6 +11546,31 @@ packages:
     supported_envs:
       - linux
       - darwin
+  - type: github_release
+    repo_owner: joerdav
+    repo_name: xc
+    description: Markdown defined task runner
+    asset: xc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.0.44")
+    version_overrides:
+      - version_constraint: semver(">= 0.0.33")
+        asset: xc_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+      - version_constraint: semver("< 0.0.33")
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
   - type: github_content
     repo_owner: johanhaleby
     repo_name: kubetail
