@@ -19553,6 +19553,45 @@ packages:
           - darwin
           - linux/amd64
   - type: github_release
+    repo_owner: sunny0826
+    repo_name: kubectl-pod-lens
+    description: kubectl plugin for show pod-related resources
+    asset: pod-lens_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    files:
+      - name: kubectl-pod_lens
+        src: pod-lens
+      - name: pod-lens
+    checksum:
+      type: github_release
+      asset: pod-lens_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.3.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.2.2")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.2.1")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 0.2.1")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+  - type: github_release
     repo_owner: supabase
     repo_name: cli
     asset: supabase_{{.OS}}_{{.Arch}}.{{.Format}}
