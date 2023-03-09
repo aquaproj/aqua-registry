@@ -5678,21 +5678,42 @@ packages:
   - type: github_release
     repo_owner: crate-ci
     repo_name: typos
-    asset: typos-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     description: Source code spell checker
+    asset: typos-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
     replacements:
+      amd64: x86_64
       darwin: apple-darwin
       linux: unknown-linux-musl
       windows: pc-windows-msvc
-      amd64: x86_64
-    rosetta2: true
     supported_envs:
       - darwin
       - amd64
+    rosetta2: true
+    version_constraint: semver(">= 1.13.18")
+    version_overrides:
+      - version_constraint: Version == "v1.13.17"
+        format: zip
+        overrides:
+          - goos: darwin
+            format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver(">= 1.1.0")
+      - version_constraint: semver("< 1.1.0")
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
   - type: github_release
     repo_owner: crazy-max
     repo_name: diun
