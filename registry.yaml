@@ -162,49 +162,68 @@ packages:
         src: aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}/aks-engine
   - type: github_release
     repo_owner: Azure
-    repo_name: aztfy
+    repo_name: aztfexport
+    aliases:
+      - name: Azure/aztfy
     description: A tool to bring existing Azure resources under Terraform's management
-    version_constraint: semver(">= 0.7.0")
-    asset: aztfy_{{.Version}}_{{.OS}}_{{.Arch}}.zip
-    checksum:
-      type: github_release
-      asset: aztfy_SHA256SUMS
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    asset: aztfexport_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
     supported_envs:
       - darwin
       - linux
-      - windows/amd64
+      - amd64
+    checksum:
+      type: github_release
+      asset: aztfexport_SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.11.0")
     version_overrides:
+      - version_constraint: semver(">= 0.7.0")
+        asset: aztfy_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: aztfy
+        checksum:
+          type: github_release
+          asset: aztfy_SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
       - version_constraint: semver(">= 0.0.6")
+        asset: aztfy_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: aztfy
         checksum:
           type: github_release
           asset: aztfy_{{.Version}}_SHA256SUMS
           file_format: regexp
           algorithm: sha256
           pattern:
-            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
             file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-      - version_constraint: "true"
-        asset: aztfy_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+      - version_constraint: semver("< 0.0.6")
+        asset: aztfy_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         replacements:
+          amd64: x86_64
           darwin: Darwin
           linux: Linux
           windows: Windows
-          386: i386
-          amd64: x86_64
+        files:
+          - name: aztfy
         checksum:
           type: github_release
           asset: checksums.txt
           file_format: regexp
           algorithm: sha256
           pattern:
-            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
             file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-        supported_envs: []
   - type: github_release
     repo_owner: Azure
     repo_name: azure-dev
@@ -1058,6 +1077,39 @@ packages:
         files:
           - name: tridentctl
             src: trident-installer/extras/macos/bin/tridentctl
+  - type: github_release
+    repo_owner: NimbleArchitect
+    repo_name: kubectl-ice
+    description: A kubectl plugin that allows you to easily view advanced configuration of all containers that are running inside pods
+    asset: kubectl-ice_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: kubectl-ice_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.0.2")
+    version_overrides:
+      - version_constraint: semver("< 0.0.2")
+        asset: ice_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: kubectl-ice
+            src: ice
+          - name: ice
+        checksum:
+          type: github_release
+          asset: ice_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: Orange-OpenSource
     repo_name: hurl
@@ -4076,7 +4128,7 @@ packages:
       algorithm: sha256
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\./(\\S+)$"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(?:\\./)?(\\S+)$"
     version_overrides:
       # support darwin/arm64
       - version_constraint: semver(">= 0.39.0")
@@ -5060,24 +5112,50 @@ packages:
     repo_owner: cloudspannerecosystem
     repo_name: wrench
     description: wrench - Schema management tool for Cloud Spanner -
-    asset: wrench_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    asset: wrench-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
     checksum:
       type: github_release
-      asset: wrench_{{trimV .Version}}_checksums.txt
+      asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-    version_constraint: semver(">= 1.3.3")
+    version_constraint: semver(">= 1.4.1")
     version_overrides:
+      - version_constraint: semver(">= 1.3.3")
+        asset: wrench_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        checksum:
+          type: github_release
+          asset: wrench_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
       - version_constraint: semver(">= 1.3.0")
+        asset: wrench_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
         supported_envs:
           - linux
           - darwin
+        checksum:
+          type: github_release
+          asset: wrench_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
       - version_constraint: semver(">= 1.1.0")
         asset: wrench_{{.OS}}_{{.Arch}}
         format: raw
+        overrides: []
         supported_envs:
           - linux
           - darwin
@@ -5086,6 +5164,7 @@ packages:
       - version_constraint: semver("< 1.1.0")
         asset: wrench_{{.OS}}_{{.Arch}}
         format: raw
+        overrides: []
         supported_envs:
           - linux/amd64
           - darwin
@@ -5151,10 +5230,11 @@ packages:
     repo_name: test-reporter
     description: Code Climate Test Reporter
     format: raw
-    url: https://codeclimate.com/downloads/test-reporter/test-reporter-{{.Version}}-{{.OS}}-amd64
+    url: https://codeclimate.com/downloads/test-reporter/test-reporter-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+    rosetta2: true
     supported_envs:
       - darwin
-      - linux/amd64
+      - linux
     files:
       - name: cc-test-reporter
         src: test-reporter
@@ -5416,6 +5496,52 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
     supported_envs:
       - linux
+  - type: github_release
+    repo_owner: controlplaneio
+    repo_name: kubectl-kubesec
+    description: Security risk analysis for Kubernetes resources
+    asset: kubectl-kubesec_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    checksum:
+      type: github_release
+      asset: kubectl-kubesec_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    files:
+      - name: kubectl-kubesec_scan
+        src: kubectl-scan
+    version_constraint: semver(">= 1.1.0")
+    version_overrides:
+      - version_constraint: semver(">= 1.0.2")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 1.0.1")
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver("< 1.0.1")
+        asset: kubectl-kubesec_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        files:
+          - name: kubectl-kubesec_scan
+            src: scan
+        checksum:
+          type: github_release
+          asset: kubectl-kubesec_{{.Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: controlplaneio
     repo_name: kubesec
@@ -5845,6 +5971,39 @@ packages:
       - darwin
     files:
       - name: kubeswitch.sh
+  - type: github_release
+    repo_owner: danielgtaylor
+    repo_name: restish
+    description: Restish is a CLI for interacting with REST-ish HTTP APIs with some nice features built-in
+    asset: restish-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      darwin: mac
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.9.2")
+    version_overrides:
+      - version_constraint: semver(">= 0.6.0")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 0.6.0")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
   - type: github_release
     repo_owner: dapr
     repo_name: cli
@@ -11433,6 +11592,31 @@ packages:
     supported_envs:
       - linux
       - darwin
+  - type: github_release
+    repo_owner: joerdav
+    repo_name: xc
+    description: Markdown defined task runner
+    asset: xc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.0.44")
+    version_overrides:
+      - version_constraint: semver(">= 0.0.33")
+        asset: xc_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+      - version_constraint: semver("< 0.0.33")
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
   - type: github_content
     repo_owner: johanhaleby
     repo_name: kubetail
@@ -19448,6 +19632,45 @@ packages:
         supported_envs:
           - darwin
           - linux/amd64
+  - type: github_release
+    repo_owner: sunny0826
+    repo_name: kubectl-pod-lens
+    description: kubectl plugin for show pod-related resources
+    asset: pod-lens_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    files:
+      - name: kubectl-pod_lens
+        src: pod-lens
+      - name: pod-lens
+    checksum:
+      type: github_release
+      asset: pod-lens_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.3.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.2.2")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.2.1")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 0.2.1")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
   - type: github_release
     repo_owner: supabase
     repo_name: cli
