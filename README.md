@@ -2,7 +2,7 @@
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/aquaproj/aqua-registry.svg)](https://github.com/aquaproj/aqua-registry) [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/aquaproj/aqua-registry/main/LICENSE)
 
-[aqua](https://github.com/aquaproj/aqua)'s Standard Registry
+[aqua](https://aquaproj.github.io/)'s Standard Registry
 
 ## How to use
 
@@ -55,7 +55,7 @@ registries:
 
 ## Request for new packages
 
-Please check [registry.yaml](https://github.com/aquaproj/aqua-registry/blob/main/registry.yaml) or search packages by `aqua g` command.
+Please check [registry.yaml](registry.yaml) or search packages by `aqua g` command.
 If the packages you want aren't found, please create issues or send pull requests!
 
 By adding various packages to the standard registry, aqua becomes more useful and attractive.
@@ -67,7 +67,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## :bulb: Tips: Get all packages in your laptop
 
-https://aquaproj.github.io/docs/tutorial-extras/install-all-packages
+https://aquaproj.github.io/docs/guides/install-all-packages
 
 ## Change Log
 

@@ -1,6 +1,6 @@
 # Contributing
 
-About how to write [registry.yaml](registry.yaml), please see [Registry Configuration](https://aquaproj.github.io/docs/reference/registry-config).
+About how to write [registry.yaml](registry.yaml), please see [Registry Configuration](https://aquaproj.github.io/docs/registry-config/).
 
 ## OSS Contribution Guide
 
@@ -23,7 +23,7 @@ you have to create an Issue and describe what is changed and why the change is n
 
 ## Requirements
 
-- [aqua](https://aquaproj.github.io/docs/reference/install) >= [v1.14.0](https://github.com/aquaproj/aqua/releases/tag/v1.14.0)
+- [aqua](https://aquaproj.github.io/docs/install) >= [v1.14.0](https://github.com/aquaproj/aqua/releases/tag/v1.14.0)
 
 ## Set up
 
@@ -52,11 +52,11 @@ $ aqua i -l # Install aqua-registry CLI
 
 :warning: `aqua >= v1.34.0` and `registry-tool >= v0.1.8` is required.
 
-https://aquaproj.github.io/docs/reference/create-private-registry/#generate-version_overrides-by---deep-option
+https://aquaproj.github.io/docs/develop-registry/scaffold-registry#generate-version_overrides-by---deep-option
 
 ## Style Guide
 
-https://aquaproj.github.io/docs/reference/registry-style-guide
+https://aquaproj.github.io/docs/develop-registry/registry-style-guide
 
 ## Supported OS and CPU Architecture
 
@@ -74,7 +74,7 @@ We test the registry in CI on the above environments by GitHub Actions' build ma
 
 ## Test multiple versions
 
-If the package has the field [version_overrides](https://aquaproj.github.io/docs/reference/registry-config#version_constraint-version_overrides),
+If the package has the field [version_overrides](https://aquaproj.github.io/docs/registry-config/version-overrides),
 please add not only the latest version but also old versions in `pkg.yaml` to test if old versions can be installed properly.
 
 e.g. [pkg.yaml](pkgs/scaleway/scaleway-cli/pkg.yaml) [registry.yaml](pkgs/scaleway/scaleway-cli/registry.yaml)
@@ -121,8 +121,8 @@ $ earthly +test --pkg=suzuki-shunsuke/github-comment --os=windows --arch=amd64
 There are three args.
 
 - `--pkg`: (Required): package name. e.g. `suzuki-shunsuke/tfcmt`
-- `--os`: (Default: `linux`): [AQUA_GOOS](https://aquaproj.github.io/docs/reference/change-os-arch-for-test)
-- `--arch`: (Default: `amd64`): [AQUA_GOARCH](https://aquaproj.github.io/docs/reference/change-os-arch-for-test)
+- `--os`: (Default: `linux`): [AQUA_GOOS](https://aquaproj.github.io/docs/develop-registry/change-os-arch-for-test)
+- `--arch`: (Default: `amd64`): [AQUA_GOARCH](https://aquaproj.github.io/docs/develop-registry/change-os-arch-for-test)
 
 ### Debug with earthly's `-i` option
 
@@ -140,4 +140,4 @@ $ apk add tree
 
 ## Change `GOOS` and `GOARCH` for testing
 
-Please see https://aquaproj.github.io/docs/reference/change-os-arch-for-test
+Please see https://aquaproj.github.io/docs/develop-registry/change-os-arch-for-test
