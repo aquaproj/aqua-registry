@@ -15822,6 +15822,45 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: nats-io
+    repo_name: natscli
+    description: The NATS Command Line Interface
+    asset: nats-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: zip
+    files:
+      - name: nats
+        src: nats-{{trimV .Version}}-{{.OS}}-{{.Arch}}/nats
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.0.27")
+    version_overrides:
+      - version_constraint: semver(">= 0.0.23")
+        asset: nats-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.0.22")
+        asset: nats-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver("< 0.0.22")
+        asset: nats-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+  - type: github_release
     repo_owner: nektos
     repo_name: act
     description: Run your GitHub Actions locally
