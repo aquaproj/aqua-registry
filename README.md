@@ -4,17 +4,9 @@
 
 [aqua](https://aquaproj.github.io/)'s Standard Registry
 
-## Document
-
-Please see [document](https://aquaproj.github.io/docs/products/aqua-registry).
-
-## How to contribute
-
-Please see [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## Change Log
-
-Please see [Releases](https://github.com/aquaproj/aqua-registry/releases).
+- [Document](https://aquaproj.github.io/docs/products/aqua-registry)
+- [How to contribute](CONTRIBUTING.md)
+- [Change Log](https://github.com/aquaproj/aqua-registry/releases)
 
 ## Contributors
 
