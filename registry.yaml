@@ -6660,6 +6660,66 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    name: dnote/dnote/cli
+    repo_owner: dnote
+    repo_name: dnote
+    description: A simple command line notebook for programmers
+    asset: dnote_{{trimPrefix "cli-v" .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: dnote_{{trimPrefix "cli-v" .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_filter: Version startsWith "cli-"
+    version_constraint: semverWithVersion(">= 0.13.0", trimPrefix(Version, "cli-"))
+    version_overrides:
+      - version_constraint: semverWithVersion(">= 0.11.1", trimPrefix(Version, "cli-"))
+        supported_envs:
+          - linux
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semverWithVersion(">= 0.6.3", trimPrefix(Version, "cli-"))
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.4.8")
+        asset: dnote_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver("= 0.4.7")
+        asset: dnote_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - linux/amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.4.7")
+        asset: dnote_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - linux/amd64
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
   - type: http
     repo_owner: docker-slim
     repo_name: docker-slim
