@@ -3679,6 +3679,46 @@ packages:
       - version_constraint: "true"
   - type: github_release
     repo_owner: bitnami-labs
+    repo_name: charts-syncer
+    description: Tool for synchronizing Helm Chart repositories
+    asset: charts-syncer_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.20.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.10.0")
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver(">= 0.7.0")
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+      - version_constraint: semver(">= 0.2.2")
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver("< 0.2.2")
+        asset: c3tsyncer_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+        files:
+          - name: c3tsyncer
+        rosetta2: true
+  - type: github_release
+    repo_owner: bitnami-labs
     repo_name: sealed-secrets
     asset: kubeseal-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz
     description: A Kubernetes controller and tool for one-way encrypted Secrets
