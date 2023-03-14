@@ -1,18 +1,27 @@
 packages:
-  - type: go_install
+  - type: github_release
     repo_owner: slsa-framework
     repo_name: slsa-verifier
-    description: The implementation for verifying SLSA provenance
-    # TODO support template in path: https://github.com/aquaproj/aqua/issues/1084
-    # path: github.com/slsa-framework/slsa-verifier/v{{(semver (trimV .Version)).Major}}/cli/slsa-verifier
-    path: github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier
-    overrides:
-      - goos: linux
-        goarch: amd64
-        type: github_release
-        asset: slsa-verifier-{{.OS}}-{{.Arch}}
-        format: raw
-    version_constraint: semver(">= 2.0.0")
+    description: Verify provenance from SLSA compliant builders
+    asset: slsa-verifier-{{.OS}}-{{.Arch}}
+    format: raw
+    version_constraint: semver(">= 2.1.0")
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver(">= 2.0.0")
+        type: go_install
+        path: github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier
+        overrides:
+          - goos: linux
+            goarch: amd64
+            type: github_release
+            asset: slsa-verifier-{{.OS}}-{{.Arch}}
+            format: raw
+      - version_constraint: semver("< 2.0.0")
+        type: go_install
         path: github.com/slsa-framework/slsa-verifier/cli/slsa-verifier
+        overrides:
+          - goos: linux
+            goarch: amd64
+            type: github_release
+            asset: slsa-verifier-{{.OS}}-{{.Arch}}
+            format: raw
