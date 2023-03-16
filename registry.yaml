@@ -1226,35 +1226,6 @@ packages:
       - linux/amd64
     rosetta2: true
   - type: github_release
-    repo_owner: Peltoche
-    repo_name: lsd
-    rosetta2: true
-    asset: lsd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    description: The next gen ls command
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      windows: pc-windows-msvc
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      linux: unknown-linux-musl # Set musl as default. If architecture matches, this can be executable without relying on external libraries
-    files:
-      - name: lsd
-        src: lsd-{{.Version}}-{{.Arch}}-{{.OS}}/lsd
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    version_constraint: semver(">= 0.20.1")
-    version_overrides:
-      - version_constraint: "true"
-        supported_envs:
-          - darwin
-          - amd64
-  - type: github_release
     repo_owner: Percona-Lab
     repo_name: mysql_random_data_load
     asset: mysql_random_data_load_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
@@ -2051,66 +2022,6 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-  - type: github_release
-    repo_owner: aelsabbahy
-    repo_name: goss
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: goss-{{.OS}}-{{.Arch}}
-    description: Quick and Easy server testing/validation
-    replacements:
-      windows: alpha-windows
-      darwin: alpha-darwin
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-  - name: aelsabbahy/goss/dcgoss
-    type: github_content
-    repo_owner: aelsabbahy
-    repo_name: goss
-    description: dcgoss is a convenience wrapper around goss that aims to bring the simplicity of goss to docker-compose managed containers
-    supported_envs:
-      - darwin
-      - linux
-    path: extras/dcgoss/dcgoss
-    files:
-      - name: dcgoss
-    checksum:
-      enabled: false
-  - name: aelsabbahy/goss/dgoss
-    type: github_content
-    repo_owner: aelsabbahy
-    repo_name: goss
-    description: dgoss is a convenience wrapper around goss that aims to bring the simplicity of goss to docker containers
-    supported_envs:
-      - darwin
-      - linux
-    path: extras/dgoss/dgoss
-    files:
-      - name: dgoss
-    checksum:
-      enabled: false
-  - name: aelsabbahy/goss/kgoss
-    type: github_content
-    repo_owner: aelsabbahy
-    repo_name: goss
-    description: kgoss is a wrapper for goss that aims to bring the simplicity of testing with goss to containers running in pods in Kubernetes
-    supported_envs:
-      - darwin
-      - linux
-    path: extras/kgoss/kgoss
-    files:
-      - name: kgoss
-    checksum:
-      enabled: false
   - type: github_release
     repo_owner: aereal
     repo_name: jsondiff
@@ -6296,6 +6207,31 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: ddev
+    repo_name: ddev
+    aliases:
+      - name: drud/ddev
+    asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+    format: tar.gz
+    description: "DDEV: a local web development environment system for PHP"
+    replacements:
+      darwin: macos
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: ddosify
     repo_name: ddosify
     description: High-performance load testing tool, written in Golang
@@ -6510,6 +6446,26 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: devspace-sh
+    repo_name: devspace
+    aliases:
+      - name: loft-sh/devspace
+    asset: devspace-{{.OS}}-{{.Arch}}
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    format: raw
+    description: DevSpace - The Fastest Developer Tool for Kubernetes. Automate your deployment workflow with DevSpace and develop software directly inside Kubernetes
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\S+?([^/]+)$"
   - type: github_release
     repo_owner: dhall-lang
     repo_name: dhall-haskell
@@ -6750,41 +6706,6 @@ packages:
           - amd64
         checksum:
           enabled: false
-  - type: http
-    repo_owner: docker-slim
-    repo_name: docker-slim
-    description: "DockerSlim (docker-slim): Don't change anything in your Docker container image and minify it by up to 30x (and for compiled languages even more) making it secure too! (free and open source)"
-    supported_envs:
-      - darwin
-      - linux
-    format: tar.gz
-    replacements:
-      darwin: mac
-    # https://downloads.dockerslim.com/releases/1.37.2/dist_mac_m1.zip
-    url: https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_{{.Arch}}.{{.Format}}
-    files:
-      - name: docker-slim
-        src: dist_{{.OS}}_{{.Arch}}/docker-slim
-      - name: docker-slim-sensor
-        src: dist_{{.OS}}_{{.Arch}}/docker-slim-sensor
-    overrides:
-      - goarch: amd64
-        url: https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}.{{.Format}}
-        files:
-          - name: docker-slim
-            src: dist_{{.OS}}/docker-slim
-          - name: docker-slim-sensor
-            src: dist_{{.OS}}/docker-slim-sensor
-      - goos: darwin
-        url: https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_m1.{{.Format}}
-        files:
-          - name: docker-slim
-            src: dist_{{.OS}}_m1/docker-slim
-          - name: docker-slim-sensor
-            src: dist_{{.OS}}_m1/docker-slim-sensor
-    format_overrides:
-      - goos: darwin
-        format: zip
   - type: http
     repo_owner: docker
     repo_name: cli
@@ -7170,29 +7091,6 @@ packages:
         supported_envs:
           - darwin
           - amd64
-  - type: github_release
-    repo_owner: drud
-    repo_name: ddev
-    asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
-    format: tar.gz
-    description: "DDEV: a local web development environment system for PHP"
-    replacements:
-      darwin: macos
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: dstotijn
     repo_name: hetty
@@ -8721,6 +8619,52 @@ packages:
       - darwin
     rosetta2: true
   - type: github_release
+    repo_owner: gitleaks
+    repo_name: gitleaks
+    aliases:
+      - name: zricethezav/gitleaks
+    description: Scan git repos (or files) for secrets using regex and entropy
+    asset: gitleaks_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x64
+      arm64: x64
+      386: x32
+    version_constraint: semver(">= 8.3.0")
+    checksum:
+      type: github_release
+      asset: gitleaks_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_overrides:
+      - version_constraint: semver(">= 8.1.3")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 8.0.0")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
+        asset: gitleaks-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        format: raw
+        overrides: []
+        replacements: {}
+        checksum:
+          enabled: false
+  - type: github_release
     repo_owner: gleam-lang
     repo_name: gleam
     description: A friendly language for building type-safe, scalable systems
@@ -9561,6 +9505,74 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: goss-org
+    repo_name: goss
+    aliases:
+      - name: aelsabbahy/goss
+    rosetta2: true
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    asset: goss-{{.OS}}-{{.Arch}}
+    description: Quick and Easy server testing/validation
+    replacements:
+      windows: alpha-windows
+      darwin: alpha-darwin
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - name: goss-org/goss/dcgoss
+    type: github_content
+    repo_owner: goss-org
+    repo_name: goss
+    aliases:
+      - name: aelsabbahy/goss/dcgoss
+    description: dcgoss is a convenience wrapper around goss that aims to bring the simplicity of goss to docker-compose managed containers
+    supported_envs:
+      - darwin
+      - linux
+    path: extras/dcgoss/dcgoss
+    files:
+      - name: dcgoss
+    checksum:
+      enabled: false
+  - name: goss-org/goss/dgoss
+    type: github_content
+    repo_owner: goss-org
+    repo_name: goss
+    aliases:
+      - name: aelsabbahy/goss/dgoss
+    description: dgoss is a convenience wrapper around goss that aims to bring the simplicity of goss to docker containers
+    supported_envs:
+      - darwin
+      - linux
+    path: extras/dgoss/dgoss
+    files:
+      - name: dgoss
+    checksum:
+      enabled: false
+  - name: goss-org/goss/kgoss
+    type: github_content
+    repo_owner: goss-org
+    repo_name: goss
+    aliases:
+      - name: aelsabbahy/goss/kgoss
+    description: kgoss is a wrapper for goss that aims to bring the simplicity of testing with goss to containers running in pods in Kubernetes
+    supported_envs:
+      - darwin
+      - linux
+    path: extras/kgoss/kgoss
+    files:
+      - name: kgoss
+    checksum:
+      enabled: false
+  - type: github_release
     repo_owner: gotestyourself
     repo_name: gotestsum
     asset: gotestsum_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
@@ -10372,6 +10384,22 @@ packages:
           - amd64
         checksum:
           enabled: false
+  - type: github_release
+    repo_owner: helmfile
+    repo_name: vals
+    aliases:
+      - name: variantdev/vals
+    rosetta2: true
+    asset: vals_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: Helm-like configuration values loader with support for various sources
+    checksum:
+      type: github_release
+      asset: vals_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: helmwave
     repo_name: helmwave
@@ -12403,6 +12431,18 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: k3d-io
+    repo_name: k3d
+    aliases:
+      - name: rancher/k3d
+    asset: k3d-{{.OS}}-{{.Arch}}
+    format: raw
+    description: Little helper to run Rancher Lab's k3s in Docker
+    supported_envs:
+      - linux
+      - darwin
+      - amd64
   - type: github_release
     repo_owner: kanisterio
     repo_name: kanister
@@ -14497,24 +14537,6 @@ packages:
     rosetta2: true
   - type: github_release
     repo_owner: loft-sh
-    repo_name: devspace
-    asset: devspace-{{.OS}}-{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    format: raw
-    description: DevSpace - The Fastest Developer Tool for Kubernetes. Automate your deployment workflow with DevSpace and develop software directly inside Kubernetes
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+\\S+?([^/]+)$"
-  - type: github_release
-    repo_owner: loft-sh
     repo_name: vcluster
     description: vcluster - Create fully functional virtual Kubernetes clusters - Each vcluster runs inside a namespace of the underlying k8s cluster. It's cheaper than creating separate full-blown clusters and it offers better multi-tenancy and isolation than regular namespaces
     supported_envs:
@@ -14556,6 +14578,37 @@ packages:
       amd64: x86_64
     files:
       - name: sk
+  - type: github_release
+    repo_owner: lsd-rs
+    repo_name: lsd
+    aliases:
+      - name: Peltoche/lsd
+    rosetta2: true
+    asset: lsd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    description: The next gen ls command
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      windows: pc-windows-msvc
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl # Set musl as default. If architecture matches, this can be executable without relying on external libraries
+    files:
+      - name: lsd
+        src: lsd-{{.Version}}-{{.Arch}}-{{.OS}}/lsd
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_constraint: semver(">= 0.20.1")
+    version_overrides:
+      - version_constraint: "true"
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: lycheeverse
     repo_name: lychee
@@ -17828,16 +17881,6 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: rancher
-    repo_name: k3d
-    asset: k3d-{{.OS}}-{{.Arch}}
-    format: raw
-    description: Little helper to run Rancher Lab's k3s in Docker
-    supported_envs:
-      - linux
-      - darwin
-      - amd64
-  - type: github_release
-    repo_owner: rancher
     repo_name: kim
     asset: kim-{{.OS}}-{{.Arch}}
     format: raw
@@ -19599,6 +19642,43 @@ packages:
       - name: nebula
       - name: nebula-cert
     asset: nebula-{{.OS}}-{{.Arch}}.{{.Format}}
+  - type: http
+    repo_owner: slimtoolkit
+    repo_name: slim
+    aliases:
+      - name: docker-slim/docker-slim
+    description: "DockerSlim (docker-slim): Don't change anything in your Docker container image and minify it by up to 30x (and for compiled languages even more) making it secure too! (free and open source)"
+    supported_envs:
+      - darwin
+      - linux
+    format: tar.gz
+    replacements:
+      darwin: mac
+    # https://downloads.dockerslim.com/releases/1.37.2/dist_mac_m1.zip
+    url: https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_{{.Arch}}.{{.Format}}
+    files:
+      - name: docker-slim
+        src: dist_{{.OS}}_{{.Arch}}/docker-slim
+      - name: docker-slim-sensor
+        src: dist_{{.OS}}_{{.Arch}}/docker-slim-sensor
+    overrides:
+      - goarch: amd64
+        url: https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}.{{.Format}}
+        files:
+          - name: docker-slim
+            src: dist_{{.OS}}/docker-slim
+          - name: docker-slim-sensor
+            src: dist_{{.OS}}/docker-slim-sensor
+      - goos: darwin
+        url: https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_m1.{{.Format}}
+        files:
+          - name: docker-slim
+            src: dist_{{.OS}}_m1/docker-slim
+          - name: docker-slim-sensor
+            src: dist_{{.OS}}_m1/docker-slim-sensor
+    format_overrides:
+      - goos: darwin
+        format: zip
   - type: github_release
     repo_owner: slok
     repo_name: sloth
@@ -21807,20 +21887,6 @@ packages:
       - darwin
       - amd64
     rosetta2: true
-  - type: github_release
-    repo_owner: variantdev
-    repo_name: vals
-    rosetta2: true
-    asset: vals_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    description: Helm-like configuration values loader with support for various sources
-    checksum:
-      type: github_release
-      asset: vals_{{trimV .Version}}_checksums.txt
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: go_install
     repo_owner: vburenin
     repo_name: ifacemaker
@@ -21990,8 +22056,10 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
-    repo_owner: vmware-tanzu
+    repo_owner: vmware-archive
     repo_name: octant
+    aliases:
+      - name: vmware-tanzu/octant
     description: Highly extensible platform for developers to better understand the complexity of Kubernetes clusters
     asset: octant_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
     format: tar.gz
@@ -22789,50 +22857,6 @@ packages:
     files:
       - name: s
         src: s-{{.OS}}_{{.Arch}}/s
-  - type: github_release
-    repo_owner: zricethezav
-    repo_name: gitleaks
-    description: Scan git repos (or files) for secrets using regex and entropy
-    asset: gitleaks_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      amd64: x64
-      arm64: x64
-      386: x32
-    version_constraint: semver(">= 8.3.0")
-    checksum:
-      type: github_release
-      asset: gitleaks_{{trimV .Version}}_checksums.txt
-      file_format: regexp
-      algorithm: sha256
-      pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
-        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
-    version_overrides:
-      - version_constraint: semver(">= 8.1.3")
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-      - version_constraint: semver(">= 8.0.0")
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - amd64
-      - version_constraint: "true"
-        asset: gitleaks-{{.OS}}-{{.Arch}}
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-        format: raw
-        overrides: []
-        replacements: {}
-        checksum:
-          enabled: false
   - type: github_release
     repo_owner: zyedidia
     repo_name: eget
