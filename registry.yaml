@@ -15300,20 +15300,43 @@ packages:
   - type: github_release
     repo_owner: mjibson
     repo_name: sqlfmt
-    asset: sqlfmt_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: SQL formatter with width-aware output
+    asset: sqlfmt_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
     supported_envs:
       - darwin
       - amd64
     rosetta2: true
     checksum:
       type: github_release
-      asset: sqlfmt_{{trimV .Version}}_checksums.txt
+      asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.5.0")
+    version_overrides:
+      - version_constraint: semver("< 0.5.0")
+        asset: sqlfmt_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        replacements: {}
+        checksum:
+          type: github_release
+          asset: sqlfmt_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: mkchoi212
     repo_name: fac
