@@ -1,0 +1,28 @@
+packages:
+  - type: github_release
+    repo_owner: vmware-archive
+    repo_name: octant
+    aliases:
+      - name: vmware-tanzu/octant
+    description: Highly extensible platform for developers to better understand the complexity of Kubernetes clusters
+    asset: octant_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      darwin: macOS
+      linux: Linux
+      windows: Windows
+      amd64: 64bit
+    files:
+      - name: octant
+        src: octant_{{trimV .Version}}_{{.OS}}-{{.Arch}}/octant
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
