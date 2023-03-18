@@ -16849,6 +16849,45 @@ packages:
             checksum: ^(\b[A-Fa-f0-9]{128}\b)
             file: "^\\b[A-Fa-f0-9]{128}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: out-of-cheese-error
+    repo_name: the-way
+    description: A code snippets manager for your terminal
+    asset: the-way-{{.OS}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      darwin: macos
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: the-way-{{.OS}}.sha256
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.14.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.2.2")
+        asset: the-way-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.2.2")
+        asset: the-way-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+        supported_envs:
+          - darwin
+        checksum:
+          enabled: false
+  - type: github_release
     repo_owner: oven-sh
     repo_name: bun
     aliases:
