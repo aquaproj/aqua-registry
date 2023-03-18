@@ -8078,6 +8078,32 @@ packages:
     files:
       - name: semver
   - type: github_release
+    repo_owner: fujiapple852
+    repo_name: trippy
+    description: A network diagnostic tool
+    asset: trippy-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: trip
+        src: trippy-{{.Version}}-{{.Arch}}-{{.OS}}/trip
+    overrides:
+      - goos: linux
+        goarch: amd64
+        replacements:
+          linux: unknown-linux-musl
+      - goos: linux
+        goarch: arm64
+        replacements:
+          arm64: aarch64
+          linux: unknown-linux-gnu
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+    supported_envs:
+      - linux
+      - darwin
+    rosetta2: true
+  - type: github_release
     repo_owner: fujiwara
     repo_name: ecrm
     asset: ecrm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
