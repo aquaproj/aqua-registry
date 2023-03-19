@@ -1,0 +1,28 @@
+packages:
+  - type: github_release
+    repo_owner: ellie
+    repo_name: atuin
+    description: Magical shell history
+    asset: atuin-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+    files:
+      - name: atuin
+        src: atuin-{{.Version}}-{{.Arch}}-{{.OS}}/atuin
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+    version_constraint: semver(">= 0.6.4")
+    version_overrides:
+      - version_constraint: semver("< 0.6.4")
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux
+          - darwin
