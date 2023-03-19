@@ -20138,6 +20138,53 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: solidiquis
+    repo_name: erdtree
+    description: A multi-threaded file-tree visualizer and disk usage analyzer
+    asset: et-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: raw
+        asset: et-{{.Version}}-{{.Arch}}-{{.OS}}
+        replacements:
+          arm64: arm64
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+      windows: pc-windows-msvc
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    files:
+      - name: et
+    version_constraint: semver(">= 1.1.0")
+    version_overrides:
+      - version_constraint: semver("< 1.1.0")
+        asset: et-{{.Version}}-{{.Arch}}-{{.OS}}
+        format: raw
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            asset: et-{{.Arch}}-{{.OS}}
+            replacements:
+              arm64: arm64
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+  - type: github_release
     repo_owner: sonatype-nexus-community
     repo_name: nancy
     asset: nancy-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
