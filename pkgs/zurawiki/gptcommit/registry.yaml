@@ -1,0 +1,35 @@
+packages:
+  - type: github_release
+    repo_owner: zurawiki
+    repo_name: gptcommit
+    description: A git prepare-commit-msg hook for authoring commit messages with GPT-3
+    asset: gptcommit-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: darwin
+        replacements:
+          arm64: aarch64
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    supported_envs:
+      - darwin
+      - amd64
+    version_constraint: semver(">= 0.1.8")
+    version_overrides:
+      - version_constraint: semver("< 0.1.8")
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        replacements:
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
