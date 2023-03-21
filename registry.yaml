@@ -21141,31 +21141,73 @@ packages:
     repo_owner: swaggo
     repo_name: swag
     description: Automatically generate RESTful API documentation with Swagger 2.0 for Go
-    supported_envs:
-      - darwin
-      - linux
-    asset: swag_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    version_constraint: semver("!= 1.8.2")
-    rosetta2: true
+    asset: swag_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     replacements:
+      amd64: x86_64
       darwin: Darwin
       linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
-      arm64: aarch64
-    version_overrides:
-      - version_constraint: semver("= 1.8.2")
-        rosetta2: false
-        replacements: {}
+    supported_envs:
+      - linux
+      - darwin
     checksum:
       type: github_release
       asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.8.11")
+    version_overrides:
+      - version_constraint: semver(">= 1.8.10")
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: Darwin
+          linux: Linux
+      - version_constraint: semver(">= 1.8.3")
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        rosetta2: true
+      - version_constraint: semver(">= 1.8.2")
+        replacements: {}
+        checksum:
+          type: github_release
+          asset: swag_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: semver(">= 1.7.3")
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        rosetta2: true
+      - version_constraint: semver(">= 1.7.1")
+        asset: swag_{{.OS}}_{{.Arch}}.{{.Format}}
+        replacements: {}
+        rosetta2: true
+        checksum:
+          enabled: false
+        files:
+          - name: swag
+            src: swag_{{.OS}}_{{.Arch}}/swag
+      - version_constraint: semver(">= 1.7.0")
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        rosetta2: true
+      - version_constraint: semver("< 1.7.0")
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
   - type: github_release
     repo_owner: syncthing
     repo_name: syncthing
