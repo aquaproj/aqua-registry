@@ -329,6 +329,48 @@ packages:
       - name: cloudfox
         src: cloudfox/cloudfox
   - type: github_release
+    repo_owner: Builditluc
+    repo_name: wiki-tui
+    description: A simple and easy to use Wikipedia Text User Interface
+    asset: wiki-tui-{{.OS}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      darwin: macos
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: wiki-tui-{{.OS}}.sha256
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    overrides:
+      - goos: windows
+        checksum:
+          type: github_release
+          asset: wiki-tui-{{.OS}}.sha256
+          file_format: raw
+          algorithm: sha256
+    version_constraint: semver(">= 0.5.0")
+    version_overrides:
+      - version_constraint: semver("< 0.5.0")
+        asset: wiki-tui-{{.Arch}}-{{.OS}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          enabled: false
+        overrides:
+          - goos: windows
+            checksum:
+              enabled: false
+  - type: github_release
     repo_owner: BurntSushi
     repo_name: ripgrep
     asset: ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
@@ -3782,6 +3824,40 @@ packages:
       - darwin
       - windows
   - type: github_release
+    repo_owner: blst-security
+    repo_name: cherrybomb
+    description: Stop half-done APIs! Cherrybomb is a CLI tool that helps you avoid undefined user behaviour by auditing your API specifications, validating them and running API security tests
+    asset: cherrybomb_{{.OS}}_gnu
+    format: raw
+    overrides:
+      - goos: darwin
+        asset: cherrybomb_{{.OS}}_{{.Arch}}
+    replacements:
+      amd64: x86_64
+      darwin: mac
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+    version_constraint: semver(">= 0.6.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.5.1")
+        asset: cherrybomb_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: linux
+            asset: cherrybomb_{{.OS}}_gnu
+          - goos: darwin
+            replacements:
+              amd64: x86_64
+        replacements:
+          darwin: mac
+      - version_constraint: semver(">= 0.4.3")
+      - version_constraint: semver("< 0.4.3")
+        asset: cherrybomb_{{.OS}}
+        overrides: []
+        replacements:
+          darwin: mac
+  - type: github_release
     repo_owner: bojand
     repo_name: ghz
     asset: ghz-{{.OS}}-{{.Arch}}.{{.Format}}
@@ -4057,6 +4133,120 @@ packages:
       pattern:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: bvaisvil
+    repo_name: zenith
+    description: Zenith - sort of like top or htop but with zoom-able charts, CPU, GPU, network, and disk usage
+    asset: zenith.{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tgz
+    overrides:
+      - goos: darwin
+        replacements:
+          arm64: aarch64
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+    supported_envs:
+      - linux/amd64
+      - darwin
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.14.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.13.1")
+        overrides: []
+        rosetta2: true
+      - version_constraint: semver(">= 0.12.0")
+        overrides:
+          - goos: darwin
+            asset: zenith.{{.Arch}}_{{.OS}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          darwin: MacOS
+          linux: unknown-linux-musl
+        rosetta2: true
+      - version_constraint: semver(">= 0.10.1")
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: zenith.{{.OS}}.{{.Format}}
+        replacements:
+          darwin: MacOS
+          linux: unknown-linux-musl
+        rosetta2: true
+      - version_constraint: semver(">= 0.10.0")
+        asset: zenith.{{.OS}}.{{.Format}}
+        overrides:
+          - goos: linux
+            asset: zenith.{{.Arch}}-{{.OS}}.{{.Format}}
+            replacements:
+              amd64: x86_64
+        replacements:
+          darwin: MacOS
+          linux: unknown-linux-musl
+        rosetta2: true
+      - version_constraint: semver(">= 0.8.2")
+        asset: zenith.{{.OS}}.{{.Format}}
+        overrides: []
+        replacements:
+          darwin: MacOS
+        rosetta2: true
+      - version_constraint: semver(">= 0.7.6")
+        asset: zenith.{{.OS}}.{{.Format}}
+        overrides: []
+        replacements:
+          darwin: MacOS
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.7.4")
+        asset: zenith.{{.OS}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: linux
+            format: tgz
+        replacements:
+          darwin: MacOS
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.7.1")
+        asset: zenith.{{.OS}}.{{.Format}}
+        overrides: []
+        replacements:
+          darwin: macos
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.7.1")
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        format: tar.gz
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+            files:
+              - name: zenith
+                src: x86_64-linux/zenith
+          - goos: darwin
+            asset: "{{.OS}}.{{.Format}}"
+            files:
+              - name: zenith
+                src: macos/zenith
+        replacements:
+          darwin: MacOS
+        rosetta2: true
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: c-bata
     repo_name: kube-prompt
@@ -7444,6 +7634,33 @@ packages:
     supported_envs:
       - linux/amd64
   - type: github_release
+    repo_owner: ellie
+    repo_name: atuin
+    description: Magical shell history
+    asset: atuin-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+    files:
+      - name: atuin
+        src: atuin-{{.Version}}-{{.Arch}}-{{.OS}}/atuin
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+    version_constraint: semver(">= 0.6.4")
+    version_overrides:
+      - version_constraint: semver("< 0.6.4")
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: elsesiy
     repo_name: kubectl-view-secret
     description: Kubernetes CLI plugin to decode Kubernetes secrets
@@ -8118,6 +8335,32 @@ packages:
     path: src/semver
     files:
       - name: semver
+  - type: github_release
+    repo_owner: fujiapple852
+    repo_name: trippy
+    description: A network diagnostic tool
+    asset: trippy-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: trip
+        src: trippy-{{.Version}}-{{.Arch}}-{{.OS}}/trip
+    overrides:
+      - goos: linux
+        goarch: amd64
+        replacements:
+          linux: unknown-linux-musl
+      - goos: linux
+        goarch: arm64
+        replacements:
+          arm64: aarch64
+          linux: unknown-linux-gnu
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+    supported_envs:
+      - linux
+      - darwin
+    rosetta2: true
   - type: github_release
     repo_owner: fujiwara
     repo_name: ecrm
@@ -11623,6 +11866,29 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: jdxcode
+    repo_name: rtx
+    description: Runtime Executor (asdf rust clone)
+    asset: rtx-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x64
+      darwin: macos
+    supported_envs:
+      - linux
+      - darwin
+    files:
+      - name: rtx
+        src: rtx/bin/rtx
+    checksum:
+      type: github_release
+      asset: SHASUMS256.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(?:\\./)?(\\S+)$"
   - type: github_release
     repo_owner: jenkins-x
     repo_name: jx
@@ -16406,6 +16672,25 @@ packages:
       - amd64
     rosetta2: true
   - type: github_release
+    repo_owner: oberblastmeister
+    repo_name: trashy
+    description: A cli system trash manager, alternative to rm and trash-cli
+    asset: trash-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: trash
+    overrides:
+      - goos: windows
+        format: raw
+        asset: trash-{{.Arch}}-{{.OS}}
+    replacements:
+      amd64: x86_64
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    supported_envs:
+      - linux/amd64
+      - windows/amd64
+  - type: github_release
     repo_owner: octohelm
     repo_name: cuemod
     description: experimental cuelang mod tool
@@ -16889,6 +17174,45 @@ packages:
           pattern:
             checksum: ^(\b[A-Fa-f0-9]{128}\b)
             file: "^\\b[A-Fa-f0-9]{128}\\b\\s+(\\S+)$"
+  - type: github_release
+    repo_owner: out-of-cheese-error
+    repo_name: the-way
+    description: A code snippets manager for your terminal
+    asset: the-way-{{.OS}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      darwin: macos
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: the-way-{{.OS}}.sha256
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.14.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.2.2")
+        asset: the-way-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        checksum:
+          enabled: false
+      - version_constraint: Version == "v0.2.1-osx"
+        asset: the-way-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+        supported_envs:
+          - darwin
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: oven-sh
     repo_name: bun
@@ -19939,6 +20263,53 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: solidiquis
+    repo_name: erdtree
+    description: A multi-threaded file-tree visualizer and disk usage analyzer
+    asset: et-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: raw
+        asset: et-{{.Version}}-{{.Arch}}-{{.OS}}
+        replacements:
+          arm64: arm64
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+      windows: pc-windows-msvc
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    files:
+      - name: et
+    version_constraint: semver(">= 1.1.0")
+    version_overrides:
+      - version_constraint: semver("< 1.1.0")
+        asset: et-{{.Version}}-{{.Arch}}-{{.OS}}
+        format: raw
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            asset: et-{{.Arch}}-{{.OS}}
+            replacements:
+              arm64: arm64
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+  - type: github_release
     repo_owner: sonatype-nexus-community
     repo_name: nancy
     asset: nancy-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
@@ -20845,31 +21216,73 @@ packages:
     repo_owner: swaggo
     repo_name: swag
     description: Automatically generate RESTful API documentation with Swagger 2.0 for Go
-    supported_envs:
-      - darwin
-      - linux
-    asset: swag_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    version_constraint: semver("!= 1.8.2")
-    rosetta2: true
+    asset: swag_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     replacements:
+      amd64: x86_64
       darwin: Darwin
       linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
-      arm64: aarch64
-    version_overrides:
-      - version_constraint: semver("= 1.8.2")
-        rosetta2: false
-        replacements: {}
+    supported_envs:
+      - linux
+      - darwin
     checksum:
       type: github_release
       asset: checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.8.11")
+    version_overrides:
+      - version_constraint: semver(">= 1.8.10")
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: Darwin
+          linux: Linux
+      - version_constraint: semver(">= 1.8.3")
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        rosetta2: true
+      - version_constraint: semver(">= 1.8.2")
+        replacements: {}
+        checksum:
+          type: github_release
+          asset: swag_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: semver(">= 1.7.3")
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        rosetta2: true
+      - version_constraint: semver(">= 1.7.1")
+        asset: swag_{{.OS}}_{{.Arch}}.{{.Format}}
+        replacements: {}
+        rosetta2: true
+        checksum:
+          enabled: false
+        files:
+          - name: swag
+            src: swag_{{.OS}}_{{.Arch}}/swag
+      - version_constraint: semver(">= 1.7.0")
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        rosetta2: true
+      - version_constraint: semver("< 1.7.0")
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
   - type: github_release
     repo_owner: syncthing
     repo_name: syncthing
@@ -22957,6 +23370,40 @@ packages:
     files:
       - name: s
         src: s-{{.OS}}_{{.Arch}}/s
+  - type: github_release
+    repo_owner: zurawiki
+    repo_name: gptcommit
+    description: A git prepare-commit-msg hook for authoring commit messages with GPT-3
+    asset: gptcommit-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: darwin
+        replacements:
+          arm64: aarch64
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    supported_envs:
+      - darwin
+      - amd64
+    version_constraint: semver(">= 0.1.8")
+    version_overrides:
+      - version_constraint: semver("< 0.1.8")
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        replacements:
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
   - type: github_release
     repo_owner: zyedidia
     repo_name: eget
