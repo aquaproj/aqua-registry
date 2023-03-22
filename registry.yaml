@@ -2314,6 +2314,47 @@ packages:
       - amd64
     rosetta2: true
   - type: github_release
+    repo_owner: andrewkroh
+    repo_name: gvm
+    description: Go Version Manager (written in Go for cross-platform usability)
+    asset: gvm-{{.OS}}-{{.Arch}}
+    format: raw
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: gvm_{{trimV .Version}}_SHA256SUMS
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.4.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.3.2")
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.3.1")
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.3.1-rc1")
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.0.4")
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.0.4")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+  - type: github_release
     repo_owner: ankitpokhrel
     repo_name: jira-cli
     asset: jira_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
