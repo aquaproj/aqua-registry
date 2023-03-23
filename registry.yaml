@@ -11323,6 +11323,51 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+bin/(\\S+)$"
   - type: github_release
+    repo_owner: innobead
+    repo_name: huber
+    description: Huber, Package Manager for GitHub repos
+    asset: huber-{{.OS}}-{{.Arch}}
+    format: raw
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      file_format: raw
+      algorithm: sha256
+    overrides:
+      - goos: linux
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+/home/runner/work/huber/huber/.target/(\\S+)$"
+      - goos: darwin
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+/Users/runner/work/huber/huber/.target/(\\S+)$"
+    version_constraint: semver(">= 0.2.5")
+    version_overrides:
+      - version_constraint: semver(">= 0.2.0")
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("< 0.2.0")
+        supported_envs:
+          - linux/amd64
+          - darwin
+  - type: github_release
     repo_owner: instrumenta
     repo_name: kubeval
     description: Validate your Kubernetes configuration files, supports multiple Kubernetes versions
