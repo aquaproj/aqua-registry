@@ -8430,21 +8430,39 @@ packages:
         src: trippy-{{.Version}}-{{.Arch}}-{{.OS}}/trip
     overrides:
       - goos: linux
-        goarch: amd64
-        replacements:
-          linux: unknown-linux-musl
-      - goos: linux
-        goarch: arm64
         replacements:
           arm64: aarch64
-          linux: unknown-linux-gnu
+      - goos: windows
+        format: zip
     replacements:
       amd64: x86_64
       darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
     supported_envs:
-      - linux
       - darwin
+      - linux
+      - amd64
     rosetta2: true
+    version_constraint: semver(">= 0.7.0")
+    version_overrides:
+      - version_constraint: semver("< 0.7.0")
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: fujiwara
     repo_name: ecrm
