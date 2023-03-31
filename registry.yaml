@@ -17,8 +17,13 @@ packages:
     description: A vault for securely storing and accessing AWS credentials in development environments
     asset: aws-vault-{{.OS}}-{{.Arch}}
     format: raw
+    overrides:
+      - goos: darwin
+        format: dmg
+        asset: aws-vault-{{.OS}}-{{.Arch}}.{{.Format}}
     supported_envs:
       - linux
+      - darwin
       - windows/arm64
     checksum:
       type: github_release
@@ -30,20 +35,55 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
     version_constraint: semver(">= 6.5.0")
     version_overrides:
+      - version_constraint: semver(">= 6.3.0")
+        asset: aws-vault-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: dmg
+        overrides:
+          - goos: linux
+            format: raw
+            asset: aws-vault-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: semver(">= 5.2.0")
+        asset: aws-vault-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: dmg
+        overrides:
+          - goos: linux
+            format: raw
+            asset: aws-vault-{{.OS}}-{{.Arch}}
         supported_envs:
           - linux
+          - darwin
+        rosetta2: true
       - version_constraint: semver(">= 5.1.0")
+        asset: aws-vault-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: dmg
+        overrides:
+          - goos: linux
+            format: raw
+            asset: aws-vault-{{.OS}}-{{.Arch}}
         supported_envs:
           - linux
+          - darwin
+        rosetta2: true
         checksum:
           enabled: false
       - version_constraint: semver(">= 4.7.0")
+        asset: aws-vault-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: dmg
+        overrides:
+          - goos: linux
+            format: raw
+            asset: aws-vault-{{.OS}}-{{.Arch}}
         supported_envs:
           - linux/amd64
+          - darwin
+        rosetta2: true
         checksum:
           enabled: false
       - version_constraint: semver(">= 3.5.0")
+        overrides: []
         supported_envs:
           - linux/amd64
           - darwin
@@ -51,6 +91,7 @@ packages:
         checksum:
           enabled: false
       - version_constraint: semver(">= 3.0.0-dev")
+        overrides: []
         replacements:
           amd64: x86_64
           darwin: Darwin
@@ -60,6 +101,7 @@ packages:
         checksum:
           enabled: false
       - version_constraint: semver(">= 2.4.0")
+        overrides: []
         replacements:
           amd64: x86_64
           darwin: Darwin
@@ -71,6 +113,7 @@ packages:
         checksum:
           enabled: false
       - version_constraint: semver(">= 2.3.3")
+        overrides: []
         replacements:
           amd64: x86_64
           darwin: Darwin
@@ -80,6 +123,7 @@ packages:
         checksum:
           enabled: false
       - version_constraint: semver(">= 2.3.2")
+        overrides: []
         replacements:
           amd64: x86_64
           darwin: Darwin
@@ -91,6 +135,7 @@ packages:
         checksum:
           enabled: false
       - version_constraint: semver("< 2.3.2")
+        overrides: []
         replacements:
           amd64: x86_64
           darwin: Darwin
