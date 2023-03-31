@@ -1,0 +1,22 @@
+packages:
+  - type: github_release
+    repo_owner: stefanprodan
+    repo_name: timoni
+    description: Timoni is a package manager for Kubernetes, powered by CUE and inspired by Helm
+    asset: timoni_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: timoni_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
