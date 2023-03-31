@@ -20,6 +20,7 @@ packages:
     supported_envs:
       - linux
       - windows/arm64
+      - darwin
     checksum:
       type: github_release
       asset: SHA256SUMS
@@ -28,6 +29,10 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    overrides:
+      - goos: darwin
+        format: dmg
+        asset: aws-vault-darwin-{{.Arch}}.{{.Format}}
     version_constraint: semver(">= 6.5.0")
     version_overrides:
       - version_constraint: semver(">= 5.2.0")
