@@ -1,0 +1,23 @@
+packages:
+  - type: github_release
+    repo_owner: rogerwelin
+    repo_name: cfnctl
+    description: Cfnctl brings the Terraform cli experience to AWS Cloudformation
+    asset: cfnctl_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
