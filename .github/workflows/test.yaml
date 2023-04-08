@@ -6,7 +6,6 @@ on:
 permissions: {}
 env:
   AQUA_LOG_COLOR: always
-  AQUA_POLICY_CONFIG: ${{ github.workspace }}/aqua-policy.yaml
 jobs:
   path-filter:
     # Get changed files to filter jobs
@@ -19,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: {}
     steps:
-      - uses: dorny/paths-filter@v2
+      - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
         id: changes
         with:
           filters: |
@@ -99,9 +98,10 @@ jobs:
     if: ${{needs.path-filter.outputs.generate-registry == 'true'}}
     steps:
       - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
-      - uses: aquaproj/aqua-installer@61e2563dfe7674cbf74fe6ec212e444198a3bb00 # v2.0.2
+      - uses: aquaproj/aqua-installer@c0a879a13120ec4d55cadc8fc606ff296cd60b91 # v2.0.3-1
         with:
-          aqua_version: v2.2.1
+          aqua_version: v2.3.0-7
+          policy_allow: "true"
       - uses: aquaproj/registry-action/generate-registry@39773065a44549758440b90a9e25f713c7e1db34 # tag=v0.1.4
 
   json-schema:
@@ -125,9 +125,10 @@ jobs:
     if: ${{needs.path-filter.outputs.test-earthly == 'true'}}
     steps:
       - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
-      - uses: aquaproj/aqua-installer@61e2563dfe7674cbf74fe6ec212e444198a3bb00 # v2.0.2
+      - uses: aquaproj/aqua-installer@c0a879a13120ec4d55cadc8fc606ff296cd60b91 # v2.0.3-1
         with:
-          aqua_version: v2.2.1
+          aqua_version: v2.3.0-7
+          policy_allow: "true"
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
       - run: earthly +test --pkg=google/wire
@@ -138,9 +139,10 @@ jobs:
       AQUA_CONFIG: aqua/ci-info.yaml
     steps:
       - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
-      - uses: aquaproj/aqua-installer@61e2563dfe7674cbf74fe6ec212e444198a3bb00 # v2.0.2
+      - uses: aquaproj/aqua-installer@c0a879a13120ec4d55cadc8fc606ff296cd60b91 # v2.0.3-1
         with:
-          aqua_version: v2.2.1
+          aqua_version: v2.3.0-7
+          policy_allow: "true"
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
       - uses: suzuki-shunsuke/ci-info-action/store@20bd996e371b27a229a348a09e17db8dcab1f2be # v0.1.2
@@ -181,9 +183,10 @@ jobs:
       #     app_id: ${{ secrets.APP_ID }}
       #     private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
-      - uses: aquaproj/aqua-installer@61e2563dfe7674cbf74fe6ec212e444198a3bb00 # v2.0.2
+      - uses: aquaproj/aqua-installer@c0a879a13120ec4d55cadc8fc606ff296cd60b91 # v2.0.3-1
         with:
-          aqua_version: v2.2.1
+          aqua_version: v2.3.0-7
+          policy_allow: "true"
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
 
