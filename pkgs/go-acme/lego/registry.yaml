@@ -2,9 +2,9 @@ packages:
   - type: github_release
     repo_owner: go-acme
     repo_name: lego
+    description: Let's Encrypt/ACME client and library written in Go
     asset: lego_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
-    description: Let's Encrypt/ACME client and library written in Go
     overrides:
       - goos: windows
         format: zip
@@ -16,3 +16,53 @@ packages:
       pattern:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 4.5.2")
+    version_overrides:
+      - version_constraint: semver(">= 4.3.0")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.5.0")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.4.0")
+        asset: lego_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.xz
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.1.1")
+        asset: lego_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.xz
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.1.1")
+        asset: lego_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
