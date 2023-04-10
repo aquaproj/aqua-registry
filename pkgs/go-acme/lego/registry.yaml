@@ -1,0 +1,18 @@
+packages:
+  - type: github_release
+    repo_owner: go-acme
+    repo_name: lego
+    asset: lego_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    description: Let's Encrypt/ACME client and library written in Go
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: lego_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
