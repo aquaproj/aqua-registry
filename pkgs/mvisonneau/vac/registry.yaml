@@ -1,0 +1,46 @@
+packages:
+  - type: github_release
+    repo_owner: mvisonneau
+    repo_name: vac
+    description: AWS credentials management leveraging Vault
+    asset: vac_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: vac_{{.Version}}_sha512sums.txt
+      file_format: regexp
+      algorithm: sha512
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{128}\\b)"
+        file: "^\\b[A-Fa-f0-9]{128}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.0.6")
+    version_overrides:
+      - version_constraint: semver(">= 0.0.5")
+        rosetta2: true
+      - version_constraint: semver(">= 0.0.4")
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: vac_{{.Version}}_SHA256SUMS
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: semver("< 0.0.4")
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
