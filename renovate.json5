@@ -2,6 +2,7 @@
   extends: [
     "config:base",
     "helpers:pinGitHubActionDigests",
+    "github>suzuki-shunsuke/renovate-config:nolimit#2.0.0",
     "github>aquaproj/aqua-renovate-config#1.5.2",
     "github>aquaproj/aqua-renovate-config:file#1.5.2(CONTRIBUTING\\.md)",
     "github>aquaproj/aqua-renovate-config:file#1.5.2(aqua-all\\.yaml)",
@@ -12,9 +13,16 @@
   ],
   automerge: true,
   platformAutomerge: true,
-  prHourlyLimit: 0,
-  prConcurrentLimit: 0,
-  branchConcurrentLimit: 0,
+  packageRules: [
+    {
+      matchPackagePatterns: ["^[a-z]"],
+      schedule: ["before 12pm"],
+    },
+    {
+      matchPackagePatterns: ["^[a-z]"],
+      schedule: ["after 12pm"],
+    },
+  ],
   regexManagers: [
     {
       fileMatch: ["README.md"],
