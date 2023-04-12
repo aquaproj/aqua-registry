@@ -18,12 +18,16 @@
     // Otherwise, Renovate doesn't work because there are too many dependencies.
     // https://github.com/renovatebot/renovate/discussions/21410
     // https://github.com/aquaproj/aqua-registry/issues/11363
+    //
+    // aqua list | wc -l # 1145
+    // aqua list | grep "standard," | sed "s/standard,//" | grep -E "^[a-k]" | wc -l # 600
+    // aqua list | grep "standard," | sed "s/standard,//" | grep -E "^[^a-k]" | wc -l # 545
     {
-      matchPackagePatterns: ["^[a-z]"],
+      matchPackagePatterns: ["^[a-k]"],
       schedule: ["before 12pm"],
     },
     {
-      matchPackagePatterns: ["^[^a-z]"],
+      matchPackagePatterns: ["^[^a-k]"],
       schedule: ["after 12pm"],
     },
   ],
