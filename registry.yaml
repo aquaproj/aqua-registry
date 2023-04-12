@@ -11449,9 +11449,14 @@ packages:
     overrides:
       - goos: windows
         format: zip
+    version_constraint: semver(">= 2.7.1")
     files:
       - name: influx
-        src: influxdb2-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}/influx
+    version_overrides:
+      - version_constraint: semver("< 2.7.1")
+        files:
+          - name: influx
+            src: influxdb2-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}/influx
   - type: github_release
     repo_owner: infracost
     repo_name: infracost
