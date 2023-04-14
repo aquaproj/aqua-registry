@@ -21571,6 +21571,30 @@ packages:
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: suzuki-shunsuke
+    repo_name: pinact
+    description: Pin GitHub Actions versions
+    asset: pinact_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    checksum:
+      type: github_release
+      asset: pinact_{{trimV .Version}}_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/suzuki-shunsuke/pinact/releases/download/{{.Version}}/pinact_{{trimV .Version}}_checksums.txt.sig
+          - --certificate
+          - https://github.com/suzuki-shunsuke/pinact/releases/download/{{.Version}}/pinact_{{trimV .Version}}_checksums.txt.pem
+    slsa_provenance:
+      type: github_release
+      asset: multiple.intoto.jsonl
+  - type: github_release
+    repo_owner: suzuki-shunsuke
     repo_name: renovate-issue-action
     description: Create, update, and close GitHub Issues with GitHub Actions according to Renovate Pull Requests
     asset: renovate-issue-action_{{.OS}}_{{.Arch}}.tar.gz
