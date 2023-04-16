@@ -24,11 +24,19 @@
     // aqua list | grep "standard," | sed "s/standard,//" | grep -E "^[^a-k]" | wc -l # 545
     {
       matchPackagePatterns: ["^[a-k]"],
-      schedule: ["* 0-3,8-11,16-19 * * *"],
+      schedule: [
+        "before 4am",
+        "after 8am and before 12am",
+        "after 4pm and before 8pm",
+      ],
     },
     {
       matchPackagePatterns: ["^[^a-k]"],
-      schedule: ["* 4-7,12-15,20-23 * * *"],
+      schedule: [
+        "after 4am and before 8am",
+        "after 12am and before 4pm",
+        "after 8pm",
+      ],
     },
   ],
   regexManagers: [
