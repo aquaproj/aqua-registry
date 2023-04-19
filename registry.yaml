@@ -23382,6 +23382,14 @@ packages:
             files:
               - name: wasmer
                 src: bin/wasmer
+          - goos: windows
+            files:
+              - name: wapm
+                src: bin/wapm.exe
+              - name: wasmer-headless
+                src: bin/wasmer-headless.exe
+              - name: wasmer
+                src: bin/wasmer.exe
       - version_constraint: semver(">= 2.0.0-rc1")
         replacements: {}
         supported_envs:
@@ -23415,11 +23423,11 @@ packages:
             src: bin/wapm
           - name: wasmer
             src: bin/wasmer
-        overrides:
-          - goos: windows
-            asset: wasmer-c-api-{{.OS}}.{{.Format}}
         replacements: {}
         rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
       - version_constraint: semver(">= 0.14.0")
         files: *wasmerio_wasmer_files_1
         overrides:
@@ -23428,7 +23436,7 @@ packages:
         replacements: {}
         supported_envs:
           - darwin
-          - amd64
+          - linux/amd64
         rosetta2: true
       - version_constraint: semver(">= 0.10.2")
         files: *wasmerio_wasmer_files_1
