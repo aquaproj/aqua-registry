@@ -11024,6 +11024,38 @@ packages:
         checksum: ^(\b[A-Fa-f0-9]{64}\b)
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: hexdigest
+    repo_name: gowrap
+    description: GoWrap is a command line tool for generating decorators for Go interfaces
+    asset: gowrap_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 1.2.2")
+    version_overrides:
+      - version_constraint: semver(">= 1.1.11")
+        rosetta2: false
+      - version_constraint: semver("< 1.1.11")
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - amd64
+  - type: github_release
     repo_owner: hhatto
     repo_name: gocloc
     description: A little fast cloc(Count Lines Of Code)
