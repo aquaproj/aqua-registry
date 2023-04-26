@@ -11,6 +11,12 @@ packages:
     overrides:
       - goos: linux
         format: tar.gz
+      - &cli_cli_windows_override
+        goos: windows
+        format: zip
+        files:
+          - name: gh
+            src: bin/gh.exe
     replacements:
       darwin: macOS
     checksum:
@@ -26,19 +32,16 @@ packages:
       - version_constraint: semver(">= 2.24.0")
         format: tar.gz
         overrides:
-          - goos: windows
-            format: zip
+          - *cli_cli_windows_override
       - version_constraint: semver(">= 2.20.1")
         format: tar.gz
         overrides:
-          - goos: windows
-            format: zip
+          - *cli_cli_windows_override
         rosetta2: true
       - version_constraint: semver("< 2.20.1")
         format: tar.gz
         overrides:
-          - goos: windows
-            format: zip
+          - *cli_cli_windows_override
         supported_envs:
           - darwin
           - linux
