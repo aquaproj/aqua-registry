@@ -3,31 +3,47 @@ packages:
     repo_owner: cli
     repo_name: cli
     description: GitHub’s official command line tool
-    search_words:
-      - github
-    supported_envs:
-      - linux
-      - darwin
-      - amd64
-    rosetta2: true
     asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
     files:
       - name: gh
         src: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/gh
-    replacements:
-      darwin: macOS
-    format: tar.gz
     overrides:
-      - goos: windows
+      - goos: linux
+        format: tar.gz
+      - &cli_cli_windows_override
+        goos: windows
         format: zip
         files:
           - name: gh
             src: bin/gh.exe
+    replacements:
+      darwin: macOS
     checksum:
       type: github_release
       asset: gh_{{trimV .Version}}_checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 2.28.0")
+    version_overrides:
+      - version_constraint: semver(">= 2.24.0")
+        format: tar.gz
+        overrides:
+          - *cli_cli_windows_override
+      - version_constraint: semver(">= 2.20.1")
+        format: tar.gz
+        overrides:
+          - *cli_cli_windows_override
+        rosetta2: true
+      - version_constraint: semver("< 2.20.1")
+        format: tar.gz
+        overrides:
+          - *cli_cli_windows_override
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
