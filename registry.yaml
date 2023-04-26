@@ -20885,12 +20885,14 @@ packages:
     repo_owner: solidiquis
     repo_name: erdtree
     description: A multi-threaded file-tree visualizer and disk usage analyzer
-    asset: et-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    asset: erd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    files:
+      - name: erd
     format: tar.gz
     overrides:
       - goos: windows
         format: raw
-        asset: et-{{.Version}}-{{.Arch}}-{{.OS}}
+        asset: erd-{{.Version}}-{{.Arch}}-{{.OS}}
         replacements:
           arm64: arm64
     replacements:
@@ -20903,12 +20905,22 @@ packages:
       - darwin
       - linux
       - amd64
-    files:
-      - name: et
-    version_constraint: semver(">= 1.1.0")
+    version_constraint: semver(">= 2.0.0")
     version_overrides:
+      - version_constraint: semver(">= 1.1.0")
+        asset: et-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        files:
+          - name: et
+        overrides:
+          - goos: windows
+            format: raw
+            asset: et-{{.Version}}-{{.Arch}}-{{.OS}}
+            replacements:
+              arm64: arm64
       - version_constraint: semver("< 1.1.0")
         asset: et-{{.Version}}-{{.Arch}}-{{.OS}}
+        files:
+          - name: et
         format: raw
         overrides:
           - goos: linux
