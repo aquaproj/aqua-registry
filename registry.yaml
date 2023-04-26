@@ -5116,40 +5116,44 @@ packages:
     repo_owner: cli
     repo_name: cli
     description: GitHub’s official command line tool
-    search_words:
-      - github
-    supported_envs:
-      - linux
-      - darwin
-      - amd64
-    rosetta2: true
     asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    files:
-      - name: gh
-        src: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/gh
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz
     replacements:
       darwin: macOS
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-        files:
-          - name: gh
-            src: bin/gh.exe
     checksum:
       type: github_release
       asset: gh_{{trimV .Version}}_checksums.txt
       file_format: regexp
       algorithm: sha256
       pattern:
-        checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 2.28.0")
     version_overrides:
-      # https://github.com/cli/cli/releases/tag/v2.28.0
-      - version_constraint: semver(">= 2.28.0")
+      - version_constraint: semver(">= 2.24.0")
+        format: tar.gz
         overrides:
-          - goos: darwin
+          - goos: windows
             format: zip
+      - version_constraint: semver(">= 2.20.1")
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        rosetta2: true
+      - version_constraint: semver("< 2.20.1")
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
   - type: github_release
     repo_owner: climech
     repo_name: grit
