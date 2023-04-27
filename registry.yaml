@@ -2186,6 +2186,66 @@ packages:
         checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
         file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
   - type: github_release
+    repo_owner: abice
+    repo_name: go-enum
+    description: An enum generator for go
+    asset: go-enum_{{.OS}}_{{.Arch}}
+    format: raw
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: go-enum_checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+    version_constraint: semver(">= 0.4.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.3.7")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.3.6")
+        asset: go-enum_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        replacements: {}
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        checksum:
+          type: github_release
+          asset: go-enum_{{trimV .Version}}_checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+      - version_constraint: semver("< 0.3.6")
+        asset: go-enum_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          file_format: regexp
+          algorithm: sha256
+          pattern:
+            checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+            file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: abiosoft
     repo_name: colima
     description: Docker (and Kubernetes) on MacOS with minimal setup
