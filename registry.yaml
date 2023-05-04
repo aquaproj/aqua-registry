@@ -1082,6 +1082,28 @@ packages:
     files:
       - name: deno
   - type: github_release
+    repo_owner: Madh93
+    repo_name: tpm
+    description: 🛠️ A package manager for Terraform providers
+    asset: tpm_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: MiSawa
     repo_name: xq
     asset: xq-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz
