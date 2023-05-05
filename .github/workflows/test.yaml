@@ -173,29 +173,26 @@ jobs:
       AQUA_CONFIG: aqua/test.yaml
     steps:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - uses: suzuki-shunsuke/ci-info-action/restore@20bd996e371b27a229a348a09e17db8dcab1f2be # v0.1.2
 
-
-      # TODO re-enable
-      #       - uses: suzuki-shunsuke/ci-info-action/restore@20bd996e371b27a229a348a09e17db8dcab1f2be # v0.1.2
-      #
-      #       # - name: Generate token
-      #       #   id: generate_token
-      #       #   uses: tibdex/github-app-token@v1
-      #       #   with:
-      #       #     app_id: ${{ secrets.APP_ID }}
-      #       #     private_key: ${{ secrets.APP_PRIVATE_KEY }}
-      #
-      #       - uses: aquaproj/aqua-installer@294926f94b4233f202a2f03875c604f840cfed70 # v2.1.1
-      #         with:
-      #           aqua_version: v2.3.6
-      #           policy_allow: "true"
-      #         env:
-      #           AQUA_GITHUB_TOKEN: ${{github.token}}
-      #
-      # - uses: aquaproj/registry-action/test@39773065a44549758440b90a9e25f713c7e1db34 # tag=v0.1.4
+      # - name: Generate token
+      #   id: generate_token
+      #   uses: tibdex/github-app-token@v1
       #   with:
-      #     goos: ${{ matrix.env.goos }}
-      #     goarch: ${{ matrix.env.goarch }}
-      #     go_version: "1.20.3"
-      #   env:
-      #     GITHUB_TOKEN: ${{github.token}}
+      #     app_id: ${{ secrets.APP_ID }}
+      #     private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - uses: aquaproj/aqua-installer@294926f94b4233f202a2f03875c604f840cfed70 # v2.1.1
+        with:
+          aqua_version: v2.3.6
+          policy_allow: "true"
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+      
+      - uses: aquaproj/registry-action/test@39773065a44549758440b90a9e25f713c7e1db34 # tag=v0.1.4
+        with:
+          goos: ${{ matrix.env.goos }}
+          goarch: ${{ matrix.env.goarch }}
+          go_version: "1.20.3"
+        env:
+          GITHUB_TOKEN: ${{github.token}}
