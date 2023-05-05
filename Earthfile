@@ -8,7 +8,7 @@ test:
 	RUN curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v2.1.1/aqua-installer
 	RUN echo "c2af02bdd15da6794f9c98db40332c804224930212f553a805425441f8331665  aqua-installer" | sha256sum -c
 	RUN chmod +x aqua-installer
-	RUN ./aqua-installer -v v2.3.6
+	RUN ./aqua-installer -v v2.4.2
 	COPY aqua/earthly-test.yaml aqua.yaml
 	COPY aqua-policy.yaml aqua-policy.yaml
 	RUN echo "- import: pkg.yaml" >> aqua.yaml
