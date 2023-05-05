@@ -979,6 +979,28 @@ packages:
     files:
       - name: deno
   - type: github_release
+    repo_owner: Madh93
+    repo_name: tpm
+    description: A package manager for Terraform providers
+    asset: tpm_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      file_format: regexp
+      algorithm: sha256
+      pattern:
+        checksum: "^(\\b[A-Fa-f0-9]{64}\\b)"
+        file: "^\\b[A-Fa-f0-9]{64}\\b\\s+(\\S+)$"
+  - type: github_release
     repo_owner: MiSawa
     repo_name: xq
     asset: xq-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz
@@ -8990,6 +9012,30 @@ packages:
       type: github_release
       asset: gopass_{{trimV .Version}}_SHA256SUMS
       algorithm: sha256
+  - type: github_release
+    repo_owner: gopinath-langote
+    repo_name: 1build
+    description: Frictionless way of managing project-specific commands
+    asset: 1build_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 1.2.0")
+    # 1build was migrated from Python to Go at v1.2.0
+    # https://github.com/gopinath-langote/1build/commit/a692bdce2643c726915950622ec46fbf4ce02816
+    version_overrides:
+      - version_constraint: semver("< 1.2.0")
+        no_asset: true
   - type: github_release
     repo_owner: goreleaser
     repo_name: goreleaser
@@ -21339,15 +21385,20 @@ packages:
   - type: github_release
     repo_owner: ysugimoto
     repo_name: falco
-    asset: falco-{{.OS}}-{{.Arch}}
-    format: raw
     description: falco is a VCL parser and linter optimized for Fastly
+    asset: falco-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
     supported_envs:
       - linux/amd64
       - darwin
-    version_constraint: semver(">= 0.9.2")
+    version_constraint: semver(">= 0.20.2")
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver(">= 0.9.2")
+        asset: falco-{{.OS}}-{{.Arch}}
+        format: raw
+      - version_constraint: semver("< 0.9.2")
+        asset: falco-{{.OS}}-{{.Arch}}
+        format: raw
         rosetta2: true
   - type: github_release
     repo_owner: yudai
