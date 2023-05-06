@@ -3,22 +3,96 @@ packages:
     repo_owner: argoproj
     repo_name: argo-cd
     description: Declarative continuous deployment for Kubernetes
+    asset: argocd-{{.OS}}-{{.Arch}}
+    format: raw
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: argocd-{{.OS}}-{{.Arch}}
-    files:
-      - name: argocd
-        src: argocd-{{.OS}}-{{.Arch}}
-    version_constraint: semver(">= 2.4.15")
     checksum:
       type: github_release
-      asset: argocd-{{trimV .Version}}-checksums.txt
+      asset: cli_checksums.txt
       algorithm: sha256
+    files:
+      - name: argocd
+    slsa_provenance:
+      type: github_release
+      asset: argocd-cli.intoto.jsonl
+    version_constraint: semver(">= 2.7.0-rc1")
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver(">= 2.5.0-rc3")
+        slsa_provenance:
+          enabled: false
+        checksum:
+          type: github_release
+          asset: argocd-{{trimV .Version}}-checksums.txt
+          algorithm: sha256
+      - version_constraint: semver(">= 2.5.0-rc1")
+        slsa_provenance:
+          enabled: false
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+      - version_constraint: semver(">= 2.4.15")
+        slsa_provenance:
+          enabled: false
+        checksum:
+          type: github_release
+          asset: argocd-{{trimV .Version}}-checksums.txt
+          algorithm: sha256
+      - version_constraint: semver(">= 2.4.0-rc1")
+        slsa_provenance:
+          enabled: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: semver(">= 2.3.11")
+        slsa_provenance:
+          enabled: false
+        checksum:
+          type: github_release
+          asset: argocd-{{trimV .Version}}-checksums.txt
+          algorithm: sha256
+      - version_constraint: semver(">= 2.3.10")
+        slsa_provenance:
+          enabled: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: semver(">= 2.3.0-rc1")
+        slsa_provenance:
+          enabled: false
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 2.2.15")
+        slsa_provenance:
+          enabled: false
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: argocd-{{trimV .Version}}-checksums.txt
+          algorithm: sha256
+      - version_constraint: semver(">= 1.4.3")
+        slsa_provenance:
+          enabled: false
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 1.4.3")
+        slsa_provenance:
+          enabled: false
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
