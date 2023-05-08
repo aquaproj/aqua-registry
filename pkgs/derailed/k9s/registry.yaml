@@ -2,27 +2,126 @@ packages:
   - type: github_release
     repo_owner: derailed
     repo_name: k9s
-    asset: k9s_{{.OS}}_{{.Arch}}.tar.gz
     description: Kubernetes CLI To Manage Your Clusters In Style
+    asset: k9s_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
     replacements:
       darwin: Darwin
       linux: Linux
       windows: Windows
-      bit: Arm
-      bitv6: Arm6
-      bitv7: Arm7
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
-    version_constraint: semver(">= 0.27.0")
+    version_constraint: semver(">= 0.27.4")
     version_overrides:
-      - version_constraint: "true"
-        replacements:
+      - version_constraint: semver(">= 0.27.0")
+        overrides: []
+      - version_constraint: semver(">= 0.25.0")
+        overrides: []
+        replacements: &derailed_k9s_replacements
+          amd64: x86_64
           darwin: Darwin
           linux: Linux
           windows: Windows
-          bit: Arm
-          bitv6: Arm6
-          bitv7: Arm7
+      - version_constraint: semver(">= 0.24.11")
+        overrides: []
+        replacements: *derailed_k9s_replacements
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.24.10")
+        asset: k9s_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        replacements: *derailed_k9s_replacements
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.24.3")
+        overrides: []
+        replacements: *derailed_k9s_replacements
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.14.0")
+        overrides: []
+        replacements: *derailed_k9s_replacements
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.13.0")
+        asset: k9s_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        replacements: *derailed_k9s_replacements
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.6.7")
+        asset: k9s_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        replacements: *derailed_k9s_replacements
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.6.5")
+        asset: k9s_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        replacements:
           amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver(">= 0.5.2")
+        asset: k9s_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+      - version_constraint: semver(">= 0.4.0")
+        asset: k9s_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        replacements: *derailed_k9s_replacements
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.3.3")
+        asset: k9s_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: 64-bit
+        replacements: *derailed_k9s_replacements
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 0.3.3")
+        asset: k9s_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        replacements: *derailed_k9s_replacements
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
