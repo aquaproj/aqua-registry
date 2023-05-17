@@ -1,0 +1,49 @@
+packages:
+  - type: github_release
+    repo_owner: goark
+    repo_name: depm
+    description: Visualize depndency packages and modules
+    asset: depm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: 64bit
+      arm64: ARM64
+      darwin: macOS
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: depm_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.4.5")
+    version_overrides:
+      - version_constraint: semver(">= 0.3.2")
+        overrides:
+          - goos: windows
+            format: zip
+            replacements:
+              arm64: arm64
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver("< 0.3.2")
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: ARM64
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: 64bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
