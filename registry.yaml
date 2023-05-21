@@ -402,24 +402,53 @@ packages:
   - type: github_release
     repo_owner: Byron
     repo_name: dua-cli
-    asset: dua-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.gz
     description: View disk space usage and delete unwanted data, fast
+    asset: dua-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    files:
+      - name: dua
+        src: dua-{{.Version}}-{{.Arch}}-{{.OS}}/dua
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
     replacements:
       amd64: x86_64
       darwin: apple-darwin
       linux: unknown-linux-musl
       windows: pc-windows-msvc
-    overrides:
-      - goos: windows
-        format: zip
     supported_envs:
       - darwin
       - amd64
     rosetta2: true
-    files:
-      - name: dua
-        src: dua-{{.Version}}-{{.Arch}}-{{.OS}}/dua
+    version_constraint: semver(">= 2.20.1")
+    version_overrides:
+      - version_constraint: semver(">= 2.20.0")
+        format: zip
+        overrides:
+          - goos: darwin
+            format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver(">= 2.10.4")
+      - version_constraint: semver(">= 2.10.3")
+        overrides: []
+      - version_constraint: semver(">= 2.6.0")
+      - version_constraint: semver("< 2.6.0")
+        files:
+          - name: dua
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
   - type: github_release
     repo_owner: Cian911
     repo_name: switchboard
