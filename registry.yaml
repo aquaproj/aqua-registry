@@ -17171,24 +17171,48 @@ packages:
     repo_owner: orf
     repo_name: gping
     description: Ping, but with a graph
+    asset: gping-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: linux
+        goarch: amd64
+        replacements:
+          linux: Linux
+      - goos: linux
+        goarch: arm64
+        asset: gping-{{.Arch}}-{{.OS}}.{{.Format}}
+        replacements:
+          arm64: aarch64
+          linux: unknown-linux-musl
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      windows: Windows
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: gping-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-      - goos: linux
-        asset: gping-{{.Arch}}-{{.OS}}.{{.Format}}
+    version_prefix: gping-
     rosetta2: true
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: Darwin
-      windows: Windows
-      linux: unknown-linux-musl
+    version_constraint: semver(">= 1.2.3")
+    version_overrides:
+      - version_constraint: semver(">= 1.2.1")
+        version_prefix: ""
+      - version_constraint: semver("< 1.2.1")
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - amd64
+        version_prefix: ""
   - type: github_release
     repo_owner: orhun
     repo_name: git-cliff
