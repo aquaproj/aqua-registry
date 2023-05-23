@@ -1,0 +1,40 @@
+packages:
+  - type: github_release
+    repo_owner: kubernetes-sigs
+    repo_name: zeitgeist
+    description: "Zeitgeist: the language-agnostic dependency checker"
+    asset: zeitgeist_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    format: raw
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.3.5")
+    version_overrides:
+      - version_constraint: semver(">= 0.3.4")
+        asset: zeitgeist
+        supported_envs:
+          - windows/amd64
+      - version_constraint: semver(">= 0.0.3")
+        asset: zeitgeist_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver("< 0.0.3")
+        asset: zeitgeist_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
