@@ -1,0 +1,30 @@
+---
+name: Update packages by aqua-registry-updater
+on: workflow_dispatch
+
+env:
+  AQUA_GLOBAL_CONFIG: ${{ github.workspace }}/aqua-all.yaml
+  AQUA_LOG_COLOR: always
+
+permissions: {}
+
+jobs:
+  integration-test-windows:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - uses: aquaproj/aqua-installer@294926f94b4233f202a2f03875c604f840cfed70 # v2.1.1
+        with:
+          aqua_version: v2.8.0
+          policy_allow: "true"
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1.8.0
+        with:
+          app_id: ${{secrets.APP_ID}}
+          private_key: ${{secrets.APP_PRIVATE_KEY}}
+      - run: aqua-registry-updater
+        env:
+          GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
