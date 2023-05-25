@@ -22,9 +22,7 @@ jobs:
           AQUA_GITHUB_TOKEN: ${{github.token}}
       - run: git config user.name "Shunsuke Suzuki"
       - run: git config user.email "suzuki.shunsuke.1989@gmail.com"
-      - run: gh auth login
-        env:
-          GH_TOKEN: ${{secrets.PERSONAL_ACCESS_TOKEN}}
+      - run: echo "${{secrets.PERSONAL_ACCESS_TOKEN}}" | gh auth login --with-token
       - run: git fetch --depth=1 origin main
       - run: git checkout main
       - run: aqua-registry-updater
