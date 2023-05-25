@@ -9,7 +9,7 @@ env:
 permissions: {}
 
 jobs:
-  integration-test-windows:
+  update-pkgs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
@@ -17,14 +17,11 @@ jobs:
         with:
           aqua_version: v2.8.0
           policy_allow: "true"
+          aqua_opts: -l -a
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
-      - name: Generate token
-        id: generate_token
-        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1.8.0
-        with:
-          app_id: ${{secrets.APP_ID}}
-          private_key: ${{secrets.APP_PRIVATE_KEY}}
       - run: aqua-registry-updater
         env:
-          GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
+          # https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+          # GitHub Packages only supports authentication using a personal access token (classic).
+          GITHUB_TOKEN: ${{secrets.PERSONAL_ACCESS_TOKEN}}
