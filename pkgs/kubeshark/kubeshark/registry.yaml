@@ -35,6 +35,16 @@ packages:
           algorithm: sha256
       - <<: *up9inc_mizu_version_override
         version_constraint: semver("< 0.24.0")
+        overrides:
+          - goos: windows
+            asset: mizu.exe
+            checksum:
+              type: github_release
+              asset: "mizu_{{.OS}}_{{.Arch}}.sha256"
+              algorithm: sha256
+              file_format: regexp
+              pattern:
+                checksum: ^(\b[A-Fa-f0-9]{64}\b)
         supported_envs:
           - darwin
           - amd64
