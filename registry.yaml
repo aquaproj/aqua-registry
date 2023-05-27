@@ -14548,42 +14548,81 @@ packages:
     repo_owner: kubeshark
     repo_name: kubeshark
     aliases:
+      # Repository was transferred at 37.0
       - name: up9inc/mizu
-    asset: kubeshark_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    description: API traffic viewer for Kubernetes
+    description: The API traffic analyzer for Kubernetes providing real-time K8s protocol-level visibility, capturing and monitoring all traffic and payloads going in, out and across containers, pods, nodes and clusters.. Think TCPDump and Wireshark re-invented for Kubernetes
+    asset: kubeshark_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     checksum:
       type: github_release
       asset: kubeshark_{{.Version}}_checksums.txt
       algorithm: sha256
-    version_constraint: semver(">= 37.0")
+    version_constraint: semver(">= 38.0")
     version_overrides:
-      - &up9inc_mizu_version_override
-        version_constraint: semver(">= 0.24.0")
+      - version_constraint: semver(">= 37.0")
+        asset: kubeshark_{{.OS}}_{{.Arch}}
         format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kubeshark.exe
+            checksum:
+              type: github_release
+              asset: kubeshark_windows_amd64.sha256
+              algorithm: sha256
+              file_format: regexp
+              pattern:
+                checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - &kubeshark_2
+        version_constraint: semver(">= 0.24.0")
         asset: mizu_{{.OS}}_{{.Arch}}
+        format: raw
         files:
           - name: mizu
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
         overrides:
           - goos: windows
             asset: mizu.exe
             checksum:
               type: github_release
-              asset: "mizu_{{.OS}}_{{.Arch}}.sha256"
+              asset: mizu_windows_amd64.sha256
               algorithm: sha256
+              file_format: regexp
+              pattern:
+                checksum: ^(\b[A-Fa-f0-9]{64}\b)
         supported_envs:
           - darwin
           - linux
           - amd64
+      - <<: *kubeshark_2
+        version_constraint: semver(">= 0.17.2")
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
-      - <<: *up9inc_mizu_version_override
-        version_constraint: semver("< 0.24.0")
         supported_envs:
           - darwin
           - amd64
-      - version_constraint: "true"
+      - <<: *kubeshark_2
+        version_constraint: semver("< 0.17.2")
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
   - type: github_release
     repo_owner: kubesphere
     repo_name: kubeeye
