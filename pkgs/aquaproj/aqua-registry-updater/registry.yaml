@@ -1,0 +1,23 @@
+packages:
+  - type: github_release
+    repo_owner: aquaproj
+    repo_name: aqua-registry-updater
+    description: Renovate alternative only for aqua-registry. Overcome Renovate's scalability issue
+    asset: aqua-registry-updater_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - linux/amd64
+    checksum:
+      type: github_release
+      asset: aqua-registry-updater_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/aquaproj/aqua-registry-updater/releases/download/{{.Version}}/aqua-registry-updater_{{trimV .Version}}_checksums.txt.sig
+          - --certificate
+          - https://github.com/aquaproj/aqua-registry-updater/releases/download/{{.Version}}/aqua-registry-updater_{{trimV .Version}}_checksums.txt.pem
+    slsa_provenance:
+      type: github_release
+      asset: aqua-registry-updater_{{.OS}}_{{.Arch}}.{{.Format}}.intoto.jsonl

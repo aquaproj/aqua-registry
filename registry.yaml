@@ -3179,6 +3179,28 @@ packages:
       - linux
   - type: github_release
     repo_owner: aquaproj
+    repo_name: aqua-registry-updater
+    description: Renovate alternative only for aqua-registry. Overcome Renovate's scalability issue
+    asset: aqua-registry-updater_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - linux/amd64
+    checksum:
+      type: github_release
+      asset: aqua-registry-updater_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/aquaproj/aqua-registry-updater/releases/download/{{.Version}}/aqua-registry-updater_{{trimV .Version}}_checksums.txt.sig
+          - --certificate
+          - https://github.com/aquaproj/aqua-registry-updater/releases/download/{{.Version}}/aqua-registry-updater_{{trimV .Version}}_checksums.txt.pem
+    slsa_provenance:
+      type: github_release
+      asset: aqua-registry-updater_{{.OS}}_{{.Arch}}.{{.Format}}.intoto.jsonl
+  - type: github_release
+    repo_owner: aquaproj
     repo_name: example-go-slsa-provenance
     asset: example-go-slsa-provenance_{{.OS}}_{{.Arch}}.tar.gz
     description: Example Go Application with SLSA Provenance
@@ -5421,6 +5443,28 @@ packages:
           windows: Windows
   - type: github_release
     repo_owner: charmbracelet
+    repo_name: mods
+    description: AI on the command line
+    asset: mods_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+  - type: github_release
+    repo_owner: charmbracelet
     repo_name: skate
     description: A personal key value store
     asset: skate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -7572,8 +7616,6 @@ packages:
         files:
           - name: containerd
             src: docker/containerd
-          - name: containerd-shim
-            src: docker/containerd-shim
           - name: containerd-shim-runc-v2
             src: docker/containerd-shim-runc-v2
           - name: ctr
@@ -7599,6 +7641,32 @@ packages:
       - darwin
       - linux
       - amd64
+    version_constraint: semver(">= 23.0.0")
+    version_overrides:
+      - version_constraint: semver("< 23.0.0")
+        overrides:
+          - goos: linux
+            files:
+              - name: containerd
+                src: docker/containerd
+              - name: containerd-shim
+                src: docker/containerd-shim
+              - name: containerd-shim-runc-v2
+                src: docker/containerd-shim-runc-v2
+              - name: ctr
+                src: docker/ctr
+              - name: docker
+                src: docker/docker
+              - name: docker-init
+                src: docker/docker-init
+              - name: docker-proxy
+                src: docker/docker-proxy
+              - name: dockerd
+                src: docker/dockerd
+              - name: runc
+                src: docker/runc
+          - goos: windows
+            format: zip
   - name: docker/cli/rootless
     type: http
     repo_owner: docker
@@ -10384,12 +10452,37 @@ packages:
   - type: github_release
     repo_owner: gotestyourself
     repo_name: gotestsum
-    asset: gotestsum_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: "'go test' runner with output optimized for humans, JUnit XML for CI integration, and a summary of the test results"
+    asset: gotestsum_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     checksum:
       type: github_release
       asset: gotestsum-{{trimV .Version}}-checksums.txt
       algorithm: sha256
+    version_constraint: semver("> 1.10.0")
+    version_overrides:
+      - version_constraint: semver("= 1.10.0")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 1.8.0")
+      - version_constraint: semver(">= 1.6.3")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.5.2")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver("< 0.5.2")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: gotify
     repo_name: cli
@@ -11219,10 +11312,6 @@ packages:
     repo_owner: hidetatz
     repo_name: kubecolor
     description: colorizes kubectl output
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
     asset: kubecolor_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.{{.Format}}
     replacements:
       amd64: x86_64
@@ -11234,14 +11323,18 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
-    version_constraint: semver("!= 0.0.23")
+    version_constraint: semver(">= 0.0.23")
+    # Windows build was excluded temporarily.
+    # https://github.com/hidetatz/kubecolor/commit/30802265cfd3819d8fc771edaf5dae353cf15f17
+    supported_envs:
+      - darwin
+      - linux
     version_overrides:
-      - version_constraint: semver("= 0.0.23")
-        # Windows build was excluded temporarily.
-        # https://github.com/hidetatz/kubecolor/commit/30802265cfd3819d8fc771edaf5dae353cf15f17
+      - version_constraint: semver("< 0.0.23")
         supported_envs:
           - darwin
           - linux
+          - amd64
   - type: github_release
     repo_owner: high-moctane
     repo_name: mocword
@@ -13133,6 +13226,22 @@ packages:
       algorithm: sha256
   - type: github_release
     repo_owner: k1LoW
+    repo_name: gh-do
+    description: gh-do is a tool to do anything using GitHub credentials
+    asset: gh-do_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: darwin
+        format: zip
+    supported_envs:
+      - darwin
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+  - type: github_release
+    repo_owner: k1LoW
     repo_name: gh-setup
     description: Setup asset of Github releases
     asset: gh-setup_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -13834,27 +13943,22 @@ packages:
       asset: checksums.txt
       algorithm: sha256
   - type: github_release
-    name: ko1nksm/getoptions
     repo_owner: ko1nksm
     repo_name: getoptions
+    description: An elegant option/argument parser for shell scripts (full support for bash and all POSIX shells)
     asset: getoptions
-    description: An elegant option/argument parser for shell scripts (full support for bash and all POSIX shells)
     supported_envs:
       - linux
       - darwin
-    checksum:
-      enabled: false
-  - type: github_release
-    name: ko1nksm/getoptions/gengetoptions
+  - name: ko1nksm/getoptions/gengetoptions
     repo_owner: ko1nksm
     repo_name: getoptions
-    asset: gengetoptions
+    type: github_release
     description: An elegant option/argument parser for shell scripts (full support for bash and all POSIX shells)
+    asset: gengetoptions
     supported_envs:
       - linux
       - darwin
-    files:
-      - name: gengetoptions
   - type: github_release
     repo_owner: ko1nksm
     repo_name: shdotenv
@@ -14295,6 +14399,45 @@ packages:
     files:
       - name: kwokctl
   - type: github_release
+    repo_owner: kubernetes-sigs
+    repo_name: zeitgeist
+    description: "Zeitgeist: the language-agnostic dependency checker"
+    asset: zeitgeist_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    format: raw
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.3.5")
+    version_overrides:
+      - version_constraint: semver(">= 0.3.4")
+        asset: zeitgeist
+        supported_envs:
+          - windows/amd64
+      - version_constraint: semver(">= 0.0.3")
+        asset: zeitgeist_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver("< 0.0.3")
+        asset: zeitgeist_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+  - type: github_release
     repo_owner: kubernetes
     repo_name: kompose
     description: Go from Docker Compose to Kubernetes
@@ -14446,42 +14589,81 @@ packages:
     repo_owner: kubeshark
     repo_name: kubeshark
     aliases:
+      # Repository was transferred at 37.0
       - name: up9inc/mizu
-    asset: kubeshark_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    description: API traffic viewer for Kubernetes
+    description: The API traffic analyzer for Kubernetes providing real-time K8s protocol-level visibility, capturing and monitoring all traffic and payloads going in, out and across containers, pods, nodes and clusters.. Think TCPDump and Wireshark re-invented for Kubernetes
+    asset: kubeshark_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     checksum:
       type: github_release
       asset: kubeshark_{{.Version}}_checksums.txt
       algorithm: sha256
-    version_constraint: semver(">= 37.0")
+    version_constraint: semver(">= 38.0")
     version_overrides:
-      - &up9inc_mizu_version_override
-        version_constraint: semver(">= 0.24.0")
+      - version_constraint: semver(">= 37.0")
+        asset: kubeshark_{{.OS}}_{{.Arch}}
         format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kubeshark.exe
+            checksum:
+              type: github_release
+              asset: kubeshark_windows_amd64.sha256
+              algorithm: sha256
+              file_format: regexp
+              pattern:
+                checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - &kubeshark_2
+        version_constraint: semver(">= 0.24.0")
         asset: mizu_{{.OS}}_{{.Arch}}
+        format: raw
         files:
           - name: mizu
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
         overrides:
           - goos: windows
             asset: mizu.exe
             checksum:
               type: github_release
-              asset: "mizu_{{.OS}}_{{.Arch}}.sha256"
+              asset: mizu_windows_amd64.sha256
               algorithm: sha256
+              file_format: regexp
+              pattern:
+                checksum: ^(\b[A-Fa-f0-9]{64}\b)
         supported_envs:
           - darwin
           - linux
           - amd64
+      - <<: *kubeshark_2
+        version_constraint: semver(">= 0.17.2")
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
-      - <<: *up9inc_mizu_version_override
-        version_constraint: semver("< 0.24.0")
         supported_envs:
           - darwin
           - amd64
-      - version_constraint: "true"
+      - <<: *kubeshark_2
+        version_constraint: semver("< 0.17.2")
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
   - type: github_release
     repo_owner: kubesphere
     repo_name: kubeeye
@@ -15437,6 +15619,47 @@ packages:
     version_overrides:
       - version_constraint: semver("< 2.0.0")
         version_prefix: ""
+  - type: github_release
+    repo_owner: matryer
+    repo_name: moq
+    description: Interface mocking tool for go generate
+    asset: moq_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      darwin: macOS
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.2.4")
+    version_overrides:
+      - version_constraint: semver(">= 0.2.2")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.2.0")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.1.7")
+        asset: moq_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 0.1.7")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
   - type: github_release
     repo_owner: mattermost
     repo_name: mmctl
@@ -19606,6 +19829,39 @@ packages:
       - linux
       - amd64
   - type: github_release
+    repo_owner: shihanng
+    repo_name: tfvar
+    description: Terraform's variable definitions template generator
+    asset: tfvar_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    checksum:
+      type: github_release
+      asset: tfvar_checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.6.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.5.0")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.0.2")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 0.0.2")
+        asset: tfvar_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: tfvar_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+  - type: github_release
     repo_owner: showwin
     repo_name: speedtest-go
     asset: speedtest-go_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
@@ -21773,6 +22029,37 @@ packages:
       - darwin
       - linux
   - type: github_release
+    repo_owner: tree-sitter
+    repo_name: tree-sitter
+    description: An incremental parsing system for programming tools
+    asset: tree-sitter-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: gz
+    replacements:
+      amd64: x64
+      darwin: macos
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    files:
+      - name: tree-sitter
+        src: tree-sitter-{{.OS}}-{{.Arch}}
+    version_constraint: semver(">= 0.20.8")
+    version_overrides:
+      - version_constraint: semver(">= 0.18.1")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 0.18.1")
+        replacements:
+          amd64: x64
+          darwin: osx
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+  - type: github_release
     repo_owner: trufflesecurity
     repo_name: driftwood
     description: Private key usage verification
@@ -21973,6 +22260,60 @@ packages:
     files:
       - name: upx
         src: upx-{{trimV .Version}}-{{.OS}}/upx
+  - type: github_release
+    repo_owner: utkuozdemir
+    repo_name: pv-migrate
+    description: CLI tool to easily migrate Kubernetes persistent volumes
+    asset: pv-migrate_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.8.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.6.3")
+        asset: pv-migrate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+      - version_constraint: semver(">= 0.5.5")
+        asset: pv-migrate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        rosetta2: true
+      - version_constraint: semver(">= 0.5.4")
+        asset: pv-migrate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        # disable checksum because asset names in the checksum file are different from actual asset names.
+        # https://github.com/aquaproj/aqua-registry/pull/12352#issuecomment-1558413383
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.2.1")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 0.2.1")
+        asset: pv-migrate-{{.OS}}.{{.Format}}
+        overrides: []
+        replacements: {}
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+        files:
+          - name: pv-migrate
+            src: bin/{{.OS}}/pv-migrate
   - type: github_release
     repo_owner: uw-labs
     repo_name: strongbox
@@ -22778,24 +23119,145 @@ packages:
   - type: github_release
     repo_owner: yamafaktory
     repo_name: jql
-    asset: jql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: zip
     description: A JSON Query Language CLI tool
+    asset: "{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz
+      - goos: windows
+        replacements:
+          arm64: arm64
     replacements:
       amd64: x86_64
       arm64: aarch64
       darwin: apple-darwin
       linux: unknown-linux-musl
-    overrides:
-      - goos: linux
-        format: tar.gz
+      windows: pc-windows-msvc
     supported_envs:
-      - linux
       - darwin
+      - linux
+      - amd64
+    version_prefix: jql-
     checksum:
       type: github_release
       asset: "{{.Asset}}.sha256"
       algorithm: sha256
+    version_constraint: semver(">= 6.0.7")
+    version_overrides:
+      - version_constraint: semver(">= 6.0.5")
+        overrides:
+          - goos: linux
+            format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver(">= 6.0.4")
+        format: tar.gz
+        overrides:
+          - goos: darwin
+            format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver(">= 6.0.3")
+        asset: jql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: linux
+            format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver(">= 5.1.3")
+        asset: jql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: linux
+            format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux
+          - darwin
+        version_prefix: ""
+      - version_constraint: semver(">= 5.1.2")
+        asset: jql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        version_prefix: ""
+      - version_constraint: semver(">= 5.1.1")
+        asset: jql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: linux
+            format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux
+          - darwin
+        version_prefix: ""
+      - version_constraint: semver(">= 5.1.0")
+        asset: jql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: darwin
+            format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux
+          - darwin
+        version_prefix: ""
+      - version_constraint: semver(">= 3.2.4")
+        asset: jql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: linux
+            format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux
+          - darwin
+        version_prefix: ""
+      - version_constraint: semver("< 3.2.4")
+        asset: jql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: darwin
+            format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux
+          - darwin
+        version_prefix: ""
   - type: github_release
     repo_owner: yannh
     repo_name: kubeconform
