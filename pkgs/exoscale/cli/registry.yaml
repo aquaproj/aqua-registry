@@ -12,10 +12,18 @@ packages:
         format: zip
       - goos: darwin
         asset: exoscale-cli_{{trimV .Version}}_darwin_all.tar.gz
-        files:
-          - name: exo
-            src: exoscale-cli
     checksum:
       type: github_release
       asset: exoscale-cli_{{trimV .Version}}_checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 1.70.0")
+    version_overrides:
+      - version_constraint: semver("< 1.70.0")
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: darwin
+            asset: exoscale-cli_{{trimV .Version}}_darwin_all.tar.gz
+            files:
+              - name: exo
+                src: exoscale-cli
