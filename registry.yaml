@@ -10418,35 +10418,49 @@ packages:
   - type: github_release
     repo_owner: google
     repo_name: go-jsonnet
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    description: An implementation of Jsonnet in pure Go
     asset: go-jsonnet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
-    description: Jsonnet - The data templating language
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
     files:
       - name: jsonnet
       - name: jsonnet-deps
       - name: jsonnet-lint
       - name: jsonnetfmt
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
     version_constraint: semver(">= 0.20.0")
     version_overrides:
-      - version_constraint: semver("< 0.20.0")
+      - version_constraint: semver(">= 0.19.0")
         files:
           - name: jsonnet
           - name: jsonnetfmt
+      - version_constraint: semver(">= 0.18.0")
+        files:
+          - name: jsonnet
+          - name: jsonnetfmt
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 0.18.0")
+        files:
+          - name: jsonnet
+          - name: jsonnetfmt
+        replacements:
+          amd64: x86_64
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - linux
+          - windows/amd64
   - type: github_release
     repo_owner: google
     repo_name: jsonnet
