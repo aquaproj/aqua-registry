@@ -7,21 +7,10 @@ packages:
     format: zip
     version_constraint: semver(">= 0.2.1")
     version_overrides:
-      - version_constraint: Version >= "release/0.2.0"
-        asset: tf-profile-v0.2.0-{{.OS}}.{{.Format}}
+      - version_constraint: semver("< 0.2.1")
+        version_prefix: release/
+        asset: tf-profile-v{{.SemVer}}-{{.OS}}.{{.Format}}
+        rosetta2: true
         supported_envs:
           - darwin
           - amd64
-        rosetta2: true
-      - version_constraint: Version >= "release/0.1.0"
-        asset: tf-profile-v0.1.0-{{.OS}}.{{.Format}}
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-      - version_constraint: Version < "release/0.1.0"
-        asset: tf-profile-v0.0.1-{{.OS}}.{{.Format}}
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
