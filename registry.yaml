@@ -16715,6 +16715,31 @@ packages:
                 src: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/mongocli
   - type: github_release
     repo_owner: mozilla
+    repo_name: sccache
+    asset: 'sccache-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+    format: tar.gz
+    description: Shared Compilation Cache
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+      windows: pc-windows-msvc
+    supported_envs:
+      - linux/amd64
+      - linux/arm64
+      - darwin/amd64
+      - darwin/arm64
+      - windows/amd64
+    files:
+      - name: sccache
+        src: 'sccache-{{.Version}}-{{.Arch}}-{{.OS}}/sccache'
+    checksum:
+      type: github_release
+      asset: 'sccache-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}.sha256'
+      algorithm: sha256
+  - type: github_release
+    repo_owner: mozilla
     repo_name: sops
     description: Simple and flexible tool for managing secrets
     format: raw
