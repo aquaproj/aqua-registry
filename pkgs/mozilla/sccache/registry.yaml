@@ -2,9 +2,13 @@ packages:
   - type: github_release
     repo_owner: mozilla
     repo_name: sccache
-    asset: 'sccache-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+    description: sccache is ccache with cloud storage
+    asset: sccache-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     format: tar.gz
-    description: Shared Compilation Cache
+    overrides:
+      - goos: windows
+        replacements:
+          arm64: arm64
     replacements:
       amd64: x86_64
       arm64: aarch64
@@ -12,15 +16,86 @@ packages:
       linux: unknown-linux-musl
       windows: pc-windows-msvc
     supported_envs:
-      - linux/amd64
-      - linux/arm64
-      - darwin/amd64
-      - darwin/arm64
-      - windows/amd64
-    files:
-      - name: sccache
-        src: 'sccache-{{.Version}}-{{.Arch}}-{{.OS}}/sccache'
+      - darwin
+      - linux
+      - amd64
     checksum:
       type: github_release
-      asset: 'sccache-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}.sha256'
+      asset: "{{.Asset}}.sha256"
       algorithm: sha256
+    version_constraint: semver(">= 0.5.2")
+    version_overrides:
+      - version_constraint: semver(">= 0.5.1")
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.4.0-pre.2")
+      - version_constraint: semver(">= 0.3.3")
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.2.14")
+      - version_constraint: semver(">= 0.2.13")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver(">= 0.2.9")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.2.6")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.2.6")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
