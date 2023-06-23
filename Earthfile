@@ -6,7 +6,7 @@ test:
 	ENV AQUA_ROOT_DIR=/root/aquaproj-aqua
 	RUN apk add curl bash
 	RUN curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v2.1.2/aqua-installer
-	RUN echo "c2af02bdd15da6794f9c98db40332c804224930212f553a805425441f8331665  aqua-installer" | sha256sum -c
+	RUN echo "411caf1b5fcef4f5e74aa2a9fe99182ea13ab93ecd8ed4a983a7cff9f08edab9  aqua-installer" | sha256sum -c
 	RUN chmod +x aqua-installer
 	RUN ./aqua-installer -v v2.9.0
 	COPY aqua/earthly-test.yaml aqua.yaml
