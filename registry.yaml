@@ -3169,6 +3169,18 @@ packages:
       type: github_release
       asset: kubesurvival_checksums.txt
       algorithm: sha256
+  - type: go_install
+    repo_owner: apstndb
+    repo_name: execspansql
+    description: Yet another gcloud spanner databases execute-sql replacement for better composability
+    version_source: github_tag
+  - name: apstndb/spannerplanviz/rendertree
+    type: go_install
+    repo_owner: apstndb
+    repo_name: spannerplanviz
+    path: github.com/apstndb/spannerplanviz/cmd/rendertree
+    description: This tool render YAML or JSON representation of Cloud Spanner query plan as ascii format
+    version_source: github_tag
   - type: github_content
     repo_owner: aquaproj
     repo_name: aqua-installer
@@ -3700,6 +3712,25 @@ packages:
       - darwin
       - amd64
     rosetta2: true
+  - type: github_release
+    repo_owner: assetnote
+    repo_name: surf
+    description: Escalate your SSRF vulnerabilities on Modern Cloud Environments. `surf` allows you to filter a list of hosts, returning a list of viable SSRF candidates
+    asset: surf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      darwin: macOS
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: surf_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
   - type: github_release
     repo_owner: astefanutti
     repo_name: kubebox
@@ -4330,12 +4361,12 @@ packages:
   - type: github_release
     repo_owner: binwiederhier
     repo_name: ntfy
+    description: Send push notifications to your phone or desktop using PUT/POST
     asset: ntfy_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
-    description: Send push notifications to your phone or desktop using PUT/POST
-    replacements:
-      amd64: x86_64
-      darwin: macOS
+    files:
+      - name: ntfy
+        src: ntfy_{{trimV .Version}}_{{.OS}}_{{.Arch}}/ntfy
     overrides:
       - goos: darwin
         asset: ntfy_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
@@ -4348,14 +4379,38 @@ packages:
       - darwin
       - linux
       - amd64
-    files:
-      - name: ntfy
-        src: ntfy_{{trimV .Version}}_{{.OS}}_{{.Arch}}/ntfy
     rosetta2: true
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 2.6.2")
+    version_overrides:
+      - version_constraint: semver(">= 1.23.0")
+        replacements:
+          amd64: x86_64
+          darwin: macOS
+      - version_constraint: semver(">= 1.4.4")
+        overrides: []
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux
+        rosetta2: false
+      - version_constraint: semver(">= 1.2.1")
+        overrides: []
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+        rosetta2: false
+      - version_constraint: semver("< 1.2.1")
+        overrides: []
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: birdayz
     repo_name: kaf
@@ -5086,6 +5141,43 @@ packages:
       type: github_release
       asset: fork-cleaner_{{trimV .Version}}_checksums.txt
       algorithm: sha256
+  - type: github_release
+    repo_owner: caarlos0
+    repo_name: svu
+    description: Semantic Version Util
+    asset: svu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: darwin
+        asset: svu_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 1.9.0")
+    version_overrides:
+      - version_constraint: semver(">= 1.8.0")
+        overrides: []
+      - version_constraint: semver(">= 1.4.0")
+        overrides: []
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        checksum:
+          type: github_release
+          asset: svu_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("< 1.4.0")
+        rosetta2: true
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          type: github_release
+          asset: svu_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: caddyserver
     repo_name: caddy
@@ -6062,30 +6154,57 @@ packages:
   - type: github_release
     repo_owner: cloudquery
     repo_name: cloudquery
-    description: The open-source data integration platform for security and infrastructure teams
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      amd64: x86_64
-      windows: Windows
+    description: The open source high performance data integration platform built for developers
+    asset: cloudquery_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
     supported_envs:
       - darwin
       - linux
       - amd64
+    version_prefix: cli-
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
-    version_filter: not (Version contains "plugins")
-    version_constraint: semverWithVersion(">= 0.32.7", trimPrefix(Version, "cli/"))
-    asset: cloudquery_{{.OS}}_{{.Arch}}.zip
+    version_constraint: semver(">= 1.0.0")
     version_overrides:
-      - version_constraint: semverWithVersion(">= 0.32.5", trimPrefix(Version, "cli/"))
+      - version_constraint: semver(">= 0.32.7")
+        version_prefix: cli/
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          amd64: x86_64
+          windows: Windows
+      - version_constraint: semver(">= 0.32.5")
+        version_prefix: cli/
         asset: cli_{{.OS}}_{{.Arch}}.zip
         files:
           - name: cloudquery
             src: cli
-      - version_constraint: "true"
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          amd64: x86_64
+          windows: Windows
+      - version_constraint: semver("< 0.32.5")
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          amd64: x86_64
+          windows: Windows
+  - type: go_install
+    repo_owner: cloudspannerecosystem
+    repo_name: spanner-cli
+    description: Interactive command line tool for Cloud Spanner
+  - type: go_install
+    repo_owner: cloudspannerecosystem
+    repo_name: spanner-dump
+    description: Command line tool for exporting a Cloud Spanner database in text format
+  - type: go_install
+    repo_owner: cloudspannerecosystem
+    repo_name: spool
+    path: github.com/cloudspannerecosystem/spool/cmd/spool
+    description: A CLI tool to manage Cloud Spanner databases for testing
   - type: github_release
     repo_owner: cloudspannerecosystem
     repo_name: wrench
@@ -6442,6 +6561,32 @@ packages:
       algorithm: sha256
     supported_envs:
       - linux
+  - name: containers/gvisor-tap-vsock/gvproxy
+    type: github_release
+    repo_owner: containers
+    repo_name: gvisor-tap-vsock
+    description: A new network stack based on gVisor
+    asset: gvproxy-{{.OS}}
+    format: raw
+    supported_envs:
+      - darwin
+      - amd64
+    version_constraint: semver(">= 0.6.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.4.0")
+        overrides:
+          - goos: darwin
+            asset: gvproxy-{{.OS}}-{{.Arch}}
+      - version_constraint: semver("< 0.4.0")
+  - name: containers/gvisor-tap-vsock/qemu-wrapper
+    type: github_release
+    repo_owner: containers
+    repo_name: gvisor-tap-vsock
+    description: A new network stack based on gVisor
+    asset: qemu-wrapper
+    format: raw
+    supported_envs:
+      - linux/amd64
   - type: github_release
     repo_owner: controlplaneio
     repo_name: kubectl-kubesec
@@ -6671,18 +6816,10 @@ packages:
     repo_owner: create-go-app
     repo_name: cli
     description: Create a new production-ready project with backend, frontend and deploy automation by running one CLI command
-    supported_envs:
-      - darwin
-      - amd64
-    asset: cgapp_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    asset: cgapp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     files:
       - name: cgapp
-    replacements:
-      darwin: macOS
-      linux: Linux
-      windows: Windows
-      amd64: x86_64
-    format: tar.gz
     overrides:
       - goos: windows
         format: zip
@@ -6690,6 +6827,67 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 4.0.0")
+    version_overrides:
+      - version_constraint: semver(">= 1.7.0")
+        asset: cgapp_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 1.6.3")
+        asset: cgapp_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 1.0.0")
+        asset: cgapp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 1.0.0")
+        asset: cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: cgapp
+            src: cli
+        overrides: []
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: cli_{{.Version}}_checksums.txt
+          algorithm: sha256
   - type: http
     repo_owner: crossplane
     repo_name: crossplane
@@ -6829,6 +7027,10 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+  - type: go_install
+    repo_owner: daixiang0
+    repo_name: gci
+    description: GCI, a tool that control golang package import order and make it always deterministic
   - type: github_release
     repo_owner: dalance
     repo_name: procs
@@ -6856,30 +7058,204 @@ packages:
   - type: github_release
     repo_owner: dandavison
     repo_name: delta
-    rosetta2: true
+    description: A syntax-highlighting pager for git, diff, and grep output
     asset: delta-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    description: A syntax-highlighting pager for git
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
     format: tar.gz
-    replacements:
-      windows: pc-windows-msvc
-      darwin: apple-darwin
-      linux: unknown-linux-musl
-      arm64: aarch64
-      amd64: x86_64
+    files:
+      - name: delta
+        src: delta-{{.Version}}-{{.Arch}}-{{.OS}}/delta
     overrides:
-      - goos: windows
-        format: zip
+      - goos: linux
+        goarch: amd64
+        replacements:
+          linux: unknown-linux-musl
       - goos: linux
         goarch: arm64
         replacements:
           linux: unknown-linux-gnu
-    files:
-      - name: delta
-        src: delta-{{.Version}}-{{.Arch}}-{{.OS}}/delta
+      - goos: windows
+        format: zip
+        replacements:
+          arm64: arm64
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      windows: pc-windows-msvc
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_constraint: semver(">= 0.16.5")
+    version_overrides:
+      - version_constraint: semver(">= 0.16.4")
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.15.0")
+      - version_constraint: semver(">= 0.4.1")
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        rosetta2: true
+      - version_constraint: semver(">= 0.3.0")
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.1.0")
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.0.16")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver(">= 0.0.10")
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.0.8")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver(">= 0.0.7")
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        rosetta2: true
+      - version_constraint: semver(">= 0.0.6")
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+            asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+            files:
+              - name: delta
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        rosetta2: true
+      - version_constraint: semver(">= 0.0.5")
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        rosetta2: true
+      - version_constraint: semver("< 0.0.5")
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
   - type: github_release
     repo_owner: danielfoehrKn
     repo_name: kubeswitch
@@ -6993,6 +7369,21 @@ packages:
     files:
       - name: pg_datanymizer
   - type: github_release
+    repo_owner: datarootsio
+    repo_name: tf-profile
+    description: CLI tool to profile Terraform runs, written in Go
+    asset: tf-profile-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: zip
+    version_constraint: semver(">= 0.2.1")
+    version_overrides:
+      - version_constraint: semver("< 0.2.1")
+        version_prefix: release/
+        asset: tf-profile-v{{.SemVer}}-{{.OS}}.{{.Format}}
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+  - type: github_release
     repo_owner: datastax-labs
     repo_name: astra-cli
     description: DataStax Astra automation CLI
@@ -7090,32 +7481,32 @@ packages:
   - type: github_release
     repo_owner: ddosify
     repo_name: ddosify
-    description: High-performance load testing tool, written in Golang
-    replacements:
-      darwin: macos
-      linux: linux
-      windows: windows
-      386: "386"
-      amd64: amd64
+    description: Comprehensive Performance Testing Platform. Available on CLI, Self-Hosted, and Cloud - https://ddosify.com
+    asset: ddosify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
-      - goos: windows
-        format: zip
       - goos: darwin
         asset: ddosify_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
-    asset: ddosify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    version_constraint: semver(">= 0.5.0")
-    version_overrides:
-      # https://github.com/goreleaser/goreleaser/pull/2572
-      # macOS Universal binaries
-      - version_constraint: "true"
-        overrides:
-          - goos: windows
-            format: zip
+      - goos: windows
+        format: zip
+    rosetta2: true
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 1.0.4")
+    version_overrides:
+      - version_constraint: semver(">= 0.5.0")
+        replacements:
+          darwin: macos
+      - version_constraint: semver("< 0.5.0")
+        asset: ddosify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          darwin: macos
+        rosetta2: false
   - type: go_install
     repo_owner: deepmap
     repo_name: oapi-codegen
@@ -8602,13 +8993,21 @@ packages:
         format: zip
       - goos: darwin
         asset: exoscale-cli_{{trimV .Version}}_darwin_all.tar.gz
-        files:
-          - name: exo
-            src: exoscale-cli
     checksum:
       type: github_release
       asset: exoscale-cli_{{trimV .Version}}_checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 1.70.0")
+    version_overrides:
+      - version_constraint: semver("< 1.70.0")
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: darwin
+            asset: exoscale-cli_{{trimV .Version}}_darwin_all.tar.gz
+            files:
+              - name: exo
+                src: exoscale-cli
   - type: github_release
     repo_owner: extrawurst
     repo_name: gitui
@@ -10222,27 +10621,49 @@ packages:
   - type: github_release
     repo_owner: google
     repo_name: go-jsonnet
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    description: An implementation of Jsonnet in pure Go
     asset: go-jsonnet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
-    description: Jsonnet - The data templating language
+    files:
+      - name: jsonnet
+      - name: jsonnet-deps
+      - name: jsonnet-lint
+      - name: jsonnetfmt
     replacements:
+      amd64: x86_64
       darwin: Darwin
       linux: Linux
       windows: Windows
-      386: i386
-      amd64: x86_64
-    files:
-      - name: jsonnet
-      - name: jsonnetfmt
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 0.20.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.19.0")
+        files:
+          - name: jsonnet
+          - name: jsonnetfmt
+      - version_constraint: semver(">= 0.18.0")
+        files:
+          - name: jsonnet
+          - name: jsonnetfmt
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 0.18.0")
+        files:
+          - name: jsonnet
+          - name: jsonnetfmt
+        replacements:
+          amd64: x86_64
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - linux
+          - windows/amd64
   - type: github_release
     repo_owner: google
     repo_name: jsonnet
@@ -10376,21 +10797,99 @@ packages:
     repo_owner: goreleaser
     repo_name: nfpm
     description: nFPM is Not FPM - a simple deb, rpm and apk packager written in Go
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
+    asset: nfpm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
-    asset: nfpm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/goreleaser/nfpm/releases/download/{{.Version}}/checksums.txt.sig
+          - --certificate
+          - https://github.com/goreleaser/nfpm/releases/download/{{.Version}}/checksums.txt.pem
+    version_constraint: semver(">= 2.30.1")
+    version_overrides:
+      - version_constraint: Version == "v2.30.0"
+        # https://github.com/goreleaser/nfpm/pull/674
+        asset: nfpm_.{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 2.11.0")
+      - version_constraint: semver(">= 2.7.1")
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver(">= 2.7.0")
+        checksum:
+          type: github_release
+          asset: nfpm_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver(">= 2.5.0")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        checksum:
+          type: github_release
+          asset: nfpm_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver(">= 2.2.5")
+        overrides: []
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        checksum:
+          type: github_release
+          asset: nfpm_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver(">= 2.2.0")
+        overrides: []
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: nfpm_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver(">= 1.3.1")
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: nfpm_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("< 1.3.1")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: nfpm_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: goss-org
     repo_name: goss
@@ -12396,6 +12895,24 @@ packages:
       - darwin
       - linux/amd64
   - type: github_release
+    repo_owner: iyear
+    repo_name: tdl
+    description: A Telegram downloader written in Golang
+    asset: tdl_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: 64bit
+      darwin: MacOS
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: tdl_checksums.txt
+      algorithm: sha256
+  - type: github_release
     repo_owner: jacobdeichert
     repo_name: mask
     asset: mask-{{.Version}}-{{.Arch}}-{{.OS}}.zip
@@ -12785,6 +13302,18 @@ packages:
       type: github_release
       asset: chisel_{{trimV .Version}}_checksums.txt
       algorithm: sha256
+  - type: github_release
+    repo_owner: jqlang
+    repo_name: jq
+    asset: jq-{{.OS}}
+    format: raw
+    description: Command-line JSON processor
+    aliases:
+      - name: stedolan/jq
+    replacements:
+      darwin: osx-amd64
+      linux: linux64
+      windows: win64.exe
   - type: github_release
     repo_owner: jreisinger
     repo_name: checkip
@@ -13755,6 +14284,20 @@ packages:
       asset: youtubedr_{{trimV .Version}}_checksums.txt
       algorithm: sha256
   - type: github_release
+    repo_owner: knadh
+    repo_name: listmonk
+    description: High performance, self-hosted, newsletter and mailing list manager with a modern dashboard. Single binary app
+    asset: listmonk_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: listmonk_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+  - type: github_release
     repo_owner: knative
     repo_name: client
     format: raw
@@ -14019,6 +14562,24 @@ packages:
         overrides: []
   - type: github_release
     repo_owner: koki-develop
+    repo_name: gat
+    description: cat alternative written in Go
+    asset: gat_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+  - type: github_release
+    repo_owner: koki-develop
     repo_name: sheep
     description: Sleep with Sheep
     asset: sheep_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -14165,6 +14726,20 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256sum"
           algorithm: sha256
+  - type: github_release
+    repo_owner: ktock
+    repo_name: container2wasm
+    description: Container to WASM converter
+    asset: container2wasm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: c2w
+    supported_envs:
+      - linux
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      algorithm: sha256
   - type: github_release
     repo_owner: ktr0731
     repo_name: evans
@@ -14372,25 +14947,35 @@ packages:
     repo_owner: kubernetes-sigs
     repo_name: kustomize
     description: Customization of kubernetes YAML configurations
-    asset: kustomize_{{trimPrefix "kustomize/" .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.tar.gz
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
-    version_filter: Version startsWith "kustomize/"
-    version_constraint: semverWithVersion(">= 4.5.4", trimPrefix(Version, "kustomize/"))
+    version_prefix: kustomize/
+    version_constraint: semver(">= 5.1.0")
+    rosetta2: true
+    supported_envs:
+      - linux
+      - darwin
+      - amd64
     version_overrides:
-      - version_constraint: semverWithVersion(">= 4.4.1", trimPrefix(Version, "kustomize/"))
+      - version_constraint: semver(">= 4.5.4")
+        rosetta2: false
+        supported_envs:
+          - all
+      - version_constraint: semver(">= 4.4.1")
+        rosetta2: false
         supported_envs:
           - linux
           - darwin
           - amd64
-      - version_constraint: semverWithVersion(">= 4.2.0", trimPrefix(Version, "kustomize/"))
+      - version_constraint: semver(">= 4.2.0")
+        rosetta2: false
         supported_envs:
           - linux
           - darwin
-      - version_constraint: semverWithVersion("< 4.2.0", trimPrefix(Version, "kustomize/"))
-        rosetta2: true
+      - version_constraint: semver("< 4.2.0")
         supported_envs:
           - linux
           - darwin
@@ -15340,8 +15925,6 @@ packages:
             asset: ls-lint-{{.OS}}-{{.Arch}}
         checksum:
           enabled: false
-        files:
-          - name: ls-lint-{{.OS}}-{{.arch}}
       - version_constraint: semver(">= 1.1.0")
         asset: ls-lint-{{.OS}}
         format: raw
@@ -15351,8 +15934,6 @@ packages:
         rosetta2: true
         checksum:
           enabled: false
-        files:
-          - name: ls-lint-{{.OS}}-{{.arch}}
       - version_constraint: semver("< 1.1.0")
         asset: ls-lint-{{.OS}}
         format: raw
@@ -15362,8 +15943,6 @@ packages:
         rosetta2: true
         checksum:
           enabled: false
-        files:
-          - name: ls-lint-{{.OS}}-{{.arch}}
   - type: github_release
     repo_owner: loft-sh
     repo_name: vcluster
@@ -16327,6 +16906,122 @@ packages:
                 src: mongocli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/mongocli
   - type: github_release
     repo_owner: mozilla
+    repo_name: sccache
+    description: sccache is ccache with cloud storage
+    asset: sccache-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: sccache
+        src: sccache-{{.Version}}-{{.Arch}}-{{.OS}}/sccache
+    overrides:
+      - goos: windows
+        replacements:
+          arm64: arm64
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+      windows: pc-windows-msvc
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      algorithm: sha256
+    version_constraint: semver(">= 0.5.2")
+    version_overrides:
+      - version_constraint: semver(">= 0.5.1")
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.4.0-pre.2")
+      - version_constraint: semver(">= 0.3.3")
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.2.14")
+        overrides:
+          - goos: windows
+            replacements:
+              arm64: arm64
+            checksum:
+              # https://github.com/aquaproj/aqua-registry/pull/13027
+              # https://github.com/aquaproj/aqua-registry/actions/runs/5262947082/jobs/9512626767
+              enabled: false # ERRO[0001] install the package                           actual_checksum=BA6BF184D2B0A78978629AAEF0D9FE3CA57923E228D949B1932EC1A91AB4CEAC aqua_version=2.8.0 env=windows/amd64 error="checksum is invalid" expected_checksum="��B\x00A\x006\x00B\x00F\x001\x008\x004\x00D\x002\x00B\x000\x00A\x007\x008\x009\x007\x008\x006\x002\x009\x00A\x00A\x00E\x00F\x000\x00D\x009\x00F\x00E\x003\x00C\x00A\x005\x007\x009\x002\x003\x00E\x002\x002\x008\x00D\x009\x004\x009\x00B\x001\x009\x003\x002\x00E\x00C\x001\x00A\x009\x001\x00A\x00B\x004\x00C\x00E\x00A\x00C\x00" package_name=mozilla/sccache package_version=0.2.14 program=aqua registry=standard
+      - version_constraint: semver(">= 0.2.13")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver(">= 0.2.9")
+        overrides:
+          - goos: windows
+            checksum:
+              # https://github.com/aquaproj/aqua-registry/pull/13027
+              # https://github.com/aquaproj/aqua-registry/actions/runs/5262947082/jobs/9512626767
+              enabled: false # ERRO[0001] install the package                           actual_checksum=6DD85F65FCCB1CDB00E7C5804C3F3BA523C1ED20EA8F777D454826EEF17C636F aqua_version=2.8.0 env=windows/amd64 error="checksum is invalid" expected_checksum="��6\x00D\x00D\x008\x005\x00F\x006\x005\x00F\x00C\x00C\x00B\x001\x00C\x00D\x00B\x000\x000\x00E\x007\x00C\x005\x008\x000\x004\x00C\x003\x00F\x003\x00B\x00A\x005\x002\x003\x00C\x001\x00E\x00D\x002\x000\x00E\x00A\x008\x00F\x007\x007\x007\x00D\x004\x005\x004\x008\x002\x006\x00E\x00E\x00F\x001\x007\x00C\x006\x003\x006\x00F\x00" package_name=mozilla/sccache package_version=0.2.9 program=aqua registry=standard
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.2.6")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.2.6")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+  - type: github_release
+    repo_owner: mozilla
     repo_name: sops
     description: Simple and flexible tool for managing secrets
     format: raw
@@ -16960,6 +17655,10 @@ packages:
     supported_envs:
       - darwin
       - amd64
+  - type: go_install
+    repo_owner: nikolaydubina
+    repo_name: go-cover-treemap
+    description: Go code coverage to SVG treemap
   - type: github_release
     repo_owner: ninja-build
     repo_name: ninja
@@ -18596,18 +19295,94 @@ packages:
   - type: github_release
     repo_owner: raviqqe
     repo_name: muffet
-    asset: muffet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: Fast website link checker in Go
-    replacements:
-      amd64: x86_64
-      arm64: ARM64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
+    asset: muffet_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
     checksum:
       type: github_release
       asset: muffet_{{trimV .Version}}_checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 2.9.1")
+    version_overrides:
+      - version_constraint: semver(">= 2.4.3")
+        asset: muffet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        replacements:
+          amd64: x86_64
+          arm64: ARM64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+      - version_constraint: semver(">= 2.4.1")
+        asset: muffet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides:
+          - goos: windows
+            replacements:
+              arm64: arm64
+        replacements:
+          amd64: x86_64
+          arm64: ARM64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 1.5.1")
+        asset: muffet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: ARM64
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 1.1.1")
+        asset: muffet_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: ARM64
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: muffet_{{.Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("< 1.1.1")
+        asset: muffet_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: rclone
     repo_name: rclone
@@ -19269,6 +20044,10 @@ packages:
         src: statusok_{{.OS}}/statusok
     replacements:
       darwin: mac
+  - type: go_install
+    repo_owner: sanposhiho
+    repo_name: gomockhandler
+    description: Mr. gomockhandler is the clever and more agile manager of golang/mock
   - type: github_release
     repo_owner: sassman
     repo_name: t-rec-rs
@@ -19470,6 +20249,10 @@ packages:
       type: github_release
       asset: chamber-{{.Version}}.sha256sums
       algorithm: sha256
+  - type: go_install
+    repo_owner: segmentio
+    repo_name: golines
+    description: A golang formatter that fixes long lines
   - type: github_release
     repo_owner: sethvargo
     repo_name: ratchet
@@ -20467,16 +21250,76 @@ packages:
         checksum:
           enabled: false
   - type: github_release
+    repo_owner: sourcegraph
+    repo_name: src-cli
+    description: Sourcegraph CLI
+    asset: src-cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: src
+    checksum:
+      type: github_release
+      asset: src-cli_{{.Version}}_checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 3.31.1")
+    version_overrides:
+      - version_constraint: semver(">= 3.30.4")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 3.10.9")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 3.10.9")
+        asset: src_{{.OS}}_{{.Arch}}
+        format: raw
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+  - type: github_release
     repo_owner: soywod
     repo_name: himalaya
-    asset: himalaya-{{.OS}}.tar.gz
-    description: Command-line interface for email management
+    description: CLI to manage your emails
+    asset: himalaya-{{.OS}}.{{.Format}}
+    format: tgz
     replacements:
       darwin: macos
     supported_envs:
       - darwin
       - amd64
     rosetta2: true
+    version_constraint: semver(">= 0.8.0")
+    # https://github.com/soywod/himalaya/releases/tag/v0.8.0
+    # Changed release archive extensions from .tar.gz to .tgz.
+    version_overrides:
+      - version_constraint: semver(">= 0.7.3")
+        format: tar.gz
+      - version_constraint: semver(">= 0.7.2")
+        format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver(">= 0.5.10")
+        format: tar.gz
+      - version_constraint: semver(">= 0.5.6")
+        format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver(">= 0.3.2")
+        format: tar.gz
+      - version_constraint: semver("< 0.3.2")
+        format: tar.gz
+        files:
+          # https://github.com/soywod/himalaya/issues/144
+          - name: himalaya
+            src: himalaya.exe
   - type: go_install
     repo_owner: spf13
     repo_name: cobra-cli
@@ -20599,16 +21442,6 @@ packages:
       - version_constraint: "true"
         repo_name: rdme
         asset: rdme_{{.OS}}_{{.Arch}}.{{.Format}}
-  - type: github_release
-    repo_owner: stedolan
-    repo_name: jq
-    asset: jq-{{.OS}}
-    format: raw
-    description: Command-line JSON processor
-    replacements:
-      darwin: osx-amd64
-      linux: linux64
-      windows: win64.exe
   - type: github_release
     repo_owner: stefanprodan
     repo_name: timoni
@@ -21687,11 +22520,12 @@ packages:
     repo_owner: terraform-linters
     repo_name: tflint
     description: A Pluggable Terraform Linter
+    asset: tflint_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
     supported_envs:
       - darwin
       - linux
       - amd64
-    asset: tflint_{{.OS}}_{{.Arch}}.zip
     checksum:
       type: github_release
       asset: checksums.txt
@@ -21705,11 +22539,96 @@ packages:
           - https://github.com/terraform-linters/tflint/releases/download/{{.Version}}/checksums.txt.pem
     version_constraint: semver(">= 0.36.0")
     version_overrides:
-      - version_constraint: "true"
-        checksum:
+      - version_constraint: semver(">= 0.33.0")
+        checksum: &tflint_checksum_2
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+      - version_constraint: semver(">= 0.32.1")
+        checksum: *tflint_checksum_2
+      - version_constraint: semver(">= 0.32.0")
+        checksum: *tflint_checksum_2
+        rosetta2: true
+      - version_constraint: semver(">= 0.29.1")
+        checksum: *tflint_checksum_2
+      - version_constraint: semver(">= 0.8.0")
+        checksum: *tflint_checksum_2
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 0.8.0")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+  - type: github_release
+    repo_owner: terramate-io
+    repo_name: terramate
+    description: Terramate adds powerful capabilities such as code generation, stacks, orchestration, change detection, data sharing and more to Terraform
+    asset: terramate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.2.8")
+    version_overrides:
+      - version_constraint: semver(">= 0.1.34")
+        replacements:
+          amd64: x86_64
+          windows: win
+      - version_constraint: semver(">= 0.0.12")
+        overrides: []
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver(">= 0.0.8")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver(">= 0.0.3")
+        asset: terramate-{{.OS}}-{{.Arch}}
+        format: raw
+        overrides: []
+        replacements: {}
+        supported_envs:
+          - linux/amd64
+          - darwin
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.0.2")
+        asset: terrastack-{{.OS}}-{{.Arch}}
+        format: raw
+        overrides: []
+        replacements: {}
+        supported_envs:
+          - linux/amd64
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.0.2")
+        asset: terrastack-{{.OS}}-{{.Arch}}
+        format: raw
+        overrides: []
+        replacements: {}
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: terrastruct
     repo_name: d2
@@ -23424,6 +24343,26 @@ packages:
       type: github_release
       asset: SHA256SUMS
       algorithm: sha256
+  - type: github_release
+    repo_owner: yuyaban
+    repo_name: gitlab-comment
+    description: About gitlab-comment is a CLI command to post Merge Request Note
+    asset: gitlab-comment_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    checksum:
+      type: github_release
+      asset: gitlab-comment_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/yuyaban/gitlab-comment/releases/download/{{.Version}}/gitlab-comment_{{trimV .Version}}_checksums.txt.sig
+          - --certificate
+          - https://github.com/yuyaban/gitlab-comment/releases/download/{{.Version}}/gitlab-comment_{{trimV .Version}}_checksums.txt.pem
+    slsa_provenance:
+      type: github_release
+      asset: multiple.intoto.jsonl
   - type: github_release
     repo_owner: zaquestion
     repo_name: lab

@@ -1,0 +1,38 @@
+packages:
+  - type: github_release
+    repo_owner: caarlos0
+    repo_name: svu
+    description: Semantic Version Util
+    asset: svu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: darwin
+        asset: svu_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 1.9.0")
+    version_overrides:
+      - version_constraint: semver(">= 1.8.0")
+        overrides: []
+      - version_constraint: semver(">= 1.4.0")
+        overrides: []
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        checksum:
+          type: github_release
+          asset: svu_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("< 1.4.0")
+        rosetta2: true
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          type: github_release
+          asset: svu_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
