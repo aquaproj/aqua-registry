@@ -2,15 +2,37 @@ packages:
   - type: github_release
     repo_owner: sheepla
     repo_name: fzwiki
-    asset: fzwiki_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    description: A command line tool with fzf-like UI to search Wikipedia articles and open it in your browser quickly
+    asset: fzwiki_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
     checksum:
       type: github_release
-      asset: fzwiki_{{trimV .Version}}_checksums.txt
+      asset: checksums.txt
       algorithm: sha256
-    version_constraint: 'Version != "v0.1.0-alpha"'
+    version_constraint: semver(">= 0.1.0-alpha")
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver(">= 0.0.3")
+        overrides: []
+        replacements: {}
         checksum:
           type: github_release
-          asset: checksums.txt
+          asset: fzwiki_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("< 0.0.3")
+        overrides: []
+        replacements: {}
+        supported_envs:
+          - linux
+          - darwin
+        checksum:
+          type: github_release
+          asset: fzwiki_{{trimV .Version}}_checksums.txt
           algorithm: sha256
