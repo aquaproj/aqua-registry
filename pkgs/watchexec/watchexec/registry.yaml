@@ -4,7 +4,7 @@ packages:
     repo_name: watchexec
     description: Executes commands in response to file modifications
     rosetta2: true
-    asset: 'watchexec-{{trimPrefix "cli-v" .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}'
+    asset: watchexec-{{trimV .SemVer}}-{{.Arch}}-{{.OS}}.{{.Format}}
     supported_envs:
       - darwin
       - linux
@@ -24,8 +24,12 @@ packages:
           linux: unknown-linux-gnu
     files:
       - name: watchexec
-        src: 'watchexec-{{trimPrefix "cli-v" .Version}}-{{.Arch}}-{{.OS}}/watchexec'
+        src: watchexec-{{trimV .SemVer}}-{{.Arch}}-{{.OS}}/watchexec
     checksum:
       type: github_release
       asset: SHA512SUMS
       algorithm: sha512
+    version_constraint: semver(">= 1.20.6")
+    version_overrides:
+      - version_constraint: semver("< 1.20.6")
+        version_prefix: cli-
