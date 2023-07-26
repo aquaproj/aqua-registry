@@ -4498,6 +4498,26 @@ packages:
           asset: s3deploy_checksums.txt
           algorithm: sha256
   - type: github_release
+    repo_owner: bflad
+    repo_name: tfproviderdocs
+    description: Terraform Provider Documentation Tool
+    asset: tfproviderdocs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: tfproviderdocs_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.10.0")
+    version_overrides:
+      - version_constraint: semver("< 0.10.0")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+  - type: github_release
     repo_owner: binwiederhier
     repo_name: ntfy
     description: Send push notifications to your phone or desktop using PUT/POST
@@ -10816,6 +10836,19 @@ packages:
       asset: golangci-lint-{{trimV .Version}}-checksums.txt
       algorithm: sha256
   - type: github_release
+    repo_owner: golangci
+    repo_name: misspell
+    description: Correct commonly misspelled English words in source files
+    asset: misspell_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: 64bit
+      darwin: mac
+    checksum:
+      type: github_release
+      asset: misspell_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+  - type: github_release
     repo_owner: gomods
     repo_name: athens
     description: A Go module datastore and proxy
@@ -11707,6 +11740,21 @@ packages:
     checksum:
       type: http
       url: https://releases.hashicorp.com/consul/{{trimV .Version}}/consul_{{trimV .Version}}_SHA256SUMS
+      algorithm: sha256
+  - type: github_release
+    repo_owner: hashicorp
+    repo_name: copywrite
+    description: Automate copyright headers and license files at scale
+    asset: copywrite_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
       algorithm: sha256
   - type: github_release
     repo_owner: hashicorp
@@ -19057,6 +19105,16 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+  - type: github_release
+    repo_owner: pavius
+    repo_name: impi
+    description: Verify proper golang import directives, beyond the capability of gofmt and goimports
+    asset: impi-{{.Version}}-{{.OS}}-{{.Arch}}
+    format: raw
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
   - type: github_release
     repo_owner: peak
     repo_name: s5cmd
