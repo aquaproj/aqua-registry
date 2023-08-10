@@ -1,0 +1,178 @@
+packages:
+  - type: github_release
+    repo_owner: smallstep
+    repo_name: certificates
+    description: A private certificate authority (X.509 & SSH) & ACME server for secure automated certificate management, so you can use TLS everywhere & SSO for SSH
+    asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: step-ca
+        src: step-ca_{{trimV .Version}}/step-ca
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.24.3-rc.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.23.0-rc.1")
+        files: &step_ca_files2
+          - name: step-ca
+            src: step-ca_{{trimV .Version}}/bin/step-ca
+      - version_constraint: semver(">= 0.22.2-rc9")
+        overrides:
+          - goos: darwin
+            files: *step_ca_files2
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver(">= 0.22.2-rc12")
+      - version_constraint: semver(">= 0.22.2-rc11")
+        overrides: []
+        supported_envs:
+          - linux
+      - version_constraint: semver(">= 0.22.2-rc10")
+        overrides:
+          - goos: darwin
+            files: *step_ca_files2
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver(">= 0.16.0")
+        files: *step_ca_files2
+      - version_constraint: semver(">= 0.16.0-rc.1")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+        files: &step_ca_files3
+          - name: step-ca
+            src: step-certificates_{{trimV .Version}}/bin/step-ca
+        overrides: []
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.15.16-rc3.test-arm6")
+        files: *step_ca_files2
+      - version_constraint: semver(">= 0.15.16-rc2.test-arm6")
+        overrides: []
+        files: *step_ca_files2
+      - version_constraint: semver(">= 0.15.16-rc1.test-arm6")
+        no_asset: true
+      - version_constraint: semver(">= 0.15.10")
+        overrides: []
+        files: *step_ca_files2
+      - version_constraint: semver(">= 0.15.9-rc18")
+        no_asset: true
+      - version_constraint: semver(">= 0.14.3")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+        files: *step_ca_files3
+        overrides: []
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.14.3-rc.2.32bitbadger2")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        rosetta2: true
+        files: *step_ca_files3
+        supported_envs:
+          - linux
+          - darwin
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.14.2")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+        files: *step_ca_files3
+        overrides: []
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.14.0")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}-dev_{{.Arch}}.{{.Format}}
+        files: &step_ca_files4
+          - name: step-ca
+            src: step-certificates_{{trimV .Version}}-dev/bin/step-ca
+        overrides: []
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.14.0-rc.16")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+        files: *step_ca_files3
+        overrides: []
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.14.0-rc.14")
+        asset: step-certificates_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        files: *step_ca_files3
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: Version == "v0.14.0-rc.9"
+        asset: step-certificates_0.14.0-rc.8_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: step-ca
+            src: step-certificates_0.14.0-rc.8/bin/step-ca
+        overrides: []
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.11.0-rc.3")
+        asset: step-certificates_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files: *step_ca_files3
+        overrides: []
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.11.0-rc.2")
+        asset: step-certificates_{{trimV .Version}}-dev_{{.OS}}_{{.Arch}}.{{.Format}}
+        files: *step_ca_files4
+        overrides: []
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.11.0-rc.2")
+        asset: step-certificates_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files: *step_ca_files3
+        overrides: []
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false

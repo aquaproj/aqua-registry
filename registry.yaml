@@ -1428,6 +1428,66 @@ packages:
           asset: spotify-tui-{{.OS}}.sha256
           algorithm: sha256
   - type: github_release
+    repo_owner: Scalingo
+    repo_name: cli
+    description: Command Line client for Scalingo PaaS
+    asset: scalingo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: scalingo
+        src: scalingo_{{.Version}}_{{.OS}}_{{.Arch}}/scalingo
+    overrides:
+      - goos: windows
+        format: zip
+        checksum:
+          type: github_release
+          asset: checksums_windows.txt
+          algorithm: sha256
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 1.26.0")
+    version_overrides:
+      - version_constraint: semver(">= 1.24.1")
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver(">= 1.24.0")
+        overrides: []
+      - version_constraint: semver(">= 1.21.0")
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 1.20.1")
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 1.20.1")
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: windows
+            files:
+              - name: scalingo
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+  - type: github_release
     repo_owner: Schniz
     repo_name: fnm
     description: Fast and simple Node.js version manager, built in Rust
@@ -3990,6 +4050,23 @@ packages:
     rosetta2: true
     files:
       - name: kitctl
+  - type: http
+    repo_owner: awslabs
+    repo_name: mountpoint-s3
+    description: A simple, high-throughput file client for mounting an Amazon S3 bucket as a local file system
+    version_source: github_tag
+    version_prefix: mountpoint-s3-
+    version_filter: |
+      Version matches "^mountpoint-s3-\\d+\\.\\d+\\.\\d+"
+    url: https://s3.amazonaws.com/mountpoint-s3-release/{{.SemVer}}/{{.Arch}}/mount-s3-{{.SemVer}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+    supported_envs:
+      - linux
+    files:
+      - name: mount-s3
+        src: bin/mount-s3
   - type: github_release
     repo_owner: awslabs
     repo_name: ssosync
@@ -4497,6 +4574,26 @@ packages:
           type: github_release
           asset: s3deploy_checksums.txt
           algorithm: sha256
+  - type: github_release
+    repo_owner: bflad
+    repo_name: tfproviderdocs
+    description: Terraform Provider Documentation Tool
+    asset: tfproviderdocs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: tfproviderdocs_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.10.0")
+    version_overrides:
+      - version_constraint: semver("< 0.10.0")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
   - type: github_release
     repo_owner: binwiederhier
     repo_name: ntfy
@@ -6705,6 +6802,16 @@ packages:
     # https://github.com/aquaproj/aqua/issues/1216
     files:
       - name: fly
+  - name: connectrpc/connect-go/protoc-gen-connect-go
+    search_words:
+      -  bufbuild
+    type: go_install
+    repo_owner: connectrpc
+    repo_name: connect-go
+    description: Simple, reliable, interoperable. A better gRPC
+    path: connectrpc.com/connect/cmd/protoc-gen-connect-go
+    files:
+      - name: protoc-gen-connect-go
   - type: github_release
     repo_owner: container-tools
     repo_name: spectrum
@@ -7543,22 +7650,29 @@ packages:
     overrides:
       - goos: windows
         format: zip
-    replacements:
-      amd64: x86_64
-      darwin: mac
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
-    version_constraint: semver(">= 0.9.2")
+    version_constraint: semver(">= 0.18.0")
     version_overrides:
+      - version_constraint: semver(">= 0.9.2")
+        replacements:
+          amd64: x86_64
+          darwin: mac
       - version_constraint: semver(">= 0.6.0")
+        replacements:
+          amd64: x86_64
+          darwin: mac
         supported_envs:
           - darwin
           - linux
           - amd64
         rosetta2: true
       - version_constraint: semver("< 0.6.0")
+        replacements:
+          amd64: x86_64
+          darwin: mac
         supported_envs:
           - darwin
           - amd64
@@ -8505,102 +8619,178 @@ packages:
     type: github_release
     repo_owner: domoritz
     repo_name: arrow-tools
-    asset: csv2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    description: A collection of handy CLI tools to convert CSV and JSON to Apache Arrow and Parquet
+    asset: csv2arrow-{{.Arch}}-{{.OS}}.{{.Format}}
     format: tar.xz
-    description: Convert CSV files to Apache Arrow. This package is part of Arrow CLI tools
-    replacements:
-      amd64: x86_64
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-      windows: pc-windows-msvc
+    files:
+      - name: csv2arrow
+        src: csv2arrow-{{.Arch}}-{{.OS}}/csv2arrow
     overrides:
+      - goos: darwin
+        replacements:
+          arm64: aarch64
       - goos: windows
         format: zip
         files:
           - name: csv2arrow
-            src: csv2arrow.exe
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
     supported_envs:
       - darwin
       - amd64
-    rosetta2: true
-    files:
-      - name: csv2arrow
-        src: csv2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/csv2arrow
+    version_constraint: semver(">= 0.12.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.10.0")
+        asset: csv2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        files:
+          - name: csv2arrow
+            src: csv2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/csv2arrow
+      - version_constraint: semver("< 0.10.0")
+        asset: csv2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        files:
+          - name: csv2arrow
+            src: csv2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/csv2arrow
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: csv2arrow
+        rosetta2: true
   - name: domoritz/arrow-tools/csv2parquet
     type: github_release
     repo_owner: domoritz
     repo_name: arrow-tools
-    asset: csv2parquet-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.xz
     description: Convert CSV files to Apache Parquet. This package is part of Arrow CLI tools
+    asset: csv2parquet-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
     files:
       - name: csv2parquet
-        src: csv2parquet-{{.Version}}-{{.Arch}}-{{.OS}}/csv2parquet
-    replacements:
-      amd64: x86_64
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-      windows: pc-windows-msvc
+        src: csv2parquet-{{.Arch}}-{{.OS}}/csv2parquet
     overrides:
+      - goos: darwin
+        replacements:
+          arm64: aarch64
       - goos: windows
         format: zip
         files:
           - name: csv2parquet
-            src: csv2parquet.exe
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
     supported_envs:
       - darwin
       - amd64
-    rosetta2: true
+    version_constraint: semver(">= 0.12.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.10.0")
+        asset: csv2parquet-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        files:
+          - name: csv2parquet
+            src: csv2parquet-{{.Version}}-{{.Arch}}-{{.OS}}/csv2parquet
+      - version_constraint: semver("< 0.10.0")
+        asset: csv2parquet-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        files:
+          - name: csv2parquet
+            src: csv2parquet-{{.Version}}-{{.Arch}}-{{.OS}}/csv2parquet
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: csv2parquet
+        rosetta2: true
   - name: domoritz/arrow-tools/json2arrow
     type: github_release
     repo_owner: domoritz
     repo_name: arrow-tools
-    asset: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.xz
     description: Convert JSON files to Apache Arrow. This package is part of Arrow CLI tools
+    asset: json2arrow-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
     files:
       - name: json2arrow
-        src: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/json2arrow
-    replacements:
-      amd64: x86_64
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-      windows: pc-windows-msvc
+        src: json2arrow-{{.Arch}}-{{.OS}}/json2arrow
     overrides:
+      - goos: darwin
+        replacements:
+          arm64: aarch64
       - goos: windows
         format: zip
         files:
           - name: json2arrow
-            src: json2arrow.exe
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-  - name: domoritz/arrow-tools/json2parquet
-    type: github_release
-    repo_owner: domoritz
-    repo_name: arrow-tools
-    asset: json2parquet-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.xz
-    description: Convert JSON files to Apache Parquet. This package is part of Arrow CLI tools
-    files:
-      - name: json2parquet
-        src: json2parquet-{{.Version}}-{{.Arch}}-{{.OS}}/json2parquet
     replacements:
       amd64: x86_64
       darwin: apple-darwin
       linux: unknown-linux-gnu
       windows: pc-windows-msvc
+    supported_envs:
+      - darwin
+      - amd64
+    version_constraint: semver(">= 0.12.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.10.0")
+        asset: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        files:
+          - name: json2arrow
+            src: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/json2arrow
+      - version_constraint: semver("< 0.10.0")
+        asset: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        files:
+          - name: json2arrow
+            src: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/json2arrow
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: json2arrow
+        rosetta2: true
+  - name: domoritz/arrow-tools/json2parquet
+    type: github_release
+    repo_owner: domoritz
+    repo_name: arrow-tools
+    description: Convert JSON files to Apache Parquet. This package is part of Arrow CLI tools
+    asset: json2parquet-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    files:
+      - name: json2parquet
+        src: json2parquet-{{.Arch}}-{{.OS}}/json2parquet
     overrides:
+      - goos: darwin
+        replacements:
+          arm64: aarch64
       - goos: windows
         format: zip
         files:
           - name: json2parquet
-            src: json2parquet.exe
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
     supported_envs:
       - darwin
       - amd64
-    rosetta2: true
+    version_constraint: semver(">= 0.12.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.10.0")
+        asset: json2parquet-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        files:
+          - name: json2parquet
+            src: json2parquet-{{.Version}}-{{.Arch}}-{{.OS}}/json2parquet
+      - version_constraint: semver("< 0.10.0")
+        asset: json2parquet-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        files:
+          - name: json2parquet
+            src: json2parquet-{{.Version}}-{{.Arch}}-{{.OS}}/json2parquet
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: json2parquet
+        rosetta2: true
   - type: github_release
     repo_owner: dotenv-linter
     repo_name: dotenv-linter
@@ -10816,6 +11006,19 @@ packages:
       asset: golangci-lint-{{trimV .Version}}-checksums.txt
       algorithm: sha256
   - type: github_release
+    repo_owner: golangci
+    repo_name: misspell
+    description: Correct commonly misspelled English words in source files
+    asset: misspell_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: 64bit
+      darwin: mac
+    checksum:
+      type: github_release
+      asset: misspell_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+  - type: github_release
     repo_owner: gomods
     repo_name: athens
     description: A Go module datastore and proxy
@@ -11707,6 +11910,21 @@ packages:
     checksum:
       type: http
       url: https://releases.hashicorp.com/consul/{{trimV .Version}}/consul_{{trimV .Version}}_SHA256SUMS
+      algorithm: sha256
+  - type: github_release
+    repo_owner: hashicorp
+    repo_name: copywrite
+    description: Automate copyright headers and license files at scale
+    asset: copywrite_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
       algorithm: sha256
   - type: github_release
     repo_owner: hashicorp
@@ -16055,15 +16273,6 @@ packages:
           - name: json2hcl
             src: json2hcl_{{.OS}}_{{.Arch}}/json2hcl
   - type: github_release
-    repo_owner: kyleconroy
-    repo_name: sqlc
-    description: Generate type-safe code from SQL
-    rosetta2: true
-    asset: sqlc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    supported_envs:
-      - darwin
-      - amd64
-  - type: github_release
     repo_owner: kyoh86
     repo_name: richgo
     description: Enrich `go test` outputs with text decorations
@@ -19079,6 +19288,16 @@ packages:
       asset: checksums.txt
       algorithm: sha256
   - type: github_release
+    repo_owner: pavius
+    repo_name: impi
+    description: Verify proper golang import directives, beyond the capability of gofmt and goimports
+    asset: impi-{{.Version}}-{{.OS}}-{{.Arch}}
+    format: raw
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+  - type: github_release
     repo_owner: peak
     repo_name: s5cmd
     description: Parallel S3 and local filesystem execution tool
@@ -20830,6 +21049,13 @@ packages:
     repo_owner: segmentio
     repo_name: golines
     description: A golang formatter that fixes long lines
+  - type: go_install
+    repo_owner: segmentio
+    repo_name: topicctl
+    description: Tool for declarative management of Kafka topics
+    path: github.com/segmentio/topicctl/cmd/topicctl
+    search_words:
+      - kafka
   - type: github_release
     repo_owner: sethvargo
     repo_name: ratchet
@@ -21655,6 +21881,183 @@ packages:
             format: raw
   - type: github_release
     repo_owner: smallstep
+    repo_name: certificates
+    description: A private certificate authority (X.509 & SSH) & ACME server for secure automated certificate management, so you can use TLS everywhere & SSO for SSH
+    asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: step-ca
+        src: step-ca_{{trimV .Version}}/step-ca
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.24.3-rc.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.23.0-rc.1")
+        files: &step_ca_files2
+          - name: step-ca
+            src: step-ca_{{trimV .Version}}/bin/step-ca
+      - version_constraint: semver(">= 0.22.2-rc9")
+        overrides:
+          - goos: darwin
+            files: *step_ca_files2
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver(">= 0.22.2-rc12")
+      - version_constraint: semver(">= 0.22.2-rc11")
+        overrides: []
+        supported_envs:
+          - linux
+      - version_constraint: semver(">= 0.22.2-rc10")
+        overrides:
+          - goos: darwin
+            files: *step_ca_files2
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver(">= 0.16.0")
+        files: *step_ca_files2
+      - version_constraint: semver(">= 0.16.0-rc.1")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+        files: &step_ca_files3
+          - name: step-ca
+            src: step-certificates_{{trimV .Version}}/bin/step-ca
+        overrides: []
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.15.16-rc3.test-arm6")
+        files: *step_ca_files2
+      - version_constraint: semver(">= 0.15.16-rc2.test-arm6")
+        overrides: []
+        files: *step_ca_files2
+      - version_constraint: semver(">= 0.15.16-rc1.test-arm6")
+        no_asset: true
+      - version_constraint: semver(">= 0.15.10")
+        overrides: []
+        files: *step_ca_files2
+      - version_constraint: semver(">= 0.15.9-rc18")
+        no_asset: true
+      - version_constraint: semver(">= 0.14.3")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+        files: *step_ca_files3
+        overrides: []
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.14.3-rc.2.32bitbadger2")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        rosetta2: true
+        files: *step_ca_files3
+        supported_envs:
+          - linux
+          - darwin
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.14.2")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+        files: *step_ca_files3
+        overrides: []
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.14.0")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}-dev_{{.Arch}}.{{.Format}}
+        files: &step_ca_files4
+          - name: step-ca
+            src: step-certificates_{{trimV .Version}}-dev/bin/step-ca
+        overrides: []
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.14.0-rc.16")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+        files: *step_ca_files3
+        overrides: []
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.14.0-rc.14")
+        asset: step-certificates_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        files: *step_ca_files3
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: Version == "v0.14.0-rc.9"
+        asset: step-certificates_0.14.0-rc.8_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: step-ca
+            src: step-certificates_0.14.0-rc.8/bin/step-ca
+        overrides: []
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.11.0-rc.3")
+        asset: step-certificates_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files: *step_ca_files3
+        overrides: []
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.11.0-rc.2")
+        asset: step-certificates_{{trimV .Version}}-dev_{{.OS}}_{{.Arch}}.{{.Format}}
+        files: *step_ca_files4
+        overrides: []
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.11.0-rc.2")
+        asset: step-certificates_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files: *step_ca_files3
+        overrides: []
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          enabled: false
+  - type: github_release
+    repo_owner: smallstep
     repo_name: cli
     asset: step_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
     format: tar.gz
@@ -21971,6 +22374,51 @@ packages:
       - linux/amd64
       - darwin
     rosetta2: true
+  - type: github_release
+    repo_owner: sqlc-dev
+    repo_name: sqlc
+    aliases:
+      - name: kyleconroy/sqlc
+    description: Generate type-safe code from SQL
+    asset: sqlc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_constraint: semver(">= 1.17.2")
+    version_overrides:
+      - version_constraint: semver(">= 1.16.0")
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 1.9.0-beta1")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 1.7.0")
+        asset: sqlc-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 1.0.0")
+        asset: sqlc-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver("< 1.0.0")
+        asset: sqlc-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
   - type: github_release
     repo_owner: sqshq
     repo_name: sampler
@@ -23891,6 +24339,13 @@ packages:
       type: github_release
       asset: kubefwd_checksums.txt
       algorithm: sha256
+  - type: go_install
+    repo_owner: uber-go
+    repo_name: mock
+    description: GoMock is a mocking framework for the Go programming language
+    path: go.uber.org/mock/mockgen
+    files:
+      - name: mockgen
   - type: github_release
     repo_owner: updatecli
     repo_name: updatecli

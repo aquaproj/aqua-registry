@@ -1,0 +1,46 @@
+packages:
+  - type: github_release
+    repo_owner: sqlc-dev
+    repo_name: sqlc
+    aliases:
+      - name: kyleconroy/sqlc
+    description: Generate type-safe code from SQL
+    asset: sqlc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_constraint: semver(">= 1.17.2")
+    version_overrides:
+      - version_constraint: semver(">= 1.16.0")
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 1.9.0-beta1")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 1.7.0")
+        asset: sqlc-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 1.0.0")
+        asset: sqlc-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver("< 1.0.0")
+        asset: sqlc-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
