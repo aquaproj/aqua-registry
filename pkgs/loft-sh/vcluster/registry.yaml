@@ -3,13 +3,31 @@ packages:
     repo_owner: loft-sh
     repo_name: vcluster
     description: vcluster - Create fully functional virtual Kubernetes clusters - Each vcluster runs inside a namespace of the underlying k8s cluster. It's cheaper than creating separate full-blown clusters and it offers better multi-tenancy and isolation than regular namespaces
+    asset: vcluster-{{.OS}}-{{.Arch}}
+    format: raw
     supported_envs:
       - darwin
       - linux
       - amd64
-    format: raw
-    asset: vcluster-{{.OS}}-{{.Arch}}
     checksum:
       type: github_release
-      asset: "{{.Asset}}.sha256"
+      asset: checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 0.15.3-beta.5")
+    version_overrides:
+      - version_constraint: semver(">= 0.15.3-beta.2")
+        asset: vcluster-cli_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+      - version_constraint: semver("< 0.15.3-beta.2")
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
