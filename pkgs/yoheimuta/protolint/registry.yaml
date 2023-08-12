@@ -2,13 +2,9 @@ packages:
   - type: github_release
     repo_owner: yoheimuta
     repo_name: protolint
-    asset: protolint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: A pluggable linter and fixer to enforce Protocol Buffer style and conventions
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
+    asset: protolint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     files:
       - name: protolint
       - name: protoc-gen-protolint
@@ -16,3 +12,67 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 0.45.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.35.2")
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+      - version_constraint: semver(">= 0.32.0")
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.28.0")
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.20.2")
+        # https://github.com/yoheimuta/protolint/releases/tag/v0.20.2
+        # Add protoc-gen-protolint
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.9.4")
+        files:
+          - name: protolint
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver(">= 0.9.1")
+        files:
+          - name: protolint
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
