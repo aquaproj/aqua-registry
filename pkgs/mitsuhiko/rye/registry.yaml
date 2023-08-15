@@ -1,0 +1,49 @@
+packages:
+  - type: github_release
+    repo_owner: mitsuhiko
+    repo_name: rye
+    description: An Experimental Package Management Solution for Python
+    asset: rye-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: gz
+    files:
+      - name: rye
+        src: rye-{{.Arch}}-{{.OS}}
+    overrides:
+      - goos: windows
+        format: raw
+        asset: rye-{{.Arch}}-{{.OS}}
+        replacements:
+          arm64: arm64
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: macos
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      algorithm: sha256
+    version_constraint: semver(">= 0.4.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.2.0")
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.2.0")
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: raw
+            asset: rye-{{.Arch}}-{{.OS}}
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          enabled: false
