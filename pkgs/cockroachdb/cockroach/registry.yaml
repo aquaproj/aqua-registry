@@ -21,6 +21,8 @@ packages:
           darwin: darwin-11.0
       - goos: windows
         format: zip
+        replacements:
+          windows: windows-6.2
     files:
       - name: cockroach
         src: cockroach-{{.Version}}.{{.OS}}-{{.Arch}}/cockroach
@@ -31,8 +33,21 @@ packages:
     version_constraint: semver(">= 22.2.0")
     version_overrides:
     - version_constraint: semver("< 22.2.0")
+      rosetta2: true
       supported_envs:
         - darwin
-        - linux
-        - windows
-        - amd64
+        - linux/amd64
+        - windows/amd64
+      overrides:
+        - goos: darwin
+          goarch: amd64
+          replacements:
+            darwin: darwin-10.9
+        - goos: darwin
+          goarch: arm64
+          replacements:
+            darwin: darwin-10.9
+        - goos: windows
+          format: zip
+          replacements:
+            windows: windows-6.2
