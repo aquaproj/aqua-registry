@@ -3241,14 +3241,28 @@ packages:
             src: fx-{{.OS}}
   - type: github_release
     repo_owner: antonmedv
-    repo_name: llama
-    rosetta2: true
-    format: raw
-    asset: llama_{{.OS}}_{{.Arch}}
+    repo_name: walk
+    aliases:
+      - name: antonmedv/llama
     description: Terminal file manager
-    supported_envs:
-      - darwin
-      - amd64
+    asset: walk_{{.OS}}_{{.Arch}}
+    format: raw
+    version_constraint: semver(">= 1.5.1")
+    version_overrides:
+      # https://github.com/antonmedv/walk/issues/81
+      # `llama` was renamed to `walk`
+      - version_constraint: semver(">= 1.1.1")
+        asset: llama_{{.OS}}_{{.Arch}}
+        files:
+          - name: llama
+      - version_constraint: semver("< 1.1.1")
+        asset: llama_{{.OS}}_{{.Arch}}
+        files:
+          - name: llama
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
   - type: github_release
     repo_owner: apache
     repo_name: camel-k
