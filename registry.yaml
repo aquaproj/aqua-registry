@@ -14145,12 +14145,11 @@ packages:
           - windows/amd64
         checksum:
           enabled: false
-      - version_constraint: semver(">= 6.1.0")
-        replacements:
-          darwin: macos
-      - version_constraint: SemVer >= "6.0.0.rc1"
-        asset: mlr-{{.OS}}-{{trimV .Version}}.{{.Format}}
+      - version_constraint: Version == "v6.0.0-beta"
+        asset: mlr-{{.OS}}-latest.{{.Format}}
         format: zip
+        files:
+          - name: mlr
         overrides: []
         replacements:
           darwin: macos
@@ -14160,8 +14159,27 @@ packages:
         rosetta2: true
         checksum:
           enabled: false
+      - version_constraint: Version == "v6.0.0.rc1"
+        asset: mlr-{{.OS}}-{{trimV .Version}}.{{.Format}}
+        format: zip
+        overrides: []
+        files:
+          - name: mlr
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows/amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 6.1.0")
+        replacements:
+          darwin: macos
       - version_constraint: semver(">= 6.0.0")
         asset: miller_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: mlr
         overrides:
           - goos: windows
             format: zip
@@ -14170,18 +14188,6 @@ packages:
           type: github_release
           asset: miller_{{trimV .Version}}_checksums.txt
           algorithm: sha256
-      - version_constraint: semver(">= 6.0.0-beta")
-        asset: mlr-{{.OS}}-latest.{{.Format}}
-        format: zip
-        overrides: []
-        replacements:
-          darwin: macos
-        supported_envs:
-          - darwin
-          - windows/amd64
-        rosetta2: true
-        checksum:
-          enabled: false
       - version_constraint: semver(">= 5.10.3")
         asset: mlr.{{.OS}}_{{.Arch}}
         format: raw
