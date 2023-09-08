@@ -19460,6 +19460,50 @@ packages:
       - name: exa
         src: bin/exa
   - type: github_release
+    repo_owner: okta
+    repo_name: okta-aws-cli
+    description: A CLI for having Okta as the IdP for AWS CLI operations
+    asset: okta-aws-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: okta-aws-cli
+        src: okta-aws-cli_{{.Version}}
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 1.0.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.3.0")
+        # checksum files isn't normalized
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.1.0")
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+      - version_constraint: semver(">= 0.0.4")
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            asset: okta-aws-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}_signed.{{.Format}}
+            # signed.tar.gz doesn't exist in checksum file
+            checksum:
+              enabled: false
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+      - version_constraint: semver("< 0.0.4")
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+  - type: github_release
     repo_owner: okteto
     repo_name: okteto
     description: Develop your applications directly in your Kubernetes Cluster
