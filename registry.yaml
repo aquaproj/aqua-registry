@@ -19474,29 +19474,30 @@ packages:
       algorithm: sha256
     version_constraint: semver(">= 1.0.0")
     version_overrides:
-        # checksums.txt isn't normalised
-      - version_constraint: semver("= 0.3.0")
+      - version_constraint: semver(">= 0.3.0")
         checksum:
-          enabled: false
+          type: github_release
+          asset: checksums-signed.txt
+          algorithm: sha256
       - version_constraint: semver(">= 0.1.0")
         replacements:
           amd64: x86_64
           darwin: Darwin
           linux: Linux
           windows: Windows
-        # signed.tar.gz doesn't exist in checksum file
       - version_constraint: semver(">= 0.0.4")
         overrides:
           - goos: darwin
             goarch: amd64
             asset: okta-aws-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}_signed.{{.Format}}
+            # signed.tar.gz doesn't exist in checksum file
+            checksum:
+              enabled: false
         replacements:
           amd64: x86_64
           darwin: Darwin
           linux: Linux
           windows: Windows
-        checksum:
-          enabled: false
       - version_constraint: semver("< 0.0.4")
         replacements:
           amd64: x86_64
