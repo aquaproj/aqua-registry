@@ -4192,6 +4192,22 @@ packages:
     files:
       - name: copilot
   - type: http
+    repo_owner: aws
+    repo_name: session-manager-plugin
+    description: This plugin helps you to use the AWS Command Line Interface (AWS CLI) to start and end sessions to your managed instances Resources
+    url: https://s3.amazonaws.com/session-manager-downloads/plugin/{{.Version}}/mac/sessionmanager-bundle.zip
+    overrides:
+      - goos: darwin
+        goarch: arm64
+        url: https://s3.amazonaws.com/session-manager-downloads/plugin/{{.Version}}/mac_{{.Arch}}/sessionmanager-bundle.zip
+    files:
+      - name: session-manager-plugin
+        src: sessionmanager-bundle/bin/session-manager-plugin
+    supported_envs:
+      - darwin
+    search_words:
+      - macOS Only
+  - type: http
     repo_owner: awslabs
     repo_name: amazon-ecr-credential-helper
     description: Automatically gets credentials for Amazon ECR on docker push/docker pull
@@ -8384,6 +8400,22 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+  - type: http
+    name: dev.yorhel.nl/ncdu
+    description: Ncdu is a disk usage analyzer with an ncurses interface
+    link: https://dev.yorhel.nl/ncdu
+    url: https://dev.yorhel.nl/download/ncdu-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      arm64: aarch64
+      amd64: x86_64
+    supported_envs:
+      - linux
+    search_words:
+      - Linux Only
+    files:
+      # https://github.com/aquaproj/aqua-registry/pull/15293#issuecomment-1712422083
+      - name: ncdu
   - type: github_release
     repo_owner: deviceinsight
     repo_name: kafkactl
@@ -9367,6 +9399,21 @@ packages:
     files:
       - name: gh-md-toc
   - type: github_release
+    repo_owner: eksctl-io
+    repo_name: eksctl
+    description: The official CLI for Amazon EKS
+    aliases:
+      - name: weaveworks/eksctl
+    asset: eksctl_{{title .OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: eksctl_checksums.txt
+      algorithm: sha256
+  - type: github_release
     repo_owner: ekzhang
     repo_name: bore
     asset: bore-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
@@ -9831,6 +9878,23 @@ packages:
       darwin: mac
       linux: linux-musl
       windows: win
+  - type: github_release
+    repo_owner: eza-community
+    repo_name: eza
+    description: A modern, maintained replacement for ls
+    asset: "{{.Arch}}-{{.OS}}-eza"
+    format: raw
+    overrides:
+      - goos: linux
+        replacements:
+          arm64: aarch64
+    replacements:
+      amd64: x86_64
+      linux: unknown-linux-gnu
+      windows: pc-windows-gnu
+    supported_envs:
+      - linux
+      - windows/amd64
   - type: github_release
     repo_owner: fabpot
     repo_name: local-php-security-checker
@@ -26118,19 +26182,6 @@ packages:
       - version_constraint: semver("< 1.18.0")
         version_prefix: cli-
         rosetta2: true
-  - type: github_release
-    repo_owner: weaveworks
-    repo_name: eksctl
-    description: The official CLI for Amazon EKS
-    asset: eksctl_{{title .OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: github_release
-      asset: eksctl_checksums.txt
-      algorithm: sha256
   - type: github_release
     name: weaveworks/tf-controller/tfctl
     repo_owner: weaveworks
