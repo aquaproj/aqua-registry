@@ -3,10 +3,11 @@ packages:
     repo_owner: eza-community
     repo_name: eza
     description: A modern, maintained replacement for ls
-    asset: "{{.Arch}}-{{.OS}}-eza"
-    format: raw
+    asset: eza_{{.Arch}}-{{.OS}}.{{.Format}}
+    format: zip
     overrides:
       - goos: linux
+        format: tar.gz
         replacements:
           arm64: aarch64
     replacements:
@@ -16,3 +17,12 @@ packages:
     supported_envs:
       - linux
       - windows/amd64
+    version_constraint: semver(">= 0.11.1")
+    version_overrides:
+      - version_constraint: semver("< 0.11.1")
+        asset: "{{.Arch}}-{{.OS}}-eza"
+        format: raw
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
