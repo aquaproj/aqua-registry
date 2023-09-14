@@ -2,18 +2,38 @@ packages:
   - type: github_release
     repo_owner: chmouel
     repo_name: snazy
-    asset: snazy_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    description: a snazzy json log viewer
+    asset: snazy_{{.Version}}_{{.OS}}_all.{{.Format}}
     format: tar.gz
-    description: A snazzy json log viewer
-    replacements:
-      darwin: macOS
     overrides:
-      - goos: darwin
-        asset: snazy_{{.Version}}_{{.OS}}_all.{{.Format}}
+      - goos: linux
+        asset: snazy_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    replacements:
+      amd64: x86_64
     supported_envs:
       - linux/amd64
       - darwin
+    rosetta2: true
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 0.51.3")
+    version_overrides:
+      - version_constraint: semver(">= 0.10.0")
+        asset: snazy_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides:
+          - goos: darwin
+            asset: snazy_{{.Version}}_{{.OS}}_all.{{.Format}}
+        replacements:
+          darwin: macOS
+      - version_constraint: semver(">= 0.9.1")
+        replacements:
+          darwin: macOS
+      - version_constraint: semver("< 0.9.1")
+        asset: snazy_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides:
+          - goos: darwin
+            asset: snazy_{{.Version}}_{{.OS}}_all.{{.Format}}
+        replacements:
+          darwin: macOS
