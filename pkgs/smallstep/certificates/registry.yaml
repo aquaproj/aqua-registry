@@ -19,16 +19,14 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
-    version_constraint: semver(">= 0.24.3-rc.1")
+    version_constraint: semver(">= 0.23.0-rc.2")
     version_overrides:
-      - version_constraint: semver("= 0.23.0-rc.1")
-        files: &step_ca_files2
-          - name: step-ca
-            src: step-ca_{{trimV .Version}}/bin/step-ca
       - version_constraint: semver(">= 0.22.2-rc9")
         overrides:
           - goos: darwin
-            files: *step_ca_files2
+            files: &step_ca_files2
+              - name: step-ca
+                src: step-ca_{{trimV .Version}}/bin/step-ca
         supported_envs:
           - linux/amd64
           - darwin
