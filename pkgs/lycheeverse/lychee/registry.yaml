@@ -2,49 +2,21 @@ packages:
   - type: github_release
     repo_owner: lycheeverse
     repo_name: lychee
-    description: Fast, async, stream-based link checker written in Rust. Finds broken URLs and mail addresses inside Markdown, HTML, reStructuredText, websites and more
     asset: lychee-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     format: tar.gz
+    description: Fast, async, stream-based link checker written in Rust. Finds broken URLs and mail addresses inside Markdown, HTML, reStructuredText, websites and more
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      linux: unknown-linux-musl
     overrides:
-      - goos: linux
-        goarch: amd64
-        replacements:
-          linux: unknown-linux-musl
       - goos: linux
         goarch: arm64
         replacements:
-          arm64: aarch64
           linux: unknown-linux-gnu
-      - goos: darwin
-        format: dmg
-        asset: lychee-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
       - goos: windows
         format: raw
         asset: lychee-{{.Version}}-{{.OS}}-{{.Arch}}
-    replacements:
-      amd64: x86_64
-      darwin: macos
     supported_envs:
-      - darwin
       - linux
-      - amd64
-    rosetta2: true
-    version_constraint: semver(">= 0.8.1")
-    version_overrides:
-      - version_constraint: semver(">= 0.8.0")
-        asset: lychee-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: dmg
-        overrides:
-          - goos: linux
-            format: tar.gz
-            asset: lychee-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-          - goos: windows
-            format: raw
-            asset: lychee-{{.Version}}-{{.OS}}-{{.Arch}}
-        replacements:
-          amd64: x86_64
-          darwin: macos
-          linux: unknown-linux-musl
-        supported_envs:
-          - darwin
-          - amd64
+      - windows/amd64
