@@ -2,16 +2,36 @@ packages:
   - type: github_release
     repo_owner: norwoodj
     repo_name: helm-docs
-    rosetta2: true
-    asset: helm-docs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: A tool for automatically generating markdown documentation for helm charts
+    asset: helm-docs_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     replacements:
+      amd64: x86_64
       darwin: Darwin
       linux: Linux
       windows: Windows
-      386: i386
-      amd64: x86_64
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 1.11.2")
+    version_overrides:
+      - version_constraint: semver(">= 1.6.0")
+        asset: helm-docs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+      - version_constraint: semver(">= 1.4.0")
+        asset: helm-docs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 1.4.0")
+        asset: helm-docs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
