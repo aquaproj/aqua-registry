@@ -18232,21 +18232,96 @@ packages:
     description: A super fast CLI tool to decode and encode JWTs built in Rust
     asset: jwt-{{.OS}}.{{.Format}}
     format: tar.gz
-    files:
-    - name: jwt
-      src: jwt
     replacements:
       darwin: macOS
     supported_envs:
       - darwin
-      - windows
-      - linux
       - amd64
     rosetta2: true
     checksum:
       type: github_release
       asset: jwt-{{.OS}}.sha256
       algorithm: sha256
+    version_constraint: semver(">= 3.2.1")
+    version_overrides:
+      - version_constraint: semver(">= 2.3.0")
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 2.2.1")
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: darwin
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows/amd64
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.5.0")
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.4.1")
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: windows
+            format: zip
+            asset: jwt-cli-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+            replacements:
+              amd64: x86_64
+        replacements:
+          darwin: macOS
+          windows: pc-windows-msvc
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.3.2")
+        asset: jwt-cli-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          windows: pc-windows-msvc
+        supported_envs:
+          - windows/amd64
+        rosetta2: false
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.3.1")
+        asset: jwt-cli-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.3.0")
+        asset: jwt-cli-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          windows: pc-windows-msvc
+        supported_envs:
+          - windows/amd64
+        rosetta2: false
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 0.3.0")
+        asset: ""
+        replacements: {}
+        rosetta2: false
+        checksum:
+          enabled: false
   - type: github_release
     repo_owner: mikefarah
     repo_name: yq
