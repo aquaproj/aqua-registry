@@ -9895,6 +9895,8 @@ packages:
         format: tar.gz
         replacements:
           arm64: aarch64
+      - goos: windows
+        asset: eza.exe_{{.Arch}}-{{.OS}}.{{.Format}}
     replacements:
       amd64: x86_64
       linux: unknown-linux-gnu
@@ -9902,8 +9904,14 @@ packages:
     supported_envs:
       - linux
       - windows/amd64
-    version_constraint: semver(">= 0.11.1")
+    version_constraint: semver(">= 0.13.0")
     version_overrides:
+      - version_constraint: semver(">= 0.11.1")
+        overrides:
+          - goos: linux
+            format: tar.gz
+            replacements:
+              arm64: aarch64
       - version_constraint: semver("< 0.11.1")
         asset: "{{.Arch}}-{{.OS}}-eza"
         format: raw
