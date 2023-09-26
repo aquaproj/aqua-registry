@@ -1217,43 +1217,109 @@ packages:
   - type: github_release
     repo_owner: Orange-OpenSource
     repo_name: hurl
+    description: Hurl, run and test HTTP requests with plain text
     asset: hurl-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     format: tar.gz
-    description: Hurl, run and test HTTP requests with plain text
     files:
       - name: hurl
-        src: hurl-{{.Version}}/hurl
+        src: hurl-{{.Version}}-{{.Arch}}-{{.OS}}/hurl
       - name: hurlfmt
-        src: hurl-{{.Version}}/hurlfmt
-    replacements:
-      amd64: x86_64
-      darwin: macos
-      windows: win64
+        src: hurl-{{.Version}}-{{.Arch}}-{{.OS}}/hurlfmt
     overrides:
+      - goos: linux
+        replacements:
+          arm64: aarch64
       - goos: windows
         format: zip
-        asset: hurl-{{.Version}}-{{.OS}}.{{.Format}}
         files:
           - name: hurl
-            src: hurl.exe
           - name: hurlfmt
-            src: hurlfmt.exe
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
     supported_envs:
       - darwin
+      - linux
       - amd64
-    version_constraint: semver(">= 1.7.0")
+    rosetta2: true
+    version_constraint: semver(">= 4.1.0")
     version_overrides:
+      - version_constraint: semver(">= 1.7.0")
+        files:
+          - name: hurl
+            src: hurl-{{.Version}}/hurl
+          - name: hurlfmt
+            src: hurl-{{.Version}}/hurlfmt
+        overrides:
+          - goos: windows
+            format: zip
+            asset: hurl-{{.Version}}-{{.OS}}.{{.Format}}
+            files:
+              - name: hurl
+              - name: hurlfmt
+        replacements:
+          amd64: x86_64
+          darwin: macos
+          windows: win64
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: false
       - version_constraint: semver(">= 1.6.1")
+        files:
+          - name: hurl
+            src: hurl-{{.Version}}/hurl
+          - name: hurlfmt
+            src: hurl-{{.Version}}/hurlfmt
+        overrides:
+          - goos: windows
+            format: zip
+            asset: hurl-{{.Version}}-{{.OS}}.{{.Format}}
+            files:
+              - name: hurl
+              - name: hurlfmt
         replacements:
           amd64: x86_64
           darwin: osx
           windows: win64
-      - version_constraint: "true"
-        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: false
+      - version_constraint: semver(">= 1.2.0")
+        files:
+          - name: hurl
+            src: hurl-{{.Version}}/hurl
+          - name: hurlfmt
+            src: hurl-{{.Version}}/hurlfmt
+        overrides:
+          - goos: windows
+            format: zip
+            asset: hurl-{{.Version}}-{{.OS}}.{{.Format}}
+            files:
+              - name: hurl
         replacements:
           amd64: x86_64
           darwin: osx
           windows: win64
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver("< 1.2.0")
+        files:
+          - name: hurl
+            src: hurl-{{.Version}}/hurl
+          - name: hurlfmt
+            src: hurl-{{.Version}}/hurlfmt
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: osx
+        supported_envs:
+          - linux/amd64
+          - darwin
   - type: github_release
     repo_owner: PaddiM8
     repo_name: kalker
@@ -6072,7 +6138,7 @@ packages:
     repo_owner: charmbracelet
     repo_name: mods
     description: AI on the command line
-    asset: mods_{{.OS}}_{{.Arch}}.{{.Format}}
+    asset: mods_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
@@ -6082,14 +6148,18 @@ packages:
       darwin: Darwin
       linux: Linux
       windows: Windows
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 1.0.0")
+    version_overrides:
+      - version_constraint: semver("< 1.0.0")
+        asset: mods_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
   - type: github_release
     repo_owner: charmbracelet
     repo_name: skate
@@ -6476,6 +6546,9 @@ packages:
       - goarch: arm64
         asset: ch-remote-static-aarch64
   - type: github_release
+    name: cloudflare/cfssl/cfssl
+    aliases:
+      - name: cloudflare/cfssl
     repo_owner: cloudflare
     repo_name: cfssl
     description: "CFSSL: Cloudflare's PKI and TLS toolkit"
@@ -6689,15 +6762,19 @@ packages:
   - type: github_release
     repo_owner: cloudfoundry
     repo_name: credhub-cli
-    asset: credhub-{{.OS}}-{{.Version}}.tgz
-    supported_envs:
-      - windows
-      - darwin
-      - linux/amd64
-    rosetta2: true
     description: CredHub CLI provides a command line interface to interact with CredHub servers
+    asset: credhub-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+    format: tgz
     files:
       - name: credhub
+    supported_envs:
+      - darwin
+      - amd64
+    version_constraint: semver(">= 2.9.21")
+    version_overrides:
+      - version_constraint: semver("< 2.9.21")
+        asset: credhub-{{.OS}}-{{.Version}}.{{.Format}}
+        rosetta2: true
   - type: github_release
     repo_owner: cloudposse
     repo_name: atmos
@@ -9895,6 +9972,8 @@ packages:
         format: tar.gz
         replacements:
           arm64: aarch64
+      - goos: windows
+        asset: eza.exe_{{.Arch}}-{{.OS}}.{{.Format}}
     replacements:
       amd64: x86_64
       linux: unknown-linux-gnu
@@ -9902,8 +9981,14 @@ packages:
     supported_envs:
       - linux
       - windows/amd64
-    version_constraint: semver(">= 0.11.1")
+    version_constraint: semver(">= 0.13.0")
     version_overrides:
+      - version_constraint: semver(">= 0.11.1")
+        overrides:
+          - goos: linux
+            format: tar.gz
+            replacements:
+              arm64: aarch64
       - version_constraint: semver("< 0.11.1")
         asset: "{{.Arch}}-{{.OS}}-eza"
         format: raw
@@ -12169,6 +12254,9 @@ packages:
           From version xk6 v0.9.0 there are no more binaries published.
 
           https://github.com/grafana/xk6/issues/60
+  - type: go_install
+    repo_owner: greymd
+    repo_name: ojichat
   - type: github_release
     repo_owner: greymd
     repo_name: teip
@@ -16255,6 +16343,10 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+  - type: go_install
+    repo_owner: koron
+    repo_name: iferr
+    description: Generate "if err != nil {" block
   - type: github_release
     repo_owner: kreuzwerker
     repo_name: awsu
@@ -18058,6 +18150,17 @@ packages:
           - darwin
           - amd64
   - type: github_release
+    repo_owner: mattn
+    repo_name: zig-update
+    asset: zig-update_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    overrides:
+      - goos: linux
+        format: tar.gz
+    files:
+      - name: zig-update
+        src: zig-update_{{.Version}}_{{.OS}}_{{.Arch}}/zig-update
+  - type: github_release
     repo_owner: maxpert
     repo_name: marmot
     description: A distributed SQLite replicator
@@ -18226,6 +18329,142 @@ packages:
         format: zip
     files:
       - name: rg
+  - type: github_release
+    repo_owner: mike-engel
+    repo_name: jwt-cli
+    description: A super fast CLI tool to decode and encode JWTs built in Rust
+    asset: jwt-{{.OS}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: jwt
+        src: jwt
+    replacements:
+      darwin: macOS
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: jwt-{{.OS}}.sha256
+      algorithm: sha256
+    version_constraint: semver(">= 3.2.1")
+    version_overrides:
+      - version_constraint: semver(">= 3.0.0")
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: linux
+            files:
+              - name: jwt
+                src: target/release/jwt
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 2.5.1")
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 2.3.0")
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: linux
+            files:
+              - name: jwt
+                src: target/release/jwt
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 2.2.1")
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: darwin
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows/amd64
+        checksum:
+          enabled: false
+      - version_constraint: Version == "2.2.0"
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: linux
+            files:
+              - name: jwt
+                src: target/release/jwt
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.6.0")
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          enabled: false
+      - version_constraint: Version == "0.5.0"
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: jwt-cli
+            src: jwt-cli
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.4.1")
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: jwt-cli
+            src: jwt-cli
+        overrides:
+          - goos: windows
+            format: zip
+            asset: jwt-cli-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+            replacements:
+              amd64: x86_64
+        replacements:
+          darwin: macOS
+          windows: pc-windows-msvc
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.3.2")
+        asset: jwt-cli-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        files:
+          - name: jwt-cli
+            src: jwt-cli
+        replacements:
+          amd64: x86_64
+          windows: pc-windows-msvc
+        supported_envs:
+          - windows/amd64
+        rosetta2: false
+        checksum:
+          enabled: false
+      - version_constraint: Version == "0.3.1"
+        asset: jwt-cli-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        files:
+          - name: jwt-cli
+            src: jwt-cli
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          enabled: false
+      - version_constraint: semver("<= 0.3.0")
+        no_asset: true
   - type: github_release
     repo_owner: mikefarah
     repo_name: yq
@@ -19228,6 +19467,22 @@ packages:
           darwin: Darwin
           linux: Linux
           windows: Windows
+  - type: github_release
+    repo_owner: natecraddock
+    repo_name: zf
+    description: a commandline fuzzy finder designed for filtering filepaths
+    asset: zf-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: macos
+    supported_envs:
+      - linux
+      - darwin
+    files:
+      - name: zf
+        src: "zf-{{.Version}}-{{.Arch}}-{{.OS}}"
   - type: github_release
     repo_owner: nats-io
     repo_name: natscli
@@ -21003,16 +21258,17 @@ packages:
         src: bin/protoc
     description: Protocol Buffers - Google's data interchange format
     replacements:
+      arm64: aarch_64
       amd64: x86_64
       darwin: osx
       windows: win64
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
     overrides:
       - goos: windows
         asset: protoc-{{trimV .Version}}-{{.OS}}.{{.Format}}
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
   - type: github_release
     repo_owner: pseudomuto
     repo_name: protoc-gen-doc
@@ -22895,6 +23151,28 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+  - type: github_release
+    repo_owner: simonwhitaker
+    repo_name: gibo
+    description: Easy access to gitignore boilerplates
+    asset: gibo_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    overrides:
+      - goos: windows
+        format: zip
+        checksum:
+          type: github_release
+          asset: checksums.windows.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: six-ddc
     repo_name: plow
@@ -25417,6 +25695,10 @@ packages:
       type: github_release
       asset: alp_{{trimV .Version}}_checksums.txt
       algorithm: sha256
+  - type: go_install
+    repo_owner: tmc
+    repo_name: json-to-struct
+    description: A simple command-line tool for generating to struct definitions from JSON
   - type: github_release
     repo_owner: tmccombs
     repo_name: hcl2json
@@ -25482,6 +25764,29 @@ packages:
     overrides:
       - goos: windows
         format: zip
+  - type: github_release
+    repo_owner: tomohiro
+    repo_name: gyazo-cli
+    description: Gyazo command-line uploader
+    asset: gyazo-cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    files:
+      - name: gyazo-cli
+        src: gyazo-cli_{{.Version}}_{{.OS}}_{{.Arch}}/gyazo-cli
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: "{{.Version}}_SHA256SUMS"
+      algorithm: sha256
+    version_constraint: semver(">= 1.0.0")
+    version_overrides:
+      - version_constraint: semver("< 1.0.0")
+        asset: gyazo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: gyazo
   - type: github_release
     repo_owner: topgrade-rs
     repo_name: topgrade
@@ -26426,6 +26731,69 @@ packages:
       - darwin
       - linux/amd64
     asset: gossh-{{.Version}}-{{.OS}}-{{.Arch}}
+  - name: winebarrel/cronplan/cronmatch
+    type: github_release
+    repo_owner: winebarrel
+    repo_name: cronplan
+    description: Cron expression parser for Amazon EventBridge
+    asset: cronmatch_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    version_constraint: semver(">= 1.8.1")
+    files:
+      - name: cronmatch
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_overrides:
+      - version_constraint: semver(">= 1.2.0")
+        checksum:
+          type: github_release
+          asset: cronmatch-checksums.txt
+          algorithm: sha256
+  - type: github_release
+    name: winebarrel/cronplan/cronplan
+    repo_owner: winebarrel
+    repo_name: cronplan
+    description: Cron expression parser for Amazon EventBridge
+    asset: cronplan_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    version_constraint: semver(">= 1.8.1")
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_overrides:
+      - version_constraint: semver(">= 1.2.0")
+        checksum:
+          type: github_release
+          asset: cronplan-checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+  - name: winebarrel/cronplan/cronviz
+    type: github_release
+    repo_owner: winebarrel
+    repo_name: cronplan
+    description: Cron expression parser for Amazon EventBridge
+    asset: cronviz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    version_constraint: semver(">= 1.8.1")
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    files:
+      - name: cronviz
+    version_overrides:
+      - version_constraint: semver(">= 1.5.0")
+        checksum:
+          type: github_release
+          asset: cronviz-checksums.txt
+          algorithm: sha256
   - type: github_release
     name: woodpecker-ci/woodpecker/woodpecker-cli
     repo_owner: woodpecker-ci
