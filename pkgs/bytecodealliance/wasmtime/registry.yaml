@@ -1,0 +1,45 @@
+packages:
+  - type: github_release
+    repo_owner: bytecodealliance
+    repo_name: wasmtime
+    description: A fast and secure runtime for WebAssembly
+    asset: wasmtime-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: macos
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    files:
+      - name: wasmtime
+        src: wasmtime-{{.Version}}-{{.Arch}}-{{.OS}}/wasmtime
+    version_constraint: semver(">= 1.0.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.60.0")
+        supported_envs:
+          - darwin
+          - amd64
+        version_prefix: cranelift-
+        rosetta2: true
+      - version_constraint: semver(">= 0.37.0")
+      - version_constraint: semver(">= 0.34.2")
+        rosetta2: true
+      - version_constraint: semver(">= 0.34.1")
+        supported_envs:
+          - darwin
+          - linux
+        rosetta2: true
+      - version_constraint: semver(">= 0.16.0")
+        rosetta2: true
+      - version_constraint: semver(">= 0.3.0")
+        supported_envs:
+          - amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: semver("< 0.3.0")
