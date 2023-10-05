@@ -342,6 +342,39 @@ packages:
       - name: cloudfox
         src: cloudfox/cloudfox
   - type: github_release
+    repo_owner: Boeing
+    repo_name: config-file-validator
+    description: Cross Platform tool to validate configuration files
+    asset: validator-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+    format: raw
+    overrides:
+      - goos: windows
+        asset: validator-{{trimV .Version}}
+    files:
+      - name: validator
+    replacements:
+      darwin: macos
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    version_constraint: semver(">= 1.4.0")
+    version_overrides:
+      - version_constraint: Version == "v1.3.0"
+        asset: validator.{{.OS}}-{{.Arch}}
+        overrides:
+          - goos: windows
+            asset: validator
+      - version_constraint: semver("< 1.3.0")
+        asset: validator.{{.OS}}-{{.Arch}}
+        overrides:
+          - goos: windows
+            asset: validator
+        replacements: {}
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+  - type: github_release
     repo_owner: Builditluc
     repo_name: wiki-tui
     description: A simple and easy to use Wikipedia Text User Interface
