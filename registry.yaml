@@ -349,14 +349,20 @@ packages:
     format: raw
     overrides:
       - goos: windows
+        goarch: amd64
         asset: validator-{{trimV .Version}}
+      - goos: linux
+        goarch: arm64
+        type: go_install
+        path: github.com/Boeing/config-file-validator/cmd/validator
+      - goos: windows
+        goarch: arm64
+        type: go_install
+        path: github.com/Boeing/config-file-validator/cmd/validator
     files:
       - name: validator
     replacements:
       darwin: macos
-    supported_envs:
-      - darwin
-      - amd64
     rosetta2: true
     version_constraint: semver(">= 1.4.0")
     version_overrides:
@@ -364,16 +370,29 @@ packages:
         asset: validator.{{.OS}}-{{.Arch}}
         overrides:
           - goos: windows
+            goarch: amd64
             asset: validator
+          - goos: linux
+            goarch: arm64
+            type: go_install
+            path: github.com/Boeing/config-file-validator/cmd/validator
+          - goos: windows
+            goarch: arm64
+            type: go_install
+            path: github.com/Boeing/config-file-validator/cmd/validator
       - version_constraint: semver("< 1.3.0")
         asset: validator.{{.OS}}-{{.Arch}}
         overrides:
           - goos: windows
+            goarch: amd64
             asset: validator
+          - goarch: arm64
+            type: go_install
+            path: git.web.boeing.com/vle-oss/config-file-validator/cmd/validator
+          - goos: darwin
+            type: go_install
+            path: git.web.boeing.com/vle-oss/config-file-validator/cmd/validator
         replacements: {}
-        supported_envs:
-          - linux/amd64
-          - windows/amd64
   - type: github_release
     repo_owner: Builditluc
     repo_name: wiki-tui
