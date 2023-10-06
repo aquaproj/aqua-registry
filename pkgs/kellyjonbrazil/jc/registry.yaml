@@ -1,0 +1,24 @@
+packages:
+  - type: github_release
+    repo_owner: kellyjonbrazil
+    repo_name: jc
+    description: CLI tool and python library that converts the output of popular command-line tools, file-types, and common strings to JSON, YAML, or Dictionaries. This allows piping of output to tools like jq and simplifying automation scripts
+    asset: jc-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+        asset: jc-{{trimV .Version}}-{{.OS}}.{{.Format}}
+    replacements:
+      amd64: x86_64
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    version_constraint: semver(">= 1.19.0")
+    version_overrides:
+      - version_constraint: semver("< 1.19.0")
+        overrides: []
+        supported_envs:
+          - linux/amd64
+          - darwin
