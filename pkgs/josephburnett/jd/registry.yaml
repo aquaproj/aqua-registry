@@ -12,10 +12,26 @@ packages:
       - version_constraint: Version == "v1.4.0"
         complete_windows_ext: false
         rosetta2: true
-        supported_envs:
-          - darwin
-          - amd64
+        overrides:
+          - goos: linux
+            goarch: arm64
+            type: go_install
+            path: github.com/josephburnett/jd
+          - goos: windows
+            goarch: arm64
+            type: go_install
+            path: github.com/josephburnett/jd
       - version_constraint: semver("< 1.4.0")
         asset: jd
-        supported_envs:
-          - linux/amd64
+        overrides:
+          - goarch: arm64
+            type: go_install
+            path: github.com/josephburnett/jd
+          - goos: darwin
+            goarch: amd64
+            type: go_install
+            path: github.com/josephburnett/jd
+          - goos: windows
+            goarch: amd64
+            type: go_install
+            path: github.com/josephburnett/jd
