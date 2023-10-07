@@ -1,0 +1,18 @@
+packages:
+  - type: github_release
+    repo_owner: cbroglie
+    repo_name: mustache
+    description: The mustache template language in Go
+    asset: mustache_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    checksum:
+      type: github_release
+      asset: mustache_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 1.4.0")
+    version_overrides:
+      - version_constraint: semver("< 1.4.0")
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true

@@ -1,0 +1,43 @@
+---
+name: test all packages
+on: workflow_dispatch
+
+permissions: {}
+env:
+  AQUA_LOG_COLOR: always
+jobs:
+  test:
+    strategy:
+      matrix:
+        env:
+          - runs-on: windows-latest
+          - runs-on: ubuntu-latest
+          - runs-on: macos-latest
+          - runs-on: ubuntu-latest
+            goarch: arm64
+          - runs-on: macos-latest
+            goos: darwin
+            goarch: arm64
+          - runs-on: windows-latest
+            goarch: arm64
+    runs-on: ${{ matrix.env.runs-on }}
+    defaults:
+      run:
+        shell: bash
+    env:
+      AQUA_CONFIG: aqua-all.yaml
+    steps:
+      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@32691ba7c9e7063bd457bd8f2a5703138591fa58 # v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+      - uses: aquaproj/aqua-installer@36dc5833b04eb63f06e3bb818aa6b7a6e6db99a9 # v2.1.2
+        with:
+          aqua_version: v2.13.0-1
+          aqua_opts: ""
+          policy_allow: "true"
+        env:
+          AQUA_GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
