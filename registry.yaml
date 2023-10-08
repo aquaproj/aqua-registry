@@ -458,10 +458,10 @@ packages:
     repo_owner: Byron
     repo_name: dua-cli
     description: View disk space usage and delete unwanted data, fast
-    asset: dua-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    asset: dua-{{.Version}}-{{.Arch}}-{{.OS}}
     files:
       - name: dua
-        src: dua-{{.Version}}-{{.Arch}}-{{.OS}}/dua
+        src: "{{.AssetWithoutExt}}/dua"
     format: tar.gz
     overrides:
       - goos: windows
@@ -477,7 +477,7 @@ packages:
     rosetta2: true
     version_constraint: semver(">= 2.20.1")
     version_overrides:
-      - version_constraint: semver(">= 2.20.0")
+      - version_constraint: Version == "v2.20.0"
         format: zip
         overrides:
           - goos: darwin
@@ -490,7 +490,7 @@ packages:
           - darwin
           - windows/amd64
       - version_constraint: semver(">= 2.10.4")
-      - version_constraint: semver(">= 2.10.3")
+      - version_constraint: Version == "v2.10.3"
         overrides: []
       - version_constraint: semver(">= 2.6.0")
       - version_constraint: semver("< 2.6.0")
@@ -524,7 +524,7 @@ packages:
     repo_name: circleci-cli
     description: Use CircleCI from the command line
     rosetta2: true
-    asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}
     supported_envs:
       - darwin
       - linux
@@ -535,10 +535,10 @@ packages:
         format: zip
     files:
       - name: circleci
-        src: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/circleci
+        src: "{{.AssetWithoutExt}}/circleci"
     version_constraint: semver(">= 0.1.17554")
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.1.17554")
         supported_envs:
           - darwin
           - amd64
@@ -654,16 +654,16 @@ packages:
   - type: github_release
     repo_owner: Dreamacro
     repo_name: clash
-    asset: clash-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+    description: A rule-based tunnel in Go
+    asset: clash-{{.OS}}-{{.Arch}}-{{.Version}}
     supported_envs:
       - windows
       - darwin
       - linux/amd64
-    description: A rule-based tunnel in Go
     format: gz
     files:
       - name: clash
-        src: clash-{{.OS}}-{{.Arch}}-{{.Version}}
+        src: "{{.AssetWithoutExt}}"
     overrides:
       - goos: windows
         format: zip
@@ -800,7 +800,7 @@ packages:
     asset: gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     files:
       - name: gwvault
-        src: gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}/gwvault
+        src: "{{.AssetWithoutExt}}/gwvault"
     format: tar.gz
     overrides:
       - goos: windows

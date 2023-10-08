@@ -4,7 +4,7 @@ packages:
     repo_name: circleci-cli
     description: Use CircleCI from the command line
     rosetta2: true
-    asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}
     supported_envs:
       - darwin
       - linux
@@ -15,10 +15,10 @@ packages:
         format: zip
     files:
       - name: circleci
-        src: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/circleci
+        src: "{{.AssetWithoutExt}}/circleci"
     version_constraint: semver(">= 0.1.17554")
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.1.17554")
         supported_envs:
           - darwin
           - amd64
