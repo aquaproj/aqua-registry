@@ -351,14 +351,12 @@ packages:
       - goos: windows
         goarch: amd64
         asset: validator-{{trimV .Version}}
-      - goos: linux
-        goarch: arm64
-        type: go_install
-        path: github.com/Boeing/config-file-validator/cmd/validator
-      - goos: windows
-        goarch: arm64
-        type: go_install
-        path: github.com/Boeing/config-file-validator/cmd/validator
+    supported_envs:
+      - darwin
+      - amd64
+    build:
+      type: go_install
+      path: github.com/Boeing/config-file-validator/cmd/validator
     files:
       - name: validator
     replacements:
@@ -372,46 +370,29 @@ packages:
           - goos: windows
             goarch: amd64
             asset: validator
-          - goos: linux
-            goarch: arm64
-            type: go_install
-            path: github.com/Boeing/config-file-validator/cmd/validator
-          - goos: windows
-            goarch: arm64
-            type: go_install
-            path: github.com/Boeing/config-file-validator/cmd/validator
       - version_constraint: semver(">= 1.0.1")
         asset: validator.{{.OS}}-{{.Arch}}
         overrides:
           - goos: windows
             goarch: amd64
             asset: validator
-          - goarch: arm64
-            type: go_install
-            path: github.com/Boeing/config-file-validator/cmd/validator
-          - goos: darwin
-            type: go_install
-            path: github.com/Boeing/config-file-validator/cmd/validator
         replacements: {}
       - version_constraint: Version == "v1.0.0"
         asset: validator.{{.OS}}-{{.Arch}}
         replacements: {}
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+        build:
+          type: go_build
+          files:
+            - name: validator
+              src: ./cmd/validator
+              dir: config-file-validator-{{trimV .Version}}
         overrides:
           - goos: windows
             goarch: amd64
             asset: validator
-          - goarch: arm64
-            type: go_build
-            files:
-              - name: validator
-                src: ./cmd/validator
-                dir: config-file-validator-{{trimV .Version}}
-          - goos: darwin
-            type: go_build
-            files:
-              - name: validator
-                src: ./cmd/validator
-                dir: config-file-validator-{{trimV .Version}}
   - type: github_release
     repo_owner: Builditluc
     repo_name: wiki-tui
@@ -15298,6 +15279,8 @@ packages:
     description: JSON diff and patch
     asset: jd-{{.Arch}}-{{.OS}}
     format: raw
+    build:
+      type: go_install
     version_constraint: semver(">= 1.6.1")
     version_overrides:
       - version_constraint: semver(">= 1.5.0")
@@ -15305,33 +15288,19 @@ packages:
       - version_constraint: Version == "v1.4.0"
         complete_windows_ext: false
         rosetta2: true
-        overrides:
-          - goos: linux
-            goarch: arm64
-            type: go_install
-            path: github.com/josephburnett/jd
-          - goos: windows
-            goarch: arm64
-            type: go_install
-            path: github.com/josephburnett/jd
+        supported_envs:
+          - darwin
+          - amd64
       - version_constraint: semver(">= 1.2.0")
         asset: jd
-        overrides:
-          - goarch: arm64
-            type: go_install
-            path: github.com/josephburnett/jd
-          - goos: darwin
-            goarch: amd64
-            type: go_install
-            path: github.com/josephburnett/jd
-          - goos: windows
-            goarch: amd64
-            type: go_install
-            path: github.com/josephburnett/jd
+        supported_envs:
+          - linux/amd64
       - version_constraint: semver("< 1.2.0")
         asset: jd
         supported_envs:
           - linux/amd64
+        build:
+          enabled: false
   - type: github_release
     repo_owner: joshdk
     repo_name: retry
