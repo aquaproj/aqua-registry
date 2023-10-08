@@ -1,0 +1,24 @@
+packages:
+  - type: github_release
+    repo_owner: suzuki-shunsuke
+    repo_name: mkghtag
+    description: CLI to create GitHub Tags via API
+    asset: mkghtag_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    slsa_provenance:
+      type: github_release
+      asset: multiple.intoto.jsonl
+    checksum:
+      type: github_release
+      asset: mkghtag_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+      cosign:
+        cosign_experimental: true
+        opts:
+          - --signature
+          - https://github.com/suzuki-shunsuke/mkghtag/releases/download/{{.Version}}/mkghtag_{{trimV .Version}}_checksums.txt.sig
+          - --certificate
+          - https://github.com/suzuki-shunsuke/mkghtag/releases/download/{{.Version}}/mkghtag_{{trimV .Version}}_checksums.txt.pem
