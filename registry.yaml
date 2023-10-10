@@ -20443,7 +20443,7 @@ packages:
     repo_owner: norwoodj
     repo_name: helm-docs
     description: A tool for automatically generating markdown documentation for helm charts
-    asset: helm-docs_{{.OS}}_{{.Arch}}.{{.Format}}
+    asset: helm-docs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     replacements:
       amd64: x86_64
@@ -20456,6 +20456,8 @@ packages:
       algorithm: sha256
     version_constraint: semver(">= 1.11.2")
     version_overrides:
+      - version_constraint: Version == "v1.11.2"
+        asset: helm-docs_{{.OS}}_{{.Arch}}.{{.Format}}
       - version_constraint: semver(">= 1.6.0")
         asset: helm-docs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
       - version_constraint: semver(">= 1.4.0")
