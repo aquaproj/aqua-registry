@@ -24385,6 +24385,25 @@ packages:
       asset: sha512sum.txt
       algorithm: sha512
   - type: github_release
+    repo_owner: sigi-cli
+    repo_name: sigi
+    description: Sigi - a tool for organizing
+    asset: sigi_{{.Version}}_{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+      windows: pc-windows-gnu
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    checksum:
+      type: github_release
+      asset: sigi_{{.Version}}_{{.Arch}}-{{.OS}}.tar.gz.sha256sum
+      algorithm: sha256
+  - type: github_release
     repo_owner: sigstore
     repo_name: cosign
     format: raw
@@ -25012,6 +25031,88 @@ packages:
       type: github_release
       asset: driftctl_SHA256SUMS
       algorithm: sha256
+  - type: github_release
+    repo_owner: so-dang-cool
+    repo_name: dt
+    description: dt - duct tape for your unix pipes
+    asset: dt-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tgz
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: macos-none
+      linux: linux-gnu
+    supported_envs:
+      - linux
+      - darwin
+    version_constraint: semver(">= 1.2.4")
+    version_overrides:
+      - version_constraint: semver(">= 1.1.1")
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        files:
+          - name: dt
+            src: "{{.Arch}}-{{.OS}}/bin/dt"
+      - version_constraint: semver("< 1.1.1")
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        files:
+          - name: dt
+            src: "{{.Arch}}-{{.OS}}/bin/dt"
+        overrides: []
+        supported_envs:
+          - linux
+  - type: github_release
+    repo_owner: so-dang-cool
+    repo_name: fib
+    description: A Fibonacci CLI
+    asset: fib-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tgz
+    replacements:
+      amd64: x86_64
+    supported_envs:
+      - linux/amd64
+  - type: github_release
+    repo_owner: so-dang-cool
+    repo_name: findup
+    description: Find parent directories
+    asset: findup-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tgz
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: macos-none
+      linux: linux-gnu
+    supported_envs:
+      - linux
+      - darwin
+    version_constraint: semver(">= 1.1.2")
+    version_overrides:
+      - version_constraint: semver("< 1.1.2")
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        supported_envs:
+          - linux
+        files:
+          - name: findup
+            src: "{{.Arch}}-{{.OS}}/bin/findup"
+  - type: github_release
+    repo_owner: so-dang-cool
+    repo_name: yn
+    asset: yn-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tgz
+    files:
+      - name: Yn
+      - name: yN
+    overrides:
+      - goos: darwin
+        files:
+          - name: Yn
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      linux: linux-gnu
+      darwin: macos-none
+    supported_envs:
+      - linux
+      - darwin
   - type: github_release
     repo_owner: soh335
     repo_name: shukujitsu
