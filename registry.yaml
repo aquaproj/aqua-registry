@@ -25004,26 +25004,20 @@ packages:
     repo_owner: so-dang-cool
     repo_name: findup
     description: Find parent directories
-    asset: findup-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
+    asset: findup-{{.Arch}}-{{.OS}}.{{.Format}}
     format: tgz
-    overrides:
-      - goos: darwin
-        asset: findup-{{.Arch}}-{{.OS}}-none.{{.Format}}
     replacements:
       amd64: x86_64
       arm64: aarch64
-      darwin: macos
+      darwin: macos-none
+      linux: linux-gnu
     supported_envs:
       - linux
       - darwin
     version_constraint: semver(">= 1.1.2")
     version_overrides:
       - version_constraint: semver("< 1.1.2")
-        asset: "{{.Arch}}-{{.OS}}-gnu.{{.Format}}"
-        overrides: []
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
         supported_envs:
           - linux
   - type: github_release
