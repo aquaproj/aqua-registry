@@ -19170,6 +19170,61 @@ packages:
     replacements:
       darwin: macos
   - type: github_release
+    repo_owner: mesosphere
+    repo_name: mindthegap
+    description: Easily create and use bundles for air-gapped environments
+    asset: mindthegap_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.13.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.10.0")
+        overrides:
+          - goos: darwin
+            asset: mindthegap_{{.Version}}_{{.OS}}_all.{{.Format}}
+          - goos: windows
+            format: zip
+        rosetta2: true
+      - version_constraint: semver(">= 0.9.1")
+        asset: mindthegap_{{.Version}}_{{.OS}}_all.{{.Format}}
+        overrides:
+          - goos: linux
+            asset: mindthegap_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: mindthegap_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        rosetta2: true
+      - version_constraint: semver(">= 0.7.3")
+        overrides:
+          - goos: darwin
+            asset: mindthegap_{{.Version}}_{{.OS}}_all.{{.Format}}
+          - goos: windows
+            format: zip
+        rosetta2: true
+      - version_constraint: semver(">= 0.6.6")
+      - version_constraint: semver(">= 0.6.5")
+        asset: mindthegap_{{.Version}}_{{.OS}}_all.{{.Format}}
+        overrides:
+          - goos: linux
+            asset: mindthegap_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: mindthegap_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        rosetta2: true
+      - version_constraint: semver("< 0.6.5")
+        overrides:
+          - goos: darwin
+            asset: mindthegap_{{.Version}}_{{.OS}}_all.{{.Format}}
+          - goos: windows
+            format: zip
+        rosetta2: true
+  - type: github_release
     repo_owner: metalbear-co
     repo_name: mirrord
     description: By mirroring traffic to and from your machine, mirrord surrounds your local service with a mirror image of its cloud environment
