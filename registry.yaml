@@ -24965,39 +24965,31 @@ packages:
     repo_owner: so-dang-cool
     repo_name: dt
     description: dt - duct tape for your unix pipes
-    asset: dt-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
+    asset: dt-{{.Arch}}-{{.OS}}.{{.Format}}
     format: tgz
-    overrides:
-      - goos: darwin
-        asset: dt-{{.Arch}}-{{.OS}}-none.{{.Format}}
     replacements:
       amd64: x86_64
       arm64: aarch64
-      darwin: macos
+      darwin: macos-none
+      linux: linux-gnu
     supported_envs:
       - linux
       - darwin
-    version_constraint: semver(">= 1.2.5")
+    version_constraint: semver(">= 1.2.4")
     version_overrides:
-      - version_constraint: semver(">= 1.2.4")
-        asset: dt-{{.Arch}}-{{.OS}}-none.{{.Format}}
-        overrides:
-          - goos: linux
-            asset: dt-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
       - version_constraint: semver(">= 1.1.1")
-        asset: "{{.Arch}}-{{.OS}}-gnu.{{.Format}}"
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
         overrides:
           - goos: darwin
-            asset: "{{.Arch}}-{{.OS}}-none.{{.Format}}"
             files:
               - name: dt
-                src: "{{.Arch}}-{{.OS}}-none/bin/dt"
+                src: "{{.Arch}}-{{.OS}}/bin/dt"
       - version_constraint: semver("< 1.1.1")
-        asset: "{{.Arch}}-{{.OS}}-gnu.{{.Format}}"
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        files:
+          - name: dt
+            src: "{{.Arch}}-{{.OS}}/bin/dt"
         overrides: []
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
         supported_envs:
           - linux
   - type: github_release
