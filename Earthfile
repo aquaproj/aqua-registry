@@ -1,10 +1,9 @@
 VERSION 0.6
-FROM golang:1.20.1-alpine3.17
+FROM golang:1.21.3-bookworm
 WORKDIR /workspace
 
 test:
 	ENV AQUA_ROOT_DIR=/root/aquaproj-aqua
-	RUN apk add curl bash
 	RUN curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v2.1.2/aqua-installer
 	RUN echo "411caf1b5fcef4f5e74aa2a9fe99182ea13ab93ecd8ed4a983a7cff9f08edab9  aqua-installer" | sha256sum -c
 	RUN chmod +x aqua-installer
