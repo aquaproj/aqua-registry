@@ -1,0 +1,24 @@
+packages:
+  - type: github_release
+    repo_owner: clowdhaus
+    repo_name: eksup
+    description: EKS cluster upgrade guidance
+    asset: eksup-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    files:
+      - name: eksup
+        src: eksup-{{.Version}}-{{.Arch}}-{{.OS}}/eksup
+    format: tar.gz
+    overrides:
+      - goos: darwin
+        replacements:
+          arm64: aarch64
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+      windows: pc-windows-msvc
+    supported_envs:
+      - darwin
+      - amd64
