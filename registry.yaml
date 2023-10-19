@@ -19553,11 +19553,14 @@ packages:
     rosetta2: true
     version_constraint: semver(">= 0.1.7")
     version_overrides:
-      - version_constraint: semver(">= 0.1.6")
+      - version_constraint: Version == "v0.1.6"
         format: zip
         overrides:
           - goos: linux
             format: tar.gz
+          - goos: windows
+            checksum:
+              enabled: false
         replacements:
           amd64: x86_64
           linux: unknown-linux-musl
@@ -19570,7 +19573,7 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
-      - version_constraint: semver(">= 0.1.5")
+      - version_constraint: Version == "v0.1.5"
         replacements:
           amd64: x86_64
           linux: unknown-linux-musl
@@ -19579,6 +19582,11 @@ packages:
           - linux/amd64
           - windows/amd64
         rosetta2: false
+        overrides:
+          - goos: windows
+            format: zip
+            checksum:
+              enabled: false
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
@@ -19588,6 +19596,9 @@ packages:
         overrides:
           - goos: linux
             format: tar.gz
+          - goos: windows
+            checksum:
+              enabled: false
         replacements:
           amd64: x86_64
           linux: unknown-linux-musl
