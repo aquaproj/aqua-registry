@@ -11,7 +11,36 @@ tasks:
     short: t
     description: test
     usage: test
-    script: aqua i --test
+    args:
+      - name: pkg
+        required: true
+    script: |
+      set -euxo pipefail
+      bash scripts/test.sh "{{.pkg}}"
+  - name: stop
+    description: stop container
+    usage: stop container
+    script: |
+      set -euxo pipefail
+      docker stop aqua-registry
+  - name: rm
+    description: remove the container
+    usage: remove the container
+    script: |
+      set -euxo pipefail
+      docker stop -t 1 aqua-registry
+      docker rm aqua-registry
+  - name: connect
+    description: connect to the container
+    usage: connect to the container
+    args:
+      - name: os
+        required: true
+      - name: arch
+        required: true
+    script: |
+      set -euxo pipefail
+      docker exec -ti aqua-registry env AQUA_GOOS="{{.os}}" AQUA_GOARCH="{{.arch}}" bash
   - name: exec
     short: x
     description: exec with aqua-all.yaml
