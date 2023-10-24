@@ -17,11 +17,17 @@ tasks:
         short: r
         type: bool
         usage: Recreate the container
+      - name: cmd
+        type: string
+        usage: A list of commands joined with commas ','
+      - name: limit
+        type: string
+        usage: The maximum number of versions
     script: |
       if [ "{{.recreate}}" = true ]; then
         cmdx rm
       fi
-      bash scripts/scaffold.sh "{{.package}}"
+      bash scripts/scaffold.sh "{{.package}}" "{{.cmd}}" "{{.limit}}"
     args:
       - name: package
         usage: a package name. e.g. `cli/cli`

@@ -18,3 +18,5 @@ for os in linux darwin windows; do
 		fi
 	done
 done
+
+aqua-registry gr
