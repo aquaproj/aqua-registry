@@ -4,15 +4,7 @@ set -euo pipefail
 
 pkg=$1
 
-docker build -t aquaproj/aqua-registry .
-
-if docker ps -a --filter "name=aqua-registry" --format "{{.Names}}" | grep -E "^aqua-registry$" >/dev/null; then
-	if docker ps -a --filter "name=aqua-registry" --filter status=running --format "{{.Names}}" | grep -E "^aqua-registry$" >/dev/null; then
-		docker start aqua-registry
-	fi
-else
-	docker run -d --name aqua-registry aquaproj/aqua-registry tail -f /dev/null
-fi
+bash scripts/start.sh
 
 docker cp "pkgs/$pkg/pkg.yaml" aqua-registry:/workspace/pkg.yaml
 docker cp "pkgs/$pkg/registry.yaml" aqua-registry:/workspace/registry.yaml

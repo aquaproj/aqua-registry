@@ -2,28 +2,30 @@
 # the configuration file of cmdx - task runner
 # https://github.com/suzuki-shunsuke/cmdx
 tasks:
-  - name: install
-    short: i
-    description: install all packages
-    usage: install all packages
-    script: aqua -c aqua-all.yaml i --test
   - name: test
     short: t
     description: test
     usage: test
+    flags:
+      - name: recreate
+        short: r
+        type: bool
     args:
       - name: pkg
         required: true
     script: |
       set -euxo pipefail
+      if [ "{{.recreate}}" = true ]; then
+        cmdx rm
+      fi
       bash scripts/test.sh "{{.pkg}}"
   - name: stop
     description: stop container
     usage: stop container
     script: |
-      set -euxo pipefail
-      docker stop aqua-registry
-  - name: rm
+      docker stop -t 1 aqua-registry
+  - name: remove
+    short: rm
     description: remove the container
     usage: remove the container
     script: |
@@ -31,6 +33,7 @@ tasks:
       docker stop -t 1 aqua-registry
       docker rm aqua-registry
   - name: connect
+    short: con
     description: connect to the container
     usage: connect to the container
     args:
@@ -41,24 +44,6 @@ tasks:
     script: |
       set -euxo pipefail
       docker exec -ti aqua-registry env AQUA_GOOS="{{.os}}" AQUA_GOARCH="{{.arch}}" bash
-  - name: exec
-    short: x
-    description: exec with aqua-all.yaml
-    usage: exec with aqua-all.yaml
-    script: AQUA_CONFIG=aqua-all.yaml aqua exec -- {{._builtin.args_string}}
-  - name: which
-    short: w
-    description: aqua which with aqua-all.yaml
-    usage: aqua which with aqua-all.yaml
-    script: "AQUA_CONFIG=aqua-all.yaml aqua which {{.package}}"
-    args:
-      - name: package
-        required: true
-  - name: generate
-    short: g
-    description: aqua generate with aqua-all.yaml
-    usage: aqua generate with aqua-all.yaml
-    script: aqua -c aqua-all.yaml g
   - name: release
     short: r
     description: release the new version
@@ -82,17 +67,19 @@ tasks:
     args:
       - name: package
         required: true
-  - name: sd
-    description: aqua-registry scaffold --deep
-    usage: aqua-registry scaffold --deep
-    script: aqua-registry scaffold --deep "{{.package}}"
-    args:
-      - name: package
-        required: true
-  - name: s
+  - name: scaffold
+    short: s
     description: aqua-registry scaffold
     usage: aqua-registry scaffold
-    script: aqua-registry scaffold "{{.package}}"
+    flags:
+      - name: recreate
+        short: r
+        type: bool
+    script: |
+      if [ "{{.recreate}}" = true ]; then
+        cmdx rm
+      fi
+      bash scripts/scaffold.sh "{{.package}}"
     args:
       - name: package
         required: true
