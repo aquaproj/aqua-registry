@@ -14,7 +14,7 @@ jobs:
       check-files: ${{steps.changes.outputs.check-files}}
       generate-registry: ${{steps.changes.outputs.generate-registry}}
       json-schema: ${{steps.changes.outputs.json-schema}}
-      test-earthly: ${{steps.changes.outputs.test-earthly}}
+      test-docker: ${{steps.changes.outputs.test-docker}}
     runs-on: ubuntu-latest
     permissions: {}
     steps:
@@ -33,10 +33,11 @@ jobs:
               - pkgs/**/registry.yaml
             json-schema:
               - registry.yaml
-            test-earthly:
-              - Earthfile
-              - aqua/earthly.yaml
-              - aqua/earthly-test.yaml
+            test-docker:
+              - Dockerfile
+              - aqua/test-docker.yaml
+              - scripts/**
+              - cmdx.yaml
 
   status-check:
     # This job is used for main branch's branch protection rule's status check.
@@ -49,7 +50,7 @@ jobs:
       - generate-registry
       - json-schema
       - prettier
-      - test-earthly
+      - test-docker
       - test
     permissions: {}
     if: failure()
@@ -119,10 +120,10 @@ jobs:
       - run: npm i -g prettier
       - run: prettier -c .
 
-  test-earthly:
+  test-docker:
     runs-on: ubuntu-latest
     needs: path-filter
-    if: ${{needs.path-filter.outputs.test-earthly == 'true'}}
+    if: ${{needs.path-filter.outputs.test-docker == 'true'}}
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - uses: aquaproj/aqua-installer@36dc5833b04eb63f06e3bb818aa6b7a6e6db99a9 # v2.1.2
@@ -131,7 +132,7 @@ jobs:
           policy_allow: "true"
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
-      - run: earthly +test --pkg=google/wire
+      - run: bash scripts/test.sh suzuki-shunsuke/mkghtag
 
   ci-info:
     runs-on: ubuntu-latest

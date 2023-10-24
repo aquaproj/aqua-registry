@@ -1,0 +1,130 @@
+---
+# the configuration file of cmdx - task runner
+# https://github.com/suzuki-shunsuke/cmdx
+tasks:
+  - name: scaffold
+    short: s
+    usage: Scaffold the configuration for a given package
+    description: |
+      Scaffold the configuration for a given package
+
+      e.g.
+
+      $ cmdx s cli/cli
+
+    flags:
+      - name: recreate
+        short: r
+        type: bool
+        usage: Recreate the container
+    script: |
+      if [ "{{.recreate}}" = true ]; then
+        cmdx rm
+      fi
+      bash scripts/scaffold.sh "{{.package}}"
+    args:
+      - name: package
+        usage: a package name. e.g. `cli/cli`
+        required: true
+
+  - name: test
+    short: t
+    usage: Test a given package in the container
+    description: |
+      Test a given package in the container
+
+      $ cmdx t [-r] <package name>
+    flags:
+      - name: recreate
+        short: r
+        type: bool
+        usage: Recreate the container
+    args:
+      - name: package
+        usage: a package name. e.g. `cli/cli`
+        required: true
+    script: |
+      set -euxo pipefail
+      if [ "{{.recreate}}" = true ]; then
+        cmdx rm
+      fi
+      bash scripts/test.sh "{{.package}}"
+
+  - name: connect
+    short: con
+    usage: Connect to the container
+    description: |
+      Connect to the container
+
+      $ cmdx connect <os> <arch>
+
+      e.g.
+
+      $ cmdx connect linux amd64
+    args:
+      - name: os
+        required: true
+      - name: arch
+        required: true
+    script: |
+      set -euxo pipefail
+      docker exec -ti aqua-registry env AQUA_GOOS="{{.os}}" AQUA_GOARCH="{{.arch}}" bash
+
+  - name: generate-registry
+    short: gr
+    usage: Update registry.yaml
+    description: |
+      Update registry.yaml
+
+      $ cmdx gr
+    script: aqua-registry gr
+
+  - name: new
+    usage: Create a branch, a commit, and a pull request to add a given package
+    description: |
+      Create a branch, a commit, and a pull request to add a given package.
+
+      $ cmdx new <package name>
+
+      e.g.
+
+      $ cmdx new cli/cli
+    script: aqua-registry create-pr-new-pkg "{{.package}}"
+    args:
+      - name: package
+        required: true
+        usage: a package name. e.g. cli/cli
+
+  - name: stop
+    usage: Stop the container
+    description: |
+      Stop the container.
+
+      $ cmdx stop
+    script: |
+      docker stop -t 1 aqua-registry
+
+  - name: remove
+    short: rm
+    usage: Remove the container
+    description: |
+      Remove the container.
+
+      $ cmdx rm
+    script: |
+      set -euxo pipefail
+      docker stop -t 1 aqua-registry
+      docker rm aqua-registry
+
+  - name: release
+    short: r
+    description: Release the new version
+    usage: Release the new version
+    script: |
+      git tag -m "chore: release {{.version}}" "{{.version}}"
+      git push origin "{{.version}}"
+    args:
+      - name: version
+        required: true
+        validate:
+          - regexp: "^v\\d+\\.\\d+.\\d+(-\\d+)?$"
