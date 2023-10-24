@@ -12,6 +12,8 @@ tasks:
 
       $ cmdx s cli/cli
 
+      After scaffolding, tests are run.
+
     flags:
       - name: recreate
         short: r
@@ -37,9 +39,14 @@ tasks:
     short: t
     usage: Test a given package in the container
     description: |
-      Test a given package in the container
+      Test a given package in the container.
 
       $ cmdx t [-r] <package name>
+
+      Tests are run on all platforms with AQUA_GOOS and AQUA_GOARCH same with CI in a container.
+
+      If the test fails, bash is attached to the container for debugging.
+      If you want to exit from the container, please run exit.
     flags:
       - name: recreate
         short: r
@@ -67,6 +74,9 @@ tasks:
       e.g.
 
       $ cmdx connect linux amd64
+
+      You need to specify os and arch.
+      These arguments are set to AQUA_GOOS and AQUA_GOARCH.
     args:
       - name: os
         required: true
