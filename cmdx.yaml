@@ -25,6 +25,9 @@ tasks:
       - name: limit
         type: string
         usage: The maximum number of versions
+    shell:
+      - "bash"
+      - "-c"
     script: |
       if [ "{{.recreate}}" = true ]; then
         cmdx rm
@@ -56,6 +59,9 @@ tasks:
       - name: package
         usage: a package name. e.g. `cli/cli`
         required: true
+    shell:
+      - "bash"
+      - "-c"
     script: |
       set -euxo pipefail
       if [ "{{.recreate}}" = true ]; then
@@ -82,6 +88,9 @@ tasks:
         required: true
       - name: arch
         required: true
+    shell:
+      - "bash"
+      - "-c"
     script: |
       set -euxo pipefail
       docker exec -ti aqua-registry env AQUA_GOOS="{{.os}}" AQUA_GOARCH="{{.arch}}" bash
@@ -93,6 +102,9 @@ tasks:
       Update registry.yaml
 
       $ cmdx gr
+    shell:
+      - "bash"
+      - "-c"
     script: aqua-registry gr
 
   - name: new
