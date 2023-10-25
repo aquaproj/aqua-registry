@@ -2979,12 +2979,16 @@ packages:
     files:
       - name: spectest-interp
         src: wabt-{{.Version}}/bin/spectest-interp
+      - name: wasm-decompile
+        src: wabt-{{.Version}}/bin/wasm-decompile
       - name: wasm-interp
         src: wabt-{{.Version}}/bin/wasm-interp
       - name: wasm-objdump
         src: wabt-{{.Version}}/bin/wasm-objdump
-      - name: wasm-opcodecnt
-        src: wabt-{{.Version}}/bin/wasm-opcodecnt
+      - name: wasm-stats
+        src: wabt-{{.Version}}/bin/wasm-stats
+      - name: wasm-strip
+        src: wabt-{{.Version}}/bin/wasm-strip
       - name: wasm-validate
         src: wabt-{{.Version}}/bin/wasm-validate
       - name: wasm2c
@@ -2997,9 +3001,32 @@ packages:
         src: wabt-{{.Version}}/bin/wat-desugar
       - name: wat2wasm
         src: wabt-{{.Version}}/bin/wat2wasm
-    version_constraint: semver(">= 1.0.33")
+    version_constraint: semver(">= 1.0.34")
     version_overrides:
+      - version_constraint: Version == "1.0.33"
+        files: &wabt_files_1
+          - name: spectest-interp
+            src: wabt-{{.Version}}/bin/spectest-interp
+          - name: wasm-interp
+            src: wabt-{{.Version}}/bin/wasm-interp
+          - name: wasm-objdump
+            src: wabt-{{.Version}}/bin/wasm-objdump
+          - name: wasm-opcodecnt
+            src: wabt-{{.Version}}/bin/wasm-opcodecnt
+          - name: wasm-validate
+            src: wabt-{{.Version}}/bin/wasm-validate
+          - name: wasm2c
+            src: wabt-{{.Version}}/bin/wasm2c
+          - name: wasm2wat
+            src: wabt-{{.Version}}/bin/wasm2wat
+          - name: wast2json
+            src: wabt-{{.Version}}/bin/wast2json
+          - name: wat-desugar
+            src: wabt-{{.Version}}/bin/wat-desugar
+          - name: wat2wasm
+            src: wabt-{{.Version}}/bin/wat2wasm
       - version_constraint: semver(">= 1.0.17")
+        files: *wabt_files_1
         replacements:
           darwin: macos
           linux: ubuntu
