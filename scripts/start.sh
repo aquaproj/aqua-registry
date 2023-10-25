@@ -6,6 +6,8 @@ docker build -t aquaproj/aqua-registry .
 
 if docker ps -a --filter "name=aqua-registry" --format "{{.Names}}" | grep -E "^aqua-registry$" >/dev/null; then
 	if docker ps -a --filter "name=aqua-registry" --filter status=running --format "{{.Names}}" | grep -E "^aqua-registry$" >/dev/null; then
+		:
+	else
 		docker start aqua-registry
 	fi
 else
