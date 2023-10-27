@@ -20528,14 +20528,20 @@ packages:
       windows: pc-windows-msvc
     supported_envs:
       - darwin
-      - linux
       - amd64
     checksum:
       type: github_release
       asset: "{{.Asset}}.sha256"
       algorithm: sha256
-    version_constraint: semver(">= 0.5.2")
+    version_constraint: semver(">= 0.6.0")
+    # > aarch64-unknown-linux-musl was disabled
+    # https://github.com/mozilla/sccache/pull/1917
     version_overrides:
+      - version_constraint: semver(">= 0.5.2")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
       - version_constraint: semver(">= 0.5.1")
         overrides:
           - goos: darwin
@@ -20550,6 +20556,10 @@ packages:
           - darwin
           - amd64
       - version_constraint: semver(">= 0.4.0-pre.2")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
       - version_constraint: semver(">= 0.3.3")
         overrides:
           - goos: darwin
@@ -20564,6 +20574,10 @@ packages:
           - darwin
           - amd64
       - version_constraint: semver(">= 0.2.14")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
         overrides:
           - goos: windows
             replacements:
