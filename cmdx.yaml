@@ -85,15 +85,27 @@ tasks:
       These arguments are set to AQUA_GOOS and AQUA_GOARCH.
     args:
       - name: os
-        required: true
+        required: false
+        default: linux
+        script_envs:
+          - OS
       - name: arch
-        required: true
+        required: false
+        script_envs:
+          - ARCH
     shell:
       - "bash"
       - "-c"
     script: |
-      set -euxo pipefail
-      docker exec -ti aqua-registry env AQUA_GOOS="{{.os}}" AQUA_GOARCH="{{.arch}}" bash
+      set -eux
+      if [ -z "${ARCH:-}" ]; then
+        ARCH=$(uname -m)
+        case $ARCH in
+          x86_64) ARCH="amd64" ;;
+          aarch64) ARCH="arm64" ;;
+        esac
+      fi
+      docker exec -ti aqua-registry env AQUA_GOOS="$OS" AQUA_GOARCH="$ARCH" bash
 
   - name: generate-registry
     short: gr

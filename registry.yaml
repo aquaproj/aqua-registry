@@ -471,6 +471,46 @@ packages:
       - name: rg
         src: ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}/rg
   - type: github_release
+    repo_owner: BurntSushi
+    repo_name: xsv
+    description: A fast CSV command line toolkit written in Rust
+    asset: xsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+      windows: pc-windows-msvc
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    version_constraint: semver(">= 0.10.3")
+    version_overrides:
+      - version_constraint: semver(">= 0.10.0")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("< 0.10.0")
+        overrides: []
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+        rosetta2: false
+        files:
+          - name: xsv
+            src: xsv-{{.Version}}-{{.Arch}}-{{.OS}}/xsv
+  - type: github_release
     repo_owner: Byron
     repo_name: dua-cli
     description: View disk space usage and delete unwanted data, fast
@@ -1148,8 +1188,24 @@ packages:
       amd64: x86_64
       windows: pc-windows-msvc
     files:
+      - name: komorebi.exe
       - name: komorebi
       - name: komorebic
+    supported_envs:
+      - windows/amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+  - type: github_release
+    repo_owner: LGUG2Z
+    repo_name: whkd
+    description: A simple hotkey daemon for Windows
+    asset: whkd-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: zip
+    replacements:
+      amd64: x86_64
+      windows: pc-windows-msvc
     supported_envs:
       - windows/amd64
     checksum:
@@ -2963,12 +3019,16 @@ packages:
     files:
       - name: spectest-interp
         src: wabt-{{.Version}}/bin/spectest-interp
+      - name: wasm-decompile
+        src: wabt-{{.Version}}/bin/wasm-decompile
       - name: wasm-interp
         src: wabt-{{.Version}}/bin/wasm-interp
       - name: wasm-objdump
         src: wabt-{{.Version}}/bin/wasm-objdump
-      - name: wasm-opcodecnt
-        src: wabt-{{.Version}}/bin/wasm-opcodecnt
+      - name: wasm-stats
+        src: wabt-{{.Version}}/bin/wasm-stats
+      - name: wasm-strip
+        src: wabt-{{.Version}}/bin/wasm-strip
       - name: wasm-validate
         src: wabt-{{.Version}}/bin/wasm-validate
       - name: wasm2c
@@ -2981,9 +3041,32 @@ packages:
         src: wabt-{{.Version}}/bin/wat-desugar
       - name: wat2wasm
         src: wabt-{{.Version}}/bin/wat2wasm
-    version_constraint: semver(">= 1.0.33")
+    version_constraint: semver(">= 1.0.34")
     version_overrides:
+      - version_constraint: Version == "1.0.33"
+        files: &wabt_files_1
+          - name: spectest-interp
+            src: wabt-{{.Version}}/bin/spectest-interp
+          - name: wasm-interp
+            src: wabt-{{.Version}}/bin/wasm-interp
+          - name: wasm-objdump
+            src: wabt-{{.Version}}/bin/wasm-objdump
+          - name: wasm-opcodecnt
+            src: wabt-{{.Version}}/bin/wasm-opcodecnt
+          - name: wasm-validate
+            src: wabt-{{.Version}}/bin/wasm-validate
+          - name: wasm2c
+            src: wabt-{{.Version}}/bin/wasm2c
+          - name: wasm2wat
+            src: wabt-{{.Version}}/bin/wasm2wat
+          - name: wast2json
+            src: wabt-{{.Version}}/bin/wast2json
+          - name: wat-desugar
+            src: wabt-{{.Version}}/bin/wat-desugar
+          - name: wat2wasm
+            src: wabt-{{.Version}}/bin/wat2wasm
       - version_constraint: semver(">= 1.0.17")
+        files: *wabt_files_1
         replacements:
           darwin: macos
           linux: ubuntu
@@ -4567,6 +4650,25 @@ packages:
       - darwin
       - amd64
     rosetta2: true
+  - type: github_release
+    repo_owner: astral-sh
+    repo_name: ruff
+    description: An extremely fast Python linter and code formatter, written in Rust
+    asset: ruff-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+      windows: pc-windows-msvc
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      algorithm: sha256
   - type: github_release
     repo_owner: auth0
     repo_name: auth0-cli
@@ -16652,36 +16754,70 @@ packages:
     type: github_release
     repo_owner: kastenhq
     repo_name: external-tools
-    description: The k10multicluster tool is used to setup and maintain a multi-cluster setup within K10
-    asset: k10multicluster_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    supported_envs:
-      - darwin
-      - linux
-    replacements:
-      darwin: macOS
+    description: Used to distribute external tools
+    asset: k10multicluster_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     files:
       - name: k10multicluster
+    replacements:
+      darwin: macOS
+    supported_envs:
+      - linux
+      - darwin
+    rosetta2: true
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 6.0.3")
+    version_overrides:
+      - version_constraint: semver(">= 4.5.0")
+        rosetta2: false
+      - version_constraint: semver(">= 4.0.3")
+        asset: k10multicluster_{{.Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: false
+      - version_constraint: semver("< 4.0.3")
+        asset: k10multicluster_{{.Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+          - darwin
   - name: kastenhq/external-tools/k10tools
     type: github_release
     repo_owner: kastenhq
     repo_name: external-tools
-    description: The k10tools binary has commands that can help with validating if a cluster is setup correctly before installing K10 and for debugging K10's micro services
-    asset: k10tools_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    supported_envs:
-      - darwin
-      - linux
-    replacements:
-      darwin: macOS
+    description: Used to distribute external tools
+    asset: k10tools_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     files:
       - name: k10tools
+    replacements:
+      darwin: macOS
+    supported_envs:
+      - linux
+      - darwin
+    rosetta2: true
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 6.0.3")
+    version_overrides:
+      - version_constraint: semver(">= 4.5.0")
+        rosetta2: false
+      - version_constraint: semver(">= 4.0.3")
+        asset: k10tools_{{.Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: false
+      - version_constraint: semver(">= 3.0.7")
+        asset: k10tools_{{.Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("< 3.0.7")
+        no_asset: true
   - type: github_release
     repo_owner: kastenhq
     repo_name: kubestr
@@ -20426,14 +20562,20 @@ packages:
       windows: pc-windows-msvc
     supported_envs:
       - darwin
-      - linux
       - amd64
     checksum:
       type: github_release
       asset: "{{.Asset}}.sha256"
       algorithm: sha256
-    version_constraint: semver(">= 0.5.2")
+    version_constraint: semver(">= 0.6.0")
+    # > aarch64-unknown-linux-musl was disabled
+    # https://github.com/mozilla/sccache/pull/1917
     version_overrides:
+      - version_constraint: semver(">= 0.5.2")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
       - version_constraint: semver(">= 0.5.1")
         overrides:
           - goos: darwin
@@ -20448,6 +20590,10 @@ packages:
           - darwin
           - amd64
       - version_constraint: semver(">= 0.4.0-pre.2")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
       - version_constraint: semver(">= 0.3.3")
         overrides:
           - goos: darwin
@@ -20462,6 +20608,10 @@ packages:
           - darwin
           - amd64
       - version_constraint: semver(">= 0.2.14")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
         overrides:
           - goos: windows
             replacements:
