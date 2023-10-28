@@ -4,8 +4,6 @@ set -euo pipefail
 
 pkg=$1
 
-bash scripts/start.sh
-
 docker cp "pkgs/$pkg/pkg.yaml" aqua-registry:/workspace/pkg.yaml
 docker cp "pkgs/$pkg/registry.yaml" aqua-registry:/workspace/registry.yaml
 
