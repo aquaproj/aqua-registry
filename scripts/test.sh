@@ -19,4 +19,4 @@ for os in linux darwin windows; do
 	done
 done
 
-aqua-registry gr
+aqua exec -- aqua-registry gr

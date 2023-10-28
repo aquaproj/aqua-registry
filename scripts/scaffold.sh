@@ -26,4 +26,4 @@ fi
 # shellcheck disable=SC2086
 docker exec -ti -w /aqua-registry aqua-registry aqua-registry scaffold $opts "$pkg"
 
-cmdx t "$pkg"
+aqua exec -- cmdx t "$pkg"
