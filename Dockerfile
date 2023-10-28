@@ -13,6 +13,6 @@ RUN \
 RUN curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v2.1.2/aqua-installer
 RUN echo "411caf1b5fcef4f5e74aa2a9fe99182ea13ab93ecd8ed4a983a7cff9f08edab9  aqua-installer" | sha256sum -c
 RUN chmod +x aqua-installer
-RUN ./aqua-installer -v v2.16.1
+RUN ./aqua-installer -v v2.16.2
 COPY aqua/test-docker.yaml aqua.yaml
 COPY aqua-policy.yaml aqua-policy.yaml
