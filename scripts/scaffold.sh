@@ -6,8 +6,6 @@ pkg=$1
 cmd=$2
 limit=$3
 
-bash scripts/start.sh
-
 if [ -d "pkgs/$pkg" ]; then
 	rm -R "pkgs/$pkg"
 fi
@@ -26,4 +24,4 @@ fi
 # shellcheck disable=SC2086
 docker exec -ti -w /aqua-registry aqua-registry aqua-registry scaffold $opts "$pkg"
 
-cmdx t "$pkg"
+bash scripts/test.sh "$pkg"

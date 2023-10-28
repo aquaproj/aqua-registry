@@ -32,6 +32,7 @@ tasks:
       if [ "{{.recreate}}" = true ]; then
         cmdx rm
       fi
+      bash scripts/start.sh
       bash scripts/scaffold.sh "{{.package}}" "{{.cmd}}" "{{.limit}}"
     args:
       - name: package
@@ -67,6 +68,7 @@ tasks:
       if [ "{{.recreate}}" = true ]; then
         cmdx rm
       fi
+      bash scripts/start.sh
       bash scripts/test.sh "{{.package}}"
 
   - name: connect
@@ -117,7 +119,7 @@ tasks:
     shell:
       - "bash"
       - "-c"
-    script: aqua-registry gr
+    script: aqua exec -- aqua-registry gr
 
   - name: new
     usage: Create a branch, a commit, and a pull request to add a given package
@@ -129,7 +131,7 @@ tasks:
       e.g.
 
       $ cmdx new cli/cli
-    script: aqua-registry create-pr-new-pkg "{{.package}}"
+    script: aqua exec -- aqua-registry create-pr-new-pkg "{{.package}}"
     args:
       - name: package
         required: true
