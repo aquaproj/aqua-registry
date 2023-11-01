@@ -196,7 +196,7 @@ packages:
     asset: aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     files:
       - name: aks-engine
-        src: aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}/aks-engine
+        src: "{{.AssetWithoutExt}}/aks-engine"
   - type: github_release
     repo_owner: Azure
     repo_name: aztfexport
@@ -248,15 +248,15 @@ packages:
   - type: github_release
     repo_owner: Azure
     repo_name: azure-dev
-    asset: azd-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: zip
     description: The Azure Developer CLI is a developer-centric command-line interface tool for creating Azure applications
+    asset: azd-{{.OS}}-{{.Arch}}
+    format: zip
     overrides:
       - goos: linux
         format: tar.gz
     files:
       - name: azd
-        src: azd-{{.OS}}-{{.Arch}}
+        src: "{{.AssetWithoutExt}}"
     supported_envs:
       - darwin
       - amd64
@@ -351,14 +351,12 @@ packages:
       - goos: windows
         goarch: amd64
         asset: validator-{{trimV .Version}}
-      - goos: linux
-        goarch: arm64
-        type: go_install
-        path: github.com/Boeing/config-file-validator/cmd/validator
-      - goos: windows
-        goarch: arm64
-        type: go_install
-        path: github.com/Boeing/config-file-validator/cmd/validator
+    supported_envs:
+      - darwin
+      - amd64
+    build:
+      type: go_install
+      path: github.com/Boeing/config-file-validator/cmd/validator
     files:
       - name: validator
     replacements:
@@ -372,46 +370,32 @@ packages:
           - goos: windows
             goarch: amd64
             asset: validator
-          - goos: linux
-            goarch: arm64
-            type: go_install
-            path: github.com/Boeing/config-file-validator/cmd/validator
-          - goos: windows
-            goarch: arm64
-            type: go_install
-            path: github.com/Boeing/config-file-validator/cmd/validator
       - version_constraint: semver(">= 1.0.1")
         asset: validator.{{.OS}}-{{.Arch}}
         overrides:
           - goos: windows
             goarch: amd64
             asset: validator
-          - goarch: arm64
-            type: go_install
-            path: github.com/Boeing/config-file-validator/cmd/validator
-          - goos: darwin
-            type: go_install
-            path: github.com/Boeing/config-file-validator/cmd/validator
         replacements: {}
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
       - version_constraint: Version == "v1.0.0"
         asset: validator.{{.OS}}-{{.Arch}}
         replacements: {}
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+        build:
+          type: go_build
+          files:
+            - name: validator
+              src: ./cmd/validator
+              dir: config-file-validator-{{trimV .Version}}
         overrides:
           - goos: windows
             goarch: amd64
             asset: validator
-          - goarch: arm64
-            type: go_build
-            files:
-              - name: validator
-                src: ./cmd/validator
-                dir: config-file-validator-{{trimV .Version}}
-          - goos: darwin
-            type: go_build
-            files:
-              - name: validator
-                src: ./cmd/validator
-                dir: config-file-validator-{{trimV .Version}}
   - type: github_release
     repo_owner: Builditluc
     repo_name: wiki-tui
@@ -452,8 +436,8 @@ packages:
   - type: github_release
     repo_owner: BurntSushi
     repo_name: ripgrep
-    asset: ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     description: ripgrep recursively searches directories for a regex pattern while respecting your gitignore
+    asset: ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}
     rosetta2: true
     supported_envs:
       - darwin
@@ -469,7 +453,7 @@ packages:
         format: zip
     files:
       - name: rg
-        src: ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}/rg
+        src: "{{.AssetWithoutExt}}/rg"
   - type: github_release
     repo_owner: BurntSushi
     repo_name: xsv
@@ -514,10 +498,10 @@ packages:
     repo_owner: Byron
     repo_name: dua-cli
     description: View disk space usage and delete unwanted data, fast
-    asset: dua-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    asset: dua-{{.Version}}-{{.Arch}}-{{.OS}}
     files:
       - name: dua
-        src: dua-{{.Version}}-{{.Arch}}-{{.OS}}/dua
+        src: "{{.AssetWithoutExt}}/dua"
     format: tar.gz
     overrides:
       - goos: windows
@@ -533,7 +517,7 @@ packages:
     rosetta2: true
     version_constraint: semver(">= 2.20.1")
     version_overrides:
-      - version_constraint: semver(">= 2.20.0")
+      - version_constraint: Version == "v2.20.0"
         format: zip
         overrides:
           - goos: darwin
@@ -546,7 +530,7 @@ packages:
           - darwin
           - windows/amd64
       - version_constraint: semver(">= 2.10.4")
-      - version_constraint: semver(">= 2.10.3")
+      - version_constraint: Version == "v2.10.3"
         overrides: []
       - version_constraint: semver(">= 2.6.0")
       - version_constraint: semver("< 2.6.0")
@@ -580,7 +564,7 @@ packages:
     repo_name: circleci-cli
     description: Use CircleCI from the command line
     rosetta2: true
-    asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}
     supported_envs:
       - darwin
       - linux
@@ -591,10 +575,10 @@ packages:
         format: zip
     files:
       - name: circleci
-        src: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/circleci
+        src: "{{.AssetWithoutExt}}/circleci"
     version_constraint: semver(">= 0.1.17554")
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.1.17554")
         supported_envs:
           - darwin
           - amd64
@@ -710,16 +694,16 @@ packages:
   - type: github_release
     repo_owner: Dreamacro
     repo_name: clash
-    asset: clash-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+    description: A rule-based tunnel in Go
+    asset: clash-{{.OS}}-{{.Arch}}-{{.Version}}
     supported_envs:
       - windows
       - darwin
       - linux/amd64
-    description: A rule-based tunnel in Go
     format: gz
     files:
       - name: clash
-        src: clash-{{.OS}}-{{.Arch}}-{{.Version}}
+        src: "{{.AssetWithoutExt}}"
     overrides:
       - goos: windows
         format: zip
@@ -870,7 +854,7 @@ packages:
     asset: gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     files:
       - name: gwvault
-        src: gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}/gwvault
+        src: "{{.AssetWithoutExt}}/gwvault"
     format: tar.gz
     overrides:
       - goos: windows
@@ -1534,12 +1518,11 @@ packages:
     repo_owner: PaddiM8
     repo_name: kalker
     description: Kalker is a calculator program that supports user-defined variables, functions, differentiation, and integration
-    asset: kalker-{{.OS}}.{{.Format}}
+    asset: kalker-{{.OS}}
     format: zip
     overrides:
       - goos: linux
         format: raw
-        asset: kalker-{{.OS}}
     replacements:
       darwin: macOS
     supported_envs:
@@ -1552,11 +1535,7 @@ packages:
     version_constraint: semver(">= 1.0.0")
     version_overrides:
       - version_constraint: semver(">= 0.3.4")
-        asset: kalk-{{.OS}}.{{.Format}}
-        overrides:
-          - goos: linux
-            format: raw
-            asset: kalk-{{.OS}}
+        asset: kalk-{{.OS}}
         files:
           - name: kalker
             src: target/release/kalk
@@ -3271,7 +3250,8 @@ packages:
     repo_owner: XAMPPRocky
     repo_name: tokei
     rosetta2: true
-    asset: tokei-{{.Arch}}-{{.OS}}.tar.gz
+    asset: tokei-{{.Arch}}-{{.OS}}
+    format: tar.gz
     description: Count your code, quickly
     supported_envs:
       - darwin
@@ -3280,11 +3260,11 @@ packages:
     replacements:
       darwin: apple-darwin
       linux: unknown-linux-gnu
+      windows: pc-windows-msvc
       amd64: x86_64
       arm64: aarch64
     overrides:
       - goos: windows
-        asset: tokei-{{.Arch}}-pc-windows-msvc.exe
         format: raw
   - type: github_release
     repo_owner: a-h
@@ -4491,8 +4471,8 @@ packages:
     repo_owner: aristocratos
     repo_name: btop
     description: A monitor of resources
-    asset: btop-{{.Arch}}-{{.OS}}.tbz
-    format: tar.bz2
+    asset: btop-{{.Arch}}-{{.OS}}
+    format: tbz
     supported_envs:
       - darwin
       - linux
@@ -4509,7 +4489,7 @@ packages:
       - name: btop
         src: btop/bin/btop
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("< 1.2.13")
         files:
           - name: btop
             src: bin/btop
@@ -5027,8 +5007,9 @@ packages:
     repo_name: gomi
     aliases:
       - name: b4b4r07/gomi
-    asset: gomi_{{.OS}}_{{.Arch}}.tar.gz
     description: Replacement for UNIX rm command
+    asset: gomi_{{.OS}}_{{.Arch}}
+    format: tar.gz
     replacements:
       amd64: x86_64
     supported_envs:
@@ -5042,7 +5023,6 @@ packages:
           - darwin
         rosetta2: true
       - version_constraint: "true"
-        asset: gomi_{{.OS}}_{{.Arch}}
         format: raw
         replacements: {}
         supported_envs:
@@ -7612,7 +7592,7 @@ packages:
   - type: github_release
     repo_owner: cloudspannerecosystem
     repo_name: yo
-    asset: yo-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    asset: yo-{{trimV .Version}}-{{.OS}}-{{.Arch}}
     format: tar.gz
     description: yo is a command-line tool to generate Go code for Google Cloud Spanner
     overrides:
@@ -7620,7 +7600,7 @@ packages:
         format: zip
     files:
       - name: yo
-        src: yo-{{trimV .Version}}-{{.OS}}-{{.Arch}}/yo
+        src: "{{.AssetWithoutExt}}/yo"
     checksum:
       type: github_release
       asset: checksums.txt
@@ -15828,6 +15808,8 @@ packages:
     description: JSON diff and patch
     asset: jd-{{.Arch}}-{{.OS}}
     format: raw
+    build:
+      type: go_install
     version_constraint: semver(">= 1.6.1")
     version_overrides:
       - version_constraint: semver(">= 1.5.0")
@@ -15835,33 +15817,19 @@ packages:
       - version_constraint: Version == "v1.4.0"
         complete_windows_ext: false
         rosetta2: true
-        overrides:
-          - goos: linux
-            goarch: arm64
-            type: go_install
-            path: github.com/josephburnett/jd
-          - goos: windows
-            goarch: arm64
-            type: go_install
-            path: github.com/josephburnett/jd
+        supported_envs:
+          - darwin
+          - amd64
       - version_constraint: semver(">= 1.2.0")
         asset: jd
-        overrides:
-          - goarch: arm64
-            type: go_install
-            path: github.com/josephburnett/jd
-          - goos: darwin
-            goarch: amd64
-            type: go_install
-            path: github.com/josephburnett/jd
-          - goos: windows
-            goarch: amd64
-            type: go_install
-            path: github.com/josephburnett/jd
+        supported_envs:
+          - linux/amd64
       - version_constraint: semver("< 1.2.0")
         asset: jd
         supported_envs:
           - linux/amd64
+        build:
+          enabled: false
   - type: github_release
     repo_owner: joshdk
     repo_name: retry
