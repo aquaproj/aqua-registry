@@ -10,8 +10,8 @@ RUN \
   apt-get install --no-install-recommends -y tree && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
-RUN curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v2.1.2/aqua-installer
-RUN echo "411caf1b5fcef4f5e74aa2a9fe99182ea13ab93ecd8ed4a983a7cff9f08edab9  aqua-installer" | sha256sum -c
+RUN curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v2.1.3/aqua-installer
+RUN echo "11ac5e48901aba04dbb33d82c5a39c6cd69d3740312feb8c096f0aae86dc8ed5  aqua-installer" | sha256sum -c
 RUN chmod +x aqua-installer
 RUN ./aqua-installer -v v2.16.4
 COPY aqua/test-docker.yaml aqua.yaml
