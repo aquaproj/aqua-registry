@@ -2,8 +2,10 @@
 
 set -euo pipefail
 
-echo "[INFO] Building the docker image aquaproj/aqua-registry" >&2
-docker build -t aquaproj/aqua-registry .
+if ! bash scripts/is_build_image.sh; then
+	echo "[INFO] Building the docker image aquaproj/aqua-registry" >&2
+	bash scripts/build_image.sh
+fi
 
 if ! bash scripts/exist_container.sh; then
 	echo "[INFO] Creaing a container aqua-registry" >&2
