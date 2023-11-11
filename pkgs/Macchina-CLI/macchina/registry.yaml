@@ -1,0 +1,39 @@
+packages:
+  - type: github_release
+    repo_owner: Macchina-CLI
+    repo_name: macchina
+    description: A system information frontend with an emphasis on performance
+    asset: macchina-{{.OS}}-{{.Arch}}
+    format: raw
+    overrides:
+      - goos: linux
+        replacements:
+          arm64: aarch64
+    replacements:
+      amd64: x86_64
+      darwin: macos
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    rosetta2: true
+    version_constraint: semver(">= 4.0.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.8.1")
+        asset: macchina-{{.OS}}
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: macchina-{{.OS}}-{{.Arch}}
+            replacements:
+              arm64: aarch64
+        replacements:
+          darwin: macos
+      - version_constraint: semver("< 0.8.1")
+        asset: macchina-{{.OS}}
+        overrides: []
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - amd64
