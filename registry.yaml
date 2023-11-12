@@ -1354,6 +1354,35 @@ packages:
       asset: checksums.txt
       algorithm: sha256
   - type: github_release
+    repo_owner: Melkeydev
+    repo_name: go-blueprint
+    description: Go-blueprint allows users to spin up a quick Go project using a popular framework
+    asset: go-blueprint-{{.OS}}_{{.Arch}}
+    format: raw
+    overrides:
+      - goos: linux
+        replacements:
+          amd64: x86_64
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_constraint: semver(">= 0.2.5")
+    version_overrides:
+      - version_constraint: semver("< 0.2.5")
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86
+              arm64: arm
+        asset: go-blueprint-{{.Arch}}
+        supported_envs:
+          - linux
+  - type: github_release
     repo_owner: MiSawa
     repo_name: xq
     asset: xq-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz
