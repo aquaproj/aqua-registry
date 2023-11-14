@@ -15572,6 +15572,56 @@ packages:
       type: github_release
       asset: go-car_{{trimV .Version}}_checksums.txt
       algorithm: sha256
+  - type: github_release
+    repo_owner: ismaelgv
+    repo_name: rnr
+    description: A command-line tool to batch rename files and directories
+    files:
+      - name: rnr
+        src: rnr-{{.Version}}-{{.Arch}}-{{.OS}}/rnr
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.3.0")
+        asset: rnr-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: rnr
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: "true"
+        asset: rnr-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
   - name: istio/istio/istioctl
     type: github_release
     repo_owner: istio
@@ -27786,6 +27836,32 @@ packages:
           - https://github.com/suzuki-shunsuke/ghalint/releases/download/{{.Version}}/ghalint_{{trimV .Version}}_checksums.txt.sig
           - --certificate
           - https://github.com/suzuki-shunsuke/ghalint/releases/download/{{.Version}}/ghalint_{{trimV .Version}}_checksums.txt.pem
+  - type: github_release
+    repo_owner: suzuki-shunsuke
+    repo_name: ghcp
+    description: Tool to fork a repository, commit files, create a pull request and upload assets using GitHub API
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: ghcp_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        checksum:
+          type: github_release
+          asset: ghcp_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            cosign_experimental: true
+            opts:
+              - --signature
+              - https://github.com/suzuki-shunsuke/ghcp/releases/download/{{.Version}}/ghcp_{{trimV .Version}}_checksums.txt.sig
+              - --certificate
+              - https://github.com/suzuki-shunsuke/ghcp/releases/download/{{.Version}}/ghcp_{{trimV .Version}}_checksums.txt.pem
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: git-rm-branch
