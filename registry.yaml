@@ -16000,8 +16000,10 @@ packages:
       asset: terradozer_{{trimV .Version}}_checksums.txt
       algorithm: sha256
   - type: github_release
-    repo_owner: jdxcode
+    repo_owner: jdx
     repo_name: rtx
+    aliases:
+      - name: jdxcode/rtx
     description: Runtime Executor (asdf rust clone)
     asset: rtx-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
     format: tar.gz
@@ -18014,43 +18016,6 @@ packages:
           - name: faas
             src: faas_{{.OS}}_{{.Arch}}
   - type: github_release
-    repo_owner: knipferrc
-    repo_name: fm
-    description: A terminal based file manager
-    asset: fm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: github_release
-      asset: fm_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.13.1")
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    version_overrides:
-      - version_constraint: Version == "v0.13.0"
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          windows: Windows
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-      - version_constraint: semver(">= 0.9.1")
-        overrides: []
-      - version_constraint: semver(">= 0.4.1")
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - amd64
-        overrides: []
-      - version_constraint: "true"
-  - type: github_release
     repo_owner: knqyf263
     repo_name: cob
     description: Continuous Benchmark for Go Project
@@ -18465,6 +18430,19 @@ packages:
           - linux/amd64
           - darwin
   - type: github_release
+    repo_owner: kubernetes-retired
+    repo_name: kubefed
+    aliases:
+      - name: kubernetes-sigs/kubefed
+    description: kubefedctl controls a Kubernetes Cluster Federation
+    rosetta2: true
+    supported_envs:
+      - darwin
+      - linux/amd64
+    asset: kubefedctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tgz
+    files:
+      - name: kubefedctl
+  - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: aws-iam-authenticator
     asset: aws-iam-authenticator_{{trimV .Version}}_{{.OS}}_{{.Arch}}
@@ -18592,17 +18570,6 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
-  - type: github_release
-    repo_owner: kubernetes-sigs
-    repo_name: kubefed
-    description: kubefedctl controls a Kubernetes Cluster Federation
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - linux/amd64
-    asset: kubefedctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tgz
-    files:
-      - name: kubefedctl
   - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: kustomize
@@ -21051,6 +21018,45 @@ packages:
       type: github_release
       asset: "{{.Asset}}.sha256"
       algorithm: sha256
+  - type: github_release
+    repo_owner: mistakenelf
+    repo_name: fm
+    aliases:
+      - name: knipferrc/fm
+    description: A terminal based file manager
+    asset: fm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: fm_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.13.1")
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_overrides:
+      - version_constraint: Version == "v0.13.0"
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          windows: Windows
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: semver(">= 0.9.1")
+        overrides: []
+      - version_constraint: semver(">= 0.4.1")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        overrides: []
+      - version_constraint: "true"
   - type: github_release
     repo_owner: mitchellh
     repo_name: golicense
