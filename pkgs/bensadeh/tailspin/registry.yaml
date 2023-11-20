@@ -1,0 +1,50 @@
+packages:
+  - type: github_release
+    repo_owner: bensadeh
+    repo_name: tailspin
+    aliases:
+      - name: crates.io/tailspin # https://github.com/aquaproj/aqua-registry/pull/17534#issuecomment-1818510758
+    description: A log file highlighter
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.1")
+        asset: tailspin_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+          linux: Linux
+        supported_envs:
+          - linux
+          - darwin
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 2.1.0")
+        type: cargo 
+        repo_owner: bensadeh 
+        repo_name: tailspin 
+        crate: tailspin
+        files:
+          - name: tspin
+      - version_constraint: "true"
+        asset: tspin-{{.Arch}}-{{.OS}}.{{.Format}}
+        files:
+          - name: tspin
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+            replacements:
+              arm64: arm64
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
