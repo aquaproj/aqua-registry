@@ -11,7 +11,7 @@ for os in linux darwin windows; do
 	for arch in amd64 arm64; do
 		if ! docker exec aqua-registry env AQUA_GOOS="$os" AQUA_GOARCH="$arch" aqua i; then
 			echo "[ERROR] Build failed $os/$arch" >&2
-      docker exec -ti aqua-registry env AQUA_GOOS="$os" AQUA_GOARCH="$arch" bash
+			docker exec -ti aqua-registry env AQUA_GOOS="$os" AQUA_GOARCH="$arch" bash
 			exit 1
 		fi
 	done
