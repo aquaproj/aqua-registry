@@ -15,10 +15,10 @@ docker exec -ti -w /aqua-registry aqua-registry aqua i -l
 
 opts=""
 if [ -n "$cmd" ]; then
-  opts="-cmd $cmd"
+	opts="-cmd $cmd"
 fi
 if [ -n "$limit" ]; then
-  opts="$opts -limit $limit"
+	opts="$opts -limit $limit"
 fi
 
 # shellcheck disable=SC2086
