@@ -28414,6 +28414,32 @@ packages:
               enabled: false
   - type: github_release
     repo_owner: suzuki-shunsuke
+    repo_name: nllint
+    description: Linter to check newlines at the end of files
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: nllint_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        checksum:
+          type: github_release
+          asset: nllint_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            cosign_experimental: true
+            opts:
+              - --signature
+              - https://github.com/suzuki-shunsuke/nllint/releases/download/{{.Version}}/nllint_{{trimV .Version}}_checksums.txt.sig
+              - --certificate
+              - https://github.com/suzuki-shunsuke/nllint/releases/download/{{.Version}}/nllint_{{trimV .Version}}_checksums.txt.pem
+  - type: github_release
+    repo_owner: suzuki-shunsuke
     repo_name: pinact
     description: Pin GitHub Actions versions
     asset: pinact_{{.OS}}_{{.Arch}}.{{.Format}}
