@@ -2,5 +2,7 @@
 
 set -eu
 
-docker stop -t 3 aqua-registry
-docker rm aqua-registry
+container_name=${1:-aqua-registry}
+
+docker stop -t 3 "$container_name"
+docker rm "$container_name"

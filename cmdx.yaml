@@ -34,6 +34,9 @@ tasks:
       fi
       bash scripts/start.sh
       bash scripts/scaffold.sh "{{.package}}" "{{.cmd}}" "{{.limit}}"
+      bash scripts/test.sh "{{.package}}"
+      bash scripts/start.sh aqua-registry-windows
+      bash scripts/test-windows.sh "{{.package}}"
     args:
       - name: package
         usage: a package name. e.g. `cli/cli`
@@ -70,6 +73,9 @@ tasks:
       fi
       bash scripts/start.sh
       bash scripts/test.sh "{{.package}}"
+      bash scripts/start.sh aqua-registry-windows
+      bash scripts/test-windows.sh "{{.package}}"
+      aqua exec -- aqua-registry gr
 
   - name: connect
     short: con
@@ -107,7 +113,11 @@ tasks:
           aarch64) ARCH="arm64" ;;
         esac
       fi
-      docker exec -ti aqua-registry env AQUA_GOOS="$OS" AQUA_GOARCH="$ARCH" bash
+      container=aqua-registry
+      if [ "$OS" = windows ]; then
+        container=aqua-registry-windows
+      fi
+      docker exec -ti "$container" env AQUA_GOOS="$OS" AQUA_GOARCH="$ARCH" bash
 
   - name: generate-registry
     short: gr
@@ -143,8 +153,7 @@ tasks:
       Stop the container.
 
       $ cmdx stop
-    script: |
-      docker stop -t 1 aqua-registry
+    script: bash scripts/stop.sh
 
   - name: remove
     short: rm
@@ -153,10 +162,7 @@ tasks:
       Remove the container.
 
       $ cmdx rm
-    script: |
-      set -eux
-      docker stop -t 1 aqua-registry
-      docker rm aqua-registry
+    script: bash scripts/stop.sh
 
   - name: release
     short: r
