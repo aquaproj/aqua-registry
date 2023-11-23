@@ -2,9 +2,11 @@
 
 set -euo pipefail
 
-echo "[INFO] Checking if the container aqua-registry is running" >&2
+container_name=${1:-aqua-registry}
+
+echo "[INFO] Checking if the container $container_name is running" >&2
 docker ps -a \
-	--filter "name=aqua-registry" \
+	--filter "name=$container_name" \
 	--filter status=running \
 	--format "{{.Names}}" |
-	grep -E "^aqua-registry$" >/dev/null
+	grep -E "^$container_name$" >/dev/null

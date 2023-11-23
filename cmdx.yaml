@@ -34,6 +34,9 @@ tasks:
       fi
       bash scripts/start.sh
       bash scripts/scaffold.sh "{{.package}}" "{{.cmd}}" "{{.limit}}"
+      bash scripts/test.sh "{{.package}}"
+      bash scripts/start.sh aqua-registry-windows
+      bash scripts/test-windows.sh "{{.package}}"
     args:
       - name: package
         usage: a package name. e.g. `cli/cli`
@@ -64,12 +67,15 @@ tasks:
       - "bash"
       - "-c"
     script: |
-      set -euxo pipefail
+      set -eu
       if [ "{{.recreate}}" = true ]; then
         cmdx rm
       fi
       bash scripts/start.sh
       bash scripts/test.sh "{{.package}}"
+      bash scripts/start.sh aqua-registry-windows
+      bash scripts/test-windows.sh "{{.package}}"
+      aqua exec -- aqua-registry gr
 
   - name: connect
     short: con
@@ -98,16 +104,7 @@ tasks:
     shell:
       - "bash"
       - "-c"
-    script: |
-      set -eux
-      if [ -z "${ARCH:-}" ]; then
-        ARCH=$(uname -m)
-        case $ARCH in
-          x86_64) ARCH="amd64" ;;
-          aarch64) ARCH="arm64" ;;
-        esac
-      fi
-      docker exec -ti aqua-registry env AQUA_GOOS="$OS" AQUA_GOARCH="$ARCH" bash
+    script: bash scripts/connect.sh
 
   - name: generate-registry
     short: gr
@@ -138,25 +135,47 @@ tasks:
         usage: a package name. e.g. cli/cli
 
   - name: stop
-    usage: Stop the container
+    usage: Stop containers
     description: |
-      Stop the container.
+      Stop containers.
 
       $ cmdx stop
     script: |
-      docker stop -t 1 aqua-registry
+      bash scripts/stop.sh
+      bash scripts/stop.sh aqua-registry-windows
 
   - name: remove
     short: rm
-    usage: Remove the container
+    usage: Remove containers
     description: |
-      Remove the container.
+      Remove containers.
 
       $ cmdx rm
     script: |
-      set -eux
-      docker stop -t 1 aqua-registry
-      docker rm aqua-registry
+      bash scripts/remove_container.sh
+      bash scripts/remove_container.sh aqua-registry-windows
+
+  - name: start
+    usage: Start containers
+    description: |
+      Start containers.
+
+      $ cmdx start
+    flags:
+      - name: recreate
+        short: r
+        type: bool
+        usage: Recreate the container
+    shell:
+      - "bash"
+      - "-c"
+    script: |
+      set -eu
+      if [ "{{.recreate}}" = true ]; then
+        cmdx rm
+      fi
+      bash scripts/start.sh
+      bash scripts/start.sh aqua-registry-windows
 
   - name: release
     short: r

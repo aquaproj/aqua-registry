@@ -2,5 +2,7 @@
 
 set -euo pipefail
 
-echo "[INFO] Checking if the container aqua-registry exists" >&2
-docker ps -a --filter "name=aqua-registry" --format "{{.Names}}" | grep -E "^aqua-registry$" >/dev/null
+container_name=${1:-aqua-registry}
+
+echo "[INFO] Checking if the container $container_name exists" >&2
+docker ps -a --filter "name=$container_name" --format "{{.Names}}" | grep -E "^$container_name$" >/dev/null
