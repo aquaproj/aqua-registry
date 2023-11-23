@@ -2,6 +2,8 @@
 
 set -eu
 
+container_name=${1:-aqua-registry}
+
 token="${AQUA_GITHUB_TOKEN:-${GITHUB_TOKEN:-}}"
 envs=""
 if [ -n "$token" ]; then
@@ -9,6 +11,6 @@ if [ -n "$token" ]; then
 fi
 
 # shellcheck disable=SC2086
-docker run -d --name aqua-registry \
+docker run -d --name "$container_name" \
 	-v "$PWD:/aqua-registry" $envs aquaproj/aqua-registry \
 	tail -f /dev/null
