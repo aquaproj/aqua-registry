@@ -2,7 +2,9 @@
 
 set -eu
 
-container_name=${1:-aqua-registry}
+container=${1:-aqua-registry}
 
-docker stop -t 3 "$container_name"
-docker rm "$container_name"
+if bash scripts/exist_container.sh "$container"; then
+	docker stop -t 1 "$container"
+	docker rm "$container"
+fi
