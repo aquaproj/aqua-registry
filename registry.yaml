@@ -879,6 +879,53 @@ packages:
     asset: mkcert-{{.Version}}-{{.OS}}-{{.Arch}}
     description: A simple zero-config tool to make locally trusted development certificates with any names you'd like
   - type: github_release
+    repo_owner: GhostTroops
+    repo_name: scan4all
+    aliases:
+      - name: hktalent/scan4all
+    description: "Official repository vuls Scan: 15000+PoCs; 23 kinds of application password crack; 7000+Web fingerprints; 146 protocols and 90000+ rules Port scanning; Fuzz, HW, awesome BugBounty"
+    asset: scan4all_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: zip
+    supported_envs:
+      - darwin
+      - amd64
+    checksum:
+      type: github_release
+      asset: scan4all-{{.OS}}-checksums.txt
+      algorithm: sha256
+    overrides:
+      - goos: darwin
+        checksum:
+          type: github_release
+          asset: scan4all-mac-checksums.txt
+          algorithm: sha256
+    version_constraint: semver(">= 2.8.7")
+    version_overrides:
+      - version_constraint: semver(">= 2.8.6")
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver(">= 2.6.9")
+        replacements:
+          darwin: macOS
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            checksum:
+              type: github_release
+              asset: scan4all-mac-checksums.txt
+              algorithm: sha256
+          - goos: darwin
+            goarch: arm64
+            checksum:
+              type: github_release
+              asset: scan4all-mac-arm64-checksums.txt
+              algorithm: sha256
+      - version_constraint: semver("< 2.6.9")
+        replacements:
+          darwin: macOS
+        rosetta2: true
+  - type: github_release
     repo_owner: GoTestTools
     repo_name: gotestfmt
     asset: gotestfmt_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -14875,51 +14922,6 @@ packages:
     files:
       - name: s3surfer
         src: s3surfer_{{.Version}}_{{.OS}}_{{.Arch}}/s3surfer
-  - type: github_release
-    repo_owner: hktalent
-    repo_name: scan4all
-    description: "Official repository vuls Scan: 15000+PoCs; 23 kinds of application password crack; 7000+Web fingerprints; 146 protocols and 90000+ rules Port scanning; Fuzz, HW, awesome BugBounty"
-    asset: scan4all_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    supported_envs:
-      - darwin
-      - amd64
-    checksum:
-      type: github_release
-      asset: scan4all-{{.OS}}-checksums.txt
-      algorithm: sha256
-    overrides:
-      - goos: darwin
-        checksum:
-          type: github_release
-          asset: scan4all-mac-checksums.txt
-          algorithm: sha256
-    version_constraint: semver(">= 2.8.7")
-    version_overrides:
-      - version_constraint: semver(">= 2.8.6")
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: semver(">= 2.6.9")
-        replacements:
-          darwin: macOS
-        overrides:
-          - goos: darwin
-            goarch: amd64
-            checksum:
-              type: github_release
-              asset: scan4all-mac-checksums.txt
-              algorithm: sha256
-          - goos: darwin
-            goarch: arm64
-            checksum:
-              type: github_release
-              asset: scan4all-mac-arm64-checksums.txt
-              algorithm: sha256
-      - version_constraint: semver("< 2.6.9")
-        replacements:
-          darwin: macOS
-        rosetta2: true
   - type: github_release
     repo_owner: hmarr
     repo_name: codeowners
