@@ -1537,19 +1537,63 @@ packages:
   - type: github_release
     repo_owner: MordechaiHadad
     repo_name: bob
-    asset: bob-{{.OS}}-{{.Arch}}.zip
     description: A version manager for neovim
-    replacements:
-      amd64: x86_64
-      darwin: macos
-      arm64: arm
-    supported_envs:
-      - amd64
-      - darwin
-    version_constraint: semver(">= 1.2.1")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.2.0")
+        asset: bob-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
         rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      # v1.2.1 darwin/arm64 support
+      - version_constraint: semver("<= 2.0.0")
+        asset: bob-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+          arm64: arm
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      # v2.1.0 linux/arm64 support
+      - version_constraint: semver("<= 2.6.0")
+        asset: bob-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        replacements:
+          amd64: x86_64
+          darwin: macos
+          arm64: arm
+      # v2.7.0 files was changed
+      - version_constraint: "true"
+        asset: bob-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: bob
+            src: bob-{{.OS}}-{{.Arch}}/bob
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        replacements:
+          amd64: x86_64
+          darwin: macos
+          arm64: arm
   - type: github_release
     repo_owner: MusicDin
     repo_name: kubitect
