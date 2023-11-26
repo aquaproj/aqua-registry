@@ -29,6 +29,7 @@ tasks:
       - "bash"
       - "-c"
     script: |
+      set -eu
       if [ "{{.recreate}}" = true ]; then
         cmdx rm
       fi
@@ -141,6 +142,7 @@ tasks:
 
       $ cmdx stop
     script: |
+      set -eu
       bash scripts/stop.sh
       bash scripts/stop.sh aqua-registry-windows
 
@@ -152,6 +154,7 @@ tasks:
 
       $ cmdx rm
     script: |
+      set -eu
       bash scripts/remove_container.sh
       bash scripts/remove_container.sh aqua-registry-windows
 
@@ -182,6 +185,7 @@ tasks:
     description: Release the new version
     usage: Release the new version
     script: |
+      set -eu
       git tag -m "chore: release {{.version}}" "{{.version}}"
       git push origin "{{.version}}"
     args:
