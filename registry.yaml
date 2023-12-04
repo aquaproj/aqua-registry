@@ -4083,6 +4083,20 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+  - type: go_install
+    repo_owner: alpkeskin
+    repo_name: mosint
+    description: An automated e-mail OSINT tool
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v2.3.1"
+        type: go_build
+        files:
+          - name: mosint
+            src: .
+            dir: mosint-{{trimV .Version}}
+      - version_constraint: "true"
+        path: github.com/alpkeskin/mosint/v{{(semver .Version).Major}}/cmd/mosint
   - type: github_release
     repo_owner: amacneil
     repo_name: dbmate
