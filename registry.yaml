@@ -18475,6 +18475,33 @@ packages:
     description: A Command-line statistics tool to compare the GitHub repositories
     path: github.com/anqiansong/github-compare
   - type: github_release
+    repo_owner: kettle11
+    repo_name: devserver
+    description: A simple HTTPS server for local development. Implemented in Rust
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: devserver-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+        checksum:
+          type: github_release
+          asset: devserver-{{.Arch}}-{{.OS}}.sha512
+          algorithm: sha512
+  - type: github_release
     repo_owner: kevincobain2000
     repo_name: gobrew
     asset: gobrew-{{.OS}}-{{.Arch}}
