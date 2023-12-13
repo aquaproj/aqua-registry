@@ -29653,6 +29653,32 @@ packages:
           algorithm: sha256
   - type: github_release
     repo_owner: suzuki-shunsuke
+    repo_name: lintnet
+    description: General Linter powered by Jsonnet
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: lintnet_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        checksum:
+          type: github_release
+          asset: lintnet_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            cosign_experimental: true
+            opts:
+              - --signature
+              - https://github.com/suzuki-shunsuke/lintnet/releases/download/{{.Version}}/lintnet_{{trimV .Version}}_checksums.txt.sig
+              - --certificate
+              - https://github.com/suzuki-shunsuke/lintnet/releases/download/{{.Version}}/lintnet_{{trimV .Version}}_checksums.txt.pem
+  - type: github_release
+    repo_owner: suzuki-shunsuke
     repo_name: matchfile
     rosetta2: true
     asset: matchfile_{{trimV .Version}}_{{.OS}}_amd64.tar.gz
