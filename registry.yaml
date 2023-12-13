@@ -29663,10 +29663,20 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
         checksum:
           type: github_release
           asset: lintnet_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+          cosign:
+            cosign_experimental: true
+            opts:
+              - --signature
+              - https://github.com/suzuki-shunsuke/lintnet/releases/download/{{.Version}}/lintnet_{{trimV .Version}}_checksums.txt.sig
+              - --certificate
+              - https://github.com/suzuki-shunsuke/lintnet/releases/download/{{.Version}}/lintnet_{{trimV .Version}}_checksums.txt.pem
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: matchfile
