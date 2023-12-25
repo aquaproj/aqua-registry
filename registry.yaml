@@ -5757,7 +5757,7 @@ packages:
     replacements:
       amd64: x86_64
       darwin: apple-darwin
-      linux: unknown-linux-gnu
+      linux: unknown-linux-musl
     files:
       - name: atuin
         src: atuin-{{.Version}}-{{.Arch}}-{{.OS}}/atuin
@@ -5765,8 +5765,13 @@ packages:
       - linux/amd64
       - darwin
     rosetta2: true
-    version_constraint: semver(">= 0.6.4")
+    version_constraint: semver(">= 14.0.0")
     version_overrides:
+      - version_constraint: semver("< 14.0.0")
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
       - version_constraint: semver("< 0.6.4")
         overrides:
           - goos: linux
