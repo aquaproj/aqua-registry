@@ -22062,6 +22062,34 @@ packages:
       asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}.sha256
       algorithm: sha256
   - type: github_release
+    repo_owner: lintnet
+    repo_name: lintnet
+    aliases:
+      - name: suzuki-shunsuke/lintnet
+    description: General Linter powered by Jsonnet
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: lintnet_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        checksum:
+          type: github_release
+          asset: lintnet_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            cosign_experimental: true
+            opts:
+              - --signature
+              - https://github.com/lintnet/lintnet/releases/download/{{.Version}}/lintnet_{{trimV .Version}}_checksums.txt.sig
+              - --certificate
+              - https://github.com/lintnet/lintnet/releases/download/{{.Version}}/lintnet_{{trimV .Version}}_checksums.txt.pem
+  - type: github_release
     repo_owner: linuxkit
     repo_name: linuxkit
     asset: linuxkit-{{.OS}}-{{.Arch}}
@@ -31324,32 +31352,6 @@ packages:
           type: github_release
           asset: github-comment_{{trimV .Version}}_checksums.txt
           algorithm: sha256
-  - type: github_release
-    repo_owner: suzuki-shunsuke
-    repo_name: lintnet
-    description: General Linter powered by Jsonnet
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: "true"
-        asset: lintnet_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
-        slsa_provenance:
-          type: github_release
-          asset: multiple.intoto.jsonl
-        checksum:
-          type: github_release
-          asset: lintnet_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-          cosign:
-            cosign_experimental: true
-            opts:
-              - --signature
-              - https://github.com/suzuki-shunsuke/lintnet/releases/download/{{.Version}}/lintnet_{{trimV .Version}}_checksums.txt.sig
-              - --certificate
-              - https://github.com/suzuki-shunsuke/lintnet/releases/download/{{.Version}}/lintnet_{{trimV .Version}}_checksums.txt.pem
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: matchfile
