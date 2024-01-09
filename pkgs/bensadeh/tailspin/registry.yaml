@@ -28,16 +28,15 @@ packages:
         crate: tailspin
         files:
           - name: tspin
-      - version_constraint: "true"
+      - version_constraint: Version == "2.2.0"
         asset: tspin-{{.Arch}}-{{.OS}}.{{.Format}}
+        windows_arm_emulation: true
         files:
           - name: tspin
         format: tar.gz
         overrides:
           - goos: windows
             format: zip
-            replacements:
-              arm64: arm64
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -48,3 +47,18 @@ packages:
           - darwin
           - linux
           - amd64
+      - version_constraint: "true"
+        asset: tailspin-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: tspin
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
