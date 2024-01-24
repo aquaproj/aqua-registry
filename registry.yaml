@@ -8841,10 +8841,24 @@ packages:
             src: melange_{{trimV .Version}}_{{.OS}}_{{.Arch}}/melange
         supported_envs:
           - linux
+        cosign:
+          cosign_experimental: true
+          opts:
+            - --signature
+            - https://github.com/chainguard-dev/melange/releases/download/{{.Version}}/melange_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}.sig
+            - --certificate
+            - https://github.com/chainguard-dev/melange/releases/download/{{.Version}}/melange_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}.crt
         checksum:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+          cosign:
+            cosign_experimental: true
+            opts:
+              - --signature
+              - https://github.com/chainguard-dev/melange/releases/download/{{.Version}}/checksums.txt.sig
+              - --certificate
+              - https://github.com/chainguard-dev/melange/releases/download/{{.Version}}/checksums.txt.crt
       - version_constraint: "true"
         asset: melange_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -8854,10 +8868,24 @@ packages:
         supported_envs:
           - linux
           - darwin
+        cosign:
+          cosign_experimental: true
+          opts:
+            - --signature
+            - https://github.com/chainguard-dev/melange/releases/download/{{.Version}}/melange_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}.sig
+            - --certificate
+            - https://github.com/chainguard-dev/melange/releases/download/{{.Version}}/melange_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}.crt
         checksum:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+          cosign:
+            cosign_experimental: true
+            opts:
+              - --signature
+              - https://github.com/chainguard-dev/melange/releases/download/{{.Version}}/checksums.txt.sig
+              - --certificate
+              - https://github.com/chainguard-dev/melange/releases/download/{{.Version}}/checksums.txt.crt
   - type: github_release
     repo_owner: chanzuckerberg
     repo_name: fogg
