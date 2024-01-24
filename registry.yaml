@@ -9360,7 +9360,7 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-      - version_constraint: semver("<= 0.52.1")
+      - version_constraint: semver("<= 0.52.0")
         asset: snazy_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         rosetta2: true
@@ -9377,53 +9377,11 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-      - version_constraint: Version == "0.52.7"
-        asset: snazy_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        overrides:
-          - goos: darwin
-            asset: snazy_{{.Version}}_{{.OS}}_all.{{.Format}}
-        replacements:
-          amd64: x86_64
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-      - version_constraint: Version == "0.52.10"
-        asset: snazy-v{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        files:
-          - name: snazy
-            src: snazy-v{{.Version}}-{{.OS}}-{{.Arch}}/snazy
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          windows: pc-windows-msvc
-        overrides:
-          - goos: linux
-            replacements:
-              amd64: amd64
-              arm64: aarch64
-          - goos: darwin
-            asset: snazy-v{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-            files:
-              - name: snazy
-                src: snazy-v{{.Version}}-{{.Arch}}-{{.OS}}/snazy
-          - goos: windows
-            format: zip
-            asset: snazy-v{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-            files:
-              - name: snazy
-                src: snazy-v{{.Version}}-{{.Arch}}-{{.OS}}/snazy
+      - version_constraint: semver("<= 0.52.16")
+        error_message: There is no GitHub Releases
       - version_constraint: "true"
         asset: snazy-v{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
-        files:
-          - name: snazy
-            src: snazy-v{{.Version}}-{{.OS}}-{{.Arch}}/snazy
         rosetta2: true
         windows_arm_emulation: true
         replacements:
@@ -9431,15 +9389,9 @@ packages:
         overrides:
           - goos: darwin
             asset: snazy-v{{.Version}}-{{.OS}}.{{.Format}}
-            files:
-              - name: snazy
-                src: snazy-v{{.Version}}-{{.OS}}/snazy
           - goos: windows
             format: zip
             asset: snazy-v{{.Version}}-{{.OS}}.{{.Format}}
-            files:
-              - name: snazy
-                src: snazy-v{{.Version}}-{{.OS}}/snazy
   - type: github_release
     repo_owner: chriswalz
     repo_name: bit
