@@ -9476,46 +9476,130 @@ packages:
     repo_owner: cli
     repo_name: cli
     description: GitHub’s official command line tool
-    asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
     files:
       - name: gh
         src: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/gh
-    overrides:
-      - goos: linux
-        format: tar.gz
-      - &cli_cli_windows_override
-        goos: windows
-        format: zip
-        files:
-          - name: gh
-            src: bin/gh.exe
-    replacements:
-      darwin: macOS
-    checksum:
-      type: github_release
-      asset: gh_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 2.28.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 2.24.0")
+      - version_constraint: semver("<= 0.4.0")
+        asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-        overrides:
-          - *cli_cli_windows_override
-      - version_constraint: semver(">= 2.20.1")
-        format: tar.gz
-        overrides:
-          - *cli_cli_windows_override
         rosetta2: true
-      - version_constraint: semver("< 2.20.1")
-        format: tar.gz
+        windows_arm_emulation: true
         overrides:
-          - *cli_cli_windows_override
+          - goos: windows
+            format: raw
+            asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+            checksum:
+              enabled: false
+        replacements:
+          darwin: macOS
         supported_envs:
           - darwin
-          - linux
+          - windows
           - amd64
+        checksum:
+          type: github_release
+          asset: gh_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.5.2")
+        asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
+        replacements:
+          darwin: macOS
+        supported_envs:
+          - linux/amd64
+          - darwin
+        checksum:
+          type: github_release
+          asset: gh_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.5.5")
+        asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: gh
+                src: bin/gh.exe
+        replacements:
+          darwin: macOS
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+        checksum:
+          type: github_release
+          asset: gh_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 2.20.0")
+        asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: gh
+                src: bin/gh.exe
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: gh_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 2.23.0")
+        asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: gh
+                src: bin/gh.exe
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: gh_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 2.27.0")
+        asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: gh
+                src: bin/gh.exe
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: gh_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: windows
+            files:
+              - name: gh
+                src: bin/gh.exe
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: gh_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: climech
     repo_name: grit
