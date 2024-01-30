@@ -6,8 +6,8 @@ container_name=${1:-aqua-registry}
 
 token="${AQUA_GITHUB_TOKEN:-${GITHUB_TOKEN:-}}"
 if [ -z "$token" ]; then
-  echo "[INFO] Get a GitHub Access token by gh auth token" >&2
-  token=$(aqua exec -- gh auth token)
+	echo "[INFO] Get a GitHub Access token by gh auth token" >&2
+	token=$(aqua exec -- gh auth token)
 fi
 envs=""
 if [ -n "$token" ]; then
