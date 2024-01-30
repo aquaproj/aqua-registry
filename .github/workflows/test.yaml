@@ -62,27 +62,14 @@ jobs:
       - run: exit 1
 
   enable-automerge-renovate:
-    runs-on: ubuntu-latest
-    environment: renovate
+    uses: ./.github/workflows/wc-enable-auto-merge.yaml
     if: |
       github.event.pull_request.user.login == 'renovate[bot]' && contains(github.event.pull_request.body, ' **Automerge**: Enabled.')
-    steps:
-      - name: Generate token
-        id: generate_token
-        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
-        with:
-          app_id: ${{secrets.APP_ID}}
-          private_key: ${{secrets.APP_PRIVATE_KEY}}
-      - name: Enable auto-merge
-        run: gh -R "$GITHUB_REPOSITORY" pr merge --squash --auto --delete-branch "$PR_NUMBER"
-        env:
-          # github.token is unavailable, because github.token doesn't have a permission to delete a branch `renovate/*`
-          # pull-requests: write and contents: write are required
-          GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
-          PR_NUMBER: ${{github.event.pull_request.number}}
+    secrets:
+      gh_app_id: ${{secrets.APP_ID}}
+      gh_app_private_key: ${{secrets.APP_PRIVATE_KEY}}
 
   renovate-config-validator:
-    # Validate Renovate Configuration by renovate-config-validator.
     uses: ./.github/workflows/wc-renovate-config-validator.yaml
     needs: path-filter
     if: ${{needs.path-filter.outputs.renovate-config-validator == 'true'}}
@@ -117,65 +104,8 @@ jobs:
     if: ${{needs.path-filter.outputs.test-docker == 'true'}}
 
   ci-info:
-    runs-on: ubuntu-latest
-    env:
-      AQUA_CONFIG: aqua/ci-info.yaml
-    steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - uses: aquaproj/aqua-installer@7c7338067bdb97d5bea2acc82b5870afca470d18 # v2.3.0
-        with:
-          aqua_version: v2.22.0
-          policy_allow: "true"
-        env:
-          AQUA_GITHUB_TOKEN: ${{github.token}}
-      - uses: suzuki-shunsuke/ci-info-action/store@20bd996e371b27a229a348a09e17db8dcab1f2be # v0.1.2
-        env:
-          GITHUB_TOKEN: ${{github.token}}
-      - run: echo "https://github.com/aquaproj/aqua-registry/pull/$CI_INFO_PR_NUMBER" >> "$GITHUB_STEP_SUMMARY"
+    uses: ./.github/workflows/wc-ci-info.yaml
 
   test:
     needs: ci-info
-    strategy:
-      matrix:
-        env:
-          - runs-on: windows-latest
-          - runs-on: ubuntu-latest
-          - runs-on: macos-latest
-          - runs-on: ubuntu-latest
-            goarch: arm64
-          - runs-on: macos-latest
-            goos: darwin
-            goarch: arm64
-          - runs-on: windows-latest
-            goarch: arm64
-    runs-on: ${{ matrix.env.runs-on }}
-    defaults:
-      run:
-        shell: bash
-    env:
-      AQUA_CONFIG: aqua/test.yaml
-    steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - uses: suzuki-shunsuke/ci-info-action/restore@20bd996e371b27a229a348a09e17db8dcab1f2be # v0.1.2
-
-      # - name: Generate token
-      #   id: generate_token
-      #   uses: tibdex/github-app-token@v1
-      #   with:
-      #     app_id: ${{ secrets.APP_ID }}
-      #     private_key: ${{ secrets.APP_PRIVATE_KEY }}
-
-      - uses: aquaproj/aqua-installer@7c7338067bdb97d5bea2acc82b5870afca470d18 # v2.3.0
-        with:
-          aqua_version: v2.22.0
-          policy_allow: "true"
-        env:
-          AQUA_GITHUB_TOKEN: ${{github.token}}
-
-      - uses: aquaproj/registry-action/test@dff21577b6ec277b2645a7a40db12eeb15b4c581 # v0.2.0
-        with:
-          goos: ${{ matrix.env.goos }}
-          goarch: ${{ matrix.env.goarch }}
-          go_version: "1.21.3"
-        env:
-          GITHUB_TOKEN: ${{github.token}}
+    uses: ./.github/workflows/wc-test.yaml
