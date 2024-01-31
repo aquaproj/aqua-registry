@@ -3,34 +3,104 @@ packages:
     repo_owner: eza-community
     repo_name: eza
     description: A modern, maintained replacement for ls
-    asset: eza_{{.Arch}}-{{.OS}}.{{.Format}}
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
-        replacements:
-          arm64: aarch64
-      - goos: windows
-        asset: eza.exe_{{.Arch}}-{{.OS}}.{{.Format}}
-    replacements:
-      amd64: x86_64
-      linux: unknown-linux-gnu
-      windows: pc-windows-gnu
-    supported_envs:
-      - linux
-      - windows/amd64
-    version_constraint: semver(">= 0.13.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.11.1")
+      - version_constraint: semver("<= 0.10.9")
+        no_asset: true
+      - version_constraint: Version == "v0.11.0"
+        asset: "{{.Arch}}-{{.OS}}-eza"
+        format: raw
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: Version == "v0.11.1"
+        asset: eza_{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
         overrides:
           - goos: linux
             format: tar.gz
             replacements:
               arm64: aarch64
-      - version_constraint: semver("< 0.11.1")
-        asset: "{{.Arch}}-{{.OS}}-eza"
-        format: raw
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: semver("<= 0.14.0")
+        asset: eza_{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         overrides:
           - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
             replacements:
               arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            asset: eza.exe_{{.Arch}}-{{.OS}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          windows: pc-windows-gnu
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: Version == "v0.14.1"
+        asset: eza_{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            asset: eza.exe_{{.Arch}}-{{.OS}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          windows: pc-windows-gnu
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: "true"
+        asset: eza_{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            asset: eza.exe_{{.Arch}}-{{.OS}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          windows: pc-windows-gnu
+        supported_envs:
+          - linux
+          - windows/amd64
