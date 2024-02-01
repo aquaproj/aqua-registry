@@ -1,0 +1,20 @@
+packages:
+  - name: gitlab.com/gitlab-org/cli
+    type: http
+    link: https://gitlab.com/gitlab-org/cli
+    description: A GitLab CLI tool bringing GitLab to your command line
+    # https://gitlab.com/gitlab-org/cli/-/releases/v1.36.0/downloads/glab_1.36.0_Linux_x86_64.tar.gz
+    url: https://gitlab.com/gitlab-org/cli/-/releases/{{.Version}}/downloads/glab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    windows_arm_emulation: true
+    files:
+      - name: glab
+        src: bin/glab
+    replacements:
+      linux: Linux
+      windows: Windows
+      darwin: macOS
+      amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
