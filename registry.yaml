@@ -15236,24 +15236,55 @@ packages:
 
           Licensed v4 no longer provides a self-contained executable build of licensed
   - name: gitlab.com/gitlab-org/cli
+    # TODO: Support GitLab
+    # repo_owner: gitlab-org
+    # repo_name: cli
+    aliases:
+      - name: profclems/glab
     type: http
     link: https://gitlab.com/gitlab-org/cli
     description: A GitLab CLI tool bringing GitLab to your command line
-    # https://gitlab.com/gitlab-org/cli/-/releases/v1.36.0/downloads/glab_1.36.0_Linux_x86_64.tar.gz
-    url: https://gitlab.com/gitlab-org/cli/-/releases/{{.Version}}/downloads/glab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    windows_arm_emulation: true
-    files:
-      - name: glab
-        src: bin/glab
-    replacements:
-      linux: Linux
-      windows: Windows
-      darwin: macOS
-      amd64: x86_64
-    overrides:
-      - goos: windows
-        format: zip
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.22.0")
+        type: github_release
+        repo_owner: profclems
+        repo_name: glab
+        rosetta2: true
+        windows_arm_emulation: true
+        asset: glab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          darwin: macOS
+          linux: Linux
+          386: i386
+          amd64: x86_64
+          windows: Windows
+        files:
+          - name: glab
+            src: bin/glab
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        url: https://gitlab.com/gitlab-org/cli/-/releases/{{.Version}}/downloads/glab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: glab
+            src: bin/glab
+        replacements:
+          linux: Linux
+          windows: Windows
+          darwin: macOS
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: gitleaks
     repo_name: gitleaks
