@@ -1,0 +1,29 @@
+---
+name: Count packages
+on:
+  workflow_call: {}
+  schedule:
+    - cron: "0 0 * * *" # daily
+jobs:
+  count-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: asdf-vm/actions/setup@05e0d2ed97b598bfce82fd30daf324ae0c4570e6 # v3.0.2
+      - run: |
+          set -euo pipefail
+          n=$(find pkgs -name registry.yaml | wc -l)
+          echo "count=$n" >> "$GITHUB_OUTPUT"
+        id: aqua
+      - run: |
+          set -euo pipefail
+          n=$(asdf plugin list all | wc -l)
+          echo "count=$n" >> "$GITHUB_OUTPUT"
+        id: asdf
+      - run: gh issue comment "$NUMBER" --body "$BODY"
+        env:
+          NUMBER: "19792"
+          BODY: |
+            asdf: ${{steps.asdf.outputs.count}}
+            aqua: ${{steps.aqua.outputs.count}}
+          GITHUB_TOKEN: ${{github.token}}
