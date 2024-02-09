@@ -1,0 +1,195 @@
+---
+# the configuration file of cmdx - task runner
+# https://github.com/suzuki-shunsuke/cmdx
+tasks:
+  - name: scaffold
+    short: s
+    usage: Scaffold the configuration for a given package
+    description: |
+      Scaffold the configuration for a given package
+
+      e.g.
+
+      $ cmdx s cli/cli
+
+      After scaffolding, tests are run.
+
+    flags:
+      - name: recreate
+        short: r
+        type: bool
+        usage: Recreate the container
+      - name: cmd
+        type: string
+        usage: A list of commands joined with commas ','
+      - name: limit
+        type: string
+        usage: The maximum number of versions
+    shell:
+      - "bash"
+      - "-c"
+    script: |
+      set -eu
+      if [ "{{.recreate}}" = true ]; then
+        cmdx rm
+      fi
+      bash scripts/start.sh
+      bash scripts/scaffold.sh "{{.package}}" "{{.cmd}}" "{{.limit}}"
+      bash scripts/test.sh "{{.package}}"
+      bash scripts/start.sh aqua-registry-windows
+      bash scripts/test-windows.sh "{{.package}}"
+    args:
+      - name: package
+        usage: a package name. e.g. `cli/cli`
+        required: true
+
+  - name: test
+    short: t
+    usage: Test a given package in the container
+    description: |
+      Test a given package in the container.
+
+      $ cmdx t [-r] <package name>
+
+      Tests are run on all platforms with AQUA_GOOS and AQUA_GOARCH same with CI in a container.
+
+      If the test fails, bash is attached to the container for debugging.
+      If you want to exit from the container, please run exit.
+    flags:
+      - name: recreate
+        short: r
+        type: bool
+        usage: Recreate the container
+    args:
+      - name: package
+        usage: a package name. e.g. `cli/cli`
+        required: true
+    shell:
+      - "bash"
+      - "-c"
+    script: |
+      set -eu
+      if [ "{{.recreate}}" = true ]; then
+        cmdx rm
+      fi
+      bash scripts/start.sh
+      bash scripts/test.sh "{{.package}}"
+      bash scripts/start.sh aqua-registry-windows
+      bash scripts/test-windows.sh "{{.package}}"
+      aqua exec -- aqua-registry gr
+
+  - name: connect
+    short: con
+    usage: Connect to the container
+    description: |
+      Connect to the container
+
+      $ cmdx connect <os> <arch>
+
+      e.g.
+
+      $ cmdx connect linux amd64
+
+      You need to specify os and arch.
+      These arguments are set to AQUA_GOOS and AQUA_GOARCH.
+    args:
+      - name: os
+        required: false
+        default: linux
+        script_envs:
+          - OS
+      - name: arch
+        required: false
+        script_envs:
+          - ARCH
+    shell:
+      - "bash"
+      - "-c"
+    script: bash scripts/connect.sh
+
+  - name: generate-registry
+    short: gr
+    usage: Update registry.yaml
+    description: |
+      Update registry.yaml
+
+      $ cmdx gr
+    shell:
+      - "bash"
+      - "-c"
+    script: aqua exec -- aqua-registry gr
+
+  - name: new
+    usage: Create a branch, a commit, and a pull request to add a given package
+    description: |
+      Create a branch, a commit, and a pull request to add a given package.
+
+      $ cmdx new <package name>
+
+      e.g.
+
+      $ cmdx new cli/cli
+    script: aqua exec -- aqua-registry create-pr-new-pkg "{{.package}}"
+    args:
+      - name: package
+        required: true
+        usage: a package name. e.g. cli/cli
+
+  - name: stop
+    usage: Stop containers
+    description: |
+      Stop containers.
+
+      $ cmdx stop
+    script: |
+      set -eu
+      bash scripts/stop.sh
+      bash scripts/stop.sh aqua-registry-windows
+
+  - name: remove
+    short: rm
+    usage: Remove containers
+    description: |
+      Remove containers.
+
+      $ cmdx rm
+    script: |
+      set -eu
+      bash scripts/remove_container.sh
+      bash scripts/remove_container.sh aqua-registry-windows
+
+  - name: start
+    usage: Start containers
+    description: |
+      Start containers.
+
+      $ cmdx start
+    flags:
+      - name: recreate
+        short: r
+        type: bool
+        usage: Recreate the container
+    shell:
+      - "bash"
+      - "-c"
+    script: |
+      set -eu
+      if [ "{{.recreate}}" = true ]; then
+        cmdx rm
+      fi
+      bash scripts/start.sh
+      bash scripts/start.sh aqua-registry-windows
+
+  - name: release
+    short: r
+    description: Release the new version
+    usage: Release the new version
+    script: |
+      set -eu
+      git tag -m "chore: release {{.version}}" "{{.version}}"
+      git push origin "{{.version}}"
+    args:
+      - name: version
+        required: true
+        validate:
+          - regexp: "^v\\d+\\.\\d+.\\d+(-\\d+)?$"

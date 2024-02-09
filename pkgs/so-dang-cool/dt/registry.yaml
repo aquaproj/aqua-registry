@@ -1,0 +1,30 @@
+packages:
+  - type: github_release
+    repo_owner: so-dang-cool
+    repo_name: dt
+    description: dt - duct tape for your unix pipes
+    asset: dt-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tgz
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: macos-none
+      linux: linux-gnu
+    supported_envs:
+      - linux
+      - darwin
+    version_constraint: semver(">= 1.2.4")
+    version_overrides:
+      - version_constraint: semver(">= 1.1.1")
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        files:
+          - name: dt
+            src: "{{.Arch}}-{{.OS}}/bin/dt"
+      - version_constraint: semver("< 1.1.1")
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        files:
+          - name: dt
+            src: "{{.Arch}}-{{.OS}}/bin/dt"
+        overrides: []
+        supported_envs:
+          - linux

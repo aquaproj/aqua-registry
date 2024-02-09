@@ -1,0 +1,24 @@
+packages:
+  - type: github_release
+    repo_owner: so-dang-cool
+    repo_name: findup
+    description: Find parent directories
+    asset: findup-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tgz
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: macos-none
+      linux: linux-gnu
+    supported_envs:
+      - linux
+      - darwin
+    version_constraint: semver(">= 1.1.2")
+    version_overrides:
+      - version_constraint: semver("< 1.1.2")
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        supported_envs:
+          - linux
+        files:
+          - name: findup
+            src: "{{.Arch}}-{{.OS}}/bin/findup"

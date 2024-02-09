@@ -1,0 +1,25 @@
+packages:
+  - type: github_release
+    repo_owner: LucasPickering
+    repo_name: slumber
+    description: Terminal-based REST client
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: slumber-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        files:
+          - name: slumber
+            src: slumber-{{.Arch}}-{{.OS}}/slumber

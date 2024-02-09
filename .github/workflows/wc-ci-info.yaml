@@ -1,0 +1,20 @@
+---
+name: wc-ci-info
+on: workflow_call
+jobs:
+  ci-info:
+    runs-on: ubuntu-latest
+    env:
+      AQUA_CONFIG: aqua/ci-info.yaml
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: aquaproj/aqua-installer@7c7338067bdb97d5bea2acc82b5870afca470d18 # v2.3.0
+        with:
+          aqua_version: v2.23.1
+          policy_allow: "true"
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+      - uses: suzuki-shunsuke/ci-info-action/store@ceeb10dd50cd632db31e7eccf92cbbb6856f3191 # v0.1.3
+        env:
+          GITHUB_TOKEN: ${{github.token}}
+      - run: echo "https://github.com/aquaproj/aqua-registry/pull/$CI_INFO_PR_NUMBER" >> "$GITHUB_STEP_SUMMARY"

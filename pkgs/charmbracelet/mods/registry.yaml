@@ -3,7 +3,7 @@ packages:
     repo_owner: charmbracelet
     repo_name: mods
     description: AI on the command line
-    asset: mods_{{.OS}}_{{.Arch}}.{{.Format}}
+    asset: mods_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
@@ -13,11 +13,15 @@ packages:
       darwin: Darwin
       linux: Linux
       windows: Windows
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 1.0.0")
+    version_overrides:
+      - version_constraint: semver("< 1.0.0")
+        asset: mods_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
