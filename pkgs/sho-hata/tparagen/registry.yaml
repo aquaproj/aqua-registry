@@ -5,10 +5,7 @@ packages:
     description: tparagen inserts `testing.T.Parallel()` in a test function in a specific source file or in an entire directory
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v1.1.0"
-        type: go_install
-        path: github.com/sho-hata/tparagen/cmd/tparagen
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.0.0")
         asset: tparagen_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -16,6 +13,16 @@ packages:
           darwin: Darwin
           linux: Linux
           windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: Version == "v1.1.0"
+        type: go_install
+        path: github.com/sho-hata/tparagen/cmd/tparagen
+      - version_constraint: "true"
+        asset: tparagen_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         checksum:
           type: github_release
           asset: checksums.txt
