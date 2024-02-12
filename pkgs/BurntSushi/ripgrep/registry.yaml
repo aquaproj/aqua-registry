@@ -4,11 +4,11 @@ packages:
     repo_name: ripgrep
     asset: ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     description: ripgrep recursively searches directories for a regex pattern while respecting your gitignore
-    rosetta2: true
     supported_envs:
       - darwin
       - amd64
     replacements:
+      arm64: aarch64
       amd64: x86_64
       darwin: apple-darwin
       linux: unknown-linux-musl
@@ -20,3 +20,11 @@ packages:
     files:
       - name: rg
         src: ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}/rg
+    version_constraint: semver(">= 14")
+    version_overrides:
+      - version_constraint: semver("< 14")
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: x86_64
+        rosetta2: true
