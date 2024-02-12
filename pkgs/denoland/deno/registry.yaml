@@ -2,14 +2,44 @@ packages:
   - type: github_release
     repo_owner: denoland
     repo_name: deno
-    asset: deno-{{.Arch}}-{{.OS}}.zip
-    supported_envs:
-      - darwin
-      - amd64
     description: A modern runtime for JavaScript and TypeScript
-    replacements:
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-      windows: pc-windows-msvc
-      arm64: aarch64
-      amd64: x86_64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.5.4")
+        asset: deno-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.40.2")
+        asset: deno-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: deno-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
