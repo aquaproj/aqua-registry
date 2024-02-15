@@ -8,13 +8,23 @@
     "github>aquaproj/aqua-renovate-config:installer-script#2.1.0(docker/Dockerfile)",
     "github>suzuki-shunsuke/renovate-config:action-go-version#2.2.0",
   ],
-  regexManagers: [
+  customManagers: [
     {
+      customType: "regex",
       fileMatch: ["README.md"],
       matchStrings: [
         "ref: (?<currentValue>.*?) # renovate: depName=(?<depName>.*)",
       ],
       datasourceTemplate: "github-releases",
+    },
+  ],
+  packageRules: [
+    {
+      // https://github.com/LukeChannings/deno-arm64/releases/tag/v1.40.4
+      // > This will be the final binary distribution from this repo.
+      // > Please go to denoland/deno for the official releases.
+      matchPackageNames: ["LukeChannings/deno-arm64"],
+      enabled: false,
     },
   ],
 }
