@@ -6,13 +6,16 @@ packages:
     supported_envs:
       - windows
       - darwin
-      - linux/amd64
+      - linux
     asset: buf-{{.OS}}-{{.Arch}}.tar.gz
     overrides:
       - goos: windows
         asset: buf-Windows-{{.Arch}}.exe
         files:
           - name: buf
+      - goos: linux
+        replacements:
+          arm64: aarch64
     replacements:
       darwin: Darwin
       linux: Linux
