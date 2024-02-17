@@ -8586,36 +8586,130 @@ packages:
   - type: github_release
     repo_owner: bufbuild
     repo_name: buf
-    description: A new way of working with Protocol Buffers
-    supported_envs:
-      - windows
-      - darwin
-      - linux
-    asset: buf-{{.OS}}-{{.Arch}}.tar.gz
-    overrides:
-      - goos: windows
-        asset: buf-Windows-{{.Arch}}.exe
-        files:
-          - name: buf
-      - goos: linux
+    description: The best way of working with Protocol Buffers
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.41.0")
+        asset: buf-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
         replacements:
-          arm64: aarch64
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      amd64: x86_64
-    files:
-      - name: buf
-        src: buf/bin/buf
-      - name: protoc-gen-buf-breaking
-        src: buf/bin/protoc-gen-buf-breaking
-      - name: protoc-gen-buf-lint
-        src: buf/bin/protoc-gen-buf-lint
-    checksum:
-      type: github_release
-      asset: sha256.txt
-      algorithm: sha256
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.42.0"
+        asset: buf-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.51.1")
+        asset: buf-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v0.52.0"
+        asset: buf-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: sha256.txt.minisig
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v0.53.0"
+        asset: buf-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.56.0")
+        asset: buf-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: sha256.txt.minisig
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: raw
+            asset: buf-{{.OS}}-{{.Arch}}
+      - version_constraint: "true"
+        asset: buf-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: raw
+            asset: buf-{{.OS}}-{{.Arch}}
   - type: go_install
     name: bufbuild/connect-go/protoc-gen-connect-go
     repo_owner: bufbuild
