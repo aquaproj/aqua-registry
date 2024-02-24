@@ -1,0 +1,20 @@
+packages:
+  - type: github_release
+    repo_owner: containers
+    repo_name: podman-desktop
+    description: Podman Desktop - A graphical tool for developing on containers and Kubernetes
+    asset: podman-desktop-{{trimV .Version}}-setup-{{.Arch}}
+    format: raw
+    complete_windows_ext: false
+    overrides:
+      - goos: darwin
+        format: dmg
+        asset: podman-desktop-{{trimV .Version}}-{{.Arch}}.{{.Format}}
+      - goos: windows
+        goarch: arm64
+        asset: podman-desktop-{{trimV .Version}}-{{.Arch}}
+    replacements:
+      amd64: x64
+    supported_envs:
+      - darwin
+      - windows
