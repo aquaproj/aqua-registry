@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - uses: asdf-vm/actions/setup@05e0d2ed97b598bfce82fd30daf324ae0c4570e6 # v3.0.2
+      - uses: jdx/mise-action@3bc85396a273ed82bba5e53a15174bbf9dba095c # v2.0.2
       - run: |
           set -euo pipefail
           n=$(find pkgs -name registry.yaml | wc -l)
@@ -22,10 +23,16 @@ jobs:
           n=$(asdf plugin list all | wc -l)
           echo "count=$n" >> "$GITHUB_OUTPUT"
         id: asdf
+      - run: |
+          set -euo pipefail
+          n=$(mise p ls-remote --only-names | wc -l)
+          echo "count=$n" >> "$GITHUB_OUTPUT"
+        id: mise
       - run: gh issue comment "$NUMBER" --body "$BODY"
         env:
           NUMBER: "19792"
           BODY: |
+            mise: ${{steps.mise.outputs.count}}
             asdf: ${{steps.asdf.outputs.count}}
             aqua: ${{steps.aqua.outputs.count}}
           GITHUB_TOKEN: ${{github.token}}
