@@ -15,7 +15,13 @@ if [ -n "$token" ]; then
 	envs="-e GITHUB_TOKEN=$token"
 fi
 
+# https://github.com/aquaproj/aqua-registry/issues/20289
+opts=""
+if [ "$(uname)" = Linux ] && docker version | grep -q Podman; then
+	opts="--privileged"
+fi
+
 # shellcheck disable=SC2086
-docker run -d --name "$container_name" \
+docker run $opts -d --name "$container_name" \
 	-v "$PWD:/aqua-registry" $envs aquaproj/aqua-registry \
 	tail -f /dev/null
