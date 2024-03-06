@@ -17593,28 +17593,54 @@ packages:
   - type: github_release
     repo_owner: google
     repo_name: osv-scanner
-    asset: osv-scanner_{{trimV .Version}}_{{.OS}}_{{.Arch}}
-    format: raw
     description: Vulnerability scanner written in Go which uses the data provided by https://osv.dev
-    checksum:
-      type: github_release
-      asset: osv-scanner_{{trimV .Version}}_SHA256SUMS
-      algorithm: sha256
-    slsa_provenance:
-      type: github_release
-      asset: multiple.intoto.jsonl
-    version_constraint: semver(">= 1.4.3")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v1.4.2"
-        slsa_provenance:
-          # https://github.com/google/osv-scanner/issues/611
-          enabled: false
-      - version_constraint: semver(">= 1.0.1")
-      - version_constraint: semver("< 1.0.1")
+      - version_constraint: semver("<= 1.0.0")
+        asset: osv-scanner_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
         rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: osv-scanner_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: Version == "v1.4.2"
+        # https://github.com/google/osv-scanner/issues/611
+        asset: osv-scanner_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: osv-scanner_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+      - version_constraint: semver("<= 1.6.2")
+        asset: osv-scanner_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        checksum:
+          type: github_release
+          asset: osv-scanner_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+      - version_constraint: "true"
+        # v1.7.0 https://github.com/google/osv-scanner/pull/831
+        asset: osv-scanner_{{.OS}}_{{.Arch}}
+        format: raw
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        checksum:
+          type: github_release
+          asset: osv-scanner_SHA256SUMS
+          algorithm: sha256
   - type: go_install
     repo_owner: google
     repo_name: pprof
