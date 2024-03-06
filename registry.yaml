@@ -1496,19 +1496,35 @@ packages:
     files:
       - name: container-diff
         src: container-diff-{{.OS}}-amd64
-  - type: http
+  - type: github_release
     repo_owner: GoogleContainerTools
     repo_name: container-structure-test
-    rosetta2: true
-    url: https://storage.googleapis.com/container-structure-test/{{.Version}}/container-structure-test-{{.OS}}-{{.Arch}}
     description: validate the structure of your container images
-    files:
-      - name: container-structure-test
-        src: container-structure-test-{{.OS}}-{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux
-      - windows/amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.16.0")
+        type: http
+        rosetta2: true
+        url: https://storage.googleapis.com/container-structure-test/{{.Version}}/container-structure-test-{{.OS}}-{{.Arch}}
+        files:
+          - name: container-structure-test
+            src: container-structure-test-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - darwin
+          - linux
+          - windows/amd64
+      # v1.17.0 https://github.com/GoogleContainerTools/container-structure-test/releases/tag/v1.17.0
+      # > Important
+      # > Releases are no longer published to GCS, use the github release asset to access the binary.
+      - version_constraint: "true"
+        type: github_release
+        asset: container-structure-test-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
   - type: http
     repo_owner: GoogleContainerTools
     repo_name: skaffold
