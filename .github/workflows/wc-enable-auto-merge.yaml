@@ -20,6 +20,13 @@ jobs:
         with:
           app_id: ${{secrets.gh_app_id}}
           private_key: ${{secrets.gh_app_private_key}}
+          repositories: >-
+            ["${{github.event.repository.name}}"]
+          permissions: >-
+            {
+              "contents": "write",
+              "pull_requests": "write"
+            }
       - name: Enable auto-merge
         run: gh -R "$GITHUB_REPOSITORY" pr merge --squash --auto --delete-branch "$PR_NUMBER"
         env:
