@@ -18,8 +18,11 @@ packages:
       asset: checksums.txt
       algorithm: sha256
       cosign:
-        cosign_experimental: true
         opts:
+          - --certificate-identity-regexp
+          - "https://github\\.com/goreleaser/nfpm/\\.github/workflows/release\\.yml@.*"
+          - --certificate-oidc-issuer
+          - "https://token.actions.githubusercontent.com"
           - --signature
           - https://github.com/goreleaser/nfpm/releases/download/{{.Version}}/checksums.txt.sig
           - --certificate

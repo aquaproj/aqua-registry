@@ -12,7 +12,12 @@ packages:
       algorithm: sha256
       cosign:
         cosign_experimental: true
+        certificate_identity: https://github.com/aquaproj/registry-tool/.github/workflows/release.yml@refs/tags/{{.Version}}
         opts:
+          - --certificate-identity-regexp
+          - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+          - --certificate-oidc-issuer
+          - "https://token.actions.githubusercontent.com"
           - --signature
           - https://github.com/aquaproj/registry-tool/releases/download/{{.Version}}/registry-tool_{{trimV .Version}}_checksums.txt.sig
           - --certificate

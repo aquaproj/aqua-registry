@@ -22,6 +22,10 @@ packages:
       algorithm: sha256
       cosign:
         opts:
+          - --certificate-identity-regexp
+          - "https://github\\.com/argoproj/argo-workflows/\\.github/workflows/release\\.yaml@.*"
+          - --certificate-oidc-issuer
+          - "https://token.actions.githubusercontent.com"
           - --signature
           - https://github.com/argoproj/argo-workflows/releases/download/{{.Version}}/argo-workflows-cli-checksums.sig
           - --key
