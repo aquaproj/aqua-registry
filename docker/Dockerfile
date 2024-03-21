@@ -10,10 +10,10 @@ RUN \
   apt-get install --no-install-recommends -y tree && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
-RUN curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v2.3.2/aqua-installer
+RUN curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v3.0.0-1/aqua-installer
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable --profile minimal
-RUN echo "63054c35389e9297d808880d6d01de579061a1cf09f78344ee67d0dcde2cfcb6  aqua-installer" | sha256sum -c
+RUN echo "481870ac8805762621fc4ccc136813cc06d5cc1183924bcc4c5054a30426ba37  aqua-installer" | sha256sum -c
 RUN chmod +x aqua-installer
-RUN ./aqua-installer -v v2.25.1-3
+RUN ./aqua-installer -v v2.25.1-5
 COPY aqua-test.yaml aqua.yaml
 COPY aqua-policy.yaml aqua-policy.yaml
