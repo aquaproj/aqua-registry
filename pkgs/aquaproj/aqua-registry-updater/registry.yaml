@@ -14,6 +14,10 @@ packages:
       cosign:
         cosign_experimental: true
         opts:
+          - --certificate-identity-regexp
+          - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+          - --certificate-oidc-issuer
+          - "https://token.actions.githubusercontent.com"
           - --signature
           - https://github.com/aquaproj/aqua-registry-updater/releases/download/{{.Version}}/aqua-registry-updater_{{trimV .Version}}_checksums.txt.sig
           - --certificate
