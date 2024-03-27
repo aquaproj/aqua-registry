@@ -12,7 +12,7 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 RUN curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v3.0.0/aqua-installer
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable --profile minimal
-RUN echo "481870ac8805762621fc4ccc136813cc06d5cc1183924bcc4c5054a30426ba37  aqua-installer" | sha256sum -c
+RUN echo "8299de6c19a8ff6b2cc6ac69669cf9e12a96cece385658310aea4f4646a5496d  aqua-installer" | sha256sum -c
 RUN chmod +x aqua-installer
 RUN ./aqua-installer -v v2.25.1-5
 COPY aqua-test.yaml aqua.yaml
