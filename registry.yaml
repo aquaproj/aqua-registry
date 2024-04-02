@@ -28021,11 +28021,6 @@ packages:
     description: concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit
     files:
       - name: buildctl
-      - name: buildkitd
-    overrides:
-      - goos: darwin
-        files:
-          - name: buildctl
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.8.3")
@@ -28036,26 +28031,12 @@ packages:
         files:
           - name: buildctl
             src: bin/buildctl
-        overrides:
-          - goos: linux
-            files:
-              - name: buildctl
-                src: bin/buildctl
-              - name: buildkitd
-                src: bin/buildkitd
       - version_constraint: semver("<= 0.11.0-rc2")
         asset: buildkit-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
           - name: buildctl
             src: bin/buildctl
-        overrides:
-          - goos: linux
-            files:
-              - name: buildctl
-                src: bin/buildctl
-              - name: buildkitd
-                src: bin/buildkitd
       - version_constraint: "true"
         asset: buildkit-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -28063,13 +28044,6 @@ packages:
         files:
           - name: buildctl
             src: bin/buildctl
-          - name: buildkitd
-            src: bin/buildkitd
-        overrides:
-          - goos: darwin
-            files:
-              - name: buildctl
-                src: bin/buildctl
   - type: github_release
     repo_owner: momaek
     repo_name: authy
