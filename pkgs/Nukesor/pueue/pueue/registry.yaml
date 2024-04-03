@@ -3,7 +3,7 @@ packages:
     type: github_release
     repo_owner: Nukesor
     repo_name: pueue
-    description: ":stars: Manage your shell commands"
+    description: Manage your shell commands
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.1.4")
@@ -60,20 +60,6 @@ packages:
               arm64: aarch64
       - version_constraint: semver("<= 0.11.1")
         no_asset: true
-      - version_constraint: semver("<= 0.12.2")
-        asset: pueue-{{.OS}}-{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          darwin: macos
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: aarch64
-      - version_constraint: semver("<= pueue-lib-v0.25.1")
-        no_asset: true
       - version_constraint: semver("<= 2.1.0")
         asset: pueue-{{.OS}}-{{.Arch}}
         format: raw
@@ -90,13 +76,14 @@ packages:
         asset: pueue-{{.OS}}-{{.Arch}}
         format: raw
         windows_arm_emulation: true
+        supported_envs:
+          - linux/arm64
+          - darwin
+          - windows
         replacements:
           amd64: x86_64
           arm64: aarch64
         overrides:
-          - goos: linux
-            goarch: amd64
-            asset: pueue-{{.OS}}-arm
           - goos: darwin
             goarch: amd64
             replacements:
