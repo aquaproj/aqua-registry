@@ -1,4 +1,4 @@
-FROM golang:1.22.2-bookworm
+FROM golang:1.22.2-bookworm@sha256:48b942a5a9803fafeb748f1a9c6edeb71e06653bb4df25f63f909151e15e9618
 WORKDIR /workspace
 ENV AQUA_ROOT_DIR=/root/aquaproj-aqua
 ENV AQUA_LOG_COLOR=always
