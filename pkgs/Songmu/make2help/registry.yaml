@@ -1,0 +1,34 @@
+packages:
+  - type: github_release
+    repo_owner: Songmu
+    repo_name: make2help
+    description: Utility for self-documented Makefile
+    asset: make2help_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_constraint: semver(">= 0.2.1")
+    format: zip
+    checksum:
+      type: github_release
+      asset: SHA256SUMS
+      algorithm: sha256
+    supported_envs:
+      - darwin
+      - linux
+      - windows
+    files:
+      - name: make2help
+        src: make2help_{{.Version}}_{{.OS}}_{{.Arch}}/make2help
+    overrides:
+      - goos: linux
+        format: tar.gz
+    version_overrides:
+      - version_constraint: semver(">= 0.1.0")
+        rosetta2: true
+        supported_envs:
+          - darwin/amd64
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: semver(">= 0.0.1")
+        rosetta2: true
+        supported_envs:
+          - darwin/amd64
+          - linux/amd64
