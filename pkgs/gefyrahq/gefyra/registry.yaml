@@ -46,7 +46,7 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 2.0.3")
         asset: gefyra-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
@@ -59,6 +59,23 @@ packages:
             files:
               - name: gefyra
                 src: dist/gefyra
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: gefyra-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        overrides:
+          - goos: darwin
+            asset: gefyra-{{.Version}}-{{.OS}}-universal.{{.Format}}
+          - goos: windows
+            replacements:
+              amd64: x86_64
+            files:
+              - name: gefyra
+                src: dist-exe/gefyra.exe
         supported_envs:
           - darwin
           - windows
