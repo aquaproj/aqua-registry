@@ -9,6 +9,7 @@
 - [Change Log](https://github.com/aquaproj/aqua-registry/releases)
 
 Test
+Test
 
 ## Contributors
 
