@@ -1,0 +1,22 @@
+packages:
+  - type: http
+    name: slack.com/slack-cli
+    description: Slack CLI
+    link: https://api.slack.com/automation/cli/commands
+    # https://downloads.slack-edge.com/slack-cli/slack_cli_2.23.0_linux_64-bit.tar.gz
+    # https://downloads.slack-edge.com/slack-cli/slack_cli_2.23.0_macOS_64-bit.tar.gz
+    # https://downloads.slack-edge.com/slack-cli/slack_cli_2.23.0_windows_64-bit.zip
+    url: https://downloads.slack-edge.com/slack-cli/slack_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    rosetta2: true
+    windows_arm_emulation: true
+    replacements:
+      amd64: 64-bit
+      darwin: macOS
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - linux/amd64
+      - windows
+      - darwin
