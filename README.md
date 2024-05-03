@@ -8,6 +8,8 @@
 - [How to contribute](https://aquaproj.github.io/docs/products/aqua-registry/contributing)
 - [Change Log](https://github.com/aquaproj/aqua-registry/releases)
 
+Test
+
 ## Contributors
 
 [![contributors](https://contrib.rocks/image?repo=aquaproj/aqua-registry)](https://github.com/aquaproj/aqua-registry/graphs/contributors)
