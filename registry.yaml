@@ -24050,6 +24050,45 @@ packages:
         checksum:
           enabled: false
   - type: github_release
+    repo_owner: kaytu-io
+    repo_name: kaytu
+    description: The Kaytu CLI helps you save on cloud costs by finding the perfect server sizes. Kaytu analyzes historical usage and provides tailored recommendations, ensuring you only pay for the resources you need
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.7")
+        asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: kaytu_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: raw
+            asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+      - version_constraint: semver("<= 0.1.1")
+        asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: kaytu_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: kaytu_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: kcp-dev
     repo_name: kcp
     asset: kcp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
