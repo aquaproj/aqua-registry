@@ -13274,7 +13274,7 @@ packages:
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.6.1")
-        asset: shoutrrr_{{.OS}}_{{.Arch}}v8.{{.Format}}
+        asset: shoutrrr_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
         checksum:
@@ -13283,32 +13283,25 @@ packages:
           algorithm: sha256
         overrides:
           - goos: linux
-            goarch: amd64
-            asset: shoutrrr_{{.OS}}_{{.Arch}}.{{.Format}}
+            goarch: arm64
+            asset: shoutrrr_{{.OS}}_{{.Arch}}v8.{{.Format}}
           - goos: windows
             format: zip
-            asset: shoutrrr_{{.OS}}_{{.Arch}}.{{.Format}}
         supported_envs:
           - linux
           - windows/amd64
       - version_constraint: semver("<= 0.7.1")
         asset: shoutrrr_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: zip
+        format: tar.gz
         checksum:
           type: github_release
           asset: shoutrrr_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+        replacements:
+          arm64: arm64v8
         overrides:
-          - goos: linux
-            goarch: amd64
-            format: tar.gz
-          - goos: linux
-            goarch: arm64
-            format: tar.gz
-            asset: shoutrrr_{{.OS}}_{{.Arch}}v8.{{.Format}}
           - goos: windows
-            goarch: arm64
-            asset: shoutrrr_{{.OS}}_{{.Arch}}v8.{{.Format}}
+            format: zip
         supported_envs:
           - linux
           - windows
