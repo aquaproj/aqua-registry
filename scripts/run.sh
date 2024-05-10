@@ -21,6 +21,10 @@ if [ "$(uname)" = Linux ] && docker version | grep -q Podman; then
 	opts="--privileged"
 fi
 
+if [ "$(uname)" = Linux ]; then
+	opts+=" -u $(id -u -n):$(id -g -n) -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro"
+fi
+
 # shellcheck disable=SC2086
 docker run $opts -d --name "$container_name" \
 	-v "$PWD:/aqua-registry" $envs aquaproj/aqua-registry \

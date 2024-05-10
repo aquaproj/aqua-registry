@@ -1156,6 +1156,30 @@ packages:
           - linux
           - amd64
   - type: github_release
+    repo_owner: Crocmagnon
+    repo_name: fatcontext
+    description: detects nested contexts in loops
+    version_constraint: "false"
+    version_overrides:
+      # foreshadow is used instead of fatcontext
+      - version_constraint: semver("<= 0.1.3")
+        no_asset: true
+      - version_constraint: "true"
+        asset: fatcontext_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: fatcontext_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: CycloneDX
     repo_name: cyclonedx-cli
     asset: cyclonedx-{{.OS}}-{{.Arch}}
@@ -1361,6 +1385,117 @@ packages:
       type: github_release
       asset: "{{.Asset}}.sha256"
       algorithm: sha256
+  - type: github_release
+    repo_owner: EmbarkStudios
+    repo_name: cargo-deny
+    description: Cargo plugin for linting your dependencies
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.6.4")
+        asset: cargo-deny-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: cargo-deny
+            src: "{{.AssetWithoutExt}}/cargo-deny"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "0.6.5"
+        asset: cargo-deny-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: cargo-deny
+            src: "{{.AssetWithoutExt}}/cargo-deny"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.9.0")
+        asset: cargo-deny-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: cargo-deny
+            src: "{{.AssetWithoutExt}}/cargo-deny"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.14.22")
+        asset: cargo-deny-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: cargo-deny
+            src: "{{.AssetWithoutExt}}/cargo-deny"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: cargo-deny-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: cargo-deny
+            src: "{{.AssetWithoutExt}}/cargo-deny"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            replacements:
+              arm64: arm64
   - type: github_release
     repo_owner: FairwindsOps
     repo_name: gonogo
@@ -2183,17 +2318,59 @@ packages:
   - type: github_release
     repo_owner: Mic-U
     repo_name: ecsher
-    asset: ecsher_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    description: ecsher is CLI tool describing ECS resources like kubectl
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.4.1")
+        asset: ecsher_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.10.0")
+        asset: ecsher_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.14.2")
+        asset: ecsher_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: ecsher_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: MichaelMure
     repo_name: git-bug
@@ -7776,6 +7953,40 @@ packages:
         rosetta2: true
   - type: github_release
     repo_owner: awslabs
+    repo_name: dynein
+    description: DynamoDB CLI written in Rust
+    files:
+      - name: dy
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.2")
+        asset: dynein-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: dynein-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+          linux/amd64: linux
+          linux/arm64: linux-arm
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: dynein-{{.OS}}.{{.Format}}
+            checksum:
+              enabled: false
+  - type: github_release
+    repo_owner: awslabs
     repo_name: eks-node-viewer
     description: EKS Node Viewer
     version_constraint: "false"
@@ -8551,6 +8762,38 @@ packages:
           - darwin
           - amd64
         rosetta2: true
+  - type: github_release
+    repo_owner: bflad
+    repo_name: tfproviderlint
+    description: Terraform Provider Lint Tool
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.28.1")
+        asset: tfproviderlint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: tfproviderlint_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: tfproviderlint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfproviderlint_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: binwiederhier
     repo_name: ntfy
@@ -9877,6 +10120,90 @@ packages:
       - linux/amd64
       - darwin
     rosetta2: true
+  - type: github_release
+    repo_owner: cargo-bins
+    repo_name: cargo-binstall
+    description: Binary installation for rust projects
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["install-cargo-binstall-1.0.0", "v1.4.0"]
+        no_asset: true
+      - version_constraint: semver("<= 0.2.0")
+        asset: cargo-binstall-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.3.0"
+        asset: cargo-binstall-{{.Arch}}-{{.OS}}-{{.Version}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.7.0")
+        asset: cargo-binstall-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            format: tgz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.18.1")
+        asset: cargo-binstall-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            format: tgz
+          - goos: windows
+            replacements:
+              arm64: arm64
+      - version_constraint: "true"
+        asset: cargo-binstall-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            format: tgz
   - type: github_release
     repo_owner: carvel-dev
     repo_name: imgpkg
@@ -13160,6 +13487,57 @@ packages:
     supported_envs:
       - linux/amd64
   - type: github_release
+    repo_owner: containrrr
+    repo_name: shoutrrr
+    description: Notification library for gophers and their furry friends
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.6.1")
+        asset: shoutrrr_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: shoutrrr_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: shoutrrr_{{.OS}}_{{.Arch}}v8.{{.Format}}
+          - goos: windows
+            format: zip
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: semver("<= 0.7.1")
+        asset: shoutrrr_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: shoutrrr_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        replacements:
+          arm64: arm64v8
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - linux
+          - windows
+      - version_constraint: "true"
+        asset: shoutrrr_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: shoutrrr_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux
+          - windows
+  - type: github_release
     repo_owner: controlplaneio
     repo_name: kubectl-kubesec
     description: Security risk analysis for Kubernetes resources
@@ -13630,7 +14008,6 @@ packages:
     repo_name: dagu
     aliases:
       - name: yohamta/dagu
-      - name: dagu-dev/dagu
       - name: hotaruswarm/dagu
     description: Yet another cron alternative with a Web UI, but with much more capabilities. It aims to solve greater problems
     asset: dagu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -17268,13 +17645,33 @@ packages:
   - type: github_release
     repo_owner: fabpot
     repo_name: local-php-security-checker
-    asset: local-php-security-checker_{{trimV .Version}}_{{.OS}}_{{.Arch}}
-    format: raw
     description: PHP security vulnerabilities checker
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.0")
+        asset: local-php-security-checker_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 2.0.6")
+        asset: local-php-security-checker_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: local-php-security-checker_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: fastly
     repo_name: cli
@@ -20630,6 +21027,80 @@ packages:
       type: github_release
       asset: asciigraph_{{trimV .Version}}_sha512-checksums.txt
       algorithm: sha512
+  - type: github_release
+    repo_owner: guumaster
+    repo_name: hostctl
+    description: Your dev tool to manage /etc/hosts like a pro
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.6")
+        asset: hostctl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: hostctl_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.0.8")
+        no_asset: true
+      - version_constraint: semver("<= 1.1.0")
+        asset: hostctl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: hostctl_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.1.2")
+        asset: hostctl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: hostctl_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: hostctl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: hostctl_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: hadolint
     repo_name: hadolint
@@ -24430,6 +24901,63 @@ packages:
         checksum:
           enabled: false
   - type: github_release
+    repo_owner: kaytu-io
+    repo_name: kaytu
+    description: The Kaytu CLI helps you save on cloud costs by finding the perfect server sizes. Kaytu analyzes historical usage and provides tailored recommendations, ensuring you only pay for the resources you need
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.7")
+        asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: kaytu_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: raw
+            asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+      - version_constraint: semver("<= 0.1.1")
+        asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: kaytu_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.4.1")
+        asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: kaytu_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: kaytu_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: kaytu
+                src: "{{.AssetWithoutExt}}/kaytu.exe"
+            checksum:
+              type: github_release
+              asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}_checksum.txt
+              algorithm: sha256
+  - type: github_release
     repo_owner: kcp-dev
     repo_name: kcp
     asset: kcp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -24998,6 +25526,14 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    slsa_provenance:
+      type: github_release
+      asset: multiple.intoto.jsonl
+    version_constraint: semver("> 0.12.0")
+    version_overrides:
+      - version_constraint: 'semver("<=0.12.0")'
+        slsa_provenance:
+          enabled: false
   - type: github_release
     repo_owner: ko1nksm
     repo_name: getoptions
@@ -26890,6 +27426,27 @@ packages:
         asset: kyverno_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         rosetta2: true
   - type: github_release
+    repo_owner: lasiar
+    repo_name: canonicalheader
+    description: Golang linter checking the canonicality of the http header
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: canonicalheader_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: canonicalheader_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
     repo_owner: lc
     repo_name: gau
     description: Fetch known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl
@@ -28093,12 +28650,22 @@ packages:
   - type: github_release
     repo_owner: mashiike
     repo_name: stefunny
-    description: stefunny is a deployment tool for AWS StepFunctions state machine and the accompanying AWS EventBridge rule
-    asset: stefunny_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.8.4")
+        asset: stefunny_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: stefunny_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: stefunny_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: masutaka
     repo_name: github-nippou
@@ -29238,6 +29805,42 @@ packages:
             src: sver_{{.OS}}_{{.Arch}}/sver
         supported_envs:
           - linux/amd64
+  - type: github_release
+    repo_owner: mitsuhiko
+    repo_name: insta
+    description: A snapshot testing library for rust
+    files:
+      - name: cargo-insta
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: cargo-insta-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: cargo-insta
+            src: "{{.AssetWithoutExt}}/cargo-insta"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: cargo-insta
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: mkchoi212
     repo_name: fac
@@ -32704,6 +33307,16 @@ packages:
       type: github_release
       asset: pscale_{{trimV .Version}}_checksums.txt
       algorithm: sha256
+  - type: go_install
+    repo_owner: playwright-community
+    repo_name: playwright-go
+    description: Playwright for Go a browser automation library to control Chromium, Firefox and WebKit with a single API
+    files:
+      - name: playwright
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        path: github.com/playwright-community/playwright-go/cmd/playwright
   - type: github_release
     repo_owner: plexsystems
     repo_name: sinker
