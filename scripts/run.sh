@@ -22,7 +22,7 @@ if [ "$(uname)" = Linux ] && docker version | grep -q Podman; then
 fi
 
 if [ "$(uname)" = Linux ]; then
-	opts+=" -u $(id -u):$(id -g) -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro"
+	opts+=" -u $(id -u -n):$(id -g -n) -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro"
 fi
 
 # shellcheck disable=SC2086
