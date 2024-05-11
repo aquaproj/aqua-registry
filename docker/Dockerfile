@@ -1,9 +1,8 @@
 FROM golang:1.22.3-bookworm@sha256:c2caf8c1c462dfa1cb58a7e8eb3e942d4013a90f42ad4ed2ac2517b37ed4bb8c
 WORKDIR /workspace
-ENV AQUA_ROOT_DIR=/root/aquaproj-aqua
 ENV AQUA_LOG_COLOR=always
 ENV AQUA_POLICY_CONFIG=/workspace/aqua-policy.yaml
-ENV PATH=$AQUA_ROOT_DIR/bin:/root/.cargo/bin:$PATH
+ENV PATH=/root/.local/share/aquaproj-aqua/bin:/root/.cargo/bin:$PATH
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
   apt-get update && \
