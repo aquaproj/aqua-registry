@@ -3420,6 +3420,25 @@ packages:
       - name: go-timeout
         src: timeout_{{.Version}}_{{.OS}}_{{.Arch}}/go-timeout
   - type: github_release
+    repo_owner: StyraInc
+    repo_name: regal
+    description: Regal is a linter for Rego, with the goal of making your Rego magnificent
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: regal_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+  - type: github_release
     repo_owner: TaKO8Ki
     repo_name: frum
     asset: frum-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz
@@ -38738,36 +38757,18 @@ packages:
     repo_owner: suzuki-shunsuke
     repo_name: mkghtag
     description: CLI to create GitHub Tags via API
-    asset: mkghtag_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    slsa_provenance:
-      type: github_release
-      asset: multiple.intoto.jsonl
-    checksum:
-      type: github_release
-      asset: mkghtag_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-      cosign:
-        opts:
-          - --certificate-identity-regexp
-          - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
-          - --certificate-oidc-issuer
-          - "https://token.actions.githubusercontent.com"
-          - --signature
-          - https://github.com/suzuki-shunsuke/mkghtag/releases/download/{{.Version}}/mkghtag_{{trimV .Version}}_checksums.txt.sig
-          - --certificate
-          - https://github.com/suzuki-shunsuke/mkghtag/releases/download/{{.Version}}/mkghtag_{{trimV .Version}}_checksums.txt.pem
-    version_constraint: semver("> 0.1.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.1.0")
+      - version_constraint: "true"
+        asset: mkghtag_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: mkghtag_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
         overrides:
           - goos: windows
             format: zip
-            slsa_provenance:
-              enabled: false
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: nllint
