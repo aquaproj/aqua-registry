@@ -1,0 +1,28 @@
+packages:
+  - type: github_release
+    repo_owner: secretlint
+    repo_name: secretlint
+    description: secretlint - Pluggable linting tool to prevent committing credential.
+    supported_envs:
+      - linux
+      - darwin
+      - amd64
+    asset: secretlint-{{trimV .Version}}-{{.Arch}}-{{.OS}}
+    format: raw
+    checksum:
+      type: github_release
+      asset: secretlint-{{trimV .Version}}-sha256sum.txt
+      algorithm: sha256
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    overrides:
+      - goos: linux
+        replacements:
+          arm64: x86_64
+    rosetta2: true
+    files:
+      - name: secretlint
