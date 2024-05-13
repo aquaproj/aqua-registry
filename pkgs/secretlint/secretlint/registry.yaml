@@ -2,27 +2,98 @@ packages:
   - type: github_release
     repo_owner: secretlint
     repo_name: secretlint
-    description: secretlint - Pluggable linting tool to prevent committing credential.
-    supported_envs:
-      - linux
-      - darwin
-      - amd64
-    asset: secretlint-{{trimV .Version}}-{{.Arch}}-{{.OS}}
-    format: raw
-    checksum:
-      type: github_release
-      asset: secretlint-{{trimV .Version}}-sha256sum.txt
-      algorithm: sha256
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-      windows: pc-windows-msvc
-    overrides:
-      - goos: linux
+    description: Pluggable linting tool to prevent committing credential
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.3.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.7.3")
+        asset: secretlint_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
         replacements:
-          arm64: x86_64
-    rosetta2: true
-    files:
-      - name: secretlint
+          linux: Linux
+          windows: Windows
+        overrides:
+          - goos: windows
+            asset: secretlint_{{.OS}}_NT_{{.Arch}}
+            replacements:
+              amd64: x64
+        supported_envs:
+          - windows
+          - x64
+      - version_constraint: semver("<= 0.10.1")
+        no_asset: true
+      - version_constraint: semver("<= 4.1.0")
+        asset: secretlint_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        overrides:
+          - goos: windows
+            asset: secretlint_{{.OS}}_NT_{{.Arch}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 8.1.2")
+        no_asset: true
+      - version_constraint: Version == "v8.2.0"
+        asset: secretlint_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        replacements:
+          amd64: X64
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "v8.2.1"
+        asset: secretlint_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v8.2.2"
+        asset: secretlint-{{trimV .Version}}-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: secretlint-{{trimV .Version}}-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: secretlint-{{trimV .Version}}-sha256sum.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
