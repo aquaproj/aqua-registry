@@ -35675,23 +35675,31 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 0.3.0")
         no_asset: true
-      - version_constraint: semver("<= 0.7.3")
+      - version_constraint: semver("<= 0.7.2")
         asset: secretlint_{{.OS}}_{{.Arch}}
         format: raw
         rosetta2: true
         windows_arm_emulation: true
         replacements:
           linux: Linux
-          windows: Windows
-        overrides:
-          - goos: windows
-            asset: secretlint_{{.OS}}_NT_{{.Arch}}
-            replacements:
-              amd64: x64
+          windows: Windows_NT
+          darwin: Darwin
+          amd64: x64
         supported_envs:
           - darwin
           - windows
-          - amd64
+          - linux/amd64
+      - version_constraint: Version == "v0.7.3"
+        asset: secretlint_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          linux: Linux
+          windows: Windows_NT
+          amd64: x64
+        supported_envs:
+          - windows/amd64
+          - linux/amd64
       - version_constraint: semver("<= 0.10.1")
         no_asset: true
       - version_constraint: semver("<= 4.1.0")
