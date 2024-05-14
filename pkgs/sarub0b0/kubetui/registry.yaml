@@ -84,8 +84,25 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.5.0")
         asset: kubetui-{{.Arch}}-{{.OS}}-openssl
+        format: raw
+        windows_arm_emulation: true
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: kubetui-{{.Arch}}-{{.OS}}
         format: raw
         windows_arm_emulation: true
         overrides:
