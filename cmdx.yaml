@@ -193,3 +193,21 @@ tasks:
         required: true
         validate:
           - regexp: "^v\\d+\\.\\d+.\\d+(-\\d+)?$"
+
+  - name: resolve-conflict
+    description: Resolve the conflict of registry.yaml
+    usage: Resolve the conflict of registry.yaml
+    script: |
+      set -eu
+      git fetch origin main
+      gh pr checkout {{.pr}}
+      tempfile=$(mktemp)
+      cp registry.yaml "$tempfile"
+      git merge origin/main || :
+      mv "$tempfile" registry.yaml
+      cmdx gr
+      git add registry.yaml
+      git commit
+    args:
+      - name: pr
+        required: true
