@@ -1,0 +1,52 @@
+packages:
+  - type: github_release
+    repo_owner: typst
+    repo_name: typst
+    description: A new markup-based typesetting system that is powerful and easy to learn
+    asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    files:
+      - name: typst
+        src: typst-{{.Arch}}-{{.OS}}/typst
+    overrides:
+      - goos: windows
+        format: zip
+    supported_envs:
+      - darwin
+      - windows
+      - amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver(">= v23-03-21")
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+      - version_constraint: semver("<= 0.2.0")
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+      - version_constraint: semver("<= 0.5.0")
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+      - version_constraint: "true"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
