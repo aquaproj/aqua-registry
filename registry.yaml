@@ -41646,6 +41646,12 @@ packages:
         files:
           - name: typst
             src: typst-{{.Arch}}-{{.OS}}/typst
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
         overrides:
           - goos: windows
             format: zip
@@ -41653,18 +41659,19 @@ packages:
           - darwin
           - windows
           - amd64
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-musl
-          windows: pc-windows-msvc
       - version_constraint: "true"
         asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
+        windows_arm_emulation: true
         files:
           - name: typst
             src: typst-{{.Arch}}-{{.OS}}/typst
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
         overrides:
           - goos: windows
             format: zip
@@ -41672,13 +41679,6 @@ packages:
           - darwin
           - windows
           - amd64
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-musl
-          windows: pc-windows-msvc
   - type: go_install
     repo_owner: uber-go
     repo_name: mock
