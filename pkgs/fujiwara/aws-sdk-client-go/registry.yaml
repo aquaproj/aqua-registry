@@ -1,0 +1,26 @@
+packages:
+  - type: github_release
+    repo_owner: fujiwara
+    repo_name: aws-sdk-client-go
+    description: A simplified alternative to the AWS CLI for limited use cases
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.7")
+        asset: aws-sdk-client-go_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+      - version_constraint: "true"
+        asset: aws-sdk-client-go_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
