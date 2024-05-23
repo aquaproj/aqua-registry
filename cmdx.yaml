@@ -22,9 +22,13 @@ tasks:
       - name: cmd
         type: string
         usage: A list of commands joined with commas ','
+        script_envs:
+          - CMD
       - name: limit
         type: string
         usage: The maximum number of versions
+        script_envs:
+          - LIMIT
     shell:
       - "bash"
       - "-c"
@@ -33,15 +37,21 @@ tasks:
       if [ "{{.recreate}}" = true ]; then
         cmdx rm
       fi
+      bash scripts/checkout.sh "$PACKAGE"
+      bash scripts/check_gpgsign.sh
+      bash scripts/check_diff.sh
       bash scripts/start.sh
-      bash scripts/scaffold.sh "{{.package}}" "{{.cmd}}" "{{.limit}}"
-      bash scripts/test.sh "{{.package}}"
+      bash scripts/scaffold.sh "$PACKAGE" "$CMD" "$LIMIT"
+      bash scripts/commit.sh "$PACKAGE"
+      bash scripts/test.sh "$PACKAGE"
       bash scripts/start.sh aqua-registry-windows
-      bash scripts/test-windows.sh "{{.package}}"
+      bash scripts/test-windows.sh "$PACKAGE"
     args:
       - name: package
         usage: a package name. e.g. `cli/cli`
         required: true
+        script_envs:
+          - PACKAGE
 
   - name: test
     short: t
