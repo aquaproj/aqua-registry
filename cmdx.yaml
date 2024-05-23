@@ -42,6 +42,7 @@ tasks:
       bash scripts/check_diff.sh
       bash scripts/start.sh
       bash scripts/scaffold.sh "$PACKAGE" "$CMD" "$LIMIT"
+      cmdx gr
       bash scripts/commit.sh "$PACKAGE"
       bash scripts/test.sh "$PACKAGE"
       bash scripts/start.sh aqua-registry-windows
@@ -139,11 +140,16 @@ tasks:
       e.g.
 
       $ cmdx new cli/cli
-    script: aqua exec -- aqua-registry create-pr-new-pkg "{{.package}}"
+    script: |
+      set -euo pipefail
+      bash scripts/check_diff_package.sh
+      pkg=$(bash scripts/get_pkg_from_branch.sh "$PACKAGE")
+      aqua exec -- aqua-registry create-pr-new-pkg "$pkg"
     args:
       - name: package
-        required: true
         usage: a package name. e.g. cli/cli
+        script_envs:
+          - PACKAGE
 
   - name: stop
     usage: Stop containers
