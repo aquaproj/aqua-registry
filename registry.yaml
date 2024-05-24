@@ -38944,14 +38944,17 @@ packages:
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
-          darwin: mac
+          darwin: mac-os
         checksum:
           type: github_release
-          asset: stripe-checksums.txt
+          asset: stripe-{{.OS}}-checksums.txt
           algorithm: sha256
         overrides:
           - goos: darwin
-            asset: stripe_{{trimV .Version}}_{{.OS}}-os_{{.Arch}}.{{.Format}}
+            checksum:
+              type: github_release
+              asset: stripe-checksums.txt
+              algorithm: sha256
           - goos: windows
             format: zip
         supported_envs:
