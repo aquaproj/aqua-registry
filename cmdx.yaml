@@ -19,6 +19,8 @@ tasks:
         short: r
         type: bool
         usage: Recreate the container
+        script_envs:
+          - IS_RECREATE
       - name: cmd
         type: string
         usage: A list of commands joined with commas ','
@@ -34,15 +36,19 @@ tasks:
       - "-c"
     script: |
       set -eu
-      if [ "{{.recreate}}" = true ]; then
-        cmdx rm
-      fi
+
+      bash scripts/check_command.sh
       bash scripts/check_gpgsign.sh
       bash scripts/check_diff.sh
       bash scripts/checkout.sh "$PACKAGE"
+
+      if [ "$IS_RECREATE" = true ]; then
+        aqua exec -- cmdx rm
+      fi
+
       bash scripts/start.sh
       bash scripts/scaffold.sh "$PACKAGE" "$CMD" "$LIMIT"
-      cmdx gr
+      aqua exec -- cmdx gr
       bash scripts/commit.sh "$PACKAGE"
       bash scripts/test.sh "$PACKAGE"
       bash scripts/start.sh aqua-registry-windows
@@ -71,22 +77,26 @@ tasks:
         short: r
         type: bool
         usage: Recreate the container
+        script_envs:
+          - IS_RECREATE
     args:
       - name: package
         usage: a package name. e.g. `cli/cli`
         required: true
+        script_envs:
+          - PACKAGE
     shell:
       - "bash"
       - "-c"
     script: |
       set -eu
-      if [ "{{.recreate}}" = true ]; then
+      if [ "$IS_RECREATE" = true ]; then
         cmdx rm
       fi
       bash scripts/start.sh
-      bash scripts/test.sh "{{.package}}"
+      bash scripts/test.sh "$PACKAGE"
       bash scripts/start.sh aqua-registry-windows
-      bash scripts/test-windows.sh "{{.package}}"
+      bash scripts/test-windows.sh "$PACKAGE"
       aqua exec -- aqua-registry gr
 
   - name: connect
@@ -185,12 +195,14 @@ tasks:
         short: r
         type: bool
         usage: Recreate the container
+        script_envs:
+          - IS_RECREATE
     shell:
       - "bash"
       - "-c"
     script: |
       set -eu
-      if [ "{{.recreate}}" = true ]; then
+      if [ "$IS_RECREATE" = true ]; then
         cmdx rm
       fi
       bash scripts/start.sh
@@ -202,11 +214,13 @@ tasks:
     usage: Release the new version
     script: |
       set -eu
-      git tag -m "chore: release {{.version}}" "{{.version}}"
-      git push origin "{{.version}}"
+      git tag -m "chore: release $VERSION" "$VERSION"
+      git push origin "$VERSION"
     args:
       - name: version
         required: true
+        script_envs:
+          - VERSION
         validate:
           - regexp: "^v\\d+\\.\\d+.\\d+(-\\d+)?$"
 
