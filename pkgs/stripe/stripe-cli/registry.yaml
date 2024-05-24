@@ -27,23 +27,20 @@ packages:
           - windows
           - amd64
       - version_constraint: semver("<= 1.5.9")
-        asset: stripe_{{trimV .Version}}_{{.OS}}-os_{{.Arch}}.{{.Format}}
+        asset: stripe_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
-          darwin: mac
+          darwin: mac-os
         checksum:
           type: github_release
           asset: stripe-checksums.txt
           algorithm: sha256
         overrides:
-          - goos: linux
-            asset: stripe_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
           - goos: windows
             format: zip
-            asset: stripe_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         supported_envs:
           - darwin
           - windows
