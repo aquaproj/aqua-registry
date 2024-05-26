@@ -30,6 +30,13 @@ jobs:
         with:
           app_id: ${{secrets.APP_ID}}
           private_key: ${{secrets.APP_PRIVATE_KEY}}
+          repositories: >-
+            ["${{github.event.repository.name}}"]
+          permissions: >-
+            {
+              "contents": "write",
+              "pull_requests": "write"
+            }
       - run: aqua-registry-updater
         env:
           AQUA_REGISTRY_UPDATER_CONTAINER_REGISTRY_TOKEN: ${{github.token}}
