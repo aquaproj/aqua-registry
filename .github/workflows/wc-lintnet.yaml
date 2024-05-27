@@ -1,11 +1,13 @@
 ---
-name: wc-ci-info
+name: wc-lintnet
 on: workflow_call
+env:
+  AQUA_LOG_COLOR: always
 jobs:
-  ci-info:
+  lintnet:
     runs-on: ubuntu-latest
     env:
-      AQUA_CONFIG: aqua/ci-info.yaml
+      AQUA_CONFIG: aqua-all.yaml
     permissions: {}
     steps:
       - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
@@ -15,7 +17,7 @@ jobs:
           policy_allow: "true"
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
-      - uses: suzuki-shunsuke/ci-info-action/store@ceeb10dd50cd632db31e7eccf92cbbb6856f3191 # v0.1.3
+
+      - run: lintnet lint
         env:
           GITHUB_TOKEN: ${{github.token}}
-      - run: echo "https://github.com/aquaproj/aqua-registry/pull/$CI_INFO_PR_NUMBER" >> "$GITHUB_STEP_SUMMARY"
