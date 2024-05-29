@@ -7978,8 +7978,12 @@ packages:
           asset: checksums.txt
           algorithm: sha256
         overrides:
+          # NOTE:
+          # musl version exists for linux,
+          # but it is dynamically linked to musl libc
+          # and therefore doesn't work on glibc systems
           - goos: linux
-            asset: zed_{{trimV .Version}}_{{.OS}}_{{.Arch}}_musl.{{.Format}}
+            asset: zed_{{trimV .Version}}_{{.OS}}_{{.Arch}}_gnu.{{.Format}}
   - type: github_release
     repo_owner: aws-cloudformation
     repo_name: rain
