@@ -2,6 +2,10 @@
 
 set -eu
 
+if [ "$NO_CREATE_BRANCH" = true ]; then
+    exit 0
+fi
+
 pkg=$1
 branch=feat/$pkg
 

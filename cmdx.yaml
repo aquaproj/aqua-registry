@@ -21,6 +21,12 @@ tasks:
         usage: Recreate the container
         script_envs:
           - IS_RECREATE
+      - name: no-create-branch
+        short: B
+        type: bool
+        usage: Don't create a branch
+        script_envs:
+          - NO_CREATE_BRANCH
       - name: cmd
         type: string
         usage: A list of commands joined with commas ','
@@ -150,11 +156,8 @@ tasks:
       e.g.
 
       $ cmdx new cli/cli
-    shell:
-      - "bash"
-      - "-c"
     script: |
-      set -euo pipefail
+      set -eu
       bash scripts/check_diff_package.sh
       pkg=$(bash scripts/get_pkg_from_branch.sh "$PACKAGE")
       aqua exec -- aqua-registry create-pr-new-pkg "$pkg"
