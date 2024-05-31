@@ -34923,7 +34923,9 @@ packages:
       - name: benthosdev/benthos
     description: Fancy stream processing made operationally mundane
     files:
+      # At v4.28.0, the binary is renamed from benthos to redpanda-connect
       - name: benthos
+      - name: redpanda-connect
     version_constraint: "false"
     version_overrides:
       # v0.10.7 and v0.11.1 doesn't work
@@ -34934,6 +34936,8 @@ packages:
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: benthos
         supported_envs:
           - darwin
           - windows
@@ -34943,6 +34947,8 @@ packages:
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: benthos
         checksum:
           type: github_release
           asset: benthos_{{trimV .Version}}_checksums.txt
@@ -34956,6 +34962,8 @@ packages:
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: benthos
         checksum:
           type: github_release
           asset: benthos_{{trimV .Version}}_checksums.txt
@@ -34964,16 +34972,29 @@ packages:
         asset: benthos_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
+        files:
+          - name: benthos
+        checksum:
+          type: github_release
+          asset: benthos_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 4.27.0")
+        asset: benthos_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: benthos
         checksum:
           type: github_release
           asset: benthos_{{trimV .Version}}_checksums.txt
           algorithm: sha256
       - version_constraint: "true"
-        asset: benthos_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        asset: redpanda-connect_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: redpanda-connect
         checksum:
           type: github_release
-          asset: benthos_{{trimV .Version}}_checksums.txt
+          asset: redpanda-connect_{{trimV .Version}}_checksums.txt
           algorithm: sha256
   - name: regclient/regclient/regbot
     type: github_release
