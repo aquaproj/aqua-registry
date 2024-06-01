@@ -8,7 +8,7 @@ function(param) {
       ],
       modules: [
         {
-          path: 'github_archive/github.com/lintnet-modules/nllint/main.jsonnet@8cfc4eae68ec93f9b92d9048ce51b0d9646c976c:v0.1.0',
+          path: 'github_archive/github.com/lintnet-modules/nllint/main.jsonnet@a36d23d28936a85df8cad6e831c16854e9e2caa6:v0.2.0',
           config: {
             trim_space: true,
           },
