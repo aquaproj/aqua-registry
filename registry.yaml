@@ -38831,6 +38831,23 @@ packages:
       - amd64
       - darwin
   - type: github_release
+    repo_owner: stacklok
+    repo_name: frizbee
+    description: Throw a tag at and it comes back with a checksum
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: frizbee_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: frizbee_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: stackrox
     repo_name: kube-linter
     description: KubeLinter is a static analysis tool that checks Kubernetes YAML files and Helm charts to ensure the applications represented in them adhere to best practices
