@@ -5,10 +5,22 @@ packages:
     description: Throw a tag at and it comes back with a checksum
     version_constraint: "false"
     version_overrides:
+      - version_constraint: Version == "v0.0.1"
+        asset: frizbee_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: frizbee_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: frizbee_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-        complete_windows_ext: false
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
         checksum:
           type: github_release
           asset: frizbee_{{trimV .Version}}_checksums.txt
