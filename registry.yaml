@@ -20576,6 +20576,13 @@ packages:
           type: github_release
           asset: misspell_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+      - version_constraint: semver("<= 0.5.1")
+        asset: misspell_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: misspell_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: misspell_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -20583,6 +20590,9 @@ packages:
           type: github_release
           asset: misspell_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: gomods
     repo_name: athens
