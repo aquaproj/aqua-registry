@@ -20589,13 +20589,26 @@ packages:
           type: github_release
           asset: misspell_{{trimV .Version}}_checksums.txt
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.5.1")
         asset: misspell_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
           type: github_release
           asset: misspell_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+      - version_constraint: "true"
+        asset: misspell_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: misspell
+            src: "{{.AssetWithoutExt}}/misspell"
+        checksum:
+          type: github_release
+          asset: misspell_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: gomods
     repo_name: athens
@@ -32173,11 +32186,14 @@ packages:
     aliases:
       - name: deepmap/oapi-codegen
     description: Generate Go client and server boilerplate from OpenAPI 3 specifications
-    path: github.com/deepmap/oapi-codegen/v{{(semver .Version).Major}}/cmd/oapi-codegen
-    version_constraint: semver(">= 2.0.0")
+    version_constraint: "false"
     version_overrides:
       - version_constraint: semver("< 2.0.0")
         path: github.com/deepmap/oapi-codegen/cmd/oapi-codegen
+      - version_constraint: semver("<= 2.2.0")
+        path: github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen
+      - version_constraint: "true"
+        path: github.com/oapi-codegen/oapi-codegen/v{{(semver .Version).Major}}/cmd/oapi-codegen
   - type: github_release
     repo_owner: oberblastmeister
     repo_name: trashy

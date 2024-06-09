@@ -18,6 +18,7 @@ fi
 
 if [ -n "$pkg" ]; then
     echo "$pkg"
+    exit 0
 fi
 
 echo ${current_branch#feat/}
