@@ -102,7 +102,6 @@ packages:
         asset: maven-mvnd-{{.Version}}-m39-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
-        complete_windows_ext: false
         files:
           - name: mvnd
             src: "{{.AssetWithoutExt}}/bin/mvnd"
@@ -116,8 +115,21 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: Version == "1.0-m8"
         asset: maven-mvnd-{{.Version}}-m39-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: mvnd
+            src: "{{.AssetWithoutExt}}/bin/mvnd"
+        replacements:
+          arm64: aarch64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: maven-mvnd-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
         files:
