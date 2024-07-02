@@ -24349,6 +24349,7 @@ packages:
         supported_envs:
           - darwin
       - version_constraint: Version == "0.4"
+        no_asset: true
       - version_constraint: semver("<= 0.8")
         asset: minisign-{{.OS}}.{{.Format}}
         format: zip
@@ -24378,9 +24379,18 @@ packages:
         replacements:
           darwin: macos
           windows: win64
+          amd64: x86_64
+          arm64: aarch64
         overrides:
           - goos: linux
             format: tar.gz
+            files:
+              - name: minisign
+                src: minisign-{{.OS}}/{{.Arch}}/minisign
+          - goos: windows
+            files:
+              - name: minisign
+                src: minisign-win64/minisign.exe
         supported_envs:
           - darwin
           - windows
