@@ -2890,6 +2890,29 @@ packages:
               - name: hurl
               - name: hurlfmt
   - type: github_release
+    repo_owner: Owloops
+    repo_name: updo
+    description: Uptime monitoring CLI tool with alerting and advanced settings
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.2")
+        no_asset: true
+      - version_constraint: "true"
+        asset: updo_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: updo_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: PaddiM8
     repo_name: kalker
     description: Kalker is a calculator program that supports user-defined variables, functions, differentiation, and integration
