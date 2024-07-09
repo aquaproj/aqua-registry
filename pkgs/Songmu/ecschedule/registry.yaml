@@ -8,18 +8,26 @@ packages:
     supported_envs:
       - darwin
       - linux
+      - windows
     files:
       - name: ecschedule
         src: ecschedule_{{.Version}}_{{.OS}}_{{.Arch}}/ecschedule
     overrides:
       - goos: darwin
         format: zip
+      - goos: windows
+        format: zip
     checksum:
       type: github_release
       asset: SHA256SUMS
       algorithm: sha256
-    version_constraint: semver(">= 0.7.0")
+    version_constraint: semver(">= 0.12.0")
     version_overrides:
+      # windows wasn't supported
+      - version_constraint: semver(">= 0.7.0")
+        supported_envs:
+          - darwin
+          - linux
       # darwin/amd64 wasn't supported
       - version_constraint: semver("= 0.5.1")
         checksum:
@@ -31,6 +39,9 @@ packages:
       - version_constraint: semver(">= 0.3.2")
         checksum:
           enabled: false
+        supported_envs:
+          - darwin
+          - linux
       # arm64 wasn't supported
       - version_constraint: "true"
         supported_envs:
