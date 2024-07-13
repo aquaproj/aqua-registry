@@ -3,18 +3,21 @@ packages:
     repo_owner: ziglang
     repo_name: zig
     description: General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
-    link: https://ziglang.org/
     url: https://ziglang.org/download/{{.Version}}/zig-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+    format: tar.xz
+    version_source: github_tag
+    files:
+      - name: zig
+        src: zig-{{.OS}}-{{.Arch}}-{{.Version}}/zig
+    minisign:
+      type: http
+      url: https://ziglang.org/builds/zig-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}.minisig
+      public_key: "RWSGOq2NVecA2UPNdBUZykf1CCb147pkmdtYxgb3Ti+JO/wCYvhbAb/U"
     replacements:
       darwin: macos
       386: i386
       arm64: aarch64
       amd64: x86_64
-    files:
-      - name: zig
-        src: zig-{{.OS}}-{{.Arch}}-{{.Version}}/zig
-    format: tar.xz
     overrides:
       - goos: windows
         format: zip
-    version_source: github_tag
