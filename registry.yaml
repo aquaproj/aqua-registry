@@ -14687,7 +14687,7 @@ packages:
         windows_arm_emulation: true
         supported_envs:
           - linux/amd64
-          - windows/amd64
+          - windows
       - version_constraint: semver("<= 1.9")
         asset: kubeletctl_{{.OS}}_{{.Arch}}
         format: raw
@@ -14703,7 +14703,7 @@ packages:
         windows_arm_emulation: true
         supported_envs:
           - linux/amd64
-          - windows/amd64
+          - windows
       - version_constraint: Version == "v1.11"
         asset: kubeletctl_{{.OS}}_{{.Arch}}
         format: raw
@@ -14717,8 +14717,10 @@ packages:
         asset: kubeletctl_{{.OS}}_{{.Arch}}
         format: raw
         windows_arm_emulation: true
-        replacements:
-          amd64: x64
+        overrides:
+          - goos: windows
+            replacements:
+              amd64: x64
   - type: github_release
     repo_owner: cybozu
     repo_name: assam
