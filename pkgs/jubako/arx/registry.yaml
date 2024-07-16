@@ -10,6 +10,9 @@ packages:
       - version_constraint: "true"
         asset: arx-{{.Version}}-{{.OS}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: arx
+            src: arx-{{.Version}}-{{.OS}}/arx
         rosetta2: true
         windows_arm_emulation: true
         replacements:
@@ -21,6 +24,16 @@ packages:
         overrides:
           - goos: windows
             format: zip
+            files:
+              - name: arx
+                src: arx-{{.Version}}-{{.OS}}/arx.exe
+            checksum:
+              type: github_release
+              file_format: regexp
+              asset: "{{.Asset}}.sha256"
+              algorithm: sha256
+              pattern:
+                checksum: ^(\b[A-Fa-f0-9]{64}\b)
         supported_envs:
           - darwin
           - windows
