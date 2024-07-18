@@ -26174,6 +26174,30 @@ packages:
     repo_name: terrafmt
     description: Format terraform blocks embedded in files
   - type: github_release
+    repo_owner: kattouf
+    repo_name: ProgressLine
+    description: Track commands progress in a compact one-line format
+    files:
+      - name: progressline
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: progressline-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: darwin
+            asset: progressline-{{.Arch}}-{{.OS}}-macosx.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: kayac
     repo_name: ecspresso
     asset: ecspresso_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
