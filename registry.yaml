@@ -45063,6 +45063,66 @@ packages:
         version_prefix: cli-
         rosetta2: true
   - type: github_release
+    repo_owner: weaviate
+    repo_name: weaviate
+    description: Weaviate is an open-source vector database that stores both objects and vectors, allowing for the combination of vector search with structured filtering with the fault tolerance and scalability of a cloud-native database​
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.18.0-rc.0") || Version == "v1.18.6"
+        no_asset: true
+      - version_constraint: Version == "v1.22.1"
+        asset: weaviate-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        overrides:
+          - goos: darwin
+            asset: weaviate-v1.21.1-{{.OS}}-all.{{.Format}}
+            format: zip
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.19.5") || Version == "v1.19.13"
+        asset: weaviate-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        supported_envs:
+          - linux
+      - version_constraint: semver("<= 1.20.6")
+        asset: weaviate-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        overrides:
+          - goos: darwin
+            asset: weaviate-{{.Version}}-{{.OS}}-all.{{.Format}}
+            format: zip
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: weaviate-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        overrides:
+          - goos: darwin
+            asset: weaviate-{{.Version}}-{{.OS}}-all.{{.Format}}
+            format: zip
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: webdevops
     repo_name: go-crond
     description: Cron daemon written in golang (for eg. usage in docker images)
