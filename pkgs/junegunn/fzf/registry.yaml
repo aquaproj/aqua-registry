@@ -52,7 +52,7 @@ packages:
         overrides:
           - goos: linux
             format: tar.gz
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.54.1")
         asset: fzf-{{trimV .Version}}-{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
         checksum:
@@ -62,3 +62,13 @@ packages:
         overrides:
           - goos: linux
             format: tar.gz
+      - version_constraint: "true"
+        asset: fzf-{{trimV .Version}}-{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          type: github_release
+          asset: fzf_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
