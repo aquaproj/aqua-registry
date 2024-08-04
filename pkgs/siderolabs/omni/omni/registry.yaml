@@ -1,0 +1,30 @@
+packages:
+  - name: siderolabs/omni/omni
+    type: github_release
+    repo_owner: siderolabs
+    repo_name: omni
+    description: SaaS-simple deployment of Kubernetes - on your own hardware
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.31.2")
+        asset: omni-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha512sum.txt
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            asset: omnictl-{{.OS}}-{{.Arch}}
+      - version_constraint: "true"
+        asset: omni-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: omnictl-{{.OS}}-{{.Arch}}
