@@ -45159,6 +45159,8 @@ packages:
         asset: notion-{{trimV .Version}}-{{.OS}}.sh
         format: raw
         rosetta2: true
+        files:
+          - name: notion
         replacements:
           darwin: macos
         supported_envs:
@@ -45168,6 +45170,8 @@ packages:
         asset: notion-{{trimV .Version}}-{{.OS}}-openssl-1.0.sh
         format: raw
         rosetta2: true
+        files:
+          - name: notion
         replacements:
           darwin: macos
         overrides:
@@ -45182,6 +45186,8 @@ packages:
         rosetta2: true
         replacements:
           darwin: macos
+        files:
+          - name: notion
         overrides:
           - goos: darwin
             asset: notion-{{trimV .Version}}-{{.OS}}.{{.Format}}
@@ -45281,25 +45287,20 @@ packages:
           - windows
           - amd64
       - version_constraint: "true"
-        asset: volta-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: zip
-        rosetta2: true
+        asset: volta-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
         replacements:
           darwin: macos
         overrides:
           - goos: linux
-            format: tar.gz
+            goarch: arm64
             asset: volta-{{trimV .Version}}-{{.OS}}-arm.{{.Format}}
-          - goos: darwin
-            format: tar.gz
-            asset: volta-{{trimV .Version}}-{{.OS}}.{{.Format}}
           - goos: windows
-            goarch: amd64
-            asset: volta-{{trimV .Version}}-{{.OS}}.{{.Format}}
-        supported_envs:
-          - linux/amd64
-          - darwin
-          - windows
+            format: zip
+          - goos: windows
+            goarch: arm64
+            asset: volta-{{trimV .Version}}-{{.OS}}-arm64.{{.Format}}
+            format: zip
   - type: github_release
     repo_owner: wader
     repo_name: fq
