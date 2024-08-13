@@ -5208,38 +5208,30 @@ packages:
   - type: github_release
     repo_owner: abiosoft
     repo_name: colima
-    description: Docker (and Kubernetes) on MacOS with minimal setup
-    format: raw
-    version_constraint: semver(">= 0.3.0")
-    asset: colima-{{.OS}}-{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      amd64: x86_64
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256sum"
-      algorithm: sha256
-    overrides:
-      - goos: linux
-        replacements:
-          arm64: aarch64
+    description: Container runtimes on macOS (and Linux) with minimal setup
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.2.0")
-        asset: colima-amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-        supported_envs:
-          - darwin
+      - version_constraint: semver("<= 0.1.10")
+        no_asset: true
+      - version_constraint: semver("<= 0.2.2")
       - version_constraint: "true"
-        type: github_content
-        path: colima
+        asset: colima-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
         checksum:
-          enabled: false
+          type: github_release
+          asset: colima-{{.OS}}-{{.Arch}}.sha256sum
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: abs-lang
     repo_name: abs
