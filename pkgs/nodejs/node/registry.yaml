@@ -1,9 +1,38 @@
 packages:
-  - type: github_release
+  - type: http
     repo_owner: nodejs
     repo_name: node
-    description: Node.js JavaScript runtime
+    description: |
+      Node.js JavaScript runtime
+
+      # Setup
+
+      To execute tools installed by npm, you need to add the following to your PATH:
+
+      ```sh
+      export PATH="$(dirname "$(aqua which node)"):$PATH"
+      ```
     version_constraint: "false"
     version_overrides:
       - version_constraint: "true"
-        no_asset: true
+        url: https://nodejs.org/dist/{{.Version}}/node-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+          windows: win
+        files:
+          - name: corepack
+            src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/corepack
+          - name: node
+            src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/node
+          - name: npm
+            src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npm
+          - name: npx
+            src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npx
+        overrides:
+          - goos: windows
+            format: zip
+        # TODO: Support Windows
+        supported_envs:
+          - darwin
+          - linux
