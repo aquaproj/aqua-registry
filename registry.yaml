@@ -33607,7 +33607,9 @@ packages:
       To execute tools installed by npm, you need to add the following to your PATH:
 
       ```sh
-      export PATH="$(dirname "$(aqua which node)"):$PATH"
+      if node_path="$(dirname "$(aqua which node)" | grep aquaproj)"; then
+        export PATH="$node_path:$PATH"
+      fi
       ```
     version_constraint: "false"
     version_overrides:
