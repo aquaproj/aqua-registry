@@ -24127,6 +24127,38 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+  - type: github_release
+    repo_owner: indygreg
+    repo_name: python-build-standalone
+    description: Produce redistributable builds of Python
+    asset: cpython-3.11.9+{{.Version}}-{{.Arch}}-{{.OS}}-debug-full.{{.Format}}
+    format: tar.zst
+    windows_arm_emulation: true
+    overrides:
+      - goos: linux
+        goarch: amd64
+        replacements:
+          linux: unknown-linux-musl
+      - goos: linux
+        goarch: arm64
+        replacements:
+          linux: unknown-linux-gnu
+      - goos: windows
+        format: tar.gz
+        asset: cpython-3.11.9+{{.Version}}-{{.Arch}}-{{.OS}}-install_only.{{.Format}}
+        replacements:
+          arm64: arm64
+    files:
+      - name: python
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      windows: pc-windows-msvc
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      algorithm: sha256
   - type: http
     repo_owner: influxdata
     repo_name: influx-cli
