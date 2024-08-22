@@ -8215,8 +8215,11 @@ packages:
     repo_name: uv
     description: An extremely fast Python package installer and resolver, written in Rust
     version_constraint: "false"
+    files:
+      - name: uv
+      - name: uvx
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.2.19")
         asset: uv-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -8238,6 +8241,59 @@ packages:
             format: zip
             files:
               - name: uv
+            replacements:
+              arm64: arm64
+      - version_constraint: Version == "0.2.20"
+        asset: uv-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: uv
+            src: "{{.AssetWithoutExt}}/uv"
+          - name: uvx
+            src: "{{.AssetWithoutExt}}/uvx"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: uv
+            replacements:
+              arm64: arm64
+      - version_constraint: "true"
+        asset: uv-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: uv
+            src: "{{.AssetWithoutExt}}/uv"
+          - name: uvx
+            src: "{{.AssetWithoutExt}}/uvx"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: uv
+              - name: uvx
             replacements:
               arm64: arm64
   - type: github_release
