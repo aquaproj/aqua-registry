@@ -3,9 +3,27 @@ packages:
     repo_owner: indygreg
     repo_name: python-build-standalone
     description: Produce redistributable builds of Python
-    asset: cpython-3.11.9+{{.Version}}-{{.Arch}}-{{.OS}}-debug-full.{{.Format}}
-    format: tar.zst
+    asset: cpython-3.11.9+{{.Version}}-{{.Arch}}-{{.OS}}-install_only.{{.Format}}
+    format: tar.gz
     windows_arm_emulation: true
+    files:
+      - name: python
+        src: python/bin/python
+      - name: python3
+        src: python/bin/python3
+      - name: pip
+        src: python/bin/pip
+      - name: pip3
+        src: python/bin/pip3
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      windows: pc-windows-msvc
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      algorithm: sha256
     overrides:
       - goos: linux
         goarch: amd64
@@ -16,18 +34,5 @@ packages:
         replacements:
           linux: unknown-linux-gnu
       - goos: windows
-        format: tar.gz
-        asset: cpython-3.11.9+{{.Version}}-{{.Arch}}-{{.OS}}-install_only.{{.Format}}
         replacements:
           arm64: arm64
-    files:
-      - name: python
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      windows: pc-windows-msvc
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
