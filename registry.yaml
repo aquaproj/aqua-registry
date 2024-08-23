@@ -33602,24 +33602,15 @@ packages:
     description: |
       Node.js JavaScript runtime
 
-      # Setup
+      ## How to set up
 
-      To execute tools installed by npm, you need to run the following command:
-
-      ```sh
-      eval "$(aqua set-shell <shell name>)"
-      ```
-
-      e.g. .bashrc
-
-      ```sh
-      eval "$(aqua set-shell bash)"
-      ```
+      Please see https://aquaproj.github.io/docs/reference/nodejs-support
     version_constraint: "false"
     version_overrides:
       - version_constraint: "true"
         url: https://nodejs.org/dist/{{.Version}}/node-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        windows_arm_emulation: true
         replacements:
           amd64: x64
           windows: win
@@ -33632,9 +33623,6 @@ packages:
             src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npm
           - name: npx
             src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npx
-        shell:
-          env:
-            PATH: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin
         overrides:
           - goos: windows
             format: zip
@@ -33650,7 +33638,6 @@ packages:
         supported_envs:
           - darwin
           - linux
-          - amd64
   - type: github_release
     repo_owner: nojima
     repo_name: httpie-go
