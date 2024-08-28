@@ -2,25 +2,112 @@ packages:
   - type: github_release
     repo_owner: ollama
     repo_name: ollama
-    aliases:
-      - name: jmorganca/ollama
-    description: Get up and running with Llama 2 and other large language models locally
-    asset: ollama-{{.OS}}-{{.Arch}}
-    format: raw
-    supported_envs:
-      - linux
-      - darwin
-    overrides:
-      - goos: darwin
-        asset: ollama-{{.OS}}
-    version_constraint: semver(">= 0.1.0")
+    description: Get up and running with Llama 3.1, Mistral, Gemma 2, and other large language models
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.0.13")
-        supported_envs:
-          - darwin
-      - version_constraint: semver("< 0.0.13")
+      - version_constraint: semver("<= 0.0.12")
+        asset: Ollama-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
         supported_envs:
           - darwin/arm64
+      - version_constraint: semver("<= 0.0.21")
+        asset: Ollama-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 0.1.24")
+        asset: Ollama-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
         overrides:
-          - goos: darwin
+          - goos: linux
+            format: raw
             asset: ollama-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.1.28")
+        asset: OllamaSetup
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            asset: ollama-{{.OS}}-{{.Arch}}
+          - goos: darwin
+            format: zip
+            asset: Ollama-{{.OS}}.{{.Format}}
+      - version_constraint: Version == "v0.1.29"
+        asset: ollama-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            goarch: amd64
+            format: tgz
+            asset: ollama-{{.OS}}-{{.Arch}}-rocm.{{.Format}}
+          - goos: darwin
+            format: zip
+            asset: Ollama-{{.OS}}.{{.Format}}
+          - goos: windows
+            asset: OllamaSetup
+      - version_constraint: semver("<= 0.1.32")
+        asset: ollama-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            format: tgz
+            asset: ollama-{{.OS}}-{{.Arch}}-rocm.{{.Format}}
+          - goos: darwin
+            format: zip
+            asset: Ollama-{{.OS}}.{{.Format}}
+          - goos: windows
+            asset: OllamaSetup
+      - version_constraint: semver("<= 0.3.6")
+        asset: Ollama-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            format: tgz
+            asset: ollama-{{.OS}}-{{.Arch}}-rocm.{{.Format}}
+          - goos: linux
+            goarch: arm64
+            format: raw
+            asset: ollama-{{.OS}}-{{.Arch}}
+          - goos: windows
+            asset: ollama-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: "true"
+        asset: ollama-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            format: tgz
+            asset: ollama-{{.OS}}-{{.Arch}}-rocm.{{.Format}}
+          - goos: linux
+            goarch: arm64
+            format: tgz
+          - goos: darwin
+            asset: Ollama-{{.OS}}.{{.Format}}
