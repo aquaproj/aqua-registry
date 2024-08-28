@@ -5,78 +5,12 @@ packages:
     description: A modern and intuitive terminal-based text editor
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 1.0rc1")
-        asset: micro-{{.Version}}-{{.OS}}64.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          darwin: osx
-          windows: win64
-        overrides:
-          - goos: linux
-            replacements:
-              amd64: x64
-          - goos: darwin
-            asset: micro-{{.Version}}-{{.OS}}.{{.Format}}
-          - goos: windows
-            format: zip
-            asset: micro-{{.Version}}-{{.OS}}.{{.Format}}
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: Version == "nightly"
-        asset: micro-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tgz
-        windows_arm_emulation: true
-        complete_windows_ext: false
-        replacements:
-          windows: win64
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: micro-{{.Version}}-{{.OS}}64-static.{{.Format}}
-            replacements:
-              amd64: x64
-          - goos: darwin
-            goarch: amd64
-            asset: micro-{{.Version}}-{{.OS}}.{{.Format}}
-            replacements:
-              darwin: osx
-          - goos: darwin
-            goarch: arm64
-            replacements:
-              darwin: macos
-          - goos: windows
-            format: zip
-            asset: micro-{{.Version}}-{{.OS}}.{{.Format}}
-      - version_constraint: semver("<= 1.4.1")
-        asset: micro-{{trimV .Version}}-{{.OS}}64.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          darwin: osx
-          windows: win64
-        overrides:
-          - goos: linux
-            replacements:
-              amd64: x64
-          - goos: darwin
-            asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
-          - goos: windows
-            format: zip
-            asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: semver("<= 2.0.7")
+      - version_constraint: Version == "v2.0.8"
         asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
         format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
+        files:
+          - name: micro
+            src: micro-{{trimV .Version}}/micro
         replacements:
           darwin: osx
           windows: win64
@@ -84,39 +18,53 @@ packages:
           - goos: linux
             goarch: amd64
             asset: micro-{{trimV .Version}}-{{.OS}}64-static.{{.Format}}
-            replacements:
-              amd64: x64
           - goos: linux
             goarch: arm64
             asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
           - goos: windows
             format: zip
-      - version_constraint: Version == "v2.0.8"
-        asset: micro-{{trimV .Version}}-{{.OS}}64-static.{{.Format}}
+      - version_constraint: semver("<= 1.0rc1")
+        asset: micro-{{.Version}}-{{.OS}}.{{.Format}}
         format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
+        files:
+          - name: micro
+            src: micro-{{trimV .Version}}/micro
         replacements:
           darwin: osx
           windows: win64
         overrides:
           - goos: linux
-            goarch: amd64
-            replacements:
-              amd64: x64
-          - goos: linux
-            goarch: arm64
-            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-          - goos: darwin
-            asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
+            asset: micro-{{.Version}}-{{.OS}}64.{{.Format}}
           - goos: windows
             format: zip
-            asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.4.1")
+        asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: micro
+            src: micro-{{trimV .Version}}/micro
+        replacements:
+          darwin: osx
+          windows: win64
+        overrides:
+          - goos: linux
+            asset: micro-{{trimV .Version}}-{{.OS}}64.{{.Format}}
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
       - version_constraint: semver("<= 2.0.10")
-        asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
         format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
+        files:
+          - name: micro
+            src: micro-{{trimV .Version}}/micro
         replacements:
           darwin: osx
           windows: win64
@@ -124,59 +72,60 @@ packages:
           - goos: linux
             goarch: amd64
             asset: micro-{{trimV .Version}}-{{.OS}}64-static.{{.Format}}
-            replacements:
-              amd64: x64
-          - goos: darwin
-            asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
+          - goos: linux
+            goarch: arm64
+            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
           - goos: windows
             format: zip
-            asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
       - version_constraint: semver("<= 2.0.13")
-        asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
         format: tar.gz
-        windows_arm_emulation: true
+        files:
+          - name: micro
+            src: micro-{{trimV .Version}}/micro
         replacements:
           windows: win64
         overrides:
           - goos: linux
             goarch: amd64
             asset: micro-{{trimV .Version}}-{{.OS}}64-static.{{.Format}}
-            replacements:
-              amd64: x64
+          - goos: linux
+            goarch: arm64
+            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
           - goos: darwin
             goarch: amd64
-            asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
             replacements:
               darwin: osx
           - goos: darwin
             goarch: arm64
+            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
             replacements:
               darwin: macos
           - goos: windows
             format: zip
-            asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
       - version_constraint: "true"
-        asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
         format: tgz
-        windows_arm_emulation: true
-        complete_windows_ext: false
+        files:
+          - name: micro
+            src: micro-{{trimV .Version}}/micro
         replacements:
           windows: win64
         overrides:
           - goos: linux
             goarch: amd64
             asset: micro-{{trimV .Version}}-{{.OS}}64-static.{{.Format}}
-            replacements:
-              amd64: x64
+          - goos: linux
+            goarch: arm64
+            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
           - goos: darwin
             goarch: amd64
-            asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
             replacements:
               darwin: osx
           - goos: darwin
             goarch: arm64
+            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
             replacements:
               darwin: macos
           - goos: windows
             format: zip
-            asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
