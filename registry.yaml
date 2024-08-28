@@ -34533,96 +34533,52 @@ packages:
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.0.12")
-        asset: Ollama-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: zip
+        asset: ollama-{{.OS}}-{{.Arch}}
+        format: raw
         supported_envs:
           - darwin/arm64
       - version_constraint: semver("<= 0.0.21")
-        asset: Ollama-{{.OS}}.{{.Format}}
-        format: zip
-        rosetta2: true
+        asset: ollama-{{.OS}}
+        format: raw
         supported_envs:
           - darwin
-      - version_constraint: semver("<= 0.1.24")
-        asset: Ollama-{{.OS}}.{{.Format}}
-        format: zip
-        rosetta2: true
+      - version_constraint: semver("<= 0.1.29")
+        asset: ollama-{{.OS}}-{{.Arch}}
+        format: raw
         overrides:
-          - goos: linux
-            format: raw
-            asset: ollama-{{.OS}}-{{.Arch}}
+          - goos: darwin
+            asset: ollama-{{.OS}}
         supported_envs:
           - linux
           - darwin
-      - version_constraint: semver("<= 0.1.28")
-        asset: OllamaSetup
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        overrides:
-          - goos: linux
-            asset: ollama-{{.OS}}-{{.Arch}}
-          - goos: darwin
-            format: zip
-            asset: Ollama-{{.OS}}.{{.Format}}
-      - version_constraint: Version == "v0.1.29"
-        asset: ollama-{{.OS}}-{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        overrides:
-          - goos: linux
-            goarch: amd64
-            format: tgz
-            asset: ollama-{{.OS}}-{{.Arch}}-rocm.{{.Format}}
-          - goos: darwin
-            format: zip
-            asset: Ollama-{{.OS}}.{{.Format}}
-          - goos: windows
-            asset: OllamaSetup
       - version_constraint: semver("<= 0.1.32")
         asset: ollama-{{.OS}}-{{.Arch}}
+        windows_arm_emulation: true
         format: raw
-        rosetta2: true
-        windows_arm_emulation: true
         checksum:
           type: github_release
           asset: sha256sum.txt
           algorithm: sha256
         overrides:
-          - goos: linux
-            goarch: amd64
-            format: tgz
-            asset: ollama-{{.OS}}-{{.Arch}}-rocm.{{.Format}}
           - goos: darwin
-            format: zip
-            asset: Ollama-{{.OS}}.{{.Format}}
-          - goos: windows
-            asset: OllamaSetup
+            asset: ollama-{{.OS}}
       - version_constraint: semver("<= 0.3.6")
-        asset: Ollama-{{.OS}}.{{.Format}}
-        format: zip
-        rosetta2: true
+        asset: ollama-{{.OS}}-{{.Arch}}
+        format: raw
         windows_arm_emulation: true
         checksum:
           type: github_release
           asset: sha256sum.txt
           algorithm: sha256
         overrides:
-          - goos: linux
-            goarch: amd64
-            format: tgz
-            asset: ollama-{{.OS}}-{{.Arch}}-rocm.{{.Format}}
-          - goos: linux
-            goarch: arm64
-            format: raw
-            asset: ollama-{{.OS}}-{{.Arch}}
+          - goos: darwin
+            asset: ollama-{{.OS}}
           - goos: windows
             asset: ollama-{{.OS}}-{{.Arch}}.{{.Format}}
+            format: zip
       - version_constraint: "true"
         asset: ollama-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
-        rosetta2: true
         windows_arm_emulation: true
         checksum:
           type: github_release
@@ -34630,14 +34586,13 @@ packages:
           algorithm: sha256
         overrides:
           - goos: linux
-            goarch: amd64
             format: tgz
-            asset: ollama-{{.OS}}-{{.Arch}}-rocm.{{.Format}}
-          - goos: linux
-            goarch: arm64
-            format: tgz
+            files:
+              - name: ollama
+                src: bin/ollama
           - goos: darwin
-            asset: Ollama-{{.OS}}.{{.Format}}
+            asset: ollama-{{.OS}}
+            format: raw
   - type: github_release
     repo_owner: omegion
     repo_name: ssh-manager
