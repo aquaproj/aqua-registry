@@ -27163,20 +27163,11 @@ packages:
     repo_owner: kcp-dev
     repo_name: kcp
     description: kubectl plugins for kcp
-    format: tar.gz
-    asset: kubectl-kcp-plugin_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    version_constraint: semver(">= 0.9.0")
-    files:
-      - name: kubectl-kcp
-        src: bin/kubectl-kcp
-      - name: kubectl-workspace
-        src: bin/kubectl-workspace
-      - name: kubectl-ws
-        src: bin/kubectl-workspace
-      - name: kubectl-workspaces
-        src: bin/kubectl-workspace
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.8.2")
+        format: tar.gz
+        asset: kubectl-kcp-plugin_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         files:
           - name: kubectl-kcp
             src: bin/kubectl-kcp
@@ -27184,6 +27175,24 @@ packages:
             src: bin/kubectl-ws
           - name: kubectl-workspaces
             src: bin/kubectl-workspaces
+      - version_constraint: semver("<= 0.24.0")
+        format: tar.gz
+        asset: kubectl-kcp-plugin_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: kubectl-kcp
+            src: bin/kubectl-kcp
+          - name: kubectl-workspace
+            src: bin/kubectl-workspace
+          - name: kubectl-ws
+            src: bin/kubectl-workspace
+          - name: kubectl-workspaces
+            src: bin/kubectl-workspace
+      - version_constraint: "true"
+        format: tar.gz
+        asset: kubectl-kcp-plugin_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: kubectl-kcp
+            src: bin/kubectl-kcp
   - type: github_content
     repo_owner: kdabir
     repo_name: has
