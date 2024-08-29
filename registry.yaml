@@ -47783,6 +47783,8 @@ packages:
     description: An end-to-end scenario testing tool for HTTP/gRPC server
     version_constraint: "false"
     version_overrides:
+      - version_constraint: Version in ["v0.14.0-rc3", "v0.15.0-rc1"]
+        no_asset: true
       - version_constraint: semver("<= 0.5.1")
         asset: scenarigo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -47827,138 +47829,11 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: semver("<= 0.9.0")
-        asset: scenarigo_{{.Version}}_go1.16.5_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: Version == "v0.10.0"
-        asset: scenarigo_{{.Version}}_go1.17.1_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: semver("<= 0.11.2")
-        asset: scenarigo_{{.Version}}_go1.17.6_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: Version == "v0.12.1"
-        asset: scenarigo_{{.Version}}_go1.17.11_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: semver("<= 0.12.5")
-        asset: scenarigo_{{.Version}}_go1.17.10_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: semver("<= 0.14.0-rc1")
-        asset: scenarigo_{{.Version}}_go1.18.1_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: Version == "v0.14.0-rc2"
-        asset: scenarigo_{{.Version}}_go1.19.1_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: Version == "v0.14.0-rc3"
-        no_asset: true
-      - version_constraint: semver("<= 0.14.2")
-        asset: scenarigo_{{.Version}}_go1.19.1_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: Version == "v0.15.0-rc1"
-        no_asset: true
-      - version_constraint: semver("<= 0.16.2")
-        asset: scenarigo_{{.Version}}_go1.20.1_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
       - version_constraint: "true"
-        asset: scenarigo_{{.Version}}_go1.20_{{.OS}}_{{.Arch}}.{{.Format}}
+        asset: scenarigo_{{.Version}}_go{{.Vars.go_version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        vars:
+          - name: go_version
+            required: true
         format: tar.gz
         replacements:
           amd64: x86_64
