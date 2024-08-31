@@ -71,6 +71,18 @@ packages:
           - goos: windows
             replacements:
               arm64: arm64
+      - version_constraint: semver("<= 1.3.1")
+        asset: cargo-binstall-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            format: tgz
       - version_constraint: "true"
         asset: cargo-binstall-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
@@ -80,6 +92,10 @@ packages:
           darwin: apple-darwin
           linux: unknown-linux-musl
           windows: pc-windows-msvc
+        minisign:
+          type: github_release
+          asset: cargo-binstall-{{.Arch}}-{{.OS}}.{{.Format}}.sig
+          public_key_url: https://github.com/cargo-bins/cargo-binstall/releases/download/v{{.Version}}/minisign.pub
         overrides:
           - goos: linux
             format: tgz
