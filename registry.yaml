@@ -13601,6 +13601,54 @@ packages:
             replacements:
               windows: windows-6.2
   - type: github_release
+    repo_owner: cococonscious
+    repo_name: koji
+    aliases:
+      - name: its-danny/koji
+    description: An interactive CLI for creating conventional commits
+    version_constraint: semver(">= 1.5.0")
+    asset: koji-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    files:
+      - name: koji
+        src: koji-{{.Version}}-{{.Arch}}-{{.OS}}/koji
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    version_overrides:
+      # error="the asset isn't found: koji-macos-arm64" package_name=its-danny/koji package_version=1.2.0 program=aqua registry=standard
+      # error="the asset isn't found: koji-1.4.0-aarch64-osx.tar.gz" package_name=its-danny/koji package_version=1.4.0 program=aqua registry=standard
+      - version_constraint: semver(">= 1.3.4")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+          linux: unknown-linux-musl
+        files:
+          - name: koji
+      - version_constraint: semver("< 1.3.4")
+        asset: koji-{{.OS}}-{{.Arch}}
+        format: raw
+        overrides: []
+        rosetta2: true
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - amd64
+        complete_windows_ext: false
+      - version_constraint: "true"
+  - type: github_release
     repo_owner: cocogitto
     repo_name: cocogitto
     description: The Conventional Commits toolbox
@@ -25056,52 +25104,6 @@ packages:
     files:
       - name: mmv
         src: mmv_{{.Version}}_{{.OS}}_{{.Arch}}/mmv
-  - type: github_release
-    repo_owner: its-danny
-    repo_name: koji
-    description: An interactive CLI for creating conventional commits
-    version_constraint: semver(">= 1.5.0")
-    asset: koji-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    files:
-      - name: koji
-        src: koji-{{.Version}}-{{.Arch}}-{{.OS}}/koji
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-      windows: pc-windows-msvc
-    version_overrides:
-      # error="the asset isn't found: koji-macos-arm64" package_name=its-danny/koji package_version=1.2.0 program=aqua registry=standard
-      # error="the asset isn't found: koji-1.4.0-aarch64-osx.tar.gz" package_name=its-danny/koji package_version=1.4.0 program=aqua registry=standard
-      - version_constraint: semver(">= 1.3.4")
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - linux/amd64
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: osx
-          linux: unknown-linux-musl
-        files:
-          - name: koji
-      - version_constraint: semver("< 1.3.4")
-        asset: koji-{{.OS}}-{{.Arch}}
-        format: raw
-        overrides: []
-        rosetta2: true
-        replacements:
-          darwin: macos
-        supported_envs:
-          - darwin
-          - amd64
-        complete_windows_ext: false
-      - version_constraint: "true"
   - type: github_release
     repo_owner: ivaaaan
     repo_name: smug
