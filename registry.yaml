@@ -43261,6 +43261,25 @@ packages:
       type: github_release
       asset: kube-psp-advisor_{{trimV .Version}}_checksums.txt
       algorithm: sha256
+  - type: http
+    repo_owner: tailscale
+    repo_name: tailscale
+    description: The easiest, most secure way to use WireGuard and 2FA
+    url: https://pkgs.tailscale.com/stable/tailscale_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+    format: tgz
+    files:
+      - name: tailscale
+        src: "{{.AssetWithoutExt}}/tailscale"
+    overrides:
+      - goos: darwin
+        url: https://pkgs.tailscale.com/stable/Tailscale-{{trimV .Version}}-macos.{{.Format}}
+        format: pkg
+        files:
+          - name: tailscale
+            src: Distribution.pkg/Payload/Contents/MacOS/Tailscale
+    supported_envs:
+      - linux
+      - darwin
   - type: github_release
     repo_owner: takaishi
     repo_name: awscost
