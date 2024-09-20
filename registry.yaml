@@ -19815,21 +19815,23 @@ packages:
           - amd64
       - version_constraint: semver("<= 2.6.0")
         asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
-        format: tar.gz
+        format: zip
         rosetta2: true
         complete_windows_ext: false
         replacements:
           darwin: Darwin
           linux: Linux
         overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: darwin
+            format: tar.gz
           - goos: windows
             goarch: amd64
-            format: zip
             replacements:
               windows: Win64
           - goos: windows
             goarch: arm64
-            format: zip
             asset: fastfetch-{{.Version}}-{{.OS}}{{.Arch}}.{{.Format}}
             replacements:
               arm64: Arm64
