@@ -5,7 +5,7 @@ packages:
     description: An actively maintained, feature-rich and performance oriented, neofetch like system information tool
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "2.7.0"
+      - version_constraint: Version in ["1.10.2", "2.7.0"]
         asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
         files:
           - name: fastfetch
@@ -29,6 +29,34 @@ packages:
               windows: WinArm64
             files:
               - name: fastfetch
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "2.1.2"
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        overrides:
+          - goos: windows
+            goarch: amd64
+            format: zip
+            files:
+              - name: fastfetch
+            replacements:
+              windows: Win64
+          - goos: windows
+            goarch: arm64
+            format: zip
+            files:
+              - name: fastfetch
+            replacements:
+              windows: WinArm64
         supported_envs:
           - darwin
           - windows
@@ -161,66 +189,6 @@ packages:
             format: zip
             files:
               - name: fastfetch
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: Version == "1.10.2"
-        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
-        files:
-          - name: fastfetch
-            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
-        format: tar.gz
-        replacements:
-          darwin: Darwin
-          linux: Linux
-        overrides:
-          - goos: windows
-            goarch: amd64
-            format: zip
-            replacements:
-              windows: Win64
-            files:
-              - name: fastfetch
-          - goos: windows
-            goarch: arm64
-            format: zip
-            asset: fastfetch-{{.Version}}-{{.OS}}{{.Arch}}.{{.Format}}
-            replacements:
-              arm64: Arm64
-              windows: Win
-            files:
-              - name: fastfetch
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: Version == "2.1.2"
-        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
-        files:
-          - name: fastfetch
-            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
-        format: tar.gz
-        replacements:
-          darwin: Darwin
-          linux: Linux
-        overrides:
-          - goos: windows
-            goarch: amd64
-            format: zip
-            files:
-              - name: fastfetch
-            replacements:
-              windows: Win64
-          - goos: windows
-            goarch: arm64
-            asset: fastfetch-{{.Version}}-{{.OS}}{{.Arch}}.{{.Format}}
-            format: zip
-            files:
-              - name: fastfetch
-            replacements:
-              arm64: Arm64
-              windows: Win
         supported_envs:
           - darwin
           - windows
