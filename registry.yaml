@@ -1208,6 +1208,31 @@ packages:
       windows: win
     files:
       - name: cyclonedx
+  - type: github_release
+    repo_owner: Darth-Tech
+    repo_name: samwise-cli
+    description: A CLI application to accompany on your terraform module journey and sharing your burden of module dependency updates, just as one brave Hobbit helped Frodo carry his :)
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.0")
+        asset: samwise-cli-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: samwise-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: samwise-cli_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
   - name: DeNA/unity-meta-check/gh-action
     type: github_release
     repo_owner: DeNA
@@ -2408,40 +2433,51 @@ packages:
     repo_owner: Macchina-CLI
     repo_name: macchina
     description: A system information frontend with an emphasis on performance
-    asset: macchina-{{.OS}}-{{.Arch}}
-    format: raw
-    overrides:
-      - goos: linux
-        replacements:
-          arm64: aarch64
-    replacements:
-      amd64: x86_64
-      darwin: macos
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    rosetta2: true
-    version_constraint: semver(">= 4.0.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.8.1")
+      - version_constraint: semver("<= 0.5.9") or Version == "0.6.5"
+        no_asset: true
+      - version_constraint: semver("<= 0.8.0")
         asset: macchina-{{.OS}}
-        overrides:
-          - goos: linux
-            goarch: arm64
-            asset: macchina-{{.OS}}-{{.Arch}}
-            replacements:
-              arm64: aarch64
-        replacements:
-          darwin: macos
-      - version_constraint: semver("< 0.8.1")
-        asset: macchina-{{.OS}}
-        overrides: []
+        format: raw
         replacements:
           darwin: macos
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 3.0.0")
+        asset: macchina-{{.OS}}
+        format: raw
+        replacements:
+          darwin: macos
+          arm64: aarch64
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: macchina-{{.OS}}-{{.Arch}}
+      - version_constraint: semver("<= 6.1.8")
+        asset: macchina-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+          arm64: aarch64
+      - version_constraint: "true"
+        asset: macchina-{{.Version}}-{{.OS}}-gnu-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        overrides:
+          - goos: darwin
+            asset: macchina-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: raw
+            asset: macchina-{{.Version}}-{{.OS}}-{{.Arch}}
   - type: github_release
     repo_owner: Madh93
     repo_name: tpm
@@ -3264,6 +3300,32 @@ packages:
           asset: spotify-tui-{{.OS}}.sha256
           algorithm: sha256
   - type: github_release
+    repo_owner: RoseSecurity
+    repo_name: Kuzco
+    description: Kuzco reviews your Terraform resources, compares them to the provider schema to detect unused parameters, and uses AI to suggest improvements
+    files:
+      - name: kuzco
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: Kuzco_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: kuzco
+            src: Kuzco
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: Kuzco_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: Scalingo
     repo_name: cli
     description: Command Line client for Scalingo PaaS
@@ -3670,6 +3732,43 @@ packages:
       type: github_release
       asset: SHA256SUMS
       algorithm: sha256
+  - type: github_release
+    repo_owner: Songmu
+    repo_name: podbard
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.2")
+        asset: primcast_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux
+          - darwin
+        files:
+          - name: primcast
+            src: primcast_{{.Version}}_{{.OS}}_{{.Arch}}/primcast
+      - version_constraint: "true"
+        asset: podbard_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux
+          - darwin
+        files:
+          - name: podbard
+            src: podbard_{{.Version}}_{{.OS}}_{{.Arch}}/podbard
   - type: github_release
     repo_owner: Songmu
     repo_name: tagpr
@@ -10298,6 +10397,24 @@ packages:
       - version_constraint: "true"
         asset: kail_{{trimV .Version}}_{{.OS}}_amd64.tar.gz
   - type: github_release
+    repo_owner: breml
+    repo_name: tfreveal
+    description: tfreveal shows a Terraform plan with all the secret (sensitive) values revealed
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: tfreveal_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: tfreveal_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+  - type: github_release
     repo_owner: bridgecrewio
     repo_name: checkov
     description: Prevent cloud misconfigurations and find vulnerabilities during build-time in infrastructure as code, container images and open source packages with Checkov by Bridgecrew
@@ -10617,27 +10734,56 @@ packages:
     repo_owner: buildkite
     repo_name: cli
     description: A command line interface for Buildkite
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: cli-{{.OS}}-{{.Arch}}
-    format: raw
     files:
       - name: bk
-        src: cli
-    version_constraint: semver(">= 2.0.0")
-    complete_windows_ext: false
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.2.0")
-        complete_windows_ext: true
-      - version_constraint: "true"
-        complete_windows_ext: true
+      - version_constraint: semver("<= 1.1.0")
+        asset: bk-{{.OS}}-{{.Arch}}-{{trimV .Version}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: Version == "v1.2.0"
+        asset: cli-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+      - version_constraint: Version == "v2.0.0"
+        asset: cli-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+      - version_constraint: Version == "v3.0.0-beta.20240202"
+        asset: bk_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+      - version_constraint: Version == "v3.0.0-beta.20240326"
+        asset: bk_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
         rosetta2: true
-        asset: bk-{{.OS}}-{{.Arch}}-{{.Version|trimV}}
+      - version_constraint: Version == "v3.0.0-beta.20240418"
+        asset: "{{.Version}}_{{.OS}}_{{.Arch}}"
+        format: raw
+      - version_constraint: "true"
+        asset: bk_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        files:
+          - name: bk
+            src: "{{.AssetWithoutExt}}/bk"
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: bk_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: windows
+            files:
+              - name: bk
   - type: github_release
     repo_owner: buildpacks
     repo_name: pack
@@ -13634,6 +13780,54 @@ packages:
             replacements:
               windows: windows-6.2
   - type: github_release
+    repo_owner: cococonscious
+    repo_name: koji
+    aliases:
+      - name: its-danny/koji
+    description: An interactive CLI for creating conventional commits
+    version_constraint: semver(">= 1.5.0")
+    asset: koji-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    files:
+      - name: koji
+        src: koji-{{.Version}}-{{.Arch}}-{{.OS}}/koji
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    version_overrides:
+      # error="the asset isn't found: koji-macos-arm64" package_name=its-danny/koji package_version=1.2.0 program=aqua registry=standard
+      # error="the asset isn't found: koji-1.4.0-aarch64-osx.tar.gz" package_name=its-danny/koji package_version=1.4.0 program=aqua registry=standard
+      - version_constraint: semver(">= 1.3.4")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux/amd64
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+          linux: unknown-linux-musl
+        files:
+          - name: koji
+      - version_constraint: semver("< 1.3.4")
+        asset: koji-{{.OS}}-{{.Arch}}
+        format: raw
+        overrides: []
+        rosetta2: true
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - amd64
+        complete_windows_ext: false
+      - version_constraint: "true"
+  - type: github_release
     repo_owner: cocogitto
     repo_name: cocogitto
     description: The Conventional Commits toolbox
@@ -16472,12 +16666,19 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.21.3")
         asset: popeye_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
           type: github_release
           asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: popeye_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.sha256
           algorithm: sha256
   - type: github_release
     repo_owner: deref
@@ -19299,6 +19500,414 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+  - type: github_release
+    repo_owner: fastfetch-cli
+    repo_name: fastfetch
+    description: An actively maintained, feature-rich and performance oriented, neofetch like system information tool
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["1.10.2", "2.1.2", "2.7.0"]
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        overrides:
+          - goos: windows
+            goarch: amd64
+            format: zip
+            replacements:
+              windows: Win64
+            files:
+              - name: fastfetch
+          - goos: windows
+            goarch: arm64
+            format: zip
+            replacements:
+              windows: WinArm64
+            files:
+              - name: fastfetch
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["2.0.2", "2.0.3", "2.2.0", "2.3.2", "2.7.1"]
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Win64
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "2.8.2"
+        asset: fastfetch-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}-{{.Arch}}/usr/bin/fastfetch
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+          - goos: darwin
+            asset: fastfetch-{{.Version}}-{{.OS}}-universal.{{.Format}}
+            files:
+              - name: fastfetch
+                src: fastfetch-{{.Version}}-{{.OS}}-universal/usr/bin/fastfetch
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
+      - version_constraint: Version == "2.8.3"
+        asset: fastfetch-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.OS}}-{{.Arch}}/usr/bin/fastfetch
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+          - goos: darwin
+            asset: fastfetch-{{.OS}}-universal.{{.Format}}
+            files:
+              - name: fastfetch
+                src: fastfetch-{{.OS}}-universal/usr/bin/fastfetch
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
+      - version_constraint: Version == "1.2.1"
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/bin/fastfetch
+        format: tar.zst
+        replacements:
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "1.8.0"
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        overrides:
+          - goos: windows
+            format: raw
+            asset: fastfetch
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "1.8.1"
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        overrides:
+          - goos: windows
+            format: zip
+            asset: fastfetch-{{.OS}}.{{.Format}}
+            files:
+              - name: fastfetch
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "1.8.2"
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Win7
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["2.8.5", "2.8.7", "2.9.0", "2.13.0"]
+        asset: fastfetch-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.OS}}-{{.Arch}}/usr/bin/fastfetch
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: darwin
+            asset: fastfetch-{{.OS}}-universal.{{.Format}}
+            files:
+              - name: fastfetch
+                src: fastfetch-{{.OS}}-universal/usr/bin/fastfetch
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
+      - version_constraint: semver("<= 1.2.0")
+        asset: fastfetch
+        format: raw
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.OS}}-{{.Arch}}/usr/bin/fastfetch
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 1.7.0")
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 1.7.5")
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.9.1")
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.12.2")
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Win64
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.0.5")
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        overrides:
+          - goos: windows
+            goarch: amd64
+            format: zip
+            replacements:
+              windows: Win64
+            files:
+              - name: fastfetch
+          - goos: windows
+            goarch: arm64
+            format: zip
+            files:
+              - name: fastfetch
+            replacements:
+              windows: WinArm64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.1.1")
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Win64
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.6.0")
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        overrides:
+          - goos: windows
+            goarch: amd64
+            format: zip
+            files:
+              - name: fastfetch
+            replacements:
+              windows: Win64
+          - goos: windows
+            goarch: arm64
+            format: zip
+            files:
+              - name: fastfetch
+            replacements:
+              windows: WinArm64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.6.3")
+        asset: fastfetch-{{.Version}}-{{.OS}}.{{.Format}}
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.Version}}-{{.OS}}/usr/bin/fastfetch
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Win64
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.9.2")
+        asset: fastfetch-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.OS}}-{{.Arch}}/usr/bin/fastfetch
+        replacements:
+          arm64: aarch64
+          darwin: macos
+        overrides:
+          - goos: darwin
+            asset: fastfetch-{{.OS}}-universal.{{.Format}}
+            files:
+              - name: fastfetch
+                src: fastfetch-{{.OS}}-universal/usr/bin/fastfetch
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
+      - version_constraint: semver("<= 2.11.4")
+        asset: fastfetch-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.OS}}-{{.Arch}}/usr/bin/fastfetch
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: darwin
+            asset: fastfetch-{{.OS}}-universal.{{.Format}}
+            files:
+              - name: fastfetch
+                src: fastfetch-{{.OS}}-universal/usr/bin/fastfetch
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
+      - version_constraint: "true"
+        asset: fastfetch-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: fastfetch
+            src: fastfetch-{{.OS}}-{{.Arch}}/usr/bin/fastfetch
+        replacements:
+          arm64: aarch64
+          darwin: macos
+        overrides:
+          - goos: darwin
+            asset: fastfetch-{{.OS}}-universal.{{.Format}}
+            files:
+              - name: fastfetch
+                src: fastfetch-{{.OS}}-universal/usr/bin/fastfetch
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
   - type: github_release
     repo_owner: fastly
     repo_name: cli
@@ -25090,52 +25699,6 @@ packages:
       - name: mmv
         src: mmv_{{.Version}}_{{.OS}}_{{.Arch}}/mmv
   - type: github_release
-    repo_owner: its-danny
-    repo_name: koji
-    description: An interactive CLI for creating conventional commits
-    version_constraint: semver(">= 1.5.0")
-    asset: koji-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    files:
-      - name: koji
-        src: koji-{{.Version}}-{{.Arch}}-{{.OS}}/koji
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-      windows: pc-windows-msvc
-    version_overrides:
-      # error="the asset isn't found: koji-macos-arm64" package_name=its-danny/koji package_version=1.2.0 program=aqua registry=standard
-      # error="the asset isn't found: koji-1.4.0-aarch64-osx.tar.gz" package_name=its-danny/koji package_version=1.4.0 program=aqua registry=standard
-      - version_constraint: semver(">= 1.3.4")
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - linux/amd64
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: osx
-          linux: unknown-linux-musl
-        files:
-          - name: koji
-      - version_constraint: semver("< 1.3.4")
-        asset: koji-{{.OS}}-{{.Arch}}
-        format: raw
-        overrides: []
-        rosetta2: true
-        replacements:
-          darwin: macos
-        supported_envs:
-          - darwin
-          - amd64
-        complete_windows_ext: false
-      - version_constraint: "true"
-  - type: github_release
     repo_owner: ivaaaan
     repo_name: smug
     asset: smug_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
@@ -26658,20 +27221,72 @@ packages:
   - type: github_release
     repo_owner: k0sproject
     repo_name: k0sctl
-    asset: k0sctl-{{.OS}}-{{.Arch}}
-    format: raw
     description: A bootstrapping and management tool for k0s clusters
-    replacements:
-      amd64: x64
-      windows: win
-    supported_envs:
-      - linux
-      - darwin
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.6.0")
+        asset: k0sctl-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          windows: win
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.10.1")
+        asset: k0sctl-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          windows: win
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.11.4")
+        asset: k0sctl-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          windows: win
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: semver("<= 0.18.1")
+        asset: k0sctl-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          windows: win
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: k0sctl-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          windows: win
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: k1LoW
     repo_name: awsdo
@@ -36536,68 +37151,104 @@ packages:
     repo_owner: printfn
     repo_name: fend
     description: Arbitrary-precision unit-aware calculator
-    asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: zip
-    overrides:
-      - goos: linux
-        goarch: arm64
-        asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}-gnu.{{.Format}}
-      - goos: windows
-        asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}-exe.{{.Format}}
-        replacements:
-          arm64: arm64
-    replacements:
-      amd64: x64
-      arm64: aarch64
-      darwin: macos
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    version_constraint: semver(">= 1.0.4")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.0.0")
+      - version_constraint: semver("<= 0.1.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.1.9")
+        asset: fend-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.26")
+        asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.28")
+        asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          darwin: macos
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.1.29"
+        asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          arm64: aarch64
+          darwin: macos
+      - version_constraint: semver("<= 1.0.3")
+        asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          arm64: aarch64
+          darwin: macos
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}-gnu.{{.Format}}
+      - version_constraint: semver("<= 1.5.1")
+        asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          arm64: aarch64
+          darwin: macos
         overrides:
           - goos: linux
             goarch: arm64
             asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}-gnu.{{.Format}}
           - goos: windows
-            replacements:
-              arm64: arm64
-      - version_constraint: semver(">= 0.1.29")
+            asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}-exe.{{.Format}}
+      - version_constraint: "true"
+        asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}-gnu.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          arm64: aarch64
+          darwin: macos
         overrides:
-          - goos: windows
+          - goos: linux
             replacements:
-              arm64: arm64
-      - version_constraint: semver(">= 0.1.27")
-        overrides:
+              amd64: x86_64
           - goos: darwin
+            asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: fend-{{trimV .Version}}-{{.OS}}-{{.Arch}}-exe.{{.Format}}
             replacements:
-              arm64: aarch64
-        replacements:
-          amd64: x64
-          darwin: macos
+              amd64: x64
+              arm64: arm64
         supported_envs:
-          - darwin
-          - amd64
-      - version_constraint: semver(">= 0.1.10")
-        overrides: []
-        replacements:
-          amd64: x64
-          darwin: macos
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-      - version_constraint: semver("< 0.1.10")
-        asset: fend-{{trimV .Version}}-{{.OS}}.{{.Format}}
-        overrides: []
-        replacements:
-          darwin: macos
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
+          - linux
+          - darwin/arm64
+          - windows/amd64
   - type: github_release
     repo_owner: project-copacetic
     repo_name: copacetic
@@ -43179,6 +43830,9 @@ packages:
     repo_owner: sxyazi
     repo_name: yazi
     description: Blazing fast terminal file manager written in Rust, based on async I/O
+    files:
+      - name: yazi
+      - name: ya
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.1.3")
@@ -43218,12 +43872,31 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: semver("<= 0.2.4")
+        asset: yazi-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        files:
+          - name: yazi
+            src: yazi-{{.Arch}}-{{.OS}}/yazi
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            replacements:
+              arm64: arm64
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
       - version_constraint: "true"
         asset: yazi-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
         files:
           - name: yazi
             src: yazi-{{.Arch}}-{{.OS}}/yazi
+          - name: ya
+            src: yazi-{{.Arch}}-{{.OS}}/ya
         windows_arm_emulation: true
         overrides:
           - goos: windows
@@ -43270,6 +43943,27 @@ packages:
       type: github_release
       asset: kube-psp-advisor_{{trimV .Version}}_checksums.txt
       algorithm: sha256
+  - type: http
+    repo_owner: tailscale
+    repo_name: tailscale
+    description: The easiest, most secure way to use WireGuard and 2FA
+    url: https://pkgs.tailscale.com/stable/tailscale_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+    format: tgz
+    files:
+      - name: tailscale
+        src: "{{.AssetWithoutExt}}/tailscale"
+      - name: tailscaled
+        src: "{{.AssetWithoutExt}}/tailscaled"
+    overrides:
+      - goos: darwin
+        url: https://pkgs.tailscale.com/stable/Tailscale-{{trimV .Version}}-macos.{{.Format}}
+        format: pkg
+        files:
+          - name: tailscale
+            src: Distribution.pkg/Payload/Contents/MacOS/Tailscale
+    supported_envs:
+      - linux
+      - darwin
   - type: github_release
     repo_owner: takaishi
     repo_name: awscost
