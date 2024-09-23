@@ -3,50 +3,59 @@ packages:
     repo_owner: terraform-linters
     repo_name: tflint
     description: A Pluggable Terraform Linter
-    asset: tflint_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-      cosign:
-        opts:
-          - --certificate-identity-regexp
-          - "https://github\\.com/terraform-linters/tflint/\\.github/workflows/release\\.yml@.*"
-          - --certificate-oidc-issuer
-          - "https://token.actions.githubusercontent.com"
-          - --signature
-          - https://github.com/terraform-linters/tflint/releases/download/{{.Version}}/checksums.txt.keyless.sig
-          - --certificate
-          - https://github.com/terraform-linters/tflint/releases/download/{{.Version}}/checksums.txt.pem
-    version_constraint: semver(">= 0.36.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.33.0")
-        checksum: &tflint_checksum_2
+      - version_constraint: semver("<= 0.7.6")
+        asset: tflint_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.29.0")
+        asset: tflint_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-      - version_constraint: semver(">= 0.32.1")
-        checksum: *tflint_checksum_2
-      - version_constraint: semver(">= 0.32.0")
-        checksum: *tflint_checksum_2
-        rosetta2: true
-      - version_constraint: semver(">= 0.29.1")
-        checksum: *tflint_checksum_2
-      - version_constraint: semver(">= 0.8.0")
-        checksum: *tflint_checksum_2
         supported_envs:
           - darwin
+          - windows
           - amd64
-        rosetta2: true
-      - version_constraint: semver("< 0.8.0")
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
+      - version_constraint: semver("<= 0.31.0")
+        asset: tflint_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
         checksum:
-          enabled: false
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: Version == "v0.32.0"
+        asset: tflint_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: Version == "v0.32.1"
+        asset: tflint_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: tflint_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
