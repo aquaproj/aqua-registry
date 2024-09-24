@@ -23372,15 +23372,6 @@ packages:
     description: The terminal for Kubernetes
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= unstable")
-        asset: kty-0.3.0-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        overrides:
-          - goos: darwin
-            asset: kty-0.3.0-UNSTABLE-{{.OS}}-{{.Arch}}.{{.Format}}
-        supported_envs:
-          - linux
-          - darwin/arm64
       - version_constraint: Version == "v0.1.0"
         asset: kuberift-{{.OS}}-{{.Arch}}
         format: raw
@@ -23402,7 +23393,8 @@ packages:
             asset: kuberift-{{.OS}}-{{.Arch}}
         supported_envs:
           - linux
-          - darwin/arm64
+          # opening tar archive for reading: wrapping file reader: gzip: invalid header
+          # - darwin/arm64
       - version_constraint: "true"
         asset: kty-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
