@@ -14680,7 +14680,23 @@ packages:
   - type: http
     repo_owner: common-fate
     repo_name: granted
-    description: The easiest way to access your cloud
+    description: |
+      The easiest way to access your cloud
+
+      ## Installation on macOS
+
+      You need to create a shell script `assumego` in your PATH with the following content:
+
+      ```sh
+      #!/usr/bin/env bash
+
+      set -eu
+
+      granted=$(aqua which granted)
+      exec -a assumego "$granted" "$@"
+      ```
+
+      For details, please see https://github.com/aquaproj/aqua-registry/issues/27177#issuecomment-2377987560
     url: https://releases.commonfate.io/granted/{{.Version}}/granted_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     files:
@@ -14696,8 +14712,6 @@ packages:
         files:
           - name: granted
           - name: assume
-          - name: assumego
-            src: granted
   - type: github_release
     repo_owner: compose
     repo_name: transporter
