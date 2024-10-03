@@ -44558,23 +44558,24 @@ packages:
     repo_owner: telepresenceio
     repo_name: telepresence
     description: Local development against a remote Kubernetes or OpenShift cluster
-    asset: telepresence-{{.OS}}-{{.Arch}}
-    format: raw
-    overrides:
-      - goos: windows
-        format: zip
-        asset: telepresence-{{.OS}}-{{.Arch}}.{{.Format}}
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    version_constraint: semver(">= 2.15.0-rc.7")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 2.15.0-rc.7")
-        overrides: []
+      - version_constraint: semver("<= 2.14.4")
+        asset: telepresence-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: "true"
+        asset: telepresence-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+            asset: telepresence-{{.OS}}-{{.Arch}}.{{.Format}}
   - type: github_release
     repo_owner: teler-sh
     repo_name: teler
