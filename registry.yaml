@@ -21682,6 +21682,8 @@ packages:
     type: http
     link: https://gitlab.com/gitlab-org/cli
     description: A GitLab CLI tool bringing GitLab to your command line
+    files:
+      - name: glab
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 1.22.0")
@@ -21708,7 +21710,7 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.46.1")
         url: https://gitlab.com/gitlab-org/cli/-/releases/{{.Version}}/downloads/glab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -21720,6 +21722,16 @@ packages:
           windows: Windows
           darwin: macOS
           amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        url: https://gitlab.com/gitlab-org/cli/-/releases/{{.Version}}/downloads/glab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: glab
+            src: bin/glab
         overrides:
           - goos: windows
             format: zip
