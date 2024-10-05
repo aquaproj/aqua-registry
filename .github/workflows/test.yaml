@@ -3,6 +3,9 @@ name: test
 on:
   pull_request:
     branches: [main]
+concurrency:
+  group: ${{ github.workflow }}--${{ github.ref }}
+  cancel-in-progress: true
 permissions: {}
 env:
   AQUA_LOG_COLOR: always
