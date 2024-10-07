@@ -48580,6 +48580,29 @@ packages:
       asset: SHA256SUMS
       algorithm: sha256
   - type: github_release
+    repo_owner: yumafuu
+    repo_name: s1m
+    description: TUI Application for AWS Systems Manager Parameter Store (ssm)
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.2.2", "v0.2.3"]
+        no_asset: true
+      - version_constraint: "true"
+        asset: s1m_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: s1m_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: yuyaban
     repo_name: gitlab-comment
     description: About gitlab-comment is a CLI command to post Merge Request Note
