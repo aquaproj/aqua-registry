@@ -5,7 +5,7 @@ packages:
     description: Pluggable linting tool to prevent committing credential
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.3.0")
+      - version_constraint: semver("<= 0.3.0") or Version == "v8.3.0"
         no_asset: true
       - version_constraint: semver("<= 0.7.2")
         asset: secretlint_{{.OS}}_{{.Arch}}
@@ -85,7 +85,7 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: Version == "v8.2.4"
         asset: secretlint-{{trimV .Version}}-{{.Arch}}-{{.OS}}
         format: raw
         windows_arm_emulation: true
@@ -106,3 +106,13 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: "true"
+        asset: secretlint-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: secretlint-{{trimV .Version}}-sha256sum.txt
+          algorithm: sha256
