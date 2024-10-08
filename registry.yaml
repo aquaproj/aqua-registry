@@ -34313,21 +34313,24 @@ packages:
           - goos: windows
             format: zip
       - version_constraint: "true"
-        asset: sq_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pkg.{{.Format}}
-        format: tar.zst
+        asset: sq-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         replacements:
           darwin: macos
+          windows: amd64
+          linux: amd64
         checksum:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
         overrides:
-          - goos: darwin
-            format: tar.gz
-            asset: sq-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        supported_envs:
-          - linux
-          - darwin
+          - goos: windows
+            format: zip
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: arm64
   - type: github_release
     repo_owner: nektos
     repo_name: act
