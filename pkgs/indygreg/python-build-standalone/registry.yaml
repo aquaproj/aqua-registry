@@ -1,0 +1,44 @@
+packages:
+  - type: github_release
+    repo_owner: indygreg
+    repo_name: python-build-standalone
+    description: Produce redistributable builds of Python
+    asset: cpython-{{.Vars.python_version}}+{{.Version}}-{{.Arch}}-{{.OS}}-install_only.{{.Format}}
+    vars:
+      - name: python_version
+        required: true
+    format: tar.gz
+    windows_arm_emulation: true
+    files:
+      - name: python
+        src: python/bin/python
+      - name: python3
+        src: python/bin/python3
+      - name: pip
+        src: python/bin/pip
+      - name: pip3
+        src: python/bin/pip3
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      windows: pc-windows-msvc
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      algorithm: sha256
+    overrides:
+      - goos: linux
+        goarch: amd64
+        replacements:
+          linux: unknown-linux-musl
+      - goos: linux
+        goarch: arm64
+        replacements:
+          linux: unknown-linux-gnu
+      - goos: windows
+        replacements:
+          arm64: arm64
+        files:
+          - name: python
+            src: python/python
