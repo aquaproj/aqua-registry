@@ -1,0 +1,26 @@
+packages:
+  - type: github_release
+    repo_owner: bomctl
+    repo_name: bomctl
+    description: Format agnostic SBOM tooling
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.0-alpha")
+        asset: bomctl-{{.OS}}-{{.Arch}}
+        format: raw
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: bomctl_checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: bomctl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: bomctl_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
