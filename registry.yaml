@@ -3775,6 +3775,26 @@ packages:
             src: podbard_{{.Version}}_{{.OS}}_{{.Arch}}/podbard
   - type: github_release
     repo_owner: Songmu
+    repo_name: r2sync
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: r2sync_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
+    repo_owner: Songmu
     repo_name: tagpr
     description: The tagpr automatically creates and updates a pull request for unreleased items, tag them when they are merged, and create releases
     asset: tagpr_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
