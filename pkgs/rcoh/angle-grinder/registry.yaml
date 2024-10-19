@@ -1,17 +1,86 @@
 packages:
   - type: github_release
-    version_constraint: 'semver(">= v0.9.0 ")'
     repo_owner: rcoh
     repo_name: angle-grinder
-    asset: agrind-{{.Arch}}-{{.OS}}.tar.gz
-    description: 'Slice and dice logs on the command line'
+    description: Slice and dice logs on the command line
     files:
       - name: agrind
-        src: agrind
-    replacements:
-      amd64: x86_64
-      darwin: apple-darwin
-      linux: unknown-linux-musl
-    supported_envs:
-      - linux/amd64
-      - darwin/amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.3.0")
+        asset: angle_grinder-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.14.1")
+        asset: angle_grinder-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.15-alpha1"
+        asset: agrind-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.15.0"
+        asset: angle_grinder-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.19.2")
+        asset: agrind-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.19.3"
+        asset: agrind-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: agrind-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
