@@ -57,7 +57,7 @@ tasks:
       aqua exec -- cmdx gr
       bash scripts/commit.sh "$PACKAGE"
       bash scripts/test.sh "$PACKAGE"
-      bash scripts/start.sh aqua-registry-windows
+      bash scripts/start.sh windows
       bash scripts/test-windows.sh "$PACKAGE"
     args:
       - name: package
@@ -101,7 +101,7 @@ tasks:
       fi
       bash scripts/start.sh
       bash scripts/test.sh "$PACKAGE"
-      bash scripts/start.sh aqua-registry-windows
+      bash scripts/start.sh windows
       bash scripts/test-windows.sh "$PACKAGE"
       aqua exec -- aqua-registry gr
 
@@ -158,9 +158,8 @@ tasks:
       $ cmdx new cli/cli
     script: |
       set -eu
-      bash scripts/check_diff_package.sh
-      pkg=$(bash scripts/get_pkg_from_branch.sh "$PACKAGE")
-      aqua exec -- aqua-registry create-pr-new-pkg "$pkg"
+
+      bash scripts/new.sh
     args:
       - name: package
         usage: a package name. e.g. cli/cli
@@ -176,7 +175,7 @@ tasks:
     script: |
       set -eu
       bash scripts/stop.sh
-      bash scripts/stop.sh aqua-registry-windows
+      bash scripts/stop.sh windows
 
   - name: remove
     short: rm
@@ -188,7 +187,7 @@ tasks:
     script: |
       set -eu
       bash scripts/remove_container.sh
-      bash scripts/remove_container.sh aqua-registry-windows
+      bash scripts/remove_container.sh windows
 
   - name: start
     usage: Start containers
@@ -212,7 +211,7 @@ tasks:
         cmdx rm
       fi
       bash scripts/start.sh
-      bash scripts/start.sh aqua-registry-windows
+      bash scripts/start.sh windows
 
   - name: release
     short: r

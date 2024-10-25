@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-container_name=${1:-aqua-registry}
+. "$(dirname "$0")/var.sh"
+container_name=${1:-$container}
 
 echo "[INFO] Checking if the container $container_name is running" >&2
 docker ps -a \

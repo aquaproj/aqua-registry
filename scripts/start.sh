@@ -2,37 +2,45 @@
 
 set -euo pipefail
 
-container_name=${1:-aqua-registry}
+. "$(dirname "$0")/var.sh"
+container_name=$container
+if [ "${1:-}" = windows ]; then
+	container_name=$container_windows
+fi
+
+info() {
+	echo "[INFO] $*" >&2
+}
 
 if ! bash scripts/is_build_image.sh; then
-	echo "[INFO] Building the docker image aquaproj/aqua-registry" >&2
+	info "Building the docker image $image"
 	bash scripts/build_image.sh
 fi
 
 if ! bash scripts/exist_container.sh "$container_name"; then
-	echo "[INFO] Creaing a container $container_name" >&2
+	info "Creating a container $container_name"
 	bash scripts/run.sh "$container_name"
 	exit 0
 fi
 
 if bash scripts/is_container_running.sh "$container_name"; then
 	if bash scripts/check_image.sh "$container_name"; then
-		echo "[INFO] Dockerfile isn't updated" >&2
+		info "Dockerfile isn't updated"
 		exit 0
 	fi
-	echo "[INFO] Dockerfile is updated, so the container $container_name is being recreated" >&2
+	info "Dockerfile is updated, so the container $container_name is being recreated"
 	bash scripts/remove_container.sh "$container_name"
 	bash scripts/run.sh "$container_name"
 	exit 0
 fi
 
 if bash scripts/check_image.sh "$container_name"; then
-	echo "[INFO] Dockerfile isn't updated" >&2
-	echo "[INFO] Starting the container $container_name" >&2
+	info "Dockerfile isn't updated"
+	info "Starting the container $container_name"
 	docker start "$container_name"
 	exit 0
 fi
 
-echo "[INFO] Dockerfile is updated, so the container $container_name is being recreated" >&2
+info "Dockerfile is updated, so the container $container_name is being recreated"
 bash scripts/remove_container.sh "$container_name"
 bash scripts/run.sh "$container_name"

@@ -2,6 +2,8 @@
 
 set -eu
 
+. "$(dirname "$0")/var.sh"
+
 if [ "$NO_CREATE_BRANCH" = true ]; then
     exit 0
 fi
@@ -16,7 +18,7 @@ fi
 
 temp_remote="temp-remote-$(date +%Y%m%d%H%M%S)"
 
-git remote add "$temp_remote" https://github.com/aquaproj/aqua-registry
+git remote add "$temp_remote" "$upstream"
 git fetch "$temp_remote" main
 git checkout -b "feat/$pkg" "$temp_remote/main"
 git remote remove "$temp_remote"

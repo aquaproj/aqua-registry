@@ -2,6 +2,11 @@
 
 set -eu
 
+. "$(dirname "$0")/var.sh"
+if [ "$OS" = windows ]; then
+	container=$container_windows
+fi
+
 if [ -z "${ARCH:-}" ]; then
 	ARCH=$(uname -m)
 	case $ARCH in
@@ -9,10 +14,7 @@ if [ -z "${ARCH:-}" ]; then
 		aarch64) ARCH="arm64" ;;
 	esac
 fi
-container=aqua-registry
-if [ "$OS" = windows ]; then
-	container=aqua-registry-windows
-fi
+
 echo "[INFO] Connecting to the container $container ($OS/$ARCH)" >&2
 
 # Workaround to fix the symbolic link to aqua-proxy
