@@ -3,6 +3,9 @@ name: test
 on:
   pull_request:
     branches: [main]
+concurrency:
+  group: ${{ github.workflow }}--${{ github.ref }}
+  cancel-in-progress: true
 permissions: {}
 env:
   AQUA_LOG_COLOR: always
@@ -17,6 +20,7 @@ jobs:
       test-docker: ${{steps.changes.outputs.test-docker}}
     runs-on: ubuntu-latest
     permissions: {}
+    timeout-minutes: 15
     steps:
       - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
         id: changes
@@ -47,6 +51,7 @@ jobs:
     # This job is used for main branch's branch protection rule's status check.
     # If all dependent jobs succeed or are skipped this job succeeds.
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs:
       - enable-automerge-renovate
       - renovate-config-validator
@@ -56,6 +61,7 @@ jobs:
       - prettier
       - test-docker
       - test
+      - lintnet
     permissions: {}
     if: failure()
     steps:
@@ -105,6 +111,9 @@ jobs:
 
   ci-info:
     uses: ./.github/workflows/wc-ci-info.yaml
+
+  lintnet:
+    uses: ./.github/workflows/wc-lintnet.yaml
 
   test:
     needs: ci-info

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eu
+set -euo pipefail
 
 container_name=${1:-aqua-registry}
 
@@ -23,5 +23,5 @@ fi
 
 # shellcheck disable=SC2086
 docker run $opts -d --name "$container_name" \
-	-v "$PWD:/aqua-registry" $envs aquaproj/aqua-registry \
+	$envs aquaproj/aqua-registry \
 	tail -f /dev/null

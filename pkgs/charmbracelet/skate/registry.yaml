@@ -3,30 +3,70 @@ packages:
     repo_owner: charmbracelet
     repo_name: skate
     description: A personal key value store
-    asset: skate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    replacements:
-      amd64: x86_64
-      linux: Linux
-      darwin: Darwin
-      windows: Windows
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.2.2")
-    # 0.2.2: linux was capitalized. linux => Linux
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.2.2")
+      - version_constraint: semver("<= 0.1.3")
+        asset: skate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         replacements:
           amd64: x86_64
           darwin: Darwin
           windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.2.1")
+        asset: skate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v0.2.2"
+        asset: skate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
+        asset: skate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: skate
+            src: "{{.AssetWithoutExt}}/skate"
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
