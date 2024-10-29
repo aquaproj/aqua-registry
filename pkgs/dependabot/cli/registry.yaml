@@ -1,0 +1,44 @@
+packages:
+  - type: github_release
+    repo_owner: dependabot
+    repo_name: cli
+    description: A tool for testing and debugging Dependabot update jobs
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.24.0")
+        asset: dependabot-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v1.25.0"
+        no_asset: true
+      - version_constraint: semver("<= 1.32.0")
+        asset: dependabot-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v1.33.0"
+        no_asset: true
+      - version_constraint: "true"
+        asset: dependabot-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        overrides:
+          - goos: windows
+            format: zip
