@@ -3,6 +3,9 @@ name: test
 on:
   pull_request:
     branches: [main]
+concurrency:
+  group: ${{ github.workflow }}--${{ github.ref }}
+  cancel-in-progress: true
 permissions: {}
 env:
   AQUA_LOG_COLOR: always
@@ -14,185 +17,111 @@ jobs:
       check-files: ${{steps.changes.outputs.check-files}}
       generate-registry: ${{steps.changes.outputs.generate-registry}}
       json-schema: ${{steps.changes.outputs.json-schema}}
-      test-earthly: ${{steps.changes.outputs.test-earthly}}
+      test-docker: ${{steps.changes.outputs.test-docker}}
     runs-on: ubuntu-latest
-    permissions: {}
+    permissions:
+      contents: read
+      pull-requests: read
+    timeout-minutes: 15
     steps:
-      - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
         id: changes
         with:
           filters: |
             renovate-config-validator:
               - renovate.json5
+              - .github/workflows/wc-renovate-config-validator.yaml
             check-files:
               - pkgs/**/pkg.yaml
               - pkgs/**/registry.yaml
+              - .github/workflows/wc-check-files.yaml
             generate-registry:
               - aqua/generate-registry.yaml
               - registry.yaml
               - pkgs/**/registry.yaml
+              - .github/workflows/wc-generate-registry.yaml
             json-schema:
               - registry.yaml
-            test-earthly:
-              - Earthfile
-              - aqua/earthly.yaml
-              - aqua/earthly-test.yaml
+              - .github/workflows/wc-json-schema.yaml
+            test-docker:
+              - docker/*
+              - scripts/**
+              - cmdx.yaml
+              - .github/workflows/wc-test-docker.yaml
 
   status-check:
     # This job is used for main branch's branch protection rule's status check.
     # If all dependent jobs succeed or are skipped this job succeeds.
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs:
-      - enable-automerge-renovate
       - renovate-config-validator
       - check-files
       - generate-registry
       - json-schema
       - prettier
-      - test-earthly
+      - test-docker
       - test
+      - lintnet
     permissions: {}
     if: failure()
     steps:
       - run: exit 1
 
-  enable-automerge-renovate:
-    runs-on: ubuntu-latest
-    environment: renovate
-    if: |
-      github.event.pull_request.user.login == 'renovate[bot]' && contains(github.event.pull_request.body, ' **Automerge**: Enabled.')
-    steps:
-      - name: Generate token
-        id: generate_token
-        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1.8.0
-        with:
-          app_id: ${{secrets.APP_ID}}
-          private_key: ${{secrets.APP_PRIVATE_KEY}}
-      - name: Enable auto-merge
-        run: gh -R "$GITHUB_REPOSITORY" pr merge --squash --auto --delete-branch "$PR_NUMBER"
-        env:
-          # github.token is unavailable, because github.token doesn't have a permission to delete a branch `renovate/*`
-          # pull-requests: write and contents: write are required
-          GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
-          PR_NUMBER: ${{github.event.pull_request.number}}
-
   renovate-config-validator:
-    # Validate Renovate Configuration by renovate-config-validator.
-    uses: suzuki-shunsuke/renovate-config-validator-workflow/.github/workflows/validate.yaml@1a2fd7b15d99b1c434124b0bd2d8bd55b54ed869 # v0.2.0
+    uses: ./.github/workflows/wc-renovate-config-validator.yaml
     needs: path-filter
     if: ${{needs.path-filter.outputs.renovate-config-validator == 'true'}}
     permissions:
       contents: read
 
   check-files:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/wc-check-files.yaml
     needs: path-filter
     if: ${{needs.path-filter.outputs.check-files == 'true'}}
-    steps:
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - uses: aquaproj/registry-action/check-files@dff21577b6ec277b2645a7a40db12eeb15b4c581 # v0.2.0
+    permissions:
+      contents: read
 
   generate-registry:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/wc-generate-registry.yaml
     needs: path-filter
     if: ${{needs.path-filter.outputs.generate-registry == 'true'}}
-    steps:
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - uses: aquaproj/aqua-installer@294926f94b4233f202a2f03875c604f840cfed70 # v2.1.1
-        with:
-          aqua_version: v2.8.0
-          policy_allow: "true"
-      - uses: aquaproj/registry-action/generate-registry@dff21577b6ec277b2645a7a40db12eeb15b4c581 # v0.2.0
+    permissions:
+      contents: read
 
   json-schema:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/wc-json-schema.yaml
     needs: path-filter
     if: ${{needs.path-filter.outputs.json-schema == 'true'}}
-    steps:
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - uses: aquaproj/registry-action/validate-json-schema@dff21577b6ec277b2645a7a40db12eeb15b4c581 # v0.2.0
+    permissions:
+      contents: read
 
   prettier:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - run: npm i -g prettier
-      - run: prettier -c .
+    uses: ./.github/workflows/wc-prettier.yaml
+    permissions:
+      contents: read
 
-  test-earthly:
-    runs-on: ubuntu-latest
+  test-docker:
+    uses: ./.github/workflows/wc-test-docker.yaml
     needs: path-filter
-    if: ${{needs.path-filter.outputs.test-earthly == 'true'}}
-    steps:
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - uses: aquaproj/aqua-installer@294926f94b4233f202a2f03875c604f840cfed70 # v2.1.1
-        with:
-          aqua_version: v2.8.0
-          policy_allow: "true"
-        env:
-          AQUA_GITHUB_TOKEN: ${{github.token}}
-      - run: earthly +test --pkg=google/wire
+    if: ${{needs.path-filter.outputs.test-docker == 'true'}}
+    permissions:
+      contents: read
 
   ci-info:
-    runs-on: ubuntu-latest
-    env:
-      AQUA_CONFIG: aqua/ci-info.yaml
-    steps:
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - uses: aquaproj/aqua-installer@294926f94b4233f202a2f03875c604f840cfed70 # v2.1.1
-        with:
-          aqua_version: v2.8.0
-          policy_allow: "true"
-        env:
-          AQUA_GITHUB_TOKEN: ${{github.token}}
-      - uses: suzuki-shunsuke/ci-info-action/store@20bd996e371b27a229a348a09e17db8dcab1f2be # v0.1.2
-        env:
-          GITHUB_TOKEN: ${{github.token}}
-      - run: echo "https://github.com/aquaproj/aqua-registry/pull/$CI_INFO_PR_NUMBER" >> "$GITHUB_STEP_SUMMARY"
+    uses: ./.github/workflows/wc-ci-info.yaml
+    permissions:
+      contents: read
+      pull-requests: read
+
+  lintnet:
+    uses: ./.github/workflows/wc-lintnet.yaml
+    permissions:
+      contents: read
 
   test:
     needs: ci-info
-    strategy:
-      matrix:
-        env:
-          - runs-on: windows-latest
-          - runs-on: ubuntu-latest
-          - runs-on: macos-latest
-          - runs-on: ubuntu-latest
-            goarch: arm64
-          - runs-on: macos-latest
-            goos: darwin
-            goarch: arm64
-          - runs-on: windows-latest
-            goarch: arm64
-    runs-on: ${{ matrix.env.runs-on }}
-    defaults:
-      run:
-        shell: bash
-    env:
-      AQUA_CONFIG: aqua/test.yaml
-    steps:
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - uses: suzuki-shunsuke/ci-info-action/restore@20bd996e371b27a229a348a09e17db8dcab1f2be # v0.1.2
-
-      # - name: Generate token
-      #   id: generate_token
-      #   uses: tibdex/github-app-token@v1
-      #   with:
-      #     app_id: ${{ secrets.APP_ID }}
-      #     private_key: ${{ secrets.APP_PRIVATE_KEY }}
-
-      - uses: aquaproj/aqua-installer@294926f94b4233f202a2f03875c604f840cfed70 # v2.1.1
-        with:
-          aqua_version: v2.8.0
-          policy_allow: "true"
-        env:
-          AQUA_GITHUB_TOKEN: ${{github.token}}
-
-      - uses: aquaproj/registry-action/test@dff21577b6ec277b2645a7a40db12eeb15b4c581 # v0.2.0
-        with:
-          goos: ${{ matrix.env.goos }}
-          goarch: ${{ matrix.env.goarch }}
-          go_version: "1.20.3"
-        env:
-          GITHUB_TOKEN: ${{github.token}}
+    uses: ./.github/workflows/wc-test.yaml
+    permissions:
+      contents: read
+      pull-requests: read

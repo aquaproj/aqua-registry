@@ -1,0 +1,31 @@
+packages:
+  - type: http
+    repo_owner: ariga
+    repo_name: atlas
+    url: https://release.ariga.io/atlas/atlas-{{.OS}}-{{.Arch}}-{{.Version}}
+    description: A modern tool for managing database schemas
+    format: raw
+    supported_envs:
+      - darwin
+      - linux
+    checksum:
+      type: http
+      url: https://release.ariga.io/atlas/atlas-{{.OS}}-{{.Arch}}-{{.Version}}.sha256
+      file_format: raw
+      algorithm: sha256
+    version_constraint: semver(">= 0.14.3")
+    # https://atlasgo.io/getting-started
+    # > As of version v0.14.3 we no longer provide a windows binary. Windows users are advised to use our [docker image](https://hub.docker.com/r/arigaio/atlas) or use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
+    version_overrides:
+      - version_constraint: semver("< 0.14.3")
+        supported_envs:
+          - darwin
+          - linux
+          - windows/amd64
+        overrides:
+          - goos: windows
+            checksum:
+              type: http
+              url: https://release.ariga.io/atlas/atlas-{{.OS}}-{{.Arch}}-{{.Version}}.exe.sha256
+              file_format: raw
+              algorithm: sha256

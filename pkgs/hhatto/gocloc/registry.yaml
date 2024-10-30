@@ -3,14 +3,71 @@ packages:
     repo_owner: hhatto
     repo_name: gocloc
     description: A little fast cloc(Count Lines Of Code)
-    asset: gocloc_{{.OS}}_{{.Arch}}.tar.gz
+    asset: gocloc_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
     supported_envs:
       - darwin
       - linux
-    replacements:
-      386: i386
-      amd64: x86_64
+      - amd64
     checksum:
       type: github_release
       asset: gocloc_{{trimV .Version}}_checksums.txt
       algorithm: sha256
+    version_constraint: semver(">= 0.5.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.4.3")
+        replacements:
+          amd64: x86_64
+      - version_constraint: semver(">= 0.4.1")
+        overrides: []
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver(">= 0.4.0")
+        overrides: []
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux
+          - darwin
+        rosetta2: true
+      - version_constraint: semver(">= 0.3.3")
+        overrides: []
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+      - version_constraint: Version == "v0.3.2"
+        overrides: []
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+          - darwin
+        files:
+          - name: gocloc
+            src: git-bump
+        rosetta2: true
+      - version_constraint: semver("< 0.3.2")
+        asset: gocloc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256

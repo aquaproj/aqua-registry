@@ -1,0 +1,28 @@
+packages:
+  - type: github_release
+    repo_owner: openziti
+    repo_name: zrok
+    description: Geo-scale, next-generation sharing platform built on top of OpenZiti
+    asset: zrok_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha1
+    version_constraint: semver(">= 0.3.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.2.13")
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver("< 0.2.13")
+        supported_envs:
+          - linux/amd64
+        checksum:
+          type: github_release
+          asset: zrok_{{trimV .Version}}_checksums.txt
+          algorithm: sha256

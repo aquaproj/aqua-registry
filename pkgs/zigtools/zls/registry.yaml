@@ -2,24 +2,68 @@ packages:
   - type: github_release
     repo_owner: zigtools
     repo_name: zls
-    description: Zig LSP implementation + Zig Language Server
-    asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: macos
-    supported_envs:
-      - darwin
-      - amd64
-    files:
-      - name: zls
-        src: bin/zls
-    version_constraint: semver(">= 0.10.0")
-    # Archive format was changed from xz to zst
-    # https://github.com/aquaproj/aqua-registry/pull/7540#issuecomment-1299556748
-    # darwin/arm64 was supported
-    format: tar.zst
+    description: A Zig language server supporting Zig developers with features like autocomplete and goto definition
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.9.0")
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
         format: tar.xz
         rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: zls
+            src: bin/zls
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "0.10.0"
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        format: tar.zst
+        windows_arm_emulation: true
+        files:
+          - name: zls
+            src: bin/zls
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "0.11.0"
+        asset: zls-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: zls
+            src: bin/zls
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        overrides:
+          - goos: windows
+            format: zip
+            replacements:
+              arm64: arm64
+      - version_constraint: "true"
+        asset: zls-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        overrides:
+          - goos: windows
+            format: zip
+            replacements:
+              arm64: arm64

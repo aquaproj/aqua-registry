@@ -1,0 +1,57 @@
+packages:
+  - type: github_release
+    repo_owner: JohnnyMorganz
+    repo_name: StyLua
+    description: An opinionated Lua code formatter
+    asset: stylua-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: zip
+    overrides:
+      - goos: windows
+        replacements:
+          arm64: arm64
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: macos
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    files:
+      - name: stylua
+    version_constraint: semver(">= 0.15.0")
+    version_overrides:
+      - version_constraint: semver(">= 0.14.0")
+        asset: stylua-{{.OS}}.{{.Format}}
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: stylua-{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements:
+              arm64: aarch64
+        replacements:
+          darwin: macos
+          windows: win64
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.13.0")
+        asset: stylua-{{.OS}}.{{.Format}}
+        overrides: []
+        replacements:
+          darwin: macos
+          windows: win64
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+      - version_constraint: semver("< 0.13.0")
+        asset: stylua-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        overrides: []
+        replacements:
+          darwin: macos
+          windows: win64
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true

@@ -1,0 +1,77 @@
+packages:
+  - type: github_release
+    repo_owner: jqlang
+    repo_name: jq
+    description: Command-line JSON processor
+    aliases:
+      - name: stedolan/jq
+    asset: jq-{{.OS}}-{{.Arch}}
+    format: raw
+    replacements:
+      darwin: macos
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_prefix: jq-
+    checksum:
+      type: github_release
+      asset: sha256sum.txt
+      algorithm: sha256
+    version_constraint: semver(">= 1.7rc1")
+    version_overrides:
+      - version_constraint: semver(">= 1.5")
+        asset: jq-{{.OS}}
+        overrides:
+          - goos: darwin
+            asset: jq-{{.OS}}-{{.Arch}}
+        replacements:
+          darwin: osx
+          linux: linux64
+          windows: win64
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 1.5rc2")
+        overrides:
+          - goos: windows
+            asset: jq-{{.OS}}
+        replacements:
+          amd64: x86_64
+          darwin: osx
+          windows: win64
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 1.5rc1")
+        overrides:
+          - goos: windows
+            asset: jq-{{.OS}}
+        replacements:
+          amd64: x86_64-static
+          windows: win64
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+        checksum:
+          enabled: false
+      - version_constraint: semver("< 1.5rc1")
+        overrides:
+          - goos: windows
+            asset: jq-{{.OS}}
+        replacements:
+          amd64: x86_64
+          darwin: osx
+          windows: win64
+        supported_envs:
+          - darwin
+          - amd64
+        rosetta2: true
+        checksum:
+          enabled: false

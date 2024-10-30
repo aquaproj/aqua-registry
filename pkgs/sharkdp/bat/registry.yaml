@@ -2,28 +2,80 @@ packages:
   - type: github_release
     repo_owner: sharkdp
     repo_name: bat
-    rosetta2: true
     description: A cat(1) clone with wings
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      windows: pc-windows-msvc
-      linux: unknown-linux-gnu
-      386: i686
-    overrides:
-      - goos: windows
-        format: zip
-      - goos: linux
-        goarch: amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.2")
+        asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: bat
+            src: bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat
         replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.6.0")
+        asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: bat
+            src: bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
           linux: unknown-linux-musl
-    files:
-      - name: bat
-        src: bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.6.1"
+        asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: bat
+            src: bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: bat
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: bat
+            src: bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip

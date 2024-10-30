@@ -1,14 +1,22 @@
 {
   extends: [
-    "config:base",
-    "github>suzuki-shunsuke/renovate-config#2.1.0",
-    "github>aquaproj/aqua-renovate-config#1.6.0",
-    "github>suzuki-shunsuke/renovate-config:nolimit#2.1.0",
-    "github>aquaproj/aqua-renovate-config:file#1.6.0(CONTRIBUTING\\.md)",
-    "github>aquaproj/aqua-renovate-config:installer-script#1.6.0(Earthfile)",
+    "github>suzuki-shunsuke/renovate-config#2.5.0",
+    "github>aquaproj/aqua-renovate-config#2.3.1",
+    "github>suzuki-shunsuke/renovate-config:nolimit#2.5.0",
+    "github>aquaproj/aqua-renovate-config:file#2.3.1(CONTRIBUTING\\.md)",
+    "github>aquaproj/aqua-renovate-config:installer-script#2.3.1(docker/Dockerfile)",
+    "github>suzuki-shunsuke/renovate-config:action-go-version#2.5.0",
+    "github>lintnet/renovate-config#0.1.2",
   ],
-  regexManagers: [
+  packageRules: [
     {
+      matchFileNames: ["docker/Dockerfile"],
+      pinDigests: false,
+    },
+  ],
+  customManagers: [
+    {
+      customType: "regex",
       fileMatch: ["README.md"],
       matchStrings: [
         "ref: (?<currentValue>.*?) # renovate: depName=(?<depName>.*)",

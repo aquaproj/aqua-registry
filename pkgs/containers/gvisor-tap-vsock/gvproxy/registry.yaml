@@ -1,0 +1,53 @@
+packages:
+  - name: containers/gvisor-tap-vsock/gvproxy
+    type: github_release
+    repo_owner: containers
+    repo_name: gvisor-tap-vsock
+    description: A new network stack based on gVisor
+    asset: gvproxy-{{.OS}}-{{.Arch}}
+    format: raw
+    overrides:
+      - goos: darwin
+        asset: gvproxy-{{.OS}}
+      - goos: windows
+        asset: gvproxy-windows.exe
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    version_constraint: semver(">= 0.7.1")
+    version_overrides:
+      - version_constraint: semver(">= 0.7.0")
+        asset: gvproxy-{{.OS}}
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.6.2")
+        asset: gvproxy-{{.OS}}
+        overrides:
+          - goos: darwin
+            asset: gvproxy-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.6.0")
+        asset: gvproxy-{{.OS}}
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver(">= 0.4.0")
+        asset: gvproxy-{{.OS}}
+        overrides:
+          - goos: darwin
+            asset: gvproxy-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: semver("< 0.4.0")
+        asset: gvproxy-{{.OS}}
+        overrides: []
+        supported_envs:
+          - darwin
+          - amd64

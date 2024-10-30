@@ -1,0 +1,30 @@
+packages:
+  - type: github_release
+    repo_owner: moby
+    repo_name: buildkit
+    description: concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit
+    files:
+      - name: buildctl
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.8.3")
+        asset: buildkit-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: buildctl
+            src: bin/buildctl
+      - version_constraint: semver("<= 0.11.0-rc2")
+        asset: buildkit-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: buildctl
+            src: bin/buildctl
+      - version_constraint: "true"
+        asset: buildkit-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        complete_windows_ext: false
+        files:
+          - name: buildctl
+            src: bin/buildctl

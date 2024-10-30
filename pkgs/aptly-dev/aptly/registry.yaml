@@ -1,0 +1,21 @@
+packages:
+  - type: github_release
+    repo_owner: aptly-dev
+    repo_name: aptly
+    description: Debian repository management tool
+    asset: aptly_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: darwin
+        format: zip
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+    files:
+      - name: aptly
+        src: "{{.AssetWithoutExt}}/aptly"
+    version_constraint: semver(">= 1.4.0")
+    version_overrides:
+      - version_constraint: semver("< 1.4.0")
+        no_asset: true
