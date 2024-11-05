@@ -31494,8 +31494,15 @@ packages:
     description: Automated upstream mirror for bpftool stand-alone build
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
-        no_asset: true
+      - version_constraint: semver(">= 7.2.0")
+        asset: bpftool-{{ .Version}}-{{.Arch}}.tar.gz
+        checksum:
+          type: github_release
+          asset: bpftool-{{ .Version}}-{{.Arch}}.tar.gz.sha256sum
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - linux/arm64
   - type: github_release
     repo_owner: librespeed
     repo_name: speedtest-cli
