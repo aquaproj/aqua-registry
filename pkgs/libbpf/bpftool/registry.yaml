@@ -5,15 +5,14 @@ packages:
     description: Automated upstream mirror for bpftool stand-alone build
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 7.2.0")
+      - version_constraint: semver("<= 7.1.0")
+        no_asset: true
+      - version_constraint: "true"
         asset: bpftool-{{ .Version}}-{{.Arch}}.{{.Format}}
         format: tar.gz
-        files:
-          - name: bpftool
         checksum:
           type: github_release
           asset: bpftool-{{ .Version}}-{{.Arch}}.{{.Format}}.sha256sum
           algorithm: sha256
         supported_envs:
-          - linux/amd64
-          - linux/arm64
+          - linux
