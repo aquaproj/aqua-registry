@@ -1,0 +1,44 @@
+---
+name: Rerun failed workflow runs automatically
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 */1 * * *" # Hourly
+
+jobs:
+  rerun:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      actions: write # To rerun workflow runs
+      pull-requests: read # To list pull requests
+    steps:
+      - run: |
+          set -eu
+
+          d=$(date +%Y-%m-%d -d "4 day ago")
+          info "date: $d"
+
+          bot=app/aquaproj-aqua-registry
+
+          info "searching pull requests" >&2
+          shas=$(gh -R "$GITHUB_REPOSITORY" pr list \
+              -A "$bot" \
+              -S "created:>=$d" \
+              --json headRefOid \
+              -q '.[].headRefOid')
+
+          for sha in $shas; do
+              echo "searching workflow runs sha=$sha" >&2
+              runids=$(gh -R "$GITHUB_REPOSITORY" run list \
+                  -c "$sha" \
+                  -s failure \
+                  --json databaseId \
+                  -q '.[].databaseId')
+              for runid in $runids; do
+                  echo "rerunning a workflow run runid=$runid" >&2
+                  gh -R "$GITHUB_REPOSITORY" run rerun "$runid" --failed
+              done
+          done
+        env:
+          GITHUB_TOKEN: ${{github.token}}
