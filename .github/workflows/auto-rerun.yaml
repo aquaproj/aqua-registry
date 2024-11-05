@@ -10,11 +10,31 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
-      actions: write # To rerun a workflow run
-      contents: read # To checkout a repository
+      actions: write # To rerun workflow runs
       pull-requests: read # To list pull requests
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - run: bash scripts/rerun.sh
+      - run: |
+          set -eu
+
+          d=$(date +%Y-%m-%d -d "4 day ago")
+
+          shas=$(gh -R aquaproj/aqua-registry pr list \
+              -A "app/aquaproj-aqua-registry" \
+              -S "created:>=$d" \
+              --json headRefOid \
+              -q '.[].headRefOiddate +%Y:%m:%d -d "1 day ago"')
+
+          for sha in $shas; do
+              echo "sha: $sha" >&2
+              runids=$(gh -R aquaproj/aqua-registry run list \
+                  -c "$sha" \
+                  -s failure \
+                  --json databaseId \
+                  -q '.[].databaseId')
+              for runid in $runids; do
+                  echo "runid: $runid" >&2
+                  gh -R aquaproj/aqua-registry run rerun "$runid" --failed
+              done
+          done
         env:
           GITHUB_TOKEN: ${{github.token}}
