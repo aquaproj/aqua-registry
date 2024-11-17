@@ -7,17 +7,35 @@ packages:
       - name: progressline
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.2.2")
         asset: progressline-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
         replacements:
           amd64: x86_64
-          darwin: apple-macosx
+          darwin: apple
           linux: unknown-linux-gnu
         overrides:
           - goos: linux
             replacements:
               arm64: aarch64
+          - goos: darwin
+            asset: progressline-{{.Arch}}-{{.OS}}-macosx.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: progressline-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          darwin: apple
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: darwin
+            asset: progressline-{{.Version}}-{{.Arch}}-{{.OS}}-macosx.{{.Format}}
         supported_envs:
           - linux
           - darwin
