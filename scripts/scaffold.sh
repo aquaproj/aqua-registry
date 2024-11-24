@@ -2,6 +2,8 @@
 
 set -eu
 
+. "$(dirname "$0")/var.sh"
+
 pkg=$1
 cmd=$2
 limit=$3
@@ -15,8 +17,8 @@ if [ -n "$limit" ]; then
 fi
 
 # shellcheck disable=SC2086
-docker exec -ti -w /workspace aqua-registry bash -c "rm pkg.yaml 2>/dev/null || :"
-docker exec -ti -w /workspace aqua-registry bash -c "aqua gr $opts --out-testdata pkg.yaml \"$pkg\" > registry.yaml"
+docker exec -ti -w /workspace "$container" bash -c "rm pkg.yaml 2>/dev/null || :"
+docker exec -ti -w /workspace "$container" bash -c "aqua gr $opts --out-testdata pkg.yaml \"$pkg\" > registry.yaml"
 mkdir -p "pkgs/$pkg"
-docker cp "aqua-registry:/workspace/pkg.yaml" "pkgs/$pkg/pkg.yaml"
-docker cp "aqua-registry:/workspace/registry.yaml" "pkgs/$pkg/registry.yaml"
+docker cp "$container:/workspace/pkg.yaml" "pkgs/$pkg/pkg.yaml"
+docker cp "$container:/workspace/registry.yaml" "pkgs/$pkg/registry.yaml"

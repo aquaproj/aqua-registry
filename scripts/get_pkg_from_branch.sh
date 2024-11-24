@@ -21,4 +21,4 @@ if [ -n "$pkg" ]; then
     exit 0
 fi
 
-echo ${current_branch#feat/}
+echo "${current_branch#feat/}"

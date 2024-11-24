@@ -2,7 +2,9 @@
 
 set -euo pipefail
 
-container_name=${1:-aqua-registry}
+. "$(dirname "$0")/var.sh"
+container_name=${1:-$container}
 
 echo "[INFO] Checking if the container $container_name exists" >&2
-docker ps -a --filter "name=$container_name" --format "{{.Names}}" | grep -E "^$container_name$" >/dev/null
+docker ps -a --filter "name=$container_name" --format "{{.Names}}" |
+    grep -E "^$container_name$" >/dev/null

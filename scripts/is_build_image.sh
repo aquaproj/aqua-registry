@@ -2,7 +2,9 @@
 
 set -eu
 
-if ! docker inspect aquaproj/aqua-registry >/dev/null; then
+. "$(dirname "$0")/var.sh"
+
+if ! docker inspect "$image" >/dev/null; then
 	# image doesn't exist
 	exit 1
 fi

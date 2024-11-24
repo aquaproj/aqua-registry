@@ -2,9 +2,10 @@
 
 set -euo pipefail
 
-container_name=${1:-aqua-registry}
+. "$(dirname "$0")/var.sh"
+container_name=${1:-$container}
 
 container_image_id=$(docker inspect "$container_name" | aqua exec -- jq -r ".[].Image")
-image_id=$(docker inspect aquaproj/aqua-registry | aqua exec -- jq -r ".[].Id")
+image_id=$(docker inspect "$image" | aqua exec -- jq -r ".[].Id")
 
 [ "$container_image_id" = "$image_id" ]

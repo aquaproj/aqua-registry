@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-container_name=${1:-aqua-registry}
+. "$(dirname "$0")/var.sh"
+container_name=${1:-$container}
 
 token="${AQUA_GITHUB_TOKEN:-${GITHUB_TOKEN:-}}"
 if [ -z "$token" ]; then
@@ -23,5 +24,5 @@ fi
 
 # shellcheck disable=SC2086
 docker run $opts -d --name "$container_name" \
-	$envs aquaproj/aqua-registry \
+	$envs "$image" \
 	tail -f /dev/null
