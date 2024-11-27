@@ -19971,6 +19971,7 @@ packages:
           - windows
           - amd64
       - version_constraint: Version == "v1.0.0"
+        no_asset: true
       - version_constraint: semver("<= 1.0.6")
         asset: vale_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -19997,6 +19998,9 @@ packages:
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: vale
+            src: bin/vale
         replacements:
           amd64: 64-bit
           darwin: macOS
@@ -20089,10 +20093,6 @@ packages:
           darwin: macOS
           linux: Linux
           windows: Windows
-        checksum:
-          type: github_release
-          asset: vale_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
         overrides:
           - goos: windows
             format: zip
