@@ -15984,6 +15984,20 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 0.1.2") || Version == "v0.1.22"
         no_asset: true
+      - version_constraint: Version == "v0.2.8"
+        asset: committed-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - windows
       - version_constraint: semver("<= 0.1.4")
         asset: committed-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
@@ -16032,37 +16046,6 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: semver("<= 0.2.7")
-        asset: committed-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          linux: unknown-linux-musl
-          windows: pc-windows-msvc
-        overrides:
-          - goos: windows
-            format: zip
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: Version == "v0.2.8"
-        asset: committed-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: zip
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          linux: unknown-linux-musl
-          windows: pc-windows-msvc
-        overrides:
-          - goos: linux
-            format: tar.gz
-        supported_envs:
-          - linux/amd64
-          - windows
       - version_constraint: "true"
         asset: committed-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
