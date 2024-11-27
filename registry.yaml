@@ -19806,26 +19806,40 @@ packages:
   - type: github_release
     repo_owner: errata-ai
     repo_name: vale
-    rosetta2: true
-    description: A syntax-aware linter for prose built with speed and extensibility in mind
-    supported_envs:
-      - amd64
-      - arm64
-      - darwin
-    asset: vale_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      amd64: 64-bit
-      darwin: macOS
-      linux: Linux
-      windows: Windows
-    checksum:
-      type: github_release
-      asset: vale_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    description: ":pencil: A markup-aware linter for prose built with speed and extensibility in mind"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 3.4.2")
+        asset: vale_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: vale_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: vale_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: vale_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: estesp
     repo_name: manifest-tool
