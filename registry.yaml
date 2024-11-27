@@ -19831,6 +19831,32 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: Version == "v2.23.1"
+        asset: vale_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: vale_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v2.23.2"
+        asset: vale_.{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: semver("<= 0.2.0")
         asset: "{{.OS}}-{{.Arch}}.{{.Format}}"
         format: tar.gz
@@ -20024,32 +20050,6 @@ packages:
           type: github_release
           asset: vale_{{trimV .Version}}_checksums.txt
           algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "v2.23.1"
-        asset: vale_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: 64-bit
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: vale_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "v2.23.2"
-        asset: vale_.{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: 64-bit
-          darwin: macOS
-          linux: Linux
-          windows: Windows
         overrides:
           - goos: windows
             format: zip
