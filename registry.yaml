@@ -49475,6 +49475,16 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/version-fox/vfox/\\.github/workflows/go-releaser\\.yml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --signature
+              - https://github.com/version-fox/vfox/releases/download/{{.Version}}/checksums.txt.sig
+              - --certificate
+              - https://github.com/version-fox/vfox/releases/download/{{.Version}}/checksums.txt.pem
         overrides:
           - goos: windows
             format: zip
