@@ -43,6 +43,8 @@ tasks:
     script: |
       set -eu
 
+      PACKAGE=${PACKAGE#https://github.com/}
+
       bash scripts/check_commands.sh
       bash scripts/check_gpgsign.sh
       bash scripts/check_diff.sh
@@ -95,10 +97,14 @@ tasks:
       - "-c"
     script: |
       set -eu
+
+      PACKAGE=${PACKAGE#https://github.com/}
+
       pkg=$(bash scripts/get_test_pkg.sh "$PACKAGE")
       if [ "$IS_RECREATE" = true ]; then
         cmdx rm
       fi
+
       bash scripts/start.sh
       bash scripts/test.sh "$pkg"
       bash scripts/start.sh aqua-registry-windows
@@ -158,6 +164,9 @@ tasks:
       $ cmdx new cli/cli
     script: |
       set -eu
+
+      PACKAGE=${PACKAGE#https://github.com/}
+
       bash scripts/check_diff_package.sh
       pkg=$(bash scripts/get_pkg_from_branch.sh "$PACKAGE")
       aqua exec -- aqua-registry create-pr-new-pkg "$pkg"
