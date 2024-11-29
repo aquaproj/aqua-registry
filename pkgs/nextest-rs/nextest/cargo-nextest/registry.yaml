@@ -9,6 +9,19 @@ packages:
     version_overrides:
       - version_constraint: SemVer in ["0.9.85-rc.1", "0.9.41-a.5", "0.9.49-rc.1", "0.9.65", "0.9.69", "0.9.71"]
         no_asset: true
+      - version_constraint: semver("> 0.9.59, <= 0.9.61-rc.1")
+        no_asset: true
+      - version_constraint: semver("> 0.9.61, <= 0.9.62-a.1")
+        no_asset: true
+      - version_constraint: semver("> 0.9.40, <= 0.9.41-a.3")
+        no_asset: true
+      - version_constraint: Version == "cargo-nextest-0.9.41"
+        asset: "{{.Version}}-universal-{{.OS}}.{{.Format}}"
+        format: tar.gz
+        replacements:
+          darwin: apple-darwin
+        supported_envs:
+          - darwin
       - version_constraint: Version == "cargo-nextest-0.9.30-rc.1"
         asset: "{{.Version}}-universal-{{.OS}}.{{.Format}}"
         format: tar.gz
@@ -99,6 +112,26 @@ packages:
           linux: unknown-linux-gnu
         supported_envs:
           - linux/arm64
+      - version_constraint: Version == "cargo-nextest-0.9.70"
+        asset: "{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: darwin
+            asset: "{{.Version}}-universal-{{.OS}}.{{.Format}}"
       - version_constraint: semver("<= 0.9.28")
         asset: "{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
         format: tar.gz
@@ -116,119 +149,6 @@ packages:
           - windows
           - amd64
       - version_constraint: semver("<= 0.9.40")
-        asset: "{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          windows: pc-windows-msvc
-        overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              linux: unknown-linux-musl
-          - goos: linux
-            goarch: arm64
-            replacements:
-              arm64: aarch64
-              linux: unknown-linux-gnu
-          - goos: darwin
-            asset: "{{.Version}}-universal-{{.OS}}.{{.Format}}"
-      - version_constraint: semver("<= 0.9.41-a.3")
-        no_asset: true
-      - version_constraint: Version == "cargo-nextest-0.9.41"
-        asset: "{{.Version}}-universal-{{.OS}}.{{.Format}}"
-        format: tar.gz
-        replacements:
-          darwin: apple-darwin
-        supported_envs:
-          - darwin
-      - version_constraint: semver("<= 0.9.59")
-        asset: "{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          windows: pc-windows-msvc
-        overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              linux: unknown-linux-musl
-          - goos: linux
-            goarch: arm64
-            replacements:
-              arm64: aarch64
-              linux: unknown-linux-gnu
-          - goos: darwin
-            asset: "{{.Version}}-universal-{{.OS}}.{{.Format}}"
-      - version_constraint: semver("<= 0.9.61-rc.1")
-        no_asset: true
-      - version_constraint: semver("<= 0.9.61")
-        asset: "{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          windows: pc-windows-msvc
-        overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              linux: unknown-linux-musl
-          - goos: linux
-            goarch: arm64
-            replacements:
-              arm64: aarch64
-              linux: unknown-linux-gnu
-          - goos: darwin
-            asset: "{{.Version}}-universal-{{.OS}}.{{.Format}}"
-      - version_constraint: semver("<= 0.9.62-a.1")
-        no_asset: true
-      - version_constraint: semver("<= 0.9.64")
-        asset: "{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          windows: pc-windows-msvc
-        overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              linux: unknown-linux-musl
-          - goos: linux
-            goarch: arm64
-            replacements:
-              arm64: aarch64
-              linux: unknown-linux-gnu
-          - goos: darwin
-            asset: "{{.Version}}-universal-{{.OS}}.{{.Format}}"
-      - version_constraint: semver("<= 0.9.68")
-        asset: "{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          windows: pc-windows-msvc
-        overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              linux: unknown-linux-musl
-          - goos: linux
-            goarch: arm64
-            replacements:
-              arm64: aarch64
-              linux: unknown-linux-gnu
-          - goos: darwin
-            asset: "{{.Version}}-universal-{{.OS}}.{{.Format}}"
-      - version_constraint: Version == "cargo-nextest-0.9.70"
         asset: "{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
         format: tar.gz
         windows_arm_emulation: true
@@ -272,7 +192,6 @@ packages:
         asset: "{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
         format: tar.gz
         windows_arm_emulation: true
-        complete_windows_ext: false
         replacements:
           amd64: x86_64
           darwin: apple-darwin
