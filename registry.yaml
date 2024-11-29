@@ -12856,6 +12856,34 @@ packages:
           - goos: windows
             format: zip
   - type: github_release
+    repo_owner: chatwork
+    repo_name: kibertas
+    description: Kubernetes E2E
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.3")
+        asset: kibertas_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: kibertas_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v0.0.4"
+        no_asset: true
+      - version_constraint: "true"
+        asset: kibertas_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: kibertas_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: che-incubator
     repo_name: chectl
     description: CLI to manage Eclipse Che server and workspaces
