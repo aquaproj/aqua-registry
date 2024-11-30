@@ -9,7 +9,6 @@ packages:
         asset: posh-{{.OS}}-{{.Arch}}
         format: raw
         rosetta2: true
-        complete_windows_ext: false
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
@@ -23,11 +22,14 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        overrides:
+          - goos: windows
+            checksum:
+              enabled: false
       - version_constraint: semver("<= 6.8.0")
         asset: posh-{{.OS}}-{{.Arch}}
         format: raw
         rosetta2: true
-        complete_windows_ext: false
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
@@ -36,48 +38,32 @@ packages:
         asset: posh-{{.OS}}-{{.Arch}}
         format: raw
         rosetta2: true
-        complete_windows_ext: false
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
-        overrides:
-          - goos: windows
-            goarch: amd64
-            asset: posh-{{.OS}}-{{.Arch}}.7z
       - version_constraint: Version == "v6.41.1"
         asset: posh-{{.OS}}-{{.Arch}}
         format: raw
-        rosetta2: true
-        complete_windows_ext: false
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
-        overrides:
-          - goos: darwin
-            asset: posh-{{.OS}}-{{.Arch}}.sig
-          - goos: windows
-            goarch: amd64
-            asset: posh-{{.OS}}-{{.Arch}}.7z
+        supported_envs:
+          - windows
+          - linux
       - version_constraint: semver("<= 7.47.0")
         asset: posh-{{.OS}}-{{.Arch}}
         format: raw
         rosetta2: true
-        complete_windows_ext: false
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
-        overrides:
-          - goos: windows
-            goarch: amd64
-            asset: posh-{{.OS}}-{{.Arch}}.7z
       - version_constraint: Version == "v7.48.0"
         asset: posh-{{.OS}}-{{.Arch}}
         format: raw
         rosetta2: true
-        complete_windows_ext: false
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
@@ -86,31 +72,20 @@ packages:
         asset: posh-{{.OS}}-{{.Arch}}
         format: raw
         rosetta2: true
-        complete_windows_ext: false
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
-        overrides:
-          - goos: windows
-            goarch: amd64
-            asset: posh-{{.OS}}-{{.Arch}}.7z
       - version_constraint: semver("<= 12.5.1")
         asset: posh-{{.OS}}-{{.Arch}}
         format: raw
-        complete_windows_ext: false
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
-        overrides:
-          - goos: windows
-            goarch: amd64
-            asset: posh-{{.OS}}-{{.Arch}}.7z
       - version_constraint: semver("<= 21.17.2")
         asset: posh-{{.OS}}-{{.Arch}}
         format: raw
-        complete_windows_ext: false
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
@@ -127,5 +102,5 @@ packages:
         format: raw
         checksum:
           type: github_release
-          asset: install-{{.Arch}}.msi.sha256
+          asset: checksums.txt
           algorithm: sha256
