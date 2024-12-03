@@ -5,15 +5,7 @@ packages:
     description: A command-line tool to prevent committing secret keys into your source code
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.1.1")
-        asset: secrets-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-        supported_envs:
-          - darwin
+
       - version_constraint: Version == "v0.1.2"
         asset: secrets-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -28,6 +20,10 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
+        files:
+          - name: ripsecrets
+            src: secrets-{{trimV .Version}}-{{.Arch}}-{{.OS}}/secrets
+
       - version_constraint: "true"
         asset: ripsecrets-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -42,3 +38,6 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
+        files:
+          - name: ripsecrets
+            src: ripsecrets-{{trimV .Version}}-{{.Arch}}-{{.OS}}/ripsecrets
