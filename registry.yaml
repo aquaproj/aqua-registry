@@ -44286,6 +44286,49 @@ packages:
       asset: checksums.txt
       algorithm: sha256
   - type: github_release
+    repo_owner: sirwart
+    repo_name: ripsecrets
+    description: A command-line tool to prevent committing secret keys into your source code
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.1")
+        asset: secrets-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "v0.1.2"
+        asset: secrets-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: ripsecrets-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux/amd64
+          - darwin
+  - type: github_release
     repo_owner: six-ddc
     repo_name: plow
     asset: plow_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
