@@ -199,6 +199,23 @@ tasks:
       bash scripts/remove_container.sh
       bash scripts/remove_container.sh aqua-registry-windows
 
+  - name: remove-package
+    short: rmp
+    usage: Remove a package from containers
+    description: |
+      Remove a package from containers
+
+      $ cmdx rmp [<package name>]
+    args:
+      - name: package
+        usage: a package name. e.g. cli/cli
+        script_envs:
+          - PACKAGE
+    script: |
+      set -eu
+      pkg=$(bash scripts/get_test_pkg.sh "$PACKAGE")
+      bash scripts/remove_package.sh "$pkg"
+
   - name: start
     usage: Start containers
     description: |
