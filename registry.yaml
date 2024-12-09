@@ -39811,6 +39811,8 @@ packages:
   - type: github_release
     repo_owner: pimalaya
     repo_name: himalaya
+    aliases:
+      - name: soywod/himalaya
     description: CLI to manage emails
     version_constraint: "false"
     version_overrides:
@@ -39835,6 +39837,19 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
+      - version_constraint: semver("< 0.3.2")
+        asset: himalaya-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          # https://github.com/soywod/himalaya/issues/144
+          - name: himalaya
+            src: himalaya.exe
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
       - version_constraint: semver("<= 0.7.3")
         asset: himalaya-{{.OS}}.{{.Format}}
         format: tar.gz
