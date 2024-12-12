@@ -22634,6 +22634,31 @@ packages:
           algorithm: sha256
   - type: github_release
     repo_owner: fujiwara
+    repo_name: stretcher
+    description: Deployment tool with consul/serf event notification
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.0")
+        asset: stretcher-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        files:
+          - name: stretcher
+            src: "{{.AssetWithoutExt}}"
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: stretcher-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        files:
+          - name: stretcher
+            src: "{{.AssetWithoutExt}}"
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
+    repo_owner: fujiwara
     repo_name: tfstate-lookup
     description: Lookup resource attributes in tfstate
     asset: tfstate-lookup_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
