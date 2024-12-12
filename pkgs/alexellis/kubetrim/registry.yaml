@@ -1,0 +1,41 @@
+packages:
+  - type: github_release
+    repo_owner: alexellis
+    repo_name: kubetrim
+    description: Trim  your KUBECONFIG automatically
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.1-rc1")
+        no_asset: true
+      - version_constraint: semver("<= 0.0.1-rc3")
+        asset: kubetrim-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: kubetrim-{{.OS}}-{{.Arch}}
+          - goos: windows
+            asset: kubetrim
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: "true"
+        asset: kubetrim-{{.OS}}.{{.Format}}
+        format: tgz
+        checksum:
+          type: github_release
+          asset: kubetrim-{{.OS}}-{{.Arch}}.sha256
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: kubetrim-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: kubetrim.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows/amd64
