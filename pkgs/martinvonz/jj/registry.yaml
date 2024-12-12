@@ -72,7 +72,7 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.20.0")
         asset: jj-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -90,3 +90,16 @@ packages:
           - darwin/arm64
           - windows
           - linux
+      - version_constraint: "true"
+        asset: jj-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+          arm64: aarch64
+        overrides:
+          - goos: windows
+            format: zip
