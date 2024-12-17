@@ -285,3 +285,25 @@ tasks:
           - PR_NUMBER
     script: |
       bash scripts/summarize.sh "$PR_NUMBER"
+
+  - name: ls-assets
+    short: lsa
+    description: List asset names
+    usage: List asset names
+    flags:
+      - name: repo
+        short: r
+        type: string
+        usage: Repo name
+        script_envs:
+          - REPO
+    args:
+      - name: version
+        required: true
+        script_envs:
+          - VERSION
+    script: |
+      REPO=${REPO#https://github.com/}
+      repo=$(bash scripts/get_test_pkg.sh "$REPO")
+
+      gh release view --json assets --jq ".assets[].name" -R "$repo" "$VERSION"
