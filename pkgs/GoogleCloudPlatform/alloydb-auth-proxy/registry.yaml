@@ -4,21 +4,19 @@ packages:
     repo_owner: GoogleCloudPlatform
     repo_name: alloydb-auth-proxy
     description: A utility for connecting securely to your AlloyDB instances
-    format: raw
-    supported_envs:
-      - darwin
-      - linux
-      - windows/amd64
-    version_constraint: semver(">= 1.0.0")
-    url: https://storage.googleapis.com/alloydb-auth-proxy/{{.Version}}/alloydb-auth-proxy.{{.OS}}.{{.Arch}}
-    overrides:
-      - goos: windows
-        goarch: amd64
-        url: https://storage.googleapis.com/alloydb-auth-proxy/{{.Version}}/alloydb-auth-proxy-x64.exe
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v1.8.0"
         url: https://storage.googleapis.com/alloydb-auth-proxy/{{.Version}}/alloydb-auth-proxy.{{.OS}}.{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
         overrides:
           - goos: windows
-            goarch: amd64
-            url: https://storage.googleapis.com/cloudsql-proxy/{{.Version}}/alloydb-auth-proxy-x64.exe
+            url: https://storage.googleapis.com/alloydb-auth-proxy/{{.Version}}/alloydb-auth-proxy.x64.exe
+      - version_constraint: "true"
+        url: https://storage.googleapis.com/alloydb-auth-proxy/{{.Version}}/alloydb-auth-proxy.{{.OS}}.{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            url: https://storage.googleapis.com/alloydb-auth-proxy/{{.Version}}/alloydb-auth-proxy-x64.exe
