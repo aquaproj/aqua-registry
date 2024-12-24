@@ -1,0 +1,26 @@
+---
+name: Check if commits are signed
+on:
+  pull_request_target:
+    branches: [main]
+concurrency:
+  group: ${{ github.workflow }}--${{ github.head_ref }} # github.ref is unavailable in case of pull_request_target
+  cancel-in-progress: true
+permissions: {}
+jobs:
+  check-commit-signing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Check signed commits in PR
+        uses: 1Password/check-signed-commits-action@ed2885f3ed2577a4f5d3c3fe895432a557d23d52 # v1.2.0
+        with:
+          comment: |
+            # :x: All commits must be signed
+
+            [workflow](${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}})
+
+            [All commits of pull requests must be signed. Please see the document.](https://github.com/suzuki-shunsuke/oss-contribution-guide/blob/main/docs/commit-signing.md)
