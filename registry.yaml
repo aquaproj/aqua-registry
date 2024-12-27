@@ -25722,14 +25722,16 @@ packages:
             asset: gptscript-{{.Version}}-{{.OS}}-universal.{{.Format}}
           - goos: windows
             format: zip
-  - type: http
+  - type: github_release
     repo_owner: gradle
-    repo_name: gradle
+    repo_name: gradle-distributions
+    aliases:
+      - name: gradle/gradle
     description: Adaptable, fast automation for all
-    url: https://services.gradle.org/distributions/gradle-{{trimV .Version}}-bin.zip
+    asset: gradle-{{trimV .Version | replace ".0-RC" "-rc-" | trimSuffix ".0"}}-bin.zip
     files:
       - name: gradle
-        src: gradle-{{trimV .Version}}/bin/gradle
+        src: gradle-{{trimV .Version | replace ".0-RC" "-rc-" | trimSuffix ".0"}}/bin/gradle
   - type: github_release
     repo_owner: graelo
     repo_name: pumas
