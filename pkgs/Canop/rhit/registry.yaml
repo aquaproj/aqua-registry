@@ -7,3 +7,15 @@ packages:
     version_constraint: "false"
     version_overrides:
       - version_constraint: "true"
+        asset: rhit_{{trimV .Version}}.{{.Format}}
+        format: zip
+        files:
+          - name: rhit
+            src: build/{{.Arch}}-{{.OS}}/rhit
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux
+
