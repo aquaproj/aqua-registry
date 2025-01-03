@@ -5,15 +5,23 @@ packages:
     repo_owner: Automattic
     repo_name: harper
     description: The Grammar Checker for Developers
-    asset: harper-ls-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.gz
-    windows_arm_emulation: true
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-      windows: pc-windows-msvc
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: harper-cli-{{.Arch}}-{{.OS}}.{{.Format}}
+        # harper-cli-aarch64-apple-darwin.tar.gz
+        # harper-cli-aarch64-unknown-linux-gnu.tar.gz
+        # harper-cli-x86_64-apple-darwin.tar.gz
+        # harper-cli-x86_64-pc-windows-msvc.zip
+        # harper-cli-x86_64-unknown-linux-gnu.tar.gz
+        format: tar.gz
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
