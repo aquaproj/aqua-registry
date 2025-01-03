@@ -1,22 +1,62 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+# TODO: sign commits
 packages:
-  - type: github_release
+  - type: http
     repo_owner: JuliaLang
     repo_name: julia
     description: The Julia Programming Language
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 0.3.0-rc1")
-        no_asset: true
-      - version_constraint: semver("<= 1.9.0-alpha1")
-      - version_constraint: Version == "v1.9.0-beta1"
-        no_asset: true
-      - version_constraint: Version == "v1.9.0-beta2"
-      - version_constraint: Version == "v1.9.0-beta3"
-        no_asset: true
-      - version_constraint: semver("<= 1.9.4")
-      - version_constraint: semver("<= 1.10.0-beta2")
-        no_asset: true
-      - version_constraint: semver("<= 1.10.7")
-      - version_constraint: "true"
-        no_asset: true
+    version_prefix: v
+    format: tar.gz
+    # this registry definition supports releases starting with the most recent LTS
+    version_constraint: 'semver(">=1.10")'
+    supported_envs:
+      - windows/amd64
+      - darwin
+      - linux
+    replacements:
+      amd64: '64'
+      arm64: aarch64
+    files:
+      - name: julia
+        src: julia-{{.SemVer}}/bin/julia
+
+    # available downloads defined by this registry (shown for latest release only)
+    # https://julialang-s3.julialang.org/bin/winnt/x64/1.11/julia-1.11.2-win64.zip
+    # https://julialang-s3.julialang.org/bin/mac/x64/1.11/julia-1.11.2-mac64.tar.gz
+    # https://julialang-s3.julialang.org/bin/mac/aarch64/1.11/julia-1.11.2-macaarch64.tar.gz
+    # https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-1.11.2-linux-x86_64.tar.gz
+    # https://julialang-s3.julialang.org/bin/linux/aarch64/1.11/julia-1.11.2-linux-aarch64.tar.gz
+
+    # available downloaded left undefined by this registry; not supported here
+    # https://julialang-s3.julialang.org/bin/freebsd/x64/1.11/julia-1.11.2-freebsd-x86_64.tar.gz
+    # https://julialang-s3.julialang.org/bin/musl/x64/1.11/julia-1.11.2-musl-x86_64.tar.gz
+    # https://julialang-s3.julialang.org/bin/linux/ppc64le/1.11/julia-1.11.2-linux-ppc64le.tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+        url: "https://julialang-s3.julialang.org/bin/winnt/x64/\
+              {{regexFind \"^[0-9]+\\\\.[0-9]+\" .SemVer}}/\
+              julia-{{.SemVer}}-win64.{{.Format}}"
+        files:
+          - name: julia
+            src: julia-{{.SemVer}}/bin/julia.exe
+      - goos: darwin
+        goarch: amd64
+        url: "https://julialang-s3.julialang.org/bin/mac/x64/\
+              {{regexFind \"^[0-9]+\\\\.[0-9]+\" .SemVer}}/\
+              julia-{{.SemVer}}-mac64.{{.Format}}"
+      - goos: darwin
+        goarch: arm64
+        url: "https://julialang-s3.julialang.org/bin/mac/aarch64/\
+              {{regexFind \"^[0-9]+\\\\.[0-9]+\" .SemVer}}/\
+              julia-{{.SemVer}}-macaarch64.{{.Format}}"
+      - goos: linux
+        goarch: amd64
+        url: "https://julialang-s3.julialang.org/bin/linux/x64/\
+              {{regexFind \"^[0-9]+\\\\.[0-9]+\" .SemVer}}/\
+              julia-{{.SemVer}}-linux-x86_64.tar.gz"
+      - goos: linux
+        goarch: arm64
+        url: "https://julialang-s3.julialang.org/bin/linux/aarch64/\
+              {{regexFind \"^[0-9]+\\\\.[0-9]+\" .SemVer}}/\
+              julia-{{.SemVer}}-linux-aarch64.tar.gz"
