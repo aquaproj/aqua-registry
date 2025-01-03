@@ -31695,24 +31695,20 @@ packages:
         src: shellcheck-{{.Version}}/shellcheck
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= stable")
-        asset: shellcheck-{{.Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
-        format: tar.xz
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-        supported_envs:
-          - linux
-          - darwin
       - version_constraint: semver("<= 0.4.5")
         no_asset: true
       - version_constraint: semver("<= 0.6.0")
         asset: shellcheck-{{.Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
         format: tar.xz
+        overrides:
+          - goos: windows
+            asset: shellcheck-{{.Version}}.{{.Format}}
+            format: zip
         replacements:
           amd64: x86_64
         supported_envs:
           - linux/amd64
+          - windows
       - version_constraint: semver("<= 0.9.0")
         asset: shellcheck-{{.Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
         format: tar.xz
@@ -31723,18 +31719,19 @@ packages:
           - goos: linux
             replacements:
               arm64: aarch64
-        supported_envs:
-          - linux
-          - darwin
+          - goos: windows
+            asset: shellcheck-{{.Version}}.{{.Format}}
+            format: zip
       - version_constraint: "true"
         asset: shellcheck-{{.Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
         format: tar.xz
         replacements:
           amd64: x86_64
           arm64: aarch64
-        supported_envs:
-          - linux
-          - darwin
+        overrides:
+          - goos: windows
+            asset: shellcheck-{{.Version}}.{{.Format}}
+            format: zip
   - type: github_release
     repo_owner: koki-develop
     repo_name: clive
