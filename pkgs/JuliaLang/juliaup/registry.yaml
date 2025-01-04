@@ -6,14 +6,16 @@ packages:
     description: Julia installer and version multiplexer
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 1.0.41.0")
-        no_asset: true
       - version_constraint: semver("<= 1.0.58.0")
+        no_asset: true
       - version_constraint: semver("<= 1.2.6")
         asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: juliaup
+            src: target\{{.Arch}}-{{.OS}}/juliaup
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -30,6 +32,9 @@ packages:
         asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
         format: tar.gz
         windows_arm_emulation: true
+        files:
+          - name: juliaup
+            src: target/{{.Arch}}-{{.OS}}/juliaup
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -43,6 +48,9 @@ packages:
         asset: juliaup--{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
+        files:
+          - name: juliaup
+            src: target/{{.Arch}}-{{.OS}}/juliaup
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -56,6 +64,9 @@ packages:
         asset: juliaup-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
+        files:
+          - name: juliaup
+            src: "{{.AssetWithoutExt}}/juliaup"
         replacements:
           amd64: x86_64
           arm64: aarch64
