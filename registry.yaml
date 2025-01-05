@@ -28144,10 +28144,14 @@ packages:
     repo_owner: ip7z
     repo_name: 7zip
     description: 7-Zip is a file archiver with a high compression ratio
+    files:
+      - name: 7zzs
+      - name: 7zz
+      - name: 7za
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "21.07"
-        asset: 7z2107-{{.OS}}-{{.Arch}}.{{.Format}}
+        asset: 7z{{replace "." "" .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
         replacements:
@@ -28158,25 +28162,25 @@ packages:
             files:
               - name: 7zzs
           - goos: darwin
-            asset: 7z2107-{{.OS}}.{{.Format}}
+            asset: 7z{{replace "." "" .Version}}-{{.OS}}.{{.Format}}
             files:
               - name: 7zz
           - goos: windows
             goarch: amd64
             format: 7z
-            asset: 7z2107-extra.{{.Format}}
+            asset: 7z{{replace "." "" .Version}}-extra.{{.Format}}
             files:
               - name: 7za
                 src: "{{.OS}}/7za"
           - goos: windows
             goarch: arm64
             format: 7z
-            asset: 7z2107-extra.{{.Format}}
+            asset: 7z{{replace "." "" .Version}}-extra.{{.Format}}
             files:
               - name: 7za
                 src: "{{.OS}}/7za"
-      - version_constraint: Version == "22.00"
-        asset: 7z2200-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: Version in ["22.00", "22.01"]
+        asset: 7z{{replace "." "" .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
         replacements:
@@ -28188,27 +28192,7 @@ packages:
           - goos: windows
             goarch: amd64
             format: 7z
-            asset: 7z2200-extra.{{.Format}}
-            files:
-              - name: 7za
-                src: "{{.OS}}/7za"
-        supported_envs:
-          - linux
-          - windows
-      - version_constraint: Version == "22.01"
-        asset: 7z2201-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.xz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-        overrides:
-          - goos: linux
-            files:
-              - name: 7zzs
-          - goos: windows
-            goarch: amd64
-            format: 7z
-            asset: 7z2201-extra.{{.Format}}
+            asset: 7z{{replace "." "" .Version}}-extra.{{.Format}}
             files:
               - name: 7za
                 src: "{{.OS}}/7za"
@@ -28216,7 +28200,7 @@ packages:
           - linux
           - windows
       - version_constraint: Version == "23.01"
-        asset: 7z2301-{{.OS}}-{{.Arch}}.{{.Format}}
+        asset: 7z{{replace "." "" .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
         replacements:
@@ -28227,18 +28211,18 @@ packages:
             files:
               - name: 7zzs
           - goos: darwin
-            asset: 7z2301-{{.OS}}.{{.Format}}
+            asset: 7z{{replace "." "" .Version}}-{{.OS}}.{{.Format}}
             files:
               - name: 7zz
           - goos: windows
             goarch: amd64
             format: 7z
-            asset: 7z2301-extra.{{.Format}}
+            asset: 7z{{replace "." "" .Version}}-extra.{{.Format}}
             files:
               - name: 7za
                 src: "{{.OS}}/7za"
-      - version_constraint: Version == "24.05"
-        asset: 7z2405-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: Version in ["24.05", "24.06"]
+        asset: 7z{{replace "." "" .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.xz
         replacements:
           darwin: mac
@@ -28248,51 +28232,44 @@ packages:
             files:
               - name: 7zzs
           - goos: darwin
-            asset: 7z2405-{{.OS}}.{{.Format}}
+            asset: 7z{{replace "." "" .Version}}-{{.OS}}.{{.Format}}
             files:
               - name: 7zz
           - goos: windows
             goarch: amd64
             format: 7z
-            asset: 7z2405-extra.{{.Format}}
+            asset: 7z{{replace "." "" .Version}}-extra.{{.Format}}
             files:
               - name: 7za
                 src: "{{.OS}}/7za"
           - goos: windows
             goarch: arm64
             format: 7z
-            asset: 7z2405-extra.{{.Format}}
+            asset: 7z{{replace "." "" .Version}}-extra.{{.Format}}
             files:
               - name: 7za
                 src: "{{.OS}}/7za"
       - version_constraint: "true"
-        asset: 7z2406-{{.OS}}-{{.Arch}}.{{.Format}}
+        asset: 7z{{replace "." "" .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.xz
-        replacements:
-          darwin: mac
-          amd64: x64
         overrides:
           - goos: linux
-            files:
-              - name: 7zzs
+            replacements:
+              amd64: x64
           - goos: darwin
-            asset: 7z2406-{{.OS}}.{{.Format}}
+            asset: 7z{{replace "." "" .Version}}-{{.OS}}.{{.Format}}
             files:
               - name: 7zz
           - goos: windows
             goarch: amd64
-            format: 7z
-            asset: 7z2406-extra.{{.Format}}
-            files:
-              - name: 7za
-                src: "{{.OS}}/7za"
+            format: raw
+            asset: 7zr
           - goos: windows
             goarch: arm64
-            format: 7z
-            asset: 7z2406-extra.{{.Format}}
-            files:
-              - name: 7za
-                src: "{{.OS}}/7za"
+            format: raw
+            asset: 7z{{replace "." "" .Version}}-{{.Arch}}
+        replacements:
+          darwin: mac
   - type: github_release
     repo_owner: ipfs
     repo_name: kubo
