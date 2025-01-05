@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
   - type: github_release
     repo_owner: sharkdp
@@ -16,9 +17,12 @@ packages:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux-gnu
-        supported_envs:
-          - linux/amd64
-          - darwin
+        overrides:
+          - envs:
+              - linux/arm64
+              - windows
+            type: cargo
+            crate: bat
       - version_constraint: semver("<= 0.6.0")
         asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -30,9 +34,12 @@ packages:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux-musl
-        supported_envs:
-          - linux/amd64
-          - darwin
+        overrides:
+          - envs:
+              - linux/arm64
+              - windows
+            type: cargo
+            crate: bat
       - version_constraint: Version == "v0.6.1"
         asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -51,10 +58,10 @@ packages:
             format: zip
             files:
               - name: bat
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
+          - goos: linux
+            goarch: arm64
+            type: cargo
+            crate: bat
       - version_constraint: "true"
         asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz

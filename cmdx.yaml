@@ -43,6 +43,8 @@ tasks:
     script: |
       set -eu
 
+      PACKAGE=${PACKAGE#https://github.com/}
+
       bash scripts/check_commands.sh
       bash scripts/check_gpgsign.sh
       bash scripts/check_diff.sh
@@ -88,7 +90,6 @@ tasks:
     args:
       - name: package
         usage: a package name. e.g. `cli/cli`
-        required: true
         script_envs:
           - PACKAGE
     shell:
@@ -96,13 +97,18 @@ tasks:
       - "-c"
     script: |
       set -eu
+
+      PACKAGE=${PACKAGE#https://github.com/}
+
+      pkg=$(bash scripts/get_test_pkg.sh "$PACKAGE")
       if [ "$IS_RECREATE" = true ]; then
         cmdx rm
       fi
+
       bash scripts/start.sh
-      bash scripts/test.sh "$PACKAGE"
+      bash scripts/test.sh "$pkg"
       bash scripts/start.sh aqua-registry-windows
-      bash scripts/test-windows.sh "$PACKAGE"
+      bash scripts/test-windows.sh "$pkg"
       aqua exec -- aqua-registry gr
 
   - name: connect
@@ -158,9 +164,10 @@ tasks:
       $ cmdx new cli/cli
     script: |
       set -eu
-      bash scripts/check_diff_package.sh
-      pkg=$(bash scripts/get_pkg_from_branch.sh "$PACKAGE")
-      aqua exec -- aqua-registry create-pr-new-pkg "$pkg"
+
+      if ! bash scripts/new.sh; then
+        bash scripts/ask_report.sh
+      fi
     args:
       - name: package
         usage: a package name. e.g. cli/cli
@@ -189,6 +196,23 @@ tasks:
       set -eu
       bash scripts/remove_container.sh
       bash scripts/remove_container.sh aqua-registry-windows
+
+  - name: remove-package
+    short: rmp
+    usage: Remove a package from containers
+    description: |
+      Remove a package from containers
+
+      $ cmdx rmp [<package name>]
+    args:
+      - name: package
+        usage: a package name. e.g. cli/cli
+        script_envs:
+          - PACKAGE
+    script: |
+      set -eu
+      pkg=$(bash scripts/get_test_pkg.sh "$PACKAGE")
+      bash scripts/remove_package.sh "$pkg"
 
   - name: start
     usage: Start containers
@@ -249,3 +273,37 @@ tasks:
       cmdx gr
       git add registry.yaml
       git commit
+
+  - name: summarize
+    short: sum
+    description: Summarize a given pull request
+    usage: Summarize a given pull request
+    args:
+      - name: pr
+        required: true
+        script_envs:
+          - PR_NUMBER
+    script: |
+      bash scripts/summarize.sh "$PR_NUMBER"
+
+  - name: ls-assets
+    short: lsa
+    description: List asset names
+    usage: List asset names
+    flags:
+      - name: repo
+        short: r
+        type: string
+        usage: Repo name
+        script_envs:
+          - REPO
+    args:
+      - name: version
+        required: true
+        script_envs:
+          - VERSION
+    script: |
+      REPO=${REPO#https://github.com/}
+      repo=$(bash scripts/get_test_pkg.sh "$REPO")
+
+      gh release view --json assets --jq ".assets[].name" -R "$repo" "$VERSION"

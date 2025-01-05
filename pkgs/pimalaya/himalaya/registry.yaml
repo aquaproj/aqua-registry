@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: pimalaya
+    repo_name: himalaya
+    aliases:
+      - name: soywod/himalaya
+    description: CLI to manage your emails
+    asset: himalaya-{{.OS}}.{{.Format}}
+    format: tgz
+    replacements:
+      darwin: macos
+    supported_envs:
+      - darwin
+      - amd64
+    rosetta2: true
+    version_constraint: semver(">= 0.8.0")
+    # https://github.com/soywod/himalaya/releases/tag/v0.8.0
+    # Changed release archive extensions from .tar.gz to .tgz.
+    version_overrides:
+      - version_constraint: semver(">= 0.7.3")
+        format: tar.gz
+      - version_constraint: semver(">= 0.7.2")
+        format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver(">= 0.5.10")
+        format: tar.gz
+      - version_constraint: semver(">= 0.5.6")
+        format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver(">= 0.3.2")
+        format: tar.gz
+      - version_constraint: semver("< 0.3.2")
+        format: tar.gz
+        files:
+          # https://github.com/soywod/himalaya/issues/144
+          - name: himalaya
+            src: himalaya.exe

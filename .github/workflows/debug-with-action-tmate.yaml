@@ -10,28 +10,31 @@ on:
         required: false
       ref:
         required: false
-permissions: {}
 jobs:
   action-tmate:
     runs-on: ${{inputs.runs-on}}
+    timeout-minutes: 360
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{inputs.ref}}
+          persist-credentials: false
 
       - run: gh pr checkout "${{inputs.pr_number}}"
         if: inputs.pr_number != ''
         env:
           GITHUB_TOKEN: ${{github.token}}
-      - uses: aquaproj/aqua-installer@6ce1f8848ec8e61f14d57bd5d7597057a6dd187c # v3.0.1
+      - uses: aquaproj/aqua-installer@f13c5d2f0357708d85477aabe50fd3f725528745 # v3.1.0
         with:
-          aqua_version: v2.29.0
+          aqua_version: v2.41.1-2
           policy_allow: "true"
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
 
       # The default vim doesn't work well, so we install the latest vim ourselves.
-      - uses: rhysd/action-setup-vim@2ab97f992520b094d4243cde0d3173493c811799 # v1.3.4
+      - uses: rhysd/action-setup-vim@acff3bc31a82af69a26f90af710926fdab04d00e # v1.3.5
 
       - uses: mxschmitt/action-tmate@1005f9c9db5f1b055a495e72c6e589764984baf6 # v3.14
         with:

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
   - type: github_release
     repo_owner: chmln
@@ -20,9 +21,11 @@ packages:
           - darwin
           - amd64
         rosetta2: true
+        windows_arm_emulation: true
       - version_constraint: Version == "v0.7.2"
         asset: sd-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
+        windows_arm_emulation: true
         files:
           - name: sd
             src: b/{{.Arch}}-{{.OS}}/release/sd
@@ -37,6 +40,7 @@ packages:
         rosetta2: true
       - version_constraint: semver("<= 0.7.4")
         asset: sd-{{trimV .Version}}.{{.Arch}}-{{.OS}}.{{.Format}}
+        windows_arm_emulation: true
         format: zip
         files:
           - name: sd
@@ -52,6 +56,7 @@ packages:
         rosetta2: true
       - version_constraint: Version == "v0.7.5"
         asset: sd.{{trimV .Version}}-.{{.Arch}}-{{.OS}}.{{.Format}}
+        windows_arm_emulation: true
         format: zip
         files:
           - name: sd
@@ -79,14 +84,13 @@ packages:
       - version_constraint: "true"
         asset: sd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
+        windows_arm_emulation: true
         files:
           - name: sd
             src: sd-{{.Version}}-{{.Arch}}-{{.OS}}/sd
         overrides:
           - goos: windows
             format: zip
-            replacements:
-              arm64: arm64
         replacements:
           amd64: x86_64
           arm64: aarch64

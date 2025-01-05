@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
   - type: github_release
     repo_owner: borgbackup
@@ -33,13 +34,23 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.2.8")
         asset: borg-{{.OS}}64
         format: raw
         rosetta2: true
         replacements:
           amd64: x64
           darwin: macos
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: borg-{{.OS}}
+        format: raw
+        rosetta2: true
+        replacements:
+          linux: linux-glibc228
+          darwin: macos1012
         supported_envs:
           - linux/amd64
           - darwin
