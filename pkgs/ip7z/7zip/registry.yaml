@@ -26,17 +26,10 @@ packages:
             files:
               - name: 7zz
           - goos: windows
-            goarch: amd64
-            format: 7z
-            asset: 7z{{replace "." "" .Version}}-extra.{{.Format}}
+            format: raw
+            asset: 7z{{replace "." "" .Version}}-{{.Arch}}
             files:
-              - name: 7za
-          - goos: windows
-            goarch: arm64
-            format: 7z
-            asset: 7z{{replace "." "" .Version}}-extra.{{.Format}}
-            files:
-              - name: 7za
+              - name: 7zz
       - version_constraint: Version in ["22.00", "22.01"]
         asset: 7z{{replace "." "" .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.xz
@@ -48,10 +41,10 @@ packages:
             files:
               - name: 7zzs
           - goos: windows
-            format: 7z
-            asset: 7z{{replace "." "" .Version}}-extra.{{.Format}}
+            format: raw
+            asset: 7z{{replace "." "" .Version}}-{{.Arch}}
             files:
-              - name: 7za
+              - name: 7zz
         supported_envs:
           - linux
           - windows
@@ -71,11 +64,10 @@ packages:
             files:
               - name: 7zz
           - goos: windows
-            goarch: amd64
-            format: 7z
-            asset: 7z{{replace "." "" .Version}}-extra.{{.Format}}
+            format: raw
+            asset: 7z{{replace "." "" .Version}}-{{.Arch}}
             files:
-              - name: 7za
+              - name: 7zz
       - version_constraint: Version in ["24.05", "24.06"]
         asset: 7z{{replace "." "" .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.xz
@@ -91,38 +83,27 @@ packages:
             files:
               - name: 7zz
           - goos: windows
-            goarch: amd64
-            format: 7z
-            asset: 7z{{replace "." "" .Version}}-extra.{{.Format}}
+            format: raw
+            asset: 7z{{replace "." "" .Version}}-{{.Arch}}
             files:
-              - name: 7za
-          - goos: windows
-            goarch: arm64
-            format: 7z
-            asset: 7z{{replace "." "" .Version}}-extra.{{.Format}}
-            files:
-              - name: 7za
+              - name: 7zz
       - version_constraint: "true"
         asset: 7z{{replace "." "" .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.xz
+        replacements:
+          amd64: x64
+          darwin: mac
         overrides:
           - goos: linux
             files:
               - name: 7zzs
               - name: 7zz
-            replacements:
-              amd64: x64
           - goos: darwin
             asset: 7z{{replace "." "" .Version}}-{{.OS}}.{{.Format}}
             files:
               - name: 7zz
           - goos: windows
-            goarch: amd64
-            format: raw
-            asset: 7zr
-          - goos: windows
-            goarch: arm64
             format: raw
             asset: 7z{{replace "." "" .Version}}-{{.Arch}}
-        replacements:
-          darwin: mac
+            files:
+              - name: 7zz
