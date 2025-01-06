@@ -1,6 +1,28 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
-  - type: github_release
+  - type: http
     repo_owner: apache
     repo_name: spark
     description: Apache Spark - A unified analytics engine for large-scale data processing
+    files:
+      - name: beeline
+        src: spark-{{trimV .Version}}-bin-hadoop3/bin/beeline
+      - name: find-spark-home
+        src: spark-{{trimV .Version}}-bin-hadoop3/bin/find-spark-home
+      - name: pyspark
+        src: spark-{{trimV .Version}}-bin-hadoop3/bin/pyspark
+      - name: run-example
+        src: spark-{{trimV .Version}}-bin-hadoop3/bin/run-example
+      - name: spark-class
+        src: spark-{{trimV .Version}}-bin-hadoop3/bin/spark-class
+      - name: spark-sql
+        src: spark-{{trimV .Version}}-bin-hadoop3/bin/spark-sql
+      - name: spark-submit
+        src: spark-{{trimV .Version}}-bin-hadoop3/bin/spark-submit
+      - name: sparkR
+        src: spark-{{trimV .Version}}-bin-hadoop3/bin/sparkR
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        url: https://dlcdn.apache.org/spark/spark-{{trimV .Version}}/spark-{{trimV .Version}}-bin-hadoop3.tgz
+        format: tgz
