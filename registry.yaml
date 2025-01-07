@@ -44861,31 +44861,43 @@ packages:
     description: A simple, fast and user-friendly alternative to 'find'
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 1.0.0")
       - version_constraint: Version == "v1.1.0"
         asset: fd
         format: raw
+        windows_arm_emulation: true
         supported_envs:
-          - windows/amd64
+          - windows
+          - linux/amd64
       - version_constraint: semver("<= 3.1.0")
+        asset: fd
+        supported_envs:
+          - linux/amd64
       - version_constraint: Version == "v4.0.0"
         asset: fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: zip
+        format: tar.gz
         windows_arm_emulation: true
+        files:
+          - name: fd
+            src: "{{.AssetWithoutExt}}/fd"
         replacements:
           amd64: x86_64
           windows: pc-windows-msvc
         overrides:
-          - goos: linux
-            format: tar.gz
+          - goos: windows
+            format: zip
+            files:
+              - name: fd
         supported_envs:
           - linux/amd64
-          - windows/amd64
+          - windows
       - version_constraint: semver("<= 8.2.1")
         asset: fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: fd
+            src: "{{.AssetWithoutExt}}/fd"
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -44894,6 +44906,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
+            files:
+              - name: fd
         supported_envs:
           - darwin
           - windows
@@ -44903,6 +44917,9 @@ packages:
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: fd
+            src: "{{.AssetWithoutExt}}/fd"
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -44924,6 +44941,9 @@ packages:
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: fd
+            src: "{{.AssetWithoutExt}}/fd"
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -44939,6 +44959,9 @@ packages:
         asset: fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
+        files:
+          - name: fd
+            src: "{{.AssetWithoutExt}}/fd"
         replacements:
           amd64: x86_64
           arm64: aarch64
