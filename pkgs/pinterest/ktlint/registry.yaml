@@ -4,10 +4,14 @@ packages:
     repo_owner: pinterest
     repo_name: ktlint
     description: An anti-bikeshedding Kotlin linter with built-in formatter
-    asset: "ktlint-{{.Version}}.{{.Format}}"
-    format: zip
-    checksum:
-      enabled: false
-    files:
-      - name: ktlint
-        src: ktlint-{{.Version}}/bin/ktlint
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.49.0")
+        complete_windows_ext: false
+        asset: ktlint
+      - version_constraint: "true"
+        asset: "ktlint-{{.Version}}.{{.Format}}"
+        format: zip
+        files:
+          - name: ktlint
+            src: "{{.AssetWithoutExt}}/bin/ktlint"
