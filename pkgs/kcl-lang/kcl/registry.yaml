@@ -4,6 +4,9 @@ packages:
     repo_owner: kcl-lang
     repo_name: kcl
     description: KCL Programming Language (CNCF Sandbox Project). https://kcl-lang.io
+    files:
+      - name: kcl
+        src: kclvm/bin/kcl
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.4.2-alpha.3")
@@ -32,24 +35,6 @@ packages:
             asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         supported_envs:
           - darwin
-      - version_constraint: Version == "v0.4.4-alpha.2"
-        asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          darwin: Darwin
-        checksum:
-          type: github_release
-          asset: kclvm-{{.Version}}-{{.OS}}.zip.md5.txt
-          algorithm: md5
-        overrides:
-          - goos: darwin
-            goarch: arm64
-            asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-          - goos: windows
-            format: zip
-        supported_envs:
-          - darwin
-          - windows/amd64
       - version_constraint: semver("<= 0.4.4-beta.2")
         asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -66,10 +51,10 @@ packages:
       - version_constraint: Version == "v0.4.4"
         asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}-with-plugin.{{.Format}}
         format: tar.gz
-        checksum:
-          type: github_release
-          asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz.md5.txt
-          algorithm: md5
+        # checksum:
+        #   type: github_release
+        #   asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz.md5.txt
+        #   algorithm: md5
         overrides:
           - goos: linux
             goarch: arm64
@@ -80,6 +65,27 @@ packages:
           - goos: windows
             format: zip
             asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
+            files:
+              - name: kcl-doc
+                src: bin/kcl-doc.exe
+              - name: kcl-fmt
+                src: bin/kcl-fmt.exe
+              - name: kcl-language-server
+                src: bin/kcl-language-server.exe
+              - name: kcl-lint
+                src: bin/kcl-lint.exe
+              - name: kcl-plugin
+                src: bin/kcl-plugin.exe
+              - name: kcl-test
+                src: bin/kcl-test.exe
+              - name: kcl-vet
+                src: bin/kcl-vet.exe
+              - name: kcl
+                src: bin/kcl.exe
+              - name: kclvm-cli
+                src: bin/kclvm-cli.exe
+              - name: kclvm
+                src: bin/kclvm.exe
       - version_constraint: semver("<= 0.4.5-alpha.2")
         asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -100,41 +106,33 @@ packages:
           darwin: Darwin
         checksum:
           type: github_release
-          asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz.md5.txt
+          asset: "{{.Asset}}.md5.txt"
           algorithm: md5
         overrides:
           - goos: windows
             format: zip
             asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
-      - version_constraint: Version == "v0.4.6-alpha.1"
-        asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          darwin: Darwin
-        checksum:
-          type: github_release
-          asset: kclvm-{{.Version}}-ubuntu.tar.gz.md5.txt
-          algorithm: md5
-        overrides:
-          - goos: windows
-            format: zip
-            asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
-      - version_constraint: Version == "v0.4.6-alpha.2"
-        asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          darwin: Darwin
-        overrides:
-          - goos: windows
-            format: zip
-            asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
-      - version_constraint: Version == "v0.4.6-beta.1"
-        asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
-            asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
+            files:
+              - name: kcl-doc
+                src: bin/kcl-doc.exe
+              - name: kcl-fmt
+                src: bin/kcl-fmt.exe
+              - name: kcl-language-server
+                src: bin/kcl-language-server.exe
+              - name: kcl-lint
+                src: bin/kcl-lint.exe
+              - name: kcl-plugin
+                src: bin/kcl-plugin.exe
+              - name: kcl-test
+                src: bin/kcl-test.exe
+              - name: kcl-vet
+                src: bin/kcl-vet.exe
+              - name: kcl
+                src: bin/kcl.exe
+              - name: kclvm-cli
+                src: bin/kclvm-cli.exe
+              - name: kclvm
+                src: bin/kclvm.exe
       - version_constraint: semver("<= 0.5.0")
         asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -142,6 +140,27 @@ packages:
           - goos: windows
             format: zip
             asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
+            files:
+              - name: kcl-doc
+                src: bin/kcl-doc.exe
+              - name: kcl-fmt
+                src: bin/kcl-fmt.exe
+              - name: kcl-language-server
+                src: bin/kcl-language-server.exe
+              - name: kcl-lint
+                src: bin/kcl-lint.exe
+              - name: kcl-plugin
+                src: bin/kcl-plugin.exe
+              - name: kcl-test
+                src: bin/kcl-test.exe
+              - name: kcl-vet
+                src: bin/kcl-vet.exe
+              - name: kcl
+                src: bin/kcl.exe
+              - name: kclvm-cli
+                src: bin/kclvm-cli.exe
+              - name: kclvm
+                src: bin/kclvm.exe
         supported_envs:
           - darwin
           - windows
@@ -152,7 +171,28 @@ packages:
         overrides:
           - goos: windows
             format: zip
-            asset: kcl-{{.OS}}.{{.Format}}
+            asset: kclvm-{{.Version}}-windows.zip
+            files:
+              - name: kcl-doc
+                src: bin/kcl-doc.exe
+              - name: kcl-fmt
+                src: bin/kcl-fmt.exe
+              - name: kcl-language-server
+                src: bin/kcl-language-server.exe
+              - name: kcl-lint
+                src: bin/kcl-lint.exe
+              - name: kcl-plugin
+                src: bin/kcl-plugin.exe
+              - name: kcl-test
+                src: bin/kcl-test.exe
+              - name: kcl-vet
+                src: bin/kcl-vet.exe
+              - name: kcl
+                src: bin/kcl.exe
+              - name: kclvm-cli
+                src: bin/kclvm-cli.exe
+              - name: kclvm
+                src: bin/kclvm.exe
         supported_envs:
           - darwin
           - windows
@@ -160,10 +200,20 @@ packages:
       - version_constraint: semver("<= 0.7.3")
         asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: kcl-language-server
+            src: kclvm/bin/kcl-language-server
+          - name: kclvm_cli
+            src: kclvm/bin/kclvm_cli
         overrides:
           - goos: windows
             format: zip
             asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
+            files:
+              - name: kcl-language-server
+                src: bin/kcl-language-server.exe
+              - name: kclvm_cli
+                src: bin/kclvm_cli.exe
         supported_envs:
           - darwin
           - windows
@@ -178,16 +228,22 @@ packages:
       - version_constraint: semver("<= 0.10.8")
         asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
-            asset: kclvm-{{.Version}}-{{.OS}}-mingw.{{.Format}}
-      - version_constraint: Version == "v0.11.0-alpha.1"
-        no_asset: true
+        files:
+          - name: kcl-language-server
+            src: kclvm/bin/kcl-language-server
+          - name: kclvm_cli
+            src: kclvm/bin/kclvm_cli
+        supported_envs:
+          - darwin
+          - linux
       - version_constraint: "true"
         asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
-            asset: kclvm-{{.Version}}-{{.OS}}-mingw.{{.Format}}
+        files:
+          - name: kcl-language-server
+            src: kclvm/bin/kcl-language-server
+          - name: kclvm_cli
+            src: kclvm/bin/kclvm_cli
+        supported_envs:
+          - darwin
+          - linux
