@@ -8597,22 +8597,13 @@ packages:
       url: https://release.ariga.io/atlas/atlas-{{.OS}}-{{.Arch}}-{{.Version}}.sha256
       file_format: raw
       algorithm: sha256
-    version_constraint: semver(">= 0.14.3")
-    # https://atlasgo.io/getting-started
-    # > As of version v0.14.3 we no longer provide a windows binary. Windows users are advised to use our [docker image](https://hub.docker.com/r/arigaio/atlas) or use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
+    version_constraint: semver(">= 0.22.0")
+    # https://github.com/ariga/atlas/issues/3296#issuecomment-2574924728
+    # > Old Versions of Atlas
+    # > As part of our Supported Version Policy mentioned above, binaries for versions that were published more than 6 months ago will be removed from the CDN and Docker Hub.
     version_overrides:
-      - version_constraint: semver("< 0.14.3")
-        supported_envs:
-          - darwin
-          - linux
-          - windows/amd64
-        overrides:
-          - goos: windows
-            checksum:
-              type: http
-              url: https://release.ariga.io/atlas/atlas-{{.OS}}-{{.Arch}}-{{.Version}}.exe.sha256
-              file_format: raw
-              algorithm: sha256
+      - version_constraint: semver("< 0.21.0")
+        no_asset: true
   - type: github_release
     repo_owner: aristocratos
     repo_name: btop
@@ -40773,6 +40764,21 @@ packages:
           # https://github.com/soywod/himalaya/issues/144
           - name: himalaya
             src: himalaya.exe
+  - type: github_release
+    repo_owner: pinterest
+    repo_name: ktlint
+    description: An anti-bikeshedding Kotlin linter with built-in formatter
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.49.0")
+        complete_windows_ext: false
+        asset: ktlint
+      - version_constraint: "true"
+        asset: "ktlint-{{.Version}}.{{.Format}}"
+        format: zip
+        files:
+          - name: ktlint
+            src: "{{.AssetWithoutExt}}/bin/ktlint"
   - name: pipe-cd/pipecd/pipectl
     type: github_release
     repo_owner: pipe-cd
@@ -44879,30 +44885,118 @@ packages:
     repo_owner: sharkdp
     repo_name: fd
     description: A simple, fast and user-friendly alternative to 'find'
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    rosetta2: true
-    asset: fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      windows: pc-windows-msvc
-      386: i686
-      linux: unknown-linux-gnu
-    overrides:
-      - goos: windows
-        format: zip
-      - goos: linux
-        goarch: amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.1.0"
+        asset: fd
+        format: raw
+        windows_arm_emulation: true
+        supported_envs:
+          - windows
+          - linux/amd64
+      - version_constraint: semver("<= 3.1.0")
+        asset: fd
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "v4.0.0"
+        asset: fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: fd
+            src: "{{.AssetWithoutExt}}/fd"
         replacements:
+          amd64: x86_64
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: fd
+        supported_envs:
+          - linux/amd64
+          - windows
+      - version_constraint: semver("<= 8.2.1")
+        asset: fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: fd
+            src: "{{.AssetWithoutExt}}/fd"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
           linux: unknown-linux-musl
-    files:
-      - name: fd
-        src: fd-{{.Version}}-{{.Arch}}-{{.OS}}/fd
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: fd
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 9.0.0")
+        asset: fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: fd
+            src: "{{.AssetWithoutExt}}/fd"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v10.0.0"
+        asset: fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: fd
+            src: "{{.AssetWithoutExt}}/fd"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: fd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: fd
+            src: "{{.AssetWithoutExt}}/fd"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: sharkdp
     repo_name: hexyl
