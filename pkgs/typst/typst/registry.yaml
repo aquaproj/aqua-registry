@@ -11,6 +11,9 @@ packages:
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: typst
+            src: "{{.AssetWithoutExt}}/typst"
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -26,6 +29,9 @@ packages:
       - version_constraint: semver("<= 0.5.0")
         asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
+        files:
+          - name: typst
+            src: "{{.AssetWithoutExt}}/typst"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -39,18 +45,9 @@ packages:
         asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-musl
-          windows: pc-windows-msvc
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 0.12.0")
-        asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.xz
+        files:
+          - name: typst
+            src: "{{.AssetWithoutExt}}/typst"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -62,18 +59,16 @@ packages:
             format: zip
       - version_constraint: "true"
         asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
+        format: tar.xz
+        files:
+          - name: typst
+            src: "{{.AssetWithoutExt}}/typst"
         replacements:
           amd64: x86_64
+          arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-gnu
+          linux: unknown-linux-musl
           windows: pc-windows-msvc
         overrides:
           - goos: windows
             format: zip
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
