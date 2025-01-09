@@ -6,14 +6,11 @@ packages:
     description: A new markup-based typesetting system that is powerful and easy to learn
     version_constraint: "false"
     version_overrides:
-      - version_constraint: (Version in ["v23-03-21", "v23-03-21-2", "v23-03-28"]) or semver("<= 0.2.0")
+      - version_constraint: semver("<= 0.2.0")
         asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
-        files:
-          - name: typst
-            src: typst-{{.Arch}}-{{.OS}}/typst
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -29,9 +26,6 @@ packages:
       - version_constraint: semver("<= 0.5.0")
         asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
-        files:
-          - name: typst
-            src: typst-{{.Arch}}-{{.OS}}/typst
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -41,22 +35,40 @@ packages:
         overrides:
           - goos: windows
             format: zip
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.11.1")
         asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
-        files:
-          - name: typst
-            src: typst-{{.Arch}}-{{.OS}}/typst
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
           linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.12.0")
+        asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
           windows: pc-windows-msvc
         overrides:
           - goos: windows
