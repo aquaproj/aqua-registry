@@ -11406,83 +11406,103 @@ packages:
     repo_name: checkov
     description: Prevent cloud misconfigurations and find vulnerabilities during build-time in infrastructure as code, container images and open source packages with Checkov by Bridgecrew
     version_constraint: "false"
-    files:
-      - name: checkov
-        src: dist/checkov
     version_overrides:
-      - version_constraint: semver("<= 2.3.314")
-        no_asset: true
-      - version_constraint: semver("<= 2.3.318")
-        asset: checkov_{{.OS}}_{{.Version}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        complete_windows_ext: false
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: Version == "2.3.320"
-        asset: checkov_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
-        format: zip
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: X86_64
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
       - version_constraint: Version == "2.3.321"
         asset: checkov_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
         format: zip
         rosetta2: true
         windows_arm_emulation: true
-        replacements:
-          amd64: X86_64
-      - version_constraint: semver("<= 2.3.334")
-        asset: checkov_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
-        format: zip
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: X86_64
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: semver("<= 2.3.338")
-        asset: checkov_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
-        format: zip
-        rosetta2: true
-        windows_arm_emulation: true
+        files:
+          - name: checkov
+            src: dist/checkov
         replacements:
           amd64: X86_64
       - version_constraint: Version == "2.3.340"
         no_asset: true
-      - version_constraint: semver("<= 2.5.13")
-        asset: checkov_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
-        format: zip
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: X86_64
       - version_constraint: Version == "2.5.15"
         asset: checkov_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
         format: zip
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: checkov
+            src: dist/checkov
         replacements:
           amd64: X86_64
         supported_envs:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: Version == "3.2.317"
+        asset: checkov_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: checkov
+            src: dist/checkov
+        replacements:
+          amd64: X86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "3.2.322"
+        asset: checkov_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        files:
+          - name: checkov
+            src: dist/checkov
+        replacements:
+          amd64: X86_64
+        supported_envs:
+          - linux
+      - version_constraint: semver("<= 2.3.314")
+        no_asset: true
+      - version_constraint: semver("<= 2.3.318")
+        asset: checkov_{{.OS}}_{{.Version}}
+        format: raw
+        complete_windows_ext: false
+        files:
+          - name: checkov
+            src: dist/checkov
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.3.334")
         asset: checkov_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
         format: zip
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: checkov
+            src: dist/checkov
+        replacements:
+          amd64: X86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.2.51")
+        asset: checkov_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: checkov
+            src: dist/checkov
+        replacements:
+          amd64: X86_64
+      - version_constraint: "true"
+        asset: checkov_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: checkov
+            src: dist/checkov
         replacements:
           amd64: X86_64
   - type: github_release
@@ -20123,23 +20143,68 @@ packages:
   - type: github_release
     repo_owner: editorconfig-checker
     repo_name: editorconfig-checker
-    asset: ec-{{.OS}}-{{.Arch}}.tar.gz
     description: A tool to verify that your files are in harmony with your .editorconfig
     files:
       - name: ec
-        src: bin/ec-{{.OS}}-{{.Arch}}
-    version_constraint: semver(">= 2.7.0")
-    overrides:
-      - goos: windows
-        asset: ec-windows-{{.Arch}}.exe.tar.gz
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 2.6.0")
-        overrides: []
+      - version_constraint: semver("<= 1.1.0")
+        asset: ec-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: ec
+            src: bin/ec-{{.OS}}-{{.Arch}}
+      - version_constraint: semver("<= 2.3.5")
+        asset: ec-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: ec
+            src: bin/ec-{{.OS}}-{{.Arch}}
+        overrides:
+          - goos: windows
+            asset: ec-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 2.5.0")
+        asset: ec-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: ec
+            src: bin/ec-{{.OS}}-{{.Arch}}
+        overrides:
+          - goos: windows
+            asset: ec-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: Version == "2.6.0"
+        asset: ec-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: ec
+            src: bin/ec-{{.OS}}-{{.Arch}}
+      - version_constraint: semver("<= 3.0.3")
+        asset: ec-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: ec
+            src: bin/ec-{{.OS}}-{{.Arch}}
+        overrides:
+          - goos: windows
+            asset: ec-{{.OS}}-{{.Arch}}.exe.{{.Format}}
       - version_constraint: "true"
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+        asset: ec-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: ec
+            src: bin/ec-{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: eficode
     repo_name: wait-for
@@ -25911,10 +25976,10 @@ packages:
     aliases:
       - name: gradle/gradle
     description: Adaptable, fast automation for all
-    asset: gradle-{{trimV .Version | replace ".0-RC" "-rc-" | trimSuffix ".0"}}-bin.zip
+    asset: gradle-{{trimV .Version | replace ".0-RC" "-rc-" | replace ".0-M" "-milestone-" | trimSuffix ".0"}}-bin.zip
     files:
       - name: gradle
-        src: gradle-{{trimV .Version | replace ".0-RC" "-rc-" | trimSuffix ".0"}}/bin/gradle
+        src: gradle-{{trimV .Version | replace ".0-RC" "-rc-" | replace ".0-M" "-milestone-" | trimSuffix ".0"}}/bin/gradle
   - type: github_release
     repo_owner: graelo
     repo_name: pumas
@@ -27775,6 +27840,17 @@ packages:
     description: Terminal bandwidth utilization tool
     version_constraint: "false"
     version_overrides:
+      - version_constraint: Version == "v0.22.0"
+        asset: bandwhich-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
       - version_constraint: semver("<= 0.3.2")
         asset: what
         format: raw
@@ -27798,23 +27874,36 @@ packages:
           linux: unknown-linux-musl
         supported_envs:
           - linux/amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.22.2")
         asset: bandwhich-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
-        overrides:
-          - goos: windows
-            format: zip
         replacements:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux-musl
           windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
         supported_envs:
           - darwin
           - windows
           - amd64
+      - version_constraint: "true"
+        asset: bandwhich-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: imuxin
     repo_name: kubectl-watch
@@ -31136,252 +31225,28 @@ packages:
               algorithm: sha256
   - type: github_release
     repo_owner: kcl-lang
+    repo_name: cli
+    description: The KCL Command Line Interface (CLI)
+    asset: kcl-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    checksum:
+      type: github_release
+      asset: cli_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+    files:
+      - name: kcl
+    overrides:
+      - goos: windows
+        format: zip
+  - type: github_release
+    repo_owner: kcl-lang
     repo_name: kcl
     description: KCL Programming Language (CNCF Sandbox Project). https://kcl-lang.io
     files:
-      - name: kcl
-      - name: kcl-doc
-      - name: kcl-fmt
-      - name: kcl-lint
-      - name: kcl-plugin
-      - name: kcl-test
-      - name: kcl-vet
-      - name: kclvm
+      - name: kcl-language-server
       - name: kclvm_cli
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.4.2-alpha.3")
-        asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          darwin: Darwin
-        overrides:
-          - goos: darwin
-            goarch: arm64
-            asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        supported_envs:
-          - darwin
-      - version_constraint: semver("<= 0.4.4-alpha.1")
-        asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          darwin: Darwin
-        checksum:
-          type: github_release
-          asset: kclvm-{{.Version}}-centos.tar.gz.md5.txt
-          algorithm: md5
-        overrides:
-          - goos: darwin
-            goarch: arm64
-            asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        supported_envs:
-          - darwin
-      - version_constraint: semver("<= 0.4.4-beta.2")
-        asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          darwin: Darwin
-        checksum:
-          type: github_release
-          asset: kclvm-{{.Version}}-{{.OS}}.zip.md5.txt
-          algorithm: md5
-        overrides:
-          - goos: windows
-            format: zip
-            asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
-      - version_constraint: Version == "v0.4.4"
-        asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}-with-plugin.{{.Format}}
-        format: tar.gz
-        files:
-          - name: kcl
-            src: kclvm/bin/kcl
-          - name: kcl-doc
-            src: kclvm/bin/kcl-doc
-          - name: kcl-fmt
-            src: kclvm/bin/kcl-fmt
-          - name: kcl-lint
-            src: kclvm/bin/kcl-lint
-          - name: kcl-plugin
-            src: kclvm/bin/kcl-plugin
-          - name: kcl-test
-            src: kclvm/bin/kcl-test
-          - name: kcl-vet
-            src: kclvm/bin/kcl-vet
-          - name: kclvm
-            src: kclvm/bin/kclvm
-          - name: kclvm_cli
-            src: kclvm/bin/kclvm_cli
-        # checksum:
-        #   type: github_release
-        #   asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz.md5.txt
-        #   algorithm: md5
-        overrides:
-          - goos: linux
-            goarch: arm64
-            asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-          - goos: darwin
-            goarch: amd64
-            asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-          - goos: windows
-            format: zip
-            asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
-            files:
-              - name: kcl-doc
-                src: bin/kcl-doc.exe
-              - name: kcl-fmt
-                src: bin/kcl-fmt.exe
-              - name: kcl-language-server
-                src: bin/kcl-language-server.exe
-              - name: kcl-lint
-                src: bin/kcl-lint.exe
-              - name: kcl-plugin
-                src: bin/kcl-plugin.exe
-              - name: kcl-test
-                src: bin/kcl-test.exe
-              - name: kcl-vet
-                src: bin/kcl-vet.exe
-              - name: kcl
-                src: bin/kcl.exe
-              - name: kclvm-cli
-                src: bin/kclvm-cli.exe
-              - name: kclvm
-                src: bin/kclvm.exe
-      - version_constraint: Version == "v0.4.5"
-        asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: kcl
-            src: kclvm/bin/kcl
-          - name: kcl-doc
-            src: kclvm/bin/kcl-doc
-          - name: kcl-fmt
-            src: kclvm/bin/kcl-fmt
-          - name: kcl-language-server
-            src: kclvm/bin/kcl-language-server
-          - name: kcl-lint
-            src: kclvm/bin/kcl-lint
-          - name: kcl-plugin
-            src: kclvm/bin/kcl-plugin
-          - name: kcl-test
-            src: kclvm/bin/kcl-test
-          - name: kcl-vet
-            src: kclvm/bin/kcl-vet
-          - name: kclvm
-            src: kclvm/bin/kclvm
-          - name: kclvm_cli
-            src: kclvm/bin/kclvm_cli
-        replacements:
-          darwin: Darwin
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.md5.txt"
-          algorithm: md5
-        overrides:
-          - goos: windows
-            format: zip
-            asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
-            files:
-              - name: kcl-doc
-                src: bin/kcl-doc.exe
-              - name: kcl-fmt
-                src: bin/kcl-fmt.exe
-              - name: kcl-language-server
-                src: bin/kcl-language-server.exe
-              - name: kcl-lint
-                src: bin/kcl-lint.exe
-              - name: kcl-plugin
-                src: bin/kcl-plugin.exe
-              - name: kcl-test
-                src: bin/kcl-test.exe
-              - name: kcl-vet
-                src: bin/kcl-vet.exe
-              - name: kcl
-                src: bin/kcl.exe
-              - name: kclvm-cli
-                src: bin/kclvm-cli.exe
-              - name: kclvm
-                src: bin/kclvm.exe
-      - version_constraint: semver("<= 0.5.1")
-        asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: kcl
-            src: kclvm/bin/kcl
-          - name: kcl-doc
-            src: kclvm/bin/kcl-doc
-          - name: kcl-fmt
-            src: kclvm/bin/kcl-fmt
-          - name: kcl-language-server
-            src: kclvm/bin/kcl-language-server
-          - name: kcl-lint
-            src: kclvm/bin/kcl-lint
-          - name: kcl-plugin
-            src: kclvm/bin/kcl-plugin
-          - name: kcl-test
-            src: kclvm/bin/kcl-test
-          - name: kcl-vet
-            src: kclvm/bin/kcl-vet
-          - name: kclvm
-            src: kclvm/bin/kclvm
-          - name: kclvm_cli
-            src: kclvm/bin/kclvm_cli
-        overrides:
-          - goos: windows
-            format: zip
-            asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
-            files:
-              - name: kcl-doc
-                src: bin/kcl-doc.exe
-              - name: kcl-fmt
-                src: bin/kcl-fmt.exe
-              - name: kcl-language-server
-                src: bin/kcl-language-server.exe
-              - name: kcl-lint
-                src: bin/kcl-lint.exe
-              - name: kcl-plugin
-                src: bin/kcl-plugin.exe
-              - name: kcl-test
-                src: bin/kcl-test.exe
-              - name: kcl-vet
-                src: bin/kcl-vet.exe
-              - name: kcl
-                src: bin/kcl.exe
-              - name: kclvm-cli
-                src: bin/kclvm-cli.exe
-              - name: kclvm
-                src: bin/kclvm.exe
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: semver("<= 0.7.3")
-        asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: kcl-language-server
-            src: kclvm/bin/kcl-language-server
-          - name: kclvm_cli
-            src: kclvm/bin/kclvm_cli
-        overrides:
-          - goos: windows
-            format: zip
-            asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
-            files:
-              - name: kcl-language-server
-                src: bin/kcl-language-server.exe
-              - name: kclvm_cli
-                src: bin/kclvm_cli.exe
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: semver("<= 0.10.0-rc.1")
-        asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
-            asset: kclvm-{{.Version}}-{{.OS}}.{{.Format}}
       - version_constraint: "true"
         asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -35081,6 +34946,25 @@ packages:
     repo_owner: magodo
     repo_name: hclgrep
     description: Syntax based grep for HCL(v2)
+  - type: github_release
+    repo_owner: magodo
+    repo_name: pipeform
+    description: Terraform runtime TUI
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version matches "\\b[0-9a-f]{40}\\b"
+        # To keep the compatibility
+        type: go_install
+      - version_constraint: "true"
+        asset: pipeform_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        files:
+          - name: pipeform
+            src: pipeform_{{.Version}}
+        checksum:
+          type: github_release
+          asset: pipeform_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
   - type: go_install
     repo_owner: magodo
     repo_name: tfadd
@@ -52028,14 +51912,14 @@ packages:
     description: A new markup-based typesetting system that is powerful and easy to learn
     version_constraint: "false"
     version_overrides:
-      - version_constraint: (Version in ["v23-03-21", "v23-03-21-2", "v23-03-28"]) or semver("<= 0.2.0")
+      - version_constraint: semver("<= 0.2.0")
         asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
         files:
           - name: typst
-            src: typst-{{.Arch}}-{{.OS}}/typst
+            src: "{{.AssetWithoutExt}}/typst"
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -52053,7 +51937,7 @@ packages:
         format: tar.xz
         files:
           - name: typst
-            src: typst-{{.Arch}}-{{.OS}}/typst
+            src: "{{.AssetWithoutExt}}/typst"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -52063,17 +51947,13 @@ packages:
         overrides:
           - goos: windows
             format: zip
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.11.1")
         asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
         files:
           - name: typst
-            src: typst-{{.Arch}}-{{.OS}}/typst
+            src: "{{.AssetWithoutExt}}/typst"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -52083,10 +51963,21 @@ packages:
         overrides:
           - goos: windows
             format: zip
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
+      - version_constraint: "true"
+        asset: typst-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        files:
+          - name: typst
+            src: "{{.AssetWithoutExt}}/typst"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
   - type: go_install
     repo_owner: uber-go
     repo_name: mock
