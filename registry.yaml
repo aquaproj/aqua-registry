@@ -31239,6 +31239,26 @@ packages:
       - goos: windows
         format: zip
   - type: github_release
+    repo_owner: kcl-lang
+    repo_name: kcl
+    description: KCL Programming Language (CNCF Sandbox Project). https://kcl-lang.io
+    files:
+      - name: kcl-language-server
+      - name: kclvm_cli
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: kclvm-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: kcl-language-server
+            src: kclvm/bin/kcl-language-server
+          - name: kclvm_cli
+            src: kclvm/bin/kclvm_cli
+        supported_envs:
+          - darwin
+          - linux
+  - type: github_release
     repo_owner: kcp-dev
     repo_name: kcp
     asset: kcp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
