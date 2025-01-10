@@ -34873,9 +34873,15 @@ packages:
     description: Terraform runtime TUI
     version_constraint: "false"
     version_overrides:
+      - version_constraint: Version matches "\\b[0-9a-f]{40}\\b"
+        # To keep the compatibility
+        type: go_install
       - version_constraint: "true"
         asset: pipeform_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
+        files:
+          - name: pipeform
+            src: pipeform_{{.Version}}
         checksum:
           type: github_release
           asset: pipeform_{{trimV .Version}}_SHA256SUMS
