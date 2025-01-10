@@ -44966,7 +44966,7 @@ packages:
             goarch: arm64
             type: cargo
             crate: bat
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.24.0")
         asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
@@ -44988,6 +44988,22 @@ packages:
             replacements:
               arm64: aarch64
               linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: bat
+            src: bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
           - goos: windows
             format: zip
   - type: github_release
