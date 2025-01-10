@@ -44908,38 +44908,50 @@ packages:
     repo_owner: sharkdp
     repo_name: bat
     description: A cat(1) clone with wings
-    files:
-      - name: bat
-        src: bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.2.2")
         asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
+        files:
+          - name: bat
+            src: bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat
         replacements:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux-gnu
-        supported_envs:
-          - linux/amd64
-          - darwin
+        overrides:
+          - envs:
+              - linux/arm64
+              - windows
+            type: cargo
+            crate: bat
       - version_constraint: semver("<= 0.6.0")
         asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
+        files:
+          - name: bat
+            src: bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat
         replacements:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux-musl
-        supported_envs:
-          - linux/amd64
-          - darwin
+        overrides:
+          - envs:
+              - linux/arm64
+              - windows
+            type: cargo
+            crate: bat
       - version_constraint: Version == "v0.6.1"
         asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: bat
+            src: bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -44949,16 +44961,19 @@ packages:
           - goos: windows
             format: zip
             files:
-              - name: bat.exe
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
+              - name: bat
+          - goos: linux
+            goarch: arm64
+            type: cargo
+            crate: bat
       - version_constraint: semver("<= 0.24.0")
         asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: bat
+            src: bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -44979,6 +44994,9 @@ packages:
         asset: bat-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
+        files:
+          - name: bat
+            src: bat-{{.Version}}-{{.Arch}}-{{.OS}}/bat
         replacements:
           amd64: x86_64
           arm64: aarch64
