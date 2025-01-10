@@ -27840,6 +27840,17 @@ packages:
     description: Terminal bandwidth utilization tool
     version_constraint: "false"
     version_overrides:
+      - version_constraint: Version == "v0.22.0"
+        asset: bandwhich-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
       - version_constraint: semver("<= 0.3.2")
         asset: what
         format: raw
@@ -27863,23 +27874,36 @@ packages:
           linux: unknown-linux-musl
         supported_envs:
           - linux/amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.22.2")
         asset: bandwhich-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
-        overrides:
-          - goos: windows
-            format: zip
         replacements:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux-musl
           windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
         supported_envs:
           - darwin
           - windows
           - amd64
+      - version_constraint: "true"
+        asset: bandwhich-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: imuxin
     repo_name: kubectl-watch
