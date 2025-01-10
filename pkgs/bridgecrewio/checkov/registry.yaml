@@ -5,17 +5,12 @@ packages:
     repo_name: checkov
     description: Prevent cloud misconfigurations and find vulnerabilities during build-time in infrastructure as code, container images and open source packages with Checkov by Bridgecrew
     version_constraint: "false"
-    files:
-      - name: checkov
-        src: dist/checkov
     version_overrides:
       - version_constraint: semver("<= 2.3.314")
         no_asset: true
       - version_constraint: semver("<= 2.3.318")
         asset: checkov_{{.OS}}_{{.Version}}
         format: raw
-        rosetta2: true
-        windows_arm_emulation: true
         complete_windows_ext: false
         supported_envs:
           - darwin
@@ -77,8 +72,49 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 3.2.51")
         asset: checkov_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: X86_64
+      - version_constraint: semver("<= 3.2.314")
+        asset: checkov_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: X86_64
+      - version_constraint: Version == "3.2.317"
+        asset: checkov_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: X86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "3.2.320"
+        asset: checkov_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: X86_64
+      - version_constraint: Version == "3.2.322"
+        asset: checkov_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        replacements:
+          amd64: X86_64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: checkov_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
         rosetta2: true
         windows_arm_emulation: true
