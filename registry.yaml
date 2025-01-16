@@ -39619,6 +39619,16 @@ packages:
       type: github_release
       asset: tofu_{{trimV .Version}}_SHA256SUMS
       algorithm: sha256
+      cosign:
+        opts:
+          - --certificate-identity-regexp
+          - "https://github\\.com/opentofu/opentofu/\\.github/workflows/release\\.yml@refs/(heads|tags)/(main|v1\\..+)"
+          - --certificate-oidc-issuer
+          - "https://token.actions.githubusercontent.com"
+          - --signature
+          - https://github.com/opentofu/opentofu/releases/download/{{.Version}}/tofu_{{trimV .Version}}_SHA256SUMS.sig
+          - --certificate
+          - https://github.com/opentofu/opentofu/releases/download/{{.Version}}/tofu_{{trimV .Version}}_SHA256SUMS.pem
     files:
       - name: tofu
   - type: github_release
