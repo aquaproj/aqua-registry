@@ -29078,7 +29078,7 @@ packages:
         supported_envs:
           - darwin
           - windows/amd64
-      - version_constraint: "true"
+      - version_constraint: Version in ["0.10", "0.11"]
         asset: minisign-{{.Version}}-{{.OS}}.{{.Format}}
         format: zip
         rosetta2: true
@@ -29099,6 +29099,30 @@ packages:
             files:
               - name: minisign
                 src: minisign-win64/minisign.exe
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: minisign-{{.Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        files:
+          - name: minisign
+            src: minisign-{{.OS}}/{{.Arch}}/minisign
+        replacements:
+          darwin: macos
+          windows: win64
+          amd64: x86_64
+          arm64: aarch64
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: darwin
+            files:
+              - name: minisign
         supported_envs:
           - darwin
           - windows

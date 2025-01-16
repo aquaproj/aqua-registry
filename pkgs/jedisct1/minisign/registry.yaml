@@ -67,19 +67,20 @@ packages:
         rosetta2: true
         windows_arm_emulation: true
         complete_windows_ext: false
+        files:
+          - name: minisign
+            src: minisign-{{.OS}}/{{.Arch}}/minisign
         replacements:
           darwin: macos
           windows: win64
           amd64: x86_64
           arm64: aarch64
         overrides:
-          - envs:
-              - linux
-              - windows
+          - goos: linux
             format: tar.gz
+          - goos: darwin
             files:
               - name: minisign
-                src: minisign-{{.OS}}/{{.Arch}}/minisign
         supported_envs:
           - darwin
           - windows
