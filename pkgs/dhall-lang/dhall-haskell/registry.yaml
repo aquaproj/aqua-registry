@@ -8,6 +8,10 @@ packages:
       - name: dhall
     version_constraint: "false"
     version_overrides:
+      - version_constraint: Version == "1.42.1"
+        no_asset: true
+      - version_constraint: Version == "1.40.0"
+        error_message: "tar.bz2.zip is not supported"
       - version_constraint: semver("<= 1.9.0-rc1")
         asset: "{{.OS}}.{{.Format}}"
         format: tar.gz
@@ -21,73 +25,46 @@ packages:
       - version_constraint: semver("<= 1.17.0")
         asset: dhall-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.bz2
+        files:
+          - name: dhall
+            src: bin/dhall
         replacements:
           amd64: x86_64
         supported_envs:
           - linux/amd64
-      - version_constraint: semver("<= 1.20.1")
-        asset: dhall-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: zip
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-        overrides:
-          - goos: linux
-            format: tar.bz2
-        supported_envs:
-          - linux/amd64
-          - windows/amd64
-      - version_constraint: semver("<= 1.22.0")
+      - version_constraint: semver("<= 1.24.0")
         asset: dhall-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.bz2
         windows_arm_emulation: true
+        files:
+          - name: dhall
+            src: bin/dhall
         replacements:
           amd64: x86_64
         overrides:
           - goos: windows
             format: zip
+            files:
+              - name: dhall
         supported_envs:
           - linux/amd64
-          - windows/amd64
-      - version_constraint: semver("<= 1.24.0")
-        asset: dhall-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: zip
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-        overrides:
-          - goos: linux
-            format: tar.bz2
-        supported_envs:
-          - linux/amd64
-          - windows/amd64
+          - windows
       - version_constraint: semver("<= 1.39.0")
         asset: dhall-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.bz2
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: dhall
+            src: bin/dhall
         replacements:
           amd64: x86_64
           darwin: macos
         overrides:
           - goos: windows
             format: zip
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: Version == "1.40.0"
-        asset: dhall-{{.Version}}-{{.Arch}}-{{.OS}}.tar.bz2.{{.Format}}
-        format: zip
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          darwin: macos
-        overrides:
-          - goos: linux
-            format: tar.bz2
-            asset: dhall-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+            files:
+              - name: dhall
         supported_envs:
           - darwin
           - windows
@@ -97,6 +74,9 @@ packages:
         format: tar.bz2
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: dhall
+            src: bin/dhall
         replacements:
           amd64: x86_64
           darwin: macos
@@ -109,6 +89,9 @@ packages:
         format: tar.bz2
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: dhall
+            src: bin/dhall
         replacements:
           amd64: x86_64
           darwin: macos
@@ -124,6 +107,9 @@ packages:
         format: tar.bz2
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: dhall
+            src: bin/dhall
         replacements:
           amd64: x86_64
           darwin: macOS
@@ -141,6 +127,9 @@ packages:
         format: tar.bz2
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: dhall
+            src: bin/dhall
         replacements:
           amd64: x86_64
           darwin: macOS
@@ -152,12 +141,13 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: Version == "1.42.1"
-        no_asset: true
       - version_constraint: "true"
         asset: dhall-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.bz2
         windows_arm_emulation: true
+        files:
+          - name: dhall
+            src: bin/dhall
         replacements:
           amd64: x86_64
         overrides:
