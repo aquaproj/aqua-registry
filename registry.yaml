@@ -20000,17 +20000,31 @@ packages:
   - type: github_release
     repo_owner: dprint
     repo_name: dprint
-    asset: dprint-{{.Arch}}-{{.OS}}.zip
     description: Pluggable and configurable code formatting platform written in Rust
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-      windows: pc-windows-msvc
-    supported_envs:
-      - darwin
-      - amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 0.34.0")
+        asset: dprint-{{.Arch}}-{{.OS}}.zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
+        asset: dprint-{{.Arch}}-{{.OS}}.zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: drlau
     repo_name: akashi
