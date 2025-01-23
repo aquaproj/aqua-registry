@@ -54800,7 +54800,7 @@ packages:
         files:
           - name: jnv
             src: "{{.AssetWithoutExt}}/jnv"
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.3.0")
         asset: jnv-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         rosetta2: true
@@ -54808,6 +54808,24 @@ packages:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux-gnu
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - linux/amd64
+        files:
+          - name: jnv
+            src: "{{.AssetWithoutExt}}/jnv"
+      - version_constraint: "true"
+        asset: jnv-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
