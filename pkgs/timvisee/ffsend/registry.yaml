@@ -7,7 +7,7 @@ packages:
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version in ["v0.2.13", "v0.2.75"]
-        asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}
+        asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}-static
         format: raw
         replacements:
           amd64: x64
@@ -35,6 +35,7 @@ packages:
           - goos: linux
             replacements:
               amd64: x64
+              asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}-static
           - goos: darwin
             asset: ffsend-{{.Version}}-{{.OS}}
         supported_envs:
@@ -104,21 +105,18 @@ packages:
           - linux
           - darwin
       - version_constraint: semver("<= 0.2.9")
-        asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}
+        asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}-static
         format: raw
         replacements:
           amd64: x64
         supported_envs:
           - linux/amd64
       - version_constraint: semver("<= 0.2.17")
-        asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}
+        asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}-static
         format: raw
         windows_arm_emulation: true
         replacements:
           amd64: x64
-        overrides:
-          - goos: windows
-            asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}-static
         supported_envs:
           - linux/amd64
           - windows/amd64
@@ -132,6 +130,8 @@ packages:
         overrides:
           - goos: darwin
             asset: ffsend-{{.Version}}-{{.OS}}
+          - goos: linux
+            asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}-static
           - goos: windows
             asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}-static
         supported_envs:
@@ -145,6 +145,7 @@ packages:
           darwin: macos
         overrides:
           - goos: linux
+            asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}-static
             replacements:
               amd64: x64
           - goos: darwin
@@ -162,6 +163,8 @@ packages:
         overrides:
           - goos: darwin
             asset: ffsend-{{.Version}}-{{.OS}}
+          - goos: linux
+            asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}-static
           - goos: windows
             asset: ffsend-{{.Version}}-{{.OS}}-{{.Arch}}-static
         supported_envs:
