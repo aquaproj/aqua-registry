@@ -1,7 +1,13 @@
 ---
 name: Update packages by aqua-registry-updater
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      package:
+        type: string
+        description: 'Package name'
+        default: ''
+        required: false
   schedule:
     - cron: "*/10 * * * *"
 
@@ -41,6 +47,14 @@ jobs:
               "pull_requests": "write"
             }
       - run: aqua-registry-updater
+        if: inputs.package == ''
         env:
           AQUA_REGISTRY_UPDATER_CONTAINER_REGISTRY_TOKEN: ${{github.token}}
           GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
+
+      - run: aqua-registry-updater "$PKG"
+        if: inputs.package != ''
+        env:
+          AQUA_REGISTRY_UPDATER_CONTAINER_REGISTRY_TOKEN: ${{github.token}}
+          GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
+          PKG: ${{inputs.package}}
