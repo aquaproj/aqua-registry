@@ -46,7 +46,7 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: semver("<= 0.2.4")
+      - version_constraint: semver("<= 0.2.3")
         asset: yazi-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
         files:
@@ -58,6 +58,19 @@ packages:
           arm64: aarch64
           darwin: apple-darwin
           linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+      - version_constraint: Version == "v0.2.4"
+        asset: yazi-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        files:
+          - name: yazi
+            src: yazi-{{.Arch}}-{{.OS}}/yazi
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
           windows: pc-windows-msvc
       - version_constraint: "true"
         asset: yazi-{{.Arch}}-{{.OS}}.{{.Format}}
@@ -72,5 +85,5 @@ packages:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-gnu
+          linux: unknown-linux-musl
           windows: pc-windows-msvc
