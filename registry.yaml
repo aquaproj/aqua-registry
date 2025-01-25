@@ -47300,7 +47300,12 @@ packages:
       amd64: x86_64
       arm64: aarch64
       darwin: macos-none
-      linux: linux-gnu
+      linux: linux-musl
+    overrides:
+      - goos: linux
+        goarch: arm64
+        replacements:
+          linux: linux-musleabi
     supported_envs:
       - linux
       - darwin
@@ -47316,7 +47321,6 @@ packages:
         files:
           - name: dt
             src: "{{.Arch}}-{{.OS}}/bin/dt"
-        overrides: []
         supported_envs:
           - linux
   - type: github_release
