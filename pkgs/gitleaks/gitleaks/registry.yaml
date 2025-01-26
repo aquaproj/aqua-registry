@@ -3,27 +3,18 @@ packages:
   - type: github_release
     repo_owner: gitleaks
     repo_name: gitleaks
+    aliases:
+      - name: zricethezav/gitleaks
     description: Find secrets with Gitleaks
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.3.0")
+      - version_constraint: semver("<= 0.3.0") || Version == "v1.2.1"
         no_asset: true
       - version_constraint: Version == "v0.4.0"
         asset: gitleaks-{{.OS}}-{{.Arch}}
         format: raw
         rosetta2: true
         windows_arm_emulation: true
-      - version_constraint: semver("<= 1.2.0")
-        asset: gitleaks-{{.OS}}-{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: Version == "v1.2.1"
-        no_asset: true
       - version_constraint: semver("<= 7.6.1")
         asset: gitleaks-{{.OS}}-{{.Arch}}
         format: raw
@@ -64,20 +55,6 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: semver("<= 8.15.0")
-        asset: gitleaks_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x64
-        checksum:
-          type: github_release
-          asset: gitleaks_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 8.15.1-test3")
-        no_asset: true
       - version_constraint: semver("<= 8.17.0")
         asset: gitleaks_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
