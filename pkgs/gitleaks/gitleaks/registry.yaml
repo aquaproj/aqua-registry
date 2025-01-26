@@ -5,40 +5,78 @@ packages:
     repo_name: gitleaks
     aliases:
       - name: zricethezav/gitleaks
-    description: Scan git repos (or files) for secrets using regex and entropy
-    asset: gitleaks_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      amd64: x64
-      arm64: x64
-      386: x32
-    version_constraint: semver(">= 8.3.0")
-    checksum:
-      type: github_release
-      asset: gitleaks_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    description: Find secrets with Gitleaks
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 8.1.3")
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-      - version_constraint: semver(">= 8.0.0")
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.3.0") || Version == "v1.2.1"
+        no_asset: true
+      - version_constraint: Version == "v0.4.0"
         asset: gitleaks-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 7.6.1")
+        asset: gitleaks-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 8.1.2")
+        asset: gitleaks_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-        format: raw
-        overrides: []
-        replacements: {}
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
         checksum:
-          enabled: false
+          type: github_release
+          asset: gitleaks_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 8.2.7")
+        asset: gitleaks_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: gitleaks_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 8.17.0")
+        asset: gitleaks_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: gitleaks_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: gitleaks_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: gitleaks_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
