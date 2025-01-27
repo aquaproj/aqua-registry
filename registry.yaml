@@ -19977,18 +19977,29 @@ packages:
     replacements:
       amd64: x86_64
       darwin: apple-darwin
-      linux: unknown-linux-gnu
+      linux: unknown-linux-musl
       windows: pc-windows-msvc
     supported_envs:
       - darwin
       - amd64
-    version_constraint: semver(">= 0.12.1")
+    version_constraint: semver(">= 0.17.3")
     version_overrides:
+      - version_constraint: semver(">= 0.12.1")
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
       - version_constraint: semver(">= 0.10.0")
         asset: csv2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         files:
           - name: csv2arrow
             src: csv2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/csv2arrow
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
       - version_constraint: semver("< 0.10.0")
         asset: csv2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         files:
@@ -19999,6 +20010,11 @@ packages:
             format: zip
             files:
               - name: csv2arrow
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
         rosetta2: true
   - name: domoritz/arrow-tools/csv2parquet
     type: github_release
