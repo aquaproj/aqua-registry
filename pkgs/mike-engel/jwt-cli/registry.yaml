@@ -8,19 +8,14 @@ packages:
       - name: jwt
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.2.0")
-      - version_constraint: Version == "0.3.0"
-        asset: jwt-cli-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: zip
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          windows: pc-windows-msvc
-        supported_envs:
-          - windows/amd64
+      - version_constraint: semver("<= 0.3.0")
+        no_asset: true
       - version_constraint: Version == "0.3.1"
         asset: jwt-cli-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: jwt-cli
+            src: jwt-cli
         rosetta2: true
         windows_arm_emulation: true
         replacements:
@@ -38,6 +33,9 @@ packages:
       - version_constraint: semver("<= 0.4.0")
         asset: jwt-cli-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
+        files:
+          - name: jwt-cli
+            src: jwt-cli
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
@@ -47,6 +45,9 @@ packages:
       - version_constraint: Version == "0.4.1"
         asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: jwt-cli
+            src: jwt-cli
         windows_arm_emulation: true
         replacements:
           darwin: macOS
@@ -89,12 +90,28 @@ packages:
           - amd64
       - version_constraint: Version == "v1.2.0"
         no_asset: true
-      - version_constraint: semver("<= 2.2.0")
+      - version_constraint: semver("< 2.2.0")
         asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
         format: tar.gz
         replacements:
           darwin: macOS
         overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "2.2.0"
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macOS
+        overrides:
+          - goos: linux
+            files:
+              - name: jwt
+                src: target/release/jwt
           - goos: windows
             format: zip
         supported_envs:
@@ -112,12 +129,28 @@ packages:
         supported_envs:
           - darwin
           - windows/amd64
-      - version_constraint: semver("<= 3.2.0")
+      - version_constraint: semver("< 3.2.0")
         asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
         format: tar.gz
         replacements:
           darwin: macOS
         overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "3.2.0"
+        asset: jwt-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macOS
+        overrides:
+          - goos: linux
+            files:
+              - name: jwt
+                src: target/release/jwt
           - goos: windows
             format: zip
         supported_envs:
