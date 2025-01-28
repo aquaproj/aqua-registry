@@ -21,20 +21,36 @@ packages:
     replacements:
       amd64: x86_64
       darwin: apple-darwin
-      linux: unknown-linux-gnu
+      linux: unknown-linux-musl
       windows: pc-windows-msvc
     supported_envs:
       - darwin
       - amd64
-    version_constraint: semver(">= 0.12.1")
+    version_constraint: semver(">= 0.17.3")
     version_overrides:
+      - version_constraint: semver(">= 0.12.1")
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
       - version_constraint: semver(">= 0.10.0")
         asset: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
         files:
           - name: json2arrow
             src: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/json2arrow
       - version_constraint: semver("< 0.10.0")
         asset: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
         files:
           - name: json2arrow
             src: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/json2arrow
