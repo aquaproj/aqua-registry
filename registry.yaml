@@ -39354,7 +39354,7 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.10.3")
         asset: nvim-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -39383,6 +39383,38 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: "true"
+        asset: nvim-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: nvim
+            src: nvim-{{.OS}}/bin/nvim
+        replacements:
+          darwin: macos
+          windows: win64
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256sum"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: nvim-{{.OS}}-{{.Arch}}.{{.Format}}
+            files:
+              - name: nvim
+                src: "{{.AssetWithoutExt}}/bin/nvim"
+            replacements:
+              amd64: x86_64
+          - goos: linux
+            asset: nvim-{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements:
+              amd64: x86_64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - linux
+          - windows
   - type: github_release
     repo_owner: newrelic
     repo_name: newrelic-cli
