@@ -35,6 +35,9 @@ jobs:
       - name: Fix newlines
         run: git ls-files | xargs nllint -f -s
 
+      - name: Configure NPM_CONFIG_PREFIX
+        run: echo NPM_CONFIG_PREFIX="$HOME/npm-global" >> "$GITHUB_ENV"
+      - run: echo "$NPM_CONFIG_PREFIX/bin" >> "$GITHUB_PATH"
       - name: Install prettier
         run: npm i -g prettier
       - name: Format code by prettier
