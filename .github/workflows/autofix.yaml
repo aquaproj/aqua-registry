@@ -30,8 +30,6 @@ jobs:
           aqua_opts: -l -a
           policy_allow: "true"
 
-      - name: Fix registry.yaml
-        run: cmdx gr
       - name: Fix newlines
         run: git ls-files | xargs nllint -f -s
 
@@ -42,5 +40,8 @@ jobs:
         run: npm i -g prettier
       - name: Format code by prettier
         run: prettier -w .
+
+      - name: Fix registry.yaml
+        run: cmdx gr
 
       - uses: autofix-ci/action@2891949f3779a1cafafae1523058501de3d4e944 # v1.3.1
