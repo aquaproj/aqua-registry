@@ -6,19 +6,74 @@ packages:
     description: From git log to SemVer in no time
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
-        asset: gitversion-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+      - version_constraint: semver("<= 3.0.0-Beta3")
+        no_asset: true
+      - version_constraint: semver("<= 4.0.0")
+      - version_constraint: semver("<= 5.0.0")
+        no_asset: true
+      - version_constraint: Version == "5.0.1"
+      - version_constraint: semver("<= 5.2.4")
+        asset: gitversion-{{.OS}}-{{.Version}}.{{.Format}}
         format: tar.gz
+        replacements:
+          darwin: osx
         supported_envs:
-          - linux
           - darwin
           - windows
+          - amd64
+      - version_constraint: semver("<= 5.6.0")
+        asset: gitversion-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          darwin: osx
+          windows: win
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 5.7.0")
+        asset: gitversion-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
         replacements:
           amd64: x64
           darwin: osx
           windows: win
         overrides:
+          - goos: linux
+            asset: gitversion-{{.OS}}-musl-{{.Arch}}-{{.Version}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "5.8.0"
+        asset: gitversion-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          darwin: osx
+          windows: win
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: gitversion-{{.OS}}-musl-{{.Arch}}-{{.Version}}.{{.Format}}
           - goos: windows
             format: zip
-        checksum:
-          enabled: false
+      - version_constraint: "true"
+        asset: gitversion-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+          darwin: osx
+          windows: win
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: gitversion-{{.OS}}-musl-{{.Arch}}-{{.Version}}.{{.Format}}
+          - goos: windows
+            format: zip
