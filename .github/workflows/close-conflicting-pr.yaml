@@ -6,7 +6,7 @@ on:
     - cron: "0 */1 * * *" # Hourly
 
 jobs:
-  rerun:
+  close-conflicting-prs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
@@ -27,6 +27,8 @@ jobs:
             -S "author:$bot is:open" \
             -L 100 \
             -q '.[] | select(.mergeable == "CONFLICTING") | .number')
+
+          info "found pull requests: $numbers"
 
           workflow_run_url=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
 
