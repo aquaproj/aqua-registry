@@ -18,6 +18,20 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("<= 1.2.1")
+        asset: goreleaser_{{title .OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: goreleaser_{{title .OS}}_all.{{.Format}}
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: goreleaser_{{title .OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -27,6 +41,16 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity
+              - https://github.com/goreleaser/goreleaser/.github/workflows/release.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/goreleaser/goreleaser/releases/download/{{.Version}}/checksums.txt.sig
+              - --certificate
+              - https://github.com/goreleaser/goreleaser/releases/download/{{.Version}}/checksums.txt.pem
         overrides:
           - goos: darwin
             asset: goreleaser_{{title .OS}}_all.{{.Format}}
