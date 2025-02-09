@@ -6,6 +6,15 @@ packages:
     description: Pluggable and configurable code formatting platform written in Rust
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("< 0.14.0")
+        asset: dprint-{{.Arch}}-{{.OS}}.zip
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        supported_envs:
+          - amd64
       - version_constraint: semver("< 0.34.0")
         asset: dprint-{{.Arch}}-{{.OS}}.zip
         replacements:
@@ -17,6 +26,10 @@ packages:
         supported_envs:
           - darwin
           - amd64
+        checksum:
+          type: github_release
+          asset: SHASUMS256.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: dprint-{{.Arch}}-{{.OS}}.zip
         replacements:
@@ -28,3 +41,7 @@ packages:
         supported_envs:
           - darwin
           - amd64
+        checksum:
+          type: github_release
+          asset: SHASUMS256.txt
+          algorithm: sha256
