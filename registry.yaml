@@ -7947,13 +7947,25 @@ packages:
           - darwin
           - windows
           - amd64
-  - type: github_release
+  - type: http
     repo_owner: apache
     repo_name: pulsar
     description: Apache Pulsar - distributed pub-sub messaging system
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: "true"
+    url: https://dist.apache.org/repos/dist/release/pulsar/pulsar-{{trimV .Version}}/apache-pulsar-{{trimV .Version}}-bin.tar.gz
+    format: tar.gz
+    files:
+      - name: pulsar
+        src: apache-pulsar-{{trimV .Version}}/bin/pulsar
+      - name: pulsar-admin
+        src: apache-pulsar-{{trimV .Version}}/bin/pulsar-admin
+      - name: pulsar-client
+        src: apache-pulsar-{{trimV .Version}}/bin/pulsar-client
+      - name: pulsar-perf
+        src: apache-pulsar-{{trimV .Version}}/bin/pulsar-perf
+      - name: pulsar-shell
+        src: apache-pulsar-{{trimV .Version}}/bin/pulsar-shell
+      - name: bookkeeper
+        src: apache-pulsar-{{trimV .Version}}/bin/bookkeeper
   - type: http
     repo_owner: apache
     repo_name: spark
