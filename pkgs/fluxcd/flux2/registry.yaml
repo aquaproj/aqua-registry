@@ -4,14 +4,32 @@ packages:
     repo_owner: fluxcd
     repo_name: flux2
     description: Open and extensible continuous delivery solution for Kubernetes. Powered by GitOps Toolkit
-    asset: flux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    files:
-      - name: flux
-    checksum:
-      type: github_release
-      asset: flux_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2.0.0")
+        asset: flux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: flux
+        checksum:
+          type: github_release
+          asset: flux_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: flux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: flux
+        checksum:
+          type: github_release
+          asset: flux_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: provenance.intoto.jsonl
