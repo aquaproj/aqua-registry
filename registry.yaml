@@ -41893,26 +41893,13 @@ packages:
     repo_owner: ossf
     repo_name: scorecard
     description: Security Scorecards - Security health metrics for Open Source
-    asset: scorecard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    files:
-      - name: scorecard
-        src: scorecard-{{.OS}}-{{.Arch}}
-    version_constraint: semver(">= 4.6.0")
-    checksum:
-      type: github_release
-      asset: scorecard_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("= 4.5.0")
-        checksum:
-          type: github_release
-          asset: scorecard_checksums.txt
-          algorithm: sha512
-        supported_envs:
-          - darwin
-          - windows
-          - linux/arm64
-      - version_constraint: semver("= 4.4.0")
+      - version_constraint: semver("< 4.4.0")
+        asset: scorecard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+        files:
+          - name: scorecard
+            src: scorecard-{{.OS}}-{{.Arch}}
         overrides:
           - goos: linux
             goarch: amd64
@@ -41922,11 +41909,61 @@ packages:
           type: github_release
           asset: scorecard_checksums.txt
           algorithm: sha512
-      - version_constraint: "true"
+      - version_constraint: semver("< 4.5.0")
+        asset: scorecard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+        files:
+          - name: scorecard
+            src: scorecard-{{.OS}}-{{.Arch}}
+        overrides:
+          - goos: linux
+            goarch: amd64
+            checksum:
+              enabled: false
         checksum:
           type: github_release
           asset: scorecard_checksums.txt
           algorithm: sha512
+      - version_constraint: semver("< 4.6.0")
+        asset: scorecard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+        files:
+          - name: scorecard
+            src: scorecard-{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: scorecard_checksums.txt
+          algorithm: sha512
+        supported_envs:
+          - darwin
+          - windows
+          - linux/arm64
+      - version_constraint: semver("< 4.9.0")
+        asset: scorecard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+        files:
+          - name: scorecard
+            src: scorecard-{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: scorecard_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - linux/arm64
+      - version_constraint: Version == "v4.9.0"
+        no_asset: true
+      - version_constraint: "true"
+        asset: scorecard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+        files:
+          - name: scorecard
+            src: scorecard-{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: scorecard_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - linux/arm64
   - type: github_release
     repo_owner: osteele
     repo_name: gojekyll
