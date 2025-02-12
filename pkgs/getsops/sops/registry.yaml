@@ -18,6 +18,17 @@ packages:
         supported_envs:
           - darwin
           - amd64
+      - version_constraint: semver("< 3.7.4")
+        asset: sops-{{.Version}}.{{.OS}}.{{.Arch}}
+        format: raw
+        overrides:
+          - goos: windows
+            asset: sops-{{.Version}}.exe
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
       - version_constraint: "true"
         asset: sops-{{.Version}}.{{.OS}}.{{.Arch}}
         format: raw
@@ -29,3 +40,6 @@ packages:
           - darwin
           - linux
           - amd64
+        slsa_provenance:
+          type: github_release
+          asset: sops-{{.Version}}.intoto.jsonl
