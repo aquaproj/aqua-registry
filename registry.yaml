@@ -23011,6 +23011,45 @@ packages:
           asset: checksums.txt
           algorithm: sha256
   - type: github_release
+    repo_owner: facebook
+    repo_name: buck2
+    description: Build system, successor to Buck
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2023-07-11")
+        asset: buck2-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zst
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: windows
+            asset: buck2-{{.Arch}}-{{.OS}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: buck2-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zst
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            asset: buck2-{{.Arch}}-{{.OS}}.exe.{{.Format}}
+  - type: github_release
     repo_owner: fastfetch-cli
     repo_name: fastfetch
     description: An actively maintained, feature-rich and performance oriented, neofetch like system information tool
