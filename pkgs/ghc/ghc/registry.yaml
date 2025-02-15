@@ -1,0 +1,105 @@
+packages:
+  - type: http
+    repo_owner: ghc
+    repo_name: ghc
+    description: The Glorious Glasgow Haskell Compiler
+    link: https://www.haskell.org/ghc/
+    url: https://downloads.haskell.org/~ghc/{{.Version}}/ghc-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    supported_envs:
+      - linux
+      - darwin
+      - windows/amd64
+    replacements:
+      darwin: apple-darwin
+      windows: unknown-mingw32
+      arm64: aarch64
+      amd64: x86_64
+    overrides:
+      - goos: linux
+        goarch: amd64
+        replacements:
+          linux: alpine3_12-linux
+        files: &ghc_linux_files
+          - name: ghc
+            src: ghc-{{.Version}}-{{.Arch}}-unknown-linux/bin/ghc-{{.Version}}
+          - name: ghc-iserv
+            src: ghc-{{.Version}}-{{.Arch}}-unknown-linux/bin/ghc-iserv-ghc-{{.Version}}
+          - name: ghc-iserv-dyn
+            src: ghc-{{.Version}}-{{.Arch}}-unknown-linux/bin/ghc-iserv-dyn-ghc-{{.Version}}
+          - name: ghc-iserv-prof
+            src: ghc-{{.Version}}-{{.Arch}}-unknown-linux/bin/ghc-iserv-prof-ghc-{{.Version}}
+          - name: ghc-pkg
+            src: ghc-{{.Version}}-{{.Arch}}-unknown-linux/bin/ghc-pkg-{{.Version}}
+          - name: haddock
+            src: ghc-{{.Version}}-{{.Arch}}-unknown-linux/bin/haddock-ghc-{{.Version}}
+          - name: hp2ps
+            src: ghc-{{.Version}}-{{.Arch}}-unknown-linux/bin/hp2ps-ghc-{{.Version}}
+          - name: hpc
+            src: ghc-{{.Version}}-{{.Arch}}-unknown-linux/bin/hpc-ghc-{{.Version}}
+          - name: hsc2hs
+            src: ghc-{{.Version}}-{{.Arch}}-unknown-linux/bin/hsc2hs-ghc-{{.Version}}
+          - name: runghc
+            src: ghc-{{.Version}}-{{.Arch}}-unknown-linux/bin/runghc-{{.Version}}
+          - name: runhaskell
+            src: ghc-{{.Version}}-{{.Arch}}-unknown-linux/bin/runhaskell-{{.Version}}
+          - name: unlit
+            src: ghc-{{.Version}}-{{.Arch}}-unknown-linux/bin/unlit-ghc-{{.Version}}
+      - goos: linux
+        goarch: arm64
+        replacements:
+          linux: deb10-linux
+        files: *ghc_linux_files
+      - goos: windows
+        files:
+          - name: ghc-iserv-prof
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/ghc-iserv-prof-ghc-{{.Version}}
+          - name: ghc-iserv
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/ghc-iserv-ghc-{{.Version}}
+          - name: ghc-pkg
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/ghc-pkg-{{.Version}}
+          - name: ghc
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/ghc-{{.Version}}
+          - name: ghci
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/ghci-{{.Version}}
+          - name: haddock
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/haddock-ghc-{{.Version}}
+          - name: hp2ps
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/hp2ps-ghc-{{.Version}}
+          - name: hpc
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/hpc-ghc-{{.Version}}
+          - name: hsc2hs
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/hsc2hs-ghc-{{.Version}}
+          - name: runghc
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/runghc-{{.Version}}
+          - name: runhaskell
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/runhaskell-{{.Version}}
+          - name: touchy
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/touchy-ghc-{{.Version}}
+          - name: unlit
+            src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/unlit-ghc-{{.Version}}
+    files:
+      - name: ghc
+        src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/ghc-{{.Version}}
+      - name: ghc-iserv
+        src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/ghc-iserv-ghc-{{.Version}}
+      - name: ghc-iserv-dyn
+        src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/ghc-iserv-dyn-ghc-{{.Version}}
+      - name: ghc-iserv-prof
+        src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/ghc-iserv-prof-ghc-{{.Version}}
+      - name: ghc-pkg
+        src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/ghc-pkg-{{.Version}}
+      - name: haddock
+        src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/haddock-ghc-{{.Version}}
+      - name: hp2ps
+        src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/hp2ps-ghc-{{.Version}}
+      - name: hpc
+        src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/hpc-ghc-{{.Version}}
+      - name: hsc2hs
+        src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/hsc2hs-ghc-{{.Version}}
+      - name: runghc
+        src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/runghc-{{.Version}}
+      - name: runhaskell
+        src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/runhaskell-{{.Version}}
+      - name: unlit
+        src: ghc-{{.Version}}-{{.Arch}}-{{.OS}}/bin/unlit-ghc-{{.Version}}
