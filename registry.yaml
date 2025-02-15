@@ -48798,39 +48798,30 @@ packages:
     repo_owner: slsa-framework
     repo_name: slsa-verifier
     description: Verify provenance from SLSA compliant builders
-    asset: slsa-verifier-{{.OS}}-{{.Arch}}
-    format: raw
-    slsa_provenance:
-      type: github_release
-      asset: slsa-verifier-{{.OS}}-{{.Arch}}.intoto.jsonl
-    version_constraint: semver(">= 2.1.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 2.0.0")
-        type: go_install
-        path: github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier
-        asset: slsa-verifier
-        overrides:
-          - goos: linux
-            goarch: amd64
-            type: github_release
-            asset: slsa-verifier-{{.OS}}-{{.Arch}} # TODO https://github.com/aquaproj/aqua/issues/1746
-            format: raw
-            slsa_provenance:
-              type: github_release
-              asset: slsa-verifier-{{.OS}}-{{.Arch}}.intoto.jsonl
-      - version_constraint: semver("< 2.0.0")
-        type: go_install
-        path: github.com/slsa-framework/slsa-verifier/cli/slsa-verifier
-        asset: slsa-verifier # TODO https://github.com/aquaproj/aqua/issues/1746
-        overrides:
-          - goos: linux
-            goarch: amd64
-            type: github_release
-            asset: slsa-verifier-{{.OS}}-{{.Arch}}
-            format: raw
-            slsa_provenance:
-              type: github_release
-              asset: slsa-verifier-{{.OS}}-{{.Arch}}.intoto.jsonl
+      - version_constraint: semver("<= 1.3.2")
+        asset: slsa-verifier-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "v1.4.0"
+        no_asset: true
+      - version_constraint: semver("<= 2.0.1")
+        asset: slsa-verifier-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 2.3.0")
+        asset: slsa-verifier-{{.OS}}-{{.Arch}}
+        format: raw
+        complete_windows_ext: false
+      - version_constraint: Version == "v2.4.0-rc.0"
+        no_asset: true
+      - version_constraint: "true"
+        asset: slsa-verifier-{{.OS}}-{{.Arch}}
+        format: raw
+        complete_windows_ext: false
   - type: github_release
     repo_owner: smallstep
     repo_name: certificates
