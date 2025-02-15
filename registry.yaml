@@ -23011,6 +23011,54 @@ packages:
           asset: checksums.txt
           algorithm: sha256
   - type: github_release
+    repo_owner: facebook
+    repo_name: buck2
+    description: Build system, successor to Buck
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "latest"
+        error_message: |
+          aqua doesn't support mutable versions such as "latest". Please change the version
+      - version_constraint: semver("<= 2023-07-11")
+        asset: buck2-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zst
+        windows_arm_emulation: true
+        files:
+          - name: buck2
+            src: buck2-{{.Arch}}-{{.OS}}
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: windows
+            asset: buck2-{{.Arch}}-{{.OS}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: buck2-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zst
+        windows_arm_emulation: true
+        files:
+          - name: buck2
+            src: buck2-{{.Arch}}-{{.OS}}
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            asset: buck2-{{.Arch}}-{{.OS}}.exe.{{.Format}}
+  - type: github_release
     repo_owner: fastfetch-cli
     repo_name: fastfetch
     description: An actively maintained, feature-rich and performance oriented, neofetch like system information tool
@@ -23748,17 +23796,62 @@ packages:
   - type: github_release
     repo_owner: fission
     repo_name: fission
-    asset: fission-{{.Version}}-{{.OS}}-{{.Arch}}
     description: Fast and Simple Serverless Functions for Kubernetes
-    format: raw
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.12.0")
+        asset: fission-cli-{{.OS}}
+        format: raw
+        replacements:
+          darwin: osx
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.14.1")
+        asset: fission-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 1.17.0-rc2")
+        asset: fission-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.20.5")
+        asset: fission-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.21.0")
+        asset: fission-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: fission_{{.Version}}.intoto.jsonl
+      - version_constraint: "true"
+        asset: fission-cli-{{.OS}}
+        format: raw
+        replacements:
+          darwin: osx
+        slsa_provenance:
+          type: github_release
+          asset: fission_{{.Version}}.intoto.jsonl
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: flatt-security
     repo_name: shisho
@@ -30921,6 +31014,16 @@ packages:
           type: github_release
           asset: jx-checksums.txt
           algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity
+              - https://github.com/jenkins-x/jx/.github/workflows/jenkins-x-release.yaml@refs/heads/main
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/jenkins-x/jx/releases/download/{{.Version}}/jx-checksums.txt.sig
+              - --certificate
+              - https://github.com/jenkins-x/jx/releases/download/{{.Version}}/jx-checksums.txt.pem
         overrides:
           - goos: windows
             format: zip
@@ -36468,34 +36571,82 @@ packages:
   - type: github_release
     repo_owner: lsd-rs
     repo_name: lsd
-    aliases:
-      - name: Peltoche/lsd
-    rosetta2: true
-    asset: lsd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     description: The next gen ls command
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      windows: pc-windows-msvc
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      linux: unknown-linux-musl # Set musl as default. If architecture matches, this can be executable without relying on external libraries
     files:
       - name: lsd
         src: lsd-{{.Version}}-{{.Arch}}-{{.OS}}/lsd
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    version_constraint: semver(">= 0.20.1")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.15.1")
+        asset: lsd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "0.16.0"
+        asset: lsd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.19.0")
+        asset: lsd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: Version == "0.20.0"
+        no_asset: true
+      - version_constraint: semver("<= 0.23.1")
+        asset: lsd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: lsd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: lusingander
     repo_name: serie
@@ -41087,7 +41238,7 @@ packages:
           - goos: windows
             asset: ollama-{{.OS}}-{{.Arch}}.{{.Format}}
             format: zip
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.5.7")
         asset: ollama-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
@@ -41104,6 +41255,23 @@ packages:
           - goos: darwin
             asset: ollama-{{.OS}}
             format: raw
+      - version_constraint: "true"
+        asset: ollama-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tgz
+            files:
+              - name: ollama
+                src: bin/ollama
+          - goos: darwin
+            asset: ollama-{{.OS}}.{{.Format}}
+            format: tgz
   - type: github_release
     repo_owner: omegion
     repo_name: ssh-manager
@@ -46752,6 +46920,77 @@ packages:
       asset: SHA256SUMS
       algorithm: sha256
   - type: github_release
+    repo_owner: scenarigo
+    repo_name: scenarigo
+    aliases:
+      - name: zoncoen/scenarigo
+    description: An end-to-end scenario testing tool for HTTP/gRPC server
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.14.0-rc3", "v0.15.0-rc1"]
+        no_asset: true
+      - version_constraint: semver("<= 0.5.1")
+        asset: scenarigo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.6.1")
+        asset: scenarigo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.7.0")
+        asset: scenarigo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: scenarigo_{{.Version}}_go{{.Vars.go_version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        vars:
+          - name: go_version
+            required: true
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+  - type: github_release
     repo_owner: schemalex
     repo_name: schemalex
     asset: schemalex_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -48668,30 +48907,41 @@ packages:
     repo_owner: slsa-framework
     repo_name: slsa-verifier
     description: Verify provenance from SLSA compliant builders
-    asset: slsa-verifier-{{.OS}}-{{.Arch}}
-    format: raw
-    version_constraint: semver(">= 2.1.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 2.0.0")
-        type: go_install
-        path: github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier
-        asset: slsa-verifier
-        overrides:
-          - goos: linux
-            goarch: amd64
-            type: github_release
-            asset: slsa-verifier-{{.OS}}-{{.Arch}} # TODO https://github.com/aquaproj/aqua/issues/1746
-            format: raw
-      - version_constraint: semver("< 2.0.0")
+      - version_constraint: Version == "v1.4.0"
         type: go_install
         path: github.com/slsa-framework/slsa-verifier/cli/slsa-verifier
-        asset: slsa-verifier # TODO https://github.com/aquaproj/aqua/issues/1746
+      - version_constraint: semver("<= 1.3.2")
+        type: go_install
+        path: github.com/slsa-framework/slsa-verifier/cli/slsa-verifier
         overrides:
           - goos: linux
             goarch: amd64
             type: github_release
             asset: slsa-verifier-{{.OS}}-{{.Arch}}
             format: raw
+            slsa_provenance:
+              type: github_release
+              asset: slsa-verifier-{{.OS}}-{{.Arch}}.intoto.jsonl
+      - version_constraint: semver("<= 2.0.1")
+        type: go_install
+        path: github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier
+        overrides:
+          - goos: linux
+            goarch: amd64
+            type: github_release
+            asset: slsa-verifier-{{.OS}}-{{.Arch}}
+            format: raw
+            slsa_provenance:
+              type: github_release
+              asset: slsa-verifier-{{.OS}}-{{.Arch}}.intoto.jsonl
+      - version_constraint: "true"
+        asset: slsa-verifier-{{.OS}}-{{.Arch}}
+        format: raw
+        slsa_provenance:
+          type: github_release
+          asset: "{{.Asset}}.intoto.jsonl"
   - type: github_release
     repo_owner: smallstep
     repo_name: certificates
@@ -57114,6 +57364,18 @@ packages:
         rosetta2: true
   - type: github_release
     repo_owner: ysugimoto
+    repo_name: gcsdeploy
+    description: Deploy files to GCS like rsync
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: gcsdeploy-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
+    repo_owner: ysugimoto
     repo_name: vintage
     description: VCL Transpiler for Edge Runtime
     asset: vintage-{{.OS}}-{{.Arch}}.{{.Format}}
@@ -57427,75 +57689,6 @@ packages:
           algorithm: sha256
         supported_envs:
           - linux
-          - darwin
-  - type: github_release
-    repo_owner: zoncoen
-    repo_name: scenarigo
-    description: An end-to-end scenario testing tool for HTTP/gRPC server
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: Version in ["v0.14.0-rc3", "v0.15.0-rc1"]
-        no_asset: true
-      - version_constraint: semver("<= 0.5.1")
-        asset: scenarigo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: semver("<= 0.6.1")
-        asset: scenarigo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux
-          - darwin
-      - version_constraint: semver("<= 0.7.0")
-        asset: scenarigo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux
-          - darwin
-      - version_constraint: "true"
-        asset: scenarigo_{{.Version}}_go{{.Vars.go_version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        vars:
-          - name: go_version
-            required: true
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
           - darwin
   - type: github_release
     repo_owner: zquestz
