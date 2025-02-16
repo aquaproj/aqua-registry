@@ -34363,7 +34363,11 @@ packages:
   - type: github_release
     repo_owner: kptdev
     repo_name: kpt
+    aliases:
+      - name: GoogleContainerTools/kpt
     description: Automate Kubernetes Configuration Editing
+    version_filter: |
+      not (Version startsWith "porch/")
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= package-examples/nginx/v0.5")
@@ -34439,9 +34443,10 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-        slsa_provenance:
-          type: github_release
-          asset: attestation.intoto.jsonl
+        # slsa_provenance:
+        #   # FAILED: SLSA verification failed: source used to generate the binary does not match provenance: expected source 'kptdev/kpt', got 'GoogleContainerTools/kpt'
+        #   type: github_release
+        #   asset: attestation.intoto.jsonl
         supported_envs:
           - linux
           - darwin
@@ -34462,9 +34467,10 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-        slsa_provenance:
-          type: github_release
-          asset: multiple.intoto.jsonl
+        # slsa_provenance:
+        #   # Verifying artifact /tmp/048982138: FAILED: source used to generate the binary does not match provenance: expected source 'kptdev/kpt', got 'GoogleContainerTools/kpt'
+        #   type: github_release
+        #   asset: multiple.intoto.jsonl
         supported_envs:
           - linux
           - darwin
@@ -34475,6 +34481,10 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: kpt_darwin_{{.Arch}}
+            format: raw
         supported_envs:
           - linux
           - darwin
