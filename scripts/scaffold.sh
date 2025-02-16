@@ -5,6 +5,7 @@ set -eu
 pkg=$1
 cmd=$2
 limit=$3
+config=$4
 
 opts=""
 if [ -n "$cmd" ]; then
@@ -12,6 +13,9 @@ if [ -n "$cmd" ]; then
 fi
 if [ -n "$limit" ]; then
 	opts="$opts -limit $limit"
+fi
+if [ -n "$config" ]; then
+	opts="$opts -c $config"
 fi
 
 mkdir -p "pkgs/$pkg"
