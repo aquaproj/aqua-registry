@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/suzuki-shunsuke/cmdx/v1.7.7/json-schema/cmdx.json
 # the configuration file of cmdx - task runner
 # https://github.com/suzuki-shunsuke/cmdx
 tasks:
@@ -34,9 +35,16 @@ tasks:
           - CMD
       - name: limit
         type: string
+        short: l
         usage: The maximum number of versions
         script_envs:
           - LIMIT
+      - name: config
+        short: c
+        type: string
+        usage: A configuration file path
+        script_envs:
+          - CONFIG
     shell:
       - "bash"
       - "-c"
@@ -55,7 +63,7 @@ tasks:
       fi
 
       bash scripts/start.sh
-      bash scripts/scaffold.sh "$PACKAGE" "$CMD" "$LIMIT"
+      bash scripts/scaffold.sh "$PACKAGE" "$CMD" "$LIMIT" "$CONFIG"
       aqua exec -- cmdx gr
       bash scripts/commit.sh "$PACKAGE"
       bash scripts/test.sh "$PACKAGE"
