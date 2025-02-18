@@ -7211,6 +7211,27 @@ packages:
           - goos: windows
             asset: kubetrim.exe.tgz
   - type: github_release
+    repo_owner: alexpasmantier
+    repo_name: television
+    description: The revolution will (not) be televised
+    files:
+      - name: tv
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.4.15")
+        no_asset: true
+      - version_constraint: "true"
+        asset: tv-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: "tv-{{.Version}}-{{.OS}}-{{.Arch}}.sha256"
+          algorithm: sha256
+  - type: github_release
     repo_owner: allero-io
     repo_name: allero
     asset: allero_{{.Version}}_{{.OS}}_{{.Arch}}.zip
