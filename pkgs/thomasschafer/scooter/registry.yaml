@@ -8,13 +8,30 @@ packages:
     version_overrides:
       - version_constraint: Version == "v0.1.1"
         no_asset: true
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.2.2")
         asset: scooter-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
         files:
           - name: scooter
             src: scooter-{{.Arch}}-{{.OS}}
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: scooter-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         replacements:
           amd64: x86_64
           arm64: aarch64
