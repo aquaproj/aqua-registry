@@ -7211,6 +7211,27 @@ packages:
           - goos: windows
             asset: kubetrim.exe.tgz
   - type: github_release
+    repo_owner: alexpasmantier
+    repo_name: television
+    description: The revolution will (not) be televised
+    files:
+      - name: tv
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.4.15")
+        no_asset: true
+      - version_constraint: "true"
+        asset: tv-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: "tv-{{.Version}}-{{.OS}}-{{.Arch}}.sha256"
+          algorithm: sha256
+  - type: github_release
     repo_owner: allero-io
     repo_name: allero
     asset: allero_{{.Version}}_{{.OS}}_{{.Arch}}.zip
@@ -8392,6 +8413,45 @@ packages:
       asset: trivy_{{trimV .Version}}_checksums.txt
       algorithm: sha256
   - type: github_release
+    repo_owner: arch-go
+    repo_name: arch-go
+    description: Architecture checks for Go projects
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.6.0")
+        no_asset: true
+      - version_constraint: "true"
+        asset: arch-go_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: arch-go_{{.Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity
+              - "https://github.com/arch-go/arch-go/.github/workflows/ci.yml@refs/heads/main"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --signature
+              - https://github.com/arch-go/arch-go/releases/download/{{.Version}}/arch-go_{{.Version}}_checksums.txt-keyless.sig
+              - --certificate
+              - https://github.com/arch-go/arch-go/releases/download/{{.Version}}/arch-go_{{.Version}}_checksums.txt-keyless.pem
+        overrides:
+          - goos: windows
+            format: zip
+        cosign:
+          opts:
+            - --certificate-identity
+            - "https://github.com/arch-go/arch-go/.github/workflows/ci.yml@refs/heads/main"
+            - --certificate-oidc-issuer
+            - "https://token.actions.githubusercontent.com"
+            - --signature
+            - https://github.com/arch-go/arch-go/releases/download/{{.Version}}/{{.Asset}}-keyless.sig
+            - --certificate
+            - https://github.com/arch-go/arch-go/releases/download/{{.Version}}/{{.Asset}}-keyless.pem
+  - type: github_release
     repo_owner: arduino
     repo_name: arduino-cli
     description: Arduino command line tool
@@ -8911,15 +8971,66 @@ packages:
     repo_owner: argoproj
     repo_name: argo-rollouts
     description: Progressive Delivery for Kubernetes
-    rosetta2: true
-    complete_windows_ext: false
-    asset: kubectl-argo-rollouts-{{.OS}}-{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
     files:
       - name: kubectl-argo-rollouts
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.5.0")
+        no_asset: true
+      - version_constraint: semver("<= 1.0.7")
+        asset: kubectl-argo-rollouts-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.1.1")
+        asset: kubectl-argo-rollouts-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.3.1")
+        asset: kubectl-argo-rollouts-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+      - version_constraint: semver("<= 1.3.3")
+        asset: kubectl-argo-rollouts-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: argo-rollouts-checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.5.1")
+        asset: kubectl-argo-rollouts-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: argo-rollouts-checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: kubectl-argo-rollouts-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: argo-rollouts-checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: argo-rollouts.intoto.jsonl
   - type: github_release
     repo_owner: argoproj
     repo_name: argo-workflows
@@ -27007,21 +27118,110 @@ packages:
   - type: github_release
     repo_owner: google
     repo_name: go-containerregistry
-    asset: go-containerregistry_{{.OS}}_{{.Arch}}.tar.gz
-    description: CLIs for working with container registries
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
+    description: Go library and CLIs for working with container registries
     files:
       - name: crane
       - name: gcrane
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.15.0", "v0.16.0"]
+        no_asset: true
+      - version_constraint: semver("<= 0.1.0")
+        asset: go-containerregistry_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.1.4")
+        asset: go-containerregistry_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.5.0")
+        asset: go-containerregistry_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.8.0")
+        asset: go-containerregistry_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.12.1")
+        asset: go-containerregistry_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.19.1")
+        asset: go-containerregistry_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+      - version_constraint: "true"
+        asset: go-containerregistry_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: google
     repo_name: go-jsonnet
@@ -27086,60 +27286,78 @@ packages:
     repo_owner: google
     repo_name: mtail
     description: extract internal monitoring data from application logs for collection in a timeseries database
-    asset: mtail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 3.0.0-rc52")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 3.0.0-rc48")
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-      - version_constraint: semver(">= 3.0.0-rc45")
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-      - version_constraint: semver(">= 3.0.0-rc41")
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        rosetta2: true
-      - version_constraint: semver(">= 3.0.0-rc38")
+      - version_constraint: semver("<= 3.0.0-rc36")
         asset: mtail_{{.Version}}_{{.OS}}_{{.Arch}}
         format: raw
+        rosetta2: true
+        windows_arm_emulation: true
         supported_envs:
           - darwin
-          - linux
+          - windows
           - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver("< 3.0.0-rc38")
+      - version_constraint: Version == "v3.0.0-rc38"
         asset: mtail_{{.Version}}_{{.OS}}_{{.Arch}}
         format: raw
-        supported_envs:
-          - darwin
-          - amd64
         rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 3.0.0-rc44")
+        asset: mtail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
         checksum:
-          enabled: false
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 3.0.0-rc47")
+        asset: mtail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 3.0.0-rc51")
+        asset: mtail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 3.0.0-rc54")
+        asset: mtail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: mtail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
   - type: github_release
     repo_owner: google
     repo_name: osv-scanner
@@ -34168,20 +34386,173 @@ packages:
     repo_name: kpt
     aliases:
       - name: GoogleContainerTools/kpt
-    description: A Git-native, schema-aware, extensible client-side tool for packaging, customizing, validating, and applying Kubernetes resources
-    asset: kpt_{{.OS}}_{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux
+    description: Automate Kubernetes Configuration Editing
     version_filter: |
       not (Version startsWith "porch/")
-    files:
-      - name: kpt
-        src: kpt_{{.OS}}_{{.Arch}}
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.33.0")
+        asset: kpt_{{.OS}}_{{.Arch}}_{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.37.1")
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.38.1")
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.39.3")
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.0.0-alpha.5")
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.0.0-beta.19")
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.0.0-beta.21")
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        # slsa_provenance:
+        #   # FAILED: SLSA verification failed: source used to generate the binary does not match provenance: expected source 'kptdev/kpt', got 'GoogleContainerTools/kpt'
+        #   type: github_release
+        #   asset: attestation.intoto.jsonl
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v1.0.0-beta.22"
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.0.0-beta.35")
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        # slsa_provenance:
+        #   # Verifying artifact /tmp/048982138: FAILED: source used to generate the binary does not match provenance: expected source 'kptdev/kpt', got 'GoogleContainerTools/kpt'
+        #   type: github_release
+        #   asset: multiple.intoto.jsonl
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v1.0.0-beta.36"
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: kpt_darwin_{{.Arch}}
+            format: raw
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.0.0-beta.49")
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.0.0-beta.51")
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.0.0-beta.55")
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: kpt_{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: krallin
     repo_name: tini
@@ -41291,6 +41662,47 @@ packages:
       - version_constraint: semver("< 0.11.0")
         supported_envs:
           - linux/arm64
+  - type: github_release
+    repo_owner: omissis
+    repo_name: go-jsonschema
+    description: A tool to generate Go data types from JSON Schema definitions
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.13.1-rc.0", "v0.14.0-rc.0"]
+        no_asset: true
+      - version_constraint: semver("<= 0.9.0")
+        asset: gojsonschema-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.12.0")
+        asset: go-jsonschema_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: go-jsonschema_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: omrikiei
     repo_name: ktunnel
@@ -53852,7 +54264,7 @@ packages:
           type: github_release
           asset: tenv_{{.Version}}_checksums.txt
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.11.19")
         # 1.11.0 atmos
         asset: tenv_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -53875,6 +54287,38 @@ packages:
           type: github_release
           asset: tenv_{{.Version}}_checksums.txt
           algorithm: sha256
+      - version_constraint: "true"
+        asset: tenv_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: tenv
+          - name: terraform
+          - name: tofu
+          - name: terragrunt
+          - name: tf
+          - name: atmos
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: tenv_{{.Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity
+              - https://github.com/tofuutils/tenv/.github/workflows/release.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/tofuutils/tenv/releases/download/{{.Version}}/tenv_{{.Version}}_checksums.txt.sig
+              - --certificate
+              - https://github.com/tofuutils/tenv/releases/download/{{.Version}}/tenv_{{.Version}}_checksums.txt.pem
   - type: github_archive
     repo_owner: tofuutils
     repo_name: tofuenv
@@ -54694,6 +55138,26 @@ packages:
     path: go.uber.org/mock/mockgen
     files:
       - name: mockgen
+  - type: github_release
+    repo_owner: umlx5h
+    repo_name: gtrash
+    description: "A Featureful Trash CLI manager: alternative to rm and trash-cli"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: gtrash_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: gtrash_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: undistro
     repo_name: marvin
