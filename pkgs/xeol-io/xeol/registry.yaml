@@ -3,23 +3,53 @@ packages:
   - type: github_release
     repo_owner: xeol-io
     repo_name: xeol
-    description: A scanner for end-of-life (EOL) software in container images, filesystems, and SBOMs
-    asset: xeol_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: github_release
-      asset: xeol_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.9.5")
-    # Verify with SLSA didn't work well
-    # > Verified signature against tlog entry index 44906341 at URL: https://rekor.sigstore.dev/api/v1/log/entries/24296fb24b8ad77a658e74e86e03e7aedcca39eebddebf59310b4d9c463b037951109186d73a5681
-    # > Verifying artifact /var/folders/lk/bw_hsbdd72l9ckd0tz61xz2m0000gn/T/176337015: FAILED: verifying tag: invalid ref: "": unexpected ref type: ""
+    description: A scanner for end-of-life (EOL) software and dependencies in container images, filesystems, and SBOMs
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.9.5")
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+      - version_constraint: semver("<= 0.9.4")
+        asset: xeol_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: xeol_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.9.13")
+        asset: xeol_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: xeol_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.10.0")
+        asset: xeol_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: xeol_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: xeol_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: xeol_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        overrides:
+          - goos: windows
+            format: zip
