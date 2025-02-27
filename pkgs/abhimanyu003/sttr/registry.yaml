@@ -36,6 +36,16 @@ packages:
           type: github_release
           asset: sttr_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity
+              - https://github.com/abhimanyu003/sttr/.github/workflows/goreleaser.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/abhimanyu003/sttr/releases/download/{{.Version}}/sttr_{{trimV .Version}}_checksums.txt.sig
+              - --certificate
+              - https://github.com/abhimanyu003/sttr/releases/download/{{.Version}}/sttr_{{trimV .Version}}_checksums.txt.pem
         overrides:
           - goos: darwin
             asset: sttr_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
