@@ -58642,6 +58642,23 @@ packages:
           - darwin
         rosetta2: true
   - type: github_release
+    repo_owner: yokecd
+    repo_name: yoke
+    description: yoke is a Helm-inspired infrastructure-as-code (IaC) package deployer
+    version_filter: not (Version matches "installer")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: yoke_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        files:
+          - name: yoke
+            src: "{{.AssetWithoutExt}}"
+        overrides:
+          - goos: windows
+            asset: yoke_{{.Version}}_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+  - type: github_release
     repo_owner: yonahd
     repo_name: kor
     description: A Golang Tool to discover unused Kubernetes Resources
