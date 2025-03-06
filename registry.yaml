@@ -6162,6 +6162,18 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+      - version_constraint: semver("< 0.2.639")
+        asset: templ_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: templ_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -6174,6 +6186,12 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+          cosign:
+            opts:
+              - --signature
+              - https://github.com/a-h/templ/releases/download/{{.Version}}/checksums.txt.sig
+              - --key
+              - https://raw.githubusercontent.com/a-h/templ/refs/tags/{{.Version}}/cosign.pub
   - type: github_release
     repo_owner: a8m
     repo_name: envsubst
