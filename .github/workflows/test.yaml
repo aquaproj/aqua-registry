@@ -43,23 +43,6 @@ jobs:
               - cmdx.yaml
               - .github/workflows/wc-test-docker.yaml
 
-  status-check:
-    # This job is used for main branch's branch protection rule's status check.
-    # If all dependent jobs succeed or are skipped this job succeeds.
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs:
-      - renovate-config-validator
-      - check-files
-      - json-schema
-      - test-docker
-      - test
-      - lintnet
-    permissions: {}
-    if: failure()
-    steps:
-      - run: exit 1
-
   renovate-config-validator:
     uses: ./.github/workflows/wc-renovate-config-validator.yaml
     needs: path-filter
