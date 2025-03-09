@@ -6754,6 +6754,10 @@ packages:
         format: raw
         supported_envs:
           - linux/amd64
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha"
+          algorithm: sha256
       - version_constraint: semver("<= 1.4.2")
         asset: ssm-{{.OS}}-{{.Arch}}
         format: raw
@@ -6761,12 +6765,32 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
+        # linux/amd64 doesn't match hash
+        overrides:
+          - goos: linux
+            goarch: amd64
+            checksum:
+              enabled: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha"
+          algorithm: sha256
       - version_constraint: "true"
         asset: ssm-{{.OS}}-{{.Arch}}
         format: raw
         supported_envs:
           - linux/amd64
           - darwin
+        # darwin/arm64 doesn't match hash
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            checksum:
+              enabled: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha"
+          algorithm: sha256
   - type: github_release
     repo_owner: aereal
     repo_name: jsondiff
