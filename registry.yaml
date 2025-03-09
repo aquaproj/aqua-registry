@@ -19994,6 +19994,30 @@ packages:
           - windows
           - amd64
   - type: github_release
+    repo_owner: dhth
+    repo_name: bmm
+    description: get to your bookmarks in a flash
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: bmm-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux/amd64
+          - darwin
+  - type: github_release
     repo_owner: digitalocean
     repo_name: doctl
     asset: doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
