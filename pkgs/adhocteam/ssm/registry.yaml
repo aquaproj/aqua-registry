@@ -34,18 +34,30 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha"
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.5.1")
         asset: ssm-{{.OS}}-{{.Arch}}
         format: raw
         supported_envs:
           - linux/amd64
           - darwin
         # darwin/arm64 doesn't match hash
+        # https://github.com/adhocteam/ssm/pull/41
         overrides:
           - goos: darwin
             goarch: arm64
             checksum:
               enabled: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha"
+          algorithm: sha256
+      - version_constraint: "true"
+        # https://github.com/adhocteam/ssm/pull/41
+        asset: ssm-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+          - darwin
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha"
