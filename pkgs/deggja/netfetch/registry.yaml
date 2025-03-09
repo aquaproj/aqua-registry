@@ -6,24 +6,13 @@ packages:
     description: Kubernetes tool for scanning clusters for network policies and identifying unprotected workloads
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.0.66")
-        asset: netfetch_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: netfetch_{{.Version}}_checksums.txt
-          algorithm: sha256
-      - version_constraint: semver("<= 0.5.4")
+      - version_constraint: "true"
         asset: netfetch_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: netfetch
+            src: "{{.AssetWithoutExt}}/netfetch"
         checksum:
           type: github_release
           asset: netfetch_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-      - version_constraint: "true"
-        asset: netfetch_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: netfetch_{{.Version}}_checksums.txt
           algorithm: sha256
