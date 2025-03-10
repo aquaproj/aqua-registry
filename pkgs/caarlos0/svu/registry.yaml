@@ -3,37 +3,68 @@ packages:
   - type: github_release
     repo_owner: caarlos0
     repo_name: svu
-    description: Semantic Version Util
-    asset: svu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: darwin
-        asset: svu_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 1.9.0")
+    description: semantic version utility
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.8.0")
-        overrides: []
-      - version_constraint: semver(">= 1.4.0")
-        overrides: []
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+      - version_constraint: Version == "v1.8.0"
+        asset: svu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         checksum:
           type: github_release
-          asset: svu_{{trimV .Version}}_checksums.txt
+          asset: checksums.txt
           algorithm: sha256
-      - version_constraint: semver("< 1.4.0")
+      - version_constraint: Version == "v3.2.2"
+        asset: svu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: svu_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.3.2")
+        asset: svu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-        overrides: []
-        supported_envs:
-          - darwin
-          - amd64
+        windows_arm_emulation: true
         checksum:
           type: github_release
           asset: svu_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.7.0")
+        asset: svu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: svu_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 3.1.0")
+        asset: svu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: svu_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+      - version_constraint: "true"
+        asset: svu_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: svu_{{.OS}}_all.{{.Format}}
+          - goos: windows
+            format: zip
