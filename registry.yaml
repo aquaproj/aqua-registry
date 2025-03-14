@@ -56459,6 +56459,12 @@ packages:
           type: github_release
           asset: chezmoi_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+          cosign:
+            opts:
+              - --signature
+              - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_{{trimV .Version}}_checksums.txt.sig
+              - --key
+              - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_cosign.pub
         overrides:
           - goos: linux
             goarch: arm64
