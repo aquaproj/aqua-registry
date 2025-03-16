@@ -24,6 +24,12 @@ packages:
           - goos: windows
             goarch: arm64
             asset: kube-linter_{{.Arch}}
+        cosign:
+          opts:
+            - --key
+            - https://raw.githubusercontent.com/stackrox/kube-linter/refs/tags/{{.Version}}/kubelinter-cosign.pub
+            - --signature
+            - https://github.com/stackrox/kube-linter/releases/download/{{.Version}}/{{.Asset}}.sig
       - version_constraint: semver("<= 0.4.0")
         asset: kube-linter-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -41,6 +47,12 @@ packages:
           - darwin
           - windows
           - amd64
+        cosign:
+          opts:
+            - --key
+            - https://raw.githubusercontent.com/stackrox/kube-linter/refs/tags/{{.Version}}/kubelinter-cosign.pub
+            - --signature
+            - https://github.com/stackrox/kube-linter/releases/download/{{.Version}}/{{.Asset}}.sig
       - version_constraint: "true"
         asset: kube-linter-{{.OS}}
         format: raw
@@ -57,3 +69,9 @@ packages:
           - goos: windows
             goarch: arm64
             asset: kube-linter_{{.Arch}}
+        cosign:
+          opts:
+            - --key
+            - https://raw.githubusercontent.com/stackrox/kube-linter/refs/tags/{{.Version}}/kubelinter-cosign.pub
+            - --signature
+            - https://github.com/stackrox/kube-linter/releases/download/{{.Version}}/{{.Asset}}.sig
