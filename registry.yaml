@@ -51718,6 +51718,16 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        cosign:
+          opts:
+            - --certificate
+            - https://github.com/stacklok/frizbee/releases/download/{{.Version}}/{{trimAssetExt .Asset}}.pem
+            - --certificate-identity
+            - https://github.com/stacklok/frizbee/.github/workflows/releaser.yml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
+            - --signature
+            - https://github.com/stacklok/frizbee/releases/download/{{.Version}}/{{.Asset}}.sig
         overrides:
           - goos: windows
             format: zip
