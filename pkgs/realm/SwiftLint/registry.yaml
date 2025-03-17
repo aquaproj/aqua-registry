@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: realm
+    repo_name: SwiftLint
+    description: A tool to enforce Swift style and conventions
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.42.0-rc.1"
+        asset: SwiftLint.{{.Format}}
+        format: pkg
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 0.40.0")
+        asset: SwiftLint.{{.Format}}
+        format: pkg
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 0.47.0-rc.3")
+        asset: swiftlint_{{.OS}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: darwin
+            format: pkg
+            asset: SwiftLint.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.48.0")
+        asset: SwiftLint.{{.Format}}
+        format: pkg
+        overrides:
+          - goos: linux
+            format: zip
+            asset: swiftlint_{{.OS}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: SwiftLint.{{.Format}}
+        format: pkg
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: zip
+            asset: swiftlint_{{.OS}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
