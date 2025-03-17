@@ -40,6 +40,13 @@ packages:
           type: github_release
           asset: gosec_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+      - version_constraint: semver("< 2.10.0")
+        asset: gosec_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: gosec_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: gosec_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -47,3 +54,9 @@ packages:
           type: github_release
           asset: gosec_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+          cosign:
+            opts:
+              - --key
+              - https://raw.githubusercontent.com/securego/gosec/refs/tags/{{.Version}}/cosign.pub
+              - --signature
+              - https://github.com/securego/gosec/releases/download/{{.Version}}/gosec_{{trimV .Version}}_checksums.txt.sig
