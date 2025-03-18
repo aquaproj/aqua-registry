@@ -10519,6 +10519,137 @@ packages:
       - darwin
   - type: github_release
     repo_owner: aws
+    repo_name: aws-sam-cli
+    description: CLI tool to build, test, debug, and deploy Serverless applications using AWS SAM
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "sam-cli-beta-cdk"
+        asset: aws-{{.Version}}-202108311500.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "sam-cli-nightly"
+        asset: aws-sam-cli-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: pkg
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: zip
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v0.2.11"
+        asset: sam_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sam_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.2.2")
+        asset: sam_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sam_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.2.8")
+        asset: sam_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sam_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.2.10")
+        asset: sam_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sam_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.15.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.53.0")
+        asset: aws-sam-cli-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 1.0.0-rc2")
+        asset: aws-sam-cli-rc-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 1.17.0")
+        asset: aws-sam-cli-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 1.65.0")
+        asset: aws-sam-cli-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 1.103.0")
+        asset: aws-sam-cli-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: pkg
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: zip
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: aws-sam-cli-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: pkg
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: zip
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
+    repo_owner: aws
     repo_name: copilot-cli
     description: The AWS Copilot CLI is a tool for developers to build, release and operate production ready containerized applications on AWS App Runner, Amazon ECS, and AWS Fargate
     asset: copilot_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
