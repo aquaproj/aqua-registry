@@ -49975,6 +49975,16 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+        cosign:
+          opts:
+            - --certificate
+            - https://github.com/sigstore/gitsign/releases/download/{{.Version}}/{{.Asset}}.pem
+            - --certificate-identity
+            - https://github.com/sigstore/gitsign/.github/workflows/release.yml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
+            - --signature
+            - https://github.com/sigstore/gitsign/releases/download/{{.Version}}/{{.Asset}}.sig
   - type: github_release
     repo_owner: sigstore
     repo_name: rekor
