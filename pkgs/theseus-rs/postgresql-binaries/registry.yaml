@@ -9,14 +9,27 @@ packages:
       - version_constraint: "true"
         asset: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: psql
+            src: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}/bin/psql
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
           windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            files:
+              - name: psql.exe
+                src: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}/bin/psql.exe
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        overrides:
+          - goos: windows
+            # Skip because the contents of the provided file cannot be handled
+            checksum:
+              enabled: false
