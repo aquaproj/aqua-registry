@@ -26971,46 +26971,64 @@ packages:
   - type: github_release
     repo_owner: getsops
     repo_name: sops
-    aliases:
-      - name: mozilla/sops
     description: Simple and flexible tool for managing secrets
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 3.7.2")
+      - version_constraint: Version == "v3.8.0-rc.1"
+        asset: sops-{{.Version}}.{{.OS}}.{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: sops-{{.Version}}.checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: provenance.intoto.jsonl
+        overrides:
+          - goos: windows
+            asset: sops-{{.Version}}
+      - version_constraint: semver("<= 3.7.1")
         asset: sops-{{.Version}}.{{.OS}}
         format: raw
         overrides:
           - goos: windows
-            asset: sops-{{.Version}}.exe
-        rosetta2: true
+            asset: sops-{{.Version}}
         supported_envs:
           - darwin
+          - windows
           - amd64
-      - version_constraint: semver("< 3.7.4")
+      - version_constraint: semver("<= 3.7.3")
         asset: sops-{{.Version}}.{{.OS}}.{{.Arch}}
         format: raw
         overrides:
           - goos: windows
-            asset: sops-{{.Version}}.exe
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-      - version_constraint: "true"
+            asset: sops-{{.Version}}
+      - version_constraint: semver("<= 3.9.4")
         asset: sops-{{.Version}}.{{.OS}}.{{.Arch}}
         format: raw
-        overrides:
-          - goos: windows
-            asset: sops-{{.Version}}.exe
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+        checksum:
+          type: github_release
+          asset: sops-{{.Version}}.checksums.txt
+          algorithm: sha256
         slsa_provenance:
           type: github_release
           asset: sops-{{.Version}}.intoto.jsonl
+        overrides:
+          - goos: windows
+            asset: sops-{{.Version}}
+      - version_constraint: "true"
+        asset: sops-{{.Version}}.{{.OS}}.{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: sops-{{.Version}}.checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: sops-{{.Version}}.intoto.jsonl
+        overrides:
+          - goos: windows
+            asset: sops-{{.Version}}.{{.Arch}}
   - type: github_release
     repo_owner: getzola
     repo_name: zola
