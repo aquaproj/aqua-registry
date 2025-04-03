@@ -42660,6 +42660,31 @@ packages:
       asset: checksums.txt
       algorithm: sha256
   - type: github_release
+    repo_owner: neondatabase
+    repo_name: neonctl
+    description: Neon CLI tool. The Neon CLI is a command-line interface that lets you manage Neon Serverless Postgres directly from the terminal
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.27.4")
+        asset: neonctl-{{.OS}}
+        format: raw
+        replacements:
+          darwin: macos
+          windows: win
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: neonctl-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          darwin: macos
+          windows: win
+  - type: github_release
     repo_owner: neovim
     repo_name: neovim
     description: Vim-fork focused on extensibility and usability
