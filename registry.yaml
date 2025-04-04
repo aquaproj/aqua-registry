@@ -6600,7 +6600,7 @@ packages:
         overrides:
           - goos: darwin
             asset: sttr_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.2.24"
         asset: sttr_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
@@ -11610,6 +11610,122 @@ packages:
           - darwin
           - linux
           - amd64
+  - name: bazelbuild/buildtools/buildifier
+    type: github_release
+    repo_owner: bazelbuild
+    repo_name: buildtools
+    description: Format BUILD, BUILD.bazel and BUCK files in a standard way
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.4.3"
+        asset: buildifier.{{.OS}}
+        format: raw
+        replacements:
+          darwin: OSX
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "0.25.0"
+        asset: buildifier.{{.OS}}
+        format: raw
+        replacements:
+          darwin: mac
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "4.0.0"
+        asset: buildifier-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "4.0.1"
+        asset: buildifier-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.22.0")
+        asset: buildifier.{{.OS}}
+        format: raw
+        replacements:
+          darwin: osx
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 3.5.0")
+        asset: buildifier.{{.OS}}
+        format: raw
+        replacements:
+          darwin: mac
+        overrides:
+          - goos: windows
+            asset: buildifier
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: "true"
+        asset: buildifier-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+  - name: bazelbuild/buildtools/buildozer
+    type: github_release
+    repo_owner: bazelbuild
+    repo_name: buildtools
+    description: Buildozer is a command line tool to rewrite multiple Bazel BUILD files using standard commands
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.4.3"
+        asset: buildozer.{{.OS}}
+        format: raw
+        replacements:
+          darwin: OSX
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "0.25.0"
+        asset: buildozer.{{.OS}}
+        format: raw
+        replacements:
+          darwin: mac
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "4.0.0"
+        asset: buildozer-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "4.0.1"
+        asset: buildozer-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.22.0")
+        asset: buildozer.{{.OS}}
+        format: raw
+        replacements:
+          darwin: osx
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 3.5.0")
+        asset: buildozer.{{.OS}}
+        format: raw
+        replacements:
+          darwin: mac
+        overrides:
+          - goos: windows
+            asset: buildozer
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: "true"
+        asset: buildozer-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
   - type: github_release
     repo_owner: bcicen
     repo_name: ctop
@@ -25224,11 +25340,19 @@ packages:
         # https://github.com/fish-shell/fish-shell/releases/tag/4.0.0
         # > fish’s core code has been ported from C++ to Rust
         no_asset: true
+      - version_constraint: Version == "4.0.0"
+        asset: fish-static-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.xz
+        replacements:
+          arm64: aarch64
+        supported_envs:
+          - linux
       - version_constraint: "true"
         asset: fish-static-{{.Arch}}-{{.Version}}.{{.Format}}
         format: tar.xz
         replacements:
           arm64: aarch64
+          amd64: x86_64
         supported_envs:
           - linux
   - type: github_release
@@ -26976,41 +27100,68 @@ packages:
     description: Simple and flexible tool for managing secrets
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 3.7.2")
+      - version_constraint: semver("<= 3.7.1")
         asset: sops-{{.Version}}.{{.OS}}
         format: raw
         overrides:
           - goos: windows
-            asset: sops-{{.Version}}.exe
-        rosetta2: true
+            asset: sops-{{.Version}}
         supported_envs:
           - darwin
+          - windows
           - amd64
-      - version_constraint: semver("< 3.7.4")
+      - version_constraint: semver("<= 3.7.3")
         asset: sops-{{.Version}}.{{.OS}}.{{.Arch}}
         format: raw
         overrides:
           - goos: windows
-            asset: sops-{{.Version}}.exe
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-      - version_constraint: "true"
+            asset: sops-{{.Version}}
+      - version_constraint: semver("<= 3.9.4")
         asset: sops-{{.Version}}.{{.OS}}.{{.Arch}}
         format: raw
-        overrides:
-          - goos: windows
-            asset: sops-{{.Version}}.exe
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+        checksum:
+          type: github_release
+          asset: sops-{{.Version}}.checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/getsops/sops/releases/download/{{.Version}}/sops-{{.Version}}.checksums.pem
+              - --signature
+              - https://github.com/getsops/sops/releases/download/{{.Version}}/sops-{{.Version}}.checksums.sig
+              - --certificate-identity-regexp
+              - https://github.com/getsops
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
         slsa_provenance:
           type: github_release
           asset: sops-{{.Version}}.intoto.jsonl
+        overrides:
+          - goos: windows
+            asset: sops-{{.Version}}
+      - version_constraint: "true"
+        asset: sops-{{.Version}}.{{.OS}}.{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: sops-{{.Version}}.checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/getsops/sops/releases/download/{{.Version}}/sops-{{.Version}}.checksums.pem
+              - --signature
+              - https://github.com/getsops/sops/releases/download/{{.Version}}/sops-{{.Version}}.checksums.sig
+              - --certificate-identity-regexp
+              - https://github.com/getsops
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+        slsa_provenance:
+          type: github_release
+          asset: sops-{{.Version}}.intoto.jsonl
+        overrides:
+          - goos: windows
+            asset: sops-{{.Version}}.{{.Arch}}
   - type: github_release
     repo_owner: getzola
     repo_name: zola
@@ -33534,6 +33685,53 @@ packages:
         overrides:
           - goos: windows
             format: zip
+  - type: github_release
+    repo_owner: jkfran
+    repo_name: killport
+    description: A command-line tool to easily kill processes running on a specified port
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        asset: killport-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux
+      - version_constraint: Version == "v0.5.0"
+        asset: killport-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.8.0") || Version == "v1.0.0"
+        asset: killport-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: linux-gnu
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: killport-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-gnu
+          linux: linux-gnu
   - type: go_install
     repo_owner: jmattheis
     repo_name: goverter
@@ -34919,6 +35117,23 @@ packages:
         supported_envs:
           - linux
           - darwin
+  - type: github_release
+    repo_owner: k1LoW
+    repo_name: tbls-driver-tailordb
+    description: tbls driver for TailorDB schema definition
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: tbls-driver-tailordb_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            format: zip
   - type: github_release
     repo_owner: k1LoW
     repo_name: tmpmod
@@ -41960,6 +42175,8 @@ packages:
     repo_owner: mvdan
     repo_name: sh
     description: A shell parser, formatter, and interpreter with bash support; includes shfmt
+    files:
+      - name: shfmt
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("< 3.8.0")
@@ -42215,6 +42432,142 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+  - type: github_release
+    repo_owner: nadoo
+    repo_name: glider
+    description: glider is a forward proxy with multiple protocols support, and also a dns/dhcp server with ipset management features(like dnsmasq)
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.5.3"
+        no_asset: true
+      - version_constraint: Version == "v0.7.0"
+        asset: glider-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: glider-{{.Version}}-checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: glider
+            src: glider-{{.Version}}-{{.OS}}-{{.Arch}}/glider
+      - version_constraint: Version == "v0.15.0"
+        asset: glider_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: mac
+        checksum:
+          type: github_release
+          asset: glider_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: glider
+            src: glider_{{trimV .Version}}_{{.OS}}_{{.Arch}}/glider
+      - version_constraint: semver("<= 0.3.2")
+        asset: glider-{{.Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: mac
+          windows: win
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+        files:
+          - name: glider
+      - version_constraint: semver("<= 0.6.11")
+        asset: glider-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+        files:
+          - name: glider
+      - version_constraint: semver("<= 0.13.0")
+        asset: glider_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: glider_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: glider
+            src: "{{.AssetWithoutExt}}/glider"
+      - version_constraint: semver("<= 0.14.0")
+        asset: glider_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: glider_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: glider
+            src: "{{.AssetWithoutExt}}/glider"
+      - version_constraint: semver("<= 0.15.2")
+        asset: glider_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: mac
+        checksum:
+          type: github_release
+          asset: glider_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: glider
+            src: "{{.AssetWithoutExt}}/glider"
+      - version_constraint: semver("<= 0.16.3")
+        asset: glider_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: glider_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: glider
+            src: "{{.AssetWithoutExt}}/glider"
+      - version_constraint: "true"
+        asset: glider_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: glider_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: glider
+            src: "{{.AssetWithoutExt}}/glider"
   - type: github_release
     repo_owner: naggie
     repo_name: dstask
@@ -42605,6 +42958,31 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+  - type: github_release
+    repo_owner: neondatabase
+    repo_name: neonctl
+    description: Neon CLI tool. The Neon CLI is a command-line interface that lets you manage Neon Serverless Postgres directly from the terminal
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.27.4")
+        asset: neonctl-{{.OS}}
+        format: raw
+        replacements:
+          darwin: macos
+          windows: win
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: neonctl-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          darwin: macos
+          windows: win
   - type: github_release
     repo_owner: neovim
     repo_name: neovim
@@ -43069,15 +43447,36 @@ packages:
   - type: github_release
     repo_owner: ninja-build
     repo_name: ninja
-    asset: ninja-{{.OS}}.zip
     description: a small build system with a focus on speed
-    replacements:
-      darwin: mac
-      windows: win
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.3.4")
+        no_asset: true
+      - version_constraint: semver("<= 1.11.1")
+        asset: ninja-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: mac
+          windows: win
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: ninja-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: mac
+          windows: win
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: ninja-{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            goarch: arm64
+            asset: ninja-{{.OS}}{{.Arch}}.{{.Format}}
   - type: github_release
     repo_owner: ninxsoft
     repo_name: mist-cli
@@ -48521,16 +48920,76 @@ packages:
     repo_owner: rs
     repo_name: curlie
     description: The power of curl, the ease of use of httpie
-    asset: curlie_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: curlie_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.1"
+        asset: curl-httpie_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: http
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: curl-httpie_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 1.0.0")
+        asset: curl-httpie_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: http
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: curl-httpie_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.6.0")
+        asset: curlie_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: curlie_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.7.2")
+        asset: curlie_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: curlie_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: curlie_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: curlie_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/rs/curlie/releases/download/{{.Version}}/curlie_{{trimV .Version}}_checksums.txt.pem
+              - --certificate-identity
+              - https://github.com/rs/curlie/.github/workflows/release.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/rs/curlie/releases/download/{{.Version}}/curlie_{{trimV .Version}}_checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: rui314
     repo_name: mold
@@ -49668,6 +50127,135 @@ packages:
           - darwin
       - version_constraint: semver("< 0.7.0")
         no_asset: true
+  - type: github_release
+    repo_owner: saucelabs
+    repo_name: forwarder
+    description: Forwarder is a production-ready, fast MITM proxy with PAC support. It's suitable for debugging, intercepting and manipulating HTTP traffic. It's used as a core component of Sauce Labs Sauce Connect Proxy
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.0.0-rc0"
+        asset: forwarder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums
+          algorithm: sha256
+      - version_constraint: Version == "v1.0.0-rc2"
+        asset: forwarder-{{trimV .Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        checksum:
+          type: github_release
+          asset: checksums
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: Version == "v1.0.0"
+        asset: forwarder-{{trimV .Version}}_{{.OS}}-signed.{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        checksum:
+          type: github_release
+          asset: checksums
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: forwarder-{{trimV .Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: forwarder-{{trimV .Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
+      - version_constraint: Version == "v1.2.0"
+        asset: forwarder-{{trimV .Version}}_{{.OS}}.all.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        checksum:
+          type: github_release
+          asset: checksums
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: forwarder-{{trimV .Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: forwarder-{{trimV .Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 0.1.12")
+        asset: forwarder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: forwarder_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.1.15")
+        asset: forwarder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: forwarder_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.3.4")
+        asset: forwarder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: forwarder_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.0.2")
+        asset: forwarder-{{trimV .Version}}_{{.OS}}-signed.all.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        checksum:
+          type: github_release
+          asset: checksums
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: forwarder-{{trimV .Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: forwarder-{{trimV .Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 1.1.0-rc1")
+        asset: forwarder-{{trimV .Version}}_{{.OS}}.all.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        checksum:
+          type: github_release
+          asset: checksums
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: forwarder-{{trimV .Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: forwarder-{{trimV .Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
+      - version_constraint: "true"
+        asset: forwarder-{{trimV .Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        checksum:
+          type: github_release
+          asset: checksums
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: darwin
+            asset: forwarder-{{trimV .Version}}_{{.OS}}-signed.all.{{.Format}}
   - type: github_release
     repo_owner: sayanarijit
     repo_name: jf
@@ -54199,49 +54787,93 @@ packages:
     repo_owner: suzuki-shunsuke
     repo_name: cmdx
     description: Task runner. It provides useful help messages and supports interactive prompts and validation of arguments
-    asset: cmdx_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    slsa_provenance:
-      type: github_release
-      asset: multiple.intoto.jsonl
-    checksum:
-      type: github_release
-      asset: cmdx_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-      cosign:
-        opts:
-          - --certificate-identity-regexp
-          - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
-          - --certificate-oidc-issuer
-          - "https://token.actions.githubusercontent.com"
-          - --signature
-          - https://github.com/suzuki-shunsuke/cmdx/releases/download/{{.Version}}/cmdx_{{trimV .Version}}_checksums.txt.sig
-          - --certificate
-          - https://github.com/suzuki-shunsuke/cmdx/releases/download/{{.Version}}/cmdx_{{trimV .Version}}_checksums.txt.pem
-    version_constraint: semver(">= 1.7.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.6.1")
+      - version_constraint: Version == "v1.7.0-2"
+        asset: cmdx_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: cmdx_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 1.6.0")
+        asset: cmdx_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-        slsa_provenance:
-          enabled: false
-        checksum: &cmdx_checksum_1
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: cmdx_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.6.1")
+        asset: cmdx_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: cmdx_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.0.0-0")
+        asset: cmdx_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
           type: github_release
           asset: cmdx_{{trimV .Version}}_checksums.txt
           algorithm: sha256
           cosign:
-            enabled: false
-      - version_constraint: semver("< 1.6.1")
-        asset: cmdx_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --signature
+              - https://github.com/suzuki-shunsuke/cmdx/releases/download/{{.Version}}/cmdx_{{trimV .Version}}_checksums.txt.sig
+              - --certificate
+              - https://github.com/suzuki-shunsuke/cmdx/releases/download/{{.Version}}/cmdx_{{trimV .Version}}_checksums.txt.pem
         slsa_provenance:
-          enabled: false
-        checksum: *cmdx_checksum_1
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
+          type: github_release
+          asset: multiple.intoto.jsonl
+      - version_constraint: "true"
+        asset: cmdx_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: cmdx_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --signature
+              - https://github.com/suzuki-shunsuke/cmdx/releases/download/{{.Version}}/cmdx_{{trimV .Version}}_checksums.txt.sig
+              - --certificate
+              - https://github.com/suzuki-shunsuke/cmdx/releases/download/{{.Version}}/cmdx_{{trimV .Version}}_checksums.txt.pem
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: dd-time
@@ -54638,6 +55270,35 @@ packages:
       type: github_release
       asset: matchfile_{{trimV .Version}}_checksums.txt
       algorithm: sha256
+  - type: github_release
+    repo_owner: suzuki-shunsuke
+    repo_name: migrate-urfave-cli-v3
+    description: Migrate github.com/urfave/cli/v2 to v3. This tool doesn't aim to the complete migration. Probably you need to fix code manually after running this tool, but this tool makes the migration easy
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: migrate-urfave-cli-v3_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: migrate-urfave-cli-v3_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/suzuki-shunsuke/migrate-urfave-cli-v3/releases/download/{{.Version}}/migrate-urfave-cli-v3_{{trimV .Version}}_checksums.txt.pem
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/suzuki-shunsuke/migrate-urfave-cli-v3/releases/download/{{.Version}}/migrate-urfave-cli-v3_{{trimV .Version}}_checksums.txt.sig
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: mkghtag
@@ -57069,21 +57730,6 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: Version == "v0.6.6"
-        asset: hcl2json_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: hcl2json_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
       - version_constraint: semver("<= 0.0.2")
         no_asset: true
       - version_constraint: semver("<= 0.3.1")
@@ -57107,9 +57753,34 @@ packages:
         asset: hcl2json_{{.OS}}_{{.Arch}}
         format: raw
         windows_arm_emulation: true
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.6.5")
         asset: hcl2json_{{.OS}}_{{.Arch}}
         format: raw
+      - version_constraint: Version == "v0.6.6"
+        asset: hcl2json_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: hcl2json_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: hcl2json_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          type: github_release
+          asset: hcl2json_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: tmknom
     repo_name: actdocs
@@ -57994,6 +58665,45 @@ packages:
         supported_envs:
           - linux
           - darwin
+  - type: github_release
+    repo_owner: tweag
+    repo_name: nickel
+    description: Better configuration for less
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "1.2.0"
+        no_asset: true
+      - version_constraint: semver("<= 0.3.1")
+        no_asset: true
+      - version_constraint: semver("<= 1.8.0")
+        asset: nickel-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux
+      - version_constraint: semver("<= 1.9.1")
+        asset: nickel-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: "true"
+        asset: nickel-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: amd64
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64
   - type: http
     repo_owner: twistedpair
     repo_name: google-cloud-sdk
