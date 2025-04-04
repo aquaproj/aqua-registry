@@ -33711,29 +33711,14 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: Version == "v1.0.0"
-        asset: killport-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
+      - version_constraint: semver("<= 0.8.0") || Version == "v1.0.0"
+        asset: killport-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-        overrides:
-          - goos: darwin
-            asset: killport-{{.Arch}}-{{.OS}}.{{.Format}}
-        supported_envs:
-          - linux
-          - darwin
-      - version_constraint: semver("<= 0.8.0")
-        asset: killport-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-        overrides:
-          - goos: darwin
-            asset: killport-{{.Arch}}-{{.OS}}.{{.Format}}
+          linux: linux-gnu
         supported_envs:
           - linux
           - darwin
@@ -33746,9 +33731,7 @@ packages:
           arm64: aarch64
           darwin: apple-darwin
           windows: pc-windows-gnu
-        overrides:
-          - goos: linux
-            asset: killport-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
+          linux: linux-gnu
   - type: go_install
     repo_owner: jmattheis
     repo_name: goverter
