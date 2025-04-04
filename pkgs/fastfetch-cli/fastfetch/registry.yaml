@@ -389,22 +389,38 @@ packages:
             format: zip
             files:
               - name: fastfetch
-      - version_constraint: "true"
+      - version_constraint: semver("<= 2.40.0")
         asset: fastfetch-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
           - name: fastfetch
-            src: fastfetch-{{.OS}}-{{.Arch}}/usr/bin/fastfetch
+            src: "{{.AssetWithoutExt}}/usr/bin/fastfetch"
         replacements:
           arm64: aarch64
           darwin: macos
         overrides:
           - goos: darwin
             asset: fastfetch-{{.OS}}-universal.{{.Format}}
-            files:
-              - name: fastfetch
-                src: fastfetch-{{.OS}}-universal/usr/bin/fastfetch
           - goos: windows
             format: zip
             files:
               - name: fastfetch
+      - version_constraint: "true"
+        asset: fastfetch-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: fastfetch
+            src: "{{.AssetWithoutExt}}/usr/bin/fastfetch"
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: darwin
+            asset: fastfetch-{{.OS}}-universal.{{.Format}}
+          - goos: windows
+            format: zip
+            files:
+              - name: fastfetch
+        replacements:
+          darwin: macos
