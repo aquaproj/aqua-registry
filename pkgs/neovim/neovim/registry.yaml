@@ -219,7 +219,7 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.10.4"
         asset: nvim-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -232,6 +232,34 @@ packages:
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256sum"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: x86_64
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: windows
+            asset: nvim-{{.OS}}.{{.Format}}
+            format: zip
+        supported_envs:
+          - darwin
+          - linux
+          - windows
+      - version_constraint: "true"
+        asset: nvim-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: nvim
+            src: "{{.AssetWithoutExt}}/bin/nvim"
+        replacements:
+          darwin: macos
+          windows: win64
+        checksum:
+          type: github_release
+          asset: shasum.txt
           algorithm: sha256
         overrides:
           - goos: darwin
