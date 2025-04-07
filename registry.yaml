@@ -50230,7 +50230,7 @@ packages:
           - goos: windows
             format: zip
             asset: dart-sass-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-      - version_constraint: "true"
+      - version_constraint: semver("< 1.86.1")
         asset: dart-sass-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -50241,6 +50241,24 @@ packages:
             asset: dart-sass-{{.Version}}-{{.OS}}-{{.Arch}}-musl.{{.Format}}
           - goos: windows
             format: zip
+      - version_constraint: "true"
+        asset: dart-sass-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+          darwin: macos
+        overrides:
+          - goos: linux
+            asset: dart-sass-{{.Version}}-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+            github_artifact_attestations:
+              signer-workflow: sass/dart-sass/.github/workflows/build-linux.yml
+          - goos: darwin
+            github_artifact_attestations:
+              signer-workflow: sass/dart-sass/.github/workflows/build-macos.yml
+          - goos: windows
+            format: zip
+            github_artifact_attestations:
+              signer-workflow: sass/dart-sass/.github/workflows/build-windows.yml
   - type: github_release
     repo_owner: sassman
     repo_name: t-rec-rs
