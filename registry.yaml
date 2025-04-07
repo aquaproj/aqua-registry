@@ -11238,17 +11238,113 @@ packages:
     repo_name: changed-objects
     aliases:
       - name: b4b4r07/changed-objects
-    asset: changed-objects-{{.OS}}-{{.Arch}}.tar.gz
     description: Get changed objects in Git commit
-    replacements:
-      amd64: x86_64
-    supported_envs:
-      - linux
-      - darwin
-    checksum:
-      type: github_release
-      asset: changed-objects_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        asset: get-changed-objects_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+        files:
+          - name: get-changed-objects
+        checksum:
+          type: github_release
+          asset: get-changed-objects_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.1.1"
+        asset: get-changed-objects-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: get-changed-objects
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: get-changed-objects_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.1.2"
+        asset: get-changed-objects-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: get-changed-objects
+        checksum:
+          type: github_release
+          asset: get-changed-objects_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.1.11"
+        asset: changed-objects-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: changed-objects_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.1.7")
+        asset: changed-objects-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: changed-objects_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.1.16")
+        asset: changed-objects-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: changed-objects_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.3.7")
+        asset: changed-objects-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: changed-objects_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: changed-objects_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: changed-objects_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: babarot
     repo_name: gist
@@ -38318,6 +38414,66 @@ packages:
       algorithm: sha256
   - type: github_release
     repo_owner: kyverno
+    repo_name: chainsaw
+    description: Declarative K8s e2e testing
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0-alpha.1"
+        asset: chainsaw_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/kyverno/chainsaw/releases/download/{{.Version}}/checksums.txt.pem
+              - --certificate-identity
+              - "https://github.com/kyverno/chainsaw/.github/workflows/release.yaml@refs/tags/{{.Version}}"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/kyverno/chainsaw/releases/download/{{.Version}}/checksums.txt.sig
+      - version_constraint: Version == "v0.1.3-alpha.1"
+        asset: chainsaw_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/kyverno/chainsaw/releases/download/{{.Version}}/checksums.txt.pem
+              - --certificate-identity
+              - "https://github.com/kyverno/chainsaw/.github/workflows/release.yaml@refs/tags/{{.Version}}"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/kyverno/chainsaw/releases/download/{{.Version}}/checksums.txt.sig
+      - version_constraint: "true"
+        asset: chainsaw_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/kyverno/chainsaw/releases/download/{{.Version}}/checksums.txt.pem
+              - --certificate-identity
+              - "https://github.com/kyverno/chainsaw/.github/workflows/release.yaml@refs/tags/{{.Version}}"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/kyverno/chainsaw/releases/download/{{.Version}}/checksums.txt.sig
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+  - type: github_release
+    repo_owner: kyverno
     repo_name: kyverno
     description: Cloud Native Policy Management
     version_filter: not (Version matches "-(alpha|beta|rc)")
@@ -40899,18 +41055,53 @@ packages:
   - type: github_release
     repo_owner: miku
     repo_name: zek
-    asset: zek_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: Generate a Go struct from XML
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
-    checksum:
-      type: github_release
-      asset: zek_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.9"
+        asset: zek-{{trimV .Version}}.{{.OS}}.{{.Arch}}.bin
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "0.1.19"
+        asset: zek_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: zek_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.1.12")
+        no_asset: true
+      - version_constraint: semver("<= 0.1.26")
+        asset: zek_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: zek_checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: zek_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: zek_checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: minamijoyo
     repo_name: hcledit
@@ -49855,6 +50046,29 @@ packages:
     repo_owner: sanposhiho
     repo_name: gomockhandler
     description: Mr. gomockhandler is the clever and more agile manager of golang/mock
+  - type: github_release
+    repo_owner: santhosh-tekuri
+    repo_name: jsonschema
+    description: JSONSchema (draft 2020-12, draft 2019-09, draft-7, draft-6, draft-4) Validation using Go
+    files:
+      - name: jv
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 5.3.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: jv-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: jv
   - type: github_release
     repo_owner: sarub0b0
     repo_name: kubetui
