@@ -27818,6 +27818,27 @@ packages:
           - amd64
   - type: github_release
     repo_owner: github
+    repo_name: github-mcp-server
+    description: GitHub's official MCP Server
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: github-mcp-server_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: github-mcp-server_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
+    repo_owner: github
     repo_name: licensed
     asset: licensed-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     description: A Ruby gem to cache and verify the licenses of dependencies
