@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: github
+    repo_name: copilot-language-server-release
+    description: Feedback for the GitHub Copilot Language Server
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.276.0")
+        asset: copilot-language-server-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: copilot-language-server-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux
+          - darwin
