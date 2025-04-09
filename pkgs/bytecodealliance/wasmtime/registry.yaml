@@ -91,9 +91,21 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("< 28.0.0")
+        asset: wasmtime-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: wasmtime-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
+        github_artifact_attestations:
+          signer_workflow: bytecodealliance/wasmtime/.github/workflows/publish-artifacts.yml
         replacements:
           amd64: x86_64
           arm64: aarch64
