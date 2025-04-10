@@ -49439,23 +49439,24 @@ packages:
   - type: github_release
     repo_owner: rootless-containers
     repo_name: rootlesskit
-    description: Linux-native fakeroot using user namespaces
-    asset: rootlesskit-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      arm: armv7l
-      arm64: aarch64
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
-    supported_envs:
-      - linux
-    files:
-      - name: rootlessctl
-      - name: rootlesskit
-      - name: rootlesskit-docker-proxy
+    description: Linux-native "fake root" for implementing rootless containers
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.8.0")
+        no_asset: true
+      - version_constraint: Version == "v0.9.0-beta.0"
+      - version_constraint: semver("<= 0.9.5")
+        checksum:
+          type: github_release
+          asset: SHA256SUM
+          algorithm: sha256
+      - version_constraint: semver("<= 2.2.0")
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+      - version_constraint: "true"
+        no_asset: true
   - type: github_release
     repo_owner: rootless-containers
     repo_name: slirp4netns
