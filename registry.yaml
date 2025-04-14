@@ -25884,6 +25884,29 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 0.9.4")
         no_asset: true
+      - version_constraint: semver("<= 0.15.1")
+        asset: tfctl_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: tf-controller_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/flux-iac/tofu-controller/releases/download/{{.Version}}/tf-controller_{{trimV .Version}}_checksums.txt.pem
+              - --certificate-identity
+              - https://github.com/weaveworks/tf-controller/.github/workflows/release.yaml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/flux-iac/tofu-controller/releases/download/{{.Version}}/tf-controller_{{trimV .Version}}_checksums.txt.sig
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: tfctl_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -25898,8 +25921,8 @@ packages:
             opts:
               - --certificate
               - https://github.com/flux-iac/tofu-controller/releases/download/{{.Version}}/tf-controller_{{trimV .Version}}_checksums.txt.pem
-              - --certificate-identity-regexp
-              - "^https://github\\.com/flux-iac/tofu-controller/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-identity
+              - https://github.com/flux-iac/tofu-controller/.github/workflows/release.yaml@refs/tags/{{.Version}}
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
               - --signature
