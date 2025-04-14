@@ -37538,6 +37538,27 @@ packages:
       algorithm: sha256
   - type: github_release
     repo_owner: kubernetes-sigs
+    repo_name: cloud-provider-kind
+    description: Cloud provider for KIND clusters
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.2"
+        no_asset: true
+      - version_constraint: Version == "v0.0.1"
+        asset: cloud-provider-kind-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
+      - version_constraint: "true"
+        asset: cloud-provider-kind_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: cloud-provider-kind_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+  - type: github_release
+    repo_owner: kubernetes-sigs
     repo_name: cluster-api
     asset: clusterctl-{{.OS}}-{{.Arch}}
     format: raw
@@ -49440,23 +49461,73 @@ packages:
   - type: github_release
     repo_owner: rootless-containers
     repo_name: rootlesskit
-    description: Linux-native fakeroot using user namespaces
-    asset: rootlesskit-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      arm: armv7l
-      arm64: aarch64
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
-    supported_envs:
-      - linux
+    description: Linux-native "fake root" for implementing rootless containers
     files:
       - name: rootlessctl
       - name: rootlesskit
       - name: rootlesskit-docker-proxy
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.8.0") || Version == "v2.3.0"
+        no_asset: true
+      - version_constraint: Version == "v0.9.0-beta.0"
+        asset: rootlesskit-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        files:
+          - name: rootlessctl
+          - name: rootlesskit
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.9.5")
+        asset: rootlesskit-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        files:
+          - name: rootlessctl
+          - name: rootlesskit
+        supported_envs:
+          - linux/amd64
+        checksum:
+          type: github_release
+          asset: SHA256SUM
+          algorithm: sha256
+      - version_constraint: semver("<= 2.2.0")
+        asset: rootlesskit-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        supported_envs:
+          - linux
+        files:
+          - name: rootlessctl
+          - name: rootlesskit
+          - name: rootlesskit-docker-proxy
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: rootlesskit-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        supported_envs:
+          - linux
+        files:
+          - name: rootlessctl
+          - name: rootlesskit
+          - name: rootlesskit-docker-proxy
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: rootless-containers/rootlesskit/.github/workflows/release.yaml
   - type: github_release
     repo_owner: rootless-containers
     repo_name: slirp4netns
@@ -56988,6 +57059,62 @@ packages:
       - linux
       - darwin
   - type: github_release
+    repo_owner: tailwindlabs
+    repo_name: tailwindcss
+    description: A utility-first CSS framework for rapid UI development
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 3.0.2")
+        no_asset: true
+      - version_constraint: semver("<= 3.0.7")
+        asset: tailwindcss-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.2.4")
+        asset: tailwindcss-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          darwin: macos
+      - version_constraint: semver("<= 3.2.7")
+        asset: tailwindcss-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x64
+          darwin: macos
+      - version_constraint: semver("<= 3.4.17")
+        asset: tailwindcss-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: tailwindcss-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: tailwindcss-{{.OS}}-{{.Arch}}-musl
+  - type: github_release
     repo_owner: takaishi
     repo_name: awscost
     description: Print AWS costs to text or graph image
@@ -60111,6 +60238,194 @@ packages:
         files:
           - name: pv-migrate
             src: bin/{{.OS}}/pv-migrate
+  - type: github_release
+    repo_owner: uutils
+    repo_name: coreutils
+    description: Cross-platform Rust rewrite of the GNU coreutils
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["0.0.9", "0.0.24", "0.0.25", "0.0.29"]
+        no_asset: true
+      - version_constraint: Version == "0.0.1"
+        asset: uutils-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - linux/amd64
+          - windows
+        files:
+          - name: uutils
+            src: uutils-{{.Version}}-{{.Arch}}-{{.OS}}/uutils
+      - version_constraint: Version == "0.0.1.1"
+        asset: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - linux/amd64
+          - windows
+        files:
+          - name: coreutils
+            src: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}/coreutils
+      - version_constraint: Version == "0.0.2"
+        asset: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+        files:
+          - name: coreutils
+            src: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}/coreutils
+      - version_constraint: Version == "0.0.7"
+        asset: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - darwin
+          - linux/amd64
+        files:
+          - name: coreutils
+            src: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}/coreutils
+      - version_constraint: Version == "0.0.14"
+        asset: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - linux/amd64
+          - windows
+        files:
+          - name: coreutils
+            src: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}/coreutils
+      - version_constraint: semver("<= 0.0.22")
+        asset: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - linux/amd64
+          - windows
+        files:
+          - name: coreutils
+            src: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}/coreutils
+      - version_constraint: Version == "0.0.23"
+        asset: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - linux/amd64
+          - windows
+        files:
+          - name: coreutils
+            src: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}/coreutils
+      - version_constraint: Version == "0.0.26"
+        asset: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin/arm64
+          - linux
+          - windows
+        files:
+          - name: coreutils
+            src: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}/coreutils
+      - version_constraint: Version == "0.0.27"
+        asset: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: coreutils
+            src: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}/coreutils
+      - version_constraint: "true"
+        asset: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: coreutils
+            src: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}/coreutils
   - type: github_release
     repo_owner: uw-labs
     repo_name: strongbox
