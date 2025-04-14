@@ -25906,7 +25906,7 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.16.0-rc.4")
         asset: tfctl_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -25926,6 +25926,29 @@ packages:
               - https://token.actions.githubusercontent.com
               - --signature
               - https://github.com/flux-iac/tofu-controller/releases/download/{{.Version}}/tf-controller_{{trimV .Version}}_checksums.txt.sig
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: tfctl_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: tofu-controller_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/flux-iac/tofu-controller/releases/download/{{.Version}}/tofu-controller_{{trimV .Version}}_checksums.txt.pem
+              - --certificate-identity
+              - https://github.com/flux-iac/tofu-controller/.github/workflows/release.yaml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/flux-iac/tofu-controller/releases/download/{{.Version}}/tofu-controller_{{trimV .Version}}_checksums.txt.sig
         supported_envs:
           - linux
           - darwin
