@@ -25872,26 +25872,38 @@ packages:
             asset: iam-policy-json-to-terraform_amd64
           - goos: darwin
             asset: iam-policy-json-to-terraform_darwin
-  - type: github_release
-    name: flux-iac/tofu-controller/tfctl
-    aliases:
-      - name: weaveworks/tf-controller/tfctl
+  - name: flux-iac/tofu-controller/tfctl
+    type: github_release
     repo_owner: flux-iac
     repo_name: tofu-controller
-    description: A GitOps Terraform controller for Kubernetes
-    asset: tfctl_{{.OS}}_{{.Arch}}.tar.gz
-    replacements:
-      darwin: Darwin
-      linux: Linux
-    supported_envs:
-      - linux
-      - darwin
-    files:
-      - name: tfctl
-    checksum:
-      type: github_release
-      asset: tf-controller_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    description: A GitOps OpenTofu and Terraform controller for Flux
+    version_filter: not (Version matches "-rc")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.9.4")
+      - version_constraint: "true"
+        asset: tfctl_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: tf-controller_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/flux-iac/tofu-controller/releases/download/{{.Version}}/tf-controller_{{trimV .Version}}_checksums.txt.pem
+              - --certificate-identity-regexp
+              - "^https://github\\.com/flux-iac/tofu-controller/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/flux-iac/tofu-controller/releases/download/{{.Version}}/tf-controller_{{trimV .Version}}_checksums.txt.sig
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: fluxcd
     repo_name: flux2
