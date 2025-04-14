@@ -17,6 +17,10 @@ packages:
         overrides:
           - goos: linux
             format: tar.gz
+          - goos: darwin
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
         supported_envs:
           - linux/amd64
           - darwin
@@ -32,6 +36,13 @@ packages:
         overrides:
           - goos: darwin
             format: zip
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
+          - goos: windows
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
         supported_envs:
           - darwin
           - windows
@@ -47,8 +58,15 @@ packages:
           asset: syft_{{trimV .Version}}_checksums.txt
           algorithm: sha256
         overrides:
+          - goos: darwin
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
           - goos: windows
             format: zip
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
       - version_constraint: semver("<= 0.5.0")
         asset: syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -57,6 +75,11 @@ packages:
           type: github_release
           asset: syft_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+        overrides:
+          - goos: darwin
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
         supported_envs:
           - linux/amd64
           - darwin
@@ -71,6 +94,10 @@ packages:
         overrides:
           - goos: linux
             format: tar.gz
+          - goos: darwin
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
         supported_envs:
           - linux/amd64
           - darwin
@@ -85,6 +112,9 @@ packages:
         overrides:
           - goos: darwin
             format: zip
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
         supported_envs:
           - linux/amd64
           - darwin
@@ -97,8 +127,30 @@ packages:
           asset: syft_{{trimV .Version}}_checksums.txt
           algorithm: sha256
         overrides:
+          - goos: darwin
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
           - goos: linux
             format: tar.gz
+          - goos: windows
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
+      - version_constraint: semver("< 0.37.10")
+        asset: syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: syft_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            checksum:
+              # checksum isn't included in checksums.txt
+              enabled: false
       - version_constraint: semver("<= 0.103.1")
         asset: syft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
