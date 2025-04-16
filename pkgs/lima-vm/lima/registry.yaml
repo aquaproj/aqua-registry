@@ -25,6 +25,24 @@ packages:
           algorithm: sha256
         supported_envs:
           - darwin
+      - version_constraint: semver("< 0.23.0")
+        asset: lima-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: lima-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -36,6 +54,8 @@ packages:
           type: github_release
           asset: SHA256SUMS
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: lima-vm/lima/.github/workflows/release.yml
         overrides:
           - goos: linux
             replacements:
