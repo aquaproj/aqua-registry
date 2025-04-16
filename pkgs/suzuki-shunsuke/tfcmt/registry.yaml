@@ -45,6 +45,26 @@ packages:
           type: github_release
           asset: tfcmt_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+      - version_constraint: semver("< 4.14.0")
+        asset: tfcmt_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfcmt_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/suzuki-shunsuke/tfcmt/releases/download/{{.Version}}/tfcmt_{{trimV .Version}}_checksums.txt.pem
+              - --certificate-identity-regexp
+              - "^https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/suzuki-shunsuke/tfcmt/releases/download/{{.Version}}/tfcmt_{{trimV .Version}}_checksums.txt.sig
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
       - version_constraint: "true"
         asset: tfcmt_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -57,7 +77,7 @@ packages:
               - --certificate
               - https://github.com/suzuki-shunsuke/tfcmt/releases/download/{{.Version}}/tfcmt_{{trimV .Version}}_checksums.txt.pem
               - --certificate-identity-regexp
-              - "^https://github\\.com/suzuki-shunsuke/tfcmt/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - "^https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@"
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
               - --signature
@@ -65,3 +85,5 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        github_artifact_attestations:
+          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
