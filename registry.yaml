@@ -4321,6 +4321,13 @@ packages:
         asset: "{{.OS}}-{{.Arch}}"
         format: raw
         windows_arm_emulation: true
+      - version_constraint: semver("< 1.5.1")
+        asset: ejson_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: ejson_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: ejson_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -4328,6 +4335,8 @@ packages:
           type: github_release
           asset: ejson_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: Shopify/ejson/.github/workflows/release.yml
   - type: github_release
     repo_owner: Shopify
     repo_name: kubeaudit
