@@ -39624,31 +39624,41 @@ packages:
   - type: github_release
     repo_owner: lima-vm
     repo_name: lima
-    description: 'Linux virtual machines, on macOS (aka "Linux-on-Mac", "macOS subsystem for Linux", "containerd for Mac", unofficially)'
-    supported_envs:
-      - darwin
-      - linux
-    asset: lima-{{trimV .Version}}-{{title .OS}}-{{.Arch}}.tar.gz
-    files:
-      - name: lima
-        src: bin/lima
-      - name: limactl
-        src: bin/limactl
-    replacements:
-      amd64: x86_64
-    overrides:
-      - goos: linux
-        replacements:
-          arm64: aarch64
-    version_constraint: semver(">= 0.1.1")
+    description: Linux virtual machines, with a focus on running containers
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.7.0"
+        no_asset: true
+      - version_constraint: Version == "v0.1.0"
+        asset: lima-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
         supported_envs:
           - darwin
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
+      - version_constraint: "true"
+        asset: lima-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: lima-vm
     repo_name: sshocker
