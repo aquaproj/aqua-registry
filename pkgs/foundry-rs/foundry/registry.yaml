@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - name: foundry-rs/foundry
+    type: github_release
+    repo_owner: foundry-rs
+    repo_name: foundry
+    version_constraint: "false"
+    files:
+      - name: forge
+      - name: cast
+      - name: anvil
+      - name: chisel
+    version_overrides:
+      - version_constraint: "true"
+        asset: foundry_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        supported_envs:
+          - darwin
+          - linux
+          - windows/amd64
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          windows: win32
