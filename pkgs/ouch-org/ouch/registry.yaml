@@ -82,6 +82,9 @@ packages:
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: ouch
+            src: "{{.AssetWithoutExt}}/ouch"
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -93,10 +96,29 @@ packages:
               arm64: aarch64
           - goos: windows
             format: zip
+      - version_constraint: semver("<= 0.5.1")
+        asset: ouch-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: ouch
+            src: "{{.AssetWithoutExt}}/ouch"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: ouch-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
+        files:
+          - name: ouch
+            src: "{{.AssetWithoutExt}}-allow_piped_choice+unrar+use_zlib+use_zstd_thin/ouch"
         replacements:
           amd64: x86_64
           arm64: aarch64
