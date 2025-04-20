@@ -12983,6 +12983,52 @@ packages:
           - name: hwatch
             src: hwatch/hwatch
   - type: github_release
+    repo_owner: block
+    repo_name: goose
+    description: "an open source, extensible AI agent that goes beyond code suggestions - install, execute, edit, and test with any LLM"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.0.0-alpha.1"
+      - version_constraint: Version == "v1.0-beta3"
+        asset: goose-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.bz2
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v1.0-beta4"
+      - version_constraint: Version in ["stable", "stable"]
+        asset: goose-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.bz2
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.9.11")
+        no_asset: true
+      - version_constraint: "true"
+        asset: goose-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.bz2
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: bloznelis
     repo_name: typioca
     asset: typioca-{{.OS}}-{{.Arch}}
