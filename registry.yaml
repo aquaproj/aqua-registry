@@ -24940,74 +24940,177 @@ packages:
     repo_owner: exercism
     repo_name: cli
     description: A Go based command line tool for exercism.org
-    asset: exercism-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    files:
-      - name: exercism
-    replacements:
-      amd64: x86_64
-    checksum:
-      type: github_release
-      asset: exercism_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 3.2.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 3.0.13")
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-      - version_constraint: semver(">= 3.0.0")
+      - version_constraint: Version == "v1.7.2"
         asset: exercism-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
         replacements:
           amd64: 64bit
           darwin: mac
         supported_envs:
           - darwin
+          - windows
           - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 1.7.3")
-        asset: exercism-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: Version in ["v3.0.0-alpha.8.mentors", "v3.0.0-alpha.9.mentors", "v3.0.0-alpha.10.mentors"]
+        asset: mentorcism-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
         replacements:
           amd64: 64bit
           darwin: mac
+        overrides:
+          - goos: windows
+            format: zip
         supported_envs:
           - darwin
+          - windows
           - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 1.7.2")
-        asset: exercism-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: Version in ["v3.0.0-alpha.8.v2", "v3.0.0-alpha.9.v2"]
+        asset: nextercism-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tgz
-        overrides: []
+        rosetta2: true
+        windows_arm_emulation: true
         replacements:
           amd64: 64bit
           darwin: mac
+        overrides:
+          - goos: windows
+            format: zip
         supported_envs:
           - darwin
+          - windows
           - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver("< 1.7.2")
+      - version_constraint: Version == "v3.0.13"
         asset: exercism-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tgz
-        overrides: []
-        replacements: {}
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: mac
+        checksum:
+          type: github_release
+          asset: exercism_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: Version == "v3.1.0"
+        asset: exercism-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
         checksum:
-          enabled: false
+          type: github_release
+          asset: exercism_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: exercism-{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements:
+              amd64: 64bit
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v3.2.0"
+        asset: exercism-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: exercism_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            goarch: amd64
+            format: zip
+            asset: exercism-{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements:
+              amd64: 64bit
+          - goos: windows
+            goarch: arm64
+            format: zip
+      - version_constraint: semver("<= 1.7.1")
+        asset: exercism-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.4.1")
+        asset: exercism-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: mac
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.0.0-alpha.7.v2")
+        asset: nextercism-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: mac
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.0.12")
+        asset: exercism-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: mac
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: exercism-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: exercism_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            replacements:
+              amd64: 64bit
   - type: github_release
     repo_owner: exoscale
     repo_name: cli
