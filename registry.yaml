@@ -4823,19 +4823,31 @@ packages:
   - type: github_release
     repo_owner: Songmu
     repo_name: maltmill
-    asset: maltmill_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
     description: create and update Homebrew thrid party Formulae
-    overrides:
-      - goos: linux
-        format: tar.gz
-    files:
-      - name: maltmill
-        src: maltmill_{{.Version}}_{{.OS}}_{{.Arch}}/maltmill
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.5.7")
+        asset: maltmill_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: maltmill_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
   - type: github_release
     repo_owner: Songmu
     repo_name: podbard
