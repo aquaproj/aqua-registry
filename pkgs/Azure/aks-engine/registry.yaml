@@ -3,12 +3,47 @@ packages:
   - type: github_release
     repo_owner: Azure
     repo_name: aks-engine
-    description: AKS Engine deploys and manages Kubernetes clusters in Azure
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - amd64
-    asset: aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
-    files:
-      - name: aks-engine
-        src: aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}/aks-engine
+    description: "AKS Engine: legacy tool for Kubernetes on Azure (see status)"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.32.2"
+        no_asset: true
+      - version_constraint: Version == "v0.48.0"
+        asset: aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}-go1.13.6.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["v0.60.0", "v0.62.1"]
+        asset: aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.35.4")
+        asset: aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.35.6")
+        no_asset: true
+      - version_constraint: "true"
+        asset: aks-engine-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
