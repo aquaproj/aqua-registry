@@ -47621,43 +47621,108 @@ packages:
   - type: github_release
     repo_owner: pimalaya
     repo_name: himalaya
-    aliases:
-      - name: soywod/himalaya
-    description: CLI to manage your emails
-    asset: himalaya-{{.OS}}.{{.Format}}
-    format: tgz
-    replacements:
-      darwin: macos
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    version_constraint: semver(">= 0.8.0")
-    # https://github.com/soywod/himalaya/releases/tag/v0.8.0
-    # Changed release archive extensions from .tar.gz to .tgz.
+    description: CLI to manage emails
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.7.3")
+      - version_constraint: Version == "v0.7.2"
+        asset: himalaya-{{.OS}}.{{.Format}}
         format: tar.gz
-      - version_constraint: semver(">= 0.7.2")
-        format: tar.gz
+        replacements:
+          darwin: macos
         supported_envs:
           - linux/amd64
           - darwin
-      - version_constraint: semver(">= 0.5.10")
+      - version_constraint: Version == "v0.7.3"
+        asset: himalaya-{{.OS}}.{{.Format}}
         format: tar.gz
-      - version_constraint: semver(">= 0.5.6")
-        format: tar.gz
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.8.2"
+        asset: himalaya-{{.OS}}.{{.Format}}
+        format: tgz
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "v0.8.3"
+        asset: himalaya-{{.OS}}.{{.Format}}
+        format: tgz
+        replacements:
+          darwin: macos
         supported_envs:
           - linux/amd64
           - darwin
-      - version_constraint: semver(">= 0.3.2")
+      - version_constraint: Version == "v1.0.0-beta.4"
+        asset: himalaya.{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+      - version_constraint: semver("<= 0.5.5")
+        asset: himalaya-{{.OS}}.{{.Format}}
         format: tar.gz
-      - version_constraint: semver("< 0.3.2")
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.5.9")
+        asset: himalaya-{{.OS}}.{{.Format}}
         format: tar.gz
-        files:
-          # https://github.com/soywod/himalaya/issues/144
-          - name: himalaya
-            src: himalaya.exe
+        replacements:
+          darwin: macos
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.7.1")
+        asset: himalaya-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.9.0")
+        asset: himalaya-{{.OS}}.{{.Format}}
+        format: tgz
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.0.0-beta.3")
+        asset: himalaya-{{.OS}}.{{.Format}}
+        format: tgz
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            asset: himalaya-{{.OS}}-musl.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: himalaya.{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        overrides:
+          - goos: windows
+            replacements: {}
   - type: github_release
     repo_owner: pinterest
     repo_name: ktlint
@@ -53818,58 +53883,64 @@ packages:
   - type: github_release
     repo_owner: skanehira
     repo_name: slack-reminder
-    asset: slack-reminder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: Slack remind generator
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: slack-reminder_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: slack-reminder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: slack-reminder_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: skanehira
     repo_name: tson
-    asset: tson_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: TUI json editor and viewer written in Go
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-    supported_envs:
-      - linux/amd64
-      - darwin
-    rosetta2: true
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: tson_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
   - type: github_release
     repo_owner: skanehira
     repo_name: yd
-    asset: yd_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
     description: YAML Incremental Digger
-    overrides:
-      - goos: linux
-        format: tar.gz
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    files:
-      - name: yd
-        src: yd_{{.Version}}_{{.OS}}_{{.Arch}}/yd
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: yd_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: skeema
     repo_name: skeema
