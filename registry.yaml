@@ -5133,14 +5133,49 @@ packages:
   - type: github_release
     repo_owner: TomWright
     repo_name: dasel
-    rosetta2: true
-    asset: dasel_{{.OS}}_{{.Arch}}
-    format: raw
     description: Select, put and delete data from JSON, TOML, YAML, XML and CSV files with a single tool. Supports conversion between formats and can be used as a Go package
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.12.0")
+        asset: dasel_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.14.0")
+        asset: dasel_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.24.2")
+        asset: dasel_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 1.26.0")
+        asset: dasel_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: dasel_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: dasel_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: dasel_{{.OS}}_{{.Arch}}.exe.{{.Format}}
   - type: github_release
     repo_owner: Traackr
     repo_name: binnacle
