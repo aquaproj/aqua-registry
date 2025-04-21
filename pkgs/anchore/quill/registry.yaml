@@ -3,17 +3,31 @@ packages:
   - type: github_release
     repo_owner: anchore
     repo_name: quill
-    asset: quill_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: Simple mac binary signing from any platform
-    overrides:
-      - goos: windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        asset: quill_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: quill_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: quill_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: "true"
+        asset: quill_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: quill_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
