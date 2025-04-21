@@ -3,20 +3,48 @@ packages:
   - type: github_release
     repo_owner: stern
     repo_name: stern
-    asset: stern_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    description: Multi pod and container log tailing for Kubernetes -- Friendly fork of https://github.com/wercker/stern
-    version_constraint: semver(">= 1.21.0")
+    description: "⎈ Multi pod and container log tailing for Kubernetes -- Friendly fork of https://github.com/wercker/stern"
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v1.20.1"
+        asset: stern_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+        windows_arm_emulation: true
         files:
           - name: stern
-            src: stern_{{trimV .Version}}_{{.OS}}_{{.Arch}}/stern
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+            src: "{{.AssetWithoutExt}}/stern"
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.14.0")
+        asset: stern_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: stern
+            src: "{{.AssetWithoutExt}}/stern"
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.20.0")
+        asset: stern_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: stern
+            src: "{{.AssetWithoutExt}}/stern"
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: stern_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
