@@ -64412,46 +64412,35 @@ packages:
   - type: github_release
     repo_owner: yinheli
     repo_name: sshw
-    asset: sshw_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: ssh client wrapper for automatic login
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: github_release
-      asset: sshw_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 1.1.1")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.0.8")
-        # asset name was changed
-        asset: sshw-{{.OS}}-{{.Arch}}-{{.Version}}.tar.gz
-        files:
-          - name: sshw
-            src: sshw-{{.OS}}-{{.Arch}}-{{.Version}}/sshw
-        overrides: []
-        # arm64 wasn't supported
+      - version_constraint: semver("<= 1.0.7")
+        asset: sshw-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
         supported_envs:
-          - darwin
-          - linux
-          - amd64
-        checksum:
-          # SHA1 is used for algorithm of checksum
-          enabled: false
-      - version_constraint: "true"
-        # asset name was changed
-        asset: sshw-{{.OS}}-{{.Arch}}.tar.gz
-        overrides: []
-        rosetta2: true
-        # windows wasn't supported
-        supported_envs:
-          - darwin
           - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.1.0")
+        asset: sshw-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
         checksum:
-          # checksum file not provided
-          enabled: false
+          type: github_release
+          asset: checksum.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: sshw_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: sshw_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: yitsushi
     repo_name: totp-cli
