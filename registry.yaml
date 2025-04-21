@@ -4031,65 +4031,57 @@ packages:
   - type: github_release
     repo_owner: PaddiM8
     repo_name: kalker
-    description: Kalker is a calculator program that supports user-defined variables, functions, differentiation, and integration
-    asset: kalker-{{.OS}}.{{.Format}}
-    format: zip
-    overrides:
-      - goos: linux
-        format: raw
-        asset: kalker-{{.OS}}
-    replacements:
-      darwin: macOS
-    supported_envs:
-      - linux/amd64
-      - darwin
-    rosetta2: true
-    files:
-      - name: kalker
-        src: target/release/kalker
-    version_constraint: semver(">= 1.0.0")
+    description: Scientific calculator with math syntax that supports user-defined variables and functions, complex numbers, and estimation of derivatives and integrals
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.3.4")
-        asset: kalk-{{.OS}}.{{.Format}}
-        overrides:
-          - goos: linux
-            format: raw
-            asset: kalk-{{.OS}}
-        files:
-          - name: kalker
-            src: target/release/kalk
-      - version_constraint: semver(">= 0.3.3")
-        asset: kalk-{{.OS}}
-        format: raw
-        overrides:
-          - goos: windows
-            asset: kalk
-        replacements:
-          darwin: macOS
-          linux: Linux
-        supported_envs:
-          - darwin
-          - amd64
-        files:
-          - name: kalker
-            src: target/release/kalk
-      - version_constraint: semver(">= 0.2.0")
+      - version_constraint: Version == "0.2.0"
         asset: kalk_cli_{{.OS}}64
         format: raw
-        overrides: []
         replacements:
           amd64: x64
         supported_envs:
           - linux/amd64
           - windows/amd64
-        rosetta2: false
-      - version_constraint: semver("< 0.2.0")
-        asset: kalk_cli
+      - version_constraint: Version == "v0.3.3"
+        asset: kalk-{{.OS}}
         format: raw
-        overrides: []
+        replacements:
+          darwin: macOS
+          linux: Linux
+        overrides:
+          - goos: windows
+            asset: kalk
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.10")
+      - version_constraint: semver("<= 0.3.2")
+        no_asset: true
+      - version_constraint: semver("<= 0.5.4")
+        asset: kalk-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macOS
+        overrides:
+          - goos: linux
+            format: raw
+            asset: kalk-{{.OS}}
         supported_envs:
           - linux/amd64
-        rosetta2: false
+          - darwin
+      - version_constraint: "true"
+        asset: kalker-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macOS
+        overrides:
+          - goos: linux
+            format: raw
+            asset: kalker-{{.OS}}
+        supported_envs:
+          - linux/amd64
+          - darwin
   - type: github_release
     repo_owner: PaulJuliusMartinez
     repo_name: jless
