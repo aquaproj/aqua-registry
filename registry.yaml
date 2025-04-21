@@ -63487,43 +63487,691 @@ packages:
     repo_owner: watchexec
     repo_name: watchexec
     description: Executes commands in response to file modifications
-    asset: watchexec-{{trimV .SemVer}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    format: tar.xz
-    replacements:
-      windows: pc-windows-msvc
-      darwin: apple-darwin
-      amd64: x86_64
-      arm64: aarch64
-      linux: unknown-linux-musl
-    overrides:
-      - goos: windows
-        format: zip
-      - goarch: arm64
-        replacements:
-          linux: unknown-linux-gnu
-    files:
-      - name: watchexec
-        src: watchexec-{{trimV .SemVer}}-{{.Arch}}-{{.OS}}/watchexec
-    checksum:
-      type: github_release
-      asset: SHA512SUMS
-      algorithm: sha512
-    version_constraint: semver(">= 1.21.1")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.21.0")
+      - version_constraint: Version in ["lib-v1.16.1", "lib-v1.17.1"]
+        no_asset: true
+      - version_constraint: Version == "0.7.0"
+        asset: watchexec-{{.OS}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "0.11.0"
+        asset: watchexec_{{.OS}}_{{.Version}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: osx
+          windows: win
+        overrides:
+          - goos: darwin
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: Version in ["1.5.0", "1.6.1"]
+        asset: watchexec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version in ["1.6.0", "1.8.6"]
+        asset: watchexec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "1.8.5"
+        asset: watchexec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: Version == "1.9.0"
+        asset: watchexec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "1.9.1"
+        asset: watchexec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "cli-v1.16.0"
+        asset: watchexec-1.16.0-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.16.1"
+        asset: watchexec-1.16.1-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.16.2"
+        asset: watchexec-1.16.2-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.17.0"
+        asset: watchexec-1.17.0-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
         checksum:
-          enabled: false
-      - version_constraint: semver(">= 1.20.6")
+          type: github_release
+          asset: SHA512SUMS.auto.minisig
+          algorithm: sha512
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.17.1"
+        asset: watchexec-1.17.1-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
         rosetta2: true
-      - version_constraint: semver(">= 1.18.0")
-        version_prefix: cli-
-      - version_constraint: semver("< 1.18.0")
-        version_prefix: cli-
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.0"
+        asset: watchexec-1.18.0-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.1"
+        asset: watchexec-1.18.1-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.2"
+        asset: watchexec-1.18.2-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.3"
+        asset: watchexec-1.18.3-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.4"
+        asset: watchexec-1.18.4-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS.auto.minisig
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.5"
+        asset: watchexec-1.18.5-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.6"
+        asset: watchexec-1.18.6-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS.auto.minisig
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.7"
+        asset: watchexec-1.18.7-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.8"
+        asset: watchexec-1.18.8-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.9"
+        asset: watchexec-1.18.9-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.10"
+        asset: watchexec-1.18.10-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.11"
+        asset: watchexec-1.18.11-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.18.12"
+        asset: watchexec-1.18.12-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.19.0"
+        asset: watchexec-1.19.0-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.20.0"
+        asset: watchexec-1.20.0-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "cli-v1.20.1"
+        asset: watchexec-1.20.1-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        checksum:
+          type: github_release
+          asset: SHA512SUMS.auto.minisig
+          algorithm: sha512
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "cli-v1.20.2"
+        asset: watchexec-1.20.2-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.20.3"
+        asset: watchexec-1.20.3-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS.auto.minisig
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.20.4"
+        asset: watchexec-1.20.4-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "cli-v1.20.5"
+        asset: watchexec-1.20.5-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v1.20.6"
+        asset: watchexec-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
         rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v1.21.0"
+        asset: watchexec-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.10.0")
+        asset: watchexec_{{.OS}}_{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 1.8.4")
+        asset: watchexec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.10.3")
+        asset: watchexec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.14.1")
+        asset: watchexec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.15.3")
+        asset: watchexec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.25.1")
+        asset: watchexec-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 2.0.0-pre.14")
+        no_asset: true
+      - version_constraint: "true"
+        asset: watchexec-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: weaviate
     repo_name: weaviate
