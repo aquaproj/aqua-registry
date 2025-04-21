@@ -4900,22 +4900,37 @@ packages:
   - type: github_release
     repo_owner: Songmu
     repo_name: tagpr
-    description: The tagpr automatically creates and updates a pull request for unreleased items, tag them when they are merged, and create releases
-    asset: tagpr_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    overrides:
-      - goos: linux
+    description: automatically creates and updates a pull request for unreleased items, tag them when they are merged, and create releases
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.2"
+        no_asset: true
+      - version_constraint: semver("<= 0.0.12")
+        asset: rcpr_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: tagpr_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-    supported_envs:
-      - linux
-      - darwin
-    files:
-      - name: tagpr
-        src: tagpr_{{.Version}}_{{.OS}}_{{.Arch}}/tagpr
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            format: zip
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: Songmu
     repo_name: timeout
