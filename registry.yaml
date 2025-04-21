@@ -63161,148 +63161,191 @@ packages:
   - type: github_release
     repo_owner: wasmerio
     repo_name: wasmer
-    description: The leading WebAssembly Runtime supporting WASI and Emscripten
-    asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      arm64: aarch64
-    overrides:
-      - goos: darwin
-        replacements:
-          arm64: arm64
-      - goos: linux
-        goarch: arm64
-        files:
-          - name: wasmer
-            src: bin/wasmer
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    files:
-      - name: wasmer
-        src: bin/wasmer
-      - name: wasmer-headless
-        src: bin/wasmer-headless
-    version_constraint: semver(">= 3.0.0-beta")
+    description: Fast, secure, lightweight containers based on WebAssembly
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 3.0.0-alpha")
+      - version_constraint: Version in ["0.3.0", "0.4.1"]
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "0.4.0"
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        overrides:
+          - goos: windows
+            format: raw
+            asset: WasmerInstaller
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "0.4.2"
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        overrides:
+          - goos: windows
+            format: raw
+            asset: WasmerInstaller-{{.Version}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "0.5.4"
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        overrides:
+          - goos: windows
+            format: raw
+            asset: WasmerInstaller
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "3.0.0-alpha"
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         overrides:
           - goos: linux
             replacements:
               arm64: aarch64
           - goos: windows
             format: zip
-        replacements: {}
-      - version_constraint: semver(">= 2.2.1")
-        files:
-          - name: wapm
-            src: bin/wapm
-          - name: wasmer-headless
-            src: bin/wasmer-headless
-          - name: wax
-            src: bin/wax
+      - version_constraint: Version == "v3.3.0"
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
           - goos: darwin
-            replacements:
-              arm64: arm64
-          - goos: linux
-            goarch: arm64
-            files:
-              - name: wasmer
-                src: bin/wasmer
-          - goos: windows
-            files:
-              - name: wapm
-                src: bin/wapm.exe
-              - name: wasmer-headless
-                src: bin/wasmer-headless.exe
-              - name: wasmer
-                src: bin/wasmer.exe
-      - version_constraint: semver(">= 2.0.0-rc1")
-        replacements: {}
+            format: zip
+            asset: wasmer-{{.OS}}-{{.Arch}}-jsc.{{.Format}}
+      - version_constraint: Version == "v5.0.0-rc.1"
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         supported_envs:
           - darwin
+          - windows
           - amd64
-      - version_constraint: semver(">= 1.0.0-beta1")
-        files:
-          - name: wasmer
-            src: bin/wasmer
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: aarch64
-          - goos: windows
-            format: raw
-            asset: wasmer-{{.OS}}
-        replacements: {}
-      - version_constraint: semver(">= 1.0.0-alpha3")
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: aarch64
-          - goos: windows
-            format: raw
-            asset: wasmer-{{.OS}}
-        replacements: {}
-        rosetta2: true
-      - version_constraint: semver(">= 0.16.0")
-        files: &wasmerio_wasmer_files_1
-          - name: wapm
-            src: bin/wapm
-          - name: wasmer
-            src: bin/wasmer
-        replacements: {}
+      - version_constraint: semver("<= 0.1.4")
+        asset: wasmer-{{.OS}}-{{.Arch}}
+        format: raw
         rosetta2: true
         supported_envs:
-          - darwin
           - linux/amd64
-      - version_constraint: semver(">= 0.14.0")
-        files: *wasmerio_wasmer_files_1
+          - darwin
+      - version_constraint: semver("<= 0.2.1")
+        asset: wasmer-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        overrides:
+          - goos: windows
+            asset: WasmerInstaller-{{.Version}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.5.3")
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.9.0")
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        overrides:
+          - goos: windows
+            format: raw
+            asset: WasmerInstaller-{{.Version}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.10.1")
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        overrides:
+          - goos: windows
+            format: raw
+            asset: wasmer-{{.OS}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.13.1")
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        overrides:
+          - goos: windows
+            format: raw
+            asset: wasmer-{{.OS}}
+      - version_constraint: semver("<= 0.15.0")
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
         overrides:
           - goos: windows
             asset: wasmer-c-api-{{.OS}}.{{.Format}}
-        replacements: {}
         supported_envs:
           - darwin
-          - linux/amd64
-        rosetta2: true
-      - version_constraint: semver(">= 0.10.2")
-        files: *wasmerio_wasmer_files_1
-        overrides:
-          - goos: windows
-            format: raw
-            asset: wasmer-{{.OS}}
-        replacements: {}
-        rosetta2: true
-      - version_constraint: semver(">= 0.10.0")
-        files: *wasmerio_wasmer_files_1
-        overrides:
-          - goos: windows
-            format: raw
-            asset: wasmer-{{.OS}}
-        replacements: {}
-        supported_envs:
-          - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 0.17.1")
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-      - version_constraint: semver(">= 0.3.0")
-        files:
-          - name: wasmer
-            src: bin/wasmer
-        replacements: {}
+        overrides:
+          - goos: windows
+            asset: wasmer-c-api-{{.OS}}.{{.Format}}
+      - version_constraint: semver("<= 1.0.0-alpha5")
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: raw
+            asset: wasmer-{{.OS}}
+      - version_constraint: semver("<= 1.0.2")
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: raw
+            asset: wasmer-{{.OS}}
+      - version_constraint: semver("<= 2.2.0")
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         supported_envs:
-          - linux/amd64
           - darwin
-        rosetta2: true
-      - version_constraint: semver("< 0.3.0")
-        asset: wasmer-{{.OS}}-{{.Arch}}
-        format: raw
-        replacements: {}
-        supported_envs:
-          - darwin
-          - linux/amd64
-        rosetta2: true
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: wasmer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          arm64: aarch64
   - type: github_release
     repo_owner: watchexec
     repo_name: cargo-watch
