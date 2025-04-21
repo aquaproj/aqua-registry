@@ -63765,25 +63765,30 @@ packages:
   - type: github_release
     repo_owner: wtetsu
     repo_name: gaze
-    asset: gaze_{{.OS}}_{{.Version}}.{{.Format}}
-    format: zip
     description: Executes commands for you
-    replacements:
-      darwin: macos
-      arm64: arm
-      amd64: amd
-    overrides:
-      - goos: darwin
-        asset: gaze_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
-        files:
-          - name: gaze
-            src: gaze_{{.OS}}_{{.Arch}}_{{.Version}}/gaze
-    supported_envs:
-      - darwin
-      - amd64
-    files:
-      - name: gaze
-        src: gaze_{{.OS}}_{{.Version}}/gaze
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.6")
+        no_asset: true
+      - version_constraint: semver("<= 0.1.7")
+        asset: gaze_{{.OS}}_{{.Version}}.{{.Format}}
+        format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: gaze_{{.OS}}_{{.Version}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: darwin
+            asset: gaze_{{.OS}}_amd_{{.Version}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: wtfutil
     repo_name: wtf
