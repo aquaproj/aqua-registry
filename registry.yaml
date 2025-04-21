@@ -63802,26 +63802,44 @@ packages:
   - type: github_release
     repo_owner: x-motemen
     repo_name: blogsync
-    asset: blogsync_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
     description: Push and pull blog entries from/to local filesystem
-    overrides:
-      - goos: linux
-        format: tar.gz
-    files:
-      - name: blogsync
-        src: blogsync_{{.Version}}_{{.OS}}_{{.Arch}}/blogsync
-    version_constraint: semver(">= 0.12.3")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("= 0.12.2")
+      - version_constraint: Version == "v0.12.2"
+        asset: blogsync_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
         supported_envs:
-          - darwin
           - linux
-      - version_constraint: "true"
+          - darwin
+      - version_constraint: semver("<= 0.12.1")
+        asset: blogsync_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
         rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: "true"
+        asset: blogsync_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
   - type: github_release
     repo_owner: x-motemen
     repo_name: ghq
