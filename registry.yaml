@@ -715,21 +715,15 @@ packages:
     repo_owner: BishopFox
     repo_name: cloudfox
     description: Automating situational awareness for cloud penetration tests
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: "true"
-        asset: cloudfox-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: zip
-        windows_arm_emulation: true
-        files:
-          - name: cloudfox
-            src: cloudfox/cloudfox
-        replacements:
-          darwin: macos
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
+    supported_envs:
+      - darwin
+      - amd64
+    asset: cloudfox-{{.OS}}-{{.Arch}}.zip
+    replacements:
+      darwin: macos
+    files:
+      - name: cloudfox
+        src: cloudfox/cloudfox
   - type: github_release
     repo_owner: Boeing
     repo_name: config-file-validator
@@ -2563,10 +2557,33 @@ packages:
   - type: github_release
     repo_owner: FiloSottile
     repo_name: mkcert
-    format: raw
-    rosetta2: true
-    asset: mkcert-{{.Version}}-{{.OS}}-{{.Arch}}
     description: A simple zero-config tool to make locally trusted development certificates with any names you'd like
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.1")
+        asset: mkcert-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.4.1")
+        asset: mkcert-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.4.3")
+        asset: mkcert-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: "true"
+        asset: mkcert-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
   - type: github_release
     repo_owner: Fusion
     repo_name: gogo
