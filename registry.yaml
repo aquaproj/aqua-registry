@@ -4696,15 +4696,25 @@ packages:
   - type: github_release
     repo_owner: Songmu
     repo_name: gitsemvers
-    description: Retrieve semvers from git tags
-    asset: gitsemvers_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    overrides:
-      - goos: linux
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v"
+      - version_constraint: Version == "v0.0.1"
+        asset: git-semvers_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-    files:
-      - name: git-semvers
-        src: gitsemvers_{{.Version}}_{{.OS}}_{{.Arch}}/git-semvers
+        rosetta2: true
+        overrides:
+          - goos: darwin
+            format: zip
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: gitsemvers_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
   - type: github_release
     repo_owner: Songmu
     repo_name: gocredits
