@@ -48160,47 +48160,130 @@ packages:
   - type: github_release
     repo_owner: pkgxdev
     repo_name: pkgx
-    description: “run anything” from the creator of `brew`
-    asset: pkgx-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
-    format: tar.xz
-    replacements:
-      arm64: aarch64
-      amd64: x86-64
-    supported_envs:
-      - linux
-      - darwin
-    version_constraint: semver(">= 1.0.0")
+    description: Run Anything
+    version_constraint: "false"
     version_overrides:
+      - version_constraint: Version == "v0.11.5"
+        no_asset: true
       - version_constraint: Version == "v0.14.2"
-        asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
-        files:
-          - name: tea
+        asset: tea-{{trimV .Version}}+{{.OS}}+x86-64.{{.Format}}
+        format: tar.xz
+        replacements:
+          arm64: aarch64
         overrides:
+          - goos: linux
+            goarch: arm64
+            asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
           - goos: darwin
             goarch: arm64
             asset: tea-+{{.OS}}+{{.Arch}}.{{.Format}}
-      - version_constraint: semver(">= 0.11.14")
-        asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
-        files:
-          - name: tea
-      - version_constraint: semver(">= 0.8.8")
-        asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
-        files:
-          - name: tea
         supported_envs:
-          - linux/amd64
+          - linux
           - darwin
-      - version_constraint: semver(">= 0.6.6")
-        no_asset: true
-      - version_constraint: semver("< 0.6.6")
-        asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
+      - version_constraint: Version == "v0.28.1"
+        asset: tea-{{trimV .Version}}+{{.OS}}+x86-64.{{.Format}}
+        format: tar.xz
+        replacements:
+          arm64: aarch64
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: amd64
+            format: tar.gz
+          - goos: darwin
+            goarch: arm64
+            format: tar.gz
+            asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.6.5")
+        asset: tea-{{trimV .Version}}+{{.OS}}+x86-64.{{.Format}}
         format: tar.gz
-        files:
-          - name: tea
-            src: tea.xyz/{{.Version}}/bin/tea
+        replacements:
+          arm64: aarch64
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
         supported_envs:
           - linux/amd64
           - darwin
+      - version_constraint: semver("<= 0.8.7")
+        no_asset: true
+      - version_constraint: semver("<= 0.11.13")
+        asset: tea-{{trimV .Version}}+{{.OS}}+x86-64.{{.Format}}
+        format: tar.xz
+        replacements:
+          arm64: aarch64
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.26.4")
+        asset: tea-{{trimV .Version}}+{{.OS}}+x86-64.{{.Format}}
+        format: tar.xz
+        replacements:
+          arm64: aarch64
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.0.0-alpha.4")
+        asset: tea-{{trimV .Version}}+{{.OS}}+x86-64.{{.Format}}
+        format: tar.gz
+        replacements:
+          arm64: aarch64
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            asset: tea-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 2.4.0")
+        asset: pkgx-{{trimV .Version}}+{{.OS}}+x86-64.{{.Format}}
+        format: tar.gz
+        replacements:
+          arm64: aarch64
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: pkgx-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            asset: pkgx-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: pkgx-{{trimV .Version}}+{{.OS}}+x86-64.{{.Format}}
+        format: tar.gz
+        replacements:
+          arm64: aarch64
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: pkgx-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            asset: pkgx-{{trimV .Version}}+{{.OS}}+{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: planetscale
     repo_name: cli
