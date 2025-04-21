@@ -36,18 +36,19 @@ packages:
           - goos: darwin
             asset: arkade-darwin
       - version_constraint: "true"
-        asset: arkade-{{.OS}}-{{.Arch}}
+        asset: arkade
         format: raw
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
         overrides:
+          - goos: linux
+            goarch: arm64
+            asset: arkade-arm64
           - goos: darwin
             goarch: amd64
-            asset: arkade-{{.OS}}
-          - goos: windows
-            asset: arkade
-        supported_envs:
-          - darwin
-          - windows/amd64
+            asset: arkade-darwin
+          - goos: darwin
+            goarch: arm64
+            asset: arkade-darwin-arm64
