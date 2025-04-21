@@ -9575,6 +9575,14 @@ packages:
     repo_owner: aquasecurity
     repo_name: kubectl-who-can
     description: Show who has RBAC permissions to perform actions on different resources in Kubernetes
+    files:
+      # https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/#naming-a-plugin
+      # https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/#names-with-dashes-and-underscores
+      # Rename kubectl-who-can to kubectl-who_can.
+      # kubectl-who-can becomes `kubectl who can` because - is command separator.
+      # To include - in the command name, use _.
+      - name: kubectl-who_can
+        src: kubectl-who-can
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.3.0")
