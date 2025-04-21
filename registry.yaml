@@ -3840,28 +3840,29 @@ packages:
   - type: github_release
     repo_owner: NimbleArchitect
     repo_name: kubectl-ice
-    description: A kubectl plugin that allows you to easily view advanced configuration of all containers that are running inside pods
-    asset: kubectl-ice_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: github_release
-      asset: kubectl-ice_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.0.2")
+    description: Kubectl-ice is an open-source tool for Kubernetes users to monitor and optimize container resource usage. Features include usage breakdowns for pods and containers, making scaling and optimization easier. The tool is compatible with major cloud providers and is actively developed by a community of contributors
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.0.2")
+      - version_constraint: Version == "v0.0.1"
         asset: ice_{{.OS}}_{{.Arch}}.{{.Format}}
-        files:
-          - name: kubectl-ice
-            src: ice
-          - name: ice
+        format: tar.gz
         checksum:
           type: github_release
           asset: ice_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: kubectl-ice_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: kubectl-ice_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: Orange-OpenSource
     repo_name: hurl
