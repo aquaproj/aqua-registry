@@ -4684,15 +4684,40 @@ packages:
     repo_owner: Songmu
     repo_name: ghg
     description: Get the executable from github releases easily
-    rosetta2: true
-    asset: ghg_{{.Version}}_{{.OS}}_amd64.{{.Format}}
-    files:
-      - name: ghg
-        src: ghg_{{.Version}}_{{.OS}}_amd64/ghg
-    format: zip
-    overrides:
-      - goos: linux
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.0")
+        asset: ghg_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        rosetta2: true
+        overrides:
+          - goos: darwin
+            format: zip
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.2.0")
+        asset: ghg_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: ghg_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
   - type: github_release
     repo_owner: Songmu
     repo_name: gitsemvers
