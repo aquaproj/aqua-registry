@@ -7131,13 +7131,39 @@ packages:
     repo_owner: abs-lang
     repo_name: abs
     description: "Home of the ABS programming language: the joy of shell scripting"
-    rosetta2: true
-    format: raw
-    asset: abs-{{.OS}}-{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "preview-2"
+        asset: abs-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: Version == "2.5.1"
+        asset: abs-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+      - version_constraint: Version == "preview-3"
+        asset: abs-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 1.11.4")
+        asset: abs-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 2.7.1")
+        asset: abs-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: "true"
+        asset: abs-{{.Version}}-{{.OS}}-amd6{{.SemVer}}
+        format: raw
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: acheronfail
     repo_name: repgrep
