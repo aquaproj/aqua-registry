@@ -1409,29 +1409,72 @@ packages:
     repo_owner: CircleCI-Public
     repo_name: circleci-cli
     description: Use CircleCI from the command line
-    rosetta2: true
-    asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    files:
-      - name: circleci
-        src: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/circleci
-    version_constraint: semver(">= 0.1.17554")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.1.6"
+        asset: cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
         supported_envs:
           - darwin
+          - windows
           - amd64
-    checksum:
-      type: github_release
-      asset: circleci-cli_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+      - version_constraint: Version == "v0.1.28363"
+        asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: circleci-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.1.17522")
+        asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: circleci-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.28434")
+        asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: circleci-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: circleci-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: ClementTsang
     repo_name: bottom
