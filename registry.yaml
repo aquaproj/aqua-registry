@@ -3177,16 +3177,45 @@ packages:
     type: github_release
     repo_owner: Kampfkarren
     repo_name: selene
-    asset: selene-light-{{.Version}}-{{.OS}}.zip
     description: A blazing-fast modern Lua linter written in Rust
-    replacements:
-      darwin: macos
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    files:
-      - name: selene
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.6.0"
+        asset: selene-{{.Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macos
+          windows: win64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.4.2")
+        asset: selene
+        format: raw
+        supported_envs:
+          - windows/amd64
+      - version_constraint: semver("<= 0.5.3")
+        asset: selene-{{.OS}}
+        format: raw
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: windows
+            asset: selene
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: selene-{{.Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: Kong
     repo_name: deck
