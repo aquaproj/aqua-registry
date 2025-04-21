@@ -4,15 +4,44 @@ packages:
     repo_owner: tcnksm
     repo_name: ghr
     description: Upload multiple artifacts to GitHub Release in parallel
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - amd64
-    asset: ghr_{{.Version}}_{{.OS}}_amd64.{{.Format}}
-    files:
-      - name: ghr
-        src: ghr_{{.Version}}_{{.OS}}_amd64/ghr
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.5.4")
+        asset: ghr_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Version}}_SHASUMS"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.15.0")
+        asset: ghr_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Version}}_SHASUMS"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: ghr_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: "{{.Version}}_SHASUMS"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
