@@ -7968,45 +7968,37 @@ packages:
     repo_owner: alexellis
     repo_name: arkade
     description: Open Source Marketplace For Developer Tools
+    files:
+      - name: ark
+      - name: arkade
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version in ["0.6.6", "0.6.26", "0.6.32", "0.6.34", "0.7.2"]
         no_asset: true
       - version_constraint: Version == "0.1.0"
-        asset: bazaar-{{.OS}}
+        asset: bazaar
         format: raw
+        files:
+          - name: bazaar
         overrides:
-          - goos: windows
-            asset: bazaar
-        supported_envs:
-          - darwin
-          - windows/amd64
-      - version_constraint: Version == "0.6.33"
-        asset: arkade-{{.OS}}
-        format: raw
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            asset: arkade
-        supported_envs:
-          - darwin
-          - windows/amd64
+          - goos: linux
+            goarch: arm64
+            asset: bazaar-arm64
+          - goos: darwin
+            asset: bazaar-darwin
       - version_constraint: semver("<= 0.8.12")
-        asset: arkade-{{.OS}}
+        asset: arkade
         format: raw
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
         overrides:
-          - goos: windows
-            asset: arkade
-        supported_envs:
-          - darwin
-          - windows/amd64
+          - goos: linux
+            goarch: arm64
+            asset: arkade-arm64
+          - goos: darwin
+            asset: arkade-darwin
       - version_constraint: "true"
         asset: arkade-{{.OS}}-{{.Arch}}
         format: raw
