@@ -4,12 +4,16 @@ packages:
     repo_owner: solidiquis
     repo_name: erdtree
     description: A modern, cross-platform, multi-threaded, and general purpose filesystem and disk-usage utility that is aware of .gitignore and hidden file rules
+    files:
+      - name: erd
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v1.0"
         asset: et-{{.Version}}-{{.Arch}}-{{.OS}}
         format: raw
         windows_arm_emulation: true
+        files:
+          - name: et
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -30,20 +34,22 @@ packages:
         asset: et-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
+        files:
+          - name: et
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
           linux: unknown-linux-musl
-          windows: pc-windows-msvc
-        overrides:
-          - goos: windows
-            format: raw
-            asset: et--{{.Arch}}-{{.OS}}
+        supported_envs:
+          - darwin
+          - linux
       - version_constraint: semver("<= 1.8.1")
         asset: et-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
+        files:
+          - name: et
         replacements:
           amd64: x86_64
           arm64: aarch64
