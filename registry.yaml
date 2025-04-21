@@ -8810,68 +8810,163 @@ packages:
     repo_owner: apache
     repo_name: camel-k
     description: Apache Camel K is a lightweight integration platform, born on Kubernetes, with serverless superpowers
-    asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    files:
-      - name: kamel
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    version_constraint: semver(">= 2.0.0-nightly")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.9.0")
-        replacements:
-          amd64: 64bit
-          arm64: arm64bit
-          darwin: mac
-        supported_envs:
-          - darwin
-          - amd64
-      - version_constraint: semver(">= 1.9.0-nightly")
-        replacements:
-          amd64: 64bit
-          darwin: mac
-        supported_envs:
-          - darwin
-          - amd64
+      - version_constraint: Version == "0.3.4"
+        asset: camel-k-client-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-      - version_constraint: semver(">= 1.6.1")
-        replacements:
-          amd64: 64bit
-          arm64: arm64bit
-          darwin: mac
-        supported_envs:
-          - darwin
-          - amd64
-      - version_constraint: semver(">= 1.0.0-M1")
+        windows_arm_emulation: true
         replacements:
           amd64: 64bit
           darwin: mac
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-      - version_constraint: semver(">= 0.3.4")
-        replacements:
-          amd64: 64bit
-          darwin: mac
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha512"
           algorithm: sha512
-      - version_constraint: semver("< 0.3.4")
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["1.8.3-nightly", "1.9.1-nightly", "1.9.2-nightly", "1.10.1-nightly", "1.10.2-nightly", "1.10.3-nightly", "1.10.4-nightly", "1.12.1-nightly", "1.12.2-nightly"]
+        asset: camel-k-client-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: mac
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: camel-k-client-{{.Version}}-{{.OS}}-{{.Arch}}bit.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["v1.9.0", "v1.9.1", "v1.9.2", "v1.10.0", "v1.10.1", "v1.10.2", "v1.10.3", "v1.10.4", "v1.11.0", "v1.11.1"]
+        asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: mac
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}bit.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["v1.12.0", "v1.12.1"]
+        asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: mac
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}bit.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["2.0.0-nightly", "2.0.1-nightly"]
+        asset: camel-k-client-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+      - version_constraint: Version == "v2.0.0"
+        asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+      - version_constraint: Version in ["v2.0.1", "v2.1.0", "v2.2.0"]
+        asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+      - version_constraint: Version in ["v2.3.0", "v2.3.1", "v2.3.2", "v2.3.3", "v2.4.0"]
+        asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+      - version_constraint: Version in ["2.3.1-nightly", "2.3.2-nightly", "2.3.3-nightly", "2.4.1-nightly"]
+        asset: camel-k-client-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 1.0.1")
+        asset: camel-k-client-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
         replacements:
           amd64: 64bit
           darwin: mac
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 1.6.0")
+        asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: mac
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.8.2")
+        asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: mac
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}bit.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.9.0-nightly.202203101127")
+        asset: camel-k-client-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: mac
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.12.0-nightly")
+        asset: camel-k-client-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: mac
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: camel-k-client-{{.Version}}-{{.OS}}-{{.Arch}}bit.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.4.0-nightly")
+        asset: camel-k-client-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+      - version_constraint: "true"
+        asset: camel-k-client-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
   - type: http
     repo_owner: apache
     repo_name: maven
