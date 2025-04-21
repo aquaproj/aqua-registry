@@ -29,20 +29,20 @@ packages:
       - version_constraint: "true"
         asset: ci-info_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
         checksum:
           type: github_release
           asset: ci-info_{{trimV .Version}}_checksums.txt
           algorithm: sha256
           cosign:
             opts:
-              - --certificate
-              - https://github.com/suzuki-shunsuke/ci-info/releases/download/{{.Version}}/ci-info_{{trimV .Version}}_checksums.txt.pem
               - --certificate-identity-regexp
-              - "^https://github\\.com/suzuki-shunsuke/ci-info/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
               - --certificate-oidc-issuer
-              - https://token.actions.githubusercontent.com
+              - "https://token.actions.githubusercontent.com"
               - --signature
               - https://github.com/suzuki-shunsuke/ci-info/releases/download/{{.Version}}/ci-info_{{trimV .Version}}_checksums.txt.sig
-        slsa_provenance:
-          type: github_release
-          asset: multiple.intoto.jsonl
+              - --certificate
+              - https://github.com/suzuki-shunsuke/ci-info/releases/download/{{.Version}}/ci-info_{{trimV .Version}}_checksums.txt.pem
