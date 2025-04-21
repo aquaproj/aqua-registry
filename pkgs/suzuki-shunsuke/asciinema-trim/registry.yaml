@@ -3,15 +3,23 @@ packages:
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: asciinema-trim
-    asset: asciinema-trim_{{.OS}}_{{.Arch}}.tar.gz
-    description: Trim asciinema's record file
-    version_constraint: semver(">= 0.1.2")
+    description: Trim and change the playback speed of asciinema's session
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.1.1")
+        asset: asciinema-trim_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: asciinema-trim_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
         supported_envs:
-          - darwin
           - linux
-    checksum:
-      type: github_release
-      asset: asciinema-trim_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+          - darwin
+      - version_constraint: "true"
+        asset: asciinema-trim_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: asciinema-trim_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
