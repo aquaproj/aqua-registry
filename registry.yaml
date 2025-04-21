@@ -9492,39 +9492,19 @@ packages:
   - type: github_release
     repo_owner: aquaproj
     repo_name: example-go-slsa-provenance
+    asset: example-go-slsa-provenance_{{.OS}}_{{.Arch}}.tar.gz
     description: Example Go Application with SLSA Provenance
-    version_constraint: "false"
+    slsa_provenance:
+      type: github_release
+      asset: multiple.intoto.jsonl
+    version_constraint: semver(">= 0.1.1")
     version_overrides:
-      - version_constraint: semver("<= 0.1.2")
-        asset: example-go-slsa-provenance_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: example-go-slsa-provenance_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        slsa_provenance:
-          type: github_release
-          asset: multiple.intoto.jsonl
       - version_constraint: "true"
-        asset: example-go-slsa-provenance_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: example-go-slsa-provenance_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-          cosign:
-            opts:
-              - --certificate
-              - https://github.com/aquaproj/example-go-slsa-provenance/releases/download/{{.Version}}/example-go-slsa-provenance_{{trimV .Version}}_checksums.txt.pem
-              - --certificate-identity-regexp
-              - "^https://github\\.com/aquaproj/example-go-slsa-provenance/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
-              - --certificate-oidc-issuer
-              - https://token.actions.githubusercontent.com
-              - --signature
-              - https://github.com/aquaproj/example-go-slsa-provenance/releases/download/{{.Version}}/example-go-slsa-provenance_{{trimV .Version}}_checksums.txt.sig
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+          # repository was transferred from suzuki-shunsuke to aquaproj
+          source_uri: github.com/suzuki-shunsuke/example-go-slsa-provenance
   - type: github_release
     repo_owner: aquaproj
     repo_name: registry-tool
@@ -9732,117 +9712,113 @@ packages:
   - type: github_release
     repo_owner: aquasecurity
     repo_name: tfsec
-    description: Security scanner for your Terraform code
-    asset: tfsec_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    checksum:
-      type: github_release
-      asset: tfsec_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 1.26.2")
+    description: Tfsec is now part of Trivy
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.26.2")
-        checksum:
-          type: github_release
-          asset: tfsec_checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 1.24.4")
-      - version_constraint: semver(">= 1.23.2")
+      - version_constraint: Version in ["v0.45.5", "v1.0.5", "v1.16.0", "v1.25.0", "v1.28.7"]
+        no_asset: true
+      - version_constraint: Version == "v0.8.1"
         asset: tfsec-{{.OS}}-{{.Arch}}
         format: raw
-        checksum:
-          type: github_release
-          asset: tfsec_checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 1.18.0")
-      - version_constraint: semver(">= 1.16.1")
-        asset: tfsec-{{.OS}}-{{.Arch}}
-        format: raw
-        checksum:
-          type: github_release
-          asset: tfsec_checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 1.0.0-rc.1")
-        asset: tfsec-{{.OS}}-{{.Arch}}
-        format: raw
-        rosetta2: false
-        supported_envs:
-          - linux
-          - darwin
-        checksum:
-          type: github_release
-          asset: tfsec_checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.63.1")
-        asset: tfsec-{{.OS}}-{{.Arch}}
-        format: raw
-        supported_envs:
-          - linux
-          - darwin
-        rosetta2: false
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 0.58.7")
-        asset: tfsec-{{.OS}}-{{.Arch}}
-        format: raw
-        rosetta2: false
-        supported_envs:
-          - darwin
-          - amd64
-        checksum:
-          type: github_release
-          asset: tfsec_checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.51.1")
-        asset: tfsec-{{.OS}}-{{.Arch}}
-        format: raw
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        rosetta2: false
-        checksum:
-          type: github_release
-          asset: tfsec_checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.39.35")
-        asset: tfsec-{{.OS}}-{{.Arch}}
-        format: raw
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-        checksum:
-          type: github_release
-          asset: tfsec_checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.9.0")
-        asset: tfsec-{{.OS}}-{{.Arch}}
-        format: raw
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 0.8.1")
-        asset: tfsec-{{.OS}}-{{.Arch}}
-        format: raw
+        windows_arm_emulation: true
         supported_envs:
           - linux/amd64
           - windows/amd64
-        rosetta2: false
-        checksum:
-          enabled: false
-      - version_constraint: semver("< 0.8.1")
+      - version_constraint: Version == "v0.63.1"
         asset: tfsec-{{.OS}}-{{.Arch}}
         format: raw
+        complete_windows_ext: false
+        overrides:
+          - goos: windows
+            asset: tfsec-{{.OS}}-{{.Arch}}.exe.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig
+      - version_constraint: Version == "v1.24.4"
+        asset: tfsec_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfsec_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.39.34")
+        asset: tfsec-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 0.51.0")
+        asset: tfsec-{{.OS}}-{{.Arch}}
+        format: raw
         rosetta2: true
+        windows_arm_emulation: true
         checksum:
-          enabled: false
+          type: github_release
+          asset: tfsec_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.58.6")
+        asset: tfsec-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: tfsec_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.15.4")
+        asset: tfsec-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: tfsec_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.22.1")
+        asset: tfsec_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfsec_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.24.3")
+        asset: tfsec-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: tfsec_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.28.6")
+        asset: tfsec_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfsec_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.28.9")
+        asset: tfsec_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfsec_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.28.13")
+        asset: tfsec_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfsec_checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: tfsec-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: aquasecurity
     repo_name: trivy
@@ -29665,20 +29641,17 @@ packages:
     repo_owner: go-to-k
     repo_name: cls3
     description: The CLI tool "cls3" is to CLear S3 Buckets. It empties (so deletes all objects and versions/delete-markers in) S3 Buckets or deletes the buckets themselves
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: "true"
-        asset: cls3_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
+    asset: cls3_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
   - type: github_release
     repo_owner: go-to-k
     repo_name: delstack
