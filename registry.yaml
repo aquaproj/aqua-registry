@@ -4765,18 +4765,46 @@ packages:
     repo_owner: Songmu
     repo_name: horenso
     description: Command wrapper for reporting the result. It is useful for cron jobs
-    rosetta2: true
-    asset: horenso_{{.Version}}_{{.OS}}_amd64.{{.Format}}
-    supported_envs:
-      - darwin
-      - amd64
-    files:
-      - name: horenso
-        src: horenso_{{.Version}}_{{.OS}}_amd64/horenso
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.9.1"
+        asset: horenso_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.0.2")
+        asset: horenso_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.9.0")
+        asset: horenso_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: horenso_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
   - type: github_release
     repo_owner: Songmu
     repo_name: make2help
