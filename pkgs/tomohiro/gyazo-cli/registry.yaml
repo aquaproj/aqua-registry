@@ -3,23 +3,32 @@ packages:
   - type: github_release
     repo_owner: tomohiro
     repo_name: gyazo-cli
-    description: Gyazo command-line uploader
-    asset: gyazo-cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    files:
-      - name: gyazo-cli
-        src: gyazo-cli_{{.Version}}_{{.OS}}_{{.Arch}}/gyazo-cli
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    checksum:
-      type: github_release
-      asset: "{{.Version}}_SHA256SUMS"
-      algorithm: sha256
-    version_constraint: semver(">= 1.0.0")
+    description: ":camera: Gyazo command-line uploader"
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 1.0.0")
+      - version_constraint: semver("<= 0.4.1")
         asset: gyazo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        files:
-          - name: gyazo
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Version}}_SHA256SUMS"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: gyazo-cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Version}}_SHA256SUMS"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
