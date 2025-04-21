@@ -3,24 +3,104 @@ packages:
   - type: github_release
     repo_owner: TheZoraiz
     repo_name: ascii-image-converter
-    asset: ascii-image-converter_{{.OS}}_{{.Arch}}.{{.Format}}
     description: A cross-platform command-line tool to convert images into ascii art and print them on the console. Now supports braille art
-    files:
-      - name: ascii-image-converter
-        src: ascii-image-converter_{{.OS}}_{{.Arch}}/ascii-image-converter
-    format: tar.gz
-    overrides:
-      - goos: windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.2.3"
+        asset: ascii-image-converter_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
-    replacements:
-      linux: Linux
-      windows: Windows
-      darwin: macOS
-      amd64: amd64_64bit
-      arm64: arm64_64bit
-      386: i386_32bit
-      arm: armv6_32bit
-    checksum:
-      type: github_release
-      asset: sha256_checksums.txt
-      algorithm: sha256
+        windows_arm_emulation: true
+        replacements:
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: Version == "v1.2.4"
+        asset: ascii-image-converter_{{.OS}}_64bit_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: semver("<= 1.2.0")
+      - version_constraint: semver("<= 1.2.2")
+        asset: ascii-image-converter_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: semver("<= 1.4.0")
+        asset: ascii-image-converter_{{.OS}}_{{.Arch}}_64bit.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: sha256_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: semver("<= 1.10.0")
+        asset: ascii-image-converter_{{.OS}}_{{.Arch}}_64bit.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: sha256_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: ascii-image-converter_{{.OS}}_{{.Arch}}_64bit.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: sha256_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
