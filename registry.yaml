@@ -3380,24 +3380,76 @@ packages:
   - type: github_release
     repo_owner: LuaLS
     repo_name: lua-language-server
-    aliases:
-      - name: sumneko/lua-language-server
-    description: A language server that offers Lua language support - programmed in Lua
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: lua-language-server-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      windows: win32
-      amd64: x64
-    overrides:
-      - goos: windows
-        format: zip
-    files:
-      - name: lua-language-server
-        src: bin/lua-language-server
+    description: "A language server that offers Lua language support - programmed in Lua"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "3.6.17"
+        asset: lua-language-server-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "3.6.18"
+        asset: lua-language-server-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 2.6.7")
+        asset: lua-language-server-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 3.6.14")
+        asset: lua-language-server-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 3.7.4")
+        asset: lua-language-server-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: lua-language-server-{{.Version}}-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 3.8.3")
+        asset: lua-language-server-{{.Version}}-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: darwin
+            asset: lua-language-server-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: lua-language-server-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: lua-language-server-{{.Version}}-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: LucasPickering
     repo_name: slumber
