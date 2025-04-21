@@ -3,41 +3,145 @@ packages:
   - type: github_release
     repo_owner: DelineaXPM
     repo_name: dsv-cli
-    aliases:
-      - name: thycotic/dsv-cli
-    link: https://docs.delinea.com/dsv/current/cli-ref
-    description: Delinea DevOps Secrets Vault is a secret vault automation tool for the management of credentials for applications, databases, CI/CD tools, and services
-    search_words:
-      - secrets
-      - vault
-    files:
-      - name: dsv
-    supported_envs:
-      - darwin
-      - amd64
-    asset: dsv-{{.OS}}-{{.Arch}}
-    format: raw
-    replacements:
-      amd64: x64
-      windows: win
-    version_constraint: semver(">= 1.39.9")
-    checksum:
-      type: github_release
-      asset: checksums-sha256.txt
-      algorithm: sha256
+    description: A cross-platform swiss army knife tool for DevOps secrets management
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.39.5")
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 1.39.1")
-        checksum:
-          enabled: false
+      - version_constraint: Version == "v1.39.1"
+        asset: dsv-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
         replacements:
           windows: win
-      - version_constraint: semver(">= 1.33.0")
         checksum:
-          enabled: false
-      - version_constraint: "true"
+          type: github_release
+          asset: dsv-{{.OS}}-sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.39.5"
+        asset: dsv-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: dsv-cli-{{.OS}}-sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: dsv.exe_{{trimV .Version}}_{{.OS}}_{{.Arch}}.sbom.json
+            replacements:
+              amd64: amd64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.39.6"
+        asset: dsv-{{.OS}}-{{.Arch}}.sbom.json
+        format: raw
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: dsv-cli-{{.OS}}-sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: dsv-{{.OS}}-{{.Arch}}
+          - goos: windows
+            asset: dsv.exe.sig
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.39.8"
+        asset: dsv-{{.OS}}-{{.Arch}}.sbom.json
+        format: raw
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: checksums-sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: dsv-{{.OS}}-{{.Arch}}
+          - goos: windows
+            asset: dsv.exe.sig
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.32.0")
+        asset: dsv-{{.OS}}-{{.Arch}}
+        format: raw
         rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          windows: win
         checksum:
-          enabled: false
+          type: github_release
+          asset: dsv-{{.OS}}-{{.Arch}}-sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.39.0")
+        asset: dsv-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          windows: win
+        checksum:
+          type: github_release
+          asset: dsv-{{.OS}}-{{.Arch}}-sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.39.4")
+        asset: dsv-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: dsv-cli-{{.OS}}-sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: dsv.exe_{{trimV .Version}}_{{.OS}}_{{.Arch}}.sbom.json
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: dsv-{{.OS}}-{{.Arch}}.sbom.json
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          windows: win
+        checksum:
+          type: github_release
+          asset: checksums-sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: dsv-{{.OS}}-{{.Arch}}
+          - goos: windows
+            format: zip
+            asset: dsv-{{.OS}}-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
