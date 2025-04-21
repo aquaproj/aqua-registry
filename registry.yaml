@@ -3779,21 +3779,51 @@ packages:
     repo_owner: MusicDin
     repo_name: kubitect
     description: Kubitect provides a simple way to set up a highly available Kubernetes cluster across multiple hosts
-    asset: kubitect-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    version_constraint: semver(">= 2.1.0")
-    supported_envs:
-      - darwin
-      - linux
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+      - version_constraint: Version == "v2.0.0"
+        asset: kubitect-cli-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: Version == "v3.0.0"
+        asset: kubitect-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        supported_envs:
+          - linux
+      - version_constraint: semver("<= 1.1.0")
+        no_asset: true
+      - version_constraint: semver("<= 2.0.7")
+        asset: kubitect-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: kubitect-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: Myriad-Dreamin
     repo_name: tinymist
