@@ -18271,23 +18271,30 @@ packages:
     repo_owner: clog-tool
     repo_name: clog-cli
     description: Generate beautiful changelogs from your Git commit history
-    rosetta2: true
-    asset: clog-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz
-    replacements:
-      arm64: aarch64
-      amd64: x86_64
-      darwin: apple-darwin
-      linux: unknown-linux-musl
-    overrides:
-      - goos: linux
-        goarch: arm64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.8.2")
+        no_asset: true
+      - version_constraint: "true"
+        asset: clog-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
         replacements:
-          linux: unknown-linux-gnu
-    supported_envs:
-      - darwin
-      - linux
-    files:
-      - name: clog
+          amd64: x86_64
+          darwin: apple-darwin
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: clok
     repo_name: sm
