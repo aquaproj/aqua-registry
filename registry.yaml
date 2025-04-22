@@ -25874,12 +25874,67 @@ packages:
   - type: github_release
     repo_owner: earthly
     repo_name: earthly
-    description: Repeatable builds
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: earthly-{{.OS}}-{{.Arch}}
+    description: Super simple build framework with fast, repeatable builds and an instantly familiar syntax – like Dockerfile and Makefile had a baby
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.4.5"
+        asset: earthly-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v0.5.1"
+        asset: earthly-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.3.19")
+        asset: earth-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.4.0-rc1")
+        asset: earthly-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.4.2")
+        asset: earth-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        overrides:
+          - goos: darwin
+            asset: earthly-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.4.4")
+        asset: earthly-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: earth-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.5.14")
+        asset: earthly-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: earthly-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
   - type: github_release
     repo_owner: ebi-yade
     repo_name: ecresolve
