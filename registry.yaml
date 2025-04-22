@@ -42204,21 +42204,23 @@ packages:
   - type: github_release
     repo_owner: loeffel-io
     repo_name: ls-lint
-    description: An extremely fast directory and filename linter - Bring some structure to your project filesystem
-    asset: ls-lint-{{.OS}}-{{.Arch}}
-    # error: opening tar archive for reading: wrapping file reader: gzip: invalid header
-    format: raw
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 2.0.0")
+    description: "An extremely fast directory and filename linter - Bring some structure to your project filesystem"
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.10.0-beta.1")
+      - version_constraint: semver("<= 1.0.5")
+        asset: ls-lint-{{.OS}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.9.2")
+        asset: ls-lint-{{.OS}}
+        format: raw
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.11.2")
         asset: ls-lint-{{.OS}}
         format: raw
         overrides:
@@ -42228,26 +42230,14 @@ packages:
           - goos: darwin
             goarch: arm64
             asset: ls-lint-{{.OS}}-{{.Arch}}
+      - version_constraint: "true"
+        asset: ls-lint-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         checksum:
-          enabled: false
-      - version_constraint: semver(">= 1.1.0")
-        asset: ls-lint-{{.OS}}
-        format: raw
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver("< 1.1.0")
-        asset: ls-lint-{{.OS}}
-        format: raw
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
-        checksum:
-          enabled: false
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: loft-sh
     repo_name: devpod
@@ -50076,21 +50066,16 @@ packages:
   - type: github_release
     repo_owner: ponkio-o
     repo_name: ec2x
-    description: A cli tool of connect to ec2 instance with Session Manager
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: Version == "v0.0.4"
-        no_asset: true
-      - version_constraint: "true"
-        asset: ec2x_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux
-          - darwin
+    description: A cli tool of connect to ec2 instance
+    asset: ec2x_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - linux
+      - darwin
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
   - type: github_release
     repo_owner: porter-dev
     repo_name: porter
