@@ -49074,58 +49074,91 @@ packages:
     repo_owner: osteele
     repo_name: gojekyll
     description: A fast Go implementation of the Jekyll blogging engine
-    asset: gojekyll_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      amd64: x86_64v1
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.2.8")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.2.7")
+      - version_constraint: Version in ["v0.1.0", "v0.2.6", "v0.2.11", "v0.2.13"]
+        no_asset: true
+      - version_constraint: Version == "v0.2.7"
+        asset: gojekyll_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         replacements:
           amd64: x86_64
           darwin: Darwin
           linux: Linux
           windows: Windows
-      - version_constraint: semver(">= 0.2.3")
-        asset: gojekyll_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v0.2.12"
+        asset: gojekyll_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         overrides:
           - goos: linux
-            asset: gojekyll_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+            goarch: amd64
+            asset: gojekyll_{{.OS}}_{{.Arch}}v1.{{.Format}}
+          - goos: darwin
+            goarch: amd64
+            asset: gojekyll_{{.OS}}_{{.Arch}}v1.{{.Format}}
+          - goos: windows
+            goarch: amd64
+            format: zip
+            asset: gojekyll_{{.OS}}_{{.Arch}}v1.{{.Format}}
+          - goos: windows
+            goarch: arm64
+            format: zip
+      - version_constraint: semver("<= 0.2.5")
+        asset: gojekyll_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
         replacements:
           amd64: x86_64
           darwin: macOS
           linux: Linux
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver("< 0.2.3")
-        asset: gojekyll_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         overrides:
           - goos: darwin
             asset: gojekyll_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        replacements:
-          amd64: x86_64
-          darwin: macOS
-          linux: Linux
         supported_envs:
           - linux/amd64
           - darwin
-        rosetta2: true
+      - version_constraint: "true"
+        asset: gojekyll_{{.OS}}_{{.Arch}}v1.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
         checksum:
-          enabled: false
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: gojekyll_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            asset: gojekyll_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: windows
+            goarch: amd64
+            format: zip
+          - goos: windows
+            goarch: arm64
+            format: zip
+            asset: gojekyll_{{.OS}}_{{.Arch}}.{{.Format}}
   - type: github_release
     repo_owner: ouch-org
     repo_name: ouch
