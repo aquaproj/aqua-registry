@@ -28925,23 +28925,117 @@ packages:
   - type: github_release
     repo_owner: fortio
     repo_name: fortio
-    asset: fortio-{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
-    format: tgz
     description: Fortio load testing library, command line tool, advanced echo server and web UI in go (golang). Allows to specify a set query-per-second load and record latency histograms and other useful stats
-    replacements:
-      windows: win
-    overrides:
-      - goos: windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.3.8"
+        no_asset: true
+      - version_constraint: Version == "0.3.7"
+        asset: fortio_0_3_7_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "1.15.2"
+        asset: fortio_{{.OS}}_{{.Version}}.{{.Format}}
         format: zip
+        replacements:
+          windows: win
+        overrides:
+          - goos: linux
+            format: tgz
+            asset: fortio-{{.OS}}_{{.Arch}}-{{.Version}}.{{.Format}}
+            replacements:
+              amd64: x64
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: Version == "v1.29.0"
+        asset: fortio_{{.OS}}_{{.Version}}.{{.Format}}
+        format: zip
+        replacements:
+          windows: win
+        overrides:
+          - goos: linux
+            format: tgz
+            asset: fortio-{{.OS}}_{{.Arch}}-{{.Version}}.{{.Format}}
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: semver("<= 0.3.6")
+        no_asset: true
+      - version_constraint: semver("<= 0.4.1")
+        asset: fortio-{{.OS}}_{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tgz
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 1.7.0")
+        asset: fortio-{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 1.8.0")
+        asset: fortio-{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        replacements:
+          windows: win
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x64
+          - goos: windows
+            format: zip
+            asset: fortio_{{.OS}}_{{trimV .Version}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: semver("<= 1.9.0")
+        asset: fortio-{{.OS}}_{{.Arch}}-{{trimV .Version}}-pre.{{.Format}}
+        format: tgz
+        replacements:
+          windows: win
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x64
+          - goos: windows
+            format: zip
+            asset: fortio_{{.OS}}_{{trimV .Version}}-pre.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: semver("<= 1.26.0")
+        asset: fortio-{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        replacements:
+          windows: win
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x64
+          - goos: windows
+            format: zip
+            asset: fortio_{{.OS}}_{{trimV .Version}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: "true"
         asset: fortio_{{.OS}}_{{trimV .Version}}.{{.Format}}
-        files:
-          - name: fortio
-    files:
-      - name: fortio
-        src: usr/bin/fortio
-    supported_envs:
-      - linux
-      - windows/amd64
+        format: zip
+        replacements:
+          windows: win
+        overrides:
+          - goos: linux
+            format: tgz
+            asset: fortio-{{.OS}}_{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        supported_envs:
+          - linux
+          - windows/amd64
   - type: github_release
     repo_owner: foundry-rs
     repo_name: foundry
