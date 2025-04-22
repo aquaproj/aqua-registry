@@ -25773,21 +25773,79 @@ packages:
     repo_owner: dundee
     repo_name: gdu
     description: Fast disk usage analyzer with console interface written in Go
-    asset: gdu_{{.OS}}_{{.Arch}}.tgz
-    overrides:
-      - goos: windows
-        asset: gdu_windows_amd64.exe.zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    files:
-      - name: gdu
-        src: gdu_{{.OS}}_{{.Arch}}
-    checksum:
-      type: github_release
-      asset: sha256sums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.2.0"
+        no_asset: true
+      - version_constraint: semver("<= 2.1.0")
+        asset: gdu-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.3.0")
+        asset: gdu-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 4.8.0")
+        asset: gdu_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+            asset: gdu_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 5.13.2")
+        asset: gdu_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: gdu_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 5.27.0")
+        asset: gdu_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: gdu_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: gdu_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: gdu_{{.OS}}_{{.Arch}}-x.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: gdu_{{.OS}}_{{.Arch}}.exe.{{.Format}}
   - type: github_release
     repo_owner: dustinblackman
     repo_name: oatmeal
