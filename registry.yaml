@@ -21023,21 +21023,56 @@ packages:
     type: github_release
     repo_owner: corneliusweig
     repo_name: rakkess
-    description: Review Access - kubectl plugin to show an access matrix for k8s server resources
-    supported_envs:
-      - darwin
-      - amd64
-    asset: access-matrix-{{.Arch}}-{{.OS}}.tar.gz
-    overrides:
-      - goos: windows
-        asset: access-matrix-amd64-windows.zip
-    files:
-      - name: kubectl-access_matrix
-        src: access-matrix-{{.Arch}}-{{.OS}}
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
+    description: "Review Access - kubectl plugin to show an access matrix for k8s server resources"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.4.1")
+        asset: rakkess-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.4.7")
+        asset: rakkess-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: rakkess-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: corrupt952
     repo_name: closest
