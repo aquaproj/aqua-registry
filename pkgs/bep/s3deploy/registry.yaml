@@ -4,126 +4,158 @@ packages:
     repo_owner: bep
     repo_name: s3deploy
     description: A simple tool to deploy static websites to Amazon S3 and CloudFront with Gzip and custom headers support (e.g. "Cache-Control")
-    asset: s3deploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
-      - goos: darwin
-        format: pkg
-        asset: s3deploy_{{trimV .Version}}_{{.OS}}-universal.{{.Format}}
-        files:
-          - name: s3deploy
-            src: Payload/s3deploy
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    checksum:
-      type: github_release
-      asset: s3deploy_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 2.11.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 2.10.1")
+      - version_constraint: Version == "v2.10.0"
+        no_asset: true
+      - version_constraint: Version == "v1.0"
+        asset: s3deploy_{{.Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: s3deploy_checksums.txt
+          algorithm: sha256
         overrides:
+          - goos: linux
+            replacements:
+              arm64: ARM64
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v2.3.5"
+        asset: s3deploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: s3deploy_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: ARM64
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v2.4.0"
+        asset: s3deploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          arm64: ARM64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: s3deploy_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v2.9.0"
+        asset: s3deploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: s3deploy_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
           - goos: darwin
             format: pkg
             asset: s3deploy_{{trimV .Version}}_{{.OS}}-universal.{{.Format}}
-            files:
-              - name: s3deploy
-                src: Payload/s3deploy
-          - goos: windows
-            format: zip
-      - version_constraint: semver(">= 2.9.0")
-      - version_constraint: semver(">= 2.5.0")
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.1.0")
+        asset: s3deploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: s3deploy_checksums.txt
+          algorithm: sha256
         overrides:
+          - goos: linux
+            replacements:
+              arm64: ARM64
           - goos: windows
             format: zip
+      - version_constraint: semver("<= 2.3.2")
+        asset: s3deploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: s3deploy_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: ARM64
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 2.3.4")
+        no_asset: true
+      - version_constraint: semver("<= 2.8.1")
+        asset: s3deploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
         replacements:
           amd64: 64bit
           arm64: ARM64
           darwin: macOS
           linux: Linux
           windows: Windows
-        rosetta2: false
-      - version_constraint: semver(">= 2.4.0")
-        format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
-            replacements:
-              arm64: arm64
-        replacements:
-          amd64: 64bit
-          arm64: ARM64
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        rosetta2: false
-      - version_constraint: semver(">= 1.1.1")
-        format: tar.gz
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: ARM64
-          - goos: windows
-            format: zip
-        replacements:
-          amd64: 64bit
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-      - version_constraint: semver(">= 1.0.2")
-        format: tar.gz
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: ARM64
-          - goos: windows
-            format: zip
-        replacements:
-          amd64: 64bit
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
         checksum:
           type: github_release
-          asset: s3deploy_checksums.txt
+          asset: s3deploy_{{trimV .Version}}_checksums.txt
           algorithm: sha256
-      - version_constraint: semver("< 1.0.2")
-        asset: s3deploy_{{.Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
         overrides:
-          - goos: linux
-            replacements:
-              arm64: ARM64
           - goos: windows
             format: zip
-        replacements:
-          amd64: 64bit
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+      - version_constraint: "true"
+        asset: s3deploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
         checksum:
           type: github_release
-          asset: s3deploy_checksums.txt
+          asset: s3deploy_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: darwin
+            format: pkg
+            asset: s3deploy_{{trimV .Version}}_{{.OS}}-universal.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
