@@ -20509,33 +20509,24 @@ packages:
           - windows
           - amd64
       - version_constraint: semver("<= 0.7.3")
-        asset: gvproxy-{{.OS}}-{{.Arch}}
+        asset: gvproxy-{{.OS}}
         format: raw
-        replacements:
-          windows: win
         overrides:
-          - goos: darwin
-            asset: gvproxy-{{.OS}}
-          - goos: windows
-            asset: "{{.OS}}-sshproxy"
+          - goos: linux
+            asset: gvproxy-{{.OS}}-{{.Arch}}
       - version_constraint: "true"
-        asset: gvproxy-{{.OS}}-{{.Arch}}
+        asset: gvproxy-{{.OS}}
         format: raw
-        replacements:
-          windows: win
         checksum:
           type: github_release
           asset: sha256sums
           algorithm: sha256
         overrides:
-          - goos: darwin
-            asset: gvproxy-{{.OS}}
-          - goos: windows
-            goarch: amd64
-            asset: "{{.OS}}-sshproxy"
+          - goos: linux
+            asset: gvproxy-{{.OS}}-{{.Arch}}
           - goos: windows
             goarch: arm64
-            asset: "{{.OS}}-sshproxy-{{.Arch}}"
+            asset: gvproxy-{{.Arch}}
   - name: containers/gvisor-tap-vsock/qemu-wrapper
     type: github_release
     repo_owner: containers
