@@ -4,15 +4,17 @@ packages:
     repo_owner: enokawa
     repo_name: taskdiff
     description: Diff tool for ECS Task Definition
-    asset: taskdiff_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    files:
-      - name: taskdiff
-        src: taskdiff_{{.Version}}_{{.OS}}_{{.Arch}}/taskdiff
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: taskdiff_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
