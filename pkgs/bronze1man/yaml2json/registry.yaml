@@ -4,9 +4,17 @@ packages:
     repo_owner: bronze1man
     repo_name: yaml2json
     description: a command line tool convert from yaml to json
-    format: raw
-    rosetta2: true
-    asset: yaml2json_{{.OS}}_{{.Arch}}
-    supported_envs:
-      - darwin
-      - amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.3.0")
+        asset: yaml2json_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: yaml2json_{{.OS}}_{{.Arch}}
+        format: raw
