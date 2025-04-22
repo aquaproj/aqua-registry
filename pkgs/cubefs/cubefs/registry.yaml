@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: cubefs
+    repo_name: cubefs
+    description: cloud-native distributed storage
+    version_filter: not (Version matches "-(beta|rc)")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2.4.3")
+        no_asset: true
+      - version_constraint: "true"
+        asset: cubefs-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: cubefs-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz.sha256sum
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
