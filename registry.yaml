@@ -35020,22 +35020,53 @@ packages:
     repo_owner: ipld
     repo_name: go-car
     description: A content addressible archive utility
-    asset: go-car_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    files:
-      - name: car
-    overrides:
-      - goos: darwin
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.4.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.6.1")
         asset: go-car_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
-        files:
-          - name: car
-            src: go-car
-      - goos: linux
-        format: tar.gz
-    checksum:
-      type: github_release
-      asset: go-car_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+        format: zip
+        checksum:
+          type: github_release
+          asset: go-car_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: go-car_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: go-car_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 2.5.0")
+        no_asset: true
+      - version_constraint: semver("<= 2.13.1")
+        asset: go-car_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: go-car_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: go-car_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: go-car_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 2.14.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: go-car_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: go-car_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: go-car_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: go-car_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
   - type: github_release
     repo_owner: ismaelgv
     repo_name: rnr
