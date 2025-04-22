@@ -21474,79 +21474,97 @@ packages:
   - type: github_release
     repo_owner: create-go-app
     repo_name: cli
-    description: Create a new production-ready project with backend, frontend and deploy automation by running one CLI command
-    asset: cgapp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    files:
-      - name: cgapp
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 4.0.0")
+    description: A complete and self-contained solution for developers of any qualification to create a production-ready project with backend (Go), frontend (JavaScript, TypeScript) and deploy automation (Ansible, Docker) by running only one CLI command
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.7.0")
-        asset: cgapp_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
-        replacements:
-          amd64: x86_64
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        supported_envs:
-          - darwin
-          - amd64
-      - version_constraint: semver(">= 1.6.3")
-        asset: cgapp_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
-        replacements:
-          amd64: x86_64
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-      - version_constraint: semver(">= 1.0.0")
-        asset: cgapp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
-        replacements:
-          amd64: x86_64
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-      - version_constraint: semver("< 1.0.0")
+      - version_constraint: Version == "0.8.4"
         asset: cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-        files:
-          - name: cgapp
-            src: cli
-        overrides: []
-        supported_envs:
-          - linux/amd64
-          - darwin
         rosetta2: true
         checksum:
           type: github_release
           asset: cli_{{.Version}}_checksums.txt
           algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.8.3")
+        no_asset: true
+      - version_constraint: semver("<= 1.6.2")
+        asset: cgapp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.6.12")
+        asset: cgapp_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.6.2")
+        asset: cgapp_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: cgapp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.zst
+            asset: cgapp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pkg.{{.Format}}
+          - goos: darwin
+            format: tar.gz
   - type: github_release
     repo_owner: cross-rs
     repo_name: cross
