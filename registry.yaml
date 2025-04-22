@@ -20739,7 +20739,17 @@ packages:
     version_constraint: "false"
     version_overrides:
       - version_constraint: "true"
-        no_asset: true
+        asset: fuse-overlayfs-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - linux
   - name: containers/gvisor-tap-vsock/gvproxy
     type: github_release
     repo_owner: containers
