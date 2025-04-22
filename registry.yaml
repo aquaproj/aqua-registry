@@ -24674,40 +24674,48 @@ packages:
   - type: github_release
     repo_owner: dolthub
     repo_name: dolt
-    asset: dolt-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    description: Dolt – It's Git for Data
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    version_constraint: semver(">= 0.40.29")
-    files:
-      - name: dolt
-        src: dolt-{{.OS}}-{{.Arch}}/bin/dolt
+    description: Dolt – Git for Data
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.40.15")
-        files:
-          - name: dolt
-            src: dolt-{{.OS}}-{{.Arch}}/bin/dolt
-          - name: git-dolt
-            src: dolt-{{.OS}}-{{.Arch}}/bin/git-dolt
-          - name: git-dolt-smudge
-            src: dolt-{{.OS}}-{{.Arch}}/bin/git-dolt-smudge
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.9.9")
+        asset: dolt-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
         supported_envs:
           - darwin
+          - windows
           - amd64
-        files:
-          - name: dolt
-            src: dolt-{{.OS}}-{{.Arch}}/bin/dolt
-          - name: git-dolt
-            src: dolt-{{.OS}}-{{.Arch}}/bin/git-dolt
-          - name: git-dolt-smudge
-            src: dolt-{{.OS}}-{{.Arch}}/bin/git-dolt-smudge
+      - version_constraint: semver("<= 0.34.3")
+        asset: dolt-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.40.13")
+        asset: dolt-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: dolt-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
   - name: dominikh/go-tools/staticcheck
     type: github_release
     repo_owner: dominikh
