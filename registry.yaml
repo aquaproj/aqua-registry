@@ -26075,21 +26075,59 @@ packages:
   - type: github_release
     repo_owner: ekzhang
     repo_name: bore
-    asset: bore-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.gz
     description: bore is a simple CLI tool for making tunnels to localhost
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      linux: unknown-linux-musl
-      windows: pc-windows-msvc
-    overrides:
-      - goos: windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.5.2"
+        asset: bore-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.3.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.5.1")
+        asset: bore-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: bore-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
-    supported_envs:
-      - darwin
-      - amd64
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            format: tar.gz
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux
+          - windows/amd64
   - type: github_release
     repo_owner: electric-saw
     repo_name: kafta
