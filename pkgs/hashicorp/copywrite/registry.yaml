@@ -4,23 +4,32 @@ packages:
     repo_owner: hashicorp
     repo_name: copywrite
     description: Automate copyright headers and license files at scale
-    asset: copywrite_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      amd64: x86_64
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
-    version_constraint: semver(">= 0.16.6")
+    version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.16.5"
         asset: copywrite_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         replacements:
           amd64: x86_64
           darwin: Darwin
           linux: Linux
           windows: Windows
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: copywrite_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
