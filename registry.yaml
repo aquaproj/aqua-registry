@@ -21465,12 +21465,68 @@ packages:
   - type: github_release
     repo_owner: crazy-max
     repo_name: ftpgrab
-    asset: ftpgrab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: Grab your files periodically from a remote FTP or SFTP server easily
-    overrides:
-      - goos: windows
-        format: zip
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v7.3.0"
+        asset: ftpgrab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v7.6.0"
+        asset: ftpgrab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v7.7.0"
+        asset: ftpgrab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 4.0.0")
+        no_asset: true
+      - version_constraint: semver("<= 4.3.5")
+      - version_constraint: semver("<= 7.2.0")
+        asset: ftpgrab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 7.5.0")
+        asset: ftpgrab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: ftpgrab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: create-go-app
     repo_name: cli
