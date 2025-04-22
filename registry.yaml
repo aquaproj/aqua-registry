@@ -32083,33 +32083,70 @@ packages:
     repo_owner: golang-migrate
     repo_name: migrate
     description: Database migrations. CLI and Golang library
-    asset: migrate.{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    version_constraint: semver(">= 4.15.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        files:
-          - name: migrate
-            src: migrate.{{.OS}}-{{.Arch}}
+      - version_constraint: Version == "v4.15.0-beta.1"
+        asset: migrate.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
         overrides:
           - goos: windows
-            format: tar.gz
-            asset: migrate.windows-amd64.exe.tar.gz
-            files:
-              - name: migrate
-                src: migrate.{{.OS}}-{{.Arch}}.exe
-    checksum:
-      type: github_release
-      asset: sha256sum.txt
-      algorithm: sha256
+            format: zip
+      - version_constraint: semver("<= 4.7.1")
+        asset: migrate.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: migrate.{{.OS}}-{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 4.11.0")
+        asset: migrate.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: migrate.{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 4.12.1")
+      - version_constraint: semver("<= 4.14.1")
+        asset: migrate.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: migrate.{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: migrate.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: go_install
     path: golang.org/x/perf/cmd/benchstat
     description: Benchstat computes and compares statistics about benchmarks
