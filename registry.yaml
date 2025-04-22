@@ -31664,19 +31664,48 @@ packages:
   - type: github_release
     repo_owner: go-swagger
     repo_name: go-swagger
-    asset: swagger_{{.OS}}_{{.Arch}}
-    format: raw
     description: Swagger 2.0 implementation for go
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    files:
-      - name: swagger
-    checksum:
-      type: github_release
-      asset: sha256sum.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.3")
+        no_asset: true
+      - version_constraint: semver("<= 0.5.0")
+        asset: swagger_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha1sum.txt
+          algorithm: sha1
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.28.0")
+        asset: swagger_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha1sum.txt
+          algorithm: sha1
+      - version_constraint: semver("<= 0.30.0")
+        asset: swagger_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha1sum.txt
+          algorithm: sha1
+      - version_constraint: "true"
+        asset: swagger_{{.OS}}_{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: go-task
     repo_name: task
