@@ -32144,19 +32144,47 @@ packages:
   - type: github_release
     repo_owner: golang
     repo_name: mock
-    asset: mock_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: GoMock is a mocking framework for the Go programming language
-    files:
-      - name: mockgen
-        src: mock_{{trimV .Version}}_{{.OS}}_{{.Arch}}/mockgen
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: mock_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.4.4"
+        no_asset: true
+      - version_constraint: Version == "v1.5.0"
+        asset: mock_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: mock_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.4.0")
+        no_asset: true
+      - version_constraint: semver("<= 1.4.3")
+        asset: mock_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: mock_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: mock_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: mock_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
   - type: go_install
     name: golang/tools/godoc
     path: golang.org/x/tools/cmd/godoc
