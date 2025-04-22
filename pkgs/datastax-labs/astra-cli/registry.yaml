@@ -3,11 +3,95 @@ packages:
   - type: github_release
     repo_owner: datastax-labs
     repo_name: astra-cli
-    description: DataStax Astra automation CLI
-    asset: astra-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    files:
-      - name: astra
-    checksum:
-      type: github_release
-      asset: astra-cli_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    description: DataStax Astra automation CLI https://astra.datastax.com
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        no_asset: true
+      - version_constraint: Version == "v0.3.5"
+        asset: astra-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: astra-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            format: zip
+            asset: astra-cli-{{.OS}}-{{.Arch}}-signed.{{.Format}}
+      - version_constraint: Version == "v0.3.6"
+        asset: astra-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: astra-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            format: zip
+            asset: astra-cli-{{.OS}}-{{.Arch}}-signed.{{.Format}}
+      - version_constraint: Version == "v0.4.0"
+        asset: astra-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: astra-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            format: zip
+            asset: astra-{{.OS}}-{{.Arch}}-signed.{{.Format}}
+      - version_constraint: semver("<= 0.3.0")
+        asset: astra-cli-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tgz
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.3.2")
+        asset: astra-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: astra-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            format: zip
+            asset: astra-cli-{{.OS}}-{{.Arch}}-signed.{{.Format}}
+      - version_constraint: semver("<= 0.3.4")
+        asset: astra-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: astra-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            format: zip
+            asset: astra-cli-{{.OS}}-{{.Arch}}-signed.{{.Format}}
+      - version_constraint: "true"
+        asset: astra-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: astra-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
