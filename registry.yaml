@@ -22102,26 +22102,68 @@ packages:
     repo_owner: dalance
     repo_name: procs
     description: A modern replacement for ps written in Rust
-    replacements:
-      amd64: x86_64
-      darwin: mac
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    asset: procs-{{.Version}}-{{.Arch}}-{{.OS}}.zip
-    version_constraint: semver(">= 0.13.3")
+    version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 0.5.0")
+      - version_constraint: semver("<= 0.6.0")
+        asset: procs-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: mac
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 0.12.1")
+        asset: procs-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: mac
+          windows: win
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 0.14.5")
+        asset: procs-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: mac
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.14.8")
+        asset: procs-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: mac
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
       - version_constraint: "true"
-        # https://github.com/aquaproj/aqua-registry/pull/7156
-        # windows zip structure was changed from 0.13.3.
-        # https://github.com/dalance/procs/blob/master/CHANGELOG.md#v0133---2022-10-18
-        # > [Changed] Release zip for Windows has the exe at toplevel
+        asset: procs-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: mac
         overrides:
           - goos: windows
-            files:
-              - name: procs
-                src: target/x86_64-pc-windows-msvc/release/procs.exe
+            replacements: {}
   - type: github_release
     repo_owner: dandavison
     repo_name: delta
