@@ -28055,32 +28055,39 @@ packages:
     repo_owner: fastly
     repo_name: terrctl
     description: A command-line client for Fastly Terrarium. https://wasm.fastlylabs.com
-    asset: terrctl-{{.OS}}_{{.Arch}}-{{.Version}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      darwin: macos
-      windows: win64
-    files:
-      - name: terrctl
-        src: "{{.OS}}-{{.Arch}}/terrctl"
-    overrides:
-      - goos: darwin
-        goarch: amd64
-        asset: terrctl-{{.OS}}-{{.Version}}.{{.Format}}
-        files:
-          - name: terrctl
-            src: "{{.OS}}/terrctl"
-      - goos: windows
-        format: zip
-        asset: terrctl-{{.OS}}-{{.Version}}.{{.Format}}
-        files:
-          - name: terrctl
-            src: "{{.OS}}/terrctl.exe"
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.1")
+        asset: terrctl-{{.OS}}_{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+          windows: win64
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: terrctl-{{.OS}}-{{.Version}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: terrctl-{{.OS}}-{{.Version}}.{{.Format}}
+      - version_constraint: "true"
+        asset: terrctl-{{.OS}}_{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+          windows: win64
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            goarch: amd64
+            asset: terrctl-{{.OS}}-{{.Version}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: terrctl-{{.OS}}-{{.Version}}.{{.Format}}
   - type: github_release
     repo_owner: fatedier
     repo_name: frp
