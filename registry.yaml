@@ -20171,12 +20171,53 @@ packages:
     repo_owner: compose
     repo_name: transporter
     description: Sync data between persistence engines, like ETL only not stodgy
-    format: raw
-    complete_windows_ext: false
-    asset: transporter-{{trimV .Version}}-{{.OS}}-{{.Arch}}
-    supported_envs:
-      - darwin
-      - amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.2-beta+93cb201"
+        asset: transporter-{{.OS}}-93cb201.{{.Format}}
+        format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.1.2"
+        asset: transporter-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.1")
+        asset: transporter_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.5.2")
+        asset: transporter-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: transporter-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: comtrya
     repo_name: comtrya
