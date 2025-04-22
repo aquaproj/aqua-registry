@@ -58438,6 +58438,8 @@ packages:
           - goos: darwin
             replacements:
               arm64: arm64
+        files:
+          - name: curl
       - version_constraint: Version == "8.6.0"
         asset: curl-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
         format: tar.xz
@@ -58446,14 +58448,26 @@ packages:
         supported_envs:
           - linux
           - darwin
+        files:
+          - name: curl
       - version_constraint: semver("<= 8.2.0")
+        asset: curl-static-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.xz
+        supported_envs:
+          - linux
+        files:
+          - name: curl
       - version_constraint: semver("<= 8.5.0")
         asset: curl-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
         format: tar.xz
         replacements:
+          linux: static
           darwin: macos
         supported_envs:
+          - linux
           - darwin
+        files:
+          - name: curl
       - version_constraint: "true"
         asset: curl-{{.OS}}-{{.Arch}}-dev-{{.Version}}.{{.Format}}
         format: tar.xz
@@ -58465,6 +58479,11 @@ packages:
           - goos: darwin
             replacements:
               arm64: arm64
+        files:
+          - name: curl
+            src: curl-{{.Arch}}/bin/curl
+          - name: curl-config
+            src: curl-{{.Arch}}/bin/curl-config
   - type: github_release
     repo_owner: subtrace
     repo_name: subtrace
