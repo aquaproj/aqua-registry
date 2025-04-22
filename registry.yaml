@@ -25365,30 +25365,89 @@ packages:
   - type: github_release
     repo_owner: dotenv-linter
     repo_name: dotenv-linter
-    rosetta2: true
-    asset: dotenv-linter-{{.OS}}-{{.Arch}}.{{.Format}}
     description: Lightning-fast linter for .env files. Written in Rust
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      windows: win
-    overrides:
-      - goos: linux
-        replacements:
-          arm64: aarch64
-      - goos: windows
-        format: zip
-        replacements:
-          amd64: x64
-    version_constraint: semver(">= 2.1.0")
-    supported_envs:
-      - darwin
-      - amd64
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v3.1.1"
+        asset: dotenv-linter-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          windows: win
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: arm64
+          - goos: windows
+            format: zip
+            replacements:
+              amd64: x64
+      - version_constraint: Version == "v3.2.0"
+        asset: dotenv-linter-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          windows: win
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            replacements:
+              amd64: x64
+      - version_constraint: semver("<= 1.1.0")
+        asset: dotenv-linter-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 2.0.0")
+        asset: dotenv-linter-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 3.1.0")
+        asset: dotenv-linter-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          windows: win
+        overrides:
+          - goos: windows
+            format: zip
+            replacements:
+              amd64: x64
         supported_envs:
           - darwin
-          - linux/amd64
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: dotenv-linter-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          windows: win
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: arm64
+          - goos: windows
+            format: zip
+            replacements:
+              amd64: x64
   - type: github_release
     repo_owner: dotenvx
     repo_name: dotenvx
