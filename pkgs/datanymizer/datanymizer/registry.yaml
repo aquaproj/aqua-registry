@@ -3,20 +3,23 @@ packages:
   - type: github_release
     repo_owner: datanymizer
     repo_name: datanymizer
-    asset: pg_datanymizer-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: Powerful database anonymizer with flexible rules. Written in Rust
-    replacements:
-      amd64: x86_64
-    overrides:
-      - goos: windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: pg_datanymizer-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
         replacements:
+          amd64: x86_64
           windows: win
-          amd64: x64
-        format: zip
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    files:
-      - name: pg_datanymizer
+        overrides:
+          - goos: windows
+            format: zip
+            replacements:
+              amd64: x64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
