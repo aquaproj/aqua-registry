@@ -14656,19 +14656,31 @@ packages:
   - type: github_release
     repo_owner: bonnefoa
     repo_name: kubectl-fzf
-    asset: kubectl-fzf_{{.OS}}_{{.Arch}}.tar.gz
     description: A fast kubectl autocompletion with fzf
-    supported_envs:
-      - linux/amd64
-      - darwin
-    rosetta2: true
-    files:
-      - name: kubectl-fzf-server
-      - name: kubectl-fzf-completion
-    checksum:
-      type: github_release
-      asset: kubectl-fzf_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.0.9"
+        asset: kubectl-fzf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: kubectl-fzf_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: kubectl-fzf_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: kubectl-fzf_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
   - type: github_release
     repo_owner: bootandy
     repo_name: dust
