@@ -15803,11 +15803,22 @@ packages:
     repo_owner: c-bata
     repo_name: kube-prompt
     description: An interactive kubernetes client featuring auto-complete
-    rosetta2: true
-    asset: kube-prompt_{{.Version}}_{{.OS}}_{{.Arch}}.zip
-    supported_envs:
-      - darwin
-      - linux
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.5")
+        asset: kube-prompt_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: kube-prompt_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: c1982
     repo_name: bomberman
