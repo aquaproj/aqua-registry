@@ -4,11 +4,16 @@ packages:
     repo_owner: stunnel
     repo_name: static-curl
     description: static builds cURL with HTTP3
+    files:
+      - name: curl
+      - name: curl-config
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "8.6.0-1"
         asset: curl-{{.OS}}-{{.Arch}}-8.6.0.{{.Format}}
         format: tar.xz
+        files:
+          - name: curl
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -17,39 +22,42 @@ packages:
           - goos: darwin
             replacements:
               arm64: arm64
-        files:
-          - name: curl
       - version_constraint: Version == "8.6.0"
         asset: curl-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
         format: tar.xz
+        files:
+          - name: curl
         replacements:
           darwin: macos
         supported_envs:
           - linux
           - darwin
-        files:
-          - name: curl
       - version_constraint: semver("<= 8.2.0")
         asset: curl-static-{{.Arch}}-{{.Version}}.{{.Format}}
         format: tar.xz
-        supported_envs:
-          - linux
         files:
           - name: curl
+        supported_envs:
+          - linux
       - version_constraint: semver("<= 8.5.0")
         asset: curl-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
         format: tar.xz
+        files:
+          - name: curl
         replacements:
           linux: static
           darwin: macos
         supported_envs:
           - linux
           - darwin
-        files:
-          - name: curl
       - version_constraint: "true"
         asset: curl-{{.OS}}-{{.Arch}}-dev-{{.Version}}.{{.Format}}
         format: tar.xz
+        files:
+          - name: curl
+            src: curl-{{.Arch}}/bin/curl
+          - name: curl-config
+            src: curl-{{.Arch}}/bin/curl-config
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -58,8 +66,3 @@ packages:
           - goos: darwin
             replacements:
               arm64: arm64
-        files:
-          - name: curl
-            src: curl-{{.Arch}}/bin/curl
-          - name: curl-config
-            src: curl-{{.Arch}}/bin/curl-config
