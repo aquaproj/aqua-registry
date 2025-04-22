@@ -25540,30 +25540,89 @@ packages:
   - type: github_release
     repo_owner: drlau
     repo_name: akashi
-    asset: akashi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: Validate "terraform plan" changes against a customizable ruleset
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    checksum:
-      type: github_release
-      asset: akashi_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.0.12")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.0.8")
+      - version_constraint: Version == "v0.0.12"
+        asset: akashi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: akashi_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: Version == "v0.0.14"
+        asset: akashi_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: akashi_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.0.7")
+        asset: akashi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: akashi_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
         supported_envs:
           - darwin
-          - linux
+          - windows
           - amd64
+      - version_constraint: semver("<= 0.0.11")
+        asset: akashi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: akashi_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.0.16")
+        asset: akashi_.{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: akashi_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - amd64
+        asset: akashi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: akashi_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: dstotijn
     repo_name: hetty
