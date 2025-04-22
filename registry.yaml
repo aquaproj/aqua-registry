@@ -28199,21 +28199,82 @@ packages:
   - type: github_release
     repo_owner: filhodanuvem
     repo_name: gitql
-    asset: gitql_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: A git query language
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "2.0.0"
+        asset: gitql-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          windows: win64
+        overrides:
+          - goos: linux
+            asset: gitql-{{.OS}}64.{{.Format}}
+            replacements:
+              amd64: x64
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: Version == "2.1.0"
+        asset: gitql-{{.OS}}64.1.{{.Format}}
+        format: zip
+        replacements:
+          darwin: mac
+          windows: win64
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x64
+          - goos: windows
+            asset: gitql-{{.OS}}.1.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "2.2.0"
+        asset: gitql-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: Version == "v2.2.1"
+        asset: gitql_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: gitql_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v2.3.0"
+        asset: gitql_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.6.0")
+        no_asset: true
+      - version_constraint: "true"
+        asset: gitql_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: fioncat
     repo_name: otree
