@@ -17740,27 +17740,50 @@ packages:
     repo_owner: cheat
     repo_name: cheat
     description: cheat allows you to create and view interactive cheatsheets on the command-line. It was designed to help remind *nix system administrators of options for commands that they use frequently, but not frequently enough to remember
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: cheat-{{.OS}}-{{.Arch}}.gz
-    files:
-      - name: cheat
-        src: cheat-{{.OS}}-{{.Arch}}
-    overrides:
-      - goos: windows
-        asset: cheat-windows-amd64.exe.zip
-    version_constraint: semver(">= 4.2.4")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "3.3.0"
+        asset: cheat-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.2.2")
+        asset: cheat-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          windows: win
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 4.2.1")
+        asset: cheat-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
         overrides:
           - goos: windows
-            asset: cheat-windows-amd64.exe.zip
-            files:
-              - name: cheat
-                src: dist/cheat-windows-amd64.exe
+            format: zip
+            asset: cheat-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: cheat-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+            asset: cheat-{{.OS}}-{{.Arch}}.exe.{{.Format}}
   - type: github_release
     repo_owner: chenjiandongx
     repo_name: kubectl-images
