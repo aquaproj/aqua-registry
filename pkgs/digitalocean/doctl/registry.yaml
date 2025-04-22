@@ -3,13 +3,135 @@ packages:
   - type: github_release
     repo_owner: digitalocean
     repo_name: doctl
-    asset: doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
     description: The official command line interface for the DigitalOcean API
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: github_release
-      asset: doctl-{{trimV .Version}}-checksums.sha256
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["1", "1.6.1", "1.7.0", "v1.21.0"]
+        no_asset: true
+      - version_constraint: Version == "0.0.16"
+        asset: "{{.OS}}-{{.Arch}}-doctl.{{.Format}}"
+        format: tar.bz2
+        rosetta2: true
+        overrides:
+          - goos: windows
+            format: zip
+            asset: "{{.OS}}-amd-64-doctl.{{.Format}}"
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.6.1"
+        asset: doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: doctl-{{trimV .Version}}-{{.OS}}-10.6-{{.Arch}}.sha256
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: doctl-{{trimV .Version}}-{{.OS}}-10.6-{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: doctl-{{trimV .Version}}-{{.OS}}-4.0-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.63.0"
+        asset: doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: doctl-{{trimV .Version}}-checksums.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.20.1")
+        asset: doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: doctl-{{trimV .Version}}-{{.OS}}-10.6-{{.Arch}}.sha256
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: doctl-{{trimV .Version}}-{{.OS}}-10.6-{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: doctl-{{trimV .Version}}-{{.OS}}-4.0-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.23.1")
+        asset: doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.54.0")
+        asset: doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: doctl-{{trimV .Version}}-checksums.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.57.0")
+        asset: doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: doctl-{{trimV .Version}}-checksums.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.65.0")
+        asset: doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: doctl-{{trimV .Version}}-checksums.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: doctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: doctl-{{trimV .Version}}-checksums.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
