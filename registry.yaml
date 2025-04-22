@@ -30844,25 +30844,33 @@ packages:
   - type: github_release
     repo_owner: go-to-k
     repo_name: lamver
-    description: CLI tool to search AWS Lambda runtime and versions across regions
-    asset: lamver_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.4.2")
+    description: The CLI tool to search AWS Lambda runtime and versions across regions
+    version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.4.1"
         asset: lamver_.{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
         checksum:
-          enabled: false
-      - version_constraint: semver("< 0.4.1")
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: lamver_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: goark
     repo_name: depm
