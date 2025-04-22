@@ -9889,19 +9889,39 @@ packages:
   - type: github_release
     repo_owner: aquaproj
     repo_name: example-go-slsa-provenance
-    asset: example-go-slsa-provenance_{{.OS}}_{{.Arch}}.tar.gz
     description: Example Go Application with SLSA Provenance
-    slsa_provenance:
-      type: github_release
-      asset: multiple.intoto.jsonl
-    version_constraint: semver(">= 0.1.1")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.1.2")
+        asset: example-go-slsa-provenance_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: example-go-slsa-provenance_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
-          # repository was transferred from suzuki-shunsuke to aquaproj
-          source_uri: github.com/suzuki-shunsuke/example-go-slsa-provenance
+      - version_constraint: "true"
+        asset: example-go-slsa-provenance_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: example-go-slsa-provenance_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/aquaproj/example-go-slsa-provenance/releases/download/{{.Version}}/example-go-slsa-provenance_{{trimV .Version}}_checksums.txt.pem
+              - --certificate-identity-regexp
+              - "^https://github\\.com/aquaproj/example-go-slsa-provenance/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/aquaproj/example-go-slsa-provenance/releases/download/{{.Version}}/example-go-slsa-provenance_{{trimV .Version}}_checksums.txt.sig
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
   - type: github_release
     repo_owner: aquaproj
     repo_name: registry-tool
@@ -30467,17 +30487,20 @@ packages:
     repo_owner: go-to-k
     repo_name: cls3
     description: The CLI tool "cls3" is to CLear S3 Buckets. It empties (so deletes all objects and versions/delete-markers in) S3 Buckets or deletes the buckets themselves
-    asset: cls3_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: cls3_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: go-to-k
     repo_name: delstack
