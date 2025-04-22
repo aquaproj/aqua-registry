@@ -20985,22 +20985,62 @@ packages:
     repo_owner: corneliusweig
     repo_name: ketall
     description: Like `kubectl get all`, but get really all resources
-    supported_envs:
-      - darwin
-      - amd64
-    files:
-      - name: ketall
-        src: ketall-{{.Arch}}-{{.OS}}
-      - name: kubectl-get_all
-        src: ketall-{{.Arch}}-{{.OS}}
-    asset: ketall-{{.Arch}}-{{.OS}}.tar.gz
-    overrides:
-      - goos: windows
-        asset: ketall-amd64-windows.zip
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.3"
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: semver("<= 0.0.2")
+        no_asset: true
+      - version_constraint: semver("<= 1.2.0")
+        asset: ketall-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.3.7")
+        asset: ketall-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: ketall-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: corneliusweig
     repo_name: rakkess
