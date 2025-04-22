@@ -67699,25 +67699,28 @@ packages:
     repo_owner: yuyaban
     repo_name: gitlab-comment
     description: About gitlab-comment is a CLI command to post Merge Request Note
-    asset: gitlab-comment_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    checksum:
-      type: github_release
-      asset: gitlab-comment_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-      cosign:
-        opts:
-          - --certificate-identity-regexp
-          - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
-          - --certificate-oidc-issuer
-          - "https://token.actions.githubusercontent.com"
-          - --signature
-          - https://github.com/yuyaban/gitlab-comment/releases/download/{{.Version}}/gitlab-comment_{{trimV .Version}}_checksums.txt.sig
-          - --certificate
-          - https://github.com/yuyaban/gitlab-comment/releases/download/{{.Version}}/gitlab-comment_{{trimV .Version}}_checksums.txt.pem
-    slsa_provenance:
-      type: github_release
-      asset: multiple.intoto.jsonl
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: gitlab-comment_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: gitlab-comment_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/yuyaban/gitlab-comment/releases/download/{{.Version}}/gitlab-comment_{{trimV .Version}}_checksums.txt.pem
+              - --certificate-identity-regexp
+              - "^https://github\\.com/yuyaban/gitlab-comment/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/yuyaban/gitlab-comment/releases/download/{{.Version}}/gitlab-comment_{{trimV .Version}}_checksums.txt.sig
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
   - type: github_release
     repo_owner: zaghaghi
     repo_name: openapi-tui
