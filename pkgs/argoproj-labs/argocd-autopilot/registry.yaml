@@ -4,17 +4,40 @@ packages:
     repo_owner: argoproj-labs
     repo_name: argocd-autopilot
     description: Argo-CD Autopilot
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    rosetta2: true
-    complete_windows_ext: false
-    asset: argocd-autopilot-{{.OS}}-{{.Arch}}.tar.gz
-    files:
-      - name: argocd-autopilot
-        src: argocd-autopilot-{{.OS}}-{{.Arch}}
-    checksum:
-      type: github_release
-      asset: argocd-autopilot-{{.OS}}-{{.Arch}}.sha256
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.6")
+        asset: argocd-autopilot-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: argocd-autopilot
+            src: argocd-autopilot-{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: argocd-autopilot-{{.OS}}-{{.Arch}}.sha256
+          algorithm: sha256
+      - version_constraint: semver("<= 0.3.7")
+        asset: argocd-autopilot-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: argocd-autopilot
+            src: argocd-autopilot-{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: argocd-autopilot-{{.OS}}-{{.Arch}}.sha256
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: argocd-autopilot-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: argocd-autopilot
+            src: argocd-autopilot-{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: argocd-autopilot-{{.OS}}-{{.Arch}}.sha256
+          algorithm: sha256
