@@ -26198,12 +26198,37 @@ packages:
   - type: github_release
     repo_owner: env0
     repo_name: terratag
-    asset: terratag_{{trimV .Version}}_{{.OS}}_amd64.tar.gz
     description: Terratag is a CLI tool that enables users of Terraform to automatically create and maintain tags across their entire set of AWS, Azure, and GCP resources
-    checksum:
-      type: github_release
-      asset: terratag_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.36"
+        no_asset: true
+      - version_constraint: semver("<= 0.1.20")
+        asset: terratag-{{.OS}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.1.35")
+        asset: terratag_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: terratag_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: terratag_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: terratag_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: equinix-labs
     repo_name: otel-cli
