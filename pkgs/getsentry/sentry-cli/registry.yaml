@@ -4,17 +4,183 @@ packages:
     repo_owner: getsentry
     repo_name: sentry-cli
     description: A command line utility to work with Sentry
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: sentry-cli-{{.OS}}-{{.Arch}}
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      amd64: x86_64
-    overrides:
-      - goos: linux
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "1.77.2"
+        asset: sentry-cli-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
         replacements:
-          arm64: aarch64
+          windows: Windows
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x64
+          - goos: darwin
+            goarch: amd64
+            asset: sentry-cli-{{.OS}}-{{.Version}}.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            format: raw
+            asset: sentry-cli-{{.OS}}-{{.Arch}}
+            replacements:
+              darwin: Darwin
+          - goos: windows
+            format: raw
+            asset: sentry-cli-{{.OS}}-{{.Arch}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: Version == "1.77.3"
+        asset: sentry-cli-{{.OS}}-{{.Arch}}-0.placeholder.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+        replacements:
+          windows: Windows
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x64
+          - goos: darwin
+            goarch: amd64
+            asset: sentry-cli-{{.OS}}-0.placeholder.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            format: raw
+            asset: sentry-cli-{{.OS}}-{{.Arch}}
+            replacements:
+              darwin: Darwin
+          - goos: windows
+            format: raw
+            asset: sentry-cli-{{.OS}}-{{.Arch}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: semver("<= 0.2.0")
+        asset: sentry-cli-{{.OS}}-x86_{{.Arch}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x64
+          darwin: Darwin
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 0.4.0")
+        asset: sentry-cli-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 0.12.0")
+        asset: sentry-cli-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.20.0")
+        asset: sentry-cli-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        overrides:
+          - goos: windows
+            asset: sentry-cli-{{.OS}}-i686
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.60.1")
+        asset: sentry-cli-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.62.0")
+        asset: sentry-cli-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.21.5")
+        asset: sentry-cli-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+      - version_constraint: semver("<= 2.42.4")
+        asset: sentry-cli-{{.OS}}-{{.Version}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+        replacements:
+          darwin: Darwin
+          windows: Windows
+        overrides:
+          - goos: linux
+            asset: sentry-cli-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+            replacements:
+              amd64: x64
+          - goos: darwin
+            goarch: arm64
+            format: raw
+            asset: sentry-cli-{{.OS}}-{{.Arch}}
+          - goos: windows
+            format: raw
+            asset: sentry-cli-{{.OS}}-{{.Arch}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: "true"
+        asset: sentry-cli-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tgz
+        replacements:
+          windows: Windows
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x64
+          - goos: darwin
+            goarch: amd64
+            asset: sentry-cli-{{.OS}}-{{.Version}}.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            format: raw
+            asset: sentry-cli-{{.OS}}-{{.Arch}}
+            replacements:
+              darwin: Darwin
+          - goos: windows
+            format: raw
+            asset: sentry-cli-{{.OS}}-{{.Arch}}
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
