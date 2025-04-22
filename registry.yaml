@@ -30004,33 +30004,95 @@ packages:
   - type: github_release
     repo_owner: geofffranks
     repo_name: spruce
-    description: Standalone, daemon-less, unprivileged Dockerfile and OCI compatible container image builder
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    format: raw
-    version_constraint: semver(">= 1.30.1")
-    asset: spruce-{{.OS}}-{{.Arch}}
-    complete_windows_ext: false
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha1"
-      algorithm: sha1
+    description: A BOSH template merge tool
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("= 1.30.0")
+      - version_constraint: Version == "v0.1"
+        asset: spruce-{{.OS}}.{{.Format}}
+        format: gz
+        replacements:
+          darwin: macosx
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "0.2"
+        asset: spruce-{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
         rosetta2: true
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v1.0.0"
+        asset: spruce_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v1.0.1"
+        asset: spruce_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v1.30.0"
+        asset: spruce-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha1"
+          algorithm: sha1
         supported_envs:
           - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.13.0")
+        asset: spruce_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.11.0")
+        asset: spruce-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.29.0")
+        asset: spruce-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
           - amd64
       - version_constraint: "true"
-        complete_windows_ext: true
+        asset: spruce-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
         checksum:
-          enabled: false
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - amd64
+          type: github_release
+          asset: "{{.Asset}}.sha1"
+          algorithm: sha1
   - type: github_release
     repo_owner: gesquive
     repo_name: git-user
