@@ -3,22 +3,96 @@ packages:
   - type: github_release
     repo_owner: mislav
     repo_name: hub
-    aliases:
-      - name: github/hub
-    rosetta2: true
-    asset: hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
     description: A command-line tool that makes git easier to use with GitHub
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    format: tgz
-    overrides:
-      - goos: windows
-        format: zip
-        files:
-          - name: hub
-            src: bin/hub.exe
-    files:
-      - name: hub
-        src: hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}/bin/hub
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v2.3.0-pre1", "v2.3.0-pre2", "v2.8.2"]
+        no_asset: true
+      - version_constraint: Version == "v2.2.0-preview1"
+        asset: hub_{{trimV .Version}}_{{.OS}}_{{.Arch}}.gz.{{.Format}}
+        format: tar
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v2.2.7"
+        asset: hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v2.2.8"
+        asset: hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: hub-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v2.2.9"
+        asset: hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version in ["v2.3.0-pre10", "v2.3.0-pre5"]
+        asset: hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.12.4")
+        no_asset: true
+      - version_constraint: semver("<= 2.2.1")
+        asset: hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: mac
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.2.6")
+        asset: hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.12.3")
+        asset: hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 2.12.5")
+        asset: hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: hub-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
