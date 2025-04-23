@@ -41479,53 +41479,41 @@ packages:
   - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: kind
-    description: "Kubernetes IN Docker - local clusters for testing Kubernetes"
-    version_constraint: "false"
+    asset: kind-{{.OS}}-{{.Arch}}
+    format: raw
+    description: Kubernetes IN Docker - local clusters for testing Kubernetes
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    complete_windows_ext: false
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256sum"
+      algorithm: sha256
+    version_constraint: semver(">= 0.12.0")
     version_overrides:
-      - version_constraint: Version == "0.0.1"
-        asset: kind-{{.OS}}-{{.Arch}}
-        format: raw
-        rosetta2: true
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: Version == "0.1.0"
-        asset: kind-{{.OS}}-{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        complete_windows_ext: false
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: Version == "v0.5.0"
-        asset: kind-{{.OS}}-{{.Arch}}
-        format: raw
-        rosetta2: true
-        supported_envs:
-          - linux
-          - darwin
-      - version_constraint: semver("<= 0.10.0")
-        asset: kind-{{.OS}}-{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        complete_windows_ext: false
-      - version_constraint: semver("<= 0.11.1")
-        asset: kind-{{.OS}}-{{.Arch}}
-        format: raw
-        windows_arm_emulation: true
-        complete_windows_ext: false
-      - version_constraint: "true"
-        asset: kind-{{.OS}}-{{.Arch}}
-        format: raw
-        windows_arm_emulation: true
-        complete_windows_ext: false
+      - version_constraint: semver(">= 0.11.0")
         checksum:
-          type: github_release
-          asset: kind-{{.OS}}-{{.Arch}}.sha256sum
-          algorithm: sha256
+          enabled: false
+      - version_constraint: semver(">= 0.2.0")
+        rosetta2: true
+        checksum:
+          enabled: false
+      - version_constraint: semver(">= 0.1.0")
+        rosetta2: true
+        checksum:
+          enabled: false
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
+        rosetta2: true
+        checksum:
+          enabled: false
+        supported_envs:
+          - darwin
+          - linux/amd64
   - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: krew
@@ -41677,12 +41665,11 @@ packages:
     type: github_release
     repo_owner: kubernetes-sigs
     repo_name: kwok
-    description: "Kubernetes WithOut Kubelet -  Simulates thousands of Nodes and Clusters"
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: "true"
-        asset: kwok-{{.OS}}-{{.Arch}}
-        format: raw
+    description: Kubernetes WithOut Kubelet -  Simulates thousands of Nodes and Clusters
+    asset: kwokctl-{{.OS}}-{{.Arch}}
+    format: raw
+    files:
+      - name: kwokctl
   - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: zeitgeist
@@ -42497,14 +42484,20 @@ packages:
   - type: github_release
     repo_owner: kurehajime
     repo_name: kuzusi
-    asset: "{{.OS}}_{{.Arch}}.zip"
     description: breakout for terminal
-    replacements:
-      darwin: macos
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: "{{.OS}}_{{.Arch}}.{{.Format}}"
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: kurehajime
     repo_name: pong-command
@@ -68552,14 +68545,11 @@ packages:
     repo_owner: ysugimoto
     repo_name: vintage
     description: VCL Transpiler for Edge Runtime
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: "true"
-        asset: vintage-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        supported_envs:
-          - linux/amd64
-          - darwin
+    asset: vintage-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    supported_envs:
+      - linux/amd64
+      - darwin
   - type: github_release
     repo_owner: yudai
     repo_name: gotty
