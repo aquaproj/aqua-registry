@@ -3,17 +3,18 @@ packages:
   - type: github_release
     repo_owner: livesense-inc
     repo_name: go-aws-s3get
-    asset: s3get-{{.OS}}-{{.Arch}}
-    format: raw
     description: A stupid simple S3 downloader CLI tool with supporting AWS Access Key
-    replacements:
-      amd64: x86_64
-    supported_envs:
-      - linux
-      - darwin
-    files:
-      - name: s3get
-    checksum:
-      type: github_release
-      asset: s3get_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: s3get-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: s3get_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
