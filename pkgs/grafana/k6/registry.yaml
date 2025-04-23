@@ -3,22 +3,57 @@ packages:
   - type: github_release
     repo_owner: grafana
     repo_name: k6
-    description: A modern load testing tool, using Go and JavaScript
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: k6-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    files:
-      - name: k6
-        src: k6-{{.Version}}-{{.OS}}-{{.Arch}}/k6
-    replacements:
-      darwin: macos
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
-    checksum:
-      type: github_release
-      asset: k6-{{.Version}}-checksums.txt
-      algorithm: sha256
+    description: "A modern load testing tool, using Go and JavaScript - https://k6.io"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.6.0"
+        no_asset: true
+      - version_constraint: semver("<= 0.18.0")
+        asset: k6-{{.Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: mac
+          windows: win64
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: k6-{{.Version}}-{{.OS}}64.{{.Format}}
+            replacements:
+              amd64: x64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.31.1")
+        asset: k6-{{.Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: mac
+          windows: win64
+        checksum:
+          type: github_release
+          asset: k6-{{.Version}}-checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: k6-{{.Version}}-{{.OS}}64.{{.Format}}
+            replacements:
+              amd64: x64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: k6-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: k6-{{.Version}}-checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
