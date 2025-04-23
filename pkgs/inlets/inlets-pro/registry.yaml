@@ -4,20 +4,76 @@ packages:
     repo_owner: inlets
     repo_name: inlets-pro
     description: Secure HTTP and TCP tunnels that just work
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: inlets-pro
-    overrides:
-      - goos: darwin
-        goarch: arm64
-        asset: inlets-pro-darwin-arm64
-      - goos: darwin
-        asset: inlets-pro-darwin
-      - goarch: arm64
-        asset: inlets-pro-arm64
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.5.5"
+        no_asset: true
+      - version_constraint: Version == "0.9.0-rc2"
+        asset: inlets-pro-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: inlets-pro-{{.OS}}-{{.Arch}}
+          - goos: windows
+            asset: inlets-pro
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: Version == "0.9.0-rc3"
+        asset: inlets-pro-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: inlets-pro
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 0.4.2")
+        no_asset: true
+      - version_constraint: semver("<= 0.7.0")
+        asset: inlets-pro
+        format: raw
+        overrides:
+          - goos: darwin
+            asset: inlets-pro-{{.OS}}
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 0.8.9")
+        asset: inlets-pro-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: inlets-pro
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: "true"
+        asset: inlets-pro-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            asset: inlets-pro-{{.OS}}
+          - goos: windows
+            asset: inlets-pro
+        supported_envs:
+          - darwin
+          - windows/amd64
