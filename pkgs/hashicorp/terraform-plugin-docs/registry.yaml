@@ -4,10 +4,41 @@ packages:
     repo_owner: hashicorp
     repo_name: terraform-plugin-docs
     description: Generate and validate Terraform plugin/provider documentation
-    asset: tfplugindocs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
-    files:
-      - name: tfplugindocs
-    checksum:
-      type: github_release
-      asset: tfplugindocs_{{trimV .Version}}_SHA256SUMS
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.3.0"
+        no_asset: true
+      - version_constraint: Version == "v0.2.0"
+        asset: tfplugindocs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: tfplugindocs_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+      - version_constraint: semver("<= 0.1.4")
+        asset: tfpluginwebsite_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: tfpluginwebsite_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+      - version_constraint: semver("<= 0.4.0")
+        asset: tfplugindocs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: tfplugindocs_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: tfplugindocs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: tfplugindocs_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
