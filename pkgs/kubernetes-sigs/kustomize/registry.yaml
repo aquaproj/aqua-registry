@@ -4,110 +4,268 @@ packages:
     repo_owner: kubernetes-sigs
     repo_name: kustomize
     description: Customization of kubernetes YAML configurations
-    asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    version_prefix: kustomize/
-    version_constraint: semver(">= 5.2.1")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 5.2.0")
-        asset: kustomize_v5.2.0_{{.OS}}_{{.Arch}}.{{.Format}}
-        files:
-          - name: kustomize
-            src: output/kustomize
-      - version_constraint: semver(">= 5.1.0")
-        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        overrides: []
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+      - version_constraint: Version in ["cmd/config/v0.5.0", "v3.3.0"]
+        no_asset: true
+      - version_constraint: Version == "pseudo/k8s/v0.1.0"
+        asset: pseudok8s_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-        checksum: &kustomize_checksum
+        windows_arm_emulation: true
+        checksum:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-      - version_constraint: semver(">= 4.5.4")
-        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        overrides: []
-        checksum: *kustomize_checksum
-      - version_constraint: semver(">= 4.4.1")
-        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        overrides: []
         supported_envs:
           - darwin
-          - linux
+          - windows
           - amd64
-        checksum: *kustomize_checksum
-      - version_constraint: semver(">= 4.2.0")
-        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        overrides: []
-        supported_envs:
-          - linux
-          - darwin
-        checksum: *kustomize_checksum
-      - version_constraint: semver(">= 3.8.6")
-        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        overrides: []
+      - version_constraint: Version in ["api/v0.4.2", "api/v0.5.0", "api/v0.5.1"]
+        asset: api_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         supported_envs:
           - darwin
-          - linux
+          - windows
           - amd64
-        rosetta2: true
-        checksum: *kustomize_checksum
-      - version_constraint: semver(">= 3.7.0")
-        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        overrides: []
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-        checksum: *kustomize_checksum
-      - version_constraint: semver(">= 3.5.5")
-        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        overrides: []
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
-        checksum: *kustomize_checksum
-      - version_constraint: semver(">= 3.3.0")
-        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        overrides: []
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-        checksum: *kustomize_checksum
-      - version_constraint: semver(">= 3.2.1")
-        asset: kustomize_kustomize.{{.SemVer}}_{{.OS}}_{{.Arch}}
+      - version_constraint: Version == "pluginator/v1.0.0"
+        asset: kustomize_pluginator.{{.SemVer}}_{{.OS}}_{{.Arch}}
         format: raw
-        overrides: []
-        supported_envs:
-          - darwin
-          - amd64
         rosetta2: true
         checksum:
-          enabled: false
-      - version_constraint: semver(">= 2.1.0")
-        asset: kustomize_{{trimV .Version}}_{{.OS}}_{{.Arch}}
-        format: raw
-        overrides: []
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         supported_envs:
           - linux/amd64
           - darwin
-        version_prefix: ""
+      - version_constraint: Version == "pluginator/v2.1.0"
+        asset: pluginator_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-        checksum: *kustomize_checksum
-      - version_constraint: semver(">= 1.0.1")
-        asset: kustomize_{{trimV .Version}}_{{.OS}}_{{.Arch}}
-        format: raw
-        overrides: []
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         supported_envs:
           - darwin
+          - windows
           - amd64
-        version_prefix: ""
+      - version_constraint: Version == "kustomize/v3.3.0"
+        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-        checksum: *kustomize_checksum
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v3.3.1"
+        asset: kustapiversion_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "kustomize/v5.2.0"
+        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.3.3")
+        asset: api_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.4.1")
+        asset: api_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.19.0")
+        no_asset: true
+      - version_constraint: semver("<= 1.0.11")
+        asset: kustomize_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.0.0")
+        asset: pluginator_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.0.3")
+        asset: kustomize_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.2.0")
+        asset: kustomize_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 3.2.3")
+        asset: kustomize_kustomize.{{.SemVer}}_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.5.4")
+        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.6.1")
+        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 3.8.5")
+        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 4.1.3")
+        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 4.4.0")
+        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 4.5.3")
+        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 5.0.3")
+        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 5.1.1")
+        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: kustomize_{{.SemVer}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
