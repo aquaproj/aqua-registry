@@ -4,16 +4,32 @@ packages:
     repo_owner: kudobuilder
     repo_name: kuttl
     description: KUbernetes Test TooL (kuttl)
-    supported_envs:
-      - darwin
-      - linux
-    asset: kuttl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    files:
-      - name: kubectl-kuttl
-    replacements:
-      386: i386
-      amd64: x86_64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.8.1"
+        no_asset: true
+      - version_constraint: semver("<= 0.10.0")
+        asset: kuttl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: kuttl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
