@@ -4,297 +4,272 @@ packages:
     repo_owner: johnkerl
     repo_name: miller
     description: Miller is like awk, sed, cut, join, and sort for name-indexed data such as CSV, TSV, and tabular JSON
-    asset: miller-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    files:
-      - name: mlr
-        src: miller-{{trimV .Version}}-{{.OS}}-{{.Arch}}/mlr
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: miller-{{trimV .Version}}-checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 6.9.0")
+    version_constraint: "false"
     version_overrides:
+      - version_constraint: Version in ["v5.2.1", "v5.6.1", "v5.10.4"]
+        no_asset: true
+      - version_constraint: Version == "v1.0.0"
+        asset: mlr.{{.OS}}
+        format: raw
+        replacements:
+          darwin: osx
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "v2.1.1"
+        asset: mlr.{{.OS}}
+        format: raw
+        replacements:
+          darwin: osx
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "v4.0.0"
+        asset: mlr.{{.OS}}
+        format: raw
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: linux
+            asset: mlr.{{.OS}}.{{.Arch}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - linux/amd64
+          - darwin
       - version_constraint: Version == "v5.1.0w"
         asset: mlr
         format: raw
-        overrides: []
         supported_envs:
           - windows/amd64
-        checksum:
-          enabled: false
+      - version_constraint: Version in ["v5.1.0", "v5.2.2"]
+        asset: mlr.{{.OS}}.{{.Arch}}
+        format: raw
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: mlr.{{.OS}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v5.2.0"
+        asset: mlr
+        format: raw
+        replacements:
+          darwin: macosx
+        overrides:
+          - goos: linux
+            asset: mlr.{{.OS}}.{{.Arch}}
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: mlr.{{.OS}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["v5.3.0", "v5.8.0"]
+        asset: mlr.{{.OS}}
+        format: raw
+        replacements:
+          darwin: macosx
+        overrides:
+          - goos: linux
+            asset: mlr.{{.OS}}.{{.Arch}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "5.4.0"
+        asset: mlr.{{.OS}}.{{.Arch}}
+        format: raw
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: mlr.{{.OS}}
+          - goos: windows
+            asset: mlr
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["v5.5.0", "v5.6.2"]
+        asset: mlr.{{.OS}}_{{.Arch}}
+        format: raw
+        replacements:
+          darwin: macosx
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: mlr.{{.OS}}
+          - goos: windows
+            asset: mlr
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["v5.6.0", "v5.7.0"]
+        asset: mlr.{{.OS}}.{{.Arch}}
+        format: raw
+        replacements:
+          darwin: macosx
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: mlr.{{.OS}}
+          - goos: windows
+            asset: mlr
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v5.10.3"
+        asset: mlr.{{.OS}}_{{.Arch}}
+        format: raw
+        replacements:
+          darwin: macosx
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: mlr.{{.OS}}
+        supported_envs:
+          - linux/amd64
+          - darwin
       - version_constraint: Version == "v6.0.0-beta"
         asset: mlr-{{.OS}}-latest.{{.Format}}
         format: zip
-        files:
-          - name: mlr
-        overrides: []
         replacements:
           darwin: macos
         supported_envs:
           - darwin
           - windows/amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: Version == "v6.0.0.rc1"
-        asset: mlr-{{.OS}}-{{trimV .Version}}.{{.Format}}
-        format: zip
-        overrides: []
-        files:
-          - name: mlr
-        replacements:
-          darwin: macos
-        supported_envs:
-          - darwin
-          - windows/amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 6.1.0")
-        replacements:
-          darwin: macos
-      - version_constraint: semver(">= 6.0.0")
+      - version_constraint: Version == "v6.0.0"
         asset: miller_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        overrides: []
-        files:
-          - name: mlr
+        format: tar.gz
         checksum:
           type: github_release
           asset: miller_{{trimV .Version}}_checksums.txt
           algorithm: sha256
-      - version_constraint: semver(">= 5.10.3")
-        asset: mlr.{{.OS}}_{{.Arch}}
-        format: raw
         overrides:
-          - goos: linux
-            replacements:
-              amd64: x86_64
-          - goos: darwin
-            asset: mlr.mac{{.OS}}
-        replacements:
-          darwin: osx
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 5.10.1")
-        asset: mlr.{{.OS}}.{{.Arch}}
-        format: raw
-        overrides:
-          - goos: linux
-            replacements:
-              amd64: x86_64
-          - goos: darwin
-            asset: mlr.mac{{.OS}}
-        replacements:
-          darwin: osx
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 5.9.0")
-        asset: mlr.{{.OS}}.{{.Arch}}
-        format: raw
-        overrides:
-          - goos: linux
-            replacements:
-              amd64: x86_64
-          - goos: darwin
-            asset: mlr.mac{{.OS}}
           - goos: windows
-            asset: mlr
+            format: zip
+            asset: mlr-{{.OS}}-latest.{{.Format}}
+      - version_constraint: Version == "v6.0.0.rc1"
+        asset: mlr-{{.OS}}-{{trimV .Version}}.{{.Format}}
+        format: zip
         replacements:
-          darwin: osx
+          darwin: macos
         supported_envs:
           - darwin
-          - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 5.8.0")
-        asset: mlr.{{.OS}}.{{.Arch}}
-        format: raw
-        overrides:
-          - goos: linux
-            replacements:
-              amd64: x86_64
-          - goos: darwin
-            asset: mlr.mac{{.OS}}
-        replacements:
-          darwin: osx
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 5.7.0")
-        asset: mlr.{{.OS}}.{{.Arch}}
-        format: raw
-        overrides:
-          - goos: linux
-            replacements:
-              amd64: x86_64
-          - goos: darwin
-            asset: mlr.mac{{.OS}}
-          - goos: windows
-            asset: mlr
-        replacements:
-          darwin: osx
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 5.6.2")
-        asset: mlr.{{.OS}}_{{.Arch}}
-        format: raw
-        overrides:
-          - goos: linux
-            replacements:
-              amd64: x86_64
-          - goos: darwin
-            asset: mlr.mac{{.OS}}
-          - goos: windows
-            asset: mlr
-        replacements:
-          darwin: osx
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 5.6.0")
-        asset: mlr.{{.OS}}.{{.Arch}}
-        format: raw
-        overrides:
-          - goos: linux
-            replacements:
-              amd64: x86_64
-          - goos: darwin
-            asset: mlr.mac{{.OS}}
-          - goos: windows
-            asset: mlr
-        replacements:
-          darwin: osx
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 5.5.0")
-        asset: mlr.{{.OS}}_{{.Arch}}
-        format: raw
-        overrides:
-          - goos: linux
-            replacements:
-              amd64: x86_64
-          - goos: darwin
-            asset: mlr.mac{{.OS}}
-          - goos: windows
-            asset: mlr
-        replacements:
-          darwin: osx
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 5.4.0")
-        asset: mlr.{{.OS}}.{{.Arch}}
-        format: raw
-        overrides:
-          - goos: linux
-            replacements:
-              amd64: x86_64
-          - goos: windows
-            asset: mlr
-        supported_envs:
-          - linux/amd64
           - windows/amd64
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 5.3.0")
+      - version_constraint: semver("<= 2.1.0")
+        no_asset: true
+      - version_constraint: semver("<= 4.3.0")
         asset: mlr.{{.OS}}.{{.Arch}}
         format: raw
+        replacements:
+          darwin: osx
         overrides:
           - goos: linux
             replacements:
               amd64: x86_64
           - goos: darwin
-            asset: mlr.mac{{.OS}}
-        replacements:
-          darwin: osx
+            asset: mlr.{{.OS}}
         supported_envs:
           - linux/amd64
           - darwin
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 5.2.2")
-        asset: mlr.{{.OS}}.{{.Arch}}
+      - version_constraint: semver("<= 4.5.0")
+        asset: mlr.{{.OS}}
         format: raw
-        overrides: []
         replacements:
-          amd64: x86_64
+          darwin: osx
+        overrides:
+          - goos: linux
+            asset: mlr.{{.OS}}.{{.Arch}}
+            replacements:
+              amd64: x86_64
         supported_envs:
           - linux/amd64
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 5.2.0")
+          - darwin
+      - version_constraint: semver("<= 5.0.1")
         asset: mlr.{{.OS}}.{{.Arch}}
         format: raw
+        replacements:
+          darwin: osx
         overrides:
           - goos: linux
             replacements:
               amd64: x86_64
           - goos: darwin
-            asset: mlr.mac{{.OS}}
+            asset: mlr.{{.OS}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 5.10.0")
+        asset: mlr.{{.OS}}.{{.Arch}}
+        format: raw
+        replacements:
+          darwin: macosx
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: mlr.{{.OS}}
           - goos: windows
             asset: mlr
-        replacements:
-          darwin: osx
         supported_envs:
           - darwin
+          - windows
           - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 5.1.0")
+      - version_constraint: semver("<= 5.10.2")
         asset: mlr.{{.OS}}.{{.Arch}}
         format: raw
-        overrides: []
         replacements:
-          amd64: x86_64
+          darwin: macosx
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: mlr.{{.OS}}
         supported_envs:
           - linux/amd64
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 2.1.3")
-        asset: mlr.{{.OS}}.{{.Arch}}
-        format: raw
-        overrides: []
+          - darwin
+      - version_constraint: semver("<= 6.8.0")
+        asset: miller-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         replacements:
-          amd64: x86_64
-        supported_envs:
-          - linux/amd64
+          darwin: macos
         checksum:
-          enabled: false
-      - version_constraint: semver("< 2.1.3")
-        no_asset: true
+          type: github_release
+          asset: miller-{{trimV .Version}}-checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: miller-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: miller-{{trimV .Version}}-checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
