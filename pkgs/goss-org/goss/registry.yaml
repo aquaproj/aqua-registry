@@ -3,22 +3,79 @@ packages:
   - type: github_release
     repo_owner: goss-org
     repo_name: goss
-    aliases:
-      - name: aelsabbahy/goss
     description: Quick and Easy server testing/validation
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: goss-{{.OS}}-{{.Arch}}
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
-    version_constraint: semver(">= 0.4.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.4.0")
-        replacements:
-          windows: alpha-windows
-          darwin: alpha-darwin
+      - version_constraint: Version == "v0.3.11"
+        asset: goss-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.3.10")
+        asset: goss-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.3.16")
+        asset: goss-alpha-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: goss-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.3.23")
+        asset: goss-alpha-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: goss-{{.OS}}-{{.Arch}}
+      - version_constraint: semver("<= 0.4.0-rc.2")
+        asset: goss-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: goss-alpha-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: semver("<= 0.4.0")
+        asset: goss-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: goss-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
