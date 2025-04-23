@@ -39682,50 +39682,53 @@ packages:
     repo_owner: kayac
     repo_name: go-katsubushi
     description: ID generator server
-    version_constraint: semver(">= 2.0.0")
-    asset: go-katsubushi_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    files:
-      - name: katsubushi
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
     version_overrides:
-      # checksum file not provided & tag style was changed
-      - version_constraint: semver(">= 1.6.1")
+      - version_constraint: Version == "v0.0.1"
+        asset: katsubushi-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 1.1.0")
+        asset: katsubushi-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.6.0")
+        asset: katsubushi-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.6.0.3")
+        asset: go-katsubushi_v{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.7.0")
         asset: go-katsubushi_v{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
         overrides:
           - goos: linux
             format: tar.gz
-        rosetta2: true
-        files:
-          - name: katsubushi
-            src: go-katsubushi_v{{.Version}}_{{.OS}}_{{.Arch}}/katsubushi
         supported_envs:
+          - linux
           - darwin
-          - linux/amd64
-        checksum:
-          enabled: false
-      # asset name was changed
-      - version_constraint: semver(">= 0.1.0")
-        asset: katsubushi-{{.Version}}-{{.OS}}-{{.Arch}}.zip
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - linux/amd64
-        checksum:
-          enabled: false
-      # linux only support
       - version_constraint: "true"
-        asset: katsubushi-{{.Version}}-{{.OS}}-{{.Arch}}.zip
-        files:
-          - name: katsubushi
-            src: katsubushi-{{.Version}}-{{.OS}}-{{.Arch}}
-        supported_envs:
-          - linux/amd64
+        asset: go-katsubushi_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         checksum:
-          enabled: false
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: kaytu-io
     repo_name: kaytu
