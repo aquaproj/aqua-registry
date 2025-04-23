@@ -36793,15 +36793,34 @@ packages:
   - type: github_release
     repo_owner: itchyny
     repo_name: gojq
-    asset: gojq_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     description: Pure Go implementation of jq
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
-    files:
-      - name: gojq
-        src: gojq_{{.Version}}_{{.OS}}_{{.Arch}}/gojq
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.12.1")
+        asset: gojq_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.12.4")
+        asset: gojq_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: "true"
+        asset: gojq_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
   - type: github_release
     repo_owner: itchyny
     repo_name: json2yaml
