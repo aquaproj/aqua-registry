@@ -4,47 +4,33 @@ packages:
     repo_owner: kashav
     repo_name: fsql
     description: Search for files using a fun query language
-    version_constraint: semver(">= 0.5.1")
-    # asset name was changed
-    asset: fsql-{{trimV .Version}}-fsql-{{.OS}}-{{.Arch}}.tar.gz
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    # asset structure was changed
-    files:
-      - name: fsql
-        src: fsql-{{.OS}}-{{.Arch}}/fsql
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("= 0.5.0")
-        # No asset was released
-        type: go_install
-        path: github.com/kashav/fsql/cmd/fsql
-        files:
-          - name: fsql
-      - version_constraint: semver("= 0.4.0")
-        asset: fsql-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz
-        # arm64 wasn't supported
+      - version_constraint: Version == "v0.5.0"
+        no_asset: true
+      - version_constraint: Version == "v0.4.0"
+        asset: fsql-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-        files:
-          - name: fsql
-            src: "{{.OS}}-{{.Arch}}/fsql"
+        windows_arm_emulation: true
         supported_envs:
           - darwin
+          - windows
           - amd64
-      - version_constraint: semver(">= 0.3.0")
-        # asset name was changed
-        asset: fsql-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz
+      - version_constraint: semver("<= 0.2.1")
+        asset: "{{.OS}}_{{.Arch}}.{{.Format}}"
+        format: tar.gz
         rosetta2: true
-        # asset structure was changed
-        files:
-          - name: fsql
-            src: "{{.OS}}-{{.Arch}}/fsql"
-      - version_constraint: "true"
-        asset: "{{.OS}}_{{.Arch}}.tar.gz"
-        rosetta2: true
+        windows_arm_emulation: true
         overrides:
           - goos: windows
-            asset: "{{.OS}}_{{.Arch}}.zip"
-        files:
-          - name: fsql
+            format: zip
+      - version_constraint: semver("<= 0.3.1")
+        asset: fsql-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: "true"
+        asset: fsql-{{trimV .Version}}-fsql-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
