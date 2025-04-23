@@ -39821,19 +39821,31 @@ packages:
   - type: github_release
     repo_owner: kcp-dev
     repo_name: kcp
-    asset: kcp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    files:
-      - name: kcp
-        src: bin/kcp
-    format: tar.gz
-    description: kcp is a Kubernetes-like control plane for workloads on many clusters
-    supported_envs:
-      - darwin
-      - linux
-    checksum:
-      type: github_release
-      asset: kcp_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    description: Kubernetes-like control planes for form-factors and use-cases beyond Kubernetes and container workloads
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.6.4")
+        no_asset: true
+      - version_constraint: semver("<= 0.24.0")
+        asset: kcp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: kcp_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kubectl-kcp-plugin_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+      - version_constraint: "true"
+        asset: kcp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: kcp_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kubectl-ws-plugin_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
   - name: kcp-dev/kcp/kubectl-kcp
     type: github_release
     repo_owner: kcp-dev
