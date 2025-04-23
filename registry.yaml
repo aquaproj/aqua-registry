@@ -34601,30 +34601,75 @@ packages:
     repo_owner: hatoo
     repo_name: oha
     description: Ohayou(おはよう), HTTP load generator, inspired by rakyll/hey with tui animation
-    asset: oha-{{.OS}}-{{.Arch}}
-
-    # https://github.com/aquaproj/aqua-registry/pull/11995#issuecomment-1537367448
-    # Unfortunately, the prebuilt binary for darwin/arm64 doesn't work, so we enable rosetta2
-    rosetta2: true
-
-    format: raw
-    replacements:
-      darwin: macos
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    version_constraint: semver(">= 0.5.4")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.5.3")
+      - version_constraint: Version in ["v0.5.3-test", "v1.4.0"]
+        asset: oha-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+      - version_constraint: Version == "v0.5.3"
+        asset: oha-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
         supported_envs:
           - darwin
+          - windows
           - amd64
-      - version_constraint: semver(">= 0.5.3-test")
-      - version_constraint: semver("< 0.5.3-test")
+      - version_constraint: Version == "v1.4.0-pgo"
+        asset: oha-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: windows
+            asset: oha-{{.OS}}-{{.Arch}}-pgo
+      - version_constraint: semver("<= 0.5.2")
+        asset: oha-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 1.3.0")
+        asset: oha-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+      - version_constraint: semver("<= 1.4.7")
+        asset: oha-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: windows
+            asset: oha-{{.OS}}-{{.Arch}}-pgo
+      - version_constraint: semver("<= 1.6.0")
+        asset: oha-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+      - version_constraint: "true"
+        asset: oha-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: windows
+            asset: oha-{{.OS}}-{{.Arch}}-pgo
   - type: github_release
     repo_owner: heartbeatsjp
     repo_name: check-tls-cert
