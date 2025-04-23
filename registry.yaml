@@ -47921,13 +47921,18 @@ packages:
     repo_owner: ninxsoft
     repo_name: mist-cli
     description: A Mac command-line tool that automatically downloads macOS Firmwares / Installers
-    asset: mist-cli.{{trimV .Version}}.{{.Format}}
-    format: pkg
-    files:
-      - name: mist
-        src: Payload/usr/local/bin/mist
-    supported_envs:
-      - darwin
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.8.0")
+        asset: Mist.{{trimV .Version}}.{{.Format}}
+        format: pkg
+        supported_envs:
+          - darwin
+      - version_constraint: "true"
+        asset: mist-cli.{{trimV .Version}}.{{.Format}}
+        format: pkg
+        supported_envs:
+          - darwin
   - type: github_release
     repo_owner: nishanths
     repo_name: license
