@@ -4,19 +4,93 @@ packages:
     type: github_release
     repo_owner: grafana
     repo_name: loki
-    description: LogCLI is the command-line interface to Grafana Loki
-    supported_envs:
-      - linux
-      - darwin
-      - amd64
-    asset: logcli-{{.OS}}-{{.Arch}}.zip
-    overrides:
-      - goos: windows
-        asset: logcli-{{.OS}}-{{.Arch}}.exe.zip
-    files:
-      - name: logcli
-        src: logcli-{{.OS}}-{{.Arch}}
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
+    description: Like Prometheus, but for logs
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        asset: loki_{{.Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "v0.2.0"
+        asset: loki_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: logcli_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: logcli_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+      - version_constraint: Version == "v0.3.0"
+        asset: loki_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: logcli_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: loki_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+      - version_constraint: Version in ["v0.4.0", "v1.0.0"]
+        asset: loki-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: logcli-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: loki-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 0.6.0")
+      - version_constraint: semver("<= 0.8.0")
+        no_asset: true
+      - version_constraint: semver("<= 1.3.0")
+        asset: loki-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: logcli-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: loki-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 2.3.0")
+        asset: loki-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: loki-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: loki-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: loki-{{.OS}}-{{.Arch}}.exe.{{.Format}}
