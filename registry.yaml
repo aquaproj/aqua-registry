@@ -35975,22 +35975,74 @@ packages:
     repo_owner: inlets
     repo_name: inletsctl
     description: Create inlets servers on the top cloud platforms
-    asset: inletsctl.tgz
-    overrides:
-      - goos: darwin
-        asset: inletsctl-darwin.tgz
-        files:
-          - name: inletsctl
-            src: inletsctl-darwin
-      - goarch: arm64
-        asset: inletsctl-arm64.tgz
-        files:
-          - name: inletsctl
-            src: inletsctl-arm64
-    checksum:
-      # The checksum in the checksum file is not the checksum of tarball but the checksum of the executable binary in tarball.
-      # aqua doesn't support such a case at the moment.
-      enabled: false
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["0.1.0", "0.8.15"]
+        no_asset: true
+      - version_constraint: Version == "0.7.0"
+        asset: inletsctl-{{.OS}}.{{.Format}}
+        format: tgz
+        overrides:
+          - goos: windows
+            asset: inletsctl.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 0.4.9")
+        asset: inletsctl-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: inletsctl
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 0.8.0")
+        asset: inletsctl-{{.OS}}.{{.Format}}
+        format: tgz
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: inletsctl.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 0.8.14")
+        asset: inletsctl-{{.OS}}.{{.Format}}
+        format: tgz
+        checksum:
+          type: github_release
+          asset: inletsctl.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: inletsctl.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: "true"
+        asset: inletsctl-{{.OS}}.{{.Format}}
+        format: tgz
+        checksum:
+          type: github_release
+          asset: inletsctl-{{.Arch}}.sha256
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: inletsctl-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            asset: inletsctl.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows/amd64
   - type: github_release
     repo_owner: inlets
     repo_name: mixctl
