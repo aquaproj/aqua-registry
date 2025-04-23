@@ -43425,18 +43425,135 @@ packages:
   - type: github_release
     repo_owner: lindell
     repo_name: multi-gitter
-    asset: multi-gitter_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    description: CLI to update multiple repositories in bulk
-    replacements:
-      amd64: x86_64
-      arm64: ARM64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    description: Update multiple repositories in with one command
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.21.0", "v0.38.1", "v0.54.0"]
+        no_asset: true
+      - version_constraint: Version == "v0.1.0"
+        asset: multi-gitter_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.1.1"
+        asset: multi-gitter_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: multi-gitter_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.20.1"
+        asset: multi-gitter_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: ARM64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: Version == "v0.47.1"
+        asset: multi-gitter_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: ARM64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: Version == "v0.47.2"
+        asset: multi-gitter_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: ARM64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.20.0")
+        asset: multi-gitter_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: ARM64
+      - version_constraint: semver("<= 0.32.0")
+        asset: multi-gitter_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: ARM64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: multi-gitter_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: ARM64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: linkerd
     repo_name: linkerd2
