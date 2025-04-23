@@ -3,14 +3,137 @@ packages:
   - type: github_release
     repo_owner: kubernetes
     repo_name: kops
-    description: Kubernetes Operations (kops) - Production Grade K8s Installation, Upgrades, and Management
-    complete_windows_ext: false
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: kops-{{.OS}}-{{.Arch}}
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
+    description: "Kubernetes Operations (kOps) - Production Grade k8s Installation, Upgrades and Management"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.8.0-alpha.1")
+        asset: kops-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.9.2")
+        asset: kops-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: kops-{{.OS}}-{{.Arch}}-sha1
+          algorithm: sha1
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.11.1")
+        asset: kops-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: kops-{{.OS}}-{{.Arch}}-sha1
+          algorithm: sha1
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.12.0-beta.2")
+        asset: kops-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha1"
+          algorithm: sha1
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.14.1")
+        asset: kops-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha1"
+          algorithm: sha1
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: "{{.OS}}-{{.Arch}}-utils.{{.Format}}"
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.18.0-beta.1")
+        asset: kops-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: "{{.OS}}-{{.Arch}}-utils.{{.Format}}"
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.18.3")
+        asset: kops-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: "{{.OS}}-{{.Arch}}-nodeup"
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.19.0-alpha.2")
+        asset: kops-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: "{{.OS}}-{{.Arch}}-nodeup"
+      - version_constraint: semver("<= 1.22.0-alpha.1")
+        asset: kops-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: kops-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
