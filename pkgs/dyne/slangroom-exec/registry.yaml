@@ -6,7 +6,7 @@ packages:
     description: Execute all Zencode from Zenroom and Slangroom plugins in one shot
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 1.4.2")
+      - version_constraint: semver("<= 1.5.0")
         asset: slangroom-exec-{{.OS}}-{{.Arch}}
         format: raw
         replacements:
@@ -17,15 +17,17 @@ packages:
           - linux
           - darwin
       - version_constraint: "true"
-        asset: slangroom-exec.{{.Format}}
+        asset: slangroom-exec-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
           - name: slangroom-exec
-            src: slangroom-exec-{{.OS}}-{{.Arch}}
+            src: slangroom-exec
           - name: slexfe
             src: slexfe
         replacements:
-          amd64: x64
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
         supported_envs:
           - linux
           - darwin
