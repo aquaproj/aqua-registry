@@ -3,15 +3,78 @@ packages:
   - type: github_release
     repo_owner: hetznercloud
     repo_name: cli
-    asset: hcloud-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: A command-line interface for Hetzner Cloud
-    overrides:
-      - goos: windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v1.29.1", "v1.31.0"]
+        no_asset: true
+      - version_constraint: Version == "v1.29.0"
+        asset: hcloud-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
-    files:
-      - name: hcloud
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+        rosetta2: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: semver("<= 1.14.0")
+        asset: hcloud-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.20.0")
+        asset: hcloud-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: semver("<= 1.28.1")
+        asset: hcloud-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: semver("<= 1.37.0")
+        asset: hcloud-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.38.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: hcloud-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
