@@ -1,16 +1,270 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
-  - name: jreleaser/jreleaser
-    type: github_release
+  - type: github_release
     repo_owner: jreleaser
     repo_name: jreleaser
-    description: Release projects quickly and easily with JReleaser
-    complete_windows_ext: false
-    asset: jreleaser-{{trimV .Version}}.zip
-    files:
-      - name: jreleaser
-        src: jreleaser-{{trimV .Version}}/bin/jreleaser
-    checksum:
-      type: github_release
-      asset: jreleaser-{{trimV .Version}}.zip.sha256
-      algorithm: sha256
+    description: ":rocket: Release projects quickly and easily with JReleaser"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "early-access"
+        asset: jreleaser-native-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: jreleaser-all-{{.Version}}.intoto.jsonl
+        overrides:
+          - goos: windows
+            goarch: arm64
+            asset: jreleaser-standalone-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: Version == "v0.3.0"
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.4.0"
+        asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: jreleaser-all-{{trimV .Version}}.intoto.jsonl
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            goarch: arm64
+            asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: Version == "v1.9.0"
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: amd64
+            asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: Version == "v1.10.0"
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: jreleaser-all-{{trimV .Version}}.intoto.jsonl
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: amd64
+            asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 0.2.0")
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.5.0")
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: checksums_sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.8.0")
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.0.0")
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: semver("<= 1.2.0")
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: amd64
+            asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 1.3.1")
+        asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            goarch: arm64
+            asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 1.5.1")
+        asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: jreleaser-all-{{.Version}}.intoto.jsonl
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            goarch: arm64
+            asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 1.8.0")
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: jreleaser-all-{{trimV .Version}}.intoto.jsonl
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: amd64
+            asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 1.16.0")
+        asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: jreleaser-all-{{trimV .Version}}.intoto.jsonl
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            goarch: arm64
+            asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: "true"
+        asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: jreleaser-all-{{trimV .Version}}.intoto.jsonl
+        overrides:
+          - goos: windows
+            goarch: arm64
+            asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
