@@ -4,35 +4,35 @@ packages:
     repo_owner: itchyny
     repo_name: maze
     description: A maze command written in Go
-    asset: maze_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
-    files:
-      - name: maze
-        src: maze_{{.Version}}_{{.OS}}_{{.Arch}}/maze
-    complete_windows_ext: false
-    version_constraint: semver(">= 0.0.8")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.0.4")
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
-      - version_constraint: semver("< 0.0.4")
+      - version_constraint: semver("<= 0.0.3")
         asset: maze_{{.OS}}_{{.Arch}}.{{.Format}}
-        supported_envs:
-          - darwin
-          - amd64
+        format: zip
         rosetta2: true
-        files:
-          - name: maze
-            src: maze_{{.OS}}_{{.Arch}}/maze
+        windows_arm_emulation: true
         overrides:
           - goos: linux
             format: tar.gz
-          - goos: windows
-            files:
-              - name: maze
-        complete_windows_ext: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.0.7")
+        asset: maze_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: maze_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
