@@ -37140,22 +37140,24 @@ packages:
     repo_owner: jckuester
     repo_name: terradozer
     description: Terraform destroy without configuration files
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    asset: terradozer_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    files:
-      - name: terradozer
-        src: terradozer_{{trimV .Version}}_{{.OS}}_{{.Arch}}/terradozer
-    checksum:
-      type: github_release
-      asset: terradozer_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: terradozer_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: terradozer_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: jdx
     repo_name: hk
