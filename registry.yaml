@@ -36781,15 +36781,46 @@ packages:
   - type: github_release
     repo_owner: itchyny
     repo_name: gojo
-    asset: gojo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
     description: Yet another Go implementation of jo
-    overrides:
-      - goos: linux
-        format: tar.gz
-    files:
-      - name: gojo
-        src: gojo_{{.Version}}_{{.OS}}_{{.Arch}}/gojo
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.3"
+        asset: gojo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: semver("<= 0.0.6")
+        asset: gojo_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.2")
+        asset: gojo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: gojo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
   - type: github_release
     repo_owner: itchyny
     repo_name: gojq
