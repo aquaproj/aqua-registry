@@ -9,18 +9,23 @@ packages:
       - version_constraint: Version == "0.0.3-rc1"
         no_asset: true
       - version_constraint: "true"
-        asset: mixctl-{{.OS}}
         format: raw
+        asset: mixctl
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
         overrides:
+          - goos: linux
+            goarch: arm64
+            asset: mixctl-arm64
+          - goos: darwin
+            goarch: amd64
+            asset: mixctl-darwin
           - goos: darwin
             goarch: arm64
-            asset: mixctl-{{.OS}}-{{.Arch}}
-          - goos: windows
-            asset: mixctl
+            asset: mixctl-darwin-arm64
         supported_envs:
           - darwin
-          - windows/amd64
+          - linux
+          - amd64
