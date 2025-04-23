@@ -18714,37 +18714,52 @@ packages:
     repo_owner: cloudflare
     repo_name: pint
     description: Prometheus rule linter/validator
-    asset: pint-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    files:
-      - name: pint
-        src: pint-{{.GOOS}}-{{.GOARCH}}
-    format: tar.gz
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.31.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.16.0")
-        replacements:
-          amd64: x86_64
-      - version_constraint: semver(">= 0.1.5")
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-      - version_constraint: semver("< 0.1.5")
+      - version_constraint: semver("<= 0.1.4")
         asset: pint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         replacements:
           amd64: x86_64
           darwin: Darwin
           linux: Linux
           windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.15.7")
+        asset: pint-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.30.2")
+        asset: pint-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: pint-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: cloudfoundry
     repo_name: bosh-cli
