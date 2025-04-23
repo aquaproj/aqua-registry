@@ -3,14 +3,19 @@ packages:
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: dd-time
-    asset: dd-time_{{trimV .Version}}_{{.OS}}_amd64.tar.gz
-    supported_envs:
-      - windows
-      - darwin
-      - linux/amd64
-    rosetta2: true
     description: CLI tool to post the command execution time as time-series data to DataDog
-    checksum:
-      type: github_release
-      asset: dd-time_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: dd-time_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: dd-time_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64

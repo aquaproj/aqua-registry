@@ -115,6 +115,16 @@ packages:
           type: github_release
           asset: jx-checksums.txt
           algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity
+              - https://github.com/jenkins-x/jx/.github/workflows/jenkins-x-release.yaml@refs/heads/main
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/jenkins-x/jx/releases/download/{{.Version}}/jx-checksums.txt.sig
+              - --certificate
+              - https://github.com/jenkins-x/jx/releases/download/{{.Version}}/jx-checksums.txt.pem
         overrides:
           - goos: windows
             format: zip

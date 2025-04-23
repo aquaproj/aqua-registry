@@ -5,35 +5,50 @@ packages:
     repo_name: kapp
     aliases:
       - name: vmware-tanzu/carvel-kapp
-    format: raw
-    asset: kapp-{{.OS}}-{{.Arch}}
-    description: 'kapp is a simple deployment tool focused on the concept of "Kubernetes application" — a set of resources with the same label'
-    files:
-      - name: kapp
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    version_constraint: semver(">= 0.46.0")
-    # support checksum
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    description: kapp is a simple deployment tool focused on the concept of "Kubernetes application" — a set of resources with the same label
+    version_constraint: "false"
     version_overrides:
-      # support darwin/arm64
-      - version_constraint: semver(">= 0.39.0")
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 0.35.0")
-        # support linux/arm64
+      - version_constraint: semver("<= 0.34.0")
+        asset: kapp-{{.OS}}-{{.Arch}}
+        format: raw
         rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: "true"
-        rosetta2: true
-        checksum:
-          enabled: false
+        windows_arm_emulation: true
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 0.38.0")
+        asset: kapp-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.45.0")
+        asset: kapp-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+      - version_constraint: semver("< 0.60.0")
+        asset: kapp-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: kapp-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity
+              - https://github.com/carvel-dev/kapp/.github/workflows/release.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/carvel-dev/kapp/releases/download/{{.Version}}/checksums.txt.sig
+              - --certificate
+              - https://github.com/carvel-dev/kapp/releases/download/{{.Version}}/checksums.txt.pem

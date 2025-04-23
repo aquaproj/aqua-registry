@@ -4,12 +4,26 @@ packages:
     repo_owner: wallix
     repo_name: awless
     description: A Mighty CLI for AWS
-    rosetta2: true
-    asset: awless-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.25")
+        asset: awless-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
-    supported_envs:
-      - darwin
-      - amd64
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: awless-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64

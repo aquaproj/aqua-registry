@@ -3,56 +3,83 @@ packages:
   - type: github_release
     repo_owner: sonatype-nexus-community
     repo_name: nancy
-    asset: nancy-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: A tool to check for vulnerabilities in your Golang dependencies, powered by Sonatype OSS Index
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: nancychecksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 1.0.20")
-    # support darwin/arm64
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.0.19")
+      - version_constraint: Version == "v1.0.19"
+        asset: nancy-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-        # support linux/arm64
-      - version_constraint: semver(">= 1.0.6")
-        # change release filename templates to allow matching by selfupdate.
-        # see: https://github.com/rhysd/go-github-selfupdate/blob/master/selfupdate/detect.go#L95
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - amd64
-      - version_constraint: semver(">= 0.1.4")
-        # Publish the archives for Nancy, for homebrew
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - amd64
-        asset: nancy-{{.OS}}.{{.Arch}}-{{.Version}}.{{.Format}}
-      - version_constraint: semver(">= 0.1.0")
-        rosetta2: true
-        format: raw
-        overrides: []
-        supported_envs:
-          - darwin
-          - amd64
-        asset: nancy-{{.OS}}.{{.Arch}}-{{.Version}}
-        # provide checksum file
-      - version_constraint: "true"
-        rosetta2: true
-        format: raw
-        overrides: []
-        supported_envs:
-          - darwin
-          - amd64
-        asset: nancy-{{.OS}}.{{.Arch}}-{{.Version}}
+        windows_arm_emulation: true
         checksum:
-          enabled: false
+          type: github_release
+          asset: nancychecksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.0.44")
+        asset: nancy-{{.OS}}.{{.Arch}}-{{.Version}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.3")
+        asset: nancy-{{.OS}}.{{.Arch}}-{{.Version}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: nancychecksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.0.5")
+        asset: nancy-{{.OS}}.{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: nancychecksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.0.17")
+        asset: nancy-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: nancychecksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: nancy-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: nancychecksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip

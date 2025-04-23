@@ -1,9 +1,15 @@
 ---
 name: Update packages by aqua-registry-updater
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      package:
+        type: string
+        description: "Package name"
+        default: ""
+        required: false
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/30 * * * *"
 
 env:
   AQUA_GLOBAL_CONFIG: ${{ github.workspace }}/aqua-all.yaml
@@ -20,9 +26,9 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
-      - uses: aquaproj/aqua-installer@f13c5d2f0357708d85477aabe50fd3f725528745 # v3.1.0
+      - uses: aquaproj/aqua-installer@5e54e5cee8a95ee2ce7c04cb993da6dfad13e59c # v3.1.2
         with:
-          aqua_version: v2.41.1-2
+          aqua_version: v2.50.0
           policy_allow: "true"
           aqua_opts: -l -a
         env:
@@ -41,6 +47,14 @@ jobs:
               "pull_requests": "write"
             }
       - run: aqua-registry-updater
+        if: inputs.package == ''
         env:
           AQUA_REGISTRY_UPDATER_CONTAINER_REGISTRY_TOKEN: ${{github.token}}
           GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
+
+      - run: aqua-registry-updater "$PKG"
+        if: inputs.package != ''
+        env:
+          AQUA_REGISTRY_UPDATER_CONTAINER_REGISTRY_TOKEN: ${{github.token}}
+          GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
+          PKG: ${{inputs.package}}

@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/suzuki-shunsuke/cmdx/v2.0.1/json-schema/cmdx.json
 # the configuration file of cmdx - task runner
 # https://github.com/suzuki-shunsuke/cmdx
 tasks:
@@ -34,15 +35,17 @@ tasks:
           - CMD
       - name: limit
         type: string
+        short: l
         usage: The maximum number of versions
         script_envs:
           - LIMIT
-    shell:
-      - "bash"
-      - "-c"
+      - name: config
+        short: c
+        type: string
+        usage: A configuration file path
+        script_envs:
+          - CONFIG
     script: |
-      set -eu
-
       PACKAGE=${PACKAGE#https://github.com/}
 
       bash scripts/check_commands.sh
@@ -55,7 +58,7 @@ tasks:
       fi
 
       bash scripts/start.sh
-      bash scripts/scaffold.sh "$PACKAGE" "$CMD" "$LIMIT"
+      bash scripts/scaffold.sh "$PACKAGE" "$CMD" "$LIMIT" "$CONFIG"
       aqua exec -- cmdx gr
       bash scripts/commit.sh "$PACKAGE"
       bash scripts/test.sh "$PACKAGE"
@@ -92,12 +95,7 @@ tasks:
         usage: a package name. e.g. `cli/cli`
         script_envs:
           - PACKAGE
-    shell:
-      - "bash"
-      - "-c"
     script: |
-      set -eu
-
       PACKAGE=${PACKAGE#https://github.com/}
 
       pkg=$(bash scripts/get_test_pkg.sh "$PACKAGE")
@@ -135,9 +133,6 @@ tasks:
         required: false
         script_envs:
           - ARCH
-    shell:
-      - "bash"
-      - "-c"
     script: bash scripts/connect.sh
 
   - name: generate-registry
@@ -147,9 +142,6 @@ tasks:
       Update registry.yaml
 
       $ cmdx gr
-    shell:
-      - "bash"
-      - "-c"
     script: aqua exec -- aqua-registry gr
 
   - name: new
@@ -163,8 +155,6 @@ tasks:
 
       $ cmdx new cli/cli
     script: |
-      set -eu
-
       if ! bash scripts/new.sh; then
         bash scripts/ask_report.sh
       fi
@@ -181,7 +171,6 @@ tasks:
 
       $ cmdx stop
     script: |
-      set -eu
       bash scripts/stop.sh
       bash scripts/stop.sh aqua-registry-windows
 
@@ -193,7 +182,6 @@ tasks:
 
       $ cmdx rm
     script: |
-      set -eu
       bash scripts/remove_container.sh
       bash scripts/remove_container.sh aqua-registry-windows
 
@@ -210,7 +198,6 @@ tasks:
         script_envs:
           - PACKAGE
     script: |
-      set -eu
       pkg=$(bash scripts/get_test_pkg.sh "$PACKAGE")
       bash scripts/remove_package.sh "$pkg"
 
@@ -227,11 +214,7 @@ tasks:
         usage: Recreate the container
         script_envs:
           - IS_RECREATE
-    shell:
-      - "bash"
-      - "-c"
     script: |
-      set -eu
       if [ "$IS_RECREATE" = true ]; then
         cmdx rm
       fi
@@ -243,7 +226,6 @@ tasks:
     description: Release the new version
     usage: Release the new version
     script: |
-      set -eu
       git tag -m "chore: release $VERSION" "$VERSION"
       git push origin "$VERSION"
     args:
@@ -263,7 +245,6 @@ tasks:
         script_envs:
           - PR_NUMBER
     script: |
-      set -eu
       git fetch origin main
       gh pr checkout "$PR_NUMBER"
       tempfile=$(mktemp)

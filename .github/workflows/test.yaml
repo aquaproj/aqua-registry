@@ -7,121 +7,18 @@ concurrency:
   group: ${{ github.workflow }}--${{ github.ref }}
   cancel-in-progress: true
 permissions: {}
-env:
-  AQUA_LOG_COLOR: always
 jobs:
-  path-filter:
-    # Get changed files to filter jobs
-    outputs:
-      renovate-config-validator: ${{steps.changes.outputs.renovate-config-validator}}
-      check-files: ${{steps.changes.outputs.check-files}}
-      generate-registry: ${{steps.changes.outputs.generate-registry}}
-      json-schema: ${{steps.changes.outputs.json-schema}}
-      test-docker: ${{steps.changes.outputs.test-docker}}
-    runs-on: ubuntu-latest
+  test:
+    uses: ./.github/workflows/workflow_call_test.yaml
     permissions:
       contents: read
       pull-requests: read
-    timeout-minutes: 15
-    steps:
-      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
-        id: changes
-        with:
-          filters: |
-            renovate-config-validator:
-              - renovate.json5
-              - .github/workflows/wc-renovate-config-validator.yaml
-            check-files:
-              - pkgs/**/pkg.yaml
-              - pkgs/**/registry.yaml
-              - .github/workflows/wc-check-files.yaml
-            generate-registry:
-              - aqua/generate-registry.yaml
-              - registry.yaml
-              - pkgs/**/registry.yaml
-              - .github/workflows/wc-generate-registry.yaml
-            json-schema:
-              - registry.yaml
-              - .github/workflows/wc-json-schema.yaml
-            test-docker:
-              - docker/*
-              - scripts/**
-              - cmdx.yaml
-              - .github/workflows/wc-test-docker.yaml
-
   status-check:
-    # This job is used for main branch's branch protection rule's status check.
-    # If all dependent jobs succeed or are skipped this job succeeds.
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs:
-      - renovate-config-validator
-      - check-files
-      - generate-registry
-      - json-schema
-      - prettier
-      - test-docker
-      - test
-      - lintnet
-    permissions: {}
+    runs-on: ubuntu-24.04
     if: failure()
+    timeout-minutes: 10
+    permissions: {}
+    needs:
+      - test
     steps:
       - run: exit 1
-
-  renovate-config-validator:
-    uses: ./.github/workflows/wc-renovate-config-validator.yaml
-    needs: path-filter
-    if: ${{needs.path-filter.outputs.renovate-config-validator == 'true'}}
-    permissions:
-      contents: read
-
-  check-files:
-    uses: ./.github/workflows/wc-check-files.yaml
-    needs: path-filter
-    if: ${{needs.path-filter.outputs.check-files == 'true'}}
-    permissions:
-      contents: read
-
-  generate-registry:
-    uses: ./.github/workflows/wc-generate-registry.yaml
-    needs: path-filter
-    if: ${{needs.path-filter.outputs.generate-registry == 'true'}}
-    permissions:
-      contents: read
-
-  json-schema:
-    uses: ./.github/workflows/wc-json-schema.yaml
-    needs: path-filter
-    if: ${{needs.path-filter.outputs.json-schema == 'true'}}
-    permissions:
-      contents: read
-
-  prettier:
-    uses: ./.github/workflows/wc-prettier.yaml
-    permissions:
-      contents: read
-
-  test-docker:
-    uses: ./.github/workflows/wc-test-docker.yaml
-    needs: path-filter
-    if: ${{needs.path-filter.outputs.test-docker == 'true'}}
-    permissions:
-      contents: read
-
-  ci-info:
-    uses: ./.github/workflows/wc-ci-info.yaml
-    permissions:
-      contents: read
-      pull-requests: read
-
-  lintnet:
-    uses: ./.github/workflows/wc-lintnet.yaml
-    permissions:
-      contents: read
-
-  test:
-    needs: ci-info
-    uses: ./.github/workflows/wc-test.yaml
-    permissions:
-      contents: read
-      pull-requests: read

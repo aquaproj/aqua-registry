@@ -5,42 +5,155 @@ packages:
     repo_owner: domoritz
     repo_name: arrow-tools
     description: Convert JSON files to Apache Arrow. This package is part of Arrow CLI tools
-    asset: json2arrow-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.xz
-    files:
-      - name: json2arrow
-        src: json2arrow-{{.Arch}}-{{.OS}}/json2arrow
-    overrides:
-      - goos: darwin
-        replacements:
-          arm64: aarch64
-      - goos: windows
-        format: zip
-        files:
-          - name: json2arrow
-    replacements:
-      amd64: x86_64
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-      windows: pc-windows-msvc
-    supported_envs:
-      - darwin
-      - amd64
-    version_constraint: semver(">= 0.12.1")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.10.0")
+      - version_constraint: Version == "v0.12.0"
+        no_asset: true
+      - version_constraint: semver("<= 0.8.0")
         asset: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        rosetta2: true
+        windows_arm_emulation: true
         files:
           - name: json2arrow
-            src: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/json2arrow
-      - version_constraint: semver("< 0.10.0")
-        asset: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        files:
-          - name: json2arrow
-            src: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}/json2arrow
+            src: "{{.AssetWithoutExt}}/json2arrow"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
         overrides:
           - goos: windows
             format: zip
             files:
               - name: json2arrow
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.8.1"
+        asset: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
         rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: json2arrow
+            src: "{{.AssetWithoutExt}}/json2arrow"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: json2arrow
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.11.0")
+        asset: json2arrow-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: json2arrow
+            src: "{{.AssetWithoutExt}}/json2arrow"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: json2arrow
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.13.0")
+        asset: json2arrow-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: json2arrow
+            src: "{{.AssetWithoutExt}}/json2arrow"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: json2arrow
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.14.1"
+        asset: json2arrow-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: json2arrow
+            src: "{{.AssetWithoutExt}}/json2arrow"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: json2arrow
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: json2arrow-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: json2arrow
+            src: "{{.AssetWithoutExt}}/json2arrow"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: json2arrow
+        supported_envs:
+          - darwin
+          - windows
+          - amd64

@@ -5,12 +5,16 @@ packages:
     repo_name: devbox
     aliases:
       - name: jetpack-io/devbox
-    asset: devbox_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    description: Instant, easy, predictable shells and containers
-    supported_envs:
-      - linux
-      - darwin
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    description: Instant, easy, and predictable development environments
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: devbox_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin

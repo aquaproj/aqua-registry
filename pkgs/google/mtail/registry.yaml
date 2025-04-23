@@ -4,57 +4,75 @@ packages:
     repo_owner: google
     repo_name: mtail
     description: extract internal monitoring data from application logs for collection in a timeseries database
-    asset: mtail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 3.0.0-rc52")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 3.0.0-rc48")
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-      - version_constraint: semver(">= 3.0.0-rc45")
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-      - version_constraint: semver(">= 3.0.0-rc41")
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        rosetta2: true
-      - version_constraint: semver(">= 3.0.0-rc38")
+      - version_constraint: semver("<= 3.0.0-rc36")
         asset: mtail_{{.Version}}_{{.OS}}_{{.Arch}}
         format: raw
+        rosetta2: true
+        windows_arm_emulation: true
         supported_envs:
           - darwin
-          - linux
+          - windows
           - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver("< 3.0.0-rc38")
+      - version_constraint: Version == "v3.0.0-rc38"
         asset: mtail_{{.Version}}_{{.OS}}_{{.Arch}}
         format: raw
-        supported_envs:
-          - darwin
-          - amd64
         rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 3.0.0-rc44")
+        asset: mtail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
         checksum:
-          enabled: false
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 3.0.0-rc47")
+        asset: mtail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 3.0.0-rc51")
+        asset: mtail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 3.0.0-rc54")
+        asset: mtail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: mtail_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl

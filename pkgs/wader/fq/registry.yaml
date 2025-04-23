@@ -3,23 +3,30 @@ packages:
   - type: github_release
     repo_owner: wader
     repo_name: fq
-    asset: fq_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    description: jq for binary formats
-    replacements:
-      darwin: macos
-    format: tar.gz
-    version_constraint: semver(">= 0.0.5")
-    overrides:
-      - goos: windows
-        format: zip
-      - goos: darwin
-        format: zip
+    description: "jq for binary formats - tool, language and decoders for working with binary and text formats"
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.0.4")
+        asset: fq_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         overrides:
           - goos: windows
             format: zip
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+      - version_constraint: "true"
+        asset: fq_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz

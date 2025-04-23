@@ -4,30 +4,56 @@ packages:
     type: github_release
     repo_owner: grpc-ecosystem
     repo_name: grpc-gateway
-    description: Generate Swagger / OpenAPIv2 JSON file from Protocol Buffer definition
-    asset: protoc-gen-openapiv2-{{.Version}}-{{.OS}}-{{.Arch}}
-    rosetta2: true
-    format: raw
-    replacements:
-      amd64: x86_64
-    files:
-      - name: protoc-gen-openapiv2
-    version_constraint: semver(">= 2.10.2")
+    description: gRPC to JSON proxy generator following the gRPC HTTP spec
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 2.0.0")
+      - version_constraint: semver("< 2.0.0") || Version == "v2.16.1"
+        no_asset: true
+      - version_constraint: semver("<= 2.10.1")
+        asset: protoc-gen-openapiv2-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: grpc-gateway_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 2.13.0")
+        asset: protoc-gen-openapiv2-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: grpc-gateway_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 2.16.0")
+        asset: protoc-gen-openapiv2-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: grpc-gateway_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
       - version_constraint: "true"
-        supported_envs:
-          - darwin
-          - amd64
-        # https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.0.0
-        # > Rename protoc-gen-swagger to protoc-gen-openapiv2
-        asset: protoc-gen-swagger-{{.Version}}-{{.OS}}-{{.Arch}}
-        files:
-          - name: protoc-gen-swagger
-    checksum:
-      type: github_release
-      asset: grpc-gateway_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+        asset: protoc-gen-openapiv2-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: grpc-gateway_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
