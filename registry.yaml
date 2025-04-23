@@ -18431,20 +18431,17 @@ packages:
     repo_owner: cloudentity
     repo_name: oauth2c
     description: User-friendly OAuth2 CLI
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: "true"
-        asset: oauth2c_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
+    asset: oauth2c_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
   - type: github_release
     repo_owner: cloudflare
     repo_name: cf-terraforming
@@ -35853,54 +35850,33 @@ packages:
     repo_owner: imuxin
     repo_name: kubectl-watch
     description: A kubectl plugin to provide a pretty delta change view of being watched kubernetes resources
-    version_constraint: "false"
+    asset: kubectl-watch-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+    supported_envs:
+      - linux/amd64
+      - darwin
+    rosetta2: true
+    version_constraint: semver(">= 0.1.6")
     version_overrides:
-      - version_constraint: Version == "0.1.5"
+      - version_constraint: semver("< 0.1.6")
         asset: kubectl-watch_{{.Version}}_{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
-        rosetta2: true
-        windows_arm_emulation: true
         replacements:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux-musl
           windows: pc-windows-gnu
+        supported_envs:
+          - darwin
+          - amd64
         checksum:
           type: github_release
           asset: kubectl-watch_{{.Version}}_{{.Arch}}-{{.OS}}.zip.sha256sum
           algorithm: sha256
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: semver("<= 0.1.4")
-        no_asset: true
-      - version_constraint: semver("<= 0.2.3")
-        asset: kubectl-watch-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: "true"
-        asset: kubectl-watch-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: aarch64
-        supported_envs:
-          - linux
-          - darwin
   - type: go_install
     repo_owner: in-toto
     repo_name: in-toto-golang
@@ -36764,27 +36740,113 @@ packages:
     type: github_release
     repo_owner: istio
     repo_name: istio
-    description: The istioctl tool is a configuration command line utility that allows service operators to debug and diagnose their Istio service mesh deployments
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    replacements:
-      darwin: osx
-      windows: win
-    asset: istioctl-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
-    files:
-      - name: istioctl
-    overrides:
-      - goos: darwin
-        goarch: amd64
-        asset: istioctl-{{.Version}}-osx.tar.gz
-      - goos: windows
-        asset: istioctl-{{.Version}}-win.zip
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
+    description: Connect, secure, control, and observe services
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.1.0"
+      - version_constraint: Version == "1.1.0.snapshot.0"
+        asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+          windows: win
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.6.0")
+        asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+          windows: win
+        overrides:
+          - goos: windows
+            format: zip
+            asset: istio_{{.Version}}_{{.OS}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.0.2")
+        asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+          windows: win
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.6.0-alpha.0")
+        asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+          windows: win
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.9.9")
+        asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+          windows: win
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: istio-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.19.0-alpha.1")
+        asset: istio-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+          windows: win
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+      - version_constraint: "true"
+        asset: istio-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: osx
+          windows: win
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: itamae-kitchen
     repo_name: mitamae
