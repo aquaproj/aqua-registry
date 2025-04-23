@@ -40447,28 +40447,125 @@ packages:
   - type: github_release
     repo_owner: ko-build
     repo_name: ko
-    aliases:
-      - name: google/ko
-    asset: ko_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    description: Build and deploy Go applications on Kubernetes
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    slsa_provenance:
-      type: github_release
-      asset: multiple.intoto.jsonl
-    version_constraint: semver("> 0.12.0")
+    description: Build and deploy Go applications
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: 'semver("<=0.12.0")'
+      - version_constraint: Version in ["v0.1", "v0.9.0", "v0.14.0", "v0.17.0"]
+        no_asset: true
+      - version_constraint: Version == "v0.8.3"
+        asset: ko_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: Version == "v0.9.1"
+        asset: ko_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: Version == "v0.12.0"
+        asset: ko_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         slsa_provenance:
-          enabled: false
+          type: github_release
+          asset: attestation.intoto.jsonl
+      - version_constraint: Version == "v0.13.0"
+        asset: ko_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+      - version_constraint: semver("<= 0.7.0")
+        asset: ko_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.8.2")
+        asset: ko_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.11.2")
+        asset: ko_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: ko_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
   - type: github_release
     repo_owner: ko1nksm
     repo_name: getoptions
