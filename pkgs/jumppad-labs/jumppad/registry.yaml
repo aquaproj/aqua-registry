@@ -3,76 +3,171 @@ packages:
   - type: github_release
     repo_owner: jumppad-labs
     repo_name: jumppad
-    aliases:
-      - name: shipyard-run/shipyard
     description: Modern cloud native development environments
-    asset: jumppad_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
-    replacements:
-      amd64: x86_64
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.5.8")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.3.20")
-        asset: shipyard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        checksum:
-          enabled: false
-        files:
-          - name: shipyard
-      - version_constraint: semver(">= 0.3.13")
-        files:
-          - name: shipyard
-        asset: shipyard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-      - version_constraint: semver(">= 0.3.6")
-        files:
-          - name: shipyard
-        asset: shipyard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-      - version_constraint: semver(">= 0.0.3")
-        files:
-          - name: shipyard
-        asset: shipyard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
+      - version_constraint: Version == "v0.4.0"
+        no_asset: true
+      - version_constraint: Version == "v0.0.0.alpha.1"
+        asset: yard-{{.OS}}-{{.Arch}}
+        format: raw
         rosetta2: true
-      - version_constraint: semver(">= 0.0.2")
+        windows_arm_emulation: true
+        complete_windows_ext: false
+      - version_constraint: Version == "v0.0.2"
         asset: shipyard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        files:
-          - name: shipyard
+        format: zip
+        windows_arm_emulation: true
         replacements:
           amd64: x86_64
           linux: Linux
           windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
         supported_envs:
           - linux
           - windows/amd64
+      - version_constraint: Version == "0.8.0"
+        asset: jumppad_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: Version == "0.9.0"
+        asset: jumppad_0.8.0_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: Version in ["v0.0.0.alpha.15", "v0.0.0.alpha.15", "v0.0.0.alpha.15", "v0.0.0.alpha.15", "v0.0.0.alpha.15", "v0.0.0.alpha.15"]
+        asset: shipyard-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: Version in ["v0.0.0.alpha.6", "v0.0.0.alpha.6", "v0.0.0.alpha.6", "v0.0.0.alpha.6", "v0.0.0.alpha.6"]
+        asset: yard-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+      - version_constraint: Version in ["v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9", "v0.0.0.beta.9"]
+        asset: shipyard-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.3.5")
+        asset: shipyard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.3.12")
+        asset: shipyard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.3.18")
+        asset: shipyard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: semver("<= 0.5.3")
+        asset: shipyard_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: semver("<= 0.5.59")
+        asset: jumppad_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: semver("<= 0.7.0")
+        asset: jumppad_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: "true"
+        asset: jumppad_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
