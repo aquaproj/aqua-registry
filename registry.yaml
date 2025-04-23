@@ -34629,14 +34629,18 @@ packages:
     repo_owner: heartbeatsjp
     repo_name: check-tls-cert
     description: Check-tls-cert is a TLS certificate checker
-    asset: check-tls-cert-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.xz
-    supported_envs:
-      - linux
-      - darwin
-      - amd64
-    files:
-      - name: check-tls-cert
-        src: check-tls-cert-{{trimV .Version}}/check-tls-cert
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.7.0")
+        asset: check-tls-cert-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.xz
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: check-tls-cert-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
   - type: github_release
     repo_owner: helix-editor
     repo_name: helix
