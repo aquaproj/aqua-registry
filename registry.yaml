@@ -67608,26 +67608,27 @@ packages:
           - goos: windows
             format: zip
   - name: xremap/xremap/gnome
-    aliases:
-      - name: k0kubun/xremap/gnome
     type: github_release
     repo_owner: xremap
     repo_name: xremap
-    description: Key remapper for X11 and Wayland (for GNOME Wayland)
-    asset: xremap-{{.OS}}-{{.Arch}}-gnome.{{.Format}}
-    format: zip
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-    supported_envs:
-      - linux
-    files:
-      - name: xremap
-    version_constraint: semver(">= 0.5.0")
+    description: Key remapper for X11 and Wayland
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.5.0")
+      - version_constraint: semver("<= 0.4.6")
+        asset: xremap-{{.OS}}-{{.Arch}}-gnome.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
         supported_envs:
           - linux/amd64
+      - version_constraint: "true"
+        asset: xremap-{{.OS}}-{{.Arch}}-gnome.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        supported_envs:
+          - linux
   - name: xremap/xremap/hypr
     aliases:
       - name: k0kubun/xremap/hypr
