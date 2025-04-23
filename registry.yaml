@@ -39021,16 +39021,26 @@ packages:
   - type: github_release
     repo_owner: k0sproject
     repo_name: k0s
-    asset: k0s-{{.Version}}-{{.Arch}}
-    format: raw
-    description: k0s - Zero Friction Kubernetes
-    supported_envs:
-      - linux
-    replacements:
-      x86_64: amd64
-      aarch64: arm64
-      armv7l: arm
-      armv8l: arm
+    description: "k0s - The Zero Friction Kubernetes"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.8.1")
+      - version_constraint: semver("<= 1.28.2-rc.0+k0s.0")
+        asset: k0s-{{.Version}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        supported_envs:
+          - windows/amd64
+      - version_constraint: "true"
+        asset: k0s-{{.Version}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
+        supported_envs:
+          - windows/amd64
   - type: github_release
     repo_owner: k0sproject
     repo_name: k0sctl
