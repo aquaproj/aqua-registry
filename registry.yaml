@@ -34293,18 +34293,26 @@ packages:
   - type: github_release
     repo_owner: harness
     repo_name: drone-cli
-    asset: drone_{{.OS}}_{{.Arch}}.tar.gz
     description: Command Line Tools for Drone CI
-    files:
-      - name: drone
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: drone_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.2.4")
+        asset: drone_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: drone_checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: drone_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: drone_checksums.txt
+          algorithm: sha256
   - type: http
     repo_owner: hashicorp
     repo_name: boundary
