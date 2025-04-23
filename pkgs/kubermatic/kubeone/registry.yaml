@@ -3,19 +3,33 @@ packages:
   - type: github_release
     repo_owner: kubermatic
     repo_name: kubeone
-    asset: kubeone_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
     description: Kubermatic KubeOne automate cluster operations on all your cloud, on-prem, edge, and IoT environments
-    supported_envs:
-      - linux
-      - darwin
-    checksum:
-      type: github_release
-      asset: kubeone_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 1.4.2")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
-        rosetta2: true
+      - version_constraint: Version == "v0.1.0-beta0"
+      - version_constraint: Version == "v0.2.0"
+        asset: kubeone_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         supported_envs:
           - linux/amd64
+      - version_constraint: semver("<= 1.4.0-rc.0")
+        asset: kubeone_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: kubeone_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: kubeone_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: kubeone_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
           - darwin
