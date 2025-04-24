@@ -44863,19 +44863,56 @@ packages:
   - type: github_release
     repo_owner: mattn
     repo_name: efm-langserver
-    asset: efm-langserver_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
     description: General purpose Language Server
-    overrides:
-      - goos: linux
-        format: tar.gz
-    files:
-      - name: efm-langserver
-        src: efm-langserver_{{.Version}}_{{.OS}}_{{.Arch}}/efm-langserver
-    version_constraint: semver("!= 0.0.45")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("= 0.0.45")
+      - version_constraint: Version == "v0.0.27"
         no_asset: true
+      - version_constraint: semver("<= 0.0.8")
+        asset: efm-langserver_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHASUMS
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.0.15")
+        asset: efm-langserver_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.0.20")
+        no_asset: true
+      - version_constraint: semver("<= 0.0.38")
+        asset: efm-langserver_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: efm-langserver_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
   - type: github_release
     repo_owner: mattn
     repo_name: files
