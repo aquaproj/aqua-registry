@@ -54807,25 +54807,44 @@ packages:
     repo_owner: restic
     repo_name: restic
     description: Fast, secure, efficient backup program
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    files:
-      - name: restic
-        src: restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}
-    format: bz2
-    overrides:
-      - goos: windows
-        format: zip
-        files:
-          - name: restic
-            src: restic_{{trimV .Version}}_windows_{{.Arch}}.exe
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.3.3"
+        asset: restic_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: bz2
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.3.2")
+      - version_constraint: semver("<= 0.12.0")
+        asset: restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: bz2
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: restic_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: bz2
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: reteps
     repo_name: dockerfmt
