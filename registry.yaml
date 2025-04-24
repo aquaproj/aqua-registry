@@ -47639,18 +47639,31 @@ packages:
     supported_envs:
       - darwin
       - linux/amd64
-  - type: github_release
-    name: naggie/dstask/dstask-import
+  - name: naggie/dstask/dstask-import
+    type: github_release
     repo_owner: naggie
     repo_name: dstask
-    description: Git powered terminal-based todo manager -- markdown note page per task. Single binary
-    rosetta2: true
-    asset: dstask-import-{{.OS}}-{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux/amd64
-    files:
-      - name: dstask-import
+    description: "Git powered terminal-based todo/note manager --  markdown note page per task. Single binary"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.12"
+        asset: dstask-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.26.0")
+        asset: dstask-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: dstask-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+          - darwin
   - type: github_release
     repo_owner: nakabonne
     repo_name: ali
