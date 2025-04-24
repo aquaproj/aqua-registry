@@ -53399,17 +53399,87 @@ packages:
   - type: github_release
     repo_owner: prometheus
     repo_name: prometheus
-    asset: prometheus-{{trimV .Version}}.{{.OS}}-{{.Arch}}.tar.gz
     description: The Prometheus monitoring system and time series database
-    checksum:
-      type: github_release
-      asset: sha256sums.txt
-      algorithm: sha256
-    files:
-      - name: prometheus
-        src: prometheus-{{trimV .Version}}.{{.OS}}-{{.Arch}}/prometheus
-      - name: promtool
-        src: prometheus-{{trimV .Version}}.{{.OS}}-{{.Arch}}/promtool
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.13.3"
+        asset: prometheus-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "0.16.1"
+        asset: prometheus-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version in ["v1.6.2", "v2.0.0-alpha.0"]
+        asset: prometheus-{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.13.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.15.0-rc1")
+        asset: prometheus-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.15.0-rc3")
+        no_asset: true
+      - version_constraint: semver("<= 0.15.1")
+        asset: prometheus-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.17.0")
+        asset: prometheus-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.20.0")
+        asset: prometheus-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 1.5.3")
+        asset: prometheus-{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 2.25.2")
+        asset: prometheus-{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 2.31.2")
+        asset: prometheus-{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: prometheus-{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: prometheus
     repo_name: promlens
