@@ -54978,16 +54978,31 @@ packages:
   - type: github_release
     repo_owner: rhysd
     repo_name: vim-startuptime
-    asset: vim-startuptime_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: A small Go program for better `vim --startuptime` alternative
-    overrides:
-      - goos: windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.1.0")
+        asset: vim-startuptime_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
-    checksum:
-      type: github_release
-      asset: vim-startuptime_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: vim-startuptime_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: vim-startuptime_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: vim-startuptime_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: go_install
     repo_owner: ribice
     repo_name: glice
