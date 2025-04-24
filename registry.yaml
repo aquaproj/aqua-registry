@@ -47208,12 +47208,57 @@ packages:
   - type: github_release
     repo_owner: mutagen-io
     repo_name: mutagen
-    asset: mutagen_{{.OS}}_{{.Arch}}_{{.Version}}.tar.gz
     description: Fast file synchronization and network forwarding for remote development
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.11.0-alpha2", "v0.11.0-alpha4"]
+        no_asset: true
+      - version_constraint: Version in ["v0.11.0-alpha1", "v0.11.0-alpha3"]
+        asset: mutagen_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: cli_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+      - version_constraint: Version == "v0.12.0-nightly2021041301"
+        asset: mutagen_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.1.1")
+        asset: mutagen_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.10.4")
+        asset: mutagen_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.12.0-beta2")
+        asset: mutagen_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: cli_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+      - version_constraint: semver("<= 0.12.0-beta4")
+        asset: mutagen_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+      - version_constraint: "true"
+        asset: mutagen_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
   - type: github_release
     repo_owner: mutagen-io
     repo_name: mutagen-compose
