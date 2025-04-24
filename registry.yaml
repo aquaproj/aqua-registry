@@ -44827,14 +44827,22 @@ packages:
     repo_owner: mattn
     repo_name: algia
     description: A cli application for nostr
-    asset: algia_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
-    files:
-      - name: algia
-        src: algia_{{.Version}}_{{.OS}}_{{.Arch}}/algia
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.9")
+        asset: algia_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: semver("<= 0.0.11")
+        no_asset: true
+      - version_constraint: "true"
+        asset: algia_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
   - type: github_release
     repo_owner: mattn
     repo_name: bsky
