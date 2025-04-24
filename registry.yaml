@@ -53413,15 +53413,16 @@ packages:
   - type: github_release
     repo_owner: prometheus
     repo_name: promlens
-    asset: promlens-{{trimV .Version}}.{{.OS}}-{{.Arch}}.tar.gz
     description: PromLens – The query builder, analyzer, and explainer for PromQL
-    checksum:
-      type: github_release
-      asset: sha256sums.txt
-      algorithm: sha256
-    files:
-      - name: promlens
-        src: promlens-{{trimV .Version}}.{{.OS}}-{{.Arch}}/promlens
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: promlens-{{trimV .Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
   - name: protocolbuffers/protobuf-go/protoc-gen-go
     type: github_release
     repo_owner: protocolbuffers
