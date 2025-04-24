@@ -40204,33 +40204,41 @@ packages:
     repo_owner: kellyjonbrazil
     repo_name: jc
     description: CLI tool and python library that converts the output of popular command-line tools, file-types, and common strings to JSON, YAML, or Dictionaries. This allows piping of output to tools like jq and simplifying automation scripts
-    asset: jc-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-        asset: jc-{{trimV .Version}}-{{.OS}}.{{.Format}}
-        files:
-          - name: jc
-            src: jc-{{trimV .Version}}-windows/jc.exe
-    replacements:
-      amd64: x86_64
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    version_constraint: semver(">= 1.21.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.19.0")
+      - version_constraint: semver("<= 1.18.8")
+        asset: jc-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.25.0")
+        asset: jc-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
         overrides:
           - goos: windows
             format: zip
             asset: jc-{{trimV .Version}}-{{.OS}}.{{.Format}}
-      - version_constraint: semver("< 1.19.0")
-        overrides: []
         supported_envs:
-          - linux/amd64
           - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: jc-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        overrides:
+          - goos: windows
+            format: zip
+            asset: jc-{{trimV .Version}}-{{.OS}}.{{.Format}}
   - type: github_release
     repo_owner: kentaro-m
     repo_name: md2confl
