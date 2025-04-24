@@ -49088,22 +49088,82 @@ packages:
   - type: github_release
     repo_owner: ogham
     repo_name: exa
-    asset: exa-{{.OS}}-{{.Arch}}-musl-{{.Version}}.{{.Format}}
-    format: zip
     description: A modern replacement for ‘ls’
-    replacements:
-      amd64: x86_64
-      darwin: macos
-    overrides:
-      - goos: darwin
-        asset: exa-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
-    supported_envs:
-      - linux/amd64
-      - darwin
-    rosetta2: true
-    files:
-      - name: exa
-        src: bin/exa
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.1.0", "v0.4.1"]
+        no_asset: true
+      - version_constraint: Version in ["v0.2.0", "v0.4.0"]
+        asset: exa-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: osx
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.3.0"
+        asset: exa-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: exa-{{.OS}}-x86-64.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.5.0"
+        asset: exa-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.7.0")
+        asset: exa-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.9.0")
+        asset: exa-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: MD5SUMS
+          algorithm: md5
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: exa-{{.OS}}-{{.Arch}}-musl-{{.Version}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: darwin
+            asset: exa-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
   - type: github_release
     repo_owner: okta
     repo_name: okta-aws-cli
