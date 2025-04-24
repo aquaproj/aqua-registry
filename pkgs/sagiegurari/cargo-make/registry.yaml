@@ -4,6 +4,11 @@ packages:
     repo_owner: sagiegurari
     repo_name: cargo-make
     description: Rust task runner and build tool
+    files:
+      - name: cargo-make
+        src: "{{.AssetWithoutExt}}/{{.FileName}}"
+      - name: makers
+        src: "{{.AssetWithoutExt}}/{{.FileName}}"
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "0.35.3"
@@ -17,6 +22,13 @@ packages:
           darwin: apple-darwin
         supported_envs:
           - darwin
+        files:
+          - name: cargo-make
+            src: "{{.AssetWithoutExt}}/{{.FileName}}"
+        overrides:
+          - goos: windows
+            files:
+              - name: cargo-make
       - version_constraint: Version == "0.19.0"
         asset: cargo-make-v0.18.0-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
@@ -31,6 +43,13 @@ packages:
           - darwin
           - windows
           - amd64
+        files:
+          - name: cargo-make
+            src: "{{.AssetWithoutExt}}/{{.FileName}}"
+        overrides:
+          - goos: windows
+            files:
+              - name: cargo-make
       - version_constraint: Version == "0.30.2"
         asset: cargo-make-v{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
@@ -43,6 +62,13 @@ packages:
         supported_envs:
           - darwin
           - windows/amd64
+        files:
+          - name: cargo-make
+            src: "{{.AssetWithoutExt}}/{{.FileName}}"
+        overrides:
+          - goos: windows
+            files:
+              - name: cargo-make
       - version_constraint: Version == "0.35.14"
         asset: cargo-make-v{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
@@ -54,6 +80,11 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
+        overrides:
+          - goos: windows
+            files:
+              - name: cargo-make
+              - name: makers
       - version_constraint: semver("<= 0.15.0")
         no_asset: true
       - version_constraint: semver("<= 0.36.6")
@@ -70,6 +101,11 @@ packages:
           - darwin
           - windows
           - amd64
+        overrides:
+          - goos: windows
+            files:
+              - name: cargo-make
+              - name: makers
       - version_constraint: "true"
         asset: cargo-make-v{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
@@ -83,6 +119,10 @@ packages:
           - goos: darwin
             replacements:
               arm64: aarch64
+          - goos: windows
+            files:
+              - name: cargo-make
+              - name: makers
         supported_envs:
           - darwin
           - windows
