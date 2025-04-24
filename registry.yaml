@@ -68303,25 +68303,27 @@ packages:
           The client for hypr was dropped.
           https://github.com/xremap/xremap/pull/479
   - name: xremap/xremap/kde
-    aliases:
-      - name: k0kubun/xremap/kde
     type: github_release
     repo_owner: xremap
     repo_name: xremap
-    description: Key remapper for X11 and Wayland (for KDE-Plasma Wayland)
-    asset: xremap-{{.OS}}-{{.Arch}}-kde.{{.Format}}
-    format: zip
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-    supported_envs:
-      - linux
-    files:
-      - name: xremap
-    version_constraint: semver(">= 0.8.3")
+    description: Key remapper for X11 and Wayland
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.8.3")
-        no_asset: true
+      - version_constraint: semver("<= 0.4.6")
+        asset: xremap-{{.OS}}-{{.Arch}}-gnome.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: "true"
+        asset: xremap-{{.OS}}-{{.Arch}}-gnome.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        supported_envs:
+          - linux
   - name: xremap/xremap/sway
     aliases:
       - name: k0kubun/xremap/sway
