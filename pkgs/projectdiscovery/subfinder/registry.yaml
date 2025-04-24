@@ -3,11 +3,91 @@ packages:
   - type: github_release
     repo_owner: projectdiscovery
     repo_name: subfinder
-    asset: subfinder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
-    description: Subfinder is a subdomain discovery tool that discovers valid subdomains for websites. Designed as a passive framework to be useful for bug bounties and safe for penetration testing
-    replacements:
-      darwin: macOS
-    checksum:
-      type: github_release
-      asset: subfinder_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    description: Fast passive subdomain enumeration tool
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["1.2", "v2.2.3"]
+        no_asset: true
+      - version_constraint: Version in ["v2.0", "v2.2.4"]
+        asset: subfinder-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: subfinder-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "2.3.5"
+        asset: subfinder_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: subfinder_{{.Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.1.1")
+        no_asset: true
+      - version_constraint: semver("<= 1.0.0")
+        asset: subfinder_{{.OS}}_{{.Arch}}_{{.Version}}.{{.Format}}
+        format: zip
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 2.2.0")
+        no_asset: true
+      - version_constraint: semver("<= 2.2.2")
+        asset: subfinder-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: subfinder-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.3.4")
+        asset: subfinder-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+            asset: subfinder-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.4.8")
+        asset: subfinder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: subfinder_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: subfinder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: subfinder_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
