@@ -46027,13 +46027,41 @@ packages:
   - type: github_release
     repo_owner: mitchellh
     repo_name: gon
-    asset: gon_{{.OS}}.zip
     description: Sign, notarize, and package macOS CLI tools and applications written in any language. Available as both a CLI and a Go library
-    replacements:
-      darwin: macos
-    supported_envs:
-      - darwin
-    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.2.3"
+        asset: gon_{{.OS}}.{{.Format}}
+        format: dmg
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "v0.2.4"
+        asset: gon_{{.OS}}.{{.Format}}
+        format: dmg
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: gon_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 0.2.2")
+        asset: gon_{{trimV .Version}}_{{.OS}}.{{.Format}}
+        format: dmg
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+      - version_constraint: "true"
+        asset: gon_{{.OS}}.{{.Format}}
+        format: dmg
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
   - type: go_install
     repo_owner: mitchellh
     repo_name: gox
