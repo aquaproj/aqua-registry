@@ -3,9 +3,50 @@ packages:
   - type: github_release
     repo_owner: mmarkdown
     repo_name: mmark
-    asset: mmark_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tgz
-    description: A powerful markdown processor in Go geared towards the IETF
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    description: "Mmark: a powerful markdown processor in Go geared towards the IETF"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v2.0.22"
+        asset: mmark_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "v2.0.33"
+        asset: mmark_2.0.32_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: Version == "v2.0.47"
+        asset: mmark_2.0.46_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: Version == "v2.1.0"
+        asset: mmark_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.2.23")
+        asset: mmark_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 2.2.31")
+        asset: mmark_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 2.2.39")
+        no_asset: true
+      - version_constraint: "true"
+        asset: mmark_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: mmark_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
