@@ -4,12 +4,41 @@ packages:
     repo_owner: mergestat
     repo_name: mergestat-lite
     description: Query git repositories with SQL. Generate reports, perform status checks, analyze codebases
-    rosetta2: true
-    asset: mergestat-{{.OS}}-{{.Arch}}.tar.gz
-    files:
-      - name: mergestat
-    supported_envs:
-      - darwin
-      - linux/amd64
-    replacements:
-      darwin: macos
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.1"
+        no_asset: true
+      - version_constraint: Version == "v0.1.0"
+        asset: askgit-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: askgit-{{.OS}}-10.6-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.4.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.4.9")
+        asset: askgit-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          darwin: macos
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: mergestat-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          darwin: macos
+        supported_envs:
+          - linux/amd64
+          - darwin
