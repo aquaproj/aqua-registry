@@ -45031,18 +45031,90 @@ packages:
     repo_owner: mattn
     repo_name: goreman
     description: foreman clone written in go language
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: goreman_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    files:
-      - name: goreman
-        src: goreman_{{.Version}}_{{.OS}}_{{.Arch}}/goreman
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.9"
+        no_asset: true
+      - version_constraint: Version in ["v0.0.8", "v0.0.10"]
+        asset: goreman_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHASUMS
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.3.0"
+        asset: goreman_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: SHASUMS
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.3.4"
+        asset: goreman_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: goreman_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["v0.3.7", "v0.3.14"]
+        asset: goreman_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.3.13"
+        asset: goreman_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: semver("<= 0.0.7")
+        asset: goreman_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.3.11")
+        asset: goreman_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: "true"
+        asset: goreman_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
   - type: github_release
     repo_owner: mattn
     repo_name: longcat
