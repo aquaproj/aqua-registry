@@ -45229,30 +45229,213 @@ packages:
   - type: github_release
     repo_owner: metalbear-co
     repo_name: mirrord
-    description: By mirroring traffic to and from your machine, mirrord surrounds your local service with a mirror image of its cloud environment
-    replacements:
-      darwin: mac
-      amd64: x86_64
-      arm64: aarch64
-    version_constraint: semver(">= 2.2.1")
-    supported_envs:
-      - linux
-      - darwin
-    rosetta2: true
-    format: zip
-    asset: mirrord_{{.OS}}_{{.Arch}}.{{.Format}}
-    overrides:
-      - goos: darwin
-        replacements:
-          amd64: universal
+    description: Connect your local process and your cloud environment, and run local code in cloud conditions
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 2.2.1")
-        rosetta2: false
+      - version_constraint: Version in ["2.4.0", "2.8.0", "2.9.0", "2.10.0", "3.0.0-alpha", "3.0.2-alpha", "3.0.18-alpha", "3.7.1", "3.10.1", "3.11.1", "3.14.2", "3.15.0", "3.19.0", "3.45.1", "3.95.1"]
+        no_asset: true
+      - version_constraint: Version in ["2.8.1", "2.9.1"]
         asset: mirrord_{{.OS}}_{{.Arch}}
         format: raw
-        overrides: []
+        replacements:
+          darwin: mac
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: mirrord_{{.OS}}_universal
         supported_envs:
           - linux/amd64
+          - darwin
+      - version_constraint: Version == "3.0.1-alpha"
+        asset: mirrord_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: mac
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: mirrord_{{.OS}}_universal.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version in ["3.0.17-alpha", "3.0.19-alpha"]
+        asset: mirrord_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            goarch: amd64
+            asset: mirrord_{{.OS}}_universal.{{.Format}}
+            replacements:
+              darwin: mac
+          - goos: darwin
+            goarch: arm64
+            format: raw
+            asset: vscode-ext-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "3.5.3"
+        asset: mirrord_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: mac
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+          - goos: darwin
+            asset: mirrord_{{.OS}}_universal.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "3.14.3"
+        asset: mirrord_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+          - goos: darwin
+            goarch: amd64
+            asset: mirrord_{{.OS}}_universal.{{.Format}}
+            replacements:
+              darwin: mac
+          - goos: darwin
+            goarch: arm64
+            format: raw
+            asset: vscode-ext-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 2.2.1")
+        asset: mirrord_{{.OS}}_{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          darwin: mac
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 2.7.0")
+        asset: mirrord_{{.OS}}_{{.Arch}}
+        format: raw
+        replacements:
+          darwin: mac
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: mirrord_{{.OS}}_universal
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 3.0.11-alpha")
+        asset: mirrord_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: mac
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            asset: mirrord_{{.OS}}_universal.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 3.0.16-alpha")
+        no_asset: true
+      - version_constraint: semver("<= 3.4.0")
+        asset: mirrord_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            goarch: amd64
+            asset: mirrord_{{.OS}}_universal.{{.Format}}
+            replacements:
+              darwin: mac
+          - goos: darwin
+            goarch: arm64
+            format: raw
+            asset: vscode-ext-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 3.5.2")
+        no_asset: true
+      - version_constraint: semver("<= 3.22.0")
+        asset: mirrord_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+          - goos: darwin
+            goarch: amd64
+            asset: mirrord_{{.OS}}_universal.{{.Format}}
+            replacements:
+              darwin: mac
+          - goos: darwin
+            goarch: arm64
+            format: raw
+            asset: vscode-ext-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 3.27.1")
+        asset: mirrord_{{.OS}}_universal.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            asset: mirrord_{{.OS}}_{{.Arch}}.{{.Format}}
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+          - goos: darwin
+            goarch: amd64
+            replacements:
+              darwin: mac
+          - goos: darwin
+            goarch: arm64
+            format: raw
+            asset: vscode-ext-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 3.28.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: mirrord_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: mac
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+          - goos: darwin
+            asset: mirrord_{{.OS}}_universal.{{.Format}}
+        supported_envs:
+          - linux
           - darwin
   - type: github_release
     repo_owner: mfontanini
