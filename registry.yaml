@@ -53200,28 +53200,60 @@ packages:
     type: github_release
     repo_owner: projectcalico
     repo_name: calico
-    asset: calicoctl-{{.OS}}-{{.Arch}}
-    format: raw
-    description: CLI tool for Calico cloud native networking and network security
-    link: https://projectcalico.docs.tigera.io/
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    files:
-      - name: calicoctl
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
-    version_constraint: semver(">= 3.23.0")
+    description: Cloud native networking and network security
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v2.6.0"
+        no_asset: true
+      - version_constraint: Version == "v3.21.6"
+        asset: calicoctl-{{.OS}}-{{.Arch}}
+        format: raw
         rosetta2: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: calico-{{.OS}}-{{.Version}}.{{.Format}}
+      - version_constraint: semver("<= 3.15.5")
+      - version_constraint: semver("<= 3.21.2")
+        asset: calico-{{.OS}}-{{.Version}}.{{.Format}}
+        format: zip
         supported_envs:
-          - darwin
-          - linux
-          - amd64
+          - windows/amd64
+      - version_constraint: semver("<= 3.22.2")
+        asset: calicoctl-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        overrides:
+          - goos: windows
+            format: zip
+            asset: calico-{{.OS}}-{{.Version}}.{{.Format}}
+      - version_constraint: semver("<= 3.22.5")
+        asset: calicoctl-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: calico-{{.OS}}-{{.Version}}.{{.Format}}
+      - version_constraint: "true"
+        asset: calicoctl-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: calico-{{.OS}}-{{.Version}}.{{.Format}}
   - type: github_release
     repo_owner: projectdiscovery
     repo_name: httpx
