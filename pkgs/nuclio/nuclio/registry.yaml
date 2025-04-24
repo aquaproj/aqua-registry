@@ -4,11 +4,57 @@ packages:
     repo_owner: nuclio
     repo_name: nuclio
     description: High-Performance Serverless event and data processing platform
-    asset: nuctl-{{.Version}}-{{.OS}}-{{.Arch}}
-    format: raw
-    complete_windows_ext: false
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "1.1.35"
+        no_asset: true
+      - version_constraint: Version in ["1.1.6", "1.11.13"]
+        asset: nuctl-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "1.1.33"
+        asset: nuctl-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "1.1.34"
+        asset: nuctl-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.2.6")
+        asset: nuctl-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.5.25")
+        asset: nuctl-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.11.25")
+        asset: nuctl-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+      - version_constraint: "true"
+        asset: nuctl-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
