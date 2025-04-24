@@ -4141,6 +4141,110 @@ packages:
           darwin: apple-darwin
           linux: unknown-linux-musl
           windows: pc-windows-msvc
+  - name: Nukesor/pueue/pueued
+    type: github_release
+    repo_owner: Nukesor
+    repo_name: pueue
+    description: |-
+      Pueue is a command-line task management tool for sequential and parallel execution of long-running tasks.
+
+      *Daemon version*
+    version_filter: not (Version matches "-rc")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.2.0"
+        asset: pueued-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        replacements:
+          darwin: macos
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.1.4")
+        asset: pueued-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        replacements:
+          darwin: macos
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.7.0")
+        asset: pueued-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.10.2")
+        asset: pueued-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+      - version_constraint: semver("<= 0.11.1")
+        no_asset: true
+      - version_constraint: semver("<= 0.12.2")
+        asset: pueued-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+      - version_constraint: semver("<= 0.29.0")
+        no_asset: true
+      - version_constraint: semver("<= 2.1.0")
+        asset: pueued-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+      - version_constraint: semver("<= 3.4.1")
+        asset: pueued-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            replacements:
+              darwin: macos
+          - goos: windows
+            replacements: {}
+      - version_constraint: "true"
+        asset: pueued-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
   - type: github_release
     repo_owner: Orange-OpenSource
     repo_name: hurl
@@ -53343,6 +53447,53 @@ packages:
       algorithm: sha256
   - type: github_release
     repo_owner: projectdiscovery
+    repo_name: katana
+    description: A next-generation crawling and spidering framework
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.2")
+        asset: katana_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: katana_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.1.0")
+        asset: katana_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: katana-{{.OS}}-checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            checksum:
+              type: github_release
+              asset: katana-mac-checksums.txt
+              algorithm: sha256
+      - version_constraint: "true"
+        asset: katana_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: katana-{{.OS}}-checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            checksum:
+              type: github_release
+              asset: katana-mac-checksums.txt
+              algorithm: sha256
+  - type: github_release
+    repo_owner: projectdiscovery
     repo_name: naabu
     description: A fast port scanner written in go with a focus on reliability and simplicity. Designed to be used in combination with other tools for attack surface discovery in bug bounties and pentests
     rosetta2: true
@@ -61443,6 +61594,79 @@ packages:
         overrides:
           - goos: windows
             asset: spectral
+  - type: github_release
+    repo_owner: str4d
+    repo_name: rage
+    description: A simple, secure and modern file encryption tool (and Rust library) with small explicit keys, no config options, and UNIX-style composability
+    files:
+      - name: rage
+        src: rage/{{.FileName}}
+      - name: rage-keygen
+        src: rage/{{.FileName}}
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        no_asset: true
+      - version_constraint: Version == "v0.1.1"
+        asset: rage-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: linux
+            goarch: amd64
+            files:
+              - name: rage
+                src: rage/{{.FileName}}
+              - name: rage-keygen
+                src: rage/{{.FileName}}
+              - name: rage-mount
+                src: rage/{{.FileName}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.10.1")
+        asset: rage-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: linux
+            goarch: amd64
+            files:
+              - name: rage
+                src: rage/{{.FileName}}
+              - name: rage-keygen
+                src: rage/{{.FileName}}
+              - name: rage-mount
+                src: rage/{{.FileName}}
+      - version_constraint: "true"
+        asset: rage-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: linux
+            goarch: amd64
+            files:
+              - name: rage
+                src: rage/{{.FileName}}
+              - name: rage-keygen
+                src: rage/{{.FileName}}
+              - name: rage-mount
+                src: rage/{{.FileName}}
   - type: github_release
     repo_owner: streamdal
     repo_name: plumber
