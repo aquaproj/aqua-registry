@@ -4,6 +4,8 @@ packages:
     repo_owner: openfga
     repo_name: cli
     description: A cross-platform CLI to interact with an OpenFGA server
+    files:
+      - name: fga
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.1.0-beta1"
@@ -40,10 +42,6 @@ packages:
               - https://token.actions.githubusercontent.com
               - --signature
               - https://github.com/openfga/cli/releases/download/{{.Version}}/checksums.txt.sig
-        overrides:
-          - goos: linux
-            format: tar.zst
-            asset: fga_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pkg.{{.Format}}
       - version_constraint: "true"
         asset: fga_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -64,7 +62,3 @@ packages:
         slsa_provenance:
           type: github_release
           asset: fga.intoto.jsonl
-        overrides:
-          - goos: linux
-            format: tar.zst
-            asset: fga_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pkg.{{.Format}}
