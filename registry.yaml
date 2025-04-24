@@ -57865,34 +57865,13 @@ packages:
   - type: github_release
     repo_owner: sharkdp
     repo_name: vivid
-    asset: vivid-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.gz
     description: A themeable LS_COLORS generator with a rich filetype datebase
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      linux: unknown-linux-musl
-      windows: pc-windows-msvc
-    overrides:
-      - goos: linux
-        goarch: arm64
-        replacements:
-          linux: unknown-linux-gnu
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    rosetta2: true
-    files:
-      - name: vivid
-        src: vivid-{{.Version}}-{{.Arch}}-{{.OS}}/vivid
-    version_constraint: semver(">= 0.8.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.8.0")
-        overrides: []
+      - version_constraint: semver("<= 0.2.0")
+        asset: dircolors-hd-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -57900,8 +57879,38 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
+      - version_constraint: semver("<= 0.7.0")
+        asset: vivid-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
       - version_constraint: "true"
+        asset: vivid-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: sheepla
     repo_name: fzwiki
