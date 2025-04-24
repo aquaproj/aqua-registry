@@ -49476,22 +49476,59 @@ packages:
   - type: github_release
     repo_owner: omrikiei
     repo_name: ktunnel
-    asset: ktunnel_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: A cli that exposes your local resources to kubernetes
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    files:
-      - name: kubectl-tunnel
-        src: ktunnel
-      - name: ktunnel
-        src: ktunnel
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.0.0-alpha"
+        asset: ktunnel_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.1.8")
+        asset: ktunnel_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.4.4")
+        asset: ktunnel_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: ktunnel_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: one2nc
     repo_name: cloudlens
