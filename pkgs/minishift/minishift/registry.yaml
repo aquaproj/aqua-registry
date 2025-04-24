@@ -3,20 +3,59 @@ packages:
   - type: github_release
     repo_owner: minishift
     repo_name: minishift
-    description: Run OpenShift 3.x locally
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - amd64
-    asset: minishift-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tgz
-    overrides:
-      - goos: windows
-        format: zip
-    files:
-      - name: minishift
-        src: minishift-{{trimV .Version}}-{{.OS}}-{{.Arch}}/minishift
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
+    description: Run OpenShift 3.x locally | This project does not see active developement and maintenance
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.1")
+        asset: minishift-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha1"
+          algorithm: sha1
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.2.1")
+        asset: minishift-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha1"
+          algorithm: sha1
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.9.0")
+        asset: minishift-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: minishift-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
