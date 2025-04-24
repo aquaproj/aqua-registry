@@ -44809,20 +44809,61 @@ packages:
   - type: github_release
     repo_owner: mattermost
     repo_name: mmctl
-    asset: "{{.OS}}_{{.Arch}}.{{.Format}}"
-    format: tar
     description: A remote CLI tool for Mattermost
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.md5.txt"
-      algorithm: md5
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.1.0"
+        asset: "{{.OS}}_{{.Arch}}.{{.Format}}"
+        format: tar
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v6.0.4"
+        asset: "{{.OS}}_{{.Arch}}.{{.Format}}"
+        format: tar
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.OS}}_{{.Arch}}.zip.md5.txt"
+          algorithm: md5
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version in ["build", "build", "build"]
+        no_asset: true
+      - version_constraint: semver("<= 6.1.3")
+        asset: "{{.OS}}_{{.Arch}}.{{.Format}}"
+        format: tar
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.OS}}_{{.Arch}}.tar.md5.txt"
+          algorithm: md5
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: "{{.OS}}_{{.Arch}}.{{.Format}}"
+        format: tar
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.OS}}_{{.Arch}}.tar.md5.txt"
+          algorithm: md5
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: mattn
     repo_name: algia
