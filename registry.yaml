@@ -45011,22 +45011,39 @@ packages:
   - type: github_release
     repo_owner: mattn
     repo_name: gof
-    asset: gof_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    description: Go Fuzzy
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
-    files:
-      - name: gof
-        src: gof_{{.Version}}_{{.OS}}_{{.Arch}}/gof
-    version_constraint: semver(">= 0.0.12")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.0.3")
+        asset: gof_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
         rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHASUMS
+          algorithm: sha256
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 0.0.10")
+        asset: gof_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: gof_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
   - type: github_release
     repo_owner: mattn
     repo_name: goreman
