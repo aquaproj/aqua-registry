@@ -44848,18 +44848,40 @@ packages:
   - type: github_release
     repo_owner: mattn
     repo_name: cho
-    asset: cho_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    files:
-      - name: cho
-        src: cho_{{.Version}}_{{.OS}}_{{.Arch}}/cho
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.4"
+        no_asset: true
+      - version_constraint: Version == "v0.0.3"
+        asset: cho_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.0.12")
+        asset: cho_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: cho_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
   - type: github_release
     repo_owner: mattn
     repo_name: efm-langserver
