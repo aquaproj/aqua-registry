@@ -58348,18 +58348,57 @@ packages:
   - type: github_release
     repo_owner: siderolabs
     repo_name: conform
-    aliases:
-      - name: talos-systems/conform
     description: Policy enforcement for your pipelines
-    supported_envs:
-      - darwin
-      - linux
-    format: raw
-    asset: conform-{{.OS}}-{{.Arch}}
-    checksum:
-      type: github_release
-      asset: sha512sum.txt
-      algorithm: sha512
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.1.0-alpha.12", "v0.1.0-alpha.14"]
+        no_asset: true
+      - version_constraint: Version == "v0.1.0-alpha.6"
+        asset: conform-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: xz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version in ["v0.1.0-alpha.11", "v0.1.0-alpha.13"]
+        asset: conform-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.1.0-alpha.15"
+        asset: conform-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.1.0-alpha.10")
+        no_asset: true
+      - version_constraint: semver("<= 0.1.0-alpha.19")
+        asset: conform-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.1.0-alpha.21")
+        no_asset: true
+      - version_constraint: "true"
+        asset: conform-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
   - name: siderolabs/omni/omni
     type: github_release
     repo_owner: siderolabs
