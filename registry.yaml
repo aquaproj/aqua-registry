@@ -45749,17 +45749,75 @@ packages:
   - type: github_release
     repo_owner: mikefarah
     repo_name: yq
-    description: yq is a portable command-line YAML processor
-    asset: yq_{{.OS}}_{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    # https://github.com/mikefarah/yq/issues/801#issuecomment-853523411
-    version_constraint: semver(">= 4.9.6")
+    description: yq is a portable command-line YAML, JSON, XML, CSV, TOML  and properties processor
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.13.1")
+        asset: yaml_{{.OS}}_{{.Arch}}
+        format: raw
         rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.1.0")
+        asset: yq_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.2.0")
+        asset: yq_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 4.0.0")
+        asset: yq_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums
+          algorithm: sha256
+      - version_constraint: semver("<= 4.9.5")
+        asset: yq_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 4.34.2")
+        asset: yq_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: yq_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: extract-checksum.sh
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: miku
     repo_name: zek
