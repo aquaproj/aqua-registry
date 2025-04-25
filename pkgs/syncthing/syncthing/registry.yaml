@@ -3,18 +3,110 @@ packages:
   - type: github_release
     repo_owner: syncthing
     repo_name: syncthing
-    asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
-    format: zip
     description: Open Source Continuous File Synchronization
-    replacements:
-      darwin: macos
-    overrides:
-      - goos: linux
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.14.25-rc.1", "v1.6.0"]
+        no_asset: true
+      - version_constraint: Version == "v0.12.25"
+        asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
         format: tar.gz
-    files:
-      - name: syncthing
-        src: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}/syncthing
-    checksum:
-      type: github_release
-      asset: sha256sum.txt.asc
-      algorithm: sha256
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v0.14.22"
+      - version_constraint: Version in ["v1.6.0-rc.1", "v1.12.0", "v1.12.1"]
+        asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: Version == "v1.6.0-rc.2"
+        asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: Version == "v1.12.1-rc.1"
+        asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: Version == "v1.20.0"
+      - version_constraint: semver("<= 0.13.3")
+        no_asset: true
+      - version_constraint: semver("<= 0.14.44")
+        asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.14.45-rc.2")
+        no_asset: true
+      - version_constraint: semver("<= 0.14.49-rc.1")
+        asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.5.0")
+        asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.12.0-rc.1")
+        asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: semver("<= 1.18.3-rc.1")
+        asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: "true"
+        asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: tar.gz
