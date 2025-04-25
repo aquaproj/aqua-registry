@@ -68096,33 +68096,54 @@ packages:
     repo_owner: tsl0922
     repo_name: ttyd
     description: Share your terminal over the web
-    asset: ttyd.{{.Arch}}
-    format: raw
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      windows: win32
-    overrides:
-      - goos: windows
-        goarch: amd64
-        asset: ttyd.{{.OS}}.exe
-    supported_envs:
-      - linux
-      - windows/amd64
-    version_constraint: semver(">= 1.7.3")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.7.0")
+      - version_constraint: semver("<= 1.3.2")
+        no_asset: true
+      - version_constraint: Version == "1.3.3"
+      - version_constraint: semver("<= 1.5.2")
+        asset: ttyd_{{.OS}}.{{.Arch}}
+        format: raw
         replacements:
           amd64: x86_64
           arm64: aarch64
-          windows: win10
-        overrides:
-          - goos: windows
-            goarch: amd64
-            asset: ttyd.{{.OS}}.exe
-      - version_constraint: semver("< 1.7.0")
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
         supported_envs:
           - linux
+      - version_constraint: Version == "1.6.0"
+        asset: ttyd_{{.OS}}.{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "1.6.1"
+        asset: ttyd_{{.OS}}.{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - linux
+      - version_constraint: semver("<= 1.6.3")
+      - version_constraint: semver("<= 1.7.2")
+        asset: ttyd.{{.OS}}10
+        format: raw
+        replacements:
+          windows: win
+        supported_envs:
+          - windows/amd64
       - version_constraint: "true"
   - type: github_release
     repo_owner: tstack
