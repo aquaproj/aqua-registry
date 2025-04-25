@@ -65018,19 +65018,40 @@ packages:
     repo_owner: sysdiglabs
     repo_name: kube-psp-advisor
     description: Help building an adaptive and fine-grained pod security policy
-    supported_envs:
-      - darwin
-      - linux/amd64
-    asset: kube-psp-advisor_{{.Version}}_{{.OS}}_amd64.tar.gz
-    files:
-      - name: kubectl-advise_psp
-        src: kubectl-advise-psp
-      - name: kube-psp-advisor
-        src: kubectl-advise-psp
-    checksum:
-      type: github_release
-      asset: kube-psp-advisor_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v3.0.0"
+        no_asset: true
+      - version_constraint: Version == "v1.4.0"
+        asset: kubectl-advise-psp_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.2.0")
+        no_asset: true
+      - version_constraint: semver("<= 2.0.1")
+        asset: kube-psp-advisor_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: kube-psp-advisor_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: kube-psp-advisor_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: kube-psp-advisor_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: syumai
     repo_name: sbx
