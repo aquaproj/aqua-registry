@@ -21066,6 +21066,30 @@ packages:
           - linux
           - windows/amd64
   - type: github_release
+    repo_owner: containerd
+    repo_name: stargz-snapshotter
+    description: Fast container image distribution plugin with lazy pulling
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.3.0")
+        asset: stargz-snapshotter-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: stargz-snapshotter-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz.sha256sum
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+      - version_constraint: "true"
+        asset: stargz-snapshotter-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: stargz-snapshotter-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz.sha256sum
+          algorithm: sha256
+        supported_envs:
+          - linux
+  - type: github_release
     repo_owner: containers
     repo_name: crun
     asset: crun-{{.Version}}-{{.OS}}-{{.Arch}}
