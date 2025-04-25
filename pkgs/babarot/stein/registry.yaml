@@ -5,20 +5,30 @@ packages:
     repo_name: stein
     aliases:
       - name: b4b4r07/stein
-    supported_envs:
-      - darwin
-      - linux/amd64
-    rosetta2: true
-    asset: stein_{{.OS}}_{{.Arch}}.{{.Format}}
     description: A linter for config files with a customizable rule set
-    format: tar.gz
-    overrides:
-      - goos: windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.3.0")
+        asset: stein_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
-    replacements:
-      386: i386
-      amd64: x86_64
-    checksum:
-      type: github_release
-      asset: stein_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: stein_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: stein_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: stein_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin

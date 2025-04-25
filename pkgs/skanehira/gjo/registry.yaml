@@ -3,13 +3,26 @@ packages:
   - type: github_release
     repo_owner: skanehira
     repo_name: gjo
-    asset: "{{.OS}}.zip"
     description: Small utility to create JSON objects
-    replacements:
-      darwin: MacOS
-      linux: Linux
-      windows: Windows
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "1.0.0"
+        asset: "{{.OS}}.{{.Format}}"
+        format: zip
+        replacements:
+          darwin: MacOS
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: "{{.OS}}.{{.Format}}"
+        format: zip
+        replacements:
+          darwin: MacOS
+          linux: Linux
+          windows: Windows
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
