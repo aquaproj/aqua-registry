@@ -43129,11 +43129,73 @@ packages:
           - darwin
           - linux
           - windows/amd64
-  - type: github_release
+  - name: kubernetes/kubelet
+    type: http
     repo_owner: kubernetes
-    repo_name: kubelet
-    description: kubelet component configs
+    repo_name: kubernetes
+    description: The kubelet command line tool lets you control Kubernetes clusters
+    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubelet
+    format: raw
+    windows_arm_emulation: true
+    overrides:
+      - goos: windows
+        url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubelet.exe
+    supported_envs:
+      - linux
+      - windows
     version_filter: not (Version matches "-(alpha|beta|rc)")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.2.7")
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 1.15.3")
+      - version_constraint: semver("<= 1.25.4")
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubelet.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            checksum:
+              type: http
+              url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubelet.exe.sha256
+              algorithm: sha256
+      - version_constraint: "true"
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubelet.sha256
+          algorithm: sha256
+        cosign:
+          signature:
+            type: http
+            url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubelet.sig
+          certificate:
+            type: http
+            url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubelet.cert
+          opts:
+            - --certificate-identity
+            - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
+            - --certificate-oidc-issuer
+            - "https://accounts.google.com"
+        overrides:
+          - goos: windows
+            checksum:
+              type: http
+              url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubelet.exe.sha256
+              algorithm: sha256
+            cosign:
+              signature:
+                type: http
+                url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubelet.exe.sig
+              certificate:
+                type: http
+                url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubelet.exe.cert
+              opts:
+                - --certificate-identity
+                - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
+                - --certificate-oidc-issuer
+                - "https://accounts.google.com"
   - type: http
     repo_owner: kubernetes
     repo_name: minikube
