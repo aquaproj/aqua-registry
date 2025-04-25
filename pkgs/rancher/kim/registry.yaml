@@ -3,14 +3,20 @@ packages:
   - type: github_release
     repo_owner: rancher
     repo_name: kim
-    asset: kim-{{.OS}}-{{.Arch}}
-    format: raw
     description: In ur kubernetes, buildin ur imagez
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: sha256sum.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.0-alpha.3")
+        asset: kim-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.1.0-alpha.6")
+        no_asset: true
+      - version_constraint: "true"
+        asset: kim-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256

@@ -3,23 +3,25 @@ packages:
   - type: github_release
     repo_owner: pfnet-research
     repo_name: git-ghost
-    asset: git-ghost_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: Synchronize your working directory efficiently to a remote place without committing the changes
-    supported_envs:
-      - linux
-      - darwin
-    checksum:
-      type: github_release
-      asset: git-ghost_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.1.5")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.1.4")
         asset: git-ghost-{{.OS}}-{{.Arch}}
         format: raw
         rosetta2: true
+        windows_arm_emulation: true
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: "true"
+        asset: git-ghost_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         checksum:
-          enabled: false
+          type: github_release
+          asset: git-ghost_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
