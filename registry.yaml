@@ -43142,8 +43142,6 @@ packages:
         rosetta2: true
         windows_arm_emulation: true
         supported_envs:
-          - darwin
-          - windows
           - amd64
       - version_constraint: Version == "v0.12.1"
         asset: minikube-{{.OS}}-{{.Arch}}
@@ -43155,20 +43153,20 @@ packages:
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
         supported_envs:
-          - darwin
-          - windows
           - amd64
       - version_constraint: Version == "v1.17.1"
         asset: minikube-{{.OS}}-{{.Arch}}
         format: raw
         windows_arm_emulation: true
-        complete_windows_ext: false
-        replacements:
-          arm64: aarch64
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            checksum:
+              enabled: false
       - version_constraint: semver("<= 0.6.0")
         asset: minikube-{{.OS}}-{{.Arch}}
         format: raw
@@ -43186,8 +43184,6 @@ packages:
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
         supported_envs:
-          - darwin
-          - windows
           - amd64
       - version_constraint: semver("<= 0.19.0")
         asset: minikube-{{.OS}}-{{.Arch}}
@@ -43200,9 +43196,11 @@ packages:
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
         supported_envs:
-          - darwin
-          - windows
           - amd64
+        overrides:
+          - goos: linux
+            checksum:
+              enabled: false
       - version_constraint: semver("<= 0.20.0")
         asset: minikube-{{.OS}}-{{.Arch}}
         format: raw
@@ -43212,10 +43210,13 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+          file_format: raw
         supported_envs:
-          - darwin
-          - windows
           - amd64
+        overrides:
+          - goos: linux
+            checksum:
+              enabled: false
       - version_constraint: semver("<= 0.35.0")
         asset: minikube-{{.OS}}-{{.Arch}}
         format: raw
@@ -43227,9 +43228,11 @@ packages:
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
         supported_envs:
-          - darwin
-          - windows
           - amd64
+        overrides:
+          - goos: windows
+            checksum:
+              enabled: false
       - version_constraint: semver("<= 1.9.2")
         asset: minikube-{{.OS}}-{{.Arch}}
         format: raw
@@ -43240,27 +43243,12 @@ packages:
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
         supported_envs:
-          - darwin
-          - windows
           - amd64
-      - version_constraint: semver("<= 1.15.1")
-        asset: minikube-{{.OS}}-{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        complete_windows_ext: false
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
       - version_constraint: semver("<= 1.17.0")
         asset: minikube-{{.OS}}-{{.Arch}}
         format: raw
         rosetta2: true
         windows_arm_emulation: true
-        complete_windows_ext: false
-        replacements:
-          arm64: aarch64
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
