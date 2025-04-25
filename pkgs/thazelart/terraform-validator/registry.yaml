@@ -4,21 +4,28 @@ packages:
     repo_owner: thazelart
     repo_name: terraform-validator
     description: A norms and conventions validator for Terraform
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    asset: terraform-validator_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      386: i386
-      amd64: x86_64
-    checksum:
-      type: github_release
-      asset: terraform-validator_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.1.0")
+        no_asset: true
+      - version_constraint: semver("<= 1.3.2")
+      - version_constraint: "true"
+        asset: terraform-validator_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: terraform-validator_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
