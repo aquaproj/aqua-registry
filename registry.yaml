@@ -37769,24 +37769,21 @@ packages:
   - type: github_release
     repo_owner: iyear
     repo_name: tdl
-    description: A Telegram toolkit written in Golang
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: "true"
-        asset: tdl_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: 64bit
-          darwin: MacOS
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: tdl_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
+    description: A Telegram downloader written in Golang
+    asset: tdl_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: 64bit
+      darwin: MacOS
+      linux: Linux
+      windows: Windows
+    checksum:
+      type: github_release
+      asset: tdl_checksums.txt
+      algorithm: sha256
   - type: github_release
     repo_owner: jacek-kurlit
     repo_name: pik
@@ -42205,56 +42202,17 @@ packages:
   - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: aws-iam-authenticator
+    asset: aws-iam-authenticator_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    format: raw
     description: A tool to use AWS IAM credentials to authenticate to a Kubernetes cluster
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: Version in ["v0.1.0", "v0.5.4", "v0.5.27", "v0.6.20"]
-        no_asset: true
-      - version_constraint: Version == "v0.3.0"
-        asset: heptio-authenticator-aws_{{trimV .Version}}_{{.OS}}_{{.Arch}}
-        format: raw
-        rosetta2: true
-        checksum:
-          type: github_release
-          asset: authenticator_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: semver("<= 0.4.0-alpha.3")
-        asset: aws-iam-authenticator_{{.Version}}_{{.OS}}_{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: authenticator_{{.Version}}_checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: semver("<= 0.5.3")
-        asset: aws-iam-authenticator_{{trimV .Version}}_{{.OS}}_{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: authenticator_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: "true"
-        asset: aws-iam-authenticator_{{trimV .Version}}_{{.OS}}_{{.Arch}}
-        format: raw
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: authenticator_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    checksum:
+      type: github_release
+      asset: authenticator_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
   - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: cloud-provider-kind
@@ -65448,31 +65406,16 @@ packages:
   - type: github_release
     repo_owner: takumin
     repo_name: gjson
+    asset: gjson_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
     description: Golang JSON Tool
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: Version == "v0.0.1"
-        asset: gjson_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: gjson_sha256sums.txt
-          algorithm: sha256
-        overrides:
-          - goos: darwin
-            asset: gjson_{{.OS}}_all.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: "true"
-        asset: gjson_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: gjson_sha256sums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: gjson_sha256sums.txt
+      algorithm: sha256
   - type: github_release
     repo_owner: takumin
     repo_name: gyaml
@@ -66689,17 +66632,98 @@ packages:
     repo_owner: thought-machine
     repo_name: please
     description: High-performance extensible build system for reproducible multi-language builds
-    supported_envs:
-      - darwin
-      - linux/amd64
-    asset: please_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    files:
-      - name: please
-        src: please/please
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v1.4.9", "v3.0.2", "v11.4.0"]
+        no_asset: true
+      - version_constraint: Version == "v1.5.2"
+      - version_constraint: Version == "v2.0.0"
+        asset: please_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v2.1.2"
+      - version_constraint: Version == "v4.0.2"
+        asset: please_{{.OS}}_{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v5.1.0"
+        asset: please_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v16.20.0-beta.6"
+        asset: please_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 1.5.11")
+        no_asset: true
+      - version_constraint: semver("<= 1.7.2")
+        asset: please_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 3.6.0")
+        asset: please_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 10.1.0")
+        no_asset: true
+      - version_constraint: semver("<= 13.6.3")
+        asset: please_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 16.0.0-rc.4")
+        asset: please_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 16.27.0")
+        asset: please_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: please_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: tilt-dev
     repo_name: ctlptl
