@@ -1,6 +1,40 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
-  - type: github_release
+  - name: kubernetes/kube-apiserver
+    type: http
     repo_owner: kubernetes
-    repo_name: kube-apiserver
+    repo_name: kubernetes
+    description: The Kubernetes API server validates and configures data for the api objects which include pods, services, replicationcontrollers, and others
+    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-apiserver
+    format: raw
+    supported_envs:
+      - linux
     version_filter: not (Version matches "-(alpha|beta|rc)")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.2.7")
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 1.15.3")
+      - version_constraint: semver("<= 1.25.4")
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-apiserver.sha256
+          algorithm: sha256
+      - version_constraint: "true"
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-apiserver.sha256
+          algorithm: sha256
+        cosign:
+          signature:
+            type: http
+            url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-apiserver.sig
+          certificate:
+            type: http
+            url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-apiserver.cert
+          opts:
+            - --certificate-identity
+            - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
+            - --certificate-oidc-issuer
+            - "https://accounts.google.com"
