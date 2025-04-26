@@ -7,40 +7,16 @@ packages:
     version_filter: not (Version matches "-rc")
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.6.0")
-        checksum:
-          type: github_release
-          asset: sha256sum-{{.Arch}}.txt
-          algorithm: sha256
-      - version_constraint: Version == "v0.6.1"
-        checksum:
-          type: github_release
-          asset: sha256sum-arm.txt
-          algorithm: sha256
-      - version_constraint: semver("<= 1.18.10+k3s1")
-        checksum:
-          type: github_release
-          asset: sha256sum-{{.Arch}}.txt
-          algorithm: sha256
-      - version_constraint: Version == "v1.18.12+k3s1"
-        checksum:
-          type: github_release
-          asset: sha256sum-arm.txt
-          algorithm: sha256
-      - version_constraint: semver("<= 1.20.0+k3s2")
-        checksum:
-          type: github_release
-          asset: sha256sum-{{.Arch}}.txt
-          algorithm: sha256
-      - version_constraint: Version == "v1.20.0+k3s1"
-        no_asset: true
-      - version_constraint: semver("<= 1.23.8+k3s2")
-        checksum:
-          type: github_release
-          asset: sha256sum-{{.Arch}}.txt
-          algorithm: sha256
       - version_constraint: "true"
+        asset: k3s-{{.Arch}}
+        format: raw
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: k3s
         checksum:
           type: github_release
-          asset: sha256sum-arm.txt
+          asset: sha256sum-{{.Arch}}.txt
           algorithm: sha256
+        supported_envs:
+          - linux
