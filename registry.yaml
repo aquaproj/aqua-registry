@@ -43063,11 +43063,44 @@ packages:
       type: github_release
       asset: "{{.Asset}}.sha256"
       algorithm: sha256
-  - type: github_release
+  - name: kubernetes/kube-controller-manager
+    type: http
     repo_owner: kubernetes
-    repo_name: kube-controller-manager
-    description: kube-controller-manager component configs
+    repo_name: kubernetes
+    description: The Kubernetes controller manager is a daemon that embeds the core control loops shipped with Kubernetes
+    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-controller-manager
+    format: raw
+    supported_envs:
+      - linux
     version_filter: not (Version matches "-(alpha|beta|rc)")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.2.7")
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 1.15.3")
+      - version_constraint: semver("<= 1.25.4")
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-controller-manager.sha256
+          algorithm: sha256
+      - version_constraint: "true"
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-controller-manager.sha256
+          algorithm: sha256
+        cosign:
+          signature:
+            type: http
+            url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-controller-manager.sig
+          certificate:
+            type: http
+            url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-controller-manager.cert
+          opts:
+            - --certificate-identity
+            - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
+            - --certificate-oidc-issuer
+            - "https://accounts.google.com"
   - name: kubernetes/kubeadm
     type: http
     repo_owner: kubernetes
