@@ -40330,6 +40330,50 @@ packages:
           asset: checksums.txt
           algorithm: sha256
   - type: github_release
+    repo_owner: k3s-io
+    repo_name: k3s
+    description: Lightweight Kubernetes
+    version_filter: not (Version matches "-rc")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.6.0")
+        checksum:
+          type: github_release
+          asset: sha256sum-{{.Arch}}.txt
+          algorithm: sha256
+      - version_constraint: Version == "v0.6.1"
+        checksum:
+          type: github_release
+          asset: sha256sum-arm.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.18.10+k3s1")
+        checksum:
+          type: github_release
+          asset: sha256sum-{{.Arch}}.txt
+          algorithm: sha256
+      - version_constraint: Version == "v1.18.12+k3s1"
+        checksum:
+          type: github_release
+          asset: sha256sum-arm.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.20.0+k3s2")
+        checksum:
+          type: github_release
+          asset: sha256sum-{{.Arch}}.txt
+          algorithm: sha256
+      - version_constraint: Version == "v1.20.0+k3s1"
+        no_asset: true
+      - version_constraint: semver("<= 1.23.8+k3s2")
+        checksum:
+          type: github_release
+          asset: sha256sum-{{.Arch}}.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        checksum:
+          type: github_release
+          asset: sha256sum-arm.txt
+          algorithm: sha256
+  - type: github_release
     repo_owner: kahing
     repo_name: goofys
     description: a high-performance, POSIX-ish Amazon S3 file system written in Go
