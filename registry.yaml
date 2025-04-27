@@ -40330,6 +40330,26 @@ packages:
           asset: checksums.txt
           algorithm: sha256
   - type: github_release
+    repo_owner: k3s-io
+    repo_name: k3s
+    description: Lightweight Kubernetes
+    version_filter: not (Version matches "-rc")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: k3s-{{.Arch}}
+        format: raw
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: k3s
+        checksum:
+          type: github_release
+          asset: sha256sum-{{.Arch}}.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+  - type: github_release
     repo_owner: kahing
     repo_name: goofys
     description: a high-performance, POSIX-ish Amazon S3 file system written in Go
