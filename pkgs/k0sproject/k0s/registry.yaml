@@ -19,7 +19,22 @@ packages:
         supported_envs:
           - linux
           - windows
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.28.15+k0s.0")
+        asset: k0s-{{.Version}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - windows
+      - version_constraint: >-
+          (semver("<= 1.32.3+k0s.0") && semver(">= 1.32.0+k0s.0")) ||
+          (semver("<= 1.31.7+k0s.0") && semver(">= 1.31.0+k0s.0")) ||
+          (semver("<= 1.30.11+k0s.0") && semver(">= 1.30.0+k0s.0")) ||
+          semver("<= 1.29.15+k0s.0")
         asset: k0s-{{.Version}}-{{.Arch}}
         format: raw
         windows_arm_emulation: true
@@ -36,8 +51,28 @@ packages:
             asset: "cosign.pub"
           opts:
             # `--insecure-ignore-tlog` is required because it is signed with `--tlog-upload=false` option
-            # see also: https://github.com/k0sproject/k0s/blob/v1.32.3%2Bk0s.0/.github/workflows/release.yml#L106
+            # see also:
+            # https://github.com/k0sproject/k0s/pull/5724
+            # https://github.com/k0sproject/k0s/commit/a01579db2dc7916194e6fd95949b6b4fbbfa2252
             - --insecure-ignore-tlog
+        supported_envs:
+          - linux
+          - windows
+      - version_constraint: "true"
+        asset: k0s-{{.Version}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
+        cosign:
+          signature:
+            type: github_release
+            asset: "{{.Asset}}.sig"
+          key:
+            type: github_release
+            asset: "cosign.pub"
         supported_envs:
           - linux
           - windows
