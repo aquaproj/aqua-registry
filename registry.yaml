@@ -38184,12 +38184,23 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: semver("< 1.14.4")
+        asset: mitamae-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: mitamae-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         replacements:
           amd64: x86_64
           arm64: aarch64
+        github_artifact_attestations:
+          signer_workflow: itamae-kitchen/mitamae/.github/workflows/build.yml
         supported_envs:
           - linux
           - darwin
