@@ -43088,13 +43088,11 @@ packages:
           url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-aggregator.sha256
           algorithm: sha256
         cosign:
-          signature:
-            type: http
-            url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-aggregator.sig
-          certificate:
-            type: http
-            url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-aggregator.cert
           opts:
+            - --signature
+            - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-aggregator.sig
+            - --certificate
+            - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kube-aggregator.cert
             - --certificate-identity
             - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
             - --certificate-oidc-issuer
