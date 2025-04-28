@@ -37,13 +37,11 @@ packages:
           url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.sha256
           algorithm: sha256
         cosign:
-          signature:
-            type: http
-            url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.sig
-          certificate:
-            type: http
-            url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.cert
           opts:
+            - --signature
+            - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.sig
+            - --certificate
+            - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.cert
             - --certificate-identity
             - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
             - --certificate-oidc-issuer
@@ -55,13 +53,11 @@ packages:
               url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.sha256
               algorithm: sha256
             cosign:
-              signature:
-                type: http
-                url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.sig
-              certificate:
-                type: http
-                url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.cert
               opts:
+                - --signature
+                - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.sig
+                - --certificate
+                - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.cert
                 - --certificate-identity
                 - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
                 - --certificate-oidc-issuer
