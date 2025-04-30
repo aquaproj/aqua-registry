@@ -44130,28 +44130,6 @@ packages:
       type: github_release
       asset: "{{.Asset}}.sha256"
       algorithm: sha256
-  - name: kubernetes/kubeadm
-    type: http
-    repo_owner: kubernetes
-    repo_name: kubernetes
-    description: Kubeadm is a tool built to provide best-practice "fast paths" for creating Kubernetes clusters
-    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm
-    format: raw
-    files:
-      - name: kubeadm
-    checksum:
-      type: http
-      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.sha256
-      algorithm: sha256
-    supported_envs:
-      - linux
-      - windows/amd64
-    overrides:
-      - goos: windows
-        checksum:
-          type: http
-          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.sha256
-          algorithm: sha256
   - name: kubernetes/kubernetes/apiextensions-apiserver
     type: http
     repo_owner: kubernetes
@@ -44195,6 +44173,79 @@ packages:
             - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
             - --certificate-oidc-issuer
             - "https://accounts.google.com"
+  - name: kubernetes/kubernetes/kubeadm
+    aliases:
+      - name: kubernetes/kubeadm
+    type: http
+    repo_owner: kubernetes
+    repo_name: kubernetes
+    description: Kubeadm is a tool built to provide best-practice "fast paths" for creating Kubernetes clusters
+    version_filter: not (Version matches "-(alpha|beta|rc)")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.4.12")
+        no_asset: true
+      - version_constraint: semver("<= 1.15.3")
+        url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm
+        format: raw
+        windows_arm_emulation: true
+        supported_envs:
+          - linux
+          - windows
+      - version_constraint: semver("<= 1.25.4")
+        url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm
+        format: raw
+        windows_arm_emulation: true
+        supported_envs:
+          - linux
+          - windows
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            checksum:
+              type: http
+              url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.sha256
+              algorithm: sha256
+      - version_constraint: "true"
+        url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm
+        format: raw
+        windows_arm_emulation: true
+        supported_envs:
+          - linux
+          - windows
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.sha256
+          algorithm: sha256
+        cosign:
+          opts:
+            - --signature
+            - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.sig
+            - --certificate
+            - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.cert
+            - --certificate-identity
+            - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
+            - --certificate-oidc-issuer
+            - "https://accounts.google.com"
+        overrides:
+          - goos: windows
+            checksum:
+              type: http
+              url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.sha256
+              algorithm: sha256
+            cosign:
+              opts:
+                - --signature
+                - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.sig
+                - --certificate
+                - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.cert
+                - --certificate-identity
+                - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
+                - --certificate-oidc-issuer
+                - "https://accounts.google.com"
   - name: kubernetes/kubernetes/kubectl
     aliases:
       - name: kubernetes/kubectl
@@ -44440,15 +44491,138 @@ packages:
         supported_envs:
           - linux
           - windows
-  - type: http
+  - type: github_release
     repo_owner: kubernetes
     repo_name: minikube
     description: Run Kubernetes locally
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    url: https://storage.googleapis.com/minikube/releases/{{.Version}}/minikube-{{.OS}}-{{.Arch}}
+    version_filter: not (Version matches "-(alpha|beta|rc)")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.10.0"
+        asset: minikube-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - amd64
+      - version_constraint: Version == "v0.12.1"
+        asset: minikube-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - amd64
+      - version_constraint: Version == "v1.17.1"
+        asset: minikube-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            checksum:
+              enabled: false
+      - version_constraint: semver("<= 0.6.0")
+        asset: minikube-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.9.0")
+        asset: minikube-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - amd64
+      - version_constraint: semver("<= 0.19.0")
+        asset: minikube-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - amd64
+        overrides:
+          - goos: linux
+            checksum:
+              enabled: false
+      - version_constraint: semver("<= 0.20.0")
+        asset: minikube-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+          file_format: raw
+        supported_envs:
+          - amd64
+        overrides:
+          - goos: linux
+            checksum:
+              enabled: false
+      - version_constraint: semver("<= 0.35.0")
+        asset: minikube-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - amd64
+        overrides:
+          - goos: windows
+            checksum:
+              enabled: false
+      - version_constraint: semver("<= 1.9.2")
+        asset: minikube-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - amd64
+      - version_constraint: semver("<= 1.17.0")
+        asset: minikube-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: minikube-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
   - type: github_release
     repo_owner: kubernetes
     repo_name: node-problem-detector
