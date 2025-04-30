@@ -44028,7 +44028,76 @@ packages:
           type: http
           url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubeadm.exe.sha256
           algorithm: sha256
-  - name: kubernetes/kubectl
+  - name: kubernetes/kubectl-convert
+    type: http
+    repo_owner: kubernetes
+    repo_name: kubernetes
+    description: A plugin for Kubernetes command-line tool kubectl, which allows you to convert manifests between different API versions
+    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert
+    format: raw
+    files:
+      - name: kubectl-convert
+    checksum:
+      type: http
+      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert.sha256
+      algorithm: sha256
+    overrides:
+      - goos: windows
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert.exe.sha256
+          algorithm: sha256
+    version_constraint: semver(">= 1.23.0")
+    version_overrides:
+      - version_constraint: "true"
+        supported_envs:
+          - darwin
+          - linux
+          - windows/amd64
+  - name: kubernetes/kubernetes/apiextensions-apiserver
+    type: http
+    repo_owner: kubernetes
+    repo_name: kubernetes
+    description: API server for API extensions like CustomResourceDefinitions
+    version_filter: not (Version matches "-(alpha|beta|rc)")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.6.13")
+        no_asset: true
+      - version_constraint: semver("<= 1.15.3")
+        url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver
+        format: raw
+        supported_envs:
+          - linux
+      - version_constraint: semver("<= 1.25.4")
+        url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver
+        format: raw
+        supported_envs:
+          - linux
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver.sha256
+          algorithm: sha256
+      - version_constraint: "true"
+        url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver
+        format: raw
+        supported_envs:
+          - linux
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver.sha256
+          algorithm: sha256
+        cosign:
+          opts:
+            - --signature
+            - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver.sig
+            - --certificate
+            - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver.cert
+            - --certificate-identity
+            - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
+            - --certificate-oidc-issuer
+            - "https://accounts.google.com"
+  - name: kubernetes/kubernetes/kubectl
     type: http
     repo_owner: kubernetes
     repo_name: kubernetes
@@ -44117,75 +44186,6 @@ packages:
                 - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
                 - --certificate-oidc-issuer
                 - "https://accounts.google.com"
-  - name: kubernetes/kubectl-convert
-    type: http
-    repo_owner: kubernetes
-    repo_name: kubernetes
-    description: A plugin for Kubernetes command-line tool kubectl, which allows you to convert manifests between different API versions
-    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert
-    format: raw
-    files:
-      - name: kubectl-convert
-    checksum:
-      type: http
-      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert.sha256
-      algorithm: sha256
-    overrides:
-      - goos: windows
-        checksum:
-          type: http
-          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert.exe.sha256
-          algorithm: sha256
-    version_constraint: semver(">= 1.23.0")
-    version_overrides:
-      - version_constraint: "true"
-        supported_envs:
-          - darwin
-          - linux
-          - windows/amd64
-  - name: kubernetes/kubernetes/apiextensions-apiserver
-    type: http
-    repo_owner: kubernetes
-    repo_name: kubernetes
-    description: API server for API extensions like CustomResourceDefinitions
-    version_filter: not (Version matches "-(alpha|beta|rc)")
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 1.6.13")
-        no_asset: true
-      - version_constraint: semver("<= 1.15.3")
-        url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver
-        format: raw
-        supported_envs:
-          - linux
-      - version_constraint: semver("<= 1.25.4")
-        url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver
-        format: raw
-        supported_envs:
-          - linux
-        checksum:
-          type: http
-          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver.sha256
-          algorithm: sha256
-      - version_constraint: "true"
-        url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver
-        format: raw
-        supported_envs:
-          - linux
-        checksum:
-          type: http
-          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver.sha256
-          algorithm: sha256
-        cosign:
-          opts:
-            - --signature
-            - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver.sig
-            - --certificate
-            - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/apiextensions-apiserver.cert
-            - --certificate-identity
-            - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
-            - --certificate-oidc-issuer
-            - "https://accounts.google.com"
   - name: kubernetes/kubernetes/kubelet
     type: http
     repo_owner: kubernetes
