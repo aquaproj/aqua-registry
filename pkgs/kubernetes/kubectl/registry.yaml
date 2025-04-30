@@ -6,30 +6,86 @@ packages:
     repo_name: kubernetes
     description: The kubectl command line tool lets you control Kubernetes clusters
     link: https://kubernetes.io/docs/reference/kubectl/
-    format: raw
     url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl
-    files:
-      - name: kubectl
-    checksum:
-      type: http
-      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.sha256
-      algorithm: sha256
+    format: raw
     overrides:
       - goos: windows
+        url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.exe
+    version_filter: not (Version matches "-(alpha|beta|rc)")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.2.7")
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - amd64
+      - version_constraint: semver("<= 1.15.3")
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 1.20.15")
+        rosetta2: true
+        windows_arm_emulation: true
         checksum:
           type: http
-          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.exe.sha256
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.sha256
           algorithm: sha256
-    version_constraint: semver(">= 1.23.0")
-    version_overrides:
-      - version_constraint: semver(">= 1.21.0")
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+        overrides:
+          - goos: windows
+            checksum:
+              type: http
+              url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.exe.sha256
+              algorithm: sha256
+      - version_constraint: semver("<= 1.22.17")
+        windows_arm_emulation: true
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            checksum:
+              type: http
+              url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.exe.sha256
+              algorithm: sha256
+      - version_constraint: semver("<= 1.25.4")
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            checksum:
+              type: http
+              url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.exe.sha256
+              algorithm: sha256
       - version_constraint: "true"
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.sha256
+          algorithm: sha256
+        cosign:
+          opts:
+            - --signature
+            - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.sig
+            - --certificate
+            - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.cert
+            - --certificate-identity
+            - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
+            - --certificate-oidc-issuer
+            - "https://accounts.google.com"
+        overrides:
+          - goos: windows
+            checksum:
+              type: http
+              url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.exe.sha256
+              algorithm: sha256
+            cosign:
+              opts:
+                - --signature
+                - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.exe.sig
+                - --certificate
+                - https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.exe.cert
+                - --certificate-identity
+                - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
+                - --certificate-oidc-issuer
+                - "https://accounts.google.com"
