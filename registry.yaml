@@ -43048,7 +43048,66 @@ packages:
       type: github_release
       asset: "{{.Asset}}.sha256"
       algorithm: sha256
-  - name: kubernetes/kubeadm
+  - name: kubernetes/kubectl
+    type: http
+    repo_owner: kubernetes
+    repo_name: kubernetes
+    description: The kubectl command line tool lets you control Kubernetes clusters
+    link: https://kubernetes.io/docs/reference/kubectl/
+    format: raw
+    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl
+    files:
+      - name: kubectl
+    checksum:
+      type: http
+      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.sha256
+      algorithm: sha256
+    overrides:
+      - goos: windows
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.exe.sha256
+          algorithm: sha256
+    version_constraint: semver(">= 1.23.0")
+    version_overrides:
+      - version_constraint: semver(">= 1.21.0")
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+  - name: kubernetes/kubectl-convert
+    type: http
+    repo_owner: kubernetes
+    repo_name: kubernetes
+    description: A plugin for Kubernetes command-line tool kubectl, which allows you to convert manifests between different API versions
+    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert
+    format: raw
+    files:
+      - name: kubectl-convert
+    checksum:
+      type: http
+      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert.sha256
+      algorithm: sha256
+    overrides:
+      - goos: windows
+        checksum:
+          type: http
+          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert.exe.sha256
+          algorithm: sha256
+    version_constraint: semver(">= 1.23.0")
+    version_overrides:
+      - version_constraint: "true"
+        supported_envs:
+          - darwin
+          - linux
+          - windows/amd64
+  - name: kubernetes/kubernetes/kubeadm
     type: http
     repo_owner: kubernetes
     repo_name: kubernetes
@@ -43110,65 +43169,6 @@ packages:
                 - "krel-staging@k8s-releng-prod.iam.gserviceaccount.com"
                 - --certificate-oidc-issuer
                 - "https://accounts.google.com"
-  - name: kubernetes/kubectl
-    type: http
-    repo_owner: kubernetes
-    repo_name: kubernetes
-    description: The kubectl command line tool lets you control Kubernetes clusters
-    link: https://kubernetes.io/docs/reference/kubectl/
-    format: raw
-    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl
-    files:
-      - name: kubectl
-    checksum:
-      type: http
-      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.sha256
-      algorithm: sha256
-    overrides:
-      - goos: windows
-        checksum:
-          type: http
-          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.exe.sha256
-          algorithm: sha256
-    version_constraint: semver(">= 1.23.0")
-    version_overrides:
-      - version_constraint: semver(">= 1.21.0")
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-      - version_constraint: "true"
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-  - name: kubernetes/kubectl-convert
-    type: http
-    repo_owner: kubernetes
-    repo_name: kubernetes
-    description: A plugin for Kubernetes command-line tool kubectl, which allows you to convert manifests between different API versions
-    url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert
-    format: raw
-    files:
-      - name: kubectl-convert
-    checksum:
-      type: http
-      url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert.sha256
-      algorithm: sha256
-    overrides:
-      - goos: windows
-        checksum:
-          type: http
-          url: https://dl.k8s.io/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl-convert.exe.sha256
-          algorithm: sha256
-    version_constraint: semver(">= 1.23.0")
-    version_overrides:
-      - version_constraint: "true"
-        supported_envs:
-          - darwin
-          - linux
-          - windows/amd64
   - type: http
     repo_owner: kubernetes
     repo_name: minikube
