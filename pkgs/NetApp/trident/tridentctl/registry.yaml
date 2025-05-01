@@ -5,16 +5,19 @@ packages:
     repo_name: trident
     name: NetApp/trident/tridentctl
     description: Storage orchestrator for containers
-    rosetta2: true
-    asset: trident-installer-{{trimV .Version}}.tar.gz
-    supported_envs:
-      - darwin
-      - linux/amd64
-    files:
-      - name: tridentctl
-        src: trident-installer/tridentctl
-    overrides:
-      - goos: darwin
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        rosetta2: true
+        asset: trident-installer-{{trimV .Version}}.tar.gz
         files:
           - name: tridentctl
-            src: trident-installer/extras/macos/bin/tridentctl
+            src: trident-installer/tridentctl
+        overrides:
+          - goos: darwin
+            files:
+              - name: tridentctl
+                src: trident-installer/extras/macos/bin/tridentctl
+        supported_envs:
+          - darwin
+          - linux/amd64
