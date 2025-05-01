@@ -9,19 +9,17 @@ packages:
       - version_constraint: Version in ["v0.0.18", "v0.0.32"]
         no_asset: true
       - version_constraint: Version == "v0.0.23"
-        asset: updatecli.{{.OS}}.{{.Arch}}
+        asset: updatecli.amd64.exe
         format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        overrides:
-          - goos: windows
-            asset: updatecli.{{.Arch}}
         supported_envs:
-          - darwin
-          - windows/amd64
+          - windows
       - version_constraint: semver("<= 0.0.5")
         no_asset: true
       - version_constraint: semver("<= 0.0.10")
+        asset: updatecli
+        format: raw
+        supported_envs:
+          - linux/amd64
       - version_constraint: semver("<= 0.3.0")
         asset: updatecli.{{.OS}}.{{.Arch}}
         format: raw
@@ -81,8 +79,8 @@ packages:
             opts:
               - --certificate
               - https://github.com/updatecli/updatecli/releases/download/{{.Version}}/checksums.txt.pem
-              - --certificate-identity-regexp
-              - "^https://github\\.com/updatecli/updatecli/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-identity
+              - "https://github.com/updatecli/updatecli/.github/workflows/release.yaml@refs/tags/{{.Version}}"
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
               - --signature
