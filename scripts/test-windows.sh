@@ -10,7 +10,7 @@ docker cp "pkgs/$pkg/registry.yaml" "aqua-registry-windows:/workspace/registry.y
 for arch in amd64 arm64; do
 	if ! docker exec aqua-registry-windows env AQUA_GOOS="windows" AQUA_GOARCH="$arch" aqua i; then
 		echo "[ERROR] Build failed windows/$arch" >&2
-		docker exec -ti aqua-registry-windows env AQUA_GOOS="windows" AQUA_GOARCH="$arch" bash
+		echo "        If you want to look into the container, please run 'cmdx con windows $arch'" >&2
 		exit 1
 	fi
 done

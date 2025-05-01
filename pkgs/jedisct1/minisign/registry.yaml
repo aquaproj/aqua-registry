@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
   - type: github_release
     repo_owner: jedisct1
@@ -35,12 +36,11 @@ packages:
         supported_envs:
           - darwin
           - windows/amd64
-      - version_constraint: "true"
+      - version_constraint: Version in ["0.10", "0.11"]
         asset: minisign-{{.Version}}-{{.OS}}.{{.Format}}
         format: zip
         rosetta2: true
         windows_arm_emulation: true
-        complete_windows_ext: false
         replacements:
           darwin: macos
           windows: win64
@@ -60,3 +60,25 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: "true"
+        asset: minisign-{{.Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: minisign
+            src: minisign-{{.OS}}/{{.Arch}}/minisign
+        replacements:
+          darwin: macos
+          windows: win64
+          amd64: x86_64
+          arm64: aarch64
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: darwin
+            files:
+              - name: minisign
+        supported_envs:
+          - darwin/arm64
+          - windows
+          - linux/amd64

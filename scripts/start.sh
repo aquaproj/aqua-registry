@@ -10,7 +10,7 @@ if ! bash scripts/is_build_image.sh; then
 fi
 
 if ! bash scripts/exist_container.sh "$container_name"; then
-	echo "[INFO] Creaing a container $container_name" >&2
+	echo "[INFO] Creating a container $container_name" >&2
 	bash scripts/run.sh "$container_name"
 	exit 0
 fi

@@ -20,22 +20,23 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{inputs.ref}}
+          persist-credentials: false
 
       - run: gh pr checkout "${{inputs.pr_number}}"
         if: inputs.pr_number != ''
         env:
           GITHUB_TOKEN: ${{github.token}}
-      - uses: aquaproj/aqua-installer@6ce1f8848ec8e61f14d57bd5d7597057a6dd187c # v3.0.1
+      - uses: aquaproj/aqua-installer@5e54e5cee8a95ee2ce7c04cb993da6dfad13e59c # v3.1.2
         with:
-          aqua_version: v2.36.2
+          aqua_version: v2.50.1-3
           policy_allow: "true"
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
 
       # The default vim doesn't work well, so we install the latest vim ourselves.
-      - uses: rhysd/action-setup-vim@acff3bc31a82af69a26f90af710926fdab04d00e # v1.3.5
+      - uses: rhysd/action-setup-vim@8e931b9954b19d4203d5caa5ff5521f3bc21dcc7 # v1.4.2
 
-      - uses: mxschmitt/action-tmate@1005f9c9db5f1b055a495e72c6e589764984baf6 # v3.14
+      - uses: mxschmitt/action-tmate@e5c7151931ca95bad1c6f4190c730ecf8c7dde48 # v3.19
         with:
           limit-access-to-actor: true # SSH Key is required
         env:

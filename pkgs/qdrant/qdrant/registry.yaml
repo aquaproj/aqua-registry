@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
   - type: github_release
     repo_owner: qdrant
@@ -21,7 +22,7 @@ packages:
         supported_envs:
           - linux/amd64
           - windows
-      - version_constraint: "true"
+      - version_constraint: semver("< 1.8.0")
         asset: qdrant-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -40,3 +41,16 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: "true"
+        asset: qdrant-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
