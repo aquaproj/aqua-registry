@@ -59545,10 +59545,31 @@ packages:
             files:
               - name: rust-analyzer
   - name: rust-lang/rustup/rustup-init
-    type: github_release
+    type: http
     repo_owner: rust-lang
     repo_name: rustup
-    description: The Rust toolchain installer
+    description: The Rust toolchain pre-installer
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        url: https://static.rust-lang.org/rustup/archive/{{.Version}}/{{.Arch}}-{{.OS}}/rustup-init
+        format: raw
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: http
+          url: https://static.rust-lang.org/rustup/archive/{{.Version}}/{{.Arch}}-{{.OS}}/rustup-init.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            checksum:
+              type: http
+              url: https://static.rust-lang.org/rustup/archive/{{.Version}}/{{.Arch}}-{{.OS}}/rustup-init.exe.sha256
+              algorithm: sha256
   - type: github_release
     repo_owner: rustic-rs
     repo_name: rustic
