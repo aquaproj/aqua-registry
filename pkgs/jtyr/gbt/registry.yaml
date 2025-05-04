@@ -4,20 +4,52 @@ packages:
     repo_owner: jtyr
     repo_name: gbt
     description: Highly configurable prompt builder for Bash, ZSH and PowerShell written in Go
-    rosetta2: true
-    asset: gbt-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    files:
-      - name: gbt
-        src: gbt-{{trimV .Version}}/gbt
-    checksum:
-      type: github_release
-      asset: gbt-{{trimV .Version}}-checksums-sha256.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.0.0"
+        no_asset: true
+      - version_constraint: Version == "v1.1.0"
+        asset: gbt-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: gbt-{{trimV .Version}}-checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.1.5")
+        asset: gbt-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: gbt-{{trimV .Version}}-checksums-sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.2.0")
+        asset: gbt-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: gbt-{{trimV .Version}}-checksums-sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: gbt-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: gbt-{{trimV .Version}}-checksums-sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
