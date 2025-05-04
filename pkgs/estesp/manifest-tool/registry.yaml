@@ -4,16 +4,29 @@ packages:
     repo_owner: estesp
     repo_name: manifest-tool
     description: Command line tool to create and query container image manifest list/indexes
-    format: tar.gz
-    asset: binaries-manifest-tool-{{trimV .Version}}.{{.Format}}
-    files:
-      - name: manifest-tool
-        src: manifest-tool-{{.OS}}-{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux
-      - windows/amd64
-    checksum:
-      type: github_release
-      asset: binaries-manifest-tool-{{trimV .Version}}.tar.gz.sha256sum
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.2.0"
+        asset: manifest-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "v0.3.0"
+        asset: manifest-tool-{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        replacements:
+          darwin: osx
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: manifest-tool-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
