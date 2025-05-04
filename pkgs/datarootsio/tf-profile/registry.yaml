@@ -4,14 +4,15 @@ packages:
     repo_owner: datarootsio
     repo_name: tf-profile
     description: CLI tool to profile Terraform runs, written in Go
-    asset: tf-profile-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: zip
-    version_constraint: semver(">= 0.2.1")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.2.1")
-        version_prefix: release/
+      - version_constraint: semver("<= 0.2.0")
         asset: tf-profile-v{{.SemVer}}-{{.OS}}.{{.Format}}
-        rosetta2: true
+        format: zip
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: "true"
+        asset: tf-profile-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
