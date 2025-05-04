@@ -4,24 +4,110 @@ packages:
     type: github_release
     repo_owner: istio
     repo_name: istio
-    description: The istioctl tool is a configuration command line utility that allows service operators to debug and diagnose their Istio service mesh deployments
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    replacements:
-      darwin: osx
-      windows: win
-    asset: istioctl-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
-    files:
-      - name: istioctl
-    overrides:
-      - goos: darwin
-        goarch: amd64
-        asset: istioctl-{{.Version}}-osx.tar.gz
-      - goos: windows
-        asset: istioctl-{{.Version}}-win.zip
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
+    description: Connect, secure, control, and observe services
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.1.0"
+      - version_constraint: Version == "1.1.0.snapshot.0"
+        asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+          windows: win
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.6.0")
+        asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+          windows: win
+        overrides:
+          - goos: windows
+            format: zip
+            asset: istio_{{.Version}}_{{.OS}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.0.2")
+        asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+          windows: win
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.6.0-alpha.0")
+        asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+          windows: win
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.9.9")
+        asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+          windows: win
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: istio-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.19.0-alpha.1")
+        asset: istio-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+          windows: win
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: istio-{{.Version}}-{{.OS}}.{{.Format}}
+      - version_constraint: "true"
+        asset: istio-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: osx
+          windows: win
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
