@@ -3,21 +3,780 @@ packages:
   - type: github_release
     repo_owner: ddev
     repo_name: ddev
-    aliases:
-      - name: drud/ddev
-    asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
-    format: tar.gz
-    description: "DDEV: a local web development environment system for PHP"
-    replacements:
-      darwin: macos
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    description: Docker-based local PHP+Node.js web development environments
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.19.4-alpha4"
+        no_asset: true
+      - version_constraint: Version == "v0.4"
+        asset: ddev_{{.OS}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}_64.sha256
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: ddev_{{.OS}}_64.{{.Format}}
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.5"
+        asset: ddev_{{.OS}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["v0.6", "v0.8"]
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.7"
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.13.1"
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.14.0"
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_docker_images.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.17.0"
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_docker_images.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.18.0"
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["v0.19.0", "v1.5.1"]
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}_installer.{{.Version}}.exe.sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["v1.3.0", "v1.5.0"]
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.5.2"
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_docker_images.{{.Version}}.tar.xz.sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.10.0"
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_docker_images.{{.Version}}.tar.xz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["v1.11.2-rc1", "v1.15-alpha1"]
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.zip.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.11.2"
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.sierra.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.15.0"
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.sierra.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.17.0-alpha1"
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.high_sierra.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: Version == "v1.17.6-rc1"
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: Version == "v1.17.6"
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: Version == "v1.18.0"
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: semver("<= 0.3.0")
+        asset: ddev_{{.OS}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}_64.sha256
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: ddev_{{.OS}}_64.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.9.1")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.13.0")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.16.0")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.2.0")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_docker_images.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.4.1")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.zip.sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.10.0-alpha1")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.zip.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.10.0-rc1")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.sierra.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.10.2")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.zip.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.11.0-rc2")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.11.1")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.sierra.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.12.0-rc2")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.13.2")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}_installer.{{.Version}}.exe.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.14.0-rc3")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_chocolatey.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.14.2")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.sierra.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.15.0-rc3")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.16.0-alpha4")
+        asset: ddev_{{.OS}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.high_sierra.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.16.0-rc3")
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: semver("<= 1.16.1")
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.high_sierra.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: semver("<= 1.16.2-alpha3")
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: semver("<= 1.16.7")
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.high_sierra.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: semver("<= 1.17.0-rc2")
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.{{.Arch}}_big_sur.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: semver("<= 1.17.5")
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_docker_images.{{.Version}}.tar.xz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: semver("<= 1.17.7-alpha2")
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.high_sierra.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: semver("<= 1.18.0-rc4")
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_shell_completion_scripts.{{.Version}}.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: semver("<= 1.18.2")
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev_docker_images.{{.Arch}}.{{.Version}}.tar.xz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: semver("<= 1.19.3")
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.tar.gz.sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: ddev-{{trimV .Version}}.{{.Arch}}_{{.OS}}.bottle.{{.Format}}
+            replacements:
+              amd64: x86_64
+      - version_constraint: semver("<= 1.19.5")
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.23.2")
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: ddev_{{.OS}}-{{.Arch}}.{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
