@@ -3,13 +3,53 @@ packages:
   - type: github_release
     repo_owner: filebrowser
     repo_name: filebrowser
-    asset: "{{.OS}}-{{.Arch}}-filebrowser.{{.Format}}"
-    format: tar.gz
     description: Web File Browser
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: github_release
-      asset: filebrowser_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2.0.9")
+        asset: "{{.OS}}-{{.Arch}}-filebrowser.{{.Format}}"
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: filebrowser_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 2.0.11")
+        no_asset: true
+      - version_constraint: semver("<= 2.11.0")
+        asset: "{{.OS}}-{{.Arch}}-filebrowser.{{.Format}}"
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: filebrowser_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 2.19.0")
+        asset: "{{.OS}}-{{.Arch}}-filebrowser.{{.Format}}"
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: filebrowser_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: "{{.OS}}-{{.Arch}}-filebrowser.{{.Format}}"
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: filebrowser_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
