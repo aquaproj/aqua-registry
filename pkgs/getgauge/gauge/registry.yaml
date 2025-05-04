@@ -3,11 +3,91 @@ packages:
   - type: github_release
     repo_owner: getgauge
     repo_name: gauge
-    asset: gauge-{{trimV .Version}}-{{.OS}}.{{.Arch}}.zip
     description: Light weight cross-platform test automation
-    replacements:
-      amd64: x86_64
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.3"
+        asset: gauge-{{trimV .Version}}-{{.OS}}.{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: raw
+            asset: gauge-{{trimV .Version}}-{{.OS}}.{{.Arch}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.0.4"
+        asset: gauge-{{trimV .Version}}-{{.OS}}.{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.2.1"
+        asset: gauge-{{trimV .Version}}-{{.OS}}.{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.5")
+        asset: gauge-{{trimV .Version}}-{{.OS}}.{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: raw
+            asset: gauge-{{trimV .Version}}-{{.OS}}.{{.Arch}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.6.1")
+        asset: gauge-{{trimV .Version}}-{{.OS}}.{{.Arch}}.{{.Format}}
+        format: pkg
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: linux
+            format: zip
+          - goos: windows
+            format: raw
+            asset: gauge-{{trimV .Version}}-{{.OS}}.{{.Arch}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.2.0")
+        asset: gauge-{{trimV .Version}}-{{.OS}}.{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: gauge-{{trimV .Version}}-{{.OS}}.{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
