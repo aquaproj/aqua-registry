@@ -4,10 +4,44 @@ packages:
     repo_owner: doitintl
     repo_name: kube-no-trouble
     description: Easily check your clusters for use of deprecated APIs
-    asset: kubent-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
-    files:
-      - name: kubent
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["nightly-0.3.2-50-g810896f", "nightly-0.3.2-98-ga011986", "nightly-0.7.2-12-g4676658"]
+        no_asset: true
+      - version_constraint: Version in ["nightly-0.3.2-100-g1b3913b", "nightly-0.4.0-4-g5859a13", "nightly-0.4.0-7-ge158834", "0.4.0"]
+        asset: kubent-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version in ["nightly-0.4.0-22-g60fec90", "nightly-0.4.0-50-ge54bb80"]
+        asset: kubent-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.3.2")
+        asset: kubent-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.4.0-112-ge8065c4")
+        asset: kubent-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.4.0-2-g5775d00")
+        asset: kubent-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: kubent-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
