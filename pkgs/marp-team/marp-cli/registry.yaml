@@ -3,18 +3,33 @@ packages:
   - type: github_release
     repo_owner: marp-team
     repo_name: marp-cli
-    asset: marp-cli-{{.Version}}-{{.OS}}.{{.Format}}
-    format: tar.gz
     description: A CLI interface for Marp and Marpit based converters
-    files:
-      - name: marp
-    replacements:
-      darwin: mac
-      windows: win
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v4.0.1"
+        no_asset: true
+      - version_constraint: Version == "v0.9.0"
+        asset: marp-{{.Version}}-{{.OS}}
+        format: raw
+        replacements:
+          darwin: mac
+          windows: win
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.8.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: marp-cli-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: mac
+          windows: win
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
