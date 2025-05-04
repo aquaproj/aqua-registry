@@ -3,12 +3,24 @@ packages:
   - type: github_release
     repo_owner: Songmu
     repo_name: goxz
-    asset: goxz_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     description: Just do cross building and archiving go tools conventionally
-    files:
-      - name: goxz
-        src: goxz_{{.Version}}_{{.OS}}_{{.Arch}}/goxz
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.7.0")
+        asset: goxz_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: goxz_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
