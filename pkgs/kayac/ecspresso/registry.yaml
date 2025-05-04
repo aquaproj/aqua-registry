@@ -3,9 +3,101 @@ packages:
   - type: github_release
     repo_owner: kayac
     repo_name: ecspresso
-    asset: ecspresso_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: ecspresso is a deployment tool for Amazon ECS
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.6.0", "v0.99.3"]
+        no_asset: true
+      - version_constraint: Version == "v1.4.0"
+        asset: ecspresso-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version in ["v1.7.4-1-g4888b8c", "v1.7.5-4-ge2324a3"]
+        asset: ecspresso_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: Version in ["v1.7.4", "v1.7.11"]
+        asset: ecspresso_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.3.3")
+        asset: ecspresso-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.5.7")
+        asset: ecspresso-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: ecspresso-{{.Version}}-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 1.5.8-11-g582a891-2-g46d7812-9-g870bfbc-6-gc91be63")
+        asset: ecspresso_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.5.9")
+        asset: ecspresso-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: ecspresso-{{.Version}}-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 1.7.6")
+        asset: ecspresso_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.7.7-7-g69c85de-2-gefbe5d7-2-gf008a7c-4-g54f6cf0-4-g7ec5449-2-g04b07f6")
+        asset: ecspresso_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.7.10")
+        asset: ecspresso_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 2.4.6")
+        asset: ecspresso_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 20210228.0.0-217e33b")
+        asset: ecspresso-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: ecspresso-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: ecspresso-{{.Version}}-{{.OS}}-{{.Arch}}.exe.{{.Format}}
