@@ -4,12 +4,45 @@ packages:
     repo_owner: xxxserxxx
     repo_name: gotop
     description: A terminal based graphical activity monitor inspired by gtop and vtop
-    asset: gotop_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tgz
-    overrides:
-      - goos: windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v3.1.0"
+        asset: gotop_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "v3.2.0"
+        asset: gotop_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "v3.3.2"
+        asset: gotop_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 3.3.1")
+        asset: gotop_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: semver("<= 4.1.1")
+        asset: gotop_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: gotop_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
