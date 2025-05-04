@@ -3,10 +3,32 @@ packages:
   - type: github_release
     repo_owner: gardener
     repo_name: docforge
-    asset: docforge-{{.OS}}-{{.Arch}}
-    format: raw
     description: Scalable build tool for distributed documentation sources
-    supported_envs:
-      - linux/amd64
-      - darwin
-    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.1"
+      - version_constraint: Version == "v0.40.0"
+        asset: docforge-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux
+      - version_constraint: semver("<= 0.32.0")
+        asset: docforge-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.49.0")
+        asset: docforge-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.52.0")
+      - version_constraint: "true"
+        asset: docforge-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux
+          - darwin
