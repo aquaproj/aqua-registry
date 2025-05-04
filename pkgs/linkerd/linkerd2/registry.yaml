@@ -3,30 +3,118 @@ packages:
   - type: github_release
     repo_owner: linkerd
     repo_name: linkerd2
-    asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
-    format: raw
     description: Ultralight, security-first service mesh for Kubernetes. Main repo for Linkerd 2.x
-    overrides:
-      - goos: darwin
-        goarch: amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "stable-2.9.0"
+        no_asset: true
+      - version_constraint: Version == "v0.1.3"
+        asset: conduit-{{trimV .Version}}-{{.OS}}
+        format: raw
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.2")
+        asset: conduit-{{trimV .Version}}-{{.OS}}
+        format: raw
+        replacements:
+          darwin: macos
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.5.0")
+        asset: conduit-{{trimV .Version}}-{{.OS}}
+        format: raw
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.8.1")
         asset: linkerd2-cli-{{.Version}}-{{.OS}}
+        format: raw
         checksum:
           type: github_release
-          asset: linkerd2-cli-{{.Version}}-{{.OS}}.sha256
+          asset: "{{.Asset}}.sha256"
           algorithm: sha256
-      - goos: windows
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.10.0")
         asset: linkerd2-cli-{{.Version}}-{{.OS}}
+        format: raw
         checksum:
           type: github_release
-          asset: linkerd2-cli-{{.Version}}-{{.OS}}.exe.sha256
+          asset: "{{.Asset}}.sha256"
           algorithm: sha256
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    files:
-      - name: linkerd
-    checksum:
-      type: github_release
-      asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}.sha256
-      algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
+      - version_constraint: semver("<= 2.14.10")
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}
+          - goos: windows
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}
+      - version_constraint: semver("<= 18.7.2")
+        asset: linkerd2-cli-{{trimV .Version}}-{{.OS}}
+        format: raw
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 18.9.1")
+        asset: linkerd2-cli-{{trimV .Version}}-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 20.7.5")
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 21.3.2")
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
+      - version_constraint: "true"
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}
+          - goos: windows
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}
