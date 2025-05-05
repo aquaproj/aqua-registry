@@ -26815,8 +26815,11 @@ packages:
     repo_owner: dyne
     repo_name: zenroom
     description: Embedded no-code VM executing human-like language to manipulate data and process cryptographic operations
-    version_constraint: semver("<= 3.10.0")
+    version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 3.10.0")
+        error_message: |
+          Please update to 3.10.1 or newer.
       - version_constraint: semver("<= 5.10.4")
         asset: zenroom
         format: raw
@@ -26828,8 +26831,8 @@ packages:
           - goos: darwin
             asset: zenroom.command
             files:
-              - name: zenroom.command
-                link: zenroom
+              - name: zenroom
+                src: zenroom.command
       - version_constraint: "true"
         asset: zenroom-{{.OS}}.{{.Format}}
         format: zip
@@ -26848,11 +26851,9 @@ packages:
         overrides:
           - goos: darwin
             files:
-              - name: zenroom.command
-                link: zenroom
+              - name: zenroom
                 src: zenroom-{{.OS}}/zenroom.command
-              - name: zencode-exec.command
-                link: zencode-exec
+              - name: zencode-exec
                 src: zenroom-{{.OS}}/zencode-exec.command
   - type: github_release
     repo_owner: earthly
