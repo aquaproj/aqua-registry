@@ -3,39 +3,19 @@ packages:
   - type: github_release
     repo_owner: google
     repo_name: go-jsonnet
-    description: An implementation of Jsonnet in pure Go
-    asset: go-jsonnet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
     files:
       - name: jsonnet
       - name: jsonnet-deps
       - name: jsonnet-lint
       - name: jsonnetfmt
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.20.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.19.0")
-        files:
-          - name: jsonnet
-          - name: jsonnetfmt
-      - version_constraint: semver(">= 0.18.0")
-        files:
-          - name: jsonnet
-          - name: jsonnetfmt
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        rosetta2: true
-      - version_constraint: semver("< 0.18.0")
+      - version_constraint: semver("<= 0.16.0")
+        no_asset: true
+      - version_constraint: Version == "v0.17.0"
+        asset: go-jsonnet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         files:
           - name: jsonnet
           - name: jsonnetfmt
@@ -43,6 +23,66 @@ packages:
           amd64: x86_64
           linux: Linux
           windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         supported_envs:
           - linux
           - windows/amd64
+      - version_constraint: Version == "v0.18.0"
+        asset: go-jsonnet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: jsonnet
+          - name: jsonnetfmt
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("< 0.20.0")
+        asset: go-jsonnet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: jsonnet
+          - name: jsonnetfmt
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: Version == "v0.20.0"
+        asset: go-jsonnet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: go-jsonnet_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
