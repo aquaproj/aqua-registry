@@ -57537,6 +57537,31 @@ packages:
     overrides:
       - goos: windows
         asset: protoc-{{trimV .Version}}-{{.OS}}.{{.Format}}
+  - name: psastras/sarif-rs/miri-sarif
+    type: github_release
+    repo_owner: psastras
+    repo_name: sarif-rs
+    description: A group of Rust projects for interacting with the SARIF format
+    version_filter: not (Version matches "-latest$")
+    version_prefix: miri-sarif-
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: miri-sarif-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
   - type: github_release
     repo_owner: pseudomuto
     repo_name: protoc-gen-doc
