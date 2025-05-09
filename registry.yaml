@@ -3321,6 +3321,44 @@ packages:
     files:
       - name: selene
   - type: github_release
+    repo_owner: KeisukeYamashita
+    repo_name: commitlint-rs
+    description: Lint commit messages  with conventional commit messages
+    files:
+      - name: commitlint
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.8")
+        no_asset: true
+      - version_constraint: semver("<= 0.1.12")
+        asset: commitlint-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        supported_envs:
+          - linux/amd64
+          - darwin
+          - windows
+      - version_constraint: semver("<= 0.2.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: commitlint-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        supported_envs:
+          - linux/amd64
+          - darwin
+          - windows
+  - type: github_release
     repo_owner: Kong
     repo_name: deck
     description: "decK: Configuration management and drift detection for Kong"
@@ -57578,6 +57616,160 @@ packages:
           - darwin
       - version_constraint: "true"
         asset: clippy-sarif-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
+  - name: psastras/sarif-rs/hadolint-sarif
+    type: github_release
+    repo_owner: psastras
+    repo_name: sarif-rs
+    description: A group of Rust projects for interacting with the SARIF format
+    version_filter: not (Version matches "-latest$")
+    version_prefix: hadolint-sarif-
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "hadolint-sarif-v0.2.23"
+        asset: hadolint-sarif-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tgz
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+        files:
+          - name: hadolint-sarif
+            src: target/release/{{.FileName}}-{{.Arch}}-{{.OS}}
+      - version_constraint: Version in ["hadolint-sarif-v0.2.24", "hadolint-sarif-v0.6.2"]
+        asset: hadolint-sarif-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.4.2")
+        asset: hadolint-sarif-{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: hadolint-sarif-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
+  - name: psastras/sarif-rs/sarif-fmt
+    type: github_release
+    repo_owner: psastras
+    repo_name: sarif-rs
+    description: A group of Rust projects for interacting with the SARIF format
+    version_filter: not (Version matches "-latest$")
+    version_prefix: sarif-fmt-
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "sarif-fmt-v0.6.2"
+        asset: sarif-fmt-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.4.2")
+        asset: sarif-fmt-{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: sarif-fmt-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
+  - name: psastras/sarif-rs/shellcheck-sarif
+    type: github_release
+    repo_owner: psastras
+    repo_name: sarif-rs
+    description: A group of Rust projects for interacting with the SARIF format
+    version_filter: not (Version matches "-latest$")
+    version_prefix: shellcheck-sarif-
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "shellcheck-sarif-v0.2.23"
+        asset: shellcheck-sarif-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tgz
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+        files:
+          - name: shellcheck-sarif
+            src: target/release/{{.FileName}}-{{.Arch}}-{{.OS}}
+      - version_constraint: Version in ["shellcheck-sarif-v0.2.24", "shellcheck-sarif-v0.6.2"]
+        asset: shellcheck-sarif-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.4.2")
+        asset: shellcheck-sarif-{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: shellcheck-sarif-{{.Arch}}-{{.OS}}
         format: raw
         replacements:
           darwin: apple-darwin
