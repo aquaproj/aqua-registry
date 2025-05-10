@@ -4,20 +4,154 @@ packages:
     repo_owner: tilt-dev
     repo_name: tilt
     description: Define your dev environment as code. For microservice apps on Kubernetes
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      darwin: mac
-      386: i386
-      amd64: x86_64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.1"
+        asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "v0.33.0"
+        asset: tilt.{{trimV .Version}}.{{.OS}}-alpine.{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: mac
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 0.9.7")
+        asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: mac
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.13.5")
+        asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: mac
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: tilt.{{trimV .Version}}.{{.OS}}_ALPHA.{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.16.1")
+        asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: mac
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.19.0")
+        asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: mac
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}_ALPHA.{{.Format}}
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.22.14")
+        asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: mac
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}_ALPHA.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}_ALPHA.{{.Format}}
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.30.10")
+        asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: mac
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: tilt.{{trimV .Version}}.{{.OS}}.{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: mac
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: tilt.{{trimV .Version}}.{{.OS}}-alpine.{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
