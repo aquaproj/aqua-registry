@@ -4,12 +4,34 @@ packages:
     repo_owner: mumoshu
     repo_name: variant
     description: Wrap up your bash scripts into a modern CLI today. Graduate to a full-blown golang app tomorrow
-    rosetta2: true
-    asset: variant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    supported_envs:
-      - darwin
-      - linux
-    checksum:
-      type: github_release
-      asset: variant_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.8")
+      - version_constraint: semver("<= 0.10.0")
+        asset: variant-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.37.0")
+        asset: variant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: variant_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: variant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: variant_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
