@@ -13,15 +13,16 @@ packages:
         slsa_provenance:
           type: github_release
           asset: todos-{{.OS}}-{{.Arch}}.intoto.jsonl
-      - version_constraint: Version == "v0.3.0"
-        asset: todos-{{.OS}}-{{.Arch}}
-        format: raw
-        slsa_provenance:
-          type: github_release
-          asset: github-issue-reopener-{{.OS}}-{{.Arch}}.intoto.jsonl
       - version_constraint: "true"
         asset: todos-{{.OS}}-{{.Arch}}
         format: raw
         slsa_provenance:
           type: github_release
           asset: todos-{{.OS}}-{{.Arch}}.intoto.jsonl
+        overrides:
+          - goos: windows
+            complete_windows_ext: false
+            asset: todos-{{.OS}}-{{.Arch}}.exe
+            slsa_provenance:
+              type: github_release
+              asset: todos-{{.OS}}-{{.Arch}}.exe.intoto.jsonl
