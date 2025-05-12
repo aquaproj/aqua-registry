@@ -15,6 +15,16 @@ packages:
           darwin: apple-darwin
           linux: unknown-linux-musl
           windows: pc-windows-gnullvm
+        cosign:
+          opts:
+            - --certificate
+            - "https://github.com/takumin/zizmor-bin/releases/download/{{.Version}}/{{.Asset}}.cert"
+            - --signature
+            - "https://github.com/takumin/zizmor-bin/releases/download/{{.Version}}/{{.Asset}}.sig"
+            - --certificate-identity
+            - "https://github.com/takumin/zizmor-bin/.github/workflows/wc-sign.yml@refs/heads/main"
+            - --certificate-oidc-issuer
+            - "https://token.actions.githubusercontent.com"
         checksum:
           type: github_release
           asset: SHA256SUMS
