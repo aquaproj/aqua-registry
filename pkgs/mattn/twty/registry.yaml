@@ -3,19 +3,38 @@ packages:
   - type: github_release
     repo_owner: mattn
     repo_name: twty
-    asset: twty_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
     description: command-line twitter client written in golang
-    overrides:
-      - goos: linux
-        format: tar.gz
-    files:
-      - name: twty
-        src: twty_{{.Version}}_{{.OS}}_{{.Arch}}/twty
-    version_constraint: semver(">= 0.0.13")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version in ["v0.0.5", "v0.0.10"]
+        no_asset: true
+      - version_constraint: Version in ["v0.0.4", "v0.0.11"]
+        asset: twty_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
         rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 0.0.9")
+        asset: twty_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: twty_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
