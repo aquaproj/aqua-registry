@@ -4,61 +4,66 @@ packages:
     repo_owner: blacknon
     repo_name: hwatch
     description: A modern alternative to the watch command, records the differences in execution results and can check this differences at after
-    supported_envs:
-      - darwin
-      - linux/amd64
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      linux: unknown-linux-musl
-    version_constraint: semver(">= 0.3.1")
-    asset: hwatch-{{.Version}}.{{.Arch}}-{{.OS}}.tar.gz
-    files:
-      - name: hwatch
-        src: bin/hwatch
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("= 0.3.0")
-        asset: hwatch_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
+      - version_constraint: Version in ["0.1.6", "0.2.1"]
+        no_asset: true
+      - version_constraint: Version in ["0.2.0", "0.3.0"]
+        asset: hwatch_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
         supported_envs:
           - darwin
-        replacements:
-          amd64: amd64
-          darwin: darwin
-          linux: linux
-        files:
-          - name: hwatch
-            src: hwatch/hwatch
-      - version_constraint: semver("= 0.2.1") || semver("= 0.1.6")
-        supported_envs: []
-      - version_constraint: semver("= 0.1.0")
-        asset: hwatch_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
+      - version_constraint: semver("<= 0.1.4")
+        asset: hwatch_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.3.13")
+        asset: hwatch-{{.Version}}.{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
         replacements:
-          amd64: amd64
-          darwin: darwin
-          linux: linux
-        files:
-          - name: hwatch
-            src: hwatch_{{.Version}}_{{.OS}}_{{.Arch}}/hwatch
-      - version_constraint: semver("<= 0.1.2")
-        asset: hwatch_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
-        rosetta2: true
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.3.18")
+        asset: hwatch-{{.Version}}.{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         replacements:
-          amd64: amd64
-          darwin: darwin
-          linux: linux
-        files:
-          - name: hwatch
-            src: hwatch
-      - version_constraint: semver("< 0.3.1")
-        asset: hwatch_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
-        rosetta2: true
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: hwatch-{{.Version}}.{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         replacements:
-          amd64: amd64
-          darwin: darwin
-          linux: linux
-        files:
-          - name: hwatch
-            src: hwatch/hwatch
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        overrides:
+          - goos: windows
+            format: zip
