@@ -3,22 +3,28 @@ packages:
   - type: github_release
     repo_owner: babarot
     repo_name: github-labeler
-    aliases:
-      - name: b4b4r07/github-labeler
-    rosetta2: true
-    asset: github-labeler_{{.OS}}_{{.Arch}}.{{.Format}}
     description: Declarative way to configure GitHub labels
-    supported_envs:
-      - darwin
-      - linux/amd64
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      386: i386
-      amd64: x86_64
-    checksum:
-      type: github_release
-      asset: github-labeler_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.1")
+        asset: github-labeler_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: github-labeler_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: github-labeler_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
