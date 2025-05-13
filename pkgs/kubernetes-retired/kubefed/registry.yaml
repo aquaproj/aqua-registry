@@ -3,13 +3,16 @@ packages:
   - type: github_release
     repo_owner: kubernetes-retired
     repo_name: kubefed
-    aliases:
-      - name: kubernetes-sigs/kubefed
-    description: kubefedctl controls a Kubernetes Cluster Federation
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - linux/amd64
-    asset: kubefedctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tgz
-    files:
-      - name: kubefedctl
+    description: Kubernetes Cluster Federation
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.1-test-fake"
+        no_asset: true
+      - version_constraint: semver("<= 0.0.10")
+      - version_constraint: "true"
+        asset: kubefedctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
