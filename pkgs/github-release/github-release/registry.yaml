@@ -3,29 +3,32 @@ packages:
   - type: github_release
     repo_owner: github-release
     repo_name: github-release
-    asset: "{{.OS}}-{{.Arch}}-github-release.{{.Format}}"
-    format: bz2
     description: Commandline app to create and edit releases on Github (and upload artifacts)
-    overrides:
-      - goos: windows
-        format: zip
-        files:
-          - name: github-release
-            src: bin/windows/{{.Arch}}/github-release.exe
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    files:
-      - name: github-release
-        src: "{{.OS}}-{{.Arch}}-github-release"
-    version_constraint: semver(">= 0.8.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.5.0")
+      - version_constraint: semver("<= 0.4.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.7.2")
+        asset: "{{.OS}}-{{.Arch}}-github-release.{{.Format}}"
         format: tar.bz2
-        files:
-          - name: github-release
-            src: bin/{{.OS}}/{{.Arch}}/github-release
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
       - version_constraint: "true"
-        supported_envs: []
-        rosetta2: false
+        asset: "{{.OS}}-{{.Arch}}-github-release.{{.Format}}"
+        format: bz2
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
