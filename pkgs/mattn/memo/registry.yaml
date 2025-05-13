@@ -4,15 +4,47 @@ packages:
     repo_owner: mattn
     repo_name: memo
     description: Memo Life For You
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - amd64
-    asset: memo_{{.Version}}_{{.OS}}_amd64.{{.Format}}
-    files:
-      - name: memo
-        src: memo_{{.Version}}_{{.OS}}_amd64/memo
-    format: zip
-    overrides:
-      - goos: linux
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.10"
+        asset: memo_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: memo_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.0.9")
+        asset: memo_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHASUMS
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.0.15")
+        asset: memo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: memo_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
