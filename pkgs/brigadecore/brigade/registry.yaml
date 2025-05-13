@@ -3,12 +3,49 @@ packages:
   - type: github_release
     repo_owner: brigadecore
     repo_name: brigade
-    format: raw
-    asset: brig-{{.OS}}-{{.Arch}}
-    description: Brigade CLI. Event-driven scripting for Kubernetes
-    files:
-      - name: brig
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    description: Event-driven scripting for Kubernetes
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.11.0", "v0.13.1"]
+        no_asset: true
+      - version_constraint: Version in ["v0.10.0", "v0.14.0"]
+        asset: brig-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.15.0"
+        asset: brig-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "v2.4.0-rc.1"
+      - version_constraint: semver("<= 0.9.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.13.0")
+        asset: brig-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.0.0-beta.1")
+        asset: brig-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: brig-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
