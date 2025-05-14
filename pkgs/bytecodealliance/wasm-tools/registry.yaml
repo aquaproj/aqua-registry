@@ -5,11 +5,18 @@ packages:
     repo_name: wasm-tools
     description: CLI and Rust libraries for low-level manipulation of WebAssembly modules
     version_constraint: "false"
+    files:
+      - name: wasm-tools
+        src: wasm-tools-{{trimV .Version}}-{{.Arch}}-{{.OS}}/wasm-tools
     version_overrides:
       - version_constraint: semver("<= 1.0.60")
         asset: "{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
         format: tar.gz
         windows_arm_emulation: true
+        version_prefix: wasm-tools-
+        files:
+        - name: wasm-tools
+          src: "{{.Version}}-{{.Arch}}-{{.OS}}/wasm-tools"
         replacements:
           amd64: x86_64
           arm64: aarch64
