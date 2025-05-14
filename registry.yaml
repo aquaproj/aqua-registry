@@ -16393,6 +16393,26 @@ packages:
           enabled: false
   - type: github_release
     repo_owner: bytecodealliance
+    repo_name: wasm-pkg-tools
+    files:
+      - name: wkg
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.7.0", "v0.7.1"]
+        no_asset: true
+      - version_constraint: "true"
+        asset: wkg-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+  - type: github_release
+    repo_owner: bytecodealliance
     repo_name: wasm-tools
     description: CLI and Rust libraries for low-level manipulation of WebAssembly modules
     version_constraint: "false"
@@ -74246,6 +74266,24 @@ packages:
           - darwin
           - windows
           - amd64
+  - name: wasmCloud/wasmCloud/wash
+    type: github_release
+    repo_owner: wasmCloud
+    repo_name: wasmCloud
+    description: wasmCloud is an open source Cloud Native Computing Foundation (CNCF) project that enables teams to build, manage, and scale polyglot apps across any cloud, K8s, or edge
+    version_prefix: wash-v
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: wash-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
   - type: github_release
     repo_owner: wasmerio
     repo_name: wapm-cli
