@@ -45885,6 +45885,16 @@ packages:
       type: github_release
       asset: sha256sums.txt
       algorithm: sha256
+      cosign:
+        opts:
+          - --certificate-identity
+          - https://github.com/kubevela/kubevela/.github/workflows/release.yml@refs/tags/{{.Version}}
+          - --certificate-oidc-issuer
+          - https://token.actions.githubusercontent.com
+          - --signature
+          - https://github.com/kubevela/kubevela/releases/download/{{.Version}}/sha256sums.txt-keyless.sig
+          - --certificate
+          - https://github.com/kubevela/kubevela/releases/download/{{.Version}}/sha256sums.txt-keyless.pem
     slsa_provenance:
       type: github_release
       asset: multiple.intoto.jsonl
