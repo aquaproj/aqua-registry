@@ -71341,7 +71341,7 @@ packages:
           - darwin
           - linux/amd64
           - windows
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.3.39")
         asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: gz
         windows_arm_emulation: true
@@ -71357,10 +71357,21 @@ packages:
             files:
               - name: tombi
                 src: "{{.FileName}}"
-        supported_envs:
-          - darwin
-          - linux
-          - windows
+      - version_constraint: "true"
+        asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: tombi
+                src: "{{.FileName}}"
   - type: github_release
     repo_owner: tomnomnom
     repo_name: gron
