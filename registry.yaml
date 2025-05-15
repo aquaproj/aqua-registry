@@ -71303,65 +71303,25 @@ packages:
     repo_owner: tombi-toml
     repo_name: tombi
     description: TOML Formatter / Linter / Language Server
+    files:
+      - name: tombi
+        src: "{{.FileName}}-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}"
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.3.27"
         no_asset: true
-      - version_constraint: Version == "v0.3.35"
+      - version_constraint: semver("<= 0.2.23")
+        no_asset: true
+      - version_constraint: semver("<= 0.3.37")
         asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: gz
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        overrides:
-          - goos: windows
-            format: zip
-            replacements:
-              amd64: amd64
         supported_envs:
-          - linux
           - darwin
-          - windows/arm64
-      - version_constraint: Version == "v0.3.36"
-        asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: gz
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-        supported_envs:
-          - linux
-          - darwin
-      - version_constraint: Version == "v0.3.37"
-        asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: gz
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          windows: pc-windows-msvc
-        overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              linux: unknown-linux-musl
-          - goos: linux
-            goarch: arm64
-            replacements:
-              linux: unknown-linux-gnu
-          - goos: windows
-            format: zip
-            replacements:
-              amd64: amd64
-        supported_envs:
-          - linux
-          - darwin
-          - windows/arm64
-      - version_constraint: Version == "v0.3.38"
+      - version_constraint: semver("<= 0.3.38")
         asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: gz
         windows_arm_emulation: true
@@ -71369,43 +71329,18 @@ packages:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
+          linux: unknown-linux-musl
           windows: pc-windows-msvc
         overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              linux: unknown-linux-musl
-          - goos: linux
-            goarch: arm64
-            replacements:
-              linux: unknown-linux-gnu
           - goos: windows
             format: zip
-      - version_constraint: semver("<= 0.2.23")
-        no_asset: true
-      - version_constraint: semver("<= 0.3.8")
-        asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: gz
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
+            files:
+              - name: tombi
+                src: "{{.FileName}}"
         supported_envs:
-          - linux
           - darwin
-      - version_constraint: semver("<= 0.3.34")
-        asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: gz
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        overrides:
-          - goos: windows
-            format: zip
+          - linux/amd64
+          - windows
       - version_constraint: "true"
         asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: gz
@@ -71419,6 +71354,13 @@ packages:
         overrides:
           - goos: windows
             format: zip
+            files:
+              - name: tombi
+                src: "{{.FileName}}"
+        supported_envs:
+          - darwin
+          - linux
+          - windows
   - type: github_release
     repo_owner: tomnomnom
     repo_name: gron
