@@ -62,6 +62,26 @@ packages:
           - linux
           - darwin
           - windows/arm64
+      - version_constraint: Version == "v0.3.38"
+        asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
       - version_constraint: semver("<= 0.2.23")
         no_asset: true
       - version_constraint: semver("<= 0.3.8")
@@ -95,15 +115,8 @@ packages:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
+          linux: unknown-linux-musl
           windows: pc-windows-msvc
         overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              linux: unknown-linux-musl
-          - goos: linux
-            goarch: arm64
-            replacements:
-              linux: unknown-linux-gnu
           - goos: windows
             format: zip
