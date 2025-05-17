@@ -3,16 +3,177 @@ packages:
   - type: github_release
     repo_owner: ory
     repo_name: hydra
-    asset: hydra_{{trimV .Version}}-{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    description: OpenID Certified OpenID Connect and OAuth Provider written in Go - cloud native, security-first, open source API security for your infrastructure. SDKs for any language. Works with Hardware Security Modules. Compatible with MITREid
-    replacements:
-      amd64: 64bit
-      darwin: macOS
-    overrides:
-      - goos: windows
+    description: The only web-scale, fully customizable OpenID Certified OpenID Connect and OAuth2 Provider in the world. Become an OpenID Connect and OAuth2 Provider over night. Written in Go, cloud native, headless, API-first. Available as a service on Ory Network and for self-hosters. Relied upon by OpenAI and others for web-scale security
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.8.0", "v0.8.5", "v0.8.7", "v0.9.3", "v1.4.0"]
+        no_asset: true
+      - version_constraint: Version in ["0.1-beta.2", "0.1-beta1"]
+        asset: "{{.OS}}-{{.Arch}}.{{.Format}}"
         format: zip
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.8.6"
+        asset: hydra-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.0-beta.4")
+        no_asset: true
+      - version_constraint: semver("<= 0.3.0")
+        asset: hydra-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.4.0")
+        asset: hydra_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.4.2-alpha.3")
+        no_asset: true
+      - version_constraint: semver("<= 0.7.9")
+        asset: hydra-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.7.11")
+        no_asset: true
+      - version_constraint: semver("<= 0.9.12")
+        asset: hydra-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.10.0-alpha.1")
+        no_asset: true
+      - version_constraint: semver("<= 0.10.0-alpha.10")
+        asset: hydra-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.10.0-alpha.13")
+        no_asset: true
+      - version_constraint: semver("<= 1.0.0-rc.6+oryOS.10")
+        asset: hydra-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.4.6")
+        asset: hydra_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: hydra_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.8.5")
+        asset: hydra_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: hydra_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.9.2")
+        asset: hydra_{{trimV .Version}}-sqlite-libmusl_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: hydra_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: hydra_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: darwin
+            asset: hydra_{{trimV .Version}}-sqlite_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: hydra_{{trimV .Version}}-sqlite_{{.OS}}_{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 1.10.6")
+        asset: hydra_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: hydra_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: hydra_{{trimV .Version}}-sqlite-libmusl_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: amd64
+            asset: hydra_{{trimV .Version}}-sqlite_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: hydra_{{trimV .Version}}-sqlite_{{.OS}}_{{.Arch}}.{{.Format}}
+      - version_constraint: "true"
+        asset: hydra_{{trimV .Version}}-{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: 64bit
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
