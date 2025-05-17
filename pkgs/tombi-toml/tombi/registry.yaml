@@ -4,9 +4,6 @@ packages:
     repo_owner: tombi-toml
     repo_name: tombi
     description: TOML Formatter / Linter / Language Server
-    files:
-      - name: tombi
-        src: "{{.FileName}}-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}"
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.3.27"
@@ -16,6 +13,9 @@ packages:
       - version_constraint: semver("<= 0.3.37")
         asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: gz
+        files:
+          - name: tombi
+            src: "{{.AssetWithoutExt}}"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -26,6 +26,9 @@ packages:
         asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: gz
         windows_arm_emulation: true
+        files:
+          - name: tombi
+            src: "{{.AssetWithoutExt}}"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -37,7 +40,6 @@ packages:
             format: zip
             files:
               - name: tombi
-                src: "{{.FileName}}"
         supported_envs:
           - darwin
           - linux/amd64
@@ -46,6 +48,9 @@ packages:
         asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: gz
         windows_arm_emulation: true
+        files:
+          - name: tombi
+            src: "{{.AssetWithoutExt}}"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -57,10 +62,12 @@ packages:
             format: zip
             files:
               - name: tombi
-                src: "{{.FileName}}"
       - version_constraint: "true"
         asset: tombi-cli-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: gz
+        files:
+          - name: tombi
+            src: "{{.AssetWithoutExt}}"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -72,4 +79,3 @@ packages:
             format: zip
             files:
               - name: tombi
-                src: "{{.FileName}}"
