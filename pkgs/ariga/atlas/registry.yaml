@@ -6,14 +6,23 @@ packages:
     url: https://release.ariga.io/atlas/atlas-{{.OS}}-{{.Arch}}-{{.Version}}
     description: A modern tool for managing database schemas
     format: raw
+    windows_arm_emulation: true
     supported_envs:
       - darwin
       - linux
+      - windows
     checksum:
       type: http
       url: https://release.ariga.io/atlas/atlas-{{.OS}}-{{.Arch}}-{{.Version}}.sha256
       file_format: raw
       algorithm: sha256
+    overrides:
+      - goos: windows
+        checksum:
+          type: http
+          url: https://release.ariga.io/atlas/atlas-{{.OS}}-{{.Arch}}-{{.Version}}.exe.sha256
+          file_format: raw
+          algorithm: sha256
     version_constraint: semver(">= 0.22.0")
     # https://github.com/ariga/atlas/issues/3296#issuecomment-2574924728
     # > Old Versions of Atlas
