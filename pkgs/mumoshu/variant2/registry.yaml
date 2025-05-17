@@ -4,13 +4,37 @@ packages:
     repo_owner: mumoshu
     repo_name: variant2
     description: Turn your bash scripts into a modern, single-executable CLI app today
-    asset: variant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    supported_envs:
-      - darwin
-      - linux
-    files:
-      - name: variant
-    checksum:
-      type: github_release
-      asset: variant_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.37.1"
+        asset: variant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: variant_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.37.0")
+        asset: variant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: variant_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: variant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: variant_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
