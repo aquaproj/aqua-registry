@@ -3133,6 +3133,20 @@ packages:
           - amd64
       - version_constraint: "true"
         asset: redli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: redli
+            src: redli_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: windows
+            goarch: amd64
+            files:
+              - name: redli.exe
+                src: redli.exe
+          - goos: windows
+            goarch: arm64
+            files:
+              - name: redli.exe
+                src: redli_{{.Arch}}.exe
         format: tar.gz
         checksum:
           type: github_release
