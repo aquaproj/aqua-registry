@@ -8,21 +8,27 @@ packages:
     version_overrides:
       - version_constraint: "true"
         asset: edit-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: xz
+        files:
+          - name: edit
+            src: "{{.AssetWithoutExt}}"
         replacements:
           amd64: x86_64
           arm64: aarch64
           linux: linux-gnu
-        supported_envs:
-          - linux
-          - windows
         overrides:
-          - goos: linux
-            format: xz
-            files:
-              - name: edit
-                src: "edit-{{trimV .Version}}-{{.Arch}}-{{.OS}}"
           - goos: windows
+            goarch: amd64
             format: zip
             files:
               - name: edit
-                src: "edit-{{trimV .Version}}-{{.Arch}}-{{.OS}}/edit.exe"
+                src: "{{.AssetWithoutExt}}.exe/edit.exe"
+          - goos: windows
+            goarch: arm64
+            format: zip
+            files:
+              - name: edit
+                src: "{{.AssetWithoutExt}}/edit.exe"
+        supported_envs:
+          - linux
+          - windows
