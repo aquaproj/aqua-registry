@@ -32,8 +32,22 @@ packages:
             format: zip
         github_artifact_attestations:
           signer_workflow: Zxilly/go-size-analyzer/.github/workflows/build-gsa.yml
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.9.1")
         asset: go-size-analyzer_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        # Disable slsa_provenance
+        # FAILED: SLSA verification failed: untrusted reusable workflow: https://github.com/Zxilly/go-size-analyzer/.github/workflows/release.yml with builderID provided: false
+        github_artifact_attestations:
+          signer_workflow: Zxilly/go-size-analyzer/.github/workflows/release.yml
+      - version_constraint: "true"
+        asset: go-size-analyzer_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
           type: github_release
@@ -44,3 +58,5 @@ packages:
             format: zip
         github_artifact_attestations:
           signer_workflow: Zxilly/go-size-analyzer/.github/workflows/release.yml
+        # Disable slsa_provenance
+        # FAILED: SLSA verification failed: untrusted reusable workflow: https://github.com/Zxilly/go-size-analyzer/.github/workflows/release.yml with builderID provided: false
