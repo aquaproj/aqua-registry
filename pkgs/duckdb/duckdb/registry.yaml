@@ -7,6 +7,7 @@ packages:
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.1.0"
+        no_asset: true
       - version_constraint: Version == "v0.2.8"
         asset: duckdb_cli-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
@@ -14,47 +15,16 @@ packages:
         supported_envs:
           - linux/amd64
           - windows/amd64
-      - version_constraint: Version == "v1.2.0"
-        asset: duckdb_cli-{{.OS}}-universal.{{.Format}}
-        format: gz
-        replacements:
-          darwin: osx
-        overrides:
-          - goos: linux
-            asset: duckdb_cli-{{.OS}}-{{.Arch}}.{{.Format}}
-            replacements:
-              arm64: aarch64
-          - goos: windows
-            format: zip
-            asset: duckdb_cli-{{.OS}}-{{.Arch}}.{{.Format}}
-      - version_constraint: Version == "v1.2.1"
-        asset: duckdb_cli-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: gz
-        replacements:
-          darwin: osx
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: aarch64
-          - goos: darwin
-            asset: duckdb_cli-{{.OS}}-universal.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "v1.2.2"
+      - version_constraint: Version in ["v1.2.0", "v1.2.1", "v1.2.2"]
         asset: duckdb_cli-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
         replacements:
           darwin: osx
         overrides:
           - goos: linux
-            goarch: amd64
-            format: gz
-          - goos: linux
-            goarch: arm64
             replacements:
               arm64: aarch64
           - goos: darwin
-            format: gz
             asset: duckdb_cli-{{.OS}}-universal.{{.Format}}
       - version_constraint: semver("<= 0.1.8")
         no_asset: true
@@ -106,13 +76,10 @@ packages:
           - goos: darwin
             asset: duckdb_cli-{{.OS}}-universal.{{.Format}}
       - version_constraint: "true"
-        asset: duckdb_cli-{{.OS}}-universal.{{.Format}}
-        format: gz
+        asset: duckdb_cli-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
         replacements:
           darwin: osx
         overrides:
-          - goos: linux
-            asset: duckdb_cli-{{.OS}}-{{.Arch}}.{{.Format}}
-          - goos: windows
-            format: zip
-            asset: duckdb_cli-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: darwin
+            asset: duckdb_cli-{{.OS}}-universal.{{.Format}}
