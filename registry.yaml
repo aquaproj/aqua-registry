@@ -57316,6 +57316,18 @@ packages:
         supported_envs:
           - windows/amd64
       - version_constraint: Version == "v0.20.0"
+        asset: fclones-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: linux
+            files:
+              - name: fclones
+                src: "usr/bin/fclones"
+        supported_envs:
+          - linux/amd64
       - version_constraint: Version == "v0.20.1"
         asset: fclones-{{trimV .Version}}-{{.OS}}.{{.Arch}}.{{.Format}}
         format: zip
@@ -57325,8 +57337,16 @@ packages:
           amd64: x86_64
           darwin: apple-darwin
           windows: win
+        overrides:
+          - goos: linux
+            asset: fclones-{{trimV .Version}}.{{.Format}}
+            format: tgz
+            files:
+              - name: fclones
+                src: "usr/bin/fclones"
         supported_envs:
           - darwin
+          - linux/amd64
           - windows/amd64
       - version_constraint: Version == "v0.21.0"
         asset: fclones-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
@@ -57340,8 +57360,15 @@ packages:
         overrides:
           - goos: windows
             asset: fclones-{{trimV .Version}}-{{.OS}}.{{.Arch}}.{{.Format}}
+          - goos: linux
+            asset: fclones-{{trimV .Version}}.{{.Format}}
+            format: tgz
+            files:
+              - name: fclones
+                src: "usr/bin/fclones"
         supported_envs:
           - darwin
+          - linux/amd64
           - windows/amd64
       - version_constraint: Version == "v0.22.0"
         asset: fclones-{{trimV .Version}}-{{.OS}}.{{.Arch}}.{{.Format}}
@@ -57355,8 +57382,15 @@ packages:
         overrides:
           - goos: darwin
             format: tar.gz
+          - goos: linux
+            asset: fclones-{{trimV .Version}}.{{.Format}}
+            format: tgz
+            files:
+              - name: fclones
+                src: "usr/bin/fclones"
         supported_envs:
           - darwin
+          - linux/amd64
           - windows/amd64
       - version_constraint: Version in ["v0.24.0", "v0.26.0"]
         asset: fclones-{{trimV .Version}}-{{.OS}}-musl.{{.Arch}}.{{.Format}}
@@ -57378,10 +57412,10 @@ packages:
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
+          linux: linux-musl
         overrides:
           - goos: linux
             format: tar.gz
-            asset: fclones-{{trimV .Version}}-{{.OS}}-musl.{{.Arch}}.{{.Format}}
         supported_envs:
           - linux/amd64
           - windows/amd64
@@ -57427,10 +57461,18 @@ packages:
         asset: fclones-{{trimV .Version}}-{{.OS}}.{{.Arch}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            asset: fclones-{{trimV .Version}}.{{.Format}}
+            format: tgz
+            files:
+              - name: fclones
+                src: "usr/bin/fclones"
         replacements:
           amd64: x86_64
           windows: win
         supported_envs:
+          - linux/amd64
           - windows/amd64
       - version_constraint: "true"
         asset: fclones-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
@@ -57438,10 +57480,14 @@ packages:
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
+          linux: linux-musl
         overrides:
           - goos: linux
             format: tar.gz
-            asset: fclones-{{trimV .Version}}-{{.OS}}-glibc-{{.Arch}}.{{.Format}}
+            asset: fclones-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+            files:
+              - name: fclones
+                src: "target/{{.Arch}}-unknown-{{.OS}}/release/fclones"
         supported_envs:
           - linux/amd64
           - windows/amd64
