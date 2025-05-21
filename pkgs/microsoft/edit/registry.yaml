@@ -4,18 +4,25 @@ packages:
     repo_owner: microsoft
     repo_name: edit
     description: We all edit
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: "true"
-        asset: edit-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    asset: "edit-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}"
+    supported_envs:
+      - linux/amd64
+      - linux/arm64
+      - windows/amd64
+      - windows/arm64
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      linux: linux-gnu
+      windows: windows
+    overrides:
+      - goos: linux
         format: xz
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          linux: linux-gnu
-        overrides:
-          - goos: windows
-            format: zip
-        supported_envs:
-          - linux
-          - windows
+        files:
+          - name: edit
+            src: "edit-{{trimV .Version}}-{{.Arch}}-{{.OS}}"
+      - goos: windows
+        format: zip
+        files:
+          - name: edit
+            src: "edit-{{trimV .Version}}-{{.Arch}}-{{.OS}}/edit.exe"
