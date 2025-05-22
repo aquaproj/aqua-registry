@@ -3,10 +3,14 @@ packages:
   - type: github_release
     repo_owner: rapiz1
     repo_name: catp
-    asset: catp-{{.Arch}}-{{.OS}}.zip
     description: Print the output of a running process
-    replacements:
-      amd64: x86_64
-      linux: unknown-linux-musl
-    supported_envs:
-      - linux/amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: catp-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64

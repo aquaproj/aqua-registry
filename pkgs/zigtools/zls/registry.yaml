@@ -53,10 +53,25 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("< 0.14.0")
+        asset: zls-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: zls-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
+        minisign:
+          type: github_release
+          asset: zls-{{.Arch}}-{{.OS}}.{{.Format}}.minisig
+          public_key: "RWR+9B91GBZ0zOjh6Lr17+zKf5BoSuFvrx2xSeDE57uIYvnKBGmMjOex"
         replacements:
           amd64: x86_64
           arm64: aarch64

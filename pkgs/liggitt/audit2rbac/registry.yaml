@@ -4,8 +4,14 @@ packages:
     repo_owner: liggitt
     repo_name: audit2rbac
     description: Autogenerate RBAC policies based on Kubernetes audit logs
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: audit2rbac-{{.OS}}-{{.Arch}}.tar.gz
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.8.0")
+        asset: audit2rbac-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: "true"
+        asset: audit2rbac-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true

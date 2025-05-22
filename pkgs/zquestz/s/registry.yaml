@@ -3,11 +3,31 @@ packages:
   - type: github_release
     repo_owner: zquestz
     repo_name: s
-    asset: s-{{.OS}}_{{.Arch}}.zip
     description: Open a web search in your terminal
-    supported_envs:
-      - darwin
-      - amd64
-    files:
-      - name: s
-        src: s-{{.OS}}_{{.Arch}}/s
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.1")
+        no_asset: true
+      - version_constraint: semver("<= 0.5.14")
+        asset: s-{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: s
+            src: "{{.AssetWithoutExt}}/s"
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: s-{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: s
+            src: "{{.AssetWithoutExt}}/s"
+        supported_envs:
+          - darwin
+          - windows
+          - amd64

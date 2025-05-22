@@ -3,12 +3,34 @@ packages:
   - type: github_release
     repo_owner: minamijoyo
     repo_name: hcledit
-    asset: hcledit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: A command line editor for HCL
-    supported_envs:
-      - darwin
-      - linux
-    checksum:
-      type: github_release
-      asset: hcledit_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.1")
+        asset: hcledit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: hcledit_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.2.6")
+        asset: hcledit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: hcledit_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: hcledit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: hcledit_{{trimV .Version}}_checksums.txt
+          algorithm: sha256

@@ -3,18 +3,21 @@ packages:
   - type: github_release
     repo_owner: denizgursoy
     repo_name: gotouch
-    asset: gotouch_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    description: Customizable Project Creator
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    description: Customizable Boilerplate Project Creator
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.1.0")
+        no_asset: true
+      - version_constraint: "true"
+        asset: gotouch_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256

@@ -3,23 +3,33 @@ packages:
   - type: github_release
     repo_owner: koki-develop
     repo_name: clive
-    description: Automates terminal operations and lets you view them live via a browser
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.10.2")
-    asset: clive_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
+    description: Automates terminal operations
+    version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 0.10.1")
+        asset: clive_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
-        asset: clive_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-        overrides: []
+        asset: clive_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
