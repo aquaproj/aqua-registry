@@ -74348,9 +74348,9 @@ packages:
     version_filter: not (Version endsWith "-victorialogs")
     version_constraint: "false"
     version_overrides:
-      - version_constraint: |
-          let versions = ["v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.6.0", "v1.9.0", "v1.10.0", "v1.10.1", "v1.16.0", "v1.22.0", "v1.22.1"];
-          Version in versions or semver("> 1.10.0-victorialogs, <= 1.29.4")
+      - version_constraint: semver("< 1.2.1")
+        no_asset: true
+      - version_constraint: semver("<= 1.29.4")
         asset: victoria-metrics-{{.Version}}.{{.Format}}
         format: tar.gz
         files:
@@ -74358,8 +74358,6 @@ packages:
             src: victoria-metrics-prod
         supported_envs:
           - linux/amd64
-      - version_constraint: semver("<= 1.2.0-victorialogs") or semver("> 1.8.2, <= 1.10.0-victorialogs")
-        no_asset: true
       - version_constraint: semver("<= 1.52.0")
         asset: victoria-metrics-{{.Version}}.{{.Format}}
         format: tar.gz
