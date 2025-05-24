@@ -3,19 +3,123 @@ packages:
   - type: github_release
     repo_owner: openfaas
     repo_name: faas-cli
-    format: raw
     description: Official CLI for OpenFaaS
-    asset: faas-cli-{{.Arch}}
-    overrides:
-      - goos: darwin
-        asset: faas-cli-darwin
-      - goarch: amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["0.2", "0.4.18a", "0.8.12", "0.11.4", "0.13.12", "0.14.0", "0.15.5"]
+        no_asset: true
+      - version_constraint: Version == "0.1-alpha"
+        asset: faas-cli-{{.OS}}
+        format: raw
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "0.4.5-b"
+        asset: faas-cli-{{.OS}}
+        format: raw
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: Version in ["0.4.5", "0.8.4"]
+        asset: faas-cli-{{.OS}}
+        format: raw
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "0.12.0"
+      - version_constraint: semver("<= 0.4.0")
+        asset: faas-cli-{{.OS}}
+        format: raw
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 0.4.8")
+        asset: faas-cli-{{.OS}}
+        format: raw
+        overrides:
+          - goos: windows
+            asset: faas-cli
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 0.4.9-beta")
+        asset: faas-cli-{{.OS}}
+        format: raw
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 0.4.14-alpha")
         asset: faas-cli
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
+        format: raw
+        overrides:
+          - goos: darwin
+            asset: faas-cli-{{.OS}}
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 0.6.11")
+        asset: faas-cli-{{.OS}}
+        format: raw
+        overrides:
+          - goos: windows
+            asset: faas-cli
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 0.6.17")
+        asset: faas-cli-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: faas-cli
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 0.6.19")
+        no_asset: true
+      - version_constraint: semver("<= 0.12.9")
+        asset: faas-cli-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: faas-cli
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 0.12.12")
+        no_asset: true
+      - version_constraint: semver("<= 0.15.1")
+        asset: faas-cli-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: faas-cli
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: "true"
+        asset: faas-cli-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: faas-cli-{{.OS}}-{{.Arch}}
+          - goos: windows
+            asset: faas-cli
+        supported_envs:
+          - darwin
+          - windows/amd64
