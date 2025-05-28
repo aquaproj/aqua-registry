@@ -15125,44 +15125,106 @@ packages:
   - type: github_release
     repo_owner: bitwarden
     repo_name: sdk-sm
-    description: Bitwarden Secrets Manager CLI.
-    version_constraint: 'semverWithVersion(">= 1.0.0", trimPrefix(Version, "bws-"))'
-    asset: bws
+    description: Bitwarden Secrets Manager SDK
+    version_prefix: bws-v
     files:
       - name: bws
-        src: ./bws
-    format: zip
-    overrides:
-      - goos: darwin
-        goarch: amd64
-        asset: bws-x86_64-apple-darwin-{{trimPrefix "bws-v" .Version}}
-      - goos: darwin
-        goarch: arm64
-        asset: bws-aarch64-apple-darwin-{{trimPrefix "bws-v" .Version}}
-      - goos: linux
-        goarch: amd64
-        asset: bws-x86_64-unknown-linux-gnu-{{trimPrefix "bws-v" .Version}}
-      - goos: linux
-        goarch: arm64
-        asset: bws-aarch64-unknown-linux-gnu-{{trimPrefix "bws-v" .Version}}
-      - goos: windows
-        goarch: amd64
-        asset: bws-x86_64-pc-windows-msvc-{{trimPrefix "bws-v" .Version}}
-      - goos: windows
-        goarch: arm64
-        asset: bws-aarch64-pc-windows-msvc-{{trimPrefix "bws-v" .Version}}
-    search_words:
-      - bws
-      - bitwarden-secrets-manager
-      - bitwarden-secrets-manager-cli
-    supported_envs:
-      - darwin
-      - linux
-      - windows
-    checksum:
-      type: github_release
-      asset: bws-sha256-checksums-{{trimPrefix "bws-v" .Version}}.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "bws-v0.2.1"
+        asset: bws-{{.Arch}}-{{.OS}}-0.2.1.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: bws-sha256-checksums-0.2.1.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "bws-v0.3.0"
+        asset: bws-{{.Arch}}-{{.OS}}-0.3.0.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: bws-sha256-checksums-0.3.0.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "bws-v0.3.1"
+        asset: bws-{{.Arch}}-{{.OS}}-0.3.1.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: bws-sha256-checksums-0.3.1.txt
+          algorithm: sha256
+      - version_constraint: Version == "bws-v0.4.0"
+        asset: bws-{{.Arch}}-{{.OS}}-0.4.0.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: bws-sha256-checksums-0.4.0.txt
+          algorithm: sha256
+      - version_constraint: Version == "bws-v0.5.0"
+        asset: bws-{{.Arch}}-{{.OS}}-0.5.0.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: bws-sha256-checksums-0.5.0.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: bws-{{.Arch}}-{{.OS}}-1.0.0.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: bws-sha256-checksums-1.0.0.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: bjesus
     repo_name: pipet
