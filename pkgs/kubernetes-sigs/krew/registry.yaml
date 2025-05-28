@@ -3,23 +3,36 @@ packages:
   - type: github_release
     repo_owner: kubernetes-sigs
     repo_name: krew
-    asset: krew-{{.OS}}_{{.Arch}}.tar.gz
     description: Find and install kubectl plugins
-    files:
-      - name: krew
-        src: krew-{{.OS}}_{{.Arch}}
-    version_constraint: semver(">= 0.4.2")
+    version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 0.1.1")
+        asset: krew-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: krew-zip.sha256
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.2.1")
+        no_asset: true
+      - version_constraint: semver("<= 0.4.1")
+        asset: krew
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - windows/amd64
       - version_constraint: "true"
-        asset: krew.tar.gz
-        files:
-          - name: krew
-            src: krew-{{.OS}}_{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
+        asset: krew-{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
