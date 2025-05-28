@@ -17,12 +17,12 @@ packages:
       - version_constraint: Version == "v0.14.1"
         asset: zk-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: macos
         overrides:
           - goos: darwin
             format: zip
+            replacements:
+              amd64: x86_64
+              darwin: macos
         supported_envs:
           - linux
           - darwin
@@ -43,13 +43,12 @@ packages:
           - darwin
       - version_constraint: semver("<= 0.14.0")
         asset: zk-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: zip
+        format: tar.gz
         replacements:
           darwin: macos
         overrides:
-          - goos: linux
-            format: tar.gz
           - goos: darwin
+            format: zip
             replacements:
               amd64: x86_64
         supported_envs:
@@ -70,13 +69,19 @@ packages:
             goarch: arm64
             asset: zk-{{.Version}}-{{.OS}}_{{.Arch}}.{{.Format}}
           - goos: windows
-            asset: zk-{{.Version}}-{{.OS}}_{{.Arch}}_86.{{.Format}}
+            asset: zk-{{.Version}}-{{.OS}}_{{.Arch}}.{{.Format}}
             replacements:
-              amd64: x64
+              amd64: x64_86
       - version_constraint: "true"
         asset: zk-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
         replacements:
-          amd64: x86_64
           darwin: macos
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: x86_64
+          - goos: windows
+            replacements:
+              amd64: x86_64
