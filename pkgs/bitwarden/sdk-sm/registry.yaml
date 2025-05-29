@@ -3,14 +3,16 @@ packages:
   - type: github_release
     repo_owner: bitwarden
     repo_name: sdk-sm
-    description: Bitwarden Secrets Manager SDK
+    description: Bitwarden Secrets Manager
     version_prefix: bws-v
+    search_words:
+      - secret manager
     files:
       - name: bws
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "bws-v0.2.1"
-        asset: bws-{{.Arch}}-{{.OS}}-0.2.1.{{.Format}}
+      - version_constraint: Version in ["bws-v0.2.1", "bws-v0.3.0"]
+        asset: bws-{{.Arch}}-{{.OS}}-{{.SemVer}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
         replacements:
@@ -20,7 +22,7 @@ packages:
           windows: pc-windows-msvc
         checksum:
           type: github_release
-          asset: bws-sha256-checksums-0.2.1.txt
+          asset: bws-sha256-checksums-{{.SemVer}}.txt
           algorithm: sha256
         overrides:
           - goos: darwin
@@ -30,68 +32,8 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: Version == "bws-v0.3.0"
-        asset: bws-{{.Arch}}-{{.OS}}-0.3.0.{{.Format}}
-        format: zip
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        checksum:
-          type: github_release
-          asset: bws-sha256-checksums-0.3.0.txt
-          algorithm: sha256
-        overrides:
-          - goos: darwin
-            replacements:
-              arm64: aarch64
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: Version == "bws-v0.3.1"
-        asset: bws-{{.Arch}}-{{.OS}}-0.3.1.{{.Format}}
-        format: zip
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        checksum:
-          type: github_release
-          asset: bws-sha256-checksums-0.3.1.txt
-          algorithm: sha256
-      - version_constraint: Version == "bws-v0.4.0"
-        asset: bws-{{.Arch}}-{{.OS}}-0.4.0.{{.Format}}
-        format: zip
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        checksum:
-          type: github_release
-          asset: bws-sha256-checksums-0.4.0.txt
-          algorithm: sha256
-      - version_constraint: Version == "bws-v0.5.0"
-        asset: bws-{{.Arch}}-{{.OS}}-0.5.0.{{.Format}}
-        format: zip
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        checksum:
-          type: github_release
-          asset: bws-sha256-checksums-0.5.0.txt
-          algorithm: sha256
       - version_constraint: "true"
-        asset: bws-{{.Arch}}-{{.OS}}-1.0.0.{{.Format}}
+        asset: bws-{{.Arch}}-{{.OS}}-{{.SemVer}}.{{.Format}}
         format: zip
         replacements:
           amd64: x86_64
@@ -101,5 +43,5 @@ packages:
           windows: pc-windows-msvc
         checksum:
           type: github_release
-          asset: bws-sha256-checksums-1.0.0.txt
+          asset: bws-sha256-checksums-{{.SemVer}}.txt
           algorithm: sha256
