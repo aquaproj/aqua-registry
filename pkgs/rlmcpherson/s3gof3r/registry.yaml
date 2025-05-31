@@ -3,19 +3,43 @@ packages:
   - type: github_release
     repo_owner: rlmcpherson
     repo_name: s3gof3r
-    description: Fast, concurrent, streaming access to Amazon S3, including gof3r, a CLI
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - amd64
-    files:
-      - name: gof3r
-        src: gof3r_{{trimV .Version}}_{{.OS}}_{{.Arch}}/gof3r
-    asset: gof3r_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: raw
-        asset: gof3r.exe
-      - goos: darwin
+    description: Fast, concurrent, streaming access to Amazon S3, including gof3r, a CLI. http://godoc.org/github.com/rlmcpherson/s3gof3r
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.3.0"
+        asset: gof3r_{{.OS}}_{{.Arch}}_binary.{{.Format}}
         format: zip
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: darwin
+            asset: gof3r_{{.OS}}_binary.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.2.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.4.10")
+        asset: gof3r_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        overrides:
+          - goos: darwin
+            format: zip
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: gof3r_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: windows
+            format: raw
+            asset: gof3r
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
