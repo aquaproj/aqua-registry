@@ -4,15 +4,29 @@ packages:
     repo_owner: rootless-containers
     repo_name: slirp4netns
     description: User-mode networking for unprivileged network namespaces
-    asset: slirp4netns-{{.Arch}}
-    format: raw
-    replacements:
-      amd64: x86_64
-      arm: armv7l
-      arm64: aarch64
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
-    supported_envs:
-      - linux
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.3.0-beta.1")
+        no_asset: true
+      - version_constraint: Version == "v0.3.0"
+      - version_constraint: semver("<= 0.4.3-beta.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.4.5")
+      - version_constraint: semver("<= 0.4.7")
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+      - version_constraint: semver("<= 1.1.0")
+      - version_constraint: Version == "v1.1.1"
+        checksum:
+          type: github_release
+          asset: SHA256SUM
+          algorithm: sha256
+      - version_constraint: semver("<= 1.1.4")
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+      - version_constraint: "true"
+        no_asset: true
