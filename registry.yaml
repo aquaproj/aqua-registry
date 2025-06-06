@@ -41247,6 +41247,16 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: semver("< 1.8.0")
+        asset: jq-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: jq-{{.OS}}-{{.Arch}}
         format: raw
@@ -41257,6 +41267,8 @@ packages:
           type: github_release
           asset: sha256sum.txt
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: jqlang/jq/.github/workflows/ci.yml
   - type: github_release
     repo_owner: jreisinger
     repo_name: checkip
