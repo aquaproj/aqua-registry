@@ -4,44 +4,44 @@ packages:
     repo_owner: mitoma
     repo_name: sver
     description: Version generator based on source code
-    asset: sver_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    replacements:
-      darwin: macos
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: SHASUMS256.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.1.14")
+    version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.1.13"
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 0.1.7")
-        rosetta2: true
+        asset: sver_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+      - version_constraint: semver("<= 0.1.1")
+        asset: sver_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
         supported_envs:
-          - darwin
-          - amd64
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 0.1.2")
-        replacements: {}
-        checksum:
-          enabled: false
+          - linux/amd64
+      - version_constraint: semver("<= 0.1.6")
+        asset: sver_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
         supported_envs:
           - linux/amd64
           - windows/amd64
-      - version_constraint: semver("< 0.1.2")
-        asset: sver_{{.OS}}_{{.Arch}}.{{.Format}}
-        replacements: {}
-        checksum:
-          enabled: false
-        files:
-          - name: sver
-            src: sver_{{.OS}}_{{.Arch}}/sver
+      - version_constraint: semver("<= 0.1.12")
+        asset: sver_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
         supported_envs:
-          - linux/amd64
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: sver_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHASUMS256.txt
+          algorithm: sha256
