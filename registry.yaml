@@ -78103,6 +78103,53 @@ packages:
           - goos: windows
             format: zip
   - type: github_release
+    repo_owner: yuuki
+    repo_name: tcpulse
+    description: A TCP/UDP load generator that provides fine-grained, flow-level control in Go
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.0")
+        asset: connperf_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: connperf_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+        files:
+          - name: connperf
+      - version_constraint: semver("<= 0.7.2")
+        asset: connperf_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: connperf_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+        files:
+          - name: connperf
+      - version_constraint: "true"
+        asset: tcpulse_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: tcpulse_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: yuyaban
     repo_name: gitlab-comment
     description: About gitlab-comment is a CLI command to post Merge Request Note
