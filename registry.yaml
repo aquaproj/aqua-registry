@@ -50834,21 +50834,48 @@ packages:
   - type: github_release
     repo_owner: mintoolkit
     repo_name: mint
+    aliases:
+      - name: slimtoolkit/slim
+      - name: docker-slim/docker-slim
+    files:
+      - name: docker-slim
+        src: "{{.AssetWithoutExt}}/docker-slim"
+      - name: mint
+        src: "{{.AssetWithoutExt}}/mint"
+      - name: mint-sensor
+        src: "{{.AssetWithoutExt}}/mint-sensor"
+      - name: slim
+        src: "{{.AssetWithoutExt}}/slim"
     description: "minT(oolkit): Mint awesome, secure and production ready containers just the way you need them! Don't change anything in your container image and minify it by up to 30x (and for compiled languages even more) making it secure too! (free and open source)"
     version_constraint: "false"
     version_overrides:
+      # https://github.com/aquaproj/aqua-registry/issues/37618
+      - version_constraint: semver("< 1.40.11")
+        no_asset: true
+      - version_constraint: Version == "1.40.11"
+        repo_owner: slimtoolkit
+        repo_name: slim
+        asset: dist_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: dist_{{.OS}}.{{.Format}}
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: arm
+          - goos: darwin
+            format: zip
+            asset: dist_{{.OS}}.{{.Format}}
+        replacements:
+          darwin: mac
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: dist_{{.OS}}.{{.Format}}
         format: tar.gz
-        files:
-          - name: docker-slim
-            src: "{{.AssetWithoutExt}}/docker-slim"
-          - name: mint
-            src: "{{.AssetWithoutExt}}/mint"
-          - name: mint-sensor
-            src: "{{.AssetWithoutExt}}/mint-sensor"
-          - name: slim
-            src: "{{.AssetWithoutExt}}/slim"
         replacements:
           darwin: mac
         overrides:
@@ -65916,72 +65943,6 @@ packages:
             format: tar.gz
           - goos: darwin
             asset: nebula-{{.OS}}.{{.Format}}
-  - type: http
-    repo_owner: slimtoolkit
-    repo_name: slim
-    aliases:
-      - name: docker-slim/docker-slim
-    description: "DockerSlim (docker-slim): Don't change anything in your Docker container image and minify it by up to 30x (and for compiled languages even more) making it secure too! (free and open source)"
-    supported_envs:
-      - darwin
-      - linux
-    format: tar.gz
-    replacements:
-      darwin: mac
-    # https://downloads.dockerslim.com/releases/1.37.2/dist_mac_m1.zip
-    url: https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_{{.Arch}}.{{.Format}}
-    files:
-      - name: slim
-        src: dist_{{.OS}}_{{.Arch}}/slim
-      - name: slim-sensor
-        src: dist_{{.OS}}_{{.Arch}}/slim-sensor
-      - name: docker-slim
-        src: dist_{{.OS}}_{{.Arch}}/docker-slim
-    overrides:
-      - goarch: amd64
-        url: https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}.{{.Format}}
-        files:
-          - name: slim
-            src: dist_{{.OS}}/slim
-          - name: slim-sensor
-            src: dist_{{.OS}}/slim-sensor
-          - name: docker-slim
-            src: dist_{{.OS}}/docker-slim
-      - goos: darwin
-        url: https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_m1.{{.Format}}
-        files:
-          - name: slim
-            src: dist_{{.OS}}_m1/slim
-          - name: slim-sensor
-            src: dist_{{.OS}}_m1/slim-sensor
-          - name: docker-slim
-            src: dist_{{.OS}}_m1/docker-slim
-    format_overrides:
-      - goos: darwin
-        format: zip
-    version_constraint: semver(">= 1.40.0")
-    version_overrides:
-      - version_constraint: semver("< 1.40.0")
-        files:
-          - name: docker-slim
-            src: dist_{{.OS}}_{{.Arch}}/docker-slim
-          - name: docker-slim-sensor
-            src: dist_{{.OS}}_{{.Arch}}/docker-slim-sensor
-        overrides:
-          - goarch: amd64
-            url: https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}.{{.Format}}
-            files:
-              - name: docker-slim
-                src: dist_{{.OS}}/docker-slim
-              - name: docker-slim-sensor
-                src: dist_{{.OS}}/docker-slim-sensor
-          - goos: darwin
-            url: https://downloads.dockerslim.com/releases/{{.Version}}/dist_{{.OS}}_m1.{{.Format}}
-            files:
-              - name: docker-slim
-                src: dist_{{.OS}}_m1/docker-slim
-              - name: docker-slim-sensor
-                src: dist_{{.OS}}_m1/docker-slim-sensor
   - type: github_release
     repo_owner: slok
     repo_name: sloth
