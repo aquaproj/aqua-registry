@@ -6,11 +6,22 @@ packages:
     aliases:
       - name: vmware-tanzu/carvel-kwt
     description: Kubernetes Workstation Tools CLI
-    rosetta2: true
-    format: raw
-    asset: kwt-{{.OS}}-{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux/amd64
-    files:
-      - name: kwt
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.6")
+        asset: kwt-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: kwt-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin

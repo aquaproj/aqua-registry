@@ -4,12 +4,16 @@ packages:
     repo_owner: mkchoi212
     repo_name: fac
     description: Easy-to-use CUI for fixing git conflicts
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - linux/amd64
-    asset: fac_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    checksum:
-      type: github_release
-      asset: fac_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: fac_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: fac_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin

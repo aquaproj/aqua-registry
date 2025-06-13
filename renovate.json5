@@ -1,11 +1,12 @@
 {
   extends: [
-    "github>suzuki-shunsuke/renovate-config#3.2.0",
-    "github>aquaproj/aqua-renovate-config#2.7.5",
-    "github>suzuki-shunsuke/renovate-config:nolimit#3.2.0",
-    "github>aquaproj/aqua-renovate-config:file#2.7.5(CONTRIBUTING\\.md)",
-    "github>aquaproj/aqua-renovate-config:installer-script#2.7.5(docker/Dockerfile)",
-    "github>suzuki-shunsuke/renovate-config:action-go-version#3.2.0",
+    "github>suzuki-shunsuke/renovate-config#3.2.1",
+    "github>aquaproj/aqua-renovate-config#2.8.1",
+    "github>suzuki-shunsuke/renovate-config:nolimit#3.2.1",
+    "github>aquaproj/aqua-renovate-config:file#2.8.1(CONTRIBUTING\\.md)",
+    "github>aquaproj/aqua-renovate-config:file#2.8.1(aqua/.*.yaml)",
+    "github>aquaproj/aqua-renovate-config:installer-script#2.8.1(docker/Dockerfile)",
+    "github>suzuki-shunsuke/renovate-config:action-go-version#3.2.1",
     "github>lintnet/renovate-config#0.1.2",
   ],
   packageRules: [
@@ -14,8 +15,6 @@
       pinDigests: false,
     },
     {
-      // https://github.com/aquaproj/aqua-registry/pull/29500#issuecomment-2516076434
-      // There is no problem that the update of golang is a bit late.
       matchFileNames: ["docker/Dockerfile"],
       matchPackageNames: ["golang"],
       minimumReleaseAge: "7 days",
@@ -24,7 +23,7 @@
   customManagers: [
     {
       customType: "regex",
-      fileMatch: ["README.md"],
+      managerFilePatterns: ["/README.md/"],
       matchStrings: [
         "ref: (?<currentValue>.*?) # renovate: depName=(?<depName>.*)",
       ],

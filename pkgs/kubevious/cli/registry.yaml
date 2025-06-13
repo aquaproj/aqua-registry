@@ -3,13 +3,15 @@ packages:
   - type: github_release
     repo_owner: kubevious
     repo_name: cli
-    description: Kubevious CLI - Prevent Kubernetes disasters at the early stages
-    asset: kubevious-{{.OS}}-{{.Arch}}
-    format: raw
-    rosetta2: true # The asset for darwin/arm64 doesn't work, so we use the asset for darwin/amd64 on darwin/arm64. https://github.com/aquaproj/aqua-registry/pull/10113#issuecomment-1451643961
+    description: "Kubevious CLI - Prevent Kubernetes disasters at the early stages"
     files:
       - name: kubevious
-    replacements:
-      amd64: x64
-      darwin: macos
-      windows: win
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: kubevious-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x64
+          darwin: macos
+          windows: win

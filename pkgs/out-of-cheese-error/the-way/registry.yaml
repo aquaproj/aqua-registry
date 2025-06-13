@@ -4,34 +4,37 @@ packages:
     repo_owner: out-of-cheese-error
     repo_name: the-way
     description: A code snippets manager for your terminal
-    asset: the-way-{{.OS}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      darwin: macos
-    supported_envs:
-      - linux/amd64
-      - darwin
-    rosetta2: true
-    checksum:
-      type: github_release
-      asset: the-way-{{.OS}}.sha256
-      algorithm: sha256
-    version_constraint: semver(">= 0.14.1")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.2.2")
-        asset: the-way-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-        checksum:
-          enabled: false
       - version_constraint: Version == "v0.2.1-osx"
         asset: the-way-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
         replacements:
           amd64: x86_64
           darwin: apple-darwin
         supported_envs:
           - darwin
+      - version_constraint: semver("<= 0.14.0")
+        asset: the-way-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: the-way-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
         checksum:
-          enabled: false
+          type: github_release
+          asset: the-way-{{.OS}}.sha256
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin

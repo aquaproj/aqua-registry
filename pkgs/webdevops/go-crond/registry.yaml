@@ -3,17 +3,44 @@ packages:
   - type: github_release
     repo_owner: webdevops
     repo_name: go-crond
-    description: Cron daemon written in golang (for eg. usage in docker images)
-    supported_envs:
-      - darwin
-      - linux
-    format: raw
-    version_constraint: semver(">= 22.9.0")
-    asset: go-crond.{{.OS}}.{{.Arch}}
+    description: ":alarm_clock: Cron daemon written in golang (for eg. usage in docker images)"
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
-        asset: go-crond-{{.Arch}}-{{.OS}}
-        rosetta2: true
+      - version_constraint: semver("<= 0.2.0")
+        asset: go-crond-64-{{.OS}}
+        format: raw
         replacements:
-          amd64: "64"
           darwin: osx
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.6.1")
+        asset: go-crond-64-{{.OS}}
+        format: raw
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: go-crond-{{.Arch}}-{{.OS}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 21.5.0")
+        asset: go-crond-64-{{.OS}}
+        format: raw
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: go-crond-arm64-linux
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: go-crond.{{.OS}}.{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux
+          - darwin

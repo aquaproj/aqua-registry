@@ -3,9 +3,13 @@ packages:
   - type: github_release
     repo_owner: pete911
     repo_name: jwt
-    asset: jwt_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    description: jwt cli to decode and encode jwt tokens
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    description: jwt cli
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: jwt_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256

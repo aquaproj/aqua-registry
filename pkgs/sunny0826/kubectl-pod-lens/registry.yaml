@@ -4,34 +4,58 @@ packages:
     repo_owner: sunny0826
     repo_name: kubectl-pod-lens
     description: kubectl plugin for show pod-related resources
-    asset: pod-lens_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
     files:
       - name: kubectl-pod_lens
         src: pod-lens
       - name: pod-lens
-    checksum:
-      type: github_release
-      asset: pod-lens_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.3.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.2.2")
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-      - version_constraint: semver(">= 0.2.1")
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+      - version_constraint: Version == "v0.2.1"
+        asset: pod-lens_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-      - version_constraint: semver("< 0.2.1")
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: pod-lens_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v0.2.2"
+        asset: pod-lens_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: pod-lens_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.2.0")
+        asset: pod-lens_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: pod-lens_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
         supported_envs:
           - darwin
+          - windows
           - amd64
-        rosetta2: true
+      - version_constraint: "true"
+        asset: pod-lens_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: pod-lens_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip

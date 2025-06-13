@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: runmedev
+    description: Execute commands directly from a README
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+    overrides:
+      - goos: windows
+        format: zip
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
+    version_constraint: semver(">= 0.2.0")
+    # https://github.com/stateful/runme/pull/35
+    repo_name: runme
+    aliases:
+      - name: stateful/runme
+    asset: runme_{{.OS}}_{{.Arch}}.{{.Format}}
+    version_overrides:
+      - version_constraint: "true"
+        repo_name: rdme
+        asset: rdme_{{.OS}}_{{.Arch}}.{{.Format}}

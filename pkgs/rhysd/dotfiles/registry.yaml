@@ -3,13 +3,25 @@ packages:
   - type: github_release
     repo_owner: rhysd
     repo_name: dotfiles
-    asset: dotfiles_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
     description: dotfiles symbolic links management CLI
-    overrides:
-      - goos: windows
-        asset: dotfiles_{{.OS}}_{{.Arch}}.exe.{{.Format}}
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.2")
+        asset: dotfiles_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: dotfiles_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: dotfiles_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: dotfiles_{{.OS}}_{{.Arch}}.exe.{{.Format}}

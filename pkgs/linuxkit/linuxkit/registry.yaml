@@ -3,31 +3,26 @@ packages:
   - type: github_release
     repo_owner: linuxkit
     repo_name: linuxkit
-    asset: linuxkit-{{.OS}}-{{.Arch}}
-    format: raw
     description: A toolkit for building secure, portable and lean operating systems for containers
-    supported_envs:
-      - linux
-      - darwin
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 1.0.0")
+    version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.8"
+        asset: linuxkit-linux-{{.Arch}}
+        format: raw
+        rosetta2: true
         supported_envs:
           - linux
           - darwin
+      - version_constraint: semver("<= 0.7.0")
+        asset: linuxkit-{{.OS}}-{{.Arch}}
+        format: raw
         rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver("< 0.8")
-        supported_envs:
-          - linux
-          - darwin
-          - amd64
-        rosetta2: true
-        checksum:
-          enabled: false
+        windows_arm_emulation: true
       - version_constraint: "true"
+        asset: linuxkit-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256

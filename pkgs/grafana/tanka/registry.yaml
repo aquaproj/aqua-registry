@@ -4,15 +4,32 @@ packages:
     repo_owner: grafana
     repo_name: tanka
     description: Flexible, reusable and concise configuration for Kubernetes
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: tk-{{.OS}}-{{.Arch}}
-    format: raw
     files:
       - name: tk
-    version_constraint: semver(">= 0.21.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.27.0"
+        no_asset: true
+      - version_constraint: semver("<= 0.3.0")
+        asset: tk_{{.OS}}_{{.Arch}}
+        format: raw
         rosetta2: true
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.10.0")
+        asset: tk-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.20.0")
+        asset: tk-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: "true"
+        asset: tk-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true

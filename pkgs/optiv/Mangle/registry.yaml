@@ -3,16 +3,21 @@ packages:
   - type: github_release
     repo_owner: optiv
     repo_name: Mangle
-    asset: Mangle_{{trimV .Version}}_{{.OS}}_{{.Arch}}
-    format: raw
     description: Mangle is a tool that manipulates aspects of compiled executables (.exe or DLL) to avoid detection from EDRs
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
     files:
       - name: mangle
-    checksum:
-      type: github_release
-      asset: Mangle_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: Mangle_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: Mangle_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64

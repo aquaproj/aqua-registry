@@ -4,10 +4,27 @@ packages:
     repo_owner: plexsystems
     repo_name: sinker
     description: A tool to sync images from one container registry to another
-    rosetta2: true
-    complete_windows_ext: false
-    format: raw
-    supported_envs:
-      - darwin
-      - amd64
-    asset: sinker-{{.OS}}-{{.Arch}}
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.4.0")
+        asset: imagesync-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        files:
+          - name: imagesync
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: sinker-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64

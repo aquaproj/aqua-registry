@@ -4,15 +4,18 @@ packages:
     repo_owner: cnosuke
     repo_name: kushi
     description: Auto SSH port-fowarding agent which gets forwarding configs from URL
-    asset: kushi-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: zip
-    supported_envs:
-      - linux
-      - darwin
-    version_constraint: semver(">= 0.7.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.7.0")
+      - version_constraint: semver("<= 0.6.1")
+        asset: kushi-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
         supported_envs:
           - linux/amd64
           - darwin
-        rosetta2: true
+      - version_constraint: "true"
+        asset: kushi-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        supported_envs:
+          - linux
+          - darwin

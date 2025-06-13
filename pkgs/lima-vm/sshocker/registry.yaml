@@ -3,21 +3,43 @@ packages:
   - type: github_release
     repo_owner: lima-vm
     repo_name: sshocker
-    asset: sshocker-{{.OS}}-{{.Arch}}
-    format: raw
     description: ssh + reverse sshfs + port forwarder, in Docker-like CLI (predecessor of Lima)
-    supported_envs:
-      - linux
-      - darwin
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-    overrides:
-      - goos: linux
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        asset: sshocker-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
         replacements:
-          arm64: aarch64
+          amd64: x86_64
+          darwin: Darwin
           linux: Linux
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: sshocker-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux
+          - darwin

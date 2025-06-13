@@ -4,22 +4,24 @@ packages:
     repo_owner: xataio
     repo_name: pgroll
     description: PostgreSQL zero-downtime migrations made easy
-    asset: pgroll.{{.OS}}.{{.Arch}}
-    format: raw
-    replacements:
-      darwin: macos
-      windows: win
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: pgroll_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.3.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.3.0")
+      - version_constraint: semver("<= 0.2.1")
+        asset: pgroll.{{.OS}}.{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
         complete_windows_ext: false
+        replacements:
+          darwin: macos
+          windows: win
+      - version_constraint: "true"
+        asset: pgroll.{{.OS}}.{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+          windows: win
         checksum:
-          enabled: false
+          type: github_release
+          asset: pgroll_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
