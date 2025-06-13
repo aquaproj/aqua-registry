@@ -35,11 +35,21 @@ packages:
           - darwin
         files:
           - name: connperf
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.8.1")
         asset: tcpulse_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
           amd64: x86_64
+        checksum:
+          type: github_release
+          asset: tcpulse_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: tcpulse_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         checksum:
           type: github_release
           asset: tcpulse_{{trimV .Version}}_checksums.txt
