@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: mintoolkit
+    repo_name: mint
+    description: "minT(oolkit): Mint awesome, secure and production ready containers just the way you need them! Don't change anything in your container image and minify it by up to 30x (and for compiled languages even more) making it secure too! (free and open source)"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: dist_{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: mac
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: dist_{{.OS}}_{{.Arch}}.{{.Format}}
+            replacements:
+              arm64: arm
+          - goos: darwin
+            format: zip
+        supported_envs:
+          - linux
+          - darwin
