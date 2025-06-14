@@ -4,18 +4,70 @@ packages:
     repo_owner: peak
     repo_name: s5cmd
     description: Parallel S3 and local filesystem execution tool
-    replacements:
-      darwin: macOS
-      linux: Linux
-      windows: Windows
-      386: 32bit
-      amd64: 64bit
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    asset: s5cmd_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-    checksum:
-      type: github_release
-      asset: s5cmd_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.6.2")
+        no_asset: true
+      - version_constraint: semver("<= 1.0.0")
+        asset: s5cmd_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: 64bit
+          darwin: macOS
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: s5cmd_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.2.1")
+        asset: s5cmd_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: s5cmd_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.4.0")
+        asset: s5cmd_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: s5cmd_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: s5cmd_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: 64bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: s5cmd_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
