@@ -4,15 +4,69 @@ packages:
     repo_owner: sayanarijit
     repo_name: xplr
     description: A hackable, minimal, fast TUI file explorer
-    asset: xplr-{{.OS}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      darwin: macos
-    supported_envs:
-      - linux/amd64
-      - darwin
-    rosetta2: true
-    checksum:
-      type: github_release
-      asset: xplr-{{.OS}}.sha256
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.3.4"
+        no_asset: true
+      - version_constraint: Version == "v0.15.2"
+        asset: xplr-{{.OS}}-musl.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: xplr-{{.OS}}.sha256
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: xplr-{{.OS}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.15.0")
+        asset: xplr-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: xplr-{{.OS}}.sha256
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.21.2")
+        asset: xplr-{{.OS}}-musl.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: xplr-{{.OS}}-musl.sha256
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: xplr-{{.OS}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: xplr-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          arm64: aarch64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: xplr-{{.OS}}-{{.Arch}}.sha256
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: xplr-{{.OS}}-arm.{{.Format}}
+          - goos: darwin
+            goarch: amd64
+            asset: xplr-{{.OS}}.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
