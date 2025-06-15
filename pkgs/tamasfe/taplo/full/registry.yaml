@@ -1,55 +1,101 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
-  - type: github_release
+  - name: tamasfe/taplo/full
+    type: github_release
     repo_owner: tamasfe
     repo_name: taplo
-    name: tamasfe/taplo/full
     description: A TOML toolkit written in Rust
-    version_constraint: not (Version startsWith "release-taplo-cli-") and not (Version startsWith "release-cli-") and semver(">= 0.8.0")
-    asset: taplo-full-{{.OS}}-{{.Arch}}.{{.Format}}
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-    supported_envs:
-      - darwin
-      - linux
-      - windows/amd64
-    format: gz
-    files:
-      - name: taplo
-        src: taplo-full-{{.OS}}-{{.Arch}}
-    overrides:
-      - goos: windows
-        format: zip
-        files:
-          - name: taplo
-            src: taplo.exe
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: Version startsWith "release-taplo-cli-"
-        asset: taplo-full-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
-        rosetta2: true
+      - version_constraint: semver("<= 0.2.5")
+        no_asset: true
+      - version_constraint: Version == "release-lsp-0.2.6"
+        asset: taplo-lsp-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
-        supported_envs:
-          - darwin
-          - linux/amd64
+        rosetta2: true
+        windows_arm_emulation: true
         replacements:
           amd64: x86_64
           darwin: apple-darwin
-          linux: unknown-linux
-        overrides: []
-        files:
-          - name: taplo
-      - version_constraint: Version startsWith "release-cli-" and semverWithVersion(">= 0.6.0", trimPrefix(Version, "release-cli-"))
-        asset: taplo-full-{{trimPrefix "release-cli-" .Version}}-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
-        rosetta2: true
-        format: tar.gz
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: darwin
+            asset: taplo-lsp-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: taplo-lsp-{{.OS}}-{{.Arch}}.{{.Format}}
         supported_envs:
           - darwin
-          - linux/amd64
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.5.0")
+        asset: taplo-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
         replacements:
           amd64: x86_64
           darwin: apple-darwin
-          linux: unknown-linux
-        overrides: []
-        files:
-          - name: taplo
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        overrides:
+          - goos: darwin
+            asset: taplo-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.6.3")
+        asset: taplo-{{.SemVer}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: darwin
+            asset: taplo-{{.SemVer}}-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.7.0")
+        asset: taplo-{{.Arch}}-{{.OS}}-gnu.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: linux
+            asset: taplo-{{.Arch}}-{{.OS}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.8.1")
+        asset: taplo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        overrides:
+          - goos: windows
+            format: zip
+            replacements: {}
+      - version_constraint: Version == "release-taplo-cli-0.9.0"
+        no_asset: true
+      - version_constraint: "true"
+        asset: taplo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        overrides:
+          - goos: windows
+            format: zip
+            replacements: {}
