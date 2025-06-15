@@ -4,19 +4,15 @@ packages:
     repo_owner: Mikescher
     repo_name: better-docker-ps
     description: Because `docker ps` is annoying and does not fit my monitor/terminal width
-    asset: dops_{{.OS}}-{{.Arch}}
-    format: raw
-    replacements:
-      darwin: macos
-    supported_envs:
-      - linux
-      - darwin
-    files:
-      - name: dops
-    rosetta2: true
-    version_constraint: semver(">= 1.5")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 1.5")
-        asset: dops
+      - version_constraint: semver("<= 1.4.0")
+      - version_constraint: "true"
+        asset: dops_{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        replacements:
+          darwin: macos
         supported_envs:
-          - linux/amd64
+          - linux
+          - darwin
