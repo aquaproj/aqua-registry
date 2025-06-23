@@ -16133,9 +16133,9 @@ packages:
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.6.1")
-        no_asset: true
+        type: go_install
       - version_constraint: "true"
-        asset: krewfile_{{.OS}}_all.{{.Format}}
+        asset: krewfile_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
           amd64: x86_64
@@ -16147,11 +16147,10 @@ packages:
           asset: krewfile_checksums.txt
           algorithm: sha256
         overrides:
-          - goos: linux
-            asset: krewfile_{{.OS}}_{{.Arch}}.{{.Format}}
           - goos: windows
             format: zip
-            asset: krewfile_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: darwin
+            asset: krewfile_{{.OS}}_all.{{.Format}}
   - type: github_release
     repo_owner: budimanjojo
     repo_name: talhelper
