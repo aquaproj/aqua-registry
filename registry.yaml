@@ -16126,13 +16126,32 @@ packages:
       - version_constraint: "true"
         asset: yaml2json_{{.OS}}_{{.Arch}}
         format: raw
-  - type: go_install
+  - type: github_release
     repo_owner: brumhard
     repo_name: krewfile
     description: Declarative krew plugin management
-    supported_envs:
-      - linux
-      - darwin
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.6.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: krewfile_{{.OS}}_all.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: krewfile_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: krewfile_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: krewfile_{{.OS}}_{{.Arch}}.{{.Format}}
   - type: github_release
     repo_owner: budimanjojo
     repo_name: talhelper
