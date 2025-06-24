@@ -28281,14 +28281,21 @@ packages:
       - version_constraint: "true"
         rosetta2: true
         asset: kubectl-doctor_{{.OS}}_{{.Arch}}.zip
-  - type: github_release
+  - type: http
     repo_owner: encoredev
     repo_name: encore
     description: Open Source Development Platform for building robust type-safe distributed systems with declarative infrastructure
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: "true"
-        no_asset: true
+    version_filter: Version matches "^v\\d+\\.\\d+\\.\\d+"
+    files:
+      - name: encore
+        src: bin/encore
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+    url: https://d2f391esomvqpi.cloudfront.net/encore-{{trimV .Version}}-{{.OS}}_{{.Arch}}.tar.gz
+    checksum:
+      enabled: false
   - type: github_release
     repo_owner: enokawa
     repo_name: taskdiff
