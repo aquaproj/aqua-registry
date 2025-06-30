@@ -4,20 +4,23 @@ packages:
     repo_owner: ogham
     repo_name: dog
     description: A command-line DNS client
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - amd64
-    asset: dog-{{.Version}}-{{.Arch}}-{{.OS}}.zip
-    replacements:
-      amd64: x86_64
-      windows: pc-windows-msvc
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-    files:
-      - name: dog
-        src: bin/dog
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: dog-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
