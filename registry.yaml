@@ -64367,7 +64367,7 @@ packages:
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.11.0")
-        no_asset: true
+        type: go_install
       - version_constraint: "true"
         asset: golines_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -64376,11 +64376,18 @@ packages:
           asset: golines_{{trimV .Version}}_checksums.txt
           algorithm: sha256
         overrides:
+          - goos: linux
+            files:
+              - name: golines
+                src: "{{.AssetWithoutExt}}/golines"
           - goos: darwin
             asset: golines_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
-        supported_envs:
-          - linux
-          - darwin
+            files:
+              - name: golines
+                src: "{{.AssetWithoutExt}}/golines"
+          - goos: windows
+            type: go_install
+            files: []
   - type: go_install
     repo_owner: segmentio
     repo_name: topicctl

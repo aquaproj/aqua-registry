@@ -11,6 +11,9 @@ packages:
       - version_constraint: "true"
         asset: golines_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: golines
+            src: "{{.AssetWithoutExt}}/golines"
         checksum:
           type: github_release
           asset: golines_{{trimV .Version}}_checksums.txt
@@ -18,6 +21,5 @@ packages:
         overrides:
           - goos: darwin
             asset: golines_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
-          - env:
-              - windows
+          - goos: windows
             type: go_install
