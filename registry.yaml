@@ -64371,23 +64371,18 @@ packages:
       - version_constraint: "true"
         asset: golines_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: golines
+            src: "{{.AssetWithoutExt}}/golines"
         checksum:
           type: github_release
           asset: golines_{{trimV .Version}}_checksums.txt
           algorithm: sha256
         overrides:
-          - goos: linux
-            files:
-              - name: golines
-                src: "{{.AssetWithoutExt}}/golines"
           - goos: darwin
             asset: golines_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
-            files:
-              - name: golines
-                src: "{{.AssetWithoutExt}}/golines"
           - goos: windows
             type: go_install
-            files: []
   - type: go_install
     repo_owner: segmentio
     repo_name: topicctl
