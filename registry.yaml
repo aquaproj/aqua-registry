@@ -64360,10 +64360,27 @@ packages:
           type: github_release
           asset: chamber-{{.Version}}.sha256sums
           algorithm: sha256
-  - type: go_install
+  - type: github_release
     repo_owner: segmentio
     repo_name: golines
     description: A golang formatter that fixes long lines
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.11.0")
+        no_asset: true
+      - version_constraint: "true"
+        asset: golines_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: golines_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: golines_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
   - type: go_install
     repo_owner: segmentio
     repo_name: topicctl
