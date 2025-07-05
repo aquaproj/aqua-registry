@@ -15,7 +15,8 @@ jobs:
       pull-requests: read
   status-check:
     runs-on: ubuntu-24.04
-    if: failure()
+    # https://github.com/aquaproj/aqua-registry/pull/38449#issuecomment-3038859524
+    if: always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled'))
     timeout-minutes: 10
     permissions: {}
     needs:
