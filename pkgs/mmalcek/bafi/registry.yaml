@@ -3,17 +3,22 @@ packages:
   - type: github_release
     repo_owner: mmalcek
     repo_name: bafi
-    asset: bafi_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tgz
-    description: Universal JSON, BSON, YAML, CSV, XML converter with templates
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    checksum:
-      type: github_release
-      asset: bafi_{{.Version}}_{{.OS}}_{{.Arch}}_checksum.txt
-      algorithm: md5
+    description: Universal JSON, BSON, YAML, CSV, XML, mt940 converter with templates
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: bafi_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: bafi_{{.Version}}_{{.OS}}_{{.Arch}}_checksum.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
