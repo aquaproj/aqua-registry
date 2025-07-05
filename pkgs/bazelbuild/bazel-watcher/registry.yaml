@@ -8,7 +8,7 @@ packages:
       - name: ibazel
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.4.0") || Version == "v0.15.1"
+      - version_constraint: semver("<= 0.4.0") || Version in ["v0.15.1", "v0.26.0", "v0.26.3"]
         no_asset: true
       - version_constraint: semver("<= 0.9.1")
         asset: ibazel_{{.OS}}_{{.Arch}}
@@ -59,6 +59,15 @@ packages:
         asset: ibazel_{{.OS}}_{{.Arch}}
         format: raw
         windows_arm_emulation: true
+      - version_constraint: Version == "V0.26.4"
+        version_prefix: V
+        asset: ibazel_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
+          - windows
       - version_constraint: "true"
         asset: ibazel_{{.OS}}_{{.Arch}}
         format: raw
