@@ -34190,64 +34190,94 @@ packages:
     version_overrides:
       - version_constraint: Version == "1.0-stable"
         no_asset: true
-      - version_constraint: Version == "1.1-stable"
-        asset: Godot_v1.1_stable_{{.OS}}.exe.{{.Format}}
+      # - version_constraint: Version == "1.1-stable"
+      #   asset: Godot_v{{replace "-" "_" .Version}}_{{.OS}}.exe.{{.Format}}
+      #   format: zip
+      #   windows_arm_emulation: true
+      #   replacements:
+      #     windows: win64
+      #   supported_envs:
+      #     - windows
+      - version_constraint: semver("<= 2.0.2-stable")
+        asset: Godot_v{{replace "-" "_" .Version}}_{{.OS}}.exe.{{.Format}}
         format: zip
+        windows_arm_emulation: true
+        files:
+          - name: Godot
+            src: "{{.AssetWithoutExt}}"
         replacements:
           windows: win64
         supported_envs:
-          - windows/amd64
-      - version_constraint: Version == "2.0-stable"
-        asset: Godot_v2.0_stable_{{.OS}}.exe.{{.Format}}
-        format: zip
-        replacements:
-          windows: win64
-        supported_envs:
-          - windows/amd64
-      - version_constraint: Version == "2.0.1-stable"
-        asset: Godot_v2.0.1_stable_{{.OS}}.exe.{{.Format}}
-        format: zip
-        replacements:
-          windows: win64
-        supported_envs:
-          - windows/amd64
-      - version_constraint: Version == "2.0.2-stable"
-        asset: Godot_v2.0.2_stable_{{.OS}}.exe.{{.Format}}
-        format: zip
-        replacements:
-          windows: win64
-        supported_envs:
-          - windows/amd64
+          - windows
       - version_constraint: Version == "2.0.3-stable"
-        asset: Godot_v2.0.3_stable_{{.OS}}64.{{.Format}}
+        asset: Godot_v{{replace "-" "_" .Version}}_{{.OS}}.{{.Format}}
         format: zip
+        windows_arm_emulation: true
+        files:
+          - name: Godot
+            src: "{{.AssetWithoutExt}}"
+        replacements:
+          darwin: osx64
+          windows: win64
+        overrides:
+          - goos: darwin
+            files:
+              - name: Godot
+                src: Godot64.app/Contents/MacOS/Godot
+            replacements:
+              amd64: x64
+          - goos: windows
+            asset: Godot_v{{replace "-" "_" .Version}}_{{.OS}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+      - version_constraint: Version == "2.0.4.1-stable"
+        asset: Godot_v{{replace "-" "_" .Version}}_{{.OS}}.fat.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: Godot
+            src: "{{.AssetWithoutExt}}"
+        replacements:
+          darwin: osx
+          windows: win64
+        overrides:
+          - goos: windows
+            asset: Godot_v{{replace "-" "_" .Version}}_{{.OS}}.exe.{{.Format}}
+          - goos: darwin
+            files:
+              - name: Godot
+                src: Godot.app/Contents/MacOS/Godot
+        supported_envs:
+          - darwin
+          - windows
+      - version_constraint: semver("<= 3.0.6-stable")
+        asset: Godot_v{{.Version}}_{{.OS}}.fat.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: Godot
+            src: "{{.AssetWithoutExt}}"
         replacements:
           darwin: osx
           windows: win64
         overrides:
           - goos: darwin
-            replacements:
-              amd64: x64
+            files:
+              - name: Godot
+                src: Godot.app/Contents/MacOS/Godot
           - goos: windows
-            asset: Godot_v2.0.3_stable_{{.OS}}.exe.{{.Format}}
+            asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
         supported_envs:
           - darwin
-          - windows/amd64
-      - version_constraint: Version == "2.0.4.1-stable"
-        asset: Godot_v2.0.4.1_stable_{{.OS}}.fat.{{.Format}}
+          - windows
+      - version_constraint: semver("<= 3.2.3-stable")
+        asset: Godot_v{{.Version}}_{{.OS}}.64.{{.Format}}
         format: zip
-        replacements:
-          darwin: osx
-          windows: win64
-        overrides:
-          - goos: windows
-            asset: Godot_v2.0.4.1_stable_{{.OS}}.exe.{{.Format}}
-        supported_envs:
-          - darwin
-          - windows/amd64
-      - version_constraint: Version == "2.1.6-stable"
-        asset: Godot_v{{.Version}}_{{.OS}}.fat.{{.Format}}
-        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: Godot
+            src: "{{.AssetWithoutExt}}"
         replacements:
           darwin: osx
           windows: win64
@@ -34256,268 +34286,138 @@ packages:
           asset: SHA512-SUMS.txt
           algorithm: sha512
         overrides:
+          - goos: darwin
+            files:
+              - name: Godot
+                src: Godot.app/Contents/MacOS/Godot
           - goos: windows
             asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
-        supported_envs:
-          - darwin
-          - windows/amd64
-      - version_constraint: Version == "3.4.1-stable"
-        asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
-        format: zip
-        replacements:
-          darwin: osx
-          windows: win64
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
-        overrides:
-          - goos: darwin
-            asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
-        supported_envs:
-          - darwin
-          - windows/amd64
-      - version_constraint: Version == "3.4.4-stable"
-        asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
-        format: zip
-        replacements:
-          darwin: osx
-          windows: win64
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
-        overrides:
-          - goos: darwin
-            asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
-        supported_envs:
-          - darwin
-          - windows/amd64
-      - version_constraint: Version == "3.5.2-stable"
-        asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
-        format: zip
-        replacements:
-          darwin: osx
-          windows: win64
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
-        overrides:
-          - goos: darwin
-            asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
-        supported_envs:
-          - darwin
-          - windows/amd64
-      - version_constraint: Version == "3.5.3-stable"
-        asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
-        format: zip
-        replacements:
-          darwin: osx
-          windows: win64
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
-        supported_envs:
-          - darwin
-          - windows/amd64
-      - version_constraint: Version == "4.0.2-stable"
-        asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
-        format: zip
-        replacements:
-          darwin: macos
-          windows: win64
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            asset: Godot_v{{.Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
-            replacements:
-              amd64: x86_64
-          - goos: darwin
-            asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
         supported_envs:
           - darwin
           - windows
-          - amd64
-      - version_constraint: Version == "4.1.4-stable"
-        asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
+      - version_constraint: semver("<= 3.5.3-stable")
+        asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
         format: zip
+        windows_arm_emulation: true
+        files:
+          - name: Godot
+            src: "{{.AssetWithoutExt}}"
         replacements:
-          darwin: macos
+          darwin: osx
           windows: win64
         checksum:
           type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
+          asset: SHA512-SUMS.txt
+          algorithm: sha512
         overrides:
-          - goos: linux
-            asset: Godot_v{{.Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
-            replacements:
-              amd64: x86_64
           - goos: darwin
-            asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
+            files:
+              - name: Godot
+                src: Godot.app/Contents/MacOS/Godot
+          - goos: windows
+            asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
         supported_envs:
           - darwin
           - windows
-          - amd64
-      - version_constraint: Version == "4.2.2-stable"
-        asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
-        format: zip
-        replacements:
-          darwin: macos
-          windows: win64
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            asset: Godot_v{{.Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
-            replacements:
-              amd64: x86_64
-          - goos: darwin
-            asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
-      - version_constraint: semver("<= 2.1.5-stable")
-        asset: Godot_v{{.Version}}_{{.OS}}.fat.{{.Format}}
-        format: zip
-        replacements:
-          darwin: osx
-          windows: win64
-        overrides:
-          - goos: windows
-            asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
-        supported_envs:
-          - darwin
-          - windows/amd64
-      - version_constraint: semver("<= 3.0.6-stable")
-        asset: Godot_v{{.Version}}_{{.OS}}.fat.{{.Format}}
-        format: zip
-        replacements:
-          darwin: osx
-          windows: win64
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
-        supported_envs:
-          - darwin
-          - windows/amd64
-      - version_constraint: semver("<= 3.2.3-stable")
-        asset: Godot_v{{.Version}}_{{.OS}}.64.{{.Format}}
-        format: zip
-        replacements:
-          darwin: osx
-          windows: win64
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
-        supported_envs:
-          - darwin
-          - windows/amd64
-      - version_constraint: semver("<= 3.5.1-stable")
-        asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
-        format: zip
-        replacements:
-          darwin: osx
-          windows: win64
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
-        supported_envs:
-          - darwin
-          - windows/amd64
       - version_constraint: semver("<= 3.6.1-stable")
         asset: Godot_v{{.Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
         format: zip
+        windows_arm_emulation: true
+        files:
+          - name: Godot
+            src: "{{.AssetWithoutExt}}"
         replacements:
           darwin: osx
           windows: win64
         checksum:
           type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
+          asset: SHA512-SUMS.txt
+          algorithm: sha512
         overrides:
           - goos: darwin
             asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
+            files:
+              - name: Godot
+                src: Godot.app/Contents/MacOS/Godot
           - goos: windows
             asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
         supported_envs:
           - linux/arm64
           - darwin
-          - windows/amd64
-      - version_constraint: semver("<= 4.1.3-stable")
-        asset: Godot_v{{.Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
+          - windows
+      - version_constraint: semver("<= 4.1.4-stable")
+        asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
         format: zip
+        files:
+          - name: Godot
+            src: "{{.AssetWithoutExt}}"
         replacements:
           darwin: macos
           windows: win64
         checksum:
           type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
+          asset: SHA512-SUMS.txt
+          algorithm: sha512
         overrides:
           - goos: linux
+            asset: Godot_v{{.Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
             replacements:
               amd64: x86_64
           - goos: darwin
             asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
-          - goos: windows
-            asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
+            files:
+              - name: Godot
+                src: Godot.app/Contents/MacOS/Godot
         supported_envs:
           - darwin
           - windows
           - amd64
-      - version_constraint: semver("<= 4.2.1-stable")
+      - version_constraint: semver("<= 4.2.2-stable")
         asset: Godot_v{{.Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
+        windows_arm_emulation: true
         format: zip
+        files:
+          - name: Godot
+            src: "{{.AssetWithoutExt}}"
         replacements:
           darwin: macos
           windows: win64
         checksum:
           type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
+          asset: SHA512-SUMS.txt
+          algorithm: sha512
         overrides:
           - goos: linux
             replacements:
               amd64: x86_64
           - goos: darwin
             asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
+            files:
+              - name: Godot
+                src: Godot.app/Contents/MacOS/Godot
           - goos: windows
             asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
       - version_constraint: "true"
         asset: Godot_v{{.Version}}_{{.OS}}.{{.Arch}}.{{.Format}}
         format: zip
+        files:
+          - name: Godot
+            src: "{{.AssetWithoutExt}}"
         replacements:
           darwin: macos
         checksum:
           type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
+          asset: SHA512-SUMS.txt
+          algorithm: sha512
         overrides:
           - goos: linux
             replacements:
               amd64: x86_64
           - goos: darwin
             asset: Godot_v{{.Version}}_{{.OS}}.universal.{{.Format}}
+            files:
+              - name: Godot
+                src: Godot.app/Contents/MacOS/Godot
           - goos: windows
             goarch: amd64
             asset: Godot_v{{.Version}}_{{.OS}}.exe.{{.Format}}
