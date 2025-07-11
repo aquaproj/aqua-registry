@@ -1,0 +1,122 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: KhronosGroup
+    repo_name: KTX-Software
+    description: KTX (Khronos Texture) Library and Tools
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v4.0.0"
+        asset: KTX-Software-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        format: pkg
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: win64
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha1"
+          algorithm: sha1
+        overrides:
+          - goos: linux
+            format: tar.bz2
+          - goos: windows
+            format: raw
+            asset: KTX-Software-{{trimV .Version}}-{{.OS}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v4.1.0"
+        asset: KTX-Software-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.bz2
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha1"
+          algorithm: sha1
+        overrides:
+          - goos: darwin
+            format: pkg
+          - goos: windows
+            format: raw
+            asset: KTX-Software-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+            replacements:
+              amd64: x64
+        supported_envs:
+          - linux/amd64
+          - darwin
+          - windows
+      - version_constraint: Version == "v4.3.0-beta1"
+        asset: KTX-Software-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.bz2
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha1"
+          algorithm: sha1
+        overrides:
+          - goos: darwin
+            format: pkg
+          - goos: windows
+            format: raw
+            asset: KTX-Software-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+            replacements:
+              amd64: x64
+      - version_constraint: semver("<= 4.2.1")
+        asset: KTX-Software-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: pkg
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha1"
+          algorithm: sha1
+        overrides:
+          - goos: linux
+            format: tar.bz2
+          - goos: windows
+            format: raw
+            asset: KTX-Software-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+            replacements:
+              amd64: x64
+      - version_constraint: "true"
+        asset: pyktx-{{trimV .Version}}-cp311-cp311-{{.OS}}_{{.Arch}}.whl
+        format: raw
+        complete_windows_ext: false
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha1"
+          algorithm: sha1
+        overrides:
+          - goos: linux
+            format: tar.bz2
+            asset: KTX-Software-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: darwin
+            format: pkg
+            asset: KTX-Software-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            goarch: amd64
+            replacements:
+              amd64: amd64
+              windows: win
+          - goos: windows
+            goarch: arm64
+            asset: KTX-Software-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+            replacements:
+              windows: Windows
