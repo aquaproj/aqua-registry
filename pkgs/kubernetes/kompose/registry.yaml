@@ -3,18 +3,119 @@ packages:
   - type: github_release
     repo_owner: kubernetes
     repo_name: kompose
-    description: Go from Docker Compose to Kubernetes
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    format: raw
-    version_constraint: semver(">= 1.26.0")
-    asset: kompose-{{.OS}}-{{.Arch}}
+    description: Convert Compose to Kubernetes
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v1.21.0"
+        asset: kompose-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-    checksum:
-      type: github_release
-      asset: SHA256_SUM
-      algorithm: sha256
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: kompose-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.22.0"
+        asset: kompose-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256_SUM
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kompose-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: Version == "v1.25"
+        asset: kompose-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256_SUM
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kompose-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: Version == "v1.31.0"
+        asset: kompose-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256_SUM.{{.Format}}
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kompose-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 0.1.2")
+        asset: kompose_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.6.0")
+        asset: kompose-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.18.0")
+        asset: kompose-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: kompose-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.20.0")
+        asset: kompose-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256_SUM
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kompose-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.24.0")
+        asset: kompose-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256_SUM
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: kompose-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256_SUM
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kompose-{{.OS}}-{{.Arch}}.exe.{{.Format}}
