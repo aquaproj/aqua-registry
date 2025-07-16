@@ -3,23 +3,50 @@ packages:
   - type: github_release
     repo_owner: harelba
     repo_name: q
-    description: q - Run SQL directly on CSV or TSV files
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - amd64
-    version_constraint: semver(">= 3.1.6")
-    asset: "{{.OS}}-q"
-    replacements:
-      windows: win
-      darwin: macos
+    description: "q - Run SQL directly on delimited files and multi-file sqlite databases"
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
-        asset: q-{{.Arch}}-{{.OS}}
+      - version_constraint: Version == "2.0.12"
+        no_asset: true
+      - version_constraint: Version == "v3.1.0-beta"
+        asset: "{{.OS}}-q"
+        format: raw
         replacements:
+          darwin: macos
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.7.1")
+        asset: setup-q-{{.Version}}
+        format: raw
+        supported_envs:
+          - windows/amd64
+      - version_constraint: semver("<= 2.0.19")
+        asset: q-{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
           darwin: Darwin
           linux: Linux
-          amd64: x86_64
+          windows: Windows
         overrides:
           - goos: windows
-            asset: q-AMD64-Windows.exe
+            asset: q-{{.Arch}}-{{.OS}}-installer
+            replacements:
+              amd64: AMD64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: "{{.OS}}-q"
+        format: raw
+        replacements:
+          darwin: macos
+          windows: win
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
