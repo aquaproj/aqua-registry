@@ -4,19 +4,34 @@ packages:
     repo_owner: GoodwayGroup
     repo_name: gwvault
     description: ansible-vault CLI reimplemented in go
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    files:
-      - name: gwvault
-        src: gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}/gwvault
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "1.4.0"
+        asset: gwvault_{{.Version}}-1-gc1b2870_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.0.1")
+        asset: gwvault_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: gwvault_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
