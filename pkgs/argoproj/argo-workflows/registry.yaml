@@ -3,38 +3,167 @@ packages:
   - type: github_release
     repo_owner: argoproj
     repo_name: argo-workflows
-    rosetta2: true
-    asset: argo-{{.OS}}-{{.Arch}}.gz
-    description: Argo Worfkflows CLI. Workflow engine for Kubernetes
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    overrides:
-      - goos: windows
-        asset: argo-{{.OS}}-{{.Arch}}.exe.gz
-    files:
-      - name: argo
-        src: argo-{{.OS}}-{{.Arch}}
-    version_constraint: semver(">= 3.4.4")
-    checksum:
-      type: github_release
-      asset: argo-workflows-cli-checksums.txt
-      algorithm: sha256
-      # TODO enable cosign https://github.com/argoproj/argo-workflows/discussions/12828
-      # cosign:
-      #   opts:
-      #     - --certificate-identity-regexp
-      #     - "https://github\\.com/argoproj/argo-workflows/\\.github/workflows/release\\.yaml@.*"
-      #     - --certificate-oidc-issuer
-      #     - "https://token.actions.githubusercontent.com"
-      #     - --signature
-      #     - https://github.com/argoproj/argo-workflows/releases/download/{{.Version}}/argo-workflows-cli-checksums.sig
-      #     - --key
-      #     - https://github.com/argoproj/argo-workflows/releases/download/{{.Version}}/argo-workflows-cosign.pub
+    description: Workflow Engine for Kubernetes
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version in ["v2.5.0-rc3", "v3.0.9"]
+        no_asset: true
+      - version_constraint: Version == "v0.0.0-dev-bom-1"
+        asset: argo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: argo-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: Version == "v2.5.0-rc4"
+        asset: argo-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v2.7.0-rc2"
+        asset: argo-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version in ["v2.7.3", "v2.9.0", "v2.10.0-rc3"]
+        asset: argo-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v2.11.8"
+        asset: argo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v3.0.0-rc1"
+        asset: argo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.0.0-dev-mc-4")
+        asset: argo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: semver("<= 2.1.0")
+        asset: argo-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 2.5.0-rc2")
+        asset: argo-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.5.0-rc7")
+        asset: argo-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 2.7.0-rc1")
+        asset: argo-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.10.0-rc1")
+        asset: argo-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+      - version_constraint: semver("<= 2.12.8")
+        asset: argo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 3.0.2")
+        asset: argo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: semver("<= 3.0.4")
+        asset: argo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 3.2.11")
+        asset: argo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: semver("<= 3.3.10")
+        asset: argo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: argo-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 3.4.3")
+        asset: argo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: argo-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: argo-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: argo-workflows-cli-checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: argo-{{.OS}}-{{.Arch}}.exe.{{.Format}}
