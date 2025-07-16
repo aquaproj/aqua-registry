@@ -4,15 +4,39 @@ packages:
     repo_owner: Songmu
     repo_name: ghch
     description: Generate changelog from git history, tags and merged pull requests
-    rosetta2: true
-    asset: ghch_{{.Version}}_{{.OS}}_amd64.{{.Format}}
-    supported_envs:
-      - darwin
-      - amd64
-    files:
-      - name: ghch
-        src: ghch_{{.Version}}_{{.OS}}_amd64/ghch
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.1"
+        asset: ghch_v_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.0")
+        asset: ghch_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: ghch_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
