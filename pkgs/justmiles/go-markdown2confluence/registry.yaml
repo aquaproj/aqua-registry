@@ -4,60 +4,86 @@ packages:
     repo_owner: justmiles
     repo_name: go-markdown2confluence
     description: Push markdown files to Confluence Cloud
-    asset: go-markdown2confluence_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    files:
-      - name: markdown2confluence
-    version_constraint: semver(">= 3.3.2")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 3.3.1")
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-      - version_constraint: semver(">= 3.3.0")
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+      - version_constraint: semver("<= 1.2.0")
+        asset: markdown2confluence.{{.OS}}-{{.Arch}}
+        format: raw
         rosetta2: true
-      - version_constraint: semver(">= 3.1.1")
+        windows_arm_emulation: true
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 2.1.0")
+        asset: markdown2confluence-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
         rosetta2: true
-      - version_constraint: semver(">= 3.0.0")
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.0.2")
         asset: markdown2confluence_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         overrides:
           - goos: windows
             format: zip
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 3.2.0")
+        asset: go-markdown2confluence_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-      - version_constraint: semver(">= 2.0.0")
-        asset: markdown2confluence-{{trimV .Version}}-{{.OS}}-{{.Arch}}
-        format: raw
-        replacements: {}
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: Version == "v3.3.0"
+        asset: go-markdown2confluence_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
         checksum:
-          enabled: false
-      - version_constraint: semver("< 2.0.0")
-        asset: markdown2confluence.{{.OS}}-{{.Arch}}
-        format: raw
-        replacements: {}
-        supported_envs:
-          - darwin
-          - amd64
-        rosetta2: true
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: Version == "v3.3.1"
+        asset: go-markdown2confluence_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
         checksum:
-          enabled: false
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: go-markdown2confluence_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
