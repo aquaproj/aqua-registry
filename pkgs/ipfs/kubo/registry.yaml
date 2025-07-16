@@ -3,29 +3,62 @@ packages:
   - type: github_release
     repo_owner: ipfs
     repo_name: kubo
-    aliases:
-      - name: ipfs/go-ipfs
-    description: IPFS is a global, versioned, peer-to-peer filesystem
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    version_constraint: semver(">= 0.14.0")
-    asset: kubo_{{.Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-    files:
-      - name: ipfs
-        src: kubo/ipfs
+    description: An IPFS implementation in Go
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.4.17"
         asset: go-ipfs_{{.Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-        files:
-          - name: ipfs
-            src: go-ipfs/ipfs
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha512"
-      algorithm: sha512
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.9.0-rc1")
+        asset: go-ipfs_{{.Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha512"
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.13.1")
+        asset: go-ipfs_{{.Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha512"
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.20.0")
+        asset: kubo_{{.Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha512"
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: kubo_{{.Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha512"
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
