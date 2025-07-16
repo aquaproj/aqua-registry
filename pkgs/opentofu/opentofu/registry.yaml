@@ -6,7 +6,27 @@ packages:
     description: OpenTofu lets you declaratively manage your cloud infrastructure
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 1.6.0-rc1")
+      - version_constraint: semver("<= 1.6.0-beta5")
+        asset: tofu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: tofu
+        checksum:
+          type: github_release
+          asset: tofu_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/opentofu/opentofu/releases/download/{{.Version}}/tofu_{{trimV .Version}}_SHA256SUMS.pem
+              - --certificate-identity
+              - https://github.com/opentofu/opentofu/.github/workflows/release.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/opentofu/opentofu/releases/download/{{.Version}}/tofu_{{trimV .Version}}_SHA256SUMS.sig
+      - version_constraint: Version == 1.6.0-rc1
         asset: tofu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
