@@ -68010,6 +68010,68 @@ packages:
         checksum:
           enabled: false
   - type: github_release
+    repo_owner: sourcemeta
+    repo_name: jsonschema
+    description: The CLI for working with JSON Schema. Covers formatting, linting, testing, bundling, and more for both local development and CI/CD pipelines
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "continuous"
+        asset: jsonschema-10.0.0-28881f25-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: CHECKSUMS.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.4.1")
+        asset: jsonschema-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
+          - windows/amd64
+      - version_constraint: semver("<= 7.2.2")
+        asset: jsonschema-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 7.3.0")
+        asset: jsonschema-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+      - version_constraint: semver("<= 9.3.2")
+        asset: jsonschema-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+      - version_constraint: "true"
+        asset: jsonschema-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: CHECKSUMS.txt
+          algorithm: sha256
+  - type: github_release
     repo_owner: spacelift-io
     repo_name: spacectl
     description: Spacelift client and CLI
