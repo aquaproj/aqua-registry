@@ -10,32 +10,30 @@ packages:
         asset: abctl-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
+        files:
+          - name: abctl
+            src: "{{.AssetWithoutExt}}/abctl"
         overrides:
-          - goos: linux
+          - envs:
+              - linux
+              - darwin/amd64
             format: tar.gz
-          - goos: darwin
-            goarch: amd64
-            format: tar.gz
-      - version_constraint: Version == "0.14.0"
-        asset: abctl-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: abctl_{{.Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
       - version_constraint: semver("<= 0.13.1")
         asset: abctl-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
+        files:
+          - name: abctl
+            src: "{{.AssetWithoutExt}}/abctl"
         overrides:
           - goos: windows
             format: zip
       - version_constraint: "true"
         asset: abctl-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: abctl
+            src: "{{.AssetWithoutExt}}/abctl"
         checksum:
           type: github_release
           asset: abctl_{{trimV .Version}}_checksums.txt
