@@ -17933,6 +17933,8 @@ packages:
     repo_owner: carp-lang
     repo_name: Carp
     description: A statically typed lisp, without a GC, for real-time applications
+    files:
+      - name: carp
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.3.0"
@@ -17942,16 +17944,47 @@ packages:
           darwin: MacOS
           linux: Linux
           windows: Windows
+        files:
+          - name: carp
+            src: "{{.AssetWithoutExt}}/bin/carp"
         supported_envs:
           - darwin
           - windows
           - amd64
-      - version_constraint: Version in ["v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS", "v0.5.2_macOS"]
+      - version_constraint: Version in ["v0.4.0_Linux", "v0.4.1_Linux", "v0.4.8_Linux", "v0.5.0_Linux", "v0.5.1_Linux", "v0.5.2_Linux"]
+        asset: '{{trimSuffix "_Linux" .Version }}.{{Format}}'
+        format: zip
+        files:
+          - name: carp
+            src: "{{.AssetWithoutExt}}/bin/carp"
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version in ["v0.4.0_macOS", "v0.4.1_macOS", "v0.4.8_macOS", "v0.5.0_macOS", "v0.5.1_macOS", "v0.5.2_macOS"]
+        asset: '{{trimSuffix "_macOS" .Version }}.{{Format}}'
+        format: zip
+        rosetta2: true
+        files:
+          - name: carp
+            src: "{{.AssetWithoutExt}}/bin/carp"
+        supported_envs:
+          - darwin
+      - version_constraint: Version in ["v0.4.8_Windows", "v0.5.0_Windows", "v0.5.1_Windows", "v0.5.2_Windows"]
+        asset: '{{trimSuffix "_Windows" .Version }}.{{Format}}'
+        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: carp
+            src: "{{.AssetWithoutExt}}/bin/carp"
+        supported_envs:
+          - windows
       - version_constraint: "true"
         asset: carp-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: carp
+            src: "{{.AssetWithoutExt}}/bin/carp"
         replacements:
           amd64: x86_64
           darwin: macos
