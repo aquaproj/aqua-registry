@@ -19,6 +19,8 @@ packages:
       - version_constraint: Version == "2.0-rc3"
         asset: spc-{{.OS}}-{{.Arch}}-bin.{{.Format}}
         format: tgz
+        files:
+          - name: spc
         supported_envs:
           - linux/amd64
       - version_constraint: semver("<= 2.0.0-rc6")
@@ -26,6 +28,8 @@ packages:
       - version_constraint: semver("<= 2.1.0-beta.2")
         asset: spc-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: spc
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -36,15 +40,15 @@ packages:
       - version_constraint: "true"
         asset: spc-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: spc
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: macos
-          windows: pc-windows
         overrides:
           - goos: windows
             format: raw
-            asset: s{{.OS}}-{{.Arch}}
             replacements:
               amd64: x64
