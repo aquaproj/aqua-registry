@@ -23336,6 +23336,54 @@ packages:
       - goos: windows
         format: zip
   - type: github_release
+    repo_owner: crazywhalecc
+    repo_name: static-php-cli
+    description: Build standalone PHP binaries on Linux, macOS, FreeBSD, Windows, with PHP project together, with popular extensions included
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "2.0.0-beta2"
+        asset: spc-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x64
+          darwin: macos
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "2.0-rc3"
+        asset: spc-{{.OS}}-{{.Arch}}-bin.{{.Format}}
+        format: tgz
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 2.0.0-rc6")
+        no_asset: true
+      - version_constraint: semver("<= 2.1.0-beta.2")
+        asset: spc-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: spc-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+          windows: pc-windows
+        overrides:
+          - goos: windows
+            format: raw
+            asset: s{{.OS}}-{{.Arch}}
+            replacements:
+              amd64: x64
+  - type: github_release
     repo_owner: create-go-app
     repo_name: cli
     description: Create a new production-ready project with backend, frontend and deploy automation by running one CLI command
