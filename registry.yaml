@@ -22098,11 +22098,17 @@ packages:
       - darwin
       - amd64
     rosetta2: true
-    # TODO checksum: support sha1
-    # https://github.com/aquaproj/aqua/issues/1216
     files:
       - name: concourse
         src: concourse/bin/concourse
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha1"
+      file_format: regexp
+      algorithm: sha1
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{40}\b)
+        file: "^\\b[A-Fa-f0-9]{40}\\b\\s+(\\S+)$"
   - name: concourse/concourse/fly
     type: github_release
     repo_owner: concourse
@@ -78423,6 +78429,14 @@ packages:
           - amd64
           - darwin
         rosetta2: true
+    checksum:
+      type: github_release
+      asset: SHASUMS
+      file_format: regexp
+      algorithm: sha1
+      pattern:
+        checksum: ^(\b[A-Fa-f0-9]{40}\b)
+        file: "^\\b[A-Fa-f0-9]{40}\\b\\s+(\\S+)$"
   - type: github_release
     repo_owner: x-motemen
     repo_name: gobump
@@ -79177,7 +79191,13 @@ packages:
           - amd64
         checksum:
           # SHA1 is used for algorithm of checksum
-          enabled: false
+          type: github_release
+          asset: checksum.txt
+          file_format: regexp
+          algorithm: sha1
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{40}\b)
+            file: "^\\b[A-Fa-f0-9]{40}\\b\\s+(\\S+)$"
       - version_constraint: "true"
         # asset name was changed
         asset: sshw-{{.OS}}-{{.Arch}}.tar.gz
