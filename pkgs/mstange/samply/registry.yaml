@@ -4,11 +4,15 @@ packages:
     repo_owner: mstange
     repo_name: samply
     description: Command-line sampling profiler for macOS, Linux, and Windows
+    version_prefix: samply-v
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "samply-v0.12.0"
+      - version_constraint: semver("= 0.12.0")
         asset: samply-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
+        files:
+          - name: samply
+            src: samply-{{.Arch}}-{{.OS}}/samply
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
@@ -25,6 +29,9 @@ packages:
               arm64: aarch64
           - goos: windows
             format: zip
+            files:
+              - name: samply
+                src: samply.exe
         supported_envs:
           - darwin
           - windows
@@ -34,6 +41,9 @@ packages:
       - version_constraint: "true"
         asset: samply-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
+        files:
+          - name: samply
+            src: samply-{{.Arch}}-{{.OS}}/samply
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
@@ -55,3 +65,6 @@ packages:
               linux: unknown-linux-gnu
           - goos: windows
             format: zip
+            files:
+              - name: samply
+                src: samply.exe
