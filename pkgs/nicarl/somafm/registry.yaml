@@ -3,12 +3,48 @@ packages:
   - type: github_release
     repo_owner: nicarl
     repo_name: somafm
-    asset: somafm-{{.Version}}-{{.OS}}-{{.Arch}}
-    format: raw
     description: CLI application to listen to SomaFM stations
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    checksum:
-      enabled: false
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0-alpha"
+        no_asset: true
+      - version_constraint: semver("<= 0.1.2-alpha")
+        asset: somafm-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.2.0")
+        asset: somafm-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.2.9")
+        no_asset: true
+      - version_constraint: semver("<= 0.2.11")
+        asset: somafm-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: somafm-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksum.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
