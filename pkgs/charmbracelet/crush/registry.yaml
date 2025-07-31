@@ -9,6 +9,9 @@ packages:
       - version_constraint: "true"
         asset: crush_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: crush
+            src: crush_{{trimV .Version}}_{{.OS}}_{{.Arch}}/crush
         replacements:
           amd64: x86_64
           darwin: Darwin
@@ -22,8 +25,8 @@ packages:
             opts:
               - --certificate
               - https://github.com/charmbracelet/crush/releases/download/{{.Version}}/checksums.txt.pem
-              - --certificate-identity-regexp
-              - "^https://github\\.com/charmbracelet/crush/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-identity
+              - https://github.com/charmbracelet/meta/.github/workflows/goreleaser.yml@refs/heads/main
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
               - --signature
