@@ -5238,6 +5238,73 @@ packages:
           - goos: windows
             format: zip
   - type: github_release
+    repo_owner: RyuyaIshibashi
+    repo_name: aws-s3-siggy
+    files:
+      - name: siggy
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        no_asset: true
+      - version_constraint: Version == "v0.0.7"
+        asset: aws-s3-siggy_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: aws-s3-siggy
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: aws-s3-siggy_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v0.0.9"
+        asset: siggy_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: siggy_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v0.2.0"
+        asset: siggy_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: siggy_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: siggy_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: Scalingo
     repo_name: cli
     description: Command Line client for Scalingo PaaS
@@ -7494,23 +7561,169 @@ packages:
   - type: github_release
     repo_owner: Wilfred
     repo_name: difftastic
-    asset: difft-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.gz
     description: a structural diff that understands syntax
-    replacements:
-      amd64: x86_64
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-      windows: pc-windows-msvc
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
     files:
       - name: difft
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.51.0"
+        no_asset: true
+      - version_constraint: Version == "0.36.0"
+        asset: difft-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: difft
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "0.51.1"
+        asset: difft-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: difft
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "0.52.0"
+        asset: difft-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: difft
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "0.53.0"
+        asset: difft-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: difft
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "0.56.0"
+        asset: difft-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: difft
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.26.2")
+        asset: difft-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: difft
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.50.0")
+        asset: difft-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: difft
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.62.0")
+        asset: difft-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: difft
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: difft-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: difft
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
   - type: github_content
     repo_owner: WoozyMasta
     repo_name: kube-dump
@@ -8205,13 +8418,13 @@ packages:
           cosign:
             opts:
               - --certificate
-              - https://github.com/abhimanyu003/sttr/releases/download/{{.Version}}/sttr_0.2.25_checksums.txt.pem
+              - https://github.com/abhimanyu003/sttr/releases/download/{{.Version}}/sttr_{{trimV .Version}}_checksums.txt.pem
               - --certificate-identity-regexp
               - "^https://github\\.com/abhimanyu003/sttr/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
               - --signature
-              - https://github.com/abhimanyu003/sttr/releases/download/{{.Version}}/sttr_0.2.25_checksums.txt.sig
+              - https://github.com/abhimanyu003/sttr/releases/download/{{.Version}}/sttr_{{trimV .Version}}_checksums.txt.sig
         overrides:
           - goos: darwin
             asset: sttr_{{.OS}}_all.{{.Format}}
@@ -14704,6 +14917,11 @@ packages:
         asset: ibazel_{{.OS}}_{{.Arch}}
         format: raw
         windows_arm_emulation: true
+      - version_constraint: Version == "V0.25.1"
+        version_prefix: V
+        asset: ibazel_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
       - version_constraint: Version == "V0.26.4"
         version_prefix: V
         asset: ibazel_{{.OS}}_{{.Arch}}
@@ -14713,7 +14931,8 @@ packages:
           - linux/amd64
           - darwin/arm64
           - windows
-      - version_constraint: "true"
+      - version_constraint: Version == "V0.26.6"
+        version_prefix: V
         asset: ibazel_{{.OS}}_{{.Arch}}
         format: raw
         windows_arm_emulation: true
@@ -14721,6 +14940,18 @@ packages:
           - linux
           - darwin/arm64
           - windows
+      - version_constraint: semver("<= 0.26.7")
+        asset: ibazel_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows
+      - version_constraint: "true"
+        asset: ibazel_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
   - type: github_release
     repo_owner: bazelbuild
     repo_name: bazelisk
@@ -19098,6 +19329,40 @@ packages:
           darwin: Darwin
           windows: Windows
       - version_constraint: "true"
+  - type: github_release
+    repo_owner: charmbracelet
+    repo_name: crush
+    description: The glamourous AI coding agent for your favourite terminal
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: crush_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: crush
+            src: crush_{{trimV .Version}}_{{.OS}}_{{.Arch}}/crush
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/charmbracelet/crush/releases/download/{{.Version}}/checksums.txt.pem
+              - --certificate-identity
+              - https://github.com/charmbracelet/meta/.github/workflows/goreleaser.yml@refs/heads/main
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/charmbracelet/crush/releases/download/{{.Version}}/checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: charmbracelet
     repo_name: freeze
@@ -32005,12 +32270,22 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.7.7")
         asset: maprobe_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
         files:
           - name: maprobe
             src: "{{.AssetWithoutExt}}/maprobe"
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: maprobe_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         supported_envs:
           - linux
           - darwin
@@ -37621,6 +37896,7 @@ packages:
       - darwin
       - linux
       - amd64
+    version_filter: Version matches "^v\\d+\\.\\d+\\.\\d+"
     checksum:
       type: http
       url: https://releases.hashicorp.com/nomad/{{trimV .Version}}/nomad_{{trimV .Version}}_SHA256SUMS
@@ -38926,6 +39202,27 @@ packages:
         files:
           - name: terraformify
             src: terraformify_{{.OS}}_{{.Arch}}/terraformify
+  - type: github_release
+    repo_owner: hytromo
+    repo_name: mimosa
+    description: Zero-config docker image promotion
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.7")
+        asset: mimosa_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: mimosa_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: mimosa_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: mimosa_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
   - type: github_archive
     repo_owner: iamhsa
     repo_name: pkenv
@@ -49150,6 +49447,12 @@ packages:
         src: bin/limactl
     version_constraint: "false"
     version_overrides:
+      - version_constraint: Version == "v1.1.1"
+        error_message: |
+          aqua doesn't support this version.
+          Please update this package.
+          https://github.com/aquaproj/aqua-registry/issues/36874
+          https://github.com/lima-vm/lima/pull/3621
       - version_constraint: Version == "v0.7.0"
         no_asset: true
       - version_constraint: Version == "v0.1.0"
@@ -53328,6 +53631,37 @@ packages:
         supported_envs:
           - linux
           - windows
+  - type: github_release
+    repo_owner: mrjosh
+    repo_name: helm-ls
+    description: Language server for Helm
+    files:
+      - name: helm_ls
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.3"
+        asset: helm_ls_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - linux/amd64
+      - version_constraint: semver("<= 0.0.5")
+        asset: helm_ls_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - linux/amd64
+      - version_constraint: "true"
+        asset: helm_ls_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
   - type: github_content
     repo_owner: mrowa44
     repo_name: emojify
@@ -64808,6 +65142,29 @@ packages:
       - version_constraint: semver("< 0.7.0")
         no_asset: true
   - type: github_release
+    repo_owner: satococoa
+    repo_name: wtp
+    description: A powerful Git worktree CLI tool with automated setup, branch tracking, and smart navigation
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: wtp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - linux
+          - darwin/arm64
+  - type: github_release
     repo_owner: saucelabs
     repo_name: forwarder
     description: Forwarder is a production-ready, fast MITM proxy with PAC support. It's suitable for debugging, intercepting and manipulating HTTP traffic. It's used as a core component of Sauce Labs Sauce Connect Proxy
@@ -68908,6 +69265,16 @@ packages:
         format: raw
         windows_arm_emulation: true
         complete_windows_ext: false
+  - name: sr.ht/~charles/rq
+    type: http
+    description: |
+      rq (Rego Query) is inspired by jq, and aims to offer a similar set of capabilities oriented around running Rego queries
+    link: https://sr.ht/~charles/rq/
+    url: https://git.sr.ht/~charles/rq/refs/download/{{.Version}}/rq-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+    format: gz
+    files:
+      - name: rq
+        src: "{{.AssetWithoutExt}}"
   - type: github_release
     repo_owner: srevinsaju
     repo_name: togomak
@@ -79614,13 +79981,16 @@ packages:
   - type: github_release
     repo_owner: ynqa
     repo_name: jnv
-    description: interactive JSON filter using jq
+    description: Interactive JSON filter using jq
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.1.0")
+      - version_constraint: Version == "v0.1.0"
         asset: jnv-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         rosetta2: true
+        files:
+          - name: jnv
+            src: "{{.AssetWithoutExt}}/jnv"
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -79630,13 +80000,41 @@ packages:
           algorithm: sha256
         supported_envs:
           - darwin
+      - version_constraint: Version == "v0.3.0"
+        asset: jnv-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
         files:
           - name: jnv
             src: "{{.AssetWithoutExt}}/jnv"
-      - version_constraint: semver("<= 0.3.0")
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: jnv
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.2.3")
         asset: jnv-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         rosetta2: true
+        files:
+          - name: jnv
+            src: "{{.AssetWithoutExt}}/jnv"
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -79646,29 +80044,65 @@ packages:
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
         supported_envs:
-          - darwin
           - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.5.0")
+        asset: jnv-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
         files:
           - name: jnv
             src: "{{.AssetWithoutExt}}/jnv"
-      - version_constraint: "true"
-        asset: jnv-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.xz
-        rosetta2: true
         replacements:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux-musl
+          windows: pc-windows-msvc
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: jnv
         supported_envs:
-          - linux/amd64
           - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: jnv-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
         files:
           - name: jnv
             src: "{{.AssetWithoutExt}}/jnv"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+            files:
+              - name: jnv
   - type: github_release
     repo_owner: yoheimuta
     repo_name: protolint
