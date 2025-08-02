@@ -3,36 +3,51 @@ packages:
   - type: github_release
     repo_owner: sheepla
     repo_name: qiitaz
-    description: A command line Qiita searcher & viewer with fuzzyfinder UI
-    asset: qiitaz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
-    overrides:
-      - goos: windows
-        format: zip
-    version_constraint: semver("!= 0.0.5")
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    description: A terminal based Qiita searcher & viewer
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("= 0.0.5")
-        # It seems that only v0.0.5 wasn't released with goreleaser.
+      - version_constraint: semver("<= 0.0.4")
+        asset: qiitaz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-        replacements: {}
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: Version == "v0.0.5"
         asset: qiitaz_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
         overrides:
-          - goos: darwin
-            format: zip
+          - goos: linux
+            format: tar.gz
+      - version_constraint: semver("<= 0.1.0")
+        asset: qiitaz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: qiitaz_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
           - goos: windows
             format: zip
-        files:
-          - name: qiitaz
-            src: qiitaz_{{.OS}}_{{.Arch}}/qiitaz
-        checksum:
-          enabled: false
