@@ -41894,7 +41894,7 @@ packages:
     description: simple terminal UI for git commands
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version in ["v0.1.12", "v0.1.77"]
+      - version_constraint: semver("<= 0.1.6") || Version in ["v0.1.12", "v0.1.77"]
         no_asset: true
       - version_constraint: Version == "v0.1.7"
         asset: lazygit_{{.OS}}_{{.Arch}}
@@ -41905,6 +41905,22 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: semver("<= 0.1.11")
+        asset: lazygit_{{.OS}}_{{.Arch}}_{{.Version}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.16")
+        asset: lazygit_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          arm64: arm
       - version_constraint: Version == "v0.1.22"
         asset: lazygit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -41934,24 +41950,6 @@ packages:
         supported_envs:
           - linux/arm64
           - windows/amd64
-      - version_constraint: semver("<= 0.1.6")
-        no_asset: true
-      - version_constraint: semver("<= 0.1.11")
-        asset: lazygit_{{.OS}}_{{.Arch}}_{{.Version}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: semver("<= 0.1.16")
-        asset: lazygit_{{.OS}}_{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          arm64: arm
       - version_constraint: semver("<= 0.1.29")
         asset: lazygit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
