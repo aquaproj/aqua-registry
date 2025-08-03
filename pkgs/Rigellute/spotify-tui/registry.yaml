@@ -3,23 +3,79 @@ packages:
   - type: github_release
     repo_owner: Rigellute
     repo_name: spotify-tui
-    asset: spotify-tui-{{.OS}}.tar.gz
     description: Spotify for the terminal written in Rust
-    replacements:
-      darwin: macos
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    files:
-      - name: spt
-    checksum:
-      type: github_release
-      asset: spotify-tui-{{.OS}}.sha256
-      algorithm: sha256
-    overrides:
-      - goos: windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.7.0"
+        asset: spt-{{.OS}}-.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: spt-{{.OS}}-.sha512
+          algorithm: sha512
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.7.1"
+        asset: spt-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: spt-{{.OS}}.sha512
+          algorithm: sha512
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.7.3"
+        asset: spotify-tui-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
         checksum:
           type: github_release
           asset: spotify-tui-{{.OS}}.sha256
           algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.7.4"
+        asset: spotify-tui-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: spotify-tui-{{.OS}}.sha256
+          algorithm: sha256
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 0.6.2")
+      - version_constraint: semver("<= 0.12.0")
+        asset: spotify-tui-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: spotify-tui-{{.OS}}.sha256
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: spotify-tui-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: spotify-tui-{{.OS}}.sha256
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
