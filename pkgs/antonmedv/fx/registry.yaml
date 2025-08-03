@@ -3,15 +3,34 @@ packages:
   - type: github_release
     repo_owner: antonmedv
     repo_name: fx
-    description: Command-line tool and terminal JSON viewer
-    version_constraint: semver(">= 21.0.0")
-    asset: fx_{{.OS}}_{{.Arch}}
+    description: Terminal JSON viewer & processor
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
-        asset: fx-{{.OS}}.zip
+      - version_constraint: Version == "23.0.0"
+        no_asset: true
+      - version_constraint: semver("<= 10.0.0")
+        asset: fx-{{.OS}}
+        format: raw
         replacements:
           darwin: macos
-          windows: win.exe
-        files:
-          - name: fx
-            src: fx-{{.OS}}
+          windows: win
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 20.0.2")
+        asset: fx-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macos
+          windows: win
+        overrides:
+          - goos: windows
+            asset: fx-{{.OS}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: fx_{{.OS}}_{{.Arch}}
+        format: raw
