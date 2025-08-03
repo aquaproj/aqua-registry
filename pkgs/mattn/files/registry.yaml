@@ -4,18 +4,25 @@ packages:
     repo_owner: mattn
     repo_name: files
     description: Fast file find
-    asset: files_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
-    files:
-      - name: files
-        src: files_{{.Version}}_{{.OS}}_{{.Arch}}/files
-    version_constraint: semver(">= 0.3.4")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.3.4")
+      - version_constraint: Version in ["v0.3.2", "v0.3.7"]
+        no_asset: true
+      - version_constraint: Version in ["v0.3.1", "v0.3.3"]
+        asset: files_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
         supported_envs:
           - darwin
+          - windows
           - amd64
-        rosetta2: true
+      - version_constraint: "true"
+        asset: files_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
