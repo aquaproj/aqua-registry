@@ -2,24 +2,36 @@
 packages:
   - type: github_release
     repo_owner: runmedev
-    description: Execute commands directly from a README
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.2.0")
-    # https://github.com/stateful/runme/pull/35
     repo_name: runme
+    description: DevOps Notebooks Built with Markdown
+    version_constraint: "false"
     aliases:
+      - name: stateful/rdme
       - name: stateful/runme
-    asset: runme_{{.OS}}_{{.Arch}}.{{.Format}}
     version_overrides:
-      - version_constraint: "true"
-        repo_name: rdme
+      - version_constraint: semver("<= 0.1.12")
         asset: rdme_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: rdme
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: runme_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
