@@ -3,16 +3,18 @@ packages:
   - type: github_release
     repo_owner: Songmu
     repo_name: timeout
-    asset: timeout_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: zip
     description: Timeout invocation. Go porting of GNU timeout and able to use as Go package
-    overrides:
-      - goos: linux
-        format: tar.gz
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    files:
-      - name: go-timeout
-        src: timeout_{{.Version}}_{{.OS}}_{{.Arch}}/go-timeout
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: timeout_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
