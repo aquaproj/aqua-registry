@@ -3,34 +3,36 @@ packages:
   - type: github_release
     repo_owner: docker
     repo_name: hub-tool
-    asset: hub-tool-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: Docker Hub experimental CLI tool
-    files:
-      - name: hub-tool
-        src: hub-tool/hub-tool
-    overrides:
-      - goos: windows
-        format: zip
-        files:
-          - name: hub-tool
-            src: hub-tool.exe
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    version_constraint: semver(">= 0.4.1")
-    # darwin/arm64 was supported
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.1.1")
-        # linux/arm64 was supported
-        # asset name and format were changed
-        rosetta2: true
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.1.0"
         asset: hub-tool_{{.OS}}_{{.Arch}}
-        overrides: []
         format: raw
         rosetta2: true
+        windows_arm_emulation: true
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 0.4.0")
+        asset: hub-tool-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.4.5")
+        asset: hub-tool-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: hub-tool-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
