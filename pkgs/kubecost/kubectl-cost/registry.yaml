@@ -4,8 +4,55 @@ packages:
     repo_owner: kubecost
     repo_name: kubectl-cost
     description: CLI for determining the cost of Kubernetes workloads
-    supported_envs:
-      - darwin
-      - amd64
-    complete_windows_ext: false
-    asset: kubectl-cost-{{.OS}}-{{.Arch}}.tar.gz
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.0.4-alpha.1", "v0.0.4-alpha.3", "v0.2.5"]
+        no_asset: true
+      - version_constraint: Version == "v0.0.4-alpha.2"
+        asset: kubectl-cost-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.0.2")
+      - version_constraint: semver("<= 0.0.3")
+        asset: kubectl-cost-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.1.1")
+        asset: kubectl-cost-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.6.3")
+        asset: kubectl-cost-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.6.5")
+        no_asset: true
+      - version_constraint: "true"
+        asset: kubectl-cost-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
