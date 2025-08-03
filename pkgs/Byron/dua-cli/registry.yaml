@@ -118,6 +118,25 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: Version == "v2.31.0"
+        asset: dua-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: dua
+            src: "{{.AssetWithoutExt}}/dua"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - darwin
+          - linux
       - version_constraint: "true"
         asset: dua-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
