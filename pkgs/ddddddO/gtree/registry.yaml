@@ -3,39 +3,47 @@ packages:
   - type: github_release
     repo_owner: ddddddO
     repo_name: gtree
-    description: Generate directory trees and the directories itself using Markdown or Programmatically. Provide CLI, Golang library and Web (using WebAssembly)
-    asset: gtree_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    checksum:
-      type: github_release
-      asset: gtree_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 1.8.4")
+    description: Using either Markdown or Programmatically to generate trees and directories, and to verify directories. Provide CLI, Go package and Web
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v1.8.3"
+      - version_constraint: Version in ["v0.2.0", "v1.8.3", "v1.10.6"]
         no_asset: true
-      - version_constraint: semver(">= 1.2.0")
-        replacements:
-          amd64: x86_64
-      - version_constraint: semver("< 1.2.0")
+      - version_constraint: semver("<= 1.1.1")
         asset: gentree_{{.OS}}_{{.Arch}}.{{.Format}}
-        files:
-          - name: gentree
-        overrides: []
+        format: tar.gz
         replacements:
           amd64: x86_64
-        supported_envs:
-          - linux
-          - darwin
         checksum:
           type: github_release
           asset: gentree_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.8.2")
+        asset: gtree_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: gtree_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: gtree_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: gtree_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
