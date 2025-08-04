@@ -75755,11 +75755,13 @@ packages:
     description: trzsz-ssh ( tssh ) is an ssh client designed as a drop-in replacement for the openssh client. It aims to provide complete compatibility with openssh, mirroring all its features, while also offering additional useful features. Such as login prompt, batch login, remember password, automated interaction, trzsz, zmodem(rz/sz), udp mode like mosh, etc
     files:
       - name: tssh
-        src: tssh_{{.Version | trimPrefix "v"}}_{{.OS}}_{{.Arch}}/tssh
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.1.20")
+      - version_constraint: "true"
         asset: tssh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: tssh
+            src: "{{.AssetWithoutExt}}/tssh"
         format: tar.gz
         replacements:
           amd64: x86_64
@@ -75772,22 +75774,6 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: "true"
-        asset: tssh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: zip
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: macos
-        checksum:
-          type: github_release
-          asset: tssh_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            format: tar.gz
-          - goos: darwin
-            format: tar.gz
   - type: github_release
     repo_owner: tsenart
     repo_name: vegeta
