@@ -10582,6 +10582,17 @@ packages:
           asset: gvm_{{trimV .Version}}_SHA256SUMS
           algorithm: sha256
   - type: github_release
+    repo_owner: andreybleme
+    repo_name: lazycontainer
+    description: Fancy terminal UI for Apple Containers
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: lazycontainer_{{.OS}}_{{.Arch}}
+        format: raw
+        supported_envs:
+          - darwin
+  - type: github_release
     repo_owner: ankitpokhrel
     repo_name: jira-cli
     description: Feature-rich interactive Jira command line
@@ -20186,6 +20197,60 @@ packages:
         overrides:
           - goos: windows
             format: zip
+  - type: github_release
+    repo_owner: cilium
+    repo_name: hubble
+    description: "Hubble - Network, Service & Security Observability for Kubernetes using eBPF"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.6.1"
+        asset: hubble-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: hubble-{{.OS}}-{{.Arch}}.tar.gz.sha256sum
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.6.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.7.1")
+        asset: hubble-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          arm64: arm
+        checksum:
+          type: github_release
+          asset: hubble-{{.OS}}-{{.Arch}}.tar.gz.sha256sum
+          algorithm: sha256
+      - version_constraint: semver("<= 0.8.2")
+        asset: hubble-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: hubble-{{.OS}}-{{.Arch}}.tar.gz.sha256sum
+          algorithm: sha256
+      - version_constraint: semver("<= 1.16.2")
+        asset: hubble-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: hubble-{{.OS}}-{{.Arch}}.tar.gz.sha256sum
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: hubble-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: hubble-{{.OS}}-{{.Arch}}.tar.gz.sha256sum
+          algorithm: sha256
   - type: github_release
     repo_owner: cirruslabs
     repo_name: tart
@@ -39481,6 +39546,63 @@ packages:
           - name: jjui
             src: "{{.AssetWithoutExt}}"
   - type: github_release
+    repo_owner: iffse
+    repo_name: pay-respects
+    description: Command suggestions, command-not-found and thefuck replacement written in Rust
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.5.12")
+        error_message: This version is not supported. Please use a newer version.
+      - version_constraint: Version == "v0.5.13"
+        asset: pay-respects-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            asset: pay-respects-{{.Arch}}-{{.OS}}.{{.Format}}
+      - version_constraint: semver("<= 0.6.2")
+        asset: pay-respects-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.6.12")
+        asset: pay-respects-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.zst
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: pay-respects-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.zst
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: igor-petruk
     repo_name: scriptisto
     description: A language-agnostic "shebang interpreter" that enables you to write scripts in compiled languages
@@ -49716,6 +49838,70 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+  - type: github_release
+    repo_owner: linebender
+    repo_name: resvg
+    description: An SVG rendering library
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.15.0")
+        error_message: This version is not supported. Please use a newer version.
+      - version_constraint: Version == "0.45.0"
+        asset: resvg-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.41.0")
+        asset: resvg-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+          windows: win64
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: windows
+            asset: resvg-{{.OS}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.44.0")
+        asset: resvg-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          windows: win64
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: resvg-{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: "true"
+        asset: resvg-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+          windows: win64
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: resvg-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: darwin
+            asset: resvg-{{.OS}}-{{.Arch}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: linkerd
     repo_name: linkerd2
@@ -69058,6 +69244,28 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+  - type: github_release
+    repo_owner: specstoryai
+    repo_name: getspecstory
+    description: Install our extensions for GH Copilot, Cursor and Claude Code. Try BearClaude. File issues and requests
+    files:
+      - name: specstory
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: SpecStoryCLI_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: SpecStoryCLI_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
   - type: go_install
     repo_owner: spf13
     repo_name: cobra-cli
@@ -75749,6 +75957,31 @@ packages:
         complete_windows_ext: false
         files:
           - name: trunk
+  - type: github_release
+    repo_owner: trzsz
+    repo_name: trzsz-ssh
+    description: trzsz-ssh ( tssh ) is an ssh client designed as a drop-in replacement for the openssh client. It aims to provide complete compatibility with openssh, mirroring all its features, while also offering additional useful features. Such as login prompt, batch login, remember password, automated interaction, trzsz, zmodem(rz/sz), udp mode like mosh, etc
+    files:
+      - name: tssh
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: tssh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        files:
+          - name: tssh
+            src: "{{.AssetWithoutExt}}/tssh"
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: tssh_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: tsenart
     repo_name: vegeta
