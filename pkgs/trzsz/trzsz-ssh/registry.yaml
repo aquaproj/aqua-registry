@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: trzsz
+    repo_name: trzsz-ssh
+    description: trzsz-ssh ( tssh ) is an ssh client designed as a drop-in replacement for the openssh client. It aims to provide complete compatibility with openssh, mirroring all its features, while also offering additional useful features. Such as login prompt, batch login, remember password, automated interaction, trzsz, zmodem(rz/sz), udp mode like mosh, etc
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.20")
+        asset: tssh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: tssh_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: tssh_{{trimV .Version}}_{{.OS}}7_{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: tssh_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: tssh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: darwin
+            format: tar.gz
+            asset: tssh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+          - goos: windows
+            goarch: amd64
+            replacements:
+              windows: win
+          - goos: windows
+            goarch: arm64
+            asset: tssh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
