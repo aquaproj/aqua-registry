@@ -3,28 +3,219 @@ packages:
   - type: github_release
     repo_owner: vi
     repo_name: websocat
-    description: "Command-line client for WebSockets, like netcat (or curl) for ws:// with advanced socat-like functions"
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    format: raw
-    rosetta2: true
-    version_constraint: semver(">= 1.10.0")
-    asset: websocat.{{.Arch}}-{{.OS}}
-    replacements:
-      darwin: apple-darwin
-      amd64: x86_64
-      windows: pc-windows-gnu
-      linux: unknown-linux-musl
-      arm64: aarch64
+    description: Command-line client for WebSockets, like netcat (or curl) for ws:// with advanced socat-like functions
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.2.0"
+        asset: websocat_0.2_{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        overrides:
+          - goos: darwin
+            asset: websocat_0.2_nossl_{{.Arch}}-{{.OS}}
+          - goos: windows
+            asset: websocat_0.2_nossl_i686-{{.OS}}
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: Version == "v0.3.0"
+        asset: websocat_0.3_{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        overrides:
+          - goos: darwin
+            asset: websocat_nossl_0.3_{{.Arch}}-{{.OS}}
+          - goos: windows
+            asset: websocat_nossl_0.3_i686-{{.OS}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.4.0"
+        asset: websocat_nossl_0.4_{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        overrides:
+          - goos: linux
+            asset: websocat_0.4_{{.Arch}}-{{.OS}}
+          - goos: windows
+            asset: websocat_nossl_0.4_i686-{{.OS}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.5.1-alpha"
+        asset: websocat-0.5.1--{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            asset: websocat-0.5.1--{{.OS}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.0.0-alpha"
+        asset: websocat_1.0_{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        overrides:
+          - goos: darwin
+            asset: websocat_nossl_1.0_{{.Arch}}-{{.OS}}
+          - goos: windows
+            asset: websocat_nossl_1.0_i686-{{.OS}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.0.0-beta"
+        asset: websocat_1.0_{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        overrides:
+          - goos: darwin
+            asset: websocat_nossl_1.0_{{.Arch}}-{{.OS}}
+          - goos: windows
+            asset: websocat_1.0_i686-{{.OS}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.9.0"
         asset: websocat_{{.OS}}
+        format: raw
         replacements:
           darwin: mac
-          linux: linux64
           windows: win64
+        overrides:
+          - goos: linux
+            asset: websocat_{{.OS}}64
+            replacements:
+              amd64: x64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v1.14.0"
+        asset: websocat.{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: websocat_max.{{.Arch}}-{{.OS}}
+      - version_constraint: Version == "v2.0.0-alpha0"
+        asset: websocat_{{.OS}}
+        format: raw
+        replacements:
+          darwin: mac
+          windows: win64
+        overrides:
+          - goos: linux
+            asset: websocat_{{.Arch}}-{{.OS}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v3.0.0-prealpha0"
+        asset: websocat3.{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+      - version_constraint: Version == "v4.0.0-alpha1"
+        asset: websocat4.{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.8.0")
+        asset: websocat_{{.OS}}
+        format: raw
+        replacements:
+          darwin: mac
+          windows: win64
+        overrides:
+          - goos: linux
+            asset: websocat_{{.Arch}}-{{.OS}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.11.0")
+        asset: websocat.{{.Arch}}-{{.OS}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+      - version_constraint: "true"
+        asset: websocat.{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
