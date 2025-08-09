@@ -1570,6 +1570,50 @@ packages:
     repo_name: mgo
     description: Build and bundle multiple GOAMD64 variants in a single executable
   - type: github_release
+    repo_owner: CQLabs
+    repo_name: homebrew-dcm
+    description: Homebrew formula for DCM
+    files:
+      - name: dcm
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "1.0.0"
+        asset: dcm-{{.OS}}-{{.Arch}}-release.{{.Format}}
+        format: zip
+        files:
+          - name: dcm
+        replacements:
+          amd64: x64
+          darwin: macos
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: arm
+          - goos: windows
+            asset: dcm-{{.OS}}-release.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: dcm-{{.OS}}-{{.Arch}}-release.{{.Format}}
+        format: zip
+        files:
+          - name: dcm
+        replacements:
+          amd64: x64
+          darwin: macos
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: arm
+          - goos: windows
+            asset: dcm-{{.OS}}-release.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
     repo_owner: Canop
     repo_name: dysk
     description: A linux utility to get information on filesystems, like df but better
