@@ -10,6 +10,16 @@ packages:
     version_overrides:
       - version_constraint: Version == "v0.1.2"
         no_asset: true
+      - version_constraint: semver("<= 0.5.1")
+        asset: oidc-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
       - version_constraint: "true"
         asset: oidc-{{.Arch}}-{{.OS}}
         format: raw
@@ -20,3 +30,5 @@ packages:
           darwin: apple-darwin
           linux: unknown-linux-musl
           windows: pc-windows-msvc
+        github_artifact_attestations:
+          signer_workflow: ctron/oidc-cli/.github/workflows/release.yaml
