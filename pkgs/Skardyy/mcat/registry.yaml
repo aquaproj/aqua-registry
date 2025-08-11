@@ -10,6 +10,9 @@ packages:
         asset: mcat-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
+        files:
+          - name: mcat
+            src: mcat-{{.Arch}}-{{.OS}}/mcat
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -20,19 +23,18 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
-        files: # ADD THIS SECTION
-          - name: mcat
-            src: mcat-{{.Arch}}-{{.OS}}/mcat
         overrides:
           - goos: windows
             format: zip
-            files: # ADD THIS SECTION
+            files:
               - name: mcat
-                src: mcat.exe
       - version_constraint: "true"
         asset: mcat-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
+        files:
+          - name: mcat
+            src: mcat-{{.Arch}}-{{.OS}}/mcat
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -51,11 +53,7 @@ packages:
             format: zip
             files:
               - name: mcat
-                src: mcat.exe
         supported_envs:
           - linux
           - darwin/arm64
-          - windows/amd64
-        files: # ADD THIS SECTION
-          - name: mcat
-            src: mcat-{{.Arch}}-{{.OS}}/mcat
+          - windows
