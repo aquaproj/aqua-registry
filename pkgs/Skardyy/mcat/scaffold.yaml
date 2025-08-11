@@ -7,15 +7,22 @@ name: Skardyy/mcat
 # version_filter: not (Version matches "-rc$")
 # version_prefix: cli-
 # all_assets_filter: not (Asset matches "-cli")
+asset: mcat-{{.Arch}}-{{.OS}}.tar.xz
 format: tar.xz
-asset: mcat-{{.Arch}}-{{.OS}}.{{.Format}}
-files:
-  - name: mcat
-    src: mcat-{{.Arch}}-{{.OS}}/mcat
 replacements:
   linux: unknown-linux-gnu
   darwin: apple-darwin
   windows: pc-windows-msvc
   amd64: x86_64
   arm64: aarch64
-
+files:
+  - name: mcat
+    src: mcat-{{.Arch}}-{{.OS}}/mcat
+format_overrides:
+  - goos: linux
+    format: tar.xz
+  - goos: darwin
+    format: tar.xz
+  - goos: windows
+    format: tar.xz
+complete_windows_ext: true
