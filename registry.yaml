@@ -5652,6 +5652,63 @@ packages:
           asset: konf-go_{{trimV .Version}}_checksums.txt
           algorithm: sha256
   - type: github_release
+    repo_owner: Skardyy
+    repo_name: mcat
+    description: Terminal image, video, directory, and Markdown viewer
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.3"
+        asset: mcat-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: mcat
+            src: mcat-{{.Arch}}-{{.OS}}/mcat
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: mcat
+      - version_constraint: "true"
+        asset: mcat-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: mcat
+            src: mcat-{{.Arch}}-{{.OS}}/mcat
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: amd64
+          - goos: windows
+            format: zip
+            files:
+              - name: mcat
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows
+  - type: github_release
     repo_owner: Songmu
     repo_name: ecschedule
     description: ecschedule is a tool to manage ECS Scheduled Tasks
@@ -5867,6 +5924,28 @@ packages:
     overrides:
       - goos: linux
         format: tar.gz
+  - type: github_release
+    repo_owner: Songmu
+    repo_name: laminate
+    description: A command-line bridge tool that orchestrates external image generation commands to convert text/code strings to images
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: laminate_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+        files:
+          - name: laminate
+            src: laminate_{{.Version}}_{{.OS}}_{{.Arch}}/laminate
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: Songmu
     repo_name: make2help
@@ -41364,6 +41443,98 @@ packages:
           - goos: windows
             format: zip
   - type: github_release
+    repo_owner: j178
+    repo_name: prek
+    description: Better `pre-commit`, re-engineered in Rust
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.5")
+        asset: pre-commit-rs-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        files:
+          - name: prek
+            src: "{{.AssetWithoutExt}}/pre-commit"
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: prek
+                src: pre-commit
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.0.22")
+        asset: prefligit-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        files:
+          - name: prek
+            src: "{{.AssetWithoutExt}}/prefligit"
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: prek
+                src: prefligit
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: prek-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        files:
+          - name: prek
+            src: "{{.AssetWithoutExt}}/prek"
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: prek
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
     repo_owner: jacek-kurlit
     repo_name: pik
     description: Process Interactive Kill
@@ -62230,6 +62401,20 @@ packages:
           - linux
           - darwin
   - type: github_release
+    repo_owner: pypa
+    repo_name: pipx
+    description: Install and Run Python Applications in Isolated Environments
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.1.0") or Version == "1.3.0"
+        no_asset: true
+      - version_constraint: "true"
+        asset: pipx.pyz
+        format: raw
+        supported_envs:
+          - darwin
+          - linux
+  - type: github_release
     repo_owner: qarmin
     repo_name: czkawka
     description: Multi functional app to find duplicates, empty folders, similar images etc
@@ -63386,6 +63571,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: Version == "v0.21.0"
+        no_asset: true
       - version_constraint: "true"
         asset: restish-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
