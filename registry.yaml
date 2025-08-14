@@ -6102,8 +6102,10 @@ packages:
       - name: go-timeout
         src: timeout_{{.Version}}_{{.OS}}_{{.Arch}}/go-timeout
   - type: github_release
-    repo_owner: StyraInc
+    repo_owner: StyraOSS
     repo_name: regal
+    aliases:
+      - name: StyraInc/regal
     description: Regal is a linter for Rego, with the goal of making your Rego magnificent
     version_constraint: "false"
     version_overrides:
@@ -20895,25 +20897,38 @@ packages:
     repo_owner: cloudflare
     repo_name: cfssl
     description: "CFSSL: Cloudflare's PKI and TLS toolkit"
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - amd64
-    format: raw
-    files:
-      - name: cfssljson
-    checksum:
-      type: github_release
-      asset: cfssl_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 1.3.1")
-    asset: cfssljson_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.2.0")
         asset: cfssljson_{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          arm64: arm
+      - version_constraint: semver("<= 1.3.4")
+        no_asset: true
+      - version_constraint: semver("<= 1.6.3")
+        asset: cfssljson_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
         checksum:
           type: github_release
-          asset: SHA256SUMS
+          asset: cfssl_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: cfssljson_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: cfssl_{{trimV .Version}}_checksums.txt
           algorithm: sha256
   - name: cloudflare/cfssl/mkbundle
     type: github_release
@@ -24967,6 +24982,33 @@ packages:
         supported_envs:
           - linux
           - darwin
+  - type: github_release
+    repo_owner: dagger
+    repo_name: container-use
+    description: Development environments for coding agents. Enable multiple agents to work safely and independently with your preferred stack
+    files:
+      - name: container-use
+      - name: cu
+        src: container-use
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.3.1")
+        asset: container-use_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: container-use_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: dagger
     repo_name: dagger
