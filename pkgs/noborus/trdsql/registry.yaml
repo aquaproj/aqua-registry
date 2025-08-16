@@ -3,12 +3,57 @@ packages:
   - type: github_release
     repo_owner: noborus
     repo_name: trdsql
-    asset: trdsql_{{.Version}}_{{.OS}}_{{.Arch}}.zip
-    description: CLI tool that can execute SQL queries on CSV, LTSV, JSON and TBLN. Can output to various formats
-    files:
-      - name: trdsql
-        src: trdsql_{{.Version}}_{{.OS}}_{{.Arch}}/trdsql
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    description: CLI tool that can execute SQL queries on CSV, LTSV, JSON, YAML and TBLN. Can output to various formats
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.3.0", "v0.10.1-rc1", "v0.11.0"]
+        no_asset: true
+      - version_constraint: Version == "v0.3.0d2"
+        asset: trdsql_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.7.0"
+        asset: trdsql_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        supported_envs:
+          - darwin
+      - version_constraint: Version in ["v0.8.0", "v0.12.1"]
+        asset: trdsql_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.6.3")
+        asset: trdsql_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.7.3")
+        asset: trdsql_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.7.6")
+        asset: trdsql_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.7.10")
+        no_asset: true
+      - version_constraint: "true"
+        asset: trdsql_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
