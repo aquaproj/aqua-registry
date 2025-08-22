@@ -1,39 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
   - type: github_release
     repo_owner: astral-sh
     repo_name: rye
     aliases:
       - name: mitsuhiko/rye
-    description: An Experimental Package Management Solution for Python
-    asset: rye-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: gz
-    files:
-      - name: rye
-        src: rye-{{.Arch}}-{{.OS}}
-    overrides:
-      - goos: windows
-        format: raw
-        asset: rye-{{.Arch}}-{{.OS}}
-        replacements:
-          arm64: arm64
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: macos
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
-    version_constraint: semver(">= 0.4.0")
+    description: a Hassle-Free Python Experience
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.2.0")
-        checksum:
-          enabled: false
-      - version_constraint: semver("< 0.2.0")
+      - version_constraint: semver("<= 0.1.2")
+        asset: rye-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        files:
+          - name: rye
+            src: rye-{{.Arch}}-{{.OS}}
+        replacements:
+          amd64: x86_64
+          darwin: macos
         overrides:
           - goos: darwin
             replacements:
@@ -41,11 +25,41 @@ packages:
           - goos: windows
             format: raw
             asset: rye-{{.Arch}}-{{.OS}}
-        replacements:
-          amd64: x86_64
-          darwin: macos
         supported_envs:
           - darwin
+          - windows
           - amd64
+      - version_constraint: semver("<= 0.3.0")
+        asset: rye-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        files:
+          - name: rye
+            src: rye-{{.Arch}}-{{.OS}}
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        overrides:
+          - goos: windows
+            format: raw
+            asset: rye-{{.Arch}}-{{.OS}}
+      - version_constraint: "true"
+        asset: rye-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        files:
+          - name: rye
+            src: rye-{{.Arch}}-{{.OS}}
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
         checksum:
-          enabled: false
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: raw
+            asset: rye-{{.Arch}}-{{.OS}}

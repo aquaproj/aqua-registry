@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
   - type: github_release
     repo_owner: WebAssembly
@@ -41,8 +42,27 @@ packages:
         src: wabt-{{.Version}}/bin/wat-desugar
       - name: wat2wasm
         src: wabt-{{.Version}}/bin/wat2wasm
-    version_constraint: semver(">= 1.0.34")
+    version_constraint: "false"
     version_overrides:
+      - version_constraint: semver(">= 1.0.35")
+        asset: wabt-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            asset: wabt-{{.Version}}-{{.OS}}.{{.Format}}
+        replacements:
+          darwin: macos-14
+          linux: ubuntu-20.04
+        supported_envs:
+          - darwin
+          - amd64
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: Version == "1.0.34"
       - version_constraint: Version == "1.0.33"
         files: &wabt_files_1
           - name: spectest-interp

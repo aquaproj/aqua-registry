@@ -1,47 +1,88 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
   - type: github_release
     repo_owner: kyverno
     repo_name: kyverno
-    description: Kubernetes Native Policy Management
-    asset: kyverno-cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    replacements:
-      amd64: x86_64
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 1.6.0-rc1")
+    description: Cloud Native Policy Management
+    version_filter: not (Version matches "-(alpha|beta|rc)")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 1.4.2-rc4")
-        supported_envs:
-          - darwin
-          - amd64
+      - version_constraint: Version == "v1.5.5"
+        no_asset: true
+      - version_constraint: semver("<= 1.1.5")
+        no_asset: true
+      - version_constraint: semver("<= 1.5.8")
+        asset: kyverno-cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-      - version_constraint: semver(">= 1.4.2-rc3")
-        overrides: []
-        supported_envs:
-          - linux/amd64
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
         checksum:
-          enabled: false
-        files:
-          - name: kyverno
-            src: kyverno-cli_{{.Version}}_{{.OS}}_{{.Arch}}/kyverno
-      - version_constraint: semver(">= 1.1.6-rc5")
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
         supported_envs:
           - darwin
+          - windows
           - amd64
-        rosetta2: true
-        files:
-          - name: kyverno
-            src: kyverno-cli
-      - version_constraint: semver("< 1.1.6-rc5")
-        asset: kyverno_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        rosetta2: true
+      - version_constraint: semver("<= 1.10.0")
+        asset: kyverno-cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.10.7")
+        asset: kyverno-cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/kyverno/kyverno/releases/download/{{.Version}}/checksums.txt.pem
+              - --certificate-identity
+              - https://github.com/kyverno/kyverno/.github/workflows/release.yaml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/kyverno/kyverno/releases/download/{{.Version}}/checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: kyverno-cli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/kyverno/kyverno/releases/download/{{.Version}}/checksums.txt.pem
+              - --certificate-identity
+              - https://github.com/kyverno/kyverno/.github/workflows/release.yaml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/kyverno/kyverno/releases/download/{{.Version}}/checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip

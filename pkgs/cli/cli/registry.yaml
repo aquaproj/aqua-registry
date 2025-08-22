@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
   - type: github_release
     repo_owner: cli
@@ -111,6 +112,22 @@ packages:
           type: github_release
           asset: gh_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+      - version_constraint: semver("< 2.50.0")
+        asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: windows
+            files:
+              - name: gh
+                src: bin/gh.exe
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: gh_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
@@ -127,3 +144,5 @@ packages:
           type: github_release
           asset: gh_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: cli/cli/.github/workflows/deployment.yml

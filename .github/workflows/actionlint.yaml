@@ -1,24 +1,12 @@
 ---
 name: actionlint
-env:
-  AQUA_LOG_COLOR: always
-on:
-  push:
-    branches: [main]
-    paths:
-      - .github/**
-  pull_request:
-    branches: [main]
-    paths:
-      - .github/**
-permissions: {}
+on: pull_request
 jobs:
-  default:
-    runs-on: ubuntu-latest
+  actionlint:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
-      - uses: actions/checkout@1d96c772d19495a3b5c517cd2bc0cb401ea0529f # v4.1.3
-      - uses: aquaproj/aqua-installer@4551ec64e21bf0f557c2525135ff0bd2cba40ec7 # v3.0.0
-        with:
-          aqua_version: v2.27.3
-          policy_allow: "true"
-      - run: actionlint -ignore "duplicate value"
+      - uses: suzuki-shunsuke/actionlint-action@29e0b7cda52e51a495d15f22759745ef6e19583a # v0.1.1

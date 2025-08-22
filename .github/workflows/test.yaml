@@ -3,109 +3,23 @@ name: test
 on:
   pull_request:
     branches: [main]
+concurrency:
+  group: ${{ github.workflow }}--${{ github.ref }}
+  cancel-in-progress: true
 permissions: {}
-env:
-  AQUA_LOG_COLOR: always
 jobs:
-  path-filter:
-    # Get changed files to filter jobs
-    outputs:
-      renovate-config-validator: ${{steps.changes.outputs.renovate-config-validator}}
-      check-files: ${{steps.changes.outputs.check-files}}
-      generate-registry: ${{steps.changes.outputs.generate-registry}}
-      json-schema: ${{steps.changes.outputs.json-schema}}
-      test-docker: ${{steps.changes.outputs.test-docker}}
-    runs-on: ubuntu-latest
-    permissions: {}
-    steps:
-      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
-        id: changes
-        with:
-          filters: |
-            renovate-config-validator:
-              - renovate.json5
-              - .github/workflows/wc-renovate-config-validator.yaml
-            check-files:
-              - pkgs/**/pkg.yaml
-              - pkgs/**/registry.yaml
-              - .github/workflows/wc-check-files.yaml
-            generate-registry:
-              - aqua/generate-registry.yaml
-              - registry.yaml
-              - pkgs/**/registry.yaml
-              - .github/workflows/wc-generate-registry.yaml
-            json-schema:
-              - registry.yaml
-              - .github/workflows/wc-json-schema.yaml
-            test-docker:
-              - docker/*
-              - scripts/**
-              - cmdx.yaml
-              - .github/workflows/wc-test-docker.yaml
-
-  status-check:
-    # This job is used for main branch's branch protection rule's status check.
-    # If all dependent jobs succeed or are skipped this job succeeds.
-    runs-on: ubuntu-latest
-    needs:
-      - enable-automerge-renovate
-      - renovate-config-validator
-      - check-files
-      - generate-registry
-      - json-schema
-      - prettier
-      - test-docker
-      - test
-    permissions: {}
-    if: failure()
-    steps:
-      - run: exit 1
-
-  enable-automerge-renovate:
-    uses: ./.github/workflows/wc-enable-auto-merge.yaml
-    if: |
-      github.event.pull_request.user.login == 'renovate[bot]' && contains(github.event.pull_request.body, ' **Automerge**: Enabled.')
-    secrets:
-      gh_app_id: ${{secrets.APP_ID}}
-      gh_app_private_key: ${{secrets.APP_PRIVATE_KEY}}
-
-  renovate-config-validator:
-    uses: ./.github/workflows/wc-renovate-config-validator.yaml
-    needs: path-filter
-    if: ${{needs.path-filter.outputs.renovate-config-validator == 'true'}}
+  test:
+    uses: ./.github/workflows/workflow_call_test.yaml
     permissions:
       contents: read
-
-  check-files:
-    uses: ./.github/workflows/wc-check-files.yaml
-    needs: path-filter
-    if: ${{needs.path-filter.outputs.check-files == 'true'}}
+      pull-requests: read
+  status-check:
+    runs-on: ubuntu-24.04
+    # https://github.com/aquaproj/aqua-registry/pull/38449#issuecomment-3038859524
+    if: always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled'))
+    timeout-minutes: 10
     permissions: {}
-
-  generate-registry:
-    uses: ./.github/workflows/wc-generate-registry.yaml
-    needs: path-filter
-    if: ${{needs.path-filter.outputs.generate-registry == 'true'}}
-    permissions: {}
-
-  json-schema:
-    uses: ./.github/workflows/wc-json-schema.yaml
-    needs: path-filter
-    if: ${{needs.path-filter.outputs.json-schema == 'true'}}
-    permissions: {}
-
-  prettier:
-    uses: ./.github/workflows/wc-prettier.yaml
-    permissions: {}
-
-  test-docker:
-    uses: ./.github/workflows/wc-test-docker.yaml
-    needs: path-filter
-    if: ${{needs.path-filter.outputs.test-docker == 'true'}}
-
-  ci-info:
-    uses: ./.github/workflows/wc-ci-info.yaml
-
-  test:
-    needs: ci-info
-    uses: ./.github/workflows/wc-test.yaml
+    needs:
+      - test
+    steps:
+      - run: exit 1

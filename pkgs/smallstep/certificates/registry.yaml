@@ -1,296 +1,141 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
   - type: github_release
     repo_owner: smallstep
     repo_name: certificates
     description: A private certificate authority (X.509 & SSH) & ACME server for secure automated certificate management, so you can use TLS everywhere & SSO for SSH
+    version_filter: not (Version matches "-rc")
+    files:
+      - name: step-ca
+        src: step-ca_{{.OS}}_{{.Arch}}/step-ca
     version_constraint: "false"
     version_overrides:
-      - &smallstep_certificates_default
-        version_constraint: semver(">= 0.25.1")
-        asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+      - version_constraint: Version in ["v0.15.1", "v0.17.5"]
+        no_asset: true
+      - version_constraint: semver("<= 0.13.3")
+        asset: step-certificates_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
-          - name: step-ca
-        overrides:
-          - goos: windows
-            format: zip
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.23.0-rc.2")
-        asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: step-ca
-            src: step-ca_{{trimV .Version}}/step-ca
-        overrides:
-          - goos: windows
-            format: zip
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.22.2-rc9")
-        overrides:
-          - goos: darwin
-            files: &step_ca_files2
-              - name: step-ca
-                src: step-ca_{{trimV .Version}}/bin/step-ca
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
-        asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: step-ca
-            src: step-ca_{{trimV .Version}}/step-ca
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.22.2-rc12")
-        asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: step-ca
-            src: step-ca_{{trimV .Version}}/step-ca
-        overrides:
-          - goos: windows
-            format: zip
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.22.2-rc11")
-        overrides: []
-        supported_envs:
-          - linux
-        asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: step-ca
-            src: step-ca_{{trimV .Version}}/step-ca
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.22.2-rc10")
-        overrides:
-          - goos: darwin
-            files: *step_ca_files2
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
-        asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: step-ca
-            src: step-ca_{{trimV .Version}}/step-ca
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.16.0")
-        files: *step_ca_files2
-        asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.16.0-rc.1")
-        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
-        files: &step_ca_files3
           - name: step-ca
             src: step-certificates_{{trimV .Version}}/bin/step-ca
-        overrides: []
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.14.1")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}-dev_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: step-ca
+            src: step-certificates_{{trimV .Version}}-dev/bin/step-ca
+        rosetta2: true
         supported_envs:
           - linux
           - darwin
-        rosetta2: true
-        checksum:
-          enabled: false
+      - version_constraint: semver("<= 0.15.8")
+        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-      - version_constraint: semver(">= 0.15.16-rc3.test-arm6")
-        files: *step_ca_files2
+        files:
+          - name: step-ca
+            src: step-certificates_{{trimV .Version}}/bin/step-ca
+        rosetta2: true
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.15.15")
         asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: step-ca
+            src: step-ca_{{trimV .Version}}/bin/step-ca
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.17.2")
+        asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: step-ca
+            src: step-ca_{{trimV .Version}}/bin/step-ca
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         overrides:
           - goos: windows
             format: zip
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.15.16-rc2.test-arm6")
-        overrides: []
-        files: *step_ca_files2
+      - version_constraint: semver("<= 0.17.4")
         asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.15.16-rc1.test-arm6")
-        no_asset: true
-      - version_constraint: semver(">= 0.15.10")
-        overrides: []
-        files: *step_ca_files2
-        asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-      - version_constraint: semver(">= 0.15.9-rc18")
-        no_asset: true
-      - version_constraint: semver(">= 0.14.3")
-        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
-        files: *step_ca_files3
-        overrides: []
-        supported_envs:
-          - linux
-          - darwin
-        rosetta2: true
-        checksum:
-          enabled: false
-        format: tar.gz
-      - version_constraint: semver(">= 0.14.3-rc.2.32bitbadger2")
-        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
-        overrides: []
-        rosetta2: true
-        files: *step_ca_files3
-        supported_envs:
-          - linux
-          - darwin
-        checksum:
-          enabled: false
-        format: tar.gz
-      - version_constraint: semver(">= 0.14.2")
-        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
-        files: *step_ca_files3
-        overrides: []
-        supported_envs:
-          - linux
-          - darwin
-        rosetta2: true
-        checksum:
-          enabled: false
-        format: tar.gz
-      - version_constraint: semver(">= 0.14.0")
-        asset: step-certificates_{{.OS}}_{{trimV .Version}}-dev_{{.Arch}}.{{.Format}}
-        files: &step_ca_files4
-          - name: step-ca
-            src: step-certificates_{{trimV .Version}}-dev/bin/step-ca
-        overrides: []
-        supported_envs:
-          - linux
-          - darwin
-        rosetta2: true
-        checksum:
-          enabled: false
-        format: tar.gz
-      - version_constraint: semver(">= 0.14.0-rc.16")
-        asset: step-certificates_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
-        files: *step_ca_files3
-        overrides: []
-        supported_envs:
-          - linux
-          - darwin
-        rosetta2: true
-        checksum:
-          enabled: false
-        format: tar.gz
-      - version_constraint: semver(">= 0.14.0-rc.14")
-        asset: step-certificates_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        overrides: []
-        files: *step_ca_files3
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
-        checksum:
-          enabled: false
-        format: tar.gz
-      - version_constraint: Version == "v0.14.0-rc.9"
-        asset: step-certificates_0.14.0-rc.8_{{.OS}}_{{.Arch}}.{{.Format}}
         files:
           - name: step-ca
-            src: step-certificates_0.14.0-rc.8/bin/step-ca
-        overrides: []
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
+            src: step-ca_{{trimV .Version}}/bin/step-ca
         checksum:
-          enabled: false
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.22.1")
+        asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-      - version_constraint: semver(">= 0.11.0-rc.3")
-        asset: step-certificates_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        files: *step_ca_files3
-        overrides: []
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
+        files:
+          - name: step-ca
+            src: step-ca_{{trimV .Version}}/bin/step-ca
+        windows_arm_emulation: true
         checksum:
-          enabled: false
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.24.2")
+        asset: step-ca_{{.OS}}_{{trimV .Version}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-      - version_constraint: semver(">= 0.11.0-rc.2")
-        asset: step-certificates_{{trimV .Version}}-dev_{{.OS}}_{{.Arch}}.{{.Format}}
-        files: *step_ca_files4
-        overrides: []
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
+        files:
+          - name: step-ca
+            src: step-ca_{{trimV .Version}}/step-ca
+        windows_arm_emulation: true
         checksum:
-          enabled: false
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/smallstep/certificates/releases/download/{{.Version}}/checksums.txt.pem
+              - --certificate-identity
+              - https://github.com/smallstep/certificates/.github/workflows/release.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/smallstep/certificates/releases/download/{{.Version}}/checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: step-ca_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-      - version_constraint: semver("< 0.11.0-rc.2")
-        asset: step-certificates_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        files: *step_ca_files3
-        overrides: []
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
+        windows_arm_emulation: true
         checksum:
-          enabled: false
-        format: tar.gz
-      - <<: *smallstep_certificates_default
-        version_constraint: "true"
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/smallstep/certificates/releases/download/{{.Version}}/checksums.txt.pem
+              - --certificate-identity
+              - https://github.com/smallstep/workflows/.github/workflows/goreleaser.yml@refs/heads/main
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/smallstep/certificates/releases/download/{{.Version}}/checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
