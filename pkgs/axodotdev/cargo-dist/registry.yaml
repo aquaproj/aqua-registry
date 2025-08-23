@@ -6,32 +6,6 @@ packages:
     description: shippable application packaging
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v0.28.1-prerelease.1"
-        asset: cargo-dist-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.xz
-        windows_arm_emulation: true
-        files:
-          - name: cargo-dist
-            src: "{{.AssetWithoutExt}}/cargo-dist"
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          linux: unknown-linux-musl
-          windows: pc-windows-msvc
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.sha256"
-          algorithm: sha256
-        overrides:
-          - goos: darwin
-            replacements:
-              arm64: aarch64
-          - goos: windows
-            format: zip
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
       - version_constraint: semver("<= 0.0.4-prerelease.1")
         asset: cargo-dist-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
@@ -148,6 +122,52 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: semver("<= 0.22.1-prerelease.1")
+        asset: cargo-dist-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: cargo-dist
+            src: "{{.AssetWithoutExt}}/cargo-dist"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v0.28.1-prerelease.1"
+        asset: cargo-dist-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: dist
+            src: "{{.AssetWithoutExt}}/dist"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
       - version_constraint: semver(">= 1.0.0-rc.1")
         asset: dist-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
@@ -173,8 +193,8 @@ packages:
         format: tar.xz
         windows_arm_emulation: true
         files:
-          - name: cargo-dist
-            src: "{{.AssetWithoutExt}}/cargo-dist"
+          - name: dist
+            src: "{{.AssetWithoutExt}}/dist"
         replacements:
           amd64: x86_64
           arm64: aarch64
