@@ -56611,7 +56611,7 @@ packages:
     description: Vim-fork focused on extensibility and usability
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v0.2.1"
+      - version_constraint: semver("<= 0.1.7")
         no_asset: true
       - version_constraint: Version == "v0.2.0"
         asset: nvim-{{.OS}}.{{.Format}}
@@ -56624,6 +56624,22 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        supported_envs:
+          - darwin
+          - windows
+      - version_constraint: Version == "v0.2.1"
+        no_asset: true
+      - version_constraint: semver("<= 0.3.1")
+        asset: nvim-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+          windows: win64
+        overrides:
+          - goos: darwin
+            format: tar.gz
         supported_envs:
           - darwin
           - windows
@@ -56649,40 +56665,6 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
-      - version_constraint: Version == "v0.10.4"
-        asset: nvim-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          darwin: macos
-          windows: win64
-        checksum:
-          type: github_release
-          asset: nvim-{{.OS}}-{{.Arch}}.appimage.sha256sum
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-            asset: nvim-{{.OS}}.{{.Format}}
-            replacements:
-              amd64: amd64
-      - version_constraint: semver("<= 0.1.7")
-        no_asset: true
-      - version_constraint: semver("<= 0.3.1")
-        asset: nvim-{{.OS}}.{{.Format}}
-        format: zip
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          darwin: macos
-          windows: win64
-        overrides:
-          - goos: darwin
-            format: tar.gz
-        supported_envs:
-          - darwin
-          - windows
       - version_constraint: semver("<= 0.4.4")
         asset: nvim-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -56783,6 +56765,24 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: Version == "v0.10.4"
+        asset: nvim-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+          windows: win64
+        checksum:
+          type: github_release
+          asset: nvim-{{.OS}}-{{.Arch}}.appimage.sha256sum
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: nvim-{{.OS}}.{{.Format}}
+            replacements:
+              amd64: amd64
       - version_constraint: "true"
         asset: nvim-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
