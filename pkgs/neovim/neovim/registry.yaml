@@ -32,7 +32,7 @@ packages:
           - windows
       - version_constraint: semver("<= 0.3.1")
         asset: nvim-{{.OS}}.{{.Format}}
-        format: zip
+        format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
         replacements:
@@ -40,13 +40,13 @@ packages:
           windows: win64
         files:
           - name: nvim
-            src: "{{.AssetWithoutExt}}/bin/nvim"
+            src: nvim-osx64/bin/nvim
         overrides:
-          - goos: darwin
-            format: tar.gz
+          - goos: windows
+            format: zip
             files:
               - name: nvim
-                src: nvim-osx64/bin/nvim
+                src: Neovim/bin/nvim.exe
         supported_envs:
           - darwin
           - windows
@@ -88,6 +88,39 @@ packages:
                 src: nvim-osx64/bin/nvim
           - goos: windows
             format: zip
+            files:
+              - name: nvim
+                src: Neovim/bin/nvim.exe
+        supported_envs:
+          - linux/amd64
+          - darwin
+          - windows
+      - version_constraint: semver("<= 0.6.1")
+        asset: nvim-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          linux: linux64
+          darwin: macos
+          windows: win64
+        files:
+          - name: nvim
+            src: "{{.AssetWithoutExt}}/bin/nvim"
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256sum"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            files:
+              - name: nvim
+                src: nvim-osx64/bin/nvim
+          - goos: windows
+            format: zip
+            files:
+              - name: nvim
+                src: Neovim/bin/nvim.exe
         supported_envs:
           - linux/amd64
           - darwin
@@ -115,6 +148,9 @@ packages:
                 src: nvim-osx64/bin/nvim
           - goos: windows
             format: zip
+            files:
+              - name: nvim
+                src: Neovim/bin/nvim.exe
         supported_envs:
           - linux/amd64
           - darwin
