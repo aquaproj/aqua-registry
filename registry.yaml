@@ -56679,7 +56679,7 @@ packages:
           windows: win64
         checksum:
           type: github_release
-          asset: nvim.appimage.sha256sum
+          asset: "{{.Asset}}.sha256sum"
           algorithm: sha256
         overrides:
           - goos: windows
@@ -56699,7 +56699,7 @@ packages:
           windows: win64
         checksum:
           type: github_release
-          asset: nvim-{{.OS}}64.tar.gz.sha256sum
+          asset: "{{.Asset}}.sha256sum"
           algorithm: sha256
         overrides:
           - goos: windows
@@ -56719,7 +56719,7 @@ packages:
           windows: win64
         checksum:
           type: github_release
-          asset: nvim-{{.OS}}.msi.sha256sum
+          asset: "{{.Asset}}.sha256sum"
           algorithm: sha256
         overrides:
           - goos: windows
@@ -56738,7 +56738,7 @@ packages:
           windows: win64
         checksum:
           type: github_release
-          asset: nvim-{{.OS}}-{{.Arch}}.tar.gz.sha256sum
+          asset: "{{.Asset}}.sha256sum"
           algorithm: sha256
         overrides:
           - goos: darwin
@@ -56761,7 +56761,7 @@ packages:
           windows: win64
         checksum:
           type: github_release
-          asset: nvim-{{.OS}}-{{.Arch}}.appimage.sha256sum
+          asset: "{{.Asset}}.sha256sum"
           algorithm: sha256
         overrides:
           - goos: windows
@@ -56769,6 +56769,22 @@ packages:
             asset: nvim-{{.OS}}.{{.Format}}
             replacements:
               amd64: amd64
+      - version_constraint: semver("<= 0.11.2")
+        asset: nvim-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+          windows: win64
+        checksum:
+          type: github_release
+          asset: shasums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: nvim-{{.OS}}.{{.Format}}
       - version_constraint: "true"
         asset: nvim-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
