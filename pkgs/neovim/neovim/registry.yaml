@@ -42,6 +42,9 @@ packages:
         overrides:
           - goos: darwin
             format: tar.gz
+            files:
+              - name: nvim
+                src: nvim-osx64/bin/nvim
         supported_envs:
           - darwin
           - windows
@@ -56,6 +59,11 @@ packages:
         files:
           - name: nvim
             src: "{{.AssetWithoutExt}}/bin/nvim"
+        overrides:
+          - goos: darwin
+            files:
+              - name: nvim
+                src: nvim-osx64/bin/nvim
         supported_envs:
           - linux/amd64
           - darwin
@@ -72,13 +80,17 @@ packages:
           - name: nvim
             src: "{{.AssetWithoutExt}}/bin/nvim"
         overrides:
+          - goos: darwin
+            files:
+              - name: nvim
+                src: nvim-osx64/bin/nvim
           - goos: windows
             format: zip
         supported_envs:
           - linux/amd64
           - darwin
           - windows
-      - version_constraint: semver("<= 0.6.1")
+      - version_constraint: semver("<= 0.7.0")
         asset: nvim-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
@@ -95,6 +107,10 @@ packages:
           asset: "{{.Asset}}.sha256sum"
           algorithm: sha256
         overrides:
+          - goos: darwin
+            files:
+              - name: nvim
+                src: nvim-osx64/bin/nvim
           - goos: windows
             format: zip
         supported_envs:
