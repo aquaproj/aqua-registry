@@ -42265,9 +42265,6 @@ packages:
           darwin: apple-darwin
           linux: unknown-linux-gnu
           windows: pc-windows-msvc
-        files:
-          - name: prek
-            src: "{{.AssetWithoutExt}}/pre-commit"
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
@@ -42278,9 +42275,6 @@ packages:
               arm64: aarch64
           - goos: windows
             format: zip
-            files:
-              - name: prek
-                src: pre-commit
         supported_envs:
           - darwin
           - windows
@@ -42294,9 +42288,6 @@ packages:
           darwin: apple-darwin
           linux: unknown-linux-gnu
           windows: pc-windows-msvc
-        files:
-          - name: prek
-            src: "{{.AssetWithoutExt}}/prefligit"
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
@@ -42307,9 +42298,29 @@ packages:
               arm64: aarch64
           - goos: windows
             format: zip
-            files:
-              - name: prek
-                src: prefligit
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.0.28")
+        asset: prek-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
         supported_envs:
           - darwin
           - windows
@@ -42317,32 +42328,19 @@ packages:
       - version_constraint: "true"
         asset: prek-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
-        windows_arm_emulation: true
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-gnu
+          linux: unknown-linux-musl
           windows: pc-windows-msvc
-        files:
-          - name: prek
-            src: "{{.AssetWithoutExt}}/prek"
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
         overrides:
-          - goos: darwin
-            replacements:
-              arm64: aarch64
           - goos: windows
             format: zip
-            files:
-              - name: prek
-        supported_envs:
-          - darwin
-          - windows
-          - linux
   - type: github_release
     repo_owner: jacek-kurlit
     repo_name: pik
