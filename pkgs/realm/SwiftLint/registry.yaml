@@ -26,14 +26,20 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
-      - version_constraint: "true"
-        asset: swiftlint_linux_{{.Arch}}.{{.Format}}
+      - version_constraint: semver(">= 0.60.0")
         format: zip
         files:
           - name: swiftlint
         overrides:
           - goos: darwin
             asset: portable_swiftlint.{{.Format}}
+          - goos: linux
+            goarch: amd64
+            asset: swiftlint_linux_amd64.{{.Format}}
+          - goos: linux
+            goarch: arm64
+            asset: swiftlint_linux_arm64.{{.Format}}
         supported_envs:
-          - linux
+          - linux/amd64
+          - linux/arm64
           - darwin
