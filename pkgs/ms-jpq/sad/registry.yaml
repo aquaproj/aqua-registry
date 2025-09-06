@@ -4,24 +4,65 @@ packages:
     repo_owner: ms-jpq
     repo_name: sad
     description: CLI search and replace | Space Age seD
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-      linux: unknown-linux-musl
-      windows: pc-windows-msvc
-    asset: "{{.Arch}}-{{.OS}}.zip"
-    version_constraint: semver(">= 0.4.17")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version in ["0.2.0", "v0.4.15"]
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        format: zip
         rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
         supported_envs:
-          - linux
           - darwin
+          - windows
           - amd64
+      - version_constraint: Version == "v0.4.16"
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+      - version_constraint: semver("<= 0.1.6")
+      - version_constraint: semver("<= 0.3.2")
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        format: zip
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version in ["ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15", "ci_0.4.9_2021-08-12_10-15"]
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        format: zip
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        format: zip
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
           linux: unknown-linux-musl
-          windows: pc-windows-gnu
+          windows: pc-windows-msvc
