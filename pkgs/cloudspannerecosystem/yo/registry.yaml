@@ -3,16 +3,32 @@ packages:
   - type: github_release
     repo_owner: cloudspannerecosystem
     repo_name: yo
-    asset: yo-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: yo is a command-line tool to generate Go code for Google Cloud Spanner
-    overrides:
-      - goos: windows
-        format: zip
-    files:
-      - name: yo
-        src: yo-{{trimV .Version}}-{{.OS}}-{{.Arch}}/yo
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.6.0"
+        no_asset: true
+      - version_constraint: semver("<= 0.3.2")
+        no_asset: true
+      - version_constraint: semver("<= 0.5.1")
+        asset: yo-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: yo-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
