@@ -4,21 +4,26 @@ packages:
     repo_owner: asciinema
     repo_name: asciinema
     description: Terminal session recorder, streamer and player
-    asset: asciinema-{{.Arch}}-{{.OS}}
-    format: raw
-    overrides:
-      - goos: linux
-        goarch: amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 3.0.0")
+        error_message: "asciinema v3.0.0 or later is required"
+      - version_constraint: "true"
+        asset: asciinema-{{.Arch}}-{{.OS}}
+        format: raw
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
         replacements:
-          linux: unknown-linux-musl
-      - goos: linux
-        goarch: arm64
-        replacements:
-          linux: unknown-linux-gnu
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      darwin: apple-darwin
-    supported_envs:
-      - linux
-      - darwin
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+        supported_envs:
+          - linux
+          - darwin
