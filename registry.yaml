@@ -29652,7 +29652,7 @@ packages:
         overrides:
           - goos: darwin
             asset: zenroom.command
-      - version_constraint: "true"
+      - version_constraint: semver("<= 5.25.0")
         asset: zenroom-{{.OS}}.{{.Format}}
         format: zip
         files:
@@ -29674,6 +29674,64 @@ packages:
                 src: zenroom-{{.OS}}/zenroom.command
               - name: zencode-exec
                 src: zenroom-{{.OS}}/zencode-exec.command
+      - version_constraint: semver("<= 5.25.3")
+        asset: zenroom-{{.OS}}.{{.Format}}
+        format: zip
+        files:
+          - name: zenroom
+            src: zenroom-{{.Arch}}-{{.OS}}/zenroom
+          - name: zencode-exec
+            src: zenroom-{{.Arch}}-{{.OS}}/zencode-exec
+        replacements:
+          darwin: osx
+          windows: win64
+          amd64: x86_64
+        supported_envs:
+          - darwin/arm64
+          - linux/amd64
+          - windows
+        overrides:
+          - goos: windows
+            files:
+              - name: zenroom
+                src: zenroom-{{.OS}}/zenroom
+              - name: zencode-exec
+                src: zenroom-{{.OS}}/zencode-exec
+          - goos: darwin
+            files:
+              - name: zenroom
+                src: zenroom-{{.OS}}/zenroom.command
+              - name: zencode-exec
+                src: zenroom-{{.OS}}/zencode-exec.command
+      - version_constraint: "true"
+        asset: zenroom-{{.OS}}.{{.Format}}
+        format: zip
+        files:
+          - name: zenroom
+            src: zenroom-{{.Arch}}-{{.OS}}/zenroom
+          - name: zencode-exec
+            src: zenroom-{{.Arch}}-{{.OS}}/zencode-exec
+        replacements:
+          darwin: osx
+          windows: win64
+          amd64: x86_64
+        supported_envs:
+          - darwin/arm64
+          - linux/amd64
+          - windows
+        overrides:
+          - goos: windows
+            files:
+              - name: zenroom
+                src: zenroom-{{.OS}}/zenroom
+              - name: zencode-exec
+                src: zenroom-{{.OS}}/zencode-exec
+          - goos: darwin
+            files:
+              - name: zenroom
+                src: zenroom-{{.OS}}/zenroom
+              - name: zencode-exec
+                src: zenroom-{{.OS}}/zencode-exec
   - type: github_release
     repo_owner: earthly
     repo_name: earthly
@@ -32071,8 +32129,6 @@ packages:
     repo_owner: fish-shell
     repo_name: fish-shell
     description: The user-friendly command line shell
-    search_words:
-      - Linux Only # TODO: Support other platforms https://github.com/aquaproj/aqua-registry/pull/32703#issuecomment-2689385634
     files:
       - name: fish
       - name: fish_indent
@@ -32089,15 +32145,61 @@ packages:
         replacements:
           arm64: aarch64
           amd64: x86_64
+        overrides:
+          - goos: darwin
+            asset: fish-{{.Version}}.pkg
+            format: pkg
+            files:
+              - name: fish
+                src: fish.pkg/Payload/usr/local/bin/fish
+              - name: fish_indent
+                src: fish.pkg/Payload/usr/local/bin/fish_indent
+              - name: fish_key_reader
+                src: fish.pkg/Payload/usr/local/bin/fish_key_reader
         supported_envs:
           - linux
-      - version_constraint: "true"
+          - darwin
+      - version_constraint: semver("<= 4.0.2")
         asset: fish-static-{{.Arch}}-{{.Version}}.{{.Format}}
         format: tar.xz
         replacements:
           arm64: aarch64
+        overrides:
+          - goos: darwin
+            asset: fish-{{.Version}}.pkg
+            format: pkg
+            files:
+              - name: fish
+                src: fish.pkg/Payload/usr/local/bin/fish
+              - name: fish_indent
+                src: fish.pkg/Payload/usr/local/bin/fish_indent
+              - name: fish_key_reader
+                src: fish.pkg/Payload/usr/local/bin/fish_key_reader
         supported_envs:
           - linux
+          - darwin
+      - version_constraint: "true"
+        asset: fish-{{.Version}}-linux-{{.Arch}}.{{.Format}}
+        format: tar.xz
+        files:
+          - name: fish
+        replacements:
+          arm64: aarch64
+          amd64: x86_64
+        overrides:
+          - goos: darwin
+            asset: fish-{{.Version}}.pkg
+            format: pkg
+            files:
+              - name: fish
+                src: fish.pkg/Payload/usr/local/bin/fish
+              - name: fish_indent
+                src: fish.pkg/Payload/usr/local/bin/fish_indent
+              - name: fish_key_reader
+                src: fish.pkg/Payload/usr/local/bin/fish_key_reader
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: fishi0x01
     repo_name: vsh
@@ -44205,14 +44307,86 @@ packages:
     repo_owner: jpillora
     repo_name: chisel
     description: A fast TCP/UDP tunnel over HTTP
-    asset: chisel_{{trimV .Version}}_{{.OS}}_{{.Arch}}.gz
-    files:
-      - name: chisel
-        src: chisel_{{trimV .Version}}_{{.OS}}_{{.Arch}}
-    checksum:
-      type: github_release
-      asset: chisel_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.1.3")
+        asset: chisel_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: chisel
+            src: "{{.AssetWithoutExt}}/chisel"
+        replacements:
+          arm64: arm
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: windows
+            files:
+              - name: chisel
+      - version_constraint: semver("<= 1.3.1")
+        asset: chisel_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: chisel
+            src: "{{.AssetWithoutExt}}"
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: arm
+          - goos: windows
+            asset: chisel_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 1.7.4")
+        asset: chisel_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: chisel
+            src: "{{.AssetWithoutExt}}"
+        checksum:
+          type: github_release
+          asset: chisel_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.7.6")
+        asset: chisel_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        files:
+          - name: chisel
+            src: "{{.AssetWithoutExt}}"
+        checksum:
+          type: github_release
+          asset: chisel_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.10.1")
+        asset: chisel_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        files:
+          - name: chisel
+            src: "{{.AssetWithoutExt}}"
+        checksum:
+          type: github_release
+          asset: chisel_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: chisel_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        files:
+          - name: chisel
+            src: "{{.AssetWithoutExt}}"
+        checksum:
+          type: github_release
+          asset: chisel_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: chisel
   - type: github_release
     repo_owner: jqlang
     repo_name: jq
