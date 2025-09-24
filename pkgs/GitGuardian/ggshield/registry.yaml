@@ -4,9 +4,42 @@ packages:
     repo_owner: GitGuardian
     repo_name: ggshield
     description: Detect and validate 500+ types of hardcoded secrets with advanced checks. Use it as a pre-commit hook, GitHub Action, or CLI for proactive secret detection and security
-    version_filter: semver("> 1.30.2")
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 1.10.5")
+        no_asset: true
+      - version_constraint: semver("<= 1.26.0")
+      - version_constraint: semver("<= 1.28.0")
+        asset: ggshield-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: pkg
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.30.2")
+        asset: ggshield-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: darwin
+            format: pkg
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
       - version_constraint: "true"
         asset: ggshield-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
