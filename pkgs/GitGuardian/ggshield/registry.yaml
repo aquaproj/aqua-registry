@@ -6,9 +6,8 @@ packages:
     description: Detect and validate 500+ types of hardcoded secrets with advanced checks. Use it as a pre-commit hook, GitHub Action, or CLI for proactive secret detection and security
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 1.10.5")
-        no_asset: true
       - version_constraint: semver("<= 1.26.0")
+        no_asset: true
       - version_constraint: semver("<= 1.28.0")
         asset: ggshield-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: pkg
@@ -19,13 +18,15 @@ packages:
         overrides:
           - goos: linux
             format: tar.gz
+            files:
+              - name: ggshield
+                src: ggshield-{{trimV .Version}}-{{.Arch}}-{{.OS}}/ggshield
         supported_envs:
           - linux/amd64
           - darwin
       - version_constraint: semver("<= 1.30.2")
         asset: ggshield-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
-        windows_arm_emulation: true
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -34,15 +35,21 @@ packages:
         overrides:
           - goos: linux
             format: tar.gz
+            files:
+              - name: ggshield
+                src: ggshield-{{trimV .Version}}-{{.Arch}}-{{.OS}}/ggshield
           - goos: darwin
             format: pkg
         supported_envs:
           - darwin
           - windows
-          - amd64
+          - linux/amd64
       - version_constraint: "true"
         asset: ggshield-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: ggshield
+            src: ggshield-{{trimV .Version}}-{{.Arch}}-{{.OS}}/ggshield
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
@@ -52,7 +59,11 @@ packages:
         overrides:
           - goos: windows
             format: zip
+          - goos: linux
+            files:
+              - name: ggshield
+                src: ggshield-{{trimV .Version}}-{{.Arch}}-{{.OS}}/ggshield
         supported_envs:
           - darwin
           - windows
-          - amd64
+          - linux/amd64
