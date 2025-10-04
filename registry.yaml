@@ -74448,7 +74448,7 @@ packages:
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: ghir
-    description: ghir is a CLI making GitHub Releases immutable
+    description: ghir is a CLI making past GitHub Releases immutable
     version_constraint: "false"
     version_overrides:
       - version_constraint: "true"
@@ -74463,7 +74463,7 @@ packages:
               - --certificate
               - https://github.com/suzuki-shunsuke/ghir/releases/download/{{.Version}}/ghir_checksums.txt.pem
               - --certificate-identity-regexp
-              - "^https://github\\.com/suzuki-shunsuke/ghir/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - "^https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.+$"
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
               - --signature
@@ -74471,6 +74471,8 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        github_artifact_attestations:
+          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
         overrides:
           - goos: windows
             format: zip
