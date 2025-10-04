@@ -74447,6 +74447,35 @@ packages:
             format: zip
   - type: github_release
     repo_owner: suzuki-shunsuke
+    repo_name: ghir
+    description: ghir is a CLI making GitHub Releases immutable
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: ghir_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: ghir_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/suzuki-shunsuke/ghir/releases/download/{{.Version}}/ghir_checksums.txt.pem
+              - --certificate-identity-regexp
+              - "^https://github\\.com/suzuki-shunsuke/ghir/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/suzuki-shunsuke/ghir/releases/download/{{.Version}}/ghir_checksums.txt.sig
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
+    repo_owner: suzuki-shunsuke
     repo_name: ghomfc
     description: GitHub Organization Members' Followers Counter
     version_constraint: "false"
