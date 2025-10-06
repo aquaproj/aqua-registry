@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - repo_owner: mongodb
+    repo_name: mongo
+    type: http
+    description: mongod is the primary daemon process for the MongoDB system.
+    url: https://fastdl.mongodb.org/{{.OS}}/mongodb-{{.OS}}-{{.Arch}}-{{trimPrefix "r" .Version}}.{{.Format}}
+    format: tgz
+    version_source: github_tag
+    version_filter: Version startsWith "r" and not (Version contains "-rc" or Version contains "-beta" or Version contains "-alpha")
+    supported_envs:
+      - darwin/amd64
+      - darwin/arm64
+      - linux/amd64
+      - linux/arm64
+      - windows/amd64
+    overrides:
+      - goos: darwin
+        goarch: amd64
+        url: https://fastdl.mongodb.org/osx/mongodb-macos-x86_64-{{trimPrefix "r" .Version}}.{{.Format}}
+        format: tgz
+        files:
+          - name: mongod
+            src: mongodb-macos-x86_64--{{trimPrefix "r" .Version}}/bin/mongod
+      - goos: darwin
+        goarch: arm64
+        url: https://fastdl.mongodb.org/osx/mongodb-macos-arm64-{{trimPrefix "r" .Version}}.{{.Format}}
+        format: tgz
+        files:
+          - name: mongod
+            src: mongodb-macos-aarch64--{{trimPrefix "r" .Version}}/bin/mongod
+      - goos: linux
+        url: https://fastdl.mongodb.org/linux/mongodb-linux-{{.Arch}}-ubuntu2404-{{trimPrefix "r" .Version}}.{{.Format}}
+        format: tgz
+        replacements:
+          arm64: aarch64
+          amd64: x86_64
+        files:
+          - name: mongod
+            src: mongodb-linux-{{.Arch}}-ubuntu2404-{{trimPrefix "r" .Version}}/bin/mongod
+      - goos: windows
+        url: https://fastdl.mongodb.org/windows/mongodb-windows-{{.Arch}}-{{trimPrefix "r" .Version}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+        files:
+          - name: mongod
+            src: mongodb-win32-{{.Arch}}-windows-{{trimPrefix "r" .Version}}/bin/mongod.exe
