@@ -81679,19 +81679,20 @@ packages:
     version_filter: not (Version startsWith "moar")
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v1.23.3"
-        asset: moar-{{.Version}}-{{.OS}}-{{.Arch}}
+      - version_constraint: Version >= "v2.0.0"
+        asset: moor-{{.Version}}-{{.OS}}-{{.Arch}}
         format: raw
-        windows_arm_emulation: true
+        windows_arm_emulation: false
         overrides:
           - goos: linux
             replacements:
               arm64: arm
           - goos: windows
-            asset: moar-{{.Version}}-dirty-{{.OS}}-{{.Arch}}
+            asset: moor-{{.Version}}-{{.OS}}-{{.Arch}}.exe
         supported_envs:
-          - linux/arm64
+          - linux
           - windows/amd64
+          - darwin
       - version_constraint: semver("<= 0.9.7")
       - version_constraint: semver("<= 1.8.1")
         asset: moar-{{.Version}}-{{.OS}}-{{.Arch}}
