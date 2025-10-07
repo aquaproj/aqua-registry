@@ -32679,14 +32679,16 @@ packages:
       - version_constraint: "true"
         url: https://storage.googleapis.com/flutter_infra_release/releases/stable/{{.OS}}/flutter_{{.OS}}_{{trimV .Version}}-stable.{{.Format}}
         format: zip
-        windows_arm_emulation: true
         replacements:
           darwin: macos
         overrides:
           - goos: linux
             format: tar.xz
+          - goos: windows
+            goarch: arm64
+            url: https://storage.googleapis.com/flutter_infra_release/releases/stable/{{.OS}}/flutter_{{.OS}}_{{trimV .Version}}-stable.{{.Format}}
           - goarch: arm64
-            url: https://storage.googleapis.com/flutter_infra_release/releases/stable/{{.OS}}/flutter_{{.OS}}_arm64_{{trimV .Version}}-stable.{{.Format}}
+            url: https://storage.googleapis.com/flutter_infra_release/releases/stable/{{.OS}}/flutter_{{.OS}}_{{.Arch}}_{{trimV .Version}}-stable.{{.Format}}
   - name: flux-iac/tofu-controller/tfctl
     type: github_release
     repo_owner: flux-iac
