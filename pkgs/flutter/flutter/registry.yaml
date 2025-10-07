@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: http
+    name: flutter/flutter
+    description: Flutter SDK - Google's UI toolkit for building beautiful, natively compiled applications
+    url: https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_{{trimV .Version}}-stable.zip
+    format: zip
+    files:
+      - name: flutter
+        src: flutter/bin/flutter
+      - name: dart
+        src: flutter/bin/dart
+    supported_envs:
+      - darwin
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        url: https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_{{trimV .Version}}-stable.zip
+        format: zip
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            url: https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_{{trimV .Version}}-stable.zip
+        checksum:
+          enabled: false
