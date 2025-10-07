@@ -51899,12 +51899,14 @@ packages:
     repo_owner: linkerd
     repo_name: linkerd2
     description: Ultralight, security-first service mesh for Kubernetes. Main repo for Linkerd 2.x
-    version_prefix: edge-
+    version_prefix: stable-
     files:
       - name: linkerd
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 20.7.5")
+      - version_constraint: Version == "stable-2.9.0"
+        no_asset: true
+      - version_constraint: semver("<= 2.8.1")
         asset: linkerd2-cli-{{.Version}}-{{.OS}}
         format: raw
         checksum:
@@ -51915,7 +51917,7 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: semver("<= 21.3.2")
+      - version_constraint: semver("<= 2.10.0")
         asset: linkerd2-cli-{{.Version}}-{{.OS}}
         format: raw
         checksum:
@@ -51925,22 +51927,13 @@ packages:
         overrides:
           - goos: linux
             asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
-      - version_constraint: semver("<= 25.9.3")
+      - version_constraint: "true"
         asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
         format: raw
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
-        overrides:
-          - goos: darwin
-            goarch: amd64
-            asset: linkerd2-cli-{{.Version}}-{{.OS}}
-          - goos: windows
-            asset: linkerd2-cli-{{.Version}}-{{.OS}}
-      - version_constraint: "true"
-        asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
-        format: raw
         overrides:
           - goos: darwin
             goarch: amd64
