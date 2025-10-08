@@ -27561,7 +27561,11 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 1.7.0")
         type: github_content
+        format: raw
         path: tf.sh
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: tf-{{.OS}}-{{.Arch}}
         format: raw
@@ -51898,33 +51902,95 @@ packages:
   - type: github_release
     repo_owner: linkerd
     repo_name: linkerd2
-    asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
-    format: raw
     description: Ultralight, security-first service mesh for Kubernetes. Main repo for Linkerd 2.x
-    overrides:
-      - goos: darwin
-        goarch: amd64
-        asset: linkerd2-cli-{{.Version}}-{{.OS}}
-        checksum:
-          type: github_release
-          asset: linkerd2-cli-{{.Version}}-{{.OS}}.sha256
-          algorithm: sha256
-      - goos: windows
-        asset: linkerd2-cli-{{.Version}}-{{.OS}}
-        checksum:
-          type: github_release
-          asset: linkerd2-cli-{{.Version}}-{{.OS}}.exe.sha256
-          algorithm: sha256
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
     files:
       - name: linkerd
-    checksum:
-      type: github_release
-      asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}.sha256
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "stable-2.9.0"
+        no_asset: true
+      - version_constraint: semver("<= 2.8.1")
+        version_prefix: stable-
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.10.0")
+        version_prefix: stable-
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
+      - version_constraint: Version startsWith "stable-"
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}
+          - goos: windows
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}
+      - version_constraint: semver("<= 20.7.5")
+        version_prefix: edge-
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 21.3.2")
+        version_prefix: edge-
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
+      - version_constraint: semver("<= 25.9.3")
+        version_prefix: edge-
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}
+          - goos: windows
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}
+      - version_constraint: Version startsWith "edge-"
+        asset: linkerd2-cli-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}
+          - goos: windows
+            asset: linkerd2-cli-{{.Version}}-{{.OS}}
   - type: github_release
     repo_owner: lintnet
     repo_name: lintnet
@@ -54574,6 +54640,11 @@ packages:
     complete_windows_ext: false
     windows_arm_emulation: true
     format: raw
+    overrides:
+      - goos: windows
+        files:
+          - name: mc
+            link: mc.exe
     checksum:
       type: http
       algorithm: sha256
@@ -70003,7 +70074,7 @@ packages:
           type: github_release
           asset: cosign_checksums.txt
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("<= 2.6.1")
         asset: cosign-{{.OS}}-{{.Arch}}
         format: raw
         windows_arm_emulation: true
@@ -70021,6 +70092,23 @@ packages:
               - https://accounts.google.com
               - --signature
               - https://github.com/sigstore/cosign/releases/download/{{.Version}}/cosign_checksums.txt-keyless.sig
+      - version_constraint: "true"
+        asset: cosign-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: cosign_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: cosign_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity
+              - keyless@projectsigstore.iam.gserviceaccount.com
+              - --certificate-oidc-issuer
+              - https://accounts.google.com
   - type: github_release
     repo_owner: sigstore
     repo_name: gitsign
@@ -81673,6 +81761,85 @@ packages:
           asset: checksums_sha256.txt
           algorithm: sha256
   - type: github_release
+    repo_owner: walles
+    repo_name: moor
+    description: Moor is a pager. It's designed to just do the right thing without any configuration
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.23.3"
+        asset: moar-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        files:
+          - name: moar
+        supported_envs:
+          - windows
+      - version_constraint: semver("<= 0.9.7")
+        no_asset: true
+      - version_constraint: semver("<= 1.8.1")
+        asset: moar-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        files:
+          - name: moar
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 1.11.4")
+        asset: moar-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: moar
+        supported_envs:
+          - darwin
+          - windows
+      - version_constraint: semver("<= 1.23.7")
+        asset: moar-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: moar
+            link: moar
+        supported_envs:
+          - darwin
+          - windows
+      - version_constraint: semver("<= 1.31.4")
+        asset: moar-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: moar
+            link: moar
+        supported_envs:
+          - darwin
+          - windows
+          - linux/amd64
+      - version_constraint: semver("<= 1.33.0")
+        asset: moar-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        files:
+          - name: moar
+            link: moar
+        supported_envs:
+          - darwin
+          - windows
+          - linux/amd64
+      - version_constraint: "true"
+        asset: moor-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        files:
+          - name: moor
+            link: moor
+        supported_envs:
+          - darwin
+          - windows
+          - linux/amd64
+  - type: github_release
     repo_owner: wallix
     repo_name: awless
     description: A Mighty CLI for AWS
@@ -83780,6 +83947,16 @@ packages:
         files:
           - name: kor
             src: kor-{{.GOOS}}-{{if eq .GOOS "darwin"}}amd64{{else}}{{.GOARCH}}{{end}}
+  - type: github_release
+    repo_owner: yonaskolb
+    repo_name: XcodeGen
+    description: A Swift command line tool for generating your Xcode project
+    asset: xcodegen.zip
+    files:
+      - name: xcodegen
+        src: xcodegen/bin/xcodegen
+    supported_envs:
+      - darwin
   - type: github_release
     repo_owner: yorukot
     repo_name: superfile
