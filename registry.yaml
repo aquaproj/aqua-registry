@@ -46321,6 +46321,26 @@ packages:
         supported_envs:
           - linux
   - type: github_release
+    repo_owner: kachick
+    repo_name: selfup
+    description: Versions should know how to update themselves
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: selfup_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: kahing
     repo_name: goofys
     description: a high-performance, POSIX-ish Amazon S3 file system written in Go
