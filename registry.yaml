@@ -26594,6 +26594,39 @@ packages:
           - windows
           - amd64
   - type: github_release
+    repo_owner: defenseunicorns
+    repo_name: uds-cli
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "nightly-unstable"
+        asset: uds-nightly-{{.OS}}-{{.Arch}}
+        format: raw
+        files:
+          - name: uds
+            src: "uds-nightly-{{.OS}}_{{.Arch}}"
+        checksum:
+          # Unfortunately the checksums for nightly are borked.
+          enabled: false
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: uds-cli_{{.Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        files:
+          - name: uds
+            src: "uds-cli_{{.Version}}_{{.OS}}_{{.Arch}}"
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: deggja
     repo_name: netfetch
     description: Kubernetes tool for scanning clusters for network policies and identifying unprotected workloads
