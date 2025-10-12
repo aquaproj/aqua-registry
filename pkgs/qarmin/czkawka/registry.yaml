@@ -51,7 +51,7 @@ packages:
           - amd64
       - version_constraint: semver("<= 2.3.2")
         no_asset: true
-      - version_constraint: "true"
+      - version_constraint: semver("<= 9.0.0")
         asset: "{{.OS}}_czkawka_cli"
         format: raw
         replacements:
@@ -61,3 +61,12 @@ packages:
               - darwin/arm64
               - linux/arm64
             asset: "{{.OS}}_czkawka_cli_arm"
+      - version_constraint: "true"
+        asset: "{{.OS}}_czkawka_cli_{{.Arch}}"
+        format: raw
+        overrides:
+          - goos: windows
+            asset: "{{.OS}}_czkawka_cli"
+        replacements:
+          amd64: x86_64
+          darwin: mac
