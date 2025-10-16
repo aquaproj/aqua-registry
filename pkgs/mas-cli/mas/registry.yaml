@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: mas-cli
+    repo_name: mas
+    description: ":package: Mac App Store command line interface"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.2.1"
+        no_asset: true
+      - version_constraint: semver("<= 1.4.2")
+      - version_constraint: semver("<= 1.8.6")
+        asset: mas.{{.Format}}
+        format: pkg
+        supported_envs:
+          - darwin
+      - version_constraint: "true"
+        asset: mas-{{trimV .Version}}.{{.Format}}
+        format: pkg
+        supported_envs:
+          - darwin
