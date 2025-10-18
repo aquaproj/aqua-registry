@@ -53329,6 +53329,35 @@ packages:
     description: Automated Semantic Import Versioning Upgrades
     path: github.com/marwan-at-work/mod/cmd/mod
   - type: github_release
+    repo_owner: mas-cli
+    repo_name: mas
+    description: Mac App Store command line interface
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.2.1"
+        no_asset: true
+      - version_constraint: semver("<= 1.4.2")
+        asset: mas-cli.{{.Format}}
+        format: zip
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 1.8.6")
+        asset: mas.{{.Format}}
+        format: pkg
+        files:
+          - name: mas
+            src: mas_components.pkg/Payload/usr/local/bin/mas
+        supported_envs:
+          - darwin
+      - version_constraint: "true"
+        asset: mas-{{trimV .Version}}.{{.Format}}
+        format: pkg
+        files:
+          - name: mas
+            src: mas_components.pkg/Payload/mas
+        supported_envs:
+          - darwin
+  - type: github_release
     repo_owner: mashiike
     repo_name: prepalert
     description: Toil reduction tool to prepare before responding to Mackerel alerts
