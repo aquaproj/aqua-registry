@@ -4,6 +4,8 @@ packages:
     repo_owner: openshift-pipelines
     repo_name: pipelines-as-code
     description: Pipelines-as-Code for Tekton
+    files:
+      - name: tkn-pac
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "0.4.3"
@@ -29,10 +31,6 @@ packages:
         format: tar.gz
         replacements:
           amd64: x86_64
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
         overrides:
           - goos: darwin
             asset: tkn-pac_.{{trimV .Version}}_.{{.OS}}_all.{{.Format}}
@@ -43,13 +41,16 @@ packages:
         format: zip
         replacements:
           amd64: x86_64
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
         overrides:
+          - goos: linux
+            checksum:
+              type: github_release
+              asset: checksums.txt
           - goos: darwin
             asset: tkn-pac_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+            checksum:
+              type: github_release
+              asset: checksums.txt
       - version_constraint: Version == "v0.35.3"
         asset: tkn-pac_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
