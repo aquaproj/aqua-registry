@@ -29,6 +29,7 @@ packages:
       - version_constraint: Version == "v0.17.4"
         asset: tkn-pac_.{{trimV .Version}}_.{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        # Checksum file is broken
         replacements:
           amd64: x86_64
         overrides:
@@ -41,18 +42,17 @@ packages:
         format: zip
         replacements:
           amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         overrides:
-          - goos: linux
-            checksum:
-              type: github_release
-              asset: checksums.txt
-              algorithm: sha256
           - goos: darwin
             asset: tkn-pac_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+          - goos: windows
+            # Checksums are missing for Windows
             checksum:
-              type: github_release
-              asset: checksums.txt
-              algorithm: sha256
+              enabled: false
       - version_constraint: Version == "v0.35.3"
         asset: tkn-pac_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
