@@ -10677,7 +10677,7 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.2.0")
         asset: dtop_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -10689,6 +10689,42 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("<= 0.3.8")
+        asset: dtop-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        files:
+          - name: dtop
+            src: "{{.AssetWithoutExt}}/dtop"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: dtop-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: dtop
+            src: "{{.AssetWithoutExt}}/dtop"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: anchore
     repo_name: grype
@@ -17450,7 +17486,7 @@ packages:
         format: raw
         supported_envs:
           - linux/amd64
-      - version_constraint: semver("<= 1.4.1") || true
+      - version_constraint: semver("<= 1.4.1") || semver(">= 2.0.0b10, <= 2.0.0b18") || Version == "2.0.0b9"
         asset: borg-{{.OS}}
         format: raw
         replacements:
@@ -17458,6 +17494,24 @@ packages:
           darwin: macos1012
         supported_envs:
           - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: borg-{{.OS}}-{{.Arch}}-gh
+        format: raw
+        replacements:
+          linux: linux-glibc235
+          amd64: x86_64
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            replacements:
+              darwin: macos-13
+          - goos: darwin
+            goarch: arm64
+            replacements:
+              darwin: macos-14
+        supported_envs:
+          - linux
           - darwin
   - type: github_release
     repo_owner: boyter
