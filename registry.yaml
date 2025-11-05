@@ -10524,7 +10524,7 @@ packages:
     description: AI-Powered, Non-Intrusive Terminal Assistant
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 2.0.0")
         asset: tmuxai_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -10538,6 +10538,19 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: "true"
+        asset: tmuxai_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.sha256
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: amacneil
     repo_name: dbmate
@@ -10664,7 +10677,7 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.2.0")
         asset: dtop_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -10676,6 +10689,42 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("<= 0.3.8")
+        asset: dtop-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        files:
+          - name: dtop
+            src: "{{.AssetWithoutExt}}/dtop"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: dtop-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: dtop
+            src: "{{.AssetWithoutExt}}/dtop"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: anchore
     repo_name: grype
@@ -17437,7 +17486,7 @@ packages:
         format: raw
         supported_envs:
           - linux/amd64
-      - version_constraint: semver("<= 1.4.1") || true
+      - version_constraint: semver("<= 1.4.1") || semver(">= 2.0.0b10, <= 2.0.0b18") || Version == "2.0.0b9"
         asset: borg-{{.OS}}
         format: raw
         replacements:
@@ -17445,6 +17494,24 @@ packages:
           darwin: macos1012
         supported_envs:
           - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: borg-{{.OS}}-{{.Arch}}-gh
+        format: raw
+        replacements:
+          linux: linux-glibc235
+          amd64: x86_64
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            replacements:
+              darwin: macos-13
+          - goos: darwin
+            goarch: arm64
+            replacements:
+              darwin: macos-14
+        supported_envs:
+          - linux
           - darwin
   - type: github_release
     repo_owner: boyter
@@ -35626,6 +35693,30 @@ packages:
         checksum:
           enabled: false
   - type: github_release
+    repo_owner: gittower
+    repo_name: git-flow-next
+    description: A modern reimplementation of git-flow in Go that offers greater flexibility while maintaining backward compatibility with the original git-flow and git-flow-avh
+    files:
+      - name: git-flow
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0-alpha.1"
+        no_asset: true
+      - version_constraint: "true"
+        asset: git-flow-next-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: git-flow
+            src: git-flow-{{.Version}}-{{.OS}}-{{.Arch}}
+        checksum:
+          type: github_release
+          asset: git-flow-next-{{.Version}}-checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: gittuf
     repo_name: gittuf
     description: A security layer for Git repositories
@@ -36130,21 +36221,6 @@ packages:
           - darwin
           - windows
           - amd64
-  - type: github_release
-    repo_owner: go-monk
-    repo_name: checkip
-    aliases:
-      - name: jreisinger/checkip
-    description: Get (security) info about IP addresses
-    rosetta2: true
-    asset: checkip_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    supported_envs:
-      - darwin
-      - amd64
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
   - type: github_release
     repo_owner: go-semantic-release
     repo_name: semantic-release
@@ -36887,6 +36963,52 @@ packages:
       type: github_release
       asset: checksum_sha256.txt
       algorithm: sha256
+  - type: github_release
+    repo_owner: goharbor
+    repo_name: harbor-cli
+    description: "[Sandbox] Official Harbor CLI"
+    files:
+      - name: harbor
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.0.3", "v0.0.5", "v0.0.13"]
+        no_asset: true
+      - version_constraint: Version == "v0.0.4"
+        asset: harbor_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.0.7")
+        asset: harbor_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: harbor-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: harbor
+            src: harbor-cli
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: gohugoio
     repo_name: hugo
@@ -45238,6 +45360,22 @@ packages:
           algorithm: sha256
         github_artifact_attestations:
           signer_workflow: jqlang/jq/.github/workflows/ci.yml
+  - type: github_release
+    repo_owner: jreisinger
+    repo_name: checkip
+    aliases:
+      - name: jreisinger/checkip
+      - name: go-monk/checkip
+    description: Get (security) info about IP addresses
+    rosetta2: true
+    asset: checkip_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    supported_envs:
+      - darwin
+      - amd64
+    checksum:
+      type: github_release
+      asset: checksums.txt
+      algorithm: sha256
   - name: jreleaser/jreleaser
     type: github_release
     repo_owner: jreleaser
@@ -57025,7 +57163,7 @@ packages:
         asset: gofumpt_{{.Version}}_{{.OS}}_{{.Arch}}
         format: raw
         windows_arm_emulation: true
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.9.1")
         asset: gofumpt_{{.Version}}_{{.OS}}_{{.Arch}}
         format: raw
         windows_arm_emulation: true
@@ -57033,6 +57171,10 @@ packages:
           type: github_release
           asset: sha256sums.txt
           algorithm: sha256
+      - version_constraint: "true"
+        asset: gofumpt_{{.Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
   - type: github_release
     repo_owner: mvdan
     repo_name: sh
@@ -74635,7 +74777,7 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 2.4.0")
         asset: ci-info_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         slsa_provenance:
@@ -74655,6 +74797,25 @@ packages:
               - https://github.com/suzuki-shunsuke/ci-info/releases/download/{{.Version}}/ci-info_{{trimV .Version}}_checksums.txt.sig
               - --certificate
               - https://github.com/suzuki-shunsuke/ci-info/releases/download/{{.Version}}/ci-info_{{trimV .Version}}_checksums.txt.pem
+      - version_constraint: "true"
+        asset: ci-info_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        checksum:
+          type: github_release
+          asset: ci-info_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: ci-info_{{trimV .Version}}_checksums.txt.bundle
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
   - type: github_content
     repo_owner: suzuki-shunsuke
     repo_name: ci-renovate-config-validator
@@ -75078,6 +75239,34 @@ packages:
         overrides:
           - goos: windows
             format: zip
+  - type: github_release
+    repo_owner: suzuki-shunsuke
+    repo_name: ghaperf
+    description: ghaperf is a CLI to analyze the performance of GitHub Actions using GitHub API and raw job logs
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: ghaperf_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: ghaperf_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+            bundle:
+              type: github_release
+              asset: ghaperf_checksums.txt.bundle
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        supported_envs:
+          - linux
+          - darwin/arm64
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: ghatm
