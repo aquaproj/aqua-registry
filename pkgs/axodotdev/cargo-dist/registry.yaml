@@ -206,6 +206,28 @@ packages:
             format: zip
             files:
               - name: dist
+      - version_constraint: semver("<= 0.29.0")
+        asset: cargo-dist-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: dist
+            src: "{{.AssetWithoutExt}}/dist"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: dist
       - version_constraint: "true"
         asset: cargo-dist-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
@@ -228,3 +250,5 @@ packages:
             format: zip
             files:
               - name: dist
+        github_artifact_attestations:
+          signer_workflow: axodotdev/cargo-dist/.github/workflows/release.yml
