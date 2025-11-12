@@ -79960,6 +79960,19 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: Version == "v16.2.0"
+        asset: topgrade-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux
+          - darwin
+        github_artifact_attestations:
+          signer_workflow: topgrade-rs/topgrade/.github/workflows/create_release_assets.yml
       - version_constraint: "true"
         asset: topgrade-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
