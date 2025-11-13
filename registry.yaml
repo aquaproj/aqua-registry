@@ -21441,6 +21441,25 @@ packages:
           algorithm: sha256
   - type: github_release
     repo_owner: cirruslabs
+    repo_name: cirrus-cli
+    description: CLI for executing Cirrus tasks locally and in any CI
+    files:
+      - name: cirrus
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 0.94.0")
+        error_message: Please use v0.94.0 or later
+      - version_constraint: Version in ["v0.140.1", "v0.140.2"]
+        no_asset: true
+      - version_constraint: "true"
+        asset: cirrus-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: cirrus_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+  - type: github_release
+    repo_owner: cirruslabs
     repo_name: tart
     description: macOS and Linux VMs on Apple Silicon to use in CI and other automations
     asset: tart.tar.gz
