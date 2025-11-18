@@ -17222,6 +17222,36 @@ packages:
         files:
           - name: hwatch
             src: hwatch/hwatch
+  - type: http
+    repo_owner: blender
+    repo_name: blender
+    description: Blender is a free and open-source 3D computer graphics software
+    version_filter: Version startsWith "v"
+    version_prefix: v
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        url: https://download.blender.org/release/Blender{{trimPrefix "v" (semver .Version).Major}}.{{semver .Version).Minor}}/blender-{{trimPrefix "v" .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.xz
+        replacements:
+          linux: linux
+          darwin: macos
+          windows: windows
+          amd64: x64
+          arm64: arm64
+        supported_envs:
+          - darwin
+          - linux
+          - windows
+        files:
+          - name: blender
+            src: blender-{{trimPrefix "v" .Version}}-{{.OS}}-{{.Arch}}/blender
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: blender
+                src: blender-{{trimPrefix "v" .Version}}-{{.OS}}-{{.Arch}}/blender.exe
   - type: github_release
     repo_owner: block
     repo_name: goose
