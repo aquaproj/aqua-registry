@@ -21,11 +21,21 @@ packages:
             src: mas_components.pkg/Payload/usr/local/bin/mas
         supported_envs:
           - darwin
-      - version_constraint: "true"
+      - version_constraint: semver("<= 2.3.0")
         asset: mas-{{trimV .Version}}.{{.Format}}
         format: pkg
         files:
           - name: mas
             src: mas_components.pkg/Payload/mas
+        supported_envs:
+          - darwin
+      - version_constraint: "true"
+        asset: mas-{{trimV .Version}}-{{.Arch}}.{{.Format}}
+        format: pkg
+        files:
+          - name: mas
+            src: mas_components.pkg/Payload/mas
+        replacements:
+          amd64: x86_64
         supported_envs:
           - darwin
