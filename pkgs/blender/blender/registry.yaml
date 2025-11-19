@@ -13,12 +13,13 @@ packages:
         url: https://download.blender.org/release/Blender{{(semver .Version).Major}}.{{(semver .Version).Minor}}/blender-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.xz
         replacements:
-          darwin: macos
           amd64: x64
+          darwin: macos
         supported_envs:
-          - darwin
-          - linux
-          - windows
+          - linux/amd64
+          - windows/amd64
+          - windows/arm64
+          - darwin/arm64
         files:
           - name: blender
             src: blender-{{trimV .Version}}-{{.OS}}-{{.Arch}}/blender
@@ -28,3 +29,5 @@ packages:
             files:
               - name: blender
                 src: blender-{{trimV .Version}}-{{.OS}}-{{.Arch}}/blender.exe
+          - goos: darwin
+            format: dmg
