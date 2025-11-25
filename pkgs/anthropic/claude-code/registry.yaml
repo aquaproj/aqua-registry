@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: http
+    repo_owner: anthropics
+    repo_name: claude-code
+    name: anthropic/claude-code
+    description: Terminal-based AI coding assistant
+    link: https://www.anthropic.com/claude-code
+    replacements:
+      darwin: darwin
+      linux: linux
+      windows: win32
+      amd64: x64
+      arm64: arm64
+    supported_envs:
+      - darwin
+      - linux
+      - windows
+      - amd64
+      - arm64
+    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        url: https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{{.Version}}/{{.OS}}-{{.Arch}}/claude{{.Format}}
+        format: ""
+        overrides:
+          - goos: windows
+            format: .exe
+        files:
+          - name: claude
