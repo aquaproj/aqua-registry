@@ -8,8 +8,15 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 2.7.0")
         no_asset: true
-      - version_constraint: "true"
+      - version_constraint: semver("<= 4.4.0")
+        asset: pre-commit-{{trimV .Version}}.pyz
+        format: raw
+        complete_windows_ext: false
         checksum:
           type: github_release
-          asset: pre-commit-{{trimV .Version}}.pyz.sha256sum
+          asset: "{{.Asset}}.sha256sum"
           algorithm: sha256
+      - version_constraint: semver("<= 4.4.0")
+        asset: pre-commit-{{trimV .Version}}.pyz
+        format: raw
+        complete_windows_ext: false
