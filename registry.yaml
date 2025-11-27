@@ -74124,16 +74124,20 @@ packages:
           - linux
           - darwin
       - version_constraint: Version == "v1.0.92"
-        asset: opencode-{{.OS}}-{{.Arch}}.{{.Format}}
+        asset: opencode-{{.OS}}-{{.Arch}}-baseline.{{.Format}}
         format: zip
         windows_arm_emulation: true
         replacements:
           amd64: x64
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: opencode-{{.OS}}-{{.Arch}}.{{.Format}}
         supported_envs:
           - darwin
           - windows/amd64
       - version_constraint: Version == "v1.0.93"
-        asset: opencode-{{.OS}}-{{.Arch}}.{{.Format}}
+        asset: opencode-{{.OS}}-{{.Arch}}-baseline.{{.Format}}
         format: zip
         rosetta2: true
         windows_arm_emulation: true
@@ -74141,7 +74145,13 @@ packages:
           amd64: x64
         overrides:
           - goos: linux
+            goarch: amd64
             format: tar.gz
+            asset: opencode-{{.OS}}-{{.Arch}}-baseline-musl.{{.Format}}
+          - goos: linux
+            goarch: arm64
+            format: tar.gz
+            asset: opencode-{{.OS}}-{{.Arch}}-musl.{{.Format}}
       - version_constraint: semver("<= 0.0.52")
         asset: opencode-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -74197,13 +74207,13 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: semver("<= 1.0.91")
+      - version_constraint: semver("<= 0.3.61")
         asset: opencode-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
         replacements:
           amd64: x64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.3.93")
         asset: opencode-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
@@ -74211,7 +74221,55 @@ packages:
           amd64: x64
         overrides:
           - goos: linux
+            goarch: amd64
+            asset: opencode-{{.OS}}-{{.Arch}}-baseline.{{.Format}}
+      - version_constraint: semver("<= 1.0.55")
+        asset: opencode-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: opencode-{{.OS}}-{{.Arch}}-baseline.{{.Format}}
+          - goos: darwin
+            goarch: amd64
+            asset: opencode-{{.OS}}-{{.Arch}}-baseline.{{.Format}}
+      - version_constraint: semver("<= 1.0.91")
+        asset: opencode-{{.OS}}-{{.Arch}}-baseline.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: opencode-{{.OS}}-{{.Arch}}-baseline-musl.{{.Format}}
+          - goos: linux
+            goarch: arm64
+            asset: opencode-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            asset: opencode-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: "true"
+        asset: opencode-{{.OS}}-{{.Arch}}-baseline.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: linux
+            goarch: amd64
             format: tar.gz
+            asset: opencode-{{.OS}}-{{.Arch}}-baseline-musl.{{.Format}}
+          - goos: linux
+            goarch: arm64
+            format: tar.gz
+            asset: opencode-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            asset: opencode-{{.OS}}-{{.Arch}}.{{.Format}}
   - type: github_release
     repo_owner: sstadick
     repo_name: crabz
