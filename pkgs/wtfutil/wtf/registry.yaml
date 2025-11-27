@@ -20,13 +20,27 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: semver("<= 0.0.7")
+        asset: wtf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: wtfutil
+            src: wtf
+        checksum:
+          type: github_release
+          asset: wtf_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
       - version_constraint: semver("<= 0.0.10")
         asset: wtf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         rosetta2: true
         files:
           - name: wtfutil
-            src: "{{.AssetWithoutExt}}/wtfutil"
+            src: "{{.AssetWithoutExt}}/wtf"
         checksum:
           type: github_release
           asset: wtf_{{trimV .Version}}_checksums.txt
@@ -40,10 +54,24 @@ packages:
         rosetta2: true
         files:
           - name: wtfutil
-            src: "{{.AssetWithoutExt}}/wtfutil"
+            src: "{{.AssetWithoutExt}}/wtf"
         checksum:
           type: github_release
           asset: wtf_{{.Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.14.0")
+        asset: wtf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: wtfutil
+            src: "{{.AssetWithoutExt}}/wtf"
+        checksum:
+          type: github_release
+          asset: wtf_{{trimV .Version}}_checksums.txt
           algorithm: sha256
         supported_envs:
           - linux/amd64
@@ -76,12 +104,24 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.46.1")
         asset: wtf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
           - name: wtfutil
             src: "{{.AssetWithoutExt}}/wtfutil"
+        checksum:
+          type: github_release
+          asset: wtf_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: wtf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: wtfutil
         checksum:
           type: github_release
           asset: wtf_{{trimV .Version}}_checksums.txt
