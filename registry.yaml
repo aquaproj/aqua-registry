@@ -32230,6 +32230,25 @@ packages:
         files:
           - name: lefthook
             src: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+      - version_constraint: semver("<= 2.0.4")
+        asset: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: gz
+        replacements:
+          amd64: x86_64
+          darwin: MacOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: lefthook_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        files:
+          - name: lefthook
+            src: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}
       - version_constraint: "true"
         asset: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: gz
@@ -32249,6 +32268,8 @@ packages:
         files:
           - name: lefthook
             src: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        github_artifact_attestations:
+          signer_workflow: evilmartians/lefthook/.github/workflows/release.yml
   - type: github_release
     repo_owner: exercism
     repo_name: cli
