@@ -5,21 +5,41 @@ packages:
     repo_name: CMake
     description: Mirror of CMake upstream repository
     files:
-      - name: make
+      - name: cmake
+        src: "{{.AssetWithoutExt}}/bin/cmake"
+      - name: ccmake
+        src: "{{.AssetWithoutExt}}/bin/ccmake"
+      - name: cmake-gui
+        src: "{{.AssetWithoutExt}}/bin/cmake-gui"
+      - name: cpack
+        src: "{{.AssetWithoutExt}}/bin/cpack"
+      - name: ctest
+        src: "{{.AssetWithoutExt}}/bin/ctest"
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v3.1.0"
         asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
-        format: dmg
+        format: tar.gz
         replacements:
           darwin: Darwin
           linux: Linux
         overrides:
           - goos: linux
-            format: tar.gz
             asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
             replacements:
               amd64: x86_64
+          - goos: darwin
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake"
+              - name: ccmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ccmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ctest"
         supported_envs:
           - linux/amd64
           - darwin
@@ -36,23 +56,53 @@ packages:
             replacements:
               amd64: x86_64
           - goos: darwin
-            format: dmg
             asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake"
+              - name: ccmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ccmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ctest"
           - goos: windows
             format: zip
             replacements:
               amd64: x64
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/bin/cmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/bin/ctest"
         supported_envs:
           - darwin
           - windows
           - amd64
       - version_constraint: semver("<= 3.0.2")
         asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
-        format: dmg
+        format: tar.gz
         replacements:
           darwin: Darwin
         supported_envs:
           - darwin
+        files:
+          - name: cmake
+            src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake"
+          - name: ccmake
+            src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ccmake"
+          - name: cmake-gui
+            src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake-gui"
+          - name: cpack
+            src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cpack"
+          - name: ctest
+            src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ctest"
       - version_constraint: semver("<= 3.5.2")
         asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -64,6 +114,19 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
+        overrides:
+          - goos: darwin
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake"
+              - name: ccmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ccmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ctest"
       - version_constraint: semver("<= 3.19.1")
         asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -79,13 +142,34 @@ packages:
             format: zip
             replacements:
               amd64: x64
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/bin/cmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/bin/ctest"
+          - goos: darwin
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake"
+              - name: ccmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ccmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ctest"
         supported_envs:
           - darwin
           - windows
           - amd64
       - version_constraint: semver("<= 3.19.8")
         asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: zip
+        format: tar.gz
         windows_arm_emulation: true
         replacements:
           darwin: macos
@@ -93,34 +177,75 @@ packages:
           windows: win64
         overrides:
           - goos: linux
-            format: tar.gz
             replacements:
               amd64: x86_64
               arm64: aarch64
           - goos: darwin
-            format: dmg
+            format: tar.gz
             asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake"
+              - name: ccmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ccmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ctest"
           - goos: windows
+            format: zip
             replacements:
               amd64: x64
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/bin/cmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/bin/ctest"
       - version_constraint: semver("<= 3.20.0-rc5")
         asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: zip
+        format: tar.gz
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
           darwin: macos
         overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/bin/cmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/bin/ctest"
           - goos: linux
             format: tar.gz
             replacements:
               arm64: aarch64
           - goos: darwin
-            format: dmg
             asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake"
+              - name: ccmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ccmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ctest"
       - version_constraint: semver("<= 3.23.5")
         asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
-        format: dmg
+        format: tar.gz
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
@@ -131,20 +256,62 @@ packages:
             asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
             replacements:
               arm64: aarch64
+          - goos: darwin
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake"
+              - name: ccmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ccmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ctest"
           - goos: windows
             format: zip
             asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/bin/cmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/bin/ctest"
       - version_constraint: "true"
         asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: zip
+        format: tar.gz
         replacements:
           amd64: x86_64
           darwin: macos
         overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/bin/cmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/bin/ctest"
           - goos: linux
-            format: tar.gz
             replacements:
               arm64: aarch64
           - goos: darwin
-            format: dmg
+            format: tar.gz
             asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
+            files:
+              - name: cmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake"
+              - name: ccmake
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ccmake"
+              - name: cmake-gui
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cmake-gui"
+              - name: cpack
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/cpack"
+              - name: ctest
+                src: "{{.AssetWithoutExt}}/CMake.app/Contents/bin/ctest"
