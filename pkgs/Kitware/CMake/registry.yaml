@@ -1,0 +1,150 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: Kitware
+    repo_name: CMake
+    description: Mirror of CMake upstream repository
+    files:
+      - name: make
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v3.1.0"
+        asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
+        format: dmg
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v3.19.2"
+        asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+          linux: Linux
+          windows: win64
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: darwin
+            format: dmg
+            asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
+          - goos: windows
+            format: zip
+            replacements:
+              amd64: x64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.0.2")
+        asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
+        format: dmg
+        replacements:
+          darwin: Darwin
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 3.5.2")
+        asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 3.19.1")
+        asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: win64
+        overrides:
+          - goos: windows
+            format: zip
+            replacements:
+              amd64: x64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 3.19.8")
+        asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+          linux: Linux
+          windows: win64
+        overrides:
+          - goos: linux
+            format: tar.gz
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+          - goos: darwin
+            format: dmg
+            asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
+          - goos: windows
+            replacements:
+              amd64: x64
+      - version_constraint: semver("<= 3.20.0-rc5")
+        asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: tar.gz
+            replacements:
+              arm64: aarch64
+          - goos: darwin
+            format: dmg
+            asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
+      - version_constraint: semver("<= 3.23.5")
+        asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
+        format: dmg
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: "true"
+        asset: cmake-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: tar.gz
+            replacements:
+              arm64: aarch64
+          - goos: darwin
+            format: dmg
+            asset: cmake-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
