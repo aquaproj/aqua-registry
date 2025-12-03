@@ -32032,9 +32032,11 @@ packages:
           - darwin
           - windows
           - amd64
+        files:
+          - name: hookah
       - version_constraint: Version == "v0.5.3"
-        asset: lefthook_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: gz
+        asset: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
         replacements:
@@ -32049,7 +32051,6 @@ packages:
         overrides:
           - goos: windows
             format: zip
-            asset: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         supported_envs:
           - darwin
           - windows
@@ -32072,6 +32073,14 @@ packages:
           - darwin
           - windows
           - amd64
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: lefthook
+        files:
+          - name: lefthook
+            src: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}
       - version_constraint: Version == "v0.7.3"
         asset: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: gz
@@ -32088,6 +32097,11 @@ packages:
         overrides:
           - goos: windows
             format: zip
+            files:
+              - name: lefthook
+        files:
+          - name: lefthook
+            src: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}
       - version_constraint: semver("<= 0.2.3")
         asset: hookah_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -32109,6 +32123,8 @@ packages:
           - darwin
           - windows
           - amd64
+        files:
+          - name: hookah
       - version_constraint: semver("<= 0.5.2")
         asset: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -32147,10 +32163,15 @@ packages:
         overrides:
           - goos: windows
             format: zip
+            files:
+              - name: lefthook
         supported_envs:
           - darwin
           - windows
           - amd64
+        files:
+          - name: lefthook
+            src: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}
       - version_constraint: semver("<= 0.7.7")
         asset: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}
         format: raw
@@ -32176,6 +32197,9 @@ packages:
           type: github_release
           asset: lefthook_checksums.txt
           algorithm: sha256
+        files:
+          - name: lefthook
+            src: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}
       - version_constraint: semver("<= 1.6.18")
         asset: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: gz
@@ -32188,10 +32212,9 @@ packages:
           type: github_release
           asset: lefthook_checksums.txt
           algorithm: sha256
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: aarch64
+        files:
+          - name: lefthook
+            src: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}
       - version_constraint: semver("<= 1.10.1")
         asset: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: gz
@@ -32204,6 +32227,9 @@ packages:
           type: github_release
           asset: lefthook_checksums.txt
           algorithm: sha256
+        files:
+          - name: lefthook
+            src: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}
       - version_constraint: "true"
         asset: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: gz
@@ -32220,6 +32246,9 @@ packages:
           - goos: linux
             replacements:
               arm64: aarch64
+        files:
+          - name: lefthook
+            src: lefthook_{{trimV .Version}}_{{.OS}}_{{.Arch}}
   - type: github_release
     repo_owner: exercism
     repo_name: cli
