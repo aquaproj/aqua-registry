@@ -19,6 +19,10 @@ jobs:
           aqua_opts: -l -a
           policy_allow: "true"
 
+      - name: install nllint
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+        run: nllint -v
       - name: Fix newlines
         run: git ls-files | xargs nllint -f -s
 
@@ -30,9 +34,18 @@ jobs:
       - name: Format code by prettier
         run: prettier -w .
 
+      - name: install cmdx
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+        run: cmdx --version
       - name: Fix registry.yaml
         run: cmdx gr
 
+      - name: install keep-sorted
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+        run: |
+          keep-sorted --version
       - name: keep-sorted
         run: |
           git grep -l " keep-sorted start" | grep -v autofix.yaml | xargs keep-sorted
