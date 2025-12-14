@@ -16781,7 +16781,7 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.0.0")
         asset: mlc-{{.Arch}}-{{.OS}}
         format: raw
         rosetta2: true
@@ -16793,6 +16793,18 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: "true"
+        asset: mlc-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+        supported_envs:
+          - darwin/arm64
+          - windows
+          - linux
   - type: github_release
     repo_owner: becheran
     repo_name: roumon
