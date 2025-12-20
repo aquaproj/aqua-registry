@@ -38330,6 +38330,51 @@ packages:
       algorithm: sha256
   - type: github_release
     repo_owner: golangci
+    repo_name: golines
+    aliases:
+      - name: segmentio/golines
+    description: A golang formatter that fixes long lines
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.11.0")
+        repo_owner: segmentio
+        repo_name: golines
+        type: go_install
+      - version_constraint: semver("> 0.11.0") and semver("<=0.13.0")
+        repo_owner: segmentio
+        repo_name: golines
+        asset: golines_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: golines
+            src: "{{.AssetWithoutExt}}/golines"
+        checksum:
+          type: github_release
+          asset: golines_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: golines_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+          - goos: windows
+            type: go_install
+      - version_constraint: "true"
+        asset: golines-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: golines
+            src: "{{.AssetWithoutExt}}/golines"
+        checksum:
+          type: github_release
+          asset: golines_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: golines-{{trimV .Version}}-{{.OS}}-all.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: golines-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+  - type: github_release
+    repo_owner: golangci
     repo_name: misspell
     description: Correct commonly misspelled English words in source files
     version_constraint: "false"
@@ -71530,29 +71575,6 @@ packages:
           type: github_release
           asset: chamber-{{.Version}}.sha256sums
           algorithm: sha256
-  - type: github_release
-    repo_owner: segmentio
-    repo_name: golines
-    description: A golang formatter that fixes long lines
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 0.11.0")
-        type: go_install
-      - version_constraint: "true"
-        asset: golines_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: golines
-            src: "{{.AssetWithoutExt}}/golines"
-        checksum:
-          type: github_release
-          asset: golines_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: darwin
-            asset: golines_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
-          - goos: windows
-            type: go_install
   - type: go_install
     repo_owner: segmentio
     repo_name: topicctl
