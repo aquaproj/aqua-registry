@@ -55997,11 +55997,26 @@ packages:
         format: zip
     files:
       - name: rg
-  - type: github_release
+  - type: http
     repo_owner: microsoft
     repo_name: vscode
     description: Visual Studio Code
-    no_asset: true
+    link: https://code.visualstudio.com/
+    search_words:
+      - vscode
+      - code
+      - visual studio code
+    url: https://update.code.visualstudio.com/{{trimV .Version}}/cli-{{.OS}}-{{.Arch}}/stable
+    replacements:
+      windows: win32
+      amd64: x64
+    files:
+      - name: code
+    overrides:
+      - goos: windows
+        files:
+          - name: code.exe
+    complete_windows_ext: false
   - type: github_release
     repo_owner: mike-engel
     repo_name: jwt-cli
