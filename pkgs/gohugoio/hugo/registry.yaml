@@ -8,85 +8,6 @@ packages:
     version_overrides:
       - version_constraint: Version == "v0.139.5"
         no_asset: true
-      - version_constraint: Version == "v0.7"
-        asset: hugo-{{trimV .Version}}-{{.OS}}-{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        complete_windows_ext: false
-        replacements:
-          amd64: x64
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: Version == "v0.8"
-        asset: hugo-{{.OS}}-{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        complete_windows_ext: false
-        replacements:
-          arm64: arm
-      - version_constraint: Version == "v0.16"
-        asset: hugo_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tgz
-        windows_arm_emulation: true
-        replacements:
-          amd64: 64bit
-        overrides:
-          - goos: darwin
-            goarch: amd64
-            replacements:
-              darwin: osx
-          - goos: darwin
-            goarch: arm64
-            asset: hugo_{{trimV .Version}}_{{.OS}}-{{.Arch}}32.{{.Format}}
-            replacements:
-              arm64: arm
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "v0.17"
-        asset: hugo_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-        format: zip
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: 64bit
-          darwin: MacOS
-          windows: Windows
-        overrides:
-          - goos: linux
-            goarch: amd64
-            format: tar.gz
-            replacements:
-              linux: Linux
-          - goos: linux
-            goarch: arm64
-            format: tar.gz
-            asset: hugo_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-            replacements:
-              arm64: arm
-      - version_constraint: Version == "v0.20.3"
-        asset: hugo_{{.Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: 64bit
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: hugo_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: ARM64
-          - goos: windows
-            format: zip
       - version_constraint: Version == "v0.88.0"
         asset: hugo_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -142,96 +63,6 @@ packages:
         overrides:
           - goos: darwin
             asset: hugo_{{trimV .Version}}_{{.OS}}-all.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 0.15.0")
-        asset: hugo_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: zip
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          arm64: arm
-        overrides:
-          - goos: linux
-            format: tar.gz
-      - version_constraint: semver("<= 0.20.2")
-        asset: hugo_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-        format: zip
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: 64bit
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        overrides:
-          - goos: linux
-            goarch: amd64
-            format: tar.gz
-          - goos: linux
-            goarch: arm64
-            format: tar.gz
-            asset: hugo_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-            replacements:
-              arm64: ARM
-      - version_constraint: semver("<= 0.26.0")
-        asset: hugo_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: 64bit
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: hugo_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: ARM64
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 0.42.2")
-        asset: hugo_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: 64bit
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: hugo_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: ARM64
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 0.55.6")
-        asset: hugo_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: 64bit
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: hugo_extended_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: ARM64
           - goos: windows
             format: zip
       - version_constraint: semver("<= 0.80.0")
@@ -326,17 +157,11 @@ packages:
       - version_constraint: semver("<= 0.152.2")
         asset: hugo_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
-        replacements:
-          linux: Linux
         checksum:
           type: github_release
           asset: hugo_{{trimV .Version}}_checksums.txt
           algorithm: sha256
         overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              amd64: 64bit
           - goos: darwin
             asset: hugo_{{trimV .Version}}_{{.OS}}-universal.{{.Format}}
           - goos: windows
@@ -344,17 +169,11 @@ packages:
       - version_constraint: "true"
         asset: hugo_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
-        replacements:
-          linux: Linux
         checksum:
           type: github_release
           asset: hugo_{{trimV .Version}}_checksums.txt
           algorithm: sha256
         overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              amd64: 64bit
           - goos: darwin
             format: pkg
             asset: hugo_{{trimV .Version}}_{{.OS}}-universal.{{.Format}}
