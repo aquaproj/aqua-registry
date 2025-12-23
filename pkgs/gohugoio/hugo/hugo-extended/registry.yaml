@@ -5,6 +5,8 @@ packages:
     repo_owner: gohugoio
     repo_name: hugo
     description: The world’s fastest framework for building websites
+    files:
+      - name: hugo
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.139.5"
@@ -69,39 +71,6 @@ packages:
         overrides:
           - goos: darwin
             asset: hugo_extended_{{trimV .Version}}_{{.OS}}-all.{{.Format}}
-          - goos: windows
-            format: zip
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: semver("<= 0.20.2")
-        no_asset: true
-      - version_constraint: semver("<= 0.26.0")
-        checksum:
-          type: github_release
-          asset: hugo_checksums.txt
-          algorithm: sha256
-      - version_constraint: semver("<= 0.42.2")
-        checksum:
-          type: github_release
-          asset: hugo_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-      - version_constraint: semver("<= 0.55.6")
-        asset: hugo_extended_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: 64bit
-          darwin: macOS
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: hugo_extended_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
           - goos: windows
             format: zip
         supported_envs:
@@ -177,17 +146,11 @@ packages:
         asset: hugo_extended_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
-        replacements:
-          linux: Linux
         checksum:
           type: github_release
           asset: hugo_{{trimV .Version}}_checksums.txt
           algorithm: sha256
         overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              amd64: 64bit
           - goos: darwin
             asset: hugo_extended_{{trimV .Version}}_{{.OS}}-universal.{{.Format}}
           - goos: windows
@@ -196,17 +159,11 @@ packages:
         asset: hugo_extended_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
-        replacements:
-          linux: Linux
         checksum:
           type: github_release
           asset: hugo_{{trimV .Version}}_checksums.txt
           algorithm: sha256
         overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              amd64: 64bit
           - goos: darwin
             format: pkg
             asset: hugo_extended_{{trimV .Version}}_{{.OS}}-universal.{{.Format}}
