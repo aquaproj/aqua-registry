@@ -66893,7 +66893,7 @@ packages:
         format: raw
         supported_envs:
           - windows
-      - version_constraint: "true"
+      - version_constraint: semver("<= 25.9.0")
         asset: black_{{.OS}}
         format: raw
         replacements:
@@ -66902,6 +66902,19 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: "true"
+        asset: black_{{.OS}}
+        format: raw
+        replacements:
+          arm64: arm
+          darwin: macos
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: black_{{.OS}}-{{.Arch}}
+          - goos: windows
+            goarch: arm64
+            asset: black_{{.OS}}-{{.Arch}}
   - type: github_release
     repo_owner: pulumi
     repo_name: esc
