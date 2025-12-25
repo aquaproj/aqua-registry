@@ -7,7 +7,11 @@ packages:
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.0.3")
-        no_asset: true
+        type: github_content
+        path: rgo
+        supported_envs:
+          - darwin
+          - linux
       - version_constraint: "true"
         asset: rgo_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -18,7 +22,7 @@ packages:
           cosign:
             opts:
               - --certificate-identity-regexp
-              - "^https://github\\.com/suzuki-shunsuke/rgo/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
             bundle:
