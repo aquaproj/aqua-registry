@@ -94,6 +94,24 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
+      - version_constraint: semver("<= 1.4.2") || Version == "2.0.0b19"
+        asset: borg-{{.OS}}-{{.Arch}}-gh
+        format: raw
+        replacements:
+          linux: linux-glibc235
+          amd64: x86_64
+        overrides:
+          - goos: darwin
+            goarch: amd64
+            replacements:
+              darwin: macos-13
+          - goos: darwin
+            goarch: arm64
+            replacements:
+              darwin: macos-14
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: borg-{{.OS}}-{{.Arch}}-gh
         format: raw
@@ -112,3 +130,5 @@ packages:
         supported_envs:
           - linux
           - darwin
+        github_artifact_attestations:
+          signer_workflow: borgbackup/borg/.github/workflows/ci.yml
