@@ -37223,6 +37223,16 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("< 4.30.1")
+        asset: lego_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: lego_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: lego_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -37233,6 +37243,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          signer_workflow: go-acme/lego/.github/workflows/release.yml
   - type: go_install
     repo_owner: go-delve
     repo_name: delve
