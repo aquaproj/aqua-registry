@@ -11,7 +11,17 @@ packages:
     version_overrides:
       - version_constraint: Version == "@biomejs/biome@2.0.1"
         no_asset: true
-      - version_constraint: semver("<= @biomejs/biome@2.3.8")
+      - version_constraint: "true"
+        version_prefix: cli/v
+        asset: biome-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 2.3.8")
+        version_prefix: "@biomejs/biome@"
         asset: biome-{{.OS}}-{{.Arch}}
         format: raw
         replacements:
