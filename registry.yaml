@@ -1048,6 +1048,41 @@ packages:
                 src: ./cmd/validator
                 dir: config-file-validator-{{trimV .Version}}
   - type: github_release
+    repo_owner: BoringDystopiaDevelopment
+    repo_name: tmuxai
+    aliases:
+      - name: alvinunreal/tmuxai
+    description: AI-Powered, Non-Intrusive Terminal Assistant
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2.0.0")
+        asset: tmuxai_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: tmuxai_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.sha256
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: Builditluc
     repo_name: wiki-tui
     description: A simple and easy to use Wikipedia Text User Interface
@@ -10972,39 +11007,6 @@ packages:
           - darwin
           - windows
           - amd64
-  - type: github_release
-    repo_owner: alvinunreal
-    repo_name: tmuxai
-    description: AI-Powered, Non-Intrusive Terminal Assistant
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 2.0.0")
-        asset: tmuxai_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: checksums.sha256
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: "true"
-        asset: tmuxai_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.sha256
-          algorithm: sha256
-        supported_envs:
-          - linux
-          - darwin
   - type: github_release
     repo_owner: amacneil
     repo_name: dbmate
