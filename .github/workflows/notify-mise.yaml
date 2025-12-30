@@ -8,8 +8,8 @@ env:
   NUMBER: ${{contains(github.event_name, 'issue') && github.event.issue.number || github.event.pull_request.number}}
 jobs:
   check-issue:
-    # github.actor != 'suzuki-shunsuke' &&
     if: |
+      github.actor != 'suzuki-shunsuke' &&
       !(contains(github.event.issue.labels.*.name, 'mise') ||
         contains(github.event.pull_request.labels.*.name, 'mise')) &&
       (contains(github.event.issue.body, ' mise ') ||
