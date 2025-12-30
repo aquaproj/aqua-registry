@@ -36645,6 +36645,46 @@ packages:
       - name: goctl
   - type: github_release
     repo_owner: github
+    repo_name: copilot-cli
+    description: GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.0.355", "v0.0.356", "v0.0.357", "v0.0.358", "v0.0.365"]
+        no_asset: true
+      - version_constraint: Version in ["v0.0.356-0", "v0.0.357-0"]
+      - version_constraint: Version == "v0.0.366-5"
+        asset: copilot-copilot-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.0.352")
+        no_asset: true
+      - version_constraint: semver("<= 0.0.366-3")
+      - version_constraint: semver("<= 0.0.370-0")
+        asset: copilot-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: copilot-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
+    repo_owner: github
     repo_name: copilot-language-server-release
     description: The Copilot Language Server enables any editor or IDE to integrate with GitHub Copilot via the language server protocol
     files:
