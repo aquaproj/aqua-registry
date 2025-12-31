@@ -1048,41 +1048,6 @@ packages:
                 src: ./cmd/validator
                 dir: config-file-validator-{{trimV .Version}}
   - type: github_release
-    repo_owner: BoringDystopiaDevelopment
-    repo_name: tmuxai
-    aliases:
-      - name: alvinunreal/tmuxai
-    description: AI-Powered, Non-Intrusive Terminal Assistant
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 2.0.0")
-        asset: tmuxai_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: checksums.sha256
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: "true"
-        asset: tmuxai_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          darwin: Darwin
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: checksums.sha256
-          algorithm: sha256
-        supported_envs:
-          - linux
-          - darwin
-  - type: github_release
     repo_owner: Builditluc
     repo_name: wiki-tui
     description: A simple and easy to use Wikipedia Text User Interface
@@ -11041,6 +11006,42 @@ packages:
           - darwin
           - windows
           - amd64
+  - type: github_release
+    repo_owner: alvinunreal
+    repo_name: tmuxai
+    aliases:
+      - name: alvinunreal/tmuxai
+      - name: BoringDystopiaDevelopment/tmuxai
+    description: AI-Powered, Non-Intrusive Terminal Assistant
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2.0.0")
+        asset: tmuxai_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: tmuxai_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.sha256
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: amacneil
     repo_name: dbmate
@@ -36644,6 +36645,50 @@ packages:
       - name: goctl
   - type: github_release
     repo_owner: github
+    repo_name: copilot-cli
+    description: GitHub Copilot CLI brings the power of Copilot coding agent directly to your terminal
+    files:
+      - name: copilot
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.366-3")
+        no_asset: true
+      - version_constraint: Version == "v0.0.366-5"
+        asset: copilot-copilot-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        files:
+          - name: copilot
+        replacements:
+          amd64: x64
+          windows: win32
+      - version_constraint: semver("<= 0.0.370-0")
+        asset: copilot-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: copilot
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: copilot-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: copilot
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+  - type: github_release
+    repo_owner: github
     repo_name: copilot-language-server-release
     description: The Copilot Language Server enables any editor or IDE to integrate with GitHub Copilot via the language server protocol
     files:
@@ -36672,6 +36717,104 @@ packages:
           amd64: x64
         files:
           - name: copilot-language-server
+  - type: github_release
+    repo_owner: github
+    repo_name: gh-ost
+    description: GitHub's Online Schema-migration Tool for MySQL
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.48")
+        error_message: "Versions <= 1.0.48 are not supported. Please use version >= v1.0.49"
+      - version_constraint: Version == "v1.0.49"
+        asset: gh-ost-binary-{{.OS}}-20200209110835.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: darwin
+            asset: gh-ost-binary-{{.OS}}-20200209114711.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v1.1.0"
+        asset: gh-ost-binary-{{.OS}}-20200828160625.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: linux
+            asset: gh-ost-binary-{{.OS}}-20200828140552.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v1.1.1"
+        asset: gh-ost-binary-{{.OS}}-20210503150942.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: darwin
+            asset: gh-ost-binary-{{.OS}}-20210503171035.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v1.1.2"
+        asset: gh-ost-binary-{{.OS}}-20210617134741.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: darwin
+            asset: gh-ost-binary-{{.OS}}-20210617155835.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v1.1.3"
+        asset: gh-ost-binary-{{.OS}}-20220225143057.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v1.1.4"
+        asset: gh-ost-binary-{{.OS}}-{{.Arch}}-20220225143506.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        overrides:
+          - goos: linux
+            asset: gh-ost-binary-{{.OS}}-20220225143506.{{.Format}}
+          - goos: darwin
+            goarch: arm64
+            asset: gh-ost-binary-{{.OS}}-{{.Arch}}-20220311164158.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v1.1.5"
+        asset: gh-ost-binary-{{.OS}}-{{.Arch}}-20220707162303.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v1.1.6"
+        asset: gh-ost-binary-{{.OS}}-{{.Arch}}-20231207144046.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: gh-ost-binary-{{.OS}}-{{.Arch}}-20241219160321.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        supported_envs:
+          - linux
+          - darwin
   - type: github_release
     repo_owner: github
     repo_name: git-sizer
@@ -83745,19 +83888,8 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: semver("<= 1.4.6")
-        asset: kubefwd_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        replacements:
-          darwin: macOS
-        checksum:
-          type: github_release
-          asset: kubefwd_{{.Version}}_checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
+      - version_constraint: semver("< 1.4.10")
+        no_asset: true
       - version_constraint: semver("<= 1.8.2")
         asset: kubefwd_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
