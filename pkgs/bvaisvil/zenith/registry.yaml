@@ -11,12 +11,18 @@ packages:
         format: tar.gz
         replacements:
           darwin: MacOS
+        files:
+          - name: zenith
+            src: "{{.AssetWithoutExt}}/zenith"
         overrides:
           - goos: linux
             replacements:
               amd64: x86_64
           - goos: darwin
             asset: "{{.OS}}.{{.Format}}"
+            files:
+              - name: zenith
+                src: macos/zenith
         supported_envs:
           - linux/amd64
           - darwin
@@ -65,6 +71,12 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: arm64
+            files:
+              - name: zenith
+                src: "{{.AssetWithoutExt}}"
         supported_envs:
           - linux
           - darwin
