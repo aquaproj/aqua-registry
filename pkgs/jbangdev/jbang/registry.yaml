@@ -5,17 +5,18 @@ packages:
     repo_name: jbang
     description: "Unleash the power of Java - JBang Lets Students, Educators and Professional Developers create, edit and run self-contained source-only Java programs with unprecedented ease"
     link: https://jbang.dev/
-    version_constraint: 'semvar(">= 0.48.0")'
     search_words:
       - java
-      - script
-    aliases:
-      - name: jbang
-    asset: "jbang-{{trimV .Version}}.zip"
-    files:
-      - name: jbang
-        src: "jbang-{{trimV .Version}}/bin/jbang"
-    checksum:
-      type: github_release
-      asset: jbang-{{trimV .Version}}.zip.sha256
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 0.48.0")
+        error_message: Use version >= 0.48.0. Older versions are not supported.
+      - version_constraint: "true"
+        asset: jbang.zip
+        files:
+          - name: jbang
+            src: jbang/bin/jbang
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
