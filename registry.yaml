@@ -48968,6 +48968,29 @@ packages:
         supported_envs:
           - linux
   - type: github_release
+    repo_owner: k8sgpt-ai
+    repo_name: k8sgpt
+    description: Giving Kubernetes Superpowers to everyone
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver(">= v0.3.33, <= v0.3.36") || semver(">= v0.3.42, <= v0.3.44")
+        no_asset: true
+      - version_constraint: "true"
+        asset: k8sgpt_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: kachick
     repo_name: selfup
     description: Versions should know how to update themselves
