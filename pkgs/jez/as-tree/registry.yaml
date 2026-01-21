@@ -3,11 +3,14 @@ packages:
   - type: github_release
     repo_owner: jez
     repo_name: as-tree
-    asset: as-tree-{{.Version}}-{{.OS}}.zip
     description: Print a list of paths as a tree of paths
-    replacements:
-      darwin: osx
-    supported_envs:
-      - linux/amd64
-      - darwin
-    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: as-tree-{{.Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: osx
+        supported_envs:
+          - linux/amd64
+          - darwin

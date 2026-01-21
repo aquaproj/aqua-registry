@@ -3,12 +3,27 @@ packages:
   - type: github_release
     repo_owner: minamijoyo
     repo_name: tfmigrate
-    description: A Terraform state migration tool for GitOps
-    supported_envs:
-      - darwin
-      - linux
-    asset: tfmigrate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    checksum:
-      type: github_release
-      asset: tfmigrate_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    description: A Terraform / OpenTofu state migration tool for GitOps
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.12")
+        asset: tfmigrate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: tfmigrate_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: tfmigrate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfmigrate_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin

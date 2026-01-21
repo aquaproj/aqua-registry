@@ -3,12 +3,15 @@ packages:
   - type: github_release
     repo_owner: liamg
     repo_name: dismember
-    asset: dismember-{{.OS}}-{{.Arch}}
-    format: raw
     description: Scan memory for secrets and more. Maybe eventually a full /proc toolkit
-    supported_envs:
-      - linux
-    checksum:
-      type: github_release
-      asset: dismember_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: dismember-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: dismember_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux

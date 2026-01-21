@@ -3,8 +3,14 @@ packages:
   - type: github_release
     repo_owner: hherman1
     repo_name: gq
-    asset: "{{.OS}}-{{.Arch}}.zip"
     description: jq but using go instead
-    supported_envs:
-      - darwin
-      - amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: "{{.OS}}-{{.Arch}}.{{.Format}}"
+        format: zip
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64

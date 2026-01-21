@@ -3,12 +3,23 @@ packages:
   - type: github_release
     repo_owner: hirosassa
     repo_name: tfcmt-gitlab
-    asset: tfcmt-gitlab_{{.OS}}_{{.Arch}}.tar.gz
     description: tfcmt-gitlab is a CLI command to parse and notify Terraform execution results. This command supports GitLab as a CI and notification platform
-    supported_envs:
-      - linux
-      - darwin
-    checksum:
-      type: github_release
-      asset: tfcmt-gitlab_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.4")
+        asset: tfcmt-gitlab_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfcmt-gitlab_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: tfcmt-gitlab_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfcmt-gitlab_{{trimV .Version}}_checksums.txt
+          algorithm: sha256

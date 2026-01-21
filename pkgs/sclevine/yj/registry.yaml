@@ -3,24 +3,37 @@ packages:
   - type: github_release
     repo_owner: sclevine
     repo_name: yj
-    description: Convert between YAML, TOML, JSON, and HCL
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    replacements:
-      darwin: macos
-    version_constraint: semver(">= 5.1.0")
-    asset: yj-{{.OS}}-{{.Arch}}
-    overrides:
-      - goos: windows
-        asset: yj.exe
+    description: "CLI - Convert between YAML, TOML, JSON, and HCL. Preserves map order"
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v5.0.0"
         asset: yj-{{.OS}}
+        format: raw
+        replacements:
+          darwin: macos
         overrides:
-          - goos: windows
-            asset: yj.exe
           - goos: linux
             goarch: arm64
-            asset: yj-linux-arm64
+            asset: yj-{{.OS}}-{{.Arch}}
+          - goos: windows
+            asset: yj
+      - version_constraint: semver("<= 4.0.0")
+        asset: yj-{{.OS}}
+        format: raw
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: windows
+            asset: yj
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: yj-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: windows
+            asset: yj

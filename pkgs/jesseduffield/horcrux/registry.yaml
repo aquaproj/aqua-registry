@@ -4,23 +4,22 @@ packages:
     repo_owner: jesseduffield
     repo_name: horcrux
     description: Split your file into encrypted fragments so that you don't need to remember a passcode
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    rosetta2: true
-    asset: horcrux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: 32-bit
-      amd64: x86_64
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: github_release
-      asset: horcrux_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: horcrux_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: horcrux_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip

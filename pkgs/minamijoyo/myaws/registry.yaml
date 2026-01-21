@@ -3,37 +3,48 @@ packages:
   - type: github_release
     repo_owner: minamijoyo
     repo_name: myaws
-    asset: myaws_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
     description: A human friendly AWS CLI written in Go
-    supported_envs:
-      - linux
-      - darwin
-    checksum:
-      type: github_release
-      asset: myaws_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">=0.4.2")
+    version_constraint: "false"
     version_overrides:
-      # arm64 wasn't supported
-      - version_constraint: semver(">= 0.3.5")
+      - version_constraint: Version == "v0.0.1"
+        asset: myaws_{{trimV .Version}}_myaws_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
         rosetta2: true
         supported_envs:
           - linux/amd64
           - darwin
-        # checksum file not provided
-      - version_constraint: semver(">= 0.0.4")
+      - version_constraint: semver("<= 0.0.3")
+        asset: myaws_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
         rosetta2: true
         supported_envs:
           - linux/amd64
           - darwin
+      - version_constraint: semver("<= 0.3.4")
+        asset: myaws_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.4.1")
+        asset: myaws_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
         checksum:
-          enabled: false
-        # format was changed from zip to tar.gz
+          type: github_release
+          asset: myaws_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
       - version_constraint: "true"
-        rosetta2: true
-        supported_envs:
-          - linux/amd64
-          - darwin
+        asset: myaws_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         checksum:
-          enabled: false
-        asset: myaws_{{.Version}}_{{.OS}}_{{.Arch}}.zip
+          type: github_release
+          asset: myaws_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin

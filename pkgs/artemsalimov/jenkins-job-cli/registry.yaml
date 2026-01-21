@@ -5,18 +5,38 @@ packages:
     repo_name: jenkins-job-cli
     aliases:
       - name: gocruncher/jenkins-job-cli
-    description: Jenkins-job-CLI - Runs Jenkins job from the Command Line
-    format: raw
-    rosetta2: true
-    complete_windows_ext: false
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: jenkins-job-cli-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+    description: "Jenkins-job-CLI - Runs Jenkins job from the Command Line"
     files:
       - name: jj
-    checksum:
-      type: github_release
-      asset: sha256sums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.1.0"
+        asset: jenkins-job-ctl-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.0.1")
+        asset: jbuilder-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: jenkins-job-cli-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        checksum:
+          type: github_release
+          asset: sha256sums.txt
+          algorithm: sha256

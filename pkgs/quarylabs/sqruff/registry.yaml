@@ -84,6 +84,22 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: semver("< 0.25.14")
+        asset: sqruff-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: sqruff-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: sqruff-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -95,6 +111,8 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: quarylabs/sqruff/.github/workflows/release.yml
         overrides:
           - goos: linux
             asset: sqruff-{{.OS}}-{{.Arch}}-musl.{{.Format}}

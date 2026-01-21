@@ -46,7 +46,7 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.30.3")
         asset: weaviate-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         rosetta2: true
@@ -60,3 +60,19 @@ packages:
             format: zip
           - goos: windows
             format: zip
+      - version_constraint: "true"
+        asset: weaviate-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        overrides:
+          - goos: darwin
+            asset: weaviate-{{.Version}}-{{.OS}}-all.{{.Format}}
+            format: zip
+        supported_envs:
+          # https://github.com/weaviate/weaviate/pull/8123
+          - linux
+          - darwin

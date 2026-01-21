@@ -3,10 +3,19 @@ packages:
   - type: github_release
     repo_owner: goccy
     repo_name: bigquery-emulator
-    asset: bigquery-emulator-{{.OS}}-{{.Arch}}
-    format: raw
     description: BigQuery emulator server implemented in Go
-    supported_envs:
-      - linux/amd64
-      - darwin
-    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.2"
+        asset: bigquery-emulator-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - darwin
+      - version_constraint: "true"
+        asset: bigquery-emulator-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        supported_envs:
+          - linux/amd64
+          - darwin

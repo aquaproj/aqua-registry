@@ -3,10 +3,18 @@ packages:
   - type: github_release
     repo_owner: uptrace
     repo_name: uptrace
-    format: raw
-    asset: uptrace_{{.OS}}_{{.Arch}}
-    description: Distributed tracing using OpenTelemetry and ClickHouse
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    description: "Open source APM: OpenTelemetry traces, metrics, and logs"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.8")
+        asset: uptrace_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: uptrace_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true

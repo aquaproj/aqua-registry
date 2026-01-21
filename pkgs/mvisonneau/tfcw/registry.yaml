@@ -4,44 +4,63 @@ packages:
     repo_owner: mvisonneau
     repo_name: tfcw
     description: Terraform Cloud Wrapper
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    version_constraint: semver(">= 0.0.12")
-    asset: tfcw_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    checksum:
-      type: github_release
-      asset: tfcw_{{.Version}}_sha512sums.txt
-      algorithm: sha512
+    version_constraint: "false"
     version_overrides:
-      # arm64 wasn't supported
-      - version_constraint: semver("= 0.0.11")
-        rosetta2: true
-        # asset name was changed
-        supported_envs:
-          - amd64
-          - darwin
-          - linux
-      - version_constraint: semver("= 0.0.10")
-        rosetta2: true
+      - version_constraint: Version == "0.0.4"
+        no_asset: true
+      - version_constraint: Version == "edge"
+        asset: tfcw_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfcw_{{.Version}}_sha512sums.txt
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v0.0.10"
         asset: tfcw_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        supported_envs:
-          - amd64
-          - darwin
-          - linux
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
         checksum:
           type: github_release
           asset: tfcw_{{trimV .Version}}_SHA256SUMS
           algorithm: sha256
-      - version_constraint: "true"
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v0.0.11"
+        asset: tfcw_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-        asset: tfcw_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        supported_envs:
-          - amd64
-          - darwin
-          - linux
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: tfcw_{{.Version}}_sha512sums.txt
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.0.9")
+        asset: tfcw_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
         checksum:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: tfcw_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfcw_{{.Version}}_sha512sums.txt
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip

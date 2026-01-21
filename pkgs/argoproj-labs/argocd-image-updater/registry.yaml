@@ -4,24 +4,31 @@ packages:
     repo_owner: argoproj-labs
     repo_name: argocd-image-updater
     description: Automatic container image update for Argo CD
-    format: raw
-    version_constraint: semver(">= 0.12.0")
-    asset: argocd-image-updater-{{.OS}}_{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    overrides:
-      - goos: windows
-        asset: argocd-image-updater-win64.exe
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.10.1"
+        no_asset: true
+      - version_constraint: Version == "v0.9.1"
+        asset: argocd-image-updater_{{.Version}}_{{.OS}}-{{.Arch}}.1-linux_amd64
+        format: raw
         supported_envs:
           - linux/amd64
+      - version_constraint: semver("<= 0.7.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.11.3")
         asset: argocd-image-updater_{{.Version}}_{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+      - version_constraint: "true"
+        asset: argocd-image-updater-{{.OS}}_{{.Arch}}
+        format: raw
+        replacements:
+          windows: win64
         checksum:
-          enabled: false
-    checksum:
-      type: github_release
-      asset: release-{{.Version}}.sha256
-      algorithm: sha256
+          type: github_release
+          asset: release-{{.Version}}.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: argocd-image-updater-{{.OS}}

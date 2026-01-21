@@ -4,25 +4,37 @@ packages:
     repo_owner: sorenisanerd
     repo_name: gotty
     description: Share your terminal as a web application
-    asset: gotty_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    supported_envs:
-      - linux
-      - darwin
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
-    version_constraint: semver(">= 1.3.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v1.2.0"
-        supported_envs:
-          - linux/amd64
-          - darwin
-        rosetta2: true
-      - version_constraint: semver("< 1.2.0")
+      - version_constraint: Version == "v1.1.0"
         asset: gotty_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
         supported_envs:
           - linux/amd64
           - darwin
+      - version_constraint: Version == "v1.2.0"
+        asset: gotty_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: gotty_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin

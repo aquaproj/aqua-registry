@@ -1,0 +1,23 @@
+---
+name: Notify ready for review
+on:
+  pull_request_target:
+    branches: [main]
+    types: [ready_for_review]
+concurrency:
+  group: ${{ github.workflow }}--${{ github.head_ref }} # github.ref is unavailable in case of pull_request_target
+  cancel-in-progress: true
+jobs:
+  notify:
+    if: github.actor != 'suzuki-shunsuke'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Notify
+        env:
+          GH_TOKEN: ${{github.token}}
+          NUMBER: ${{github.event.pull_request.number}}
+        run: |
+          gh pr comment -R "$GITHUB_REPOSITORY" "$NUMBER" --body "@suzuki-shunsuke Ready for review"

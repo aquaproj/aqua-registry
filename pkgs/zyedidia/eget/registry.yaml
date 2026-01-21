@@ -4,20 +4,36 @@ packages:
     repo_owner: zyedidia
     repo_name: eget
     description: Easily install prebuilt binaries from GitHub
-    asset: eget-{{trimV .Version}}-{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    files:
-      - name: eget
-        src: eget-{{trimV .Version}}-{{.OS}}_{{.Arch}}/eget
-    version_constraint: semver(">= 1.1.0")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.1.1")
+      - version_constraint: Version == "v0.1.0"
+        asset: eget-{{trimV .Version}}-{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: eget
+            src: "{{.AssetWithoutExt}}/eget"
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.0.1")
+        asset: eget-{{trimV .Version}}-{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         rosetta2: true
-      - version_constraint: semver("< 0.1.1")
+        windows_arm_emulation: true
+        files:
+          - name: eget
+            src: "{{.AssetWithoutExt}}/eget"
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: eget-{{trimV .Version}}-{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: eget
+            src: "{{.AssetWithoutExt}}/eget"
+        overrides:
+          - goos: windows
+            format: zip

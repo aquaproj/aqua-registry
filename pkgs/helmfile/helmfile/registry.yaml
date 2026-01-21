@@ -5,22 +5,13 @@ packages:
     repo_name: helmfile
     aliases:
       - name: roboll/helmfile
-    asset: helmfile_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
-    description: Declaratively deploy your Kubernetes manifests, Kustomize configs, and Charts as Helm releases in one shot
-    checksum:
-      type: github_release
-      asset: helmfile_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.145.0")
+    description: Declaratively deploy your Kubernetes manifests, Kustomize configs, and Charts as Helm releases. Generate all-in-one manifests for use with ArgoCD
+    version_constraint: "false"
     version_overrides:
       - version_constraint: "true"
-        repo_owner: roboll
-        rosetta2: true
-        asset: helmfile_{{.OS}}_{{.Arch}}
-        format: raw
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+        asset: helmfile_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         checksum:
-          enabled: false
+          type: github_release
+          asset: helmfile_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
