@@ -28,6 +28,18 @@ packages:
           type: github_release
           asset: sbomqs_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+      - version_constraint: semver("<= 2.0.2")
+        asset: sbomqs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: sbomqs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -40,3 +52,13 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+        cosign:
+          opts:
+            - --certificate-identity
+            - https://github.com/interlynk-io/sbomqs/.github/workflows/release.yml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
+            - --certificate
+            - https://github.com/interlynk-io/sbomqs/releases/download/{{.Version}}/{{.Asset}}.pem
+            - --signature
+            - https://github.com/interlynk-io/sbomqs/releases/download/{{.Version}}/{{.Asset}}.sig
