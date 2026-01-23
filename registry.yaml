@@ -2676,6 +2676,52 @@ packages:
           - windows
           - amd64
   - type: github_release
+    repo_owner: Epistates
+    repo_name: treemd
+    description: A (TUI/CLI) markdown navigator with tree-based structural navigation
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.4")
+        no_asset: true
+      - version_constraint: semver("<= 0.5.4")
+        asset: treemd-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: treemd
+            src: "{{.AssetWithoutExt}}"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: treemd-{{.Arch}}-{{.OS}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: treemd-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: treemd
+            src: "{{.AssetWithoutExt}}"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            asset: treemd-{{.Arch}}-{{.OS}}.exe.{{.Format}}
+  - type: github_release
     repo_owner: F1bonacc1
     repo_name: process-compose
     description: Process Compose is a simple and flexible scheduler and orchestrator to manage non-containerized applications
@@ -12004,6 +12050,28 @@ packages:
           - darwin
           - windows
           - amd64
+  - type: http
+    repo_owner: anthropics
+    repo_name: claude-code
+    description: Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and handling git workflows - all through natural language commands
+    files:
+      - name: claude
+    version_source: github_tag
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        format: raw
+        url: https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{{trimV .Version}}/{{.OS}}-{{.Arch}}/claude
+        files:
+          - name: claude
+        replacements:
+          amd64: x64
+        supported_envs:
+          - darwin
+          - linux
+        overrides:
+          - goos: linux
+            url: https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{{trimV .Version}}/{{.OS}}-{{.Arch}}-musl/claude
   - type: github_release
     repo_owner: antonmedv
     repo_name: fx
@@ -13971,6 +14039,31 @@ packages:
           url: https://release.ariga.io/atlas/atlas-{{.OS}}-{{.Arch}}-{{.Version}}.exe.sha256
           file_format: raw
           algorithm: sha256
+    version_constraint: semver(">= 0.22.0")
+    # https://github.com/ariga/atlas/issues/3296#issuecomment-2574924728
+    # > Old Versions of Atlas
+    # > As part of our Supported Version Policy mentioned above, binaries for versions that were published more than 6 months ago will be removed from the CDN and Docker Hub.
+    version_overrides:
+      - version_constraint: semver("< 0.21.0")
+        no_asset: true
+  - name: ariga/atlas/community
+    type: http
+    repo_owner: ariga
+    repo_name: atlas
+    url: https://release.ariga.io/atlas/atlas-community-{{.OS}}-{{.Arch}}-{{.Version}}
+    description: A modern tool for managing database schemas (Community Edition)
+    link: https://atlasgo.io/community-edition
+    format: raw
+    supported_envs:
+      - darwin
+      - linux
+    files:
+      - name: atlas
+    checksum:
+      type: http
+      url: https://release.ariga.io/atlas/atlas-community-{{.OS}}-{{.Arch}}-{{.Version}}.sha256
+      file_format: raw
+      algorithm: sha256
     version_constraint: semver(">= 0.22.0")
     # https://github.com/ariga/atlas/issues/3296#issuecomment-2574924728
     # > Old Versions of Atlas
@@ -20392,6 +20485,58 @@ packages:
               - --certificate
               - https://github.com/caddyserver/caddy/releases/download/v{{trimV .Version}}/caddy_{{trimV .Version}}_checksums.txt.pem
   - type: github_release
+    repo_owner: cameron-martin
+    repo_name: bazel-lsp
+    description: A language server implementation for Bazel
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.3.0"
+        asset: bazel-lsp-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        replacements:
+          darwin: osx
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.3.1"
+        asset: bazel-lsp-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          darwin: osx
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.2.0")
+        asset: bazel-lsp-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.6.1")
+        asset: bazel-lsp-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          darwin: osx
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.6.3")
+        asset: bazel-lsp-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          darwin: osx
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: bazel-lsp-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          darwin: osx
+  - type: github_release
     repo_owner: cantino
     repo_name: mcfly
     description: Fly through your shell history. Great Scott
@@ -22257,12 +22402,12 @@ packages:
     repo_name: checkmake
     aliases:
       - name: mrtazz/checkmake
-    description: experimental linter/analyzer for Makefiles
+    description: Linter/analyzer for Makefiles
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "0.2.0"
         no_asset: true
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.2.2")
         asset: checkmake-{{.Version}}.{{.OS}}.{{.Arch}}
         format: raw
         rosetta2: true
@@ -22273,6 +22418,13 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
+      - version_constraint: "true"
+        asset: checkmake-{{.Version}}.{{.OS}}.{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: chenjiandongx
     repo_name: kubectl-images
@@ -41541,16 +41693,77 @@ packages:
   - type: github_release
     repo_owner: gruntwork-io
     repo_name: terragrunt
-    description: Terragrunt is a thin wrapper for Terraform that provides extra tools for working with multiple Terraform modules
-    asset: terragrunt_{{.OS}}_{{.Arch}}
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: SHA256SUMS
-      algorithm: sha256
+    description: Terragrunt is a flexible orchestration tool that allows Infrastructure as Code written in OpenTofu/Terraform to scale
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.18.0")
+        asset: terragrunt_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.28.11")
+        asset: terragrunt_{{.OS}}_{{.Arch}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.93.5")
+        asset: terragrunt_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+      - version_constraint: semver("<= 0.97.2")
+        asset: terragrunt_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: terragrunt
+            src: "{{.AssetWithoutExt}}"
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: terragrunt_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: terragrunt_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: terragrunt
+            src: "{{.AssetWithoutExt}}"
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/gruntwork-io/terragrunt/releases/download/{{.Version}}/SHA256SUMS.pem
+              - --certificate-identity-regexp
+              - "^https://github\\.com/gruntwork-io/terragrunt/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/gruntwork-io/terragrunt/releases/download/{{.Version}}/SHA256SUMS.sig
+        overrides:
+          - goos: windows
+            asset: terragrunt_{{.OS}}_{{.Arch}}.exe.{{.Format}}
   - type: github_release
     repo_owner: gsamokovarov
     repo_name: jump
@@ -44844,10 +45057,10 @@ packages:
   - type: github_release
     repo_owner: interlynk-io
     repo_name: sbomqs
-    description: SBOM quality score - Quality metrics for your sboms
+    description: "sbomqs: The Comprehensive SBOM Quality & Compliance Tool"
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= V0.0.3")
+      - version_constraint: semver("<= 0.0.3")
         no_asset: true
       - version_constraint: semver("<= 0.0.9")
         asset: sbomqs-{{.OS}}-{{.Arch}}
@@ -44862,20 +45075,47 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: Version == "v0.0.10"
+      - version_constraint: semver("<= 1.3.0")
         asset: sbomqs-{{.OS}}-{{.Arch}}
         format: raw
         checksum:
           type: github_release
           asset: sbomqs_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 2.0.2")
+        asset: sbomqs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
           algorithm: sha256
       - version_constraint: "true"
-        asset: sbomqs-{{.OS}}-{{.Arch}}
-        format: raw
+        asset: sbomqs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
         checksum:
           type: github_release
-          asset: sbomqs_{{trimV .Version}}_checksums.txt
+          asset: checksums.txt
           algorithm: sha256
+        cosign:
+          opts:
+            - --certificate-identity
+            - https://github.com/interlynk-io/sbomqs/.github/workflows/release.yml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
+            - --certificate
+            - https://github.com/interlynk-io/sbomqs/releases/download/{{.Version}}/{{.Asset}}.pem
+            - --signature
+            - https://github.com/interlynk-io/sbomqs/releases/download/{{.Version}}/{{.Asset}}.sig
   - type: github_release
     repo_owner: iovisor
     repo_name: kubectl-trace
@@ -48856,6 +49096,23 @@ packages:
           - amd64
       - version_constraint: "true"
         asset: gh-setup_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            format: zip
+  - type: github_release
+    repo_owner: k1LoW
+    repo_name: git-wt
+    description: A Git subcommand that makes `git worktree` simple
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: git-wt_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
         checksum:
@@ -57375,6 +57632,112 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+  - type: github_release
+    repo_owner: micro-editor
+    repo_name: micro
+    aliases:
+      - name: zyedidia/micro
+    description: A modern and intuitive terminal-based text editor
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v2.0.8"
+        asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: micro
+            src: micro-{{trimV .Version}}/micro
+        replacements:
+          darwin: osx
+          windows: win64
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: micro-{{trimV .Version}}-{{.OS}}64-static.{{.Format}}
+          - goos: linux
+            goarch: arm64
+            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.0rc1")
+        asset: micro-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: micro
+            src: micro-{{trimV .Version}}/micro
+        replacements:
+          darwin: osx
+          windows: win64
+        overrides:
+          - goos: linux
+            asset: micro-{{.Version}}-{{.OS}}64.{{.Format}}
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.4.1")
+        asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: micro
+            src: micro-{{trimV .Version}}/micro
+        replacements:
+          darwin: osx
+          windows: win64
+        overrides:
+          - goos: linux
+            asset: micro-{{trimV .Version}}-{{.OS}}64.{{.Format}}
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.0.10")
+        asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: micro
+            src: micro-{{trimV .Version}}/micro
+        replacements:
+          darwin: osx
+          windows: win64
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: micro-{{trimV .Version}}-{{.OS}}64-static.{{.Format}}
+          - goos: linux
+            goarch: arm64
+            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: micro
+            src: micro-{{trimV .Version}}/micro
+        replacements:
+          windows: win64
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: micro-{{trimV .Version}}-{{.OS}}64-static.{{.Format}}
+          - goos: linux
+            goarch: arm64
+            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: darwin
+            goarch: amd64
+            replacements:
+              darwin: osx
+          - goos: darwin
+            goarch: arm64
+            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements:
+              darwin: macos
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: microsoft
     repo_name: component-detection
@@ -67415,7 +67778,7 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.1.8")
         asset: witr-{{.OS}}-{{.Arch}}
         format: raw
         checksum:
@@ -67425,6 +67788,17 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: "true"
+        asset: witr-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: witr-{{.OS}}-{{.Arch}}.{{.Format}}
   - type: github_release
     repo_owner: pre-commit
     repo_name: pre-commit
@@ -75146,16 +75520,27 @@ packages:
   - type: github_release
     repo_owner: skim-rs
     repo_name: skim
+    description: Fuzzy Finder in rust
     aliases:
       - name: lotabout/skim
-    description: Fuzzy Finder in rust
     files:
       - name: sk
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.1-alpha")
+      - version_constraint: Version == "v0.1-alpha"
         no_asset: true
-      - version_constraint: semver("<= 0.6.9")
+      - version_constraint: Version == "v0.9.4"
+        asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.5.0")
         asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
@@ -75166,20 +75551,47 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
-      - version_constraint: semver("<= 0.9.4")
+      - version_constraint: semver("<= 0.6.9")
         asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
         replacements:
           amd64: x86_64
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}eabi.{{.Format}}
+            replacements:
+              arm64: arm
         supported_envs:
-          - linux/amd64
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.9.3")
+        asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+            replacements:
+              arm64: arm
+              linux: unknown-linux-gnueabi
+        supported_envs:
+          - linux
           - darwin
       - version_constraint: semver("<= 0.10.4")
         no_asset: true
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.14.3")
         asset: skim-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tgz
         replacements:
@@ -75187,6 +75599,45 @@ packages:
           arm64: aarch64
           darwin: apple-darwin
           linux: unknown-linux-musl
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.15.3")
+        no_asset: true
+      - version_constraint: semver("<= 0.20.5")
+        asset: skim-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tgz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: skim-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        files:
+          - name: sk
+            src: "{{.AssetWithoutExt}}/sk"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
         supported_envs:
           - linux
           - darwin
@@ -90383,109 +90834,5 @@ packages:
           - name: eget
             src: "{{.AssetWithoutExt}}/eget"
         overrides:
-          - goos: windows
-            format: zip
-  - type: github_release
-    repo_owner: zyedidia
-    repo_name: micro
-    description: A modern and intuitive terminal-based text editor
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: Version == "v2.0.8"
-        asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: micro
-            src: micro-{{trimV .Version}}/micro
-        replacements:
-          darwin: osx
-          windows: win64
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: micro-{{trimV .Version}}-{{.OS}}64-static.{{.Format}}
-          - goos: linux
-            goarch: arm64
-            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 1.0rc1")
-        asset: micro-{{.Version}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: micro
-            src: micro-{{trimV .Version}}/micro
-        replacements:
-          darwin: osx
-          windows: win64
-        overrides:
-          - goos: linux
-            asset: micro-{{.Version}}-{{.OS}}64.{{.Format}}
-          - goos: windows
-            format: zip
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: semver("<= 1.4.1")
-        asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: micro
-            src: micro-{{trimV .Version}}/micro
-        replacements:
-          darwin: osx
-          windows: win64
-        overrides:
-          - goos: linux
-            asset: micro-{{trimV .Version}}-{{.OS}}64.{{.Format}}
-          - goos: windows
-            format: zip
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: semver("<= 2.0.10")
-        asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: micro
-            src: micro-{{trimV .Version}}/micro
-        replacements:
-          darwin: osx
-          windows: win64
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: micro-{{trimV .Version}}-{{.OS}}64-static.{{.Format}}
-          - goos: linux
-            goarch: arm64
-            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: "true"
-        asset: micro-{{trimV .Version}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: micro
-            src: micro-{{trimV .Version}}/micro
-        replacements:
-          windows: win64
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: micro-{{trimV .Version}}-{{.OS}}64-static.{{.Format}}
-          - goos: linux
-            goarch: arm64
-            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-          - goos: darwin
-            goarch: amd64
-            replacements:
-              darwin: osx
-          - goos: darwin
-            goarch: arm64
-            asset: micro-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-            replacements:
-              darwin: macos
           - goos: windows
             format: zip
