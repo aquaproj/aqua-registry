@@ -69852,6 +69852,32 @@ packages:
         rosetta2: true
         windows_arm_emulation: true
   - type: github_release
+    repo_owner: raskell-io
+    repo_name: hx
+    description: A fast, opinionated Haskell toolchain CLI
+    asset: hx-v{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      algorithm: sha256
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      windows: pc-windows-msvc
+    overrides:
+      - goos: linux
+        goarch: amd64
+        replacements:
+          linux: unknown-linux-gnu
+      - goos: linux
+        goarch: arm64
+        replacements:
+          linux: unknown-linux-gnu
+      - goos: windows
+        format: zip
+  - type: github_release
     repo_owner: raviqqe
     repo_name: muffet
     description: Fast website link checker in Go
