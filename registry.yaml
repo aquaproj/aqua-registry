@@ -78824,6 +78824,19 @@ packages:
       - name: age-plugin-yubikey
         src: age-plugin-yubikey/age-plugin-yubikey
     version_overrides:
+      - version_constraint: semver("<= 0.3.0")
+        asset: age-plugin-yubikey-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin/amd64
+          - linux/amd64
+          - windows/amd64
       - version_constraint: semver("<= 0.4.0")
         asset: age-plugin-yubikey-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
