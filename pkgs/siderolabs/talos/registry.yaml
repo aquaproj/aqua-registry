@@ -3,18 +3,110 @@ packages:
   - type: github_release
     repo_owner: siderolabs
     repo_name: talos
-    aliases:
-      - name: talos-systems/talos
-    description: Talos is a modern OS for Kubernetes. talosctl is a CLI for out-of-band management of Kubernetes nodes created by Talos
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    asset: talosctl-{{.OS}}-{{.Arch}}
-    files:
-      - name: talosctl
-    format: raw
-    checksum:
-      type: github_release
-      asset: sha512sum.txt
-      algorithm: sha512
+    description: Talos Linux is a modern Linux distribution built for Kubernetes
+    version_filter: not (Version matches "-(alpha|beta|rc)")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.2.9"
+        asset: talosctl-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha512sum.txt
+          algorithm: sha512
+      - version_constraint: semver("<= 0.2.0")
+        asset: vm{{.OS}}
+        format: raw
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: osctl-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.3.3")
+        asset: vm{{.OS}}
+        format: raw
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: sha512sum.txt
+          algorithm: sha512
+        overrides:
+          - goos: darwin
+            asset: osctl-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.6.3")
+        asset: talosctl-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: vm{{.OS}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.10.4")
+        asset: talosctl-{{.OS}}-{{.Arch}}
+        format: raw
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.12.3")
+        asset: talosctl-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.8.4")
+        asset: talosctl-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 1.11.3")
+        asset: talosctl-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: talosctl-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: sha256sum.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/siderolabs/talos/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+            bundle:
+              type: github_release
+              asset: sha256sum.txt.bundle
