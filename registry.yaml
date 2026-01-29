@@ -3842,6 +3842,177 @@ packages:
             goarch: amd64
             asset: stylua-{{.OS}}-{{.Arch}}-musl.{{.Format}}
   - type: github_release
+    repo_owner: JuliaLang
+    repo_name: juliaup
+    description: Julia installer and version multiplexer
+    files:
+      - name: julia
+      - name: juliaup
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.58.0")
+        no_asset: true
+      - version_constraint: semver("<= 1.2.6")
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: juliaup
+            src: target\{{.Arch}}-{{.OS}}/juliaup
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.2.22")
+        asset: "{{.Arch}}-{{.OS}}.{{.Format}}"
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: julia
+            src: target/{{.Arch}}-{{.OS}}/julialauncher
+          - name: juliaup
+            src: target/{{.Arch}}-{{.OS}}/juliaup
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.2.29")
+        asset: juliaup--{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: julia
+            src: target/{{.Arch}}-{{.OS}}/julialauncher
+          - name: juliaup
+            src: target/{{.Arch}}-{{.OS}}/juliaup
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.2.41")
+        asset: juliaup-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: julia
+            src: "{{.AssetWithoutExt}}/julialauncher"
+          - name: juliaup
+            src: "{{.AssetWithoutExt}}/juliaup"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v1.2.43"
+        asset: juliaup-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: julia
+            src: julialauncher
+          - name: juliaup
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.6.12")
+        asset: juliaup-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: julia
+            src: julialauncher
+          - name: juliaup
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.7.4")
+        asset: juliaup-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: julia
+            src: julialauncher
+          - name: juliaup
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            asset: juliaup-{{trimV .Version}}-{{.Arch}}-{{.OS}}-windowsstore.{{.Format}}
+      - version_constraint: semver("<= 1.12.4")
+        no_asset: true
+      - version_constraint: semver("<= 1.13.0")
+        asset: juliaup-{{trimV .Version}}-{{.Arch}}-{{.OS}}-portable.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+      - version_constraint: Version == "v1.13.1"
+        no_asset: true
+      - version_constraint: semver("<= 1.16.6")
+        asset: juliaup-{{trimV .Version}}-{{.Arch}}-{{.OS}}-portable.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+      - version_constraint: semver("<= 1.16.9")
+        no_asset: true
+      - version_constraint: "true"
+        asset: juliaup-{{trimV .Version}}-{{.Arch}}-{{.OS}}-portable.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+  - type: github_release
     repo_owner: Julien-R44
     repo_name: fast-ssh
     description: FastSSH is a TUI that allows you to quickly connect to your services by navigating through your SSH config
