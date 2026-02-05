@@ -81927,6 +81927,14 @@ packages:
         overrides:
           - goos: linux
             format: tar.gz
+      - version_constraint: semver("<= 2.0.13")
+        asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: linux
+            format: tar.gz
       - version_constraint: "true"
         asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
         format: zip
@@ -81935,6 +81943,8 @@ packages:
         overrides:
           - goos: linux
             format: tar.gz
+        github_artifact_attestations:
+          signer_workflow: syncthing/syncthing/.github/workflows/build-syncthing.yaml
   - type: github_release
     repo_owner: synfinatic
     repo_name: aws-sso-cli
