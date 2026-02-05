@@ -7,8 +7,6 @@ packages:
     version_filter: not (Version matches "-rc")
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v1.6.0"
-        no_asset: true
       - version_constraint: Version == "v0.12.25"
         asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
         format: tar.gz
@@ -19,9 +17,9 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: Version == "v0.14.22"
-      - version_constraint: Version == "v1.20.0"
       - version_constraint: semver("<= 0.13.3")
+        no_asset: true
+      - version_constraint: Version in ["v0.14.22", "v1.6.0", "v1.20.0"]
         no_asset: true
       - version_constraint: semver("<= 0.14.48")
         asset: syncthing-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
