@@ -85819,35 +85819,31 @@ packages:
     version_filter: Version matches "^[0-9]"
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 4.140.0")
+      - version_constraint: semver("<= 4.139.1")
         asset: tuist.zip
         format: zip
         supported_envs:
           - darwin
-          - linux/amd64
-          - linux/arm64
         checksum:
           type: github_release
           asset: SHASUMS256.txt
           algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: tuist-linux-x86_64.tar.gz
-            format: tar.gz
-          - goos: linux
-            goarch: arm64
-            asset: tuist-linux-aarch64.tar.gz
-            format: tar.gz
       - version_constraint: "true"
         asset: tuist.zip
         format: zip
-        supported_envs:
-          - darwin
         checksum:
           type: github_release
           asset: SHASUMS256.txt
           algorithm: sha256
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - darwin
+          - linux
   - type: github_release
     repo_owner: tummychow
     repo_name: git-absorb
