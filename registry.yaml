@@ -20916,6 +20916,22 @@ packages:
             asset: mago-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
           - goos: windows
             format: zip
+      - version_constraint: semver("< 1.5.0")
+        asset: mago-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: mago
+            src: mago-{{.Version}}-{{.Arch}}-{{.OS}}/mago
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: mago-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -20932,6 +20948,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          signer_workflow: carthage-software/mago/.github/workflows/cd.yml
   - type: github_release
     repo_owner: carvel-dev
     repo_name: imgpkg
