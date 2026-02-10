@@ -5,6 +5,9 @@ packages:
     repo_name: tone
     description: tone is a cross platform audio tagger and metadata editor to dump and modify metadata for a wide variety of formats, including mp3, m4b, flac and more. It has no dependencies and can be downloaded as single binary for Windows, macOS, Linux and other common platforms
     version_constraint: "false"
+    files:
+      - name: tone
+        src: tone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/tone
     version_overrides:
       - version_constraint: semver("<= 0.0.4")
         asset: tone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
@@ -17,6 +20,9 @@ packages:
         overrides:
           - goos: windows
             format: zip
+            files:
+              - name: tone
+                src: tone.exe
       - version_constraint: "true"
         asset: tone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -29,5 +35,11 @@ packages:
           - goos: linux
             goarch: amd64
             asset: tone-{{trimV .Version}}-{{.OS}}-musl-{{.Arch}}.{{.Format}}
+            files:
+              - name: tone
+                src: tone-{{trimV .Version}}-{{.OS}}-musl-{{.Arch}}/tone
           - goos: windows
             format: zip
+            files:
+              - name: tone
+                src: tone.exe
