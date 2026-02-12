@@ -7,7 +7,7 @@ packages:
     version_constraint: "false"
     files:
       - name: tone
-        src: tone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/tone
+        src: "{{.AssetWithoutExt}}/tone"
     version_overrides:
       - version_constraint: semver("<= 0.0.4")
         asset: tone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
@@ -22,7 +22,6 @@ packages:
             format: zip
             files:
               - name: tone
-                src: tone.exe
       - version_constraint: "true"
         asset: tone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -35,11 +34,7 @@ packages:
           - goos: linux
             goarch: amd64
             asset: tone-{{trimV .Version}}-{{.OS}}-musl-{{.Arch}}.{{.Format}}
-            files:
-              - name: tone
-                src: tone-{{trimV .Version}}-{{.OS}}-musl-{{.Arch}}/tone
           - goos: windows
             format: zip
             files:
               - name: tone
-                src: tone.exe
