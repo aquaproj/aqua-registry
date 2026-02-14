@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: http
+    repo_owner: glossia
+    repo_name: glossia
+    description: Localize like you ship software
+    version_source: github_tag
+    version_prefix: cli-v
+    version_filter: |
+      Version matches "^cli-v\\d+\\.\\d+\\.\\d+$"
+    url: https://glossia-releases.t3.storage.dev/cli/{{.Version}}/glossia-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: glossia
+        src: glossia
+    replacements:
+      amd64: x64
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: glossia
+            src: glossia.exe
+        supported_envs:
+          - windows/amd64
+    checksum:
+      type: http
+      url: https://glossia-releases.t3.storage.dev/cli/{{.Version}}/SHA256SUMS
+      algorithm: sha256
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
+      - arm64
