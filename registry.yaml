@@ -64246,7 +64246,7 @@ packages:
           windows: Windows
         checksum:
           type: github_release
-          asset: checksums-{{.OS}}.txt.gpgsig
+          asset: checksums-{{.OS}}.txt
           algorithm: sha256
         overrides:
           - goos: windows
@@ -64261,33 +64261,8 @@ packages:
           windows: Windows
         checksum:
           type: github_release
-          asset: checksums-{{.OS}}.txt.gpgsig
+          asset: checksums-{{.OS}}.txt
           algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 2.3.0-beta20250528")
-        asset: bao_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: checksums-illumos.txt
-          algorithm: sha256
-          cosign:
-            opts:
-              - --certificate
-              - https://github.com/openbao/openbao/releases/download/{{.Version}}/checksums-illumos.txt.pem
-              - --certificate-identity-regexp
-              - "^https://github\\.com/openbao/openbao/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
-              - --certificate-oidc-issuer
-              - https://token.actions.githubusercontent.com
-              - --signature
-              - https://github.com/openbao/openbao/releases/download/{{.Version}}/checksums-illumos.txt.sig
         overrides:
           - goos: windows
             format: zip
@@ -64306,13 +64281,13 @@ packages:
           cosign:
             opts:
               - --certificate
-              - https://github.com/openbao/openbao/releases/download/{{.Version}}/checksums-darwin.txt.pem
+              - https://github.com/openbao/openbao/releases/download/{{.Version}}/checksums-{{.OS}}.txt.pem
               - --certificate-identity-regexp
-              - "^https://github\\.com/openbao/openbao/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - '^https://github\.com/openbao/openbao/\.github/workflows/release\.yml@refs/tags/.*$'
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
               - --signature
-              - https://github.com/openbao/openbao/releases/download/{{.Version}}/checksums-darwin.txt.sig
+              - https://github.com/openbao/openbao/releases/download/{{.Version}}/checksums-{{.OS}}.txt.sig
         overrides:
           - goos: windows
             format: zip
@@ -64331,12 +64306,12 @@ packages:
           cosign:
             opts:
               - --certificate-identity-regexp
-              - "^https://github\\.com/openbao/openbao/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - '^https://github\.com/openbao/openbao/\.github/workflows/release\.yml@refs/tags/.*$'
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
             bundle:
               type: github_release
-              asset: checksums-darwin.txt.sigstore.json
+              asset: checksums-{{.OS}}.txt.sigstore.json
         overrides:
           - goos: windows
             format: zip
