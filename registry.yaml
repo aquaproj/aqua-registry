@@ -64236,21 +64236,6 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: Version == "v2.5.0-beta20251125"
-        asset: bao_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: checksums-{{.OS}}.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
       - version_constraint: semver("<= 2.1.1")
         asset: bao_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -64288,6 +64273,21 @@ packages:
               - https://token.actions.githubusercontent.com
               - --signature
               - https://github.com/openbao/openbao/releases/download/{{.Version}}/checksums-{{.OS}}.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: Version == "v2.5.0-beta20251125"
+        asset: bao_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums-{{.OS}}.txt
+          algorithm: sha256
         overrides:
           - goos: windows
             format: zip
