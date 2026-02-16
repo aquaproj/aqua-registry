@@ -958,6 +958,32 @@ packages:
           asset: korb_{{trimV .Version}}_SHA256SUMS
           algorithm: sha256
   - type: github_release
+    repo_owner: BetterDiscord
+    repo_name: cli
+    description: CLI for installing and managing BetterDiscord
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        asset: bdcli_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: bdcli_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: bdcli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: bdcli_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: BishopFox
     repo_name: cloudfox
     description: Automating situational awareness for cloud penetration tests
