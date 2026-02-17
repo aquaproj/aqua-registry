@@ -1,4 +1,4 @@
-FROM golang:1.25.7-bookworm
+FROM golang:1.26.0-bookworm
 WORKDIR /workspace
 ENV AQUA_LOG_COLOR=always
 ENV AQUA_POLICY_CONFIG=/workspace/aqua-policy.yaml
