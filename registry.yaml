@@ -55052,9 +55052,29 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
-  - type: github_release
+  - type: http
+    name: kunobi-ninja/kunobi
     repo_owner: kunobi-ninja
-    repo_name: kunobi
+    repo_name: kunobi-releases
+    description: Kubernetes IDE for managing clusters, resources, and workloads
+    link: https://kunobi.ninja
+    url: https://r2.kunobi.ninja/v{{.Version}}/Kunobi_{{.Version}}_{{.OS}}_{{.Arch}}.AppImage
+    format: raw
+    replacements:
+      amd64: x86_64
+    files:
+      - name: kunobi
+    overrides:
+      - goos: darwin
+        url: https://r2.kunobi.ninja/v{{.Version}}/Kunobi_{{.Version}}_darwin_aarch64.app.tar.gz
+        format: tar.gz
+        files:
+          - name: kunobi
+            src: Kunobi.app/Contents/MacOS/kunobi
+    version_filter: semver(">= 0.1.0-beta.22")
+    supported_envs:
+      - darwin/arm64
+      - linux/amd64
   - type: github_release
     repo_owner: kurehajime
     repo_name: dajarep
