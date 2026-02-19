@@ -85299,6 +85299,32 @@ packages:
               - --signature
               - https://github.com/tmknom/actdocs/releases/download/{{.Version}}/actdocs_{{trimV .Version}}_checksums.txt.sig
   - type: github_release
+    repo_owner: tmux
+    repo_name: tmux-builds
+    description: tmux builds
+    files:
+      - name: tmux
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "preview"
+        asset: tmux-20260218-4cc3de4f-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: tmux-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: tofuutils
     repo_name: tenv
     description: OpenTofu / Terraform version manager
