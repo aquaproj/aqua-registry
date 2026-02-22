@@ -65291,6 +65291,46 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+  - type: http
+    repo_owner: openshift
+    repo_name: oc
+    url: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{trimV .Version}}/openshift-client-{{.OS}}-{{trimV .Version}}.{{.Format}}
+    description: The OpenShift Command Line, part of OKD
+    checksum:
+      enabled: true
+      type: http
+      url: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{trimV .Version}}/sha256sum.txt
+      algorithm: sha256
+    search_words:
+      - openshift
+      - kubernetes
+      - ocp
+      - okd
+      - k8s
+      - oc
+      - kubectl
+    format: tar.gz
+    files:
+      - name: oc
+    supported_envs:
+      - darwin
+      - linux
+      - windows/amd64
+    overrides:
+      - goos: windows
+        goarch: amd64
+        format: zip
+        files:
+          - name: oc
+            src: oc.exe
+      - goos: darwin
+        goarch: arm64
+        replacements:
+          darwin: mac-arm64
+      - goos: darwin
+        goarch: amd64
+        replacements:
+          darwin: mac
   - type: github_release
     repo_owner: openshift-pipelines
     repo_name: pipelines-as-code
