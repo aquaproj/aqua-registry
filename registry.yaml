@@ -47126,6 +47126,13 @@ packages:
     description: A declarative schema-based Markdown validator that helps maintain consistent documentation structure across projects
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 0.11.2")
+        asset: mdschema_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: mdschema_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: mdschema_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -47133,6 +47140,9 @@ packages:
           type: github_release
           asset: mdschema_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: jacobdeichert
     repo_name: mask
