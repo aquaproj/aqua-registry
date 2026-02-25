@@ -68668,6 +68668,37 @@ packages:
           - windows
           - amd64
   - type: github_release
+    repo_owner: pkdindustries
+    repo_name: soulshack
+    description: soulshack, an irc chatbot. openai/ollama api compatible. easy shell tooling
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.42.9-alpha"
+        asset: soulshack-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux
+          - darwin/arm64
+      - version_constraint: semver("< 0.42.17")
+        asset: soulshack-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64
+      - version_constraint: "true"
+        asset: soulshack-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        github_artifact_attestations:
+          signer_workflow: pkdindustries/soulshack/.github/workflows/go.yml
+          predicate_type: https://in-toto.io/attestation/release/v0.1
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64
+  - type: github_release
     repo_owner: pkgxdev
     repo_name: pkgx
     description: “run anything” from the creator of `brew`
