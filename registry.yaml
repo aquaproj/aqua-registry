@@ -36402,6 +36402,17 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          signer_workflow: foundry-rs/foundry/.github/workflows/release.yml
+      - version_constraint: semver("< 1.3.0-rc1")
+        asset: foundry_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: foundry_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -36411,6 +36422,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          signer_workflow: foundry-rs/foundry/.github/workflows/release.yml
   - type: github_release
     repo_owner: freshautomations
     repo_name: stoml
