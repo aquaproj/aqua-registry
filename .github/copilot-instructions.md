@@ -18,6 +18,7 @@ If you use VSCode, we recommend setting `"files.insertFinalNewline": true`.
 https://stackoverflow.com/questions/44704968/visual-studio-code-insert-newline-at-the-end-of-files
 
 Reference: [Why should text files end with a newline?](https://stackoverflow.com/a/729795/6364492)
+
 # Guide
 
 ## Do Not Change the Source of Existing Packages to a Fork
@@ -76,6 +77,7 @@ aqua gr -l 1 "<package name>"
 ```
 
 Fix this and add it to the end of `version_overrides` in the original code and modify version_constraint.
+
 # Style Style Guide of pkgs/\*\*/pkg.yaml
 
 ## What's pkgs/\*\*/pkg.yaml for?
@@ -128,6 +130,7 @@ packages:
   - name: scaleway/scaleway-cli@v2.12.0
   - name: scaleway/scaleway-cli@v2.4.0
 ```
+
 # Style Guide of pkgs/\*\*/registry.yaml
 
 ## Tool Naming Convention
