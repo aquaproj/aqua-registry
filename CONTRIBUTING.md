@@ -1,3 +1,15 @@
 # Contributing
 
-Please see [Contributing](https://aquaproj.github.io/docs/products/aqua-registry/contributing).
+- [Manner](docs/manner.md)
+- [AI Guide](docs/ai.md)
+- [Support Policy](docs/support_policy.md)
+- [Repository Structure](docs/structure.md)
+- [Development Tools](docs/tool.md)
+- [Common Style Guide](docs/common_style.md)
+- [Registry Style Guide](docs/registry_yaml.md)
+- [pkg.yaml Guide](docs/pkg_yaml.md)
+- [Development Guide](docs/guide.md)
+- [Adding New Tools](docs/add_package.md)
+- [Tool Installation Error Handling](docs/error_handling.md)
+- [How to execute a package in your machine during development](docs/run_tool.md)
+- [Troubleshooting](docs/troubleshooting.md)
