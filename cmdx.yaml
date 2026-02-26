@@ -288,3 +288,11 @@ tasks:
       repo=$(bash scripts/get_test_pkg.sh "$REPO")
 
       gh release view --json assets --jq ".assets[].name" -R "$repo" "$VERSION"
+
+  - name: generate-copilot-instruction
+    short: gci
+    description: Generate copilot instruction
+    usage: Generate copilot instruction
+    script: |
+      cd docs
+      cat common_style.md guide.md pkg_yaml.md registry_yaml.md > ../.github/copilot-instructions.md
