@@ -147,9 +147,9 @@ e.g. [winebarrel/cronplan](https://github.com/winebarrel/cronplan)
 - `winebarrel/cronplan/cronviz`
 
 Packages hosted outside GitHub should have naming that distinguishes them from GitHub.
-`cargo` packages become [crates.io/{crate name}](https://github.com/aquaproj/aqua-registry/tree/main/pkgs/crates.io).
+`cargo` packages become [crates.io/{crate name}](../pkgs/crates.io).
 Platforms other than GitHub like GitLab are not actively supported, but some are supported as http type packages.
-[GitLab uses `gitlab.com/<repository name>`.](https://github.com/aquaproj/aqua-registry/tree/main/pkgs/gitlab.com)
+[GitLab uses `gitlab.com/<repository name>`.](../pkgs/gitlab.com)
 
 ## YAML Language Server Comment is necessary at the top of pkgs/\*\*/registry.yaml
 
@@ -439,4 +439,7 @@ For example, you can also use `http` type to install the package from GitHub Rel
 
 ## `cargo` package name should be `crates.io/<crate name>`
 
-Please see [here](/docs/reference/registry-config/cargo-package#-package-name).
+If you add a crate hosted at crates.io, we recommend the package name is crates.io/<crate name> such as crates.io/skim because
+
+1. aqua gr and aqua-registry gr command can treat the package as cargo package
+1. aqua-renovate-config can update the package
