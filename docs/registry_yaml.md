@@ -1,4 +1,4 @@
-# Style Guide of pkgs/**/registry.yaml
+# Style Guide of pkgs/\*\*/registry.yaml
 
 ## Tool Naming Convention
 
@@ -21,7 +21,7 @@ Packages hosted outside GitHub should have naming that distinguishes them from G
 Platforms other than GitHub like GitLab are not actively supported, but some are supported as http type packages.
 [GitLab uses `gitlab.com/<repository name>`.](https://github.com/aquaproj/aqua-registry/tree/main/pkgs/gitlab.com)
 
-## YAML Language Server Comment is necessary at the top of pkgs/**/registry.yaml
+## YAML Language Server Comment is necessary at the top of pkgs/\*\*/registry.yaml
 
 ```yaml
 # yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json

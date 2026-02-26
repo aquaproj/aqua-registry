@@ -15,7 +15,7 @@ git pull origin main
 ```
 
 Then please see .ai/aqua/website/docs.
-Especially, about the registry settings, please see .ai/aqua/website/docs/reference/registry-config/*.md.
+Especially, about the registry settings, please see .ai/aqua/website/docs/reference/registry-config/\*.md.
 
 JSON Schema:
 

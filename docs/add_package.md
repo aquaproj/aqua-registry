@@ -142,6 +142,7 @@ e.g.
 ```yaml
 all_assets_filter: not (Asset contains "static")
 ```
+
 :::
 
 1. Create `aqua-generate-registry.yaml` by `aqua gr --init` command:

@@ -33,13 +33,13 @@ One characteristic to identify if code is old is how `version_constraint` and `v
 In the new style, it basically looks like this:
 
 ```yaml
-  version_constraint: "false" # Root version_constraint is "false"
-  version_overrides:
-    - version_constraint: semver("<= 0.1.0") # Version constraints use <, <= not >, >= (basically <=)
-      # ...
+version_constraint: "false" # Root version_constraint is "false"
+version_overrides:
+  - version_constraint: semver("<= 0.1.0") # Version constraints use <, <= not >, >= (basically <=)
     # ...
-    - version_constraint: "true" # End with "true" for latest version configuration
-      # ...
+  # ...
+  - version_constraint: "true" # End with "true" for latest version configuration
+    # ...
 ```
 
 In the old style, `version_overrides` is often not defined.

@@ -1,6 +1,6 @@
-# Style Style Guide of pkgs/**/pkg.yaml
+# Style Style Guide of pkgs/\*\*/pkg.yaml
 
-## What's pkgs/**/pkg.yaml for?
+## What's pkgs/\*\*/pkg.yaml for?
 
 `pkgs/**/pkg.yaml` are test data.
 `pkgs/**/pkg.yaml` are used to test if packages can be installed properly.

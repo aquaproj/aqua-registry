@@ -93,9 +93,9 @@ By default, it's the same as `name`.
 For gh, since the path is different, you need to specify `src`.
 
 ```yaml
-    files:
-      - name: gh
-        src: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/gh
+files:
+  - name: gh
+    src: gh_{{trimV .Version}}_{{.OS}}_{{.Arch}}/bin/gh
 ```
 
 https://github.com/aquaproj/aqua-registry/blob/dc98ca0c3314ae3cface74556a295a4cb0a95918/pkgs/cli/cli/registry.yaml#L7-L9
