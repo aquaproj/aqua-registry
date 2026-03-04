@@ -27,9 +27,13 @@ packages:
       asset: "{{.Asset}}.sha256"
       algorithm: sha256
     version_constraint: semver(">= 0.6.0")
-    # > aarch64-unknown-linux-musl was disabled
-    # https://github.com/mozilla/sccache/pull/1917
+    # > aarch64-unknown-linux-musl was disabled 0.5.2 in https://github.com/mozilla/sccache/pull/1917
+    # and reenabled in 0.7.0 https://github.com/mozilla/sccache/pull/1926
     version_overrides:
+      - version_constraint: semver(">= 0.7.0")
+        supported_envs:
+          - darwin
+          - linux
       - version_constraint: semver(">= 0.5.2")
         supported_envs:
           - darwin
