@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: http
+    name: google/android-sdk-emulator
+    description: Android Emulator for running Android virtual devices
+    link: https://developer.android.com/studio/run/emulator-commandline
+    search_words:
+      - android
+      - emulator
+      - avd
+    supported_envs:
+      - darwin
+      - linux/amd64
+      - windows/amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v36.5.6"
+        url: https://dl.google.com/android/repository/emulator-{{.OS}}_{{.Arch}}-14945876.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x64
+          arm64: aarch64
+        files:
+          - name: emulator
+            src: emulator/emulator

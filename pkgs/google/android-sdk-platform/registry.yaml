@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: http
+    name: google/android-sdk-platform
+    description: Android SDK Platform providing android.jar and API data for building apps (no CLI executables)
+    link: https://developer.android.com/about/versions
+    search_words:
+      - android
+      - platform
+      - api
+    supported_envs:
+      - darwin
+      - linux
+      - windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v35"
+        url: https://dl.google.com/android/repository/platform-{{trimV .Version}}_r02.{{.Format}}
+        format: zip
+        files:
+          - name: android-sdk-platform-props
+            src: android-{{trimV .Version}}/source.properties
+      - version_constraint: Version == "v36"
+        url: https://dl.google.com/android/repository/platform-{{trimV .Version}}_r02.{{.Format}}
+        format: zip
+        files:
+          - name: android-sdk-platform-props
+            src: android-{{trimV .Version}}/source.properties
+      - version_constraint: Version == "v36.1"
+        url: https://dl.google.com/android/repository/platform-{{trimV .Version}}_r01.{{.Format}}
+        format: zip
+        files:
+          - name: android-sdk-platform-props
+            src: android-{{trimV .Version}}/source.properties

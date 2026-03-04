@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: http
+    name: google/android-sdk-build-tools
+    description: Android SDK Build-Tools including aapt2, d8, zipalign, and apksigner
+    link: https://developer.android.com/tools/releases/build-tools
+    search_words:
+      - android
+      - aapt2
+      - d8
+      - zipalign
+      - apksigner
+    supported_envs:
+      - darwin
+      - linux
+      - windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver(">= 35.0.0") and semver("<= 35.0.1")
+        url: https://dl.google.com/android/repository/build-tools_r{{trimV .Version}}_{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macosx
+        files:
+          - name: aapt2
+            src: android-15/aapt2
+          - name: d8
+            src: android-15/d8
+          - name: zipalign
+            src: android-15/zipalign
+          - name: apksigner
+            src: android-15/apksigner
+      - version_constraint: "true"
+        url: https://dl.google.com/android/repository/build-tools_r{{trimV .Version}}_{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macosx
+        files:
+          - name: aapt2
+            src: android-16/aapt2
+          - name: d8
+            src: android-16/d8
+          - name: zipalign
+            src: android-16/zipalign
+          - name: apksigner
+            src: android-16/apksigner

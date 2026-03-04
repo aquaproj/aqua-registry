@@ -41276,6 +41276,183 @@ packages:
         overrides:
           - goos: windows
             format: zip
+  - type: http
+    name: google/android-ndk
+    repo_owner: android
+    repo_name: ndk
+    url: https://dl.google.com/android/repository/android-ndk-r{{trimV .Version}}-{{.OS}}.{{.Format}}
+    format: zip
+    description: Android Native Development Kit (NDK) for building native code
+    link: https://developer.android.com/ndk
+    search_words:
+      - android
+      - ndk-build
+    version_prefix: "r"
+    version_filter: not (Version contains "beta" or Version contains "rc")
+    files:
+      - name: ndk-build
+        src: android-ndk-r{{trimV .Version}}/ndk-build
+    supported_envs:
+      - darwin
+      - linux
+      - windows
+    overrides:
+      - goos: windows
+        files:
+          - name: ndk-build
+            src: android-ndk-r{{trimV .Version}}/ndk-build.cmd
+  - type: http
+    name: google/android-sdk-build-tools
+    description: Android SDK Build-Tools including aapt2, d8, zipalign, and apksigner
+    link: https://developer.android.com/tools/releases/build-tools
+    search_words:
+      - android
+      - aapt2
+      - d8
+      - zipalign
+      - apksigner
+    supported_envs:
+      - darwin
+      - linux
+      - windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver(">= 35.0.0") and semver("<= 35.0.1")
+        url: https://dl.google.com/android/repository/build-tools_r{{trimV .Version}}_{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macosx
+        files:
+          - name: aapt2
+            src: android-15/aapt2
+          - name: d8
+            src: android-15/d8
+          - name: zipalign
+            src: android-15/zipalign
+          - name: apksigner
+            src: android-15/apksigner
+      - version_constraint: "true"
+        url: https://dl.google.com/android/repository/build-tools_r{{trimV .Version}}_{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macosx
+        files:
+          - name: aapt2
+            src: android-16/aapt2
+          - name: d8
+            src: android-16/d8
+          - name: zipalign
+            src: android-16/zipalign
+          - name: apksigner
+            src: android-16/apksigner
+  - type: http
+    name: google/android-sdk-cmdline-tools
+    description: Android SDK Command-line Tools including sdkmanager and avdmanager
+    link: https://developer.android.com/tools
+    search_words:
+      - android
+      - sdkmanager
+      - avdmanager
+    supported_envs:
+      - darwin
+      - linux
+      - windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v20.0"
+        url: https://dl.google.com/android/repository/commandlinetools-{{.OS}}-14742923_latest.{{.Format}}
+        format: zip
+        replacements:
+          darwin: mac
+          windows: win
+        files:
+          - name: sdkmanager
+            src: cmdline-tools/bin/sdkmanager
+          - name: avdmanager
+            src: cmdline-tools/bin/avdmanager
+        overrides:
+          - goos: windows
+            files:
+              - name: sdkmanager
+                src: cmdline-tools/bin/sdkmanager.bat
+              - name: avdmanager
+                src: cmdline-tools/bin/avdmanager.bat
+  - type: http
+    name: google/android-sdk-emulator
+    description: Android Emulator for running Android virtual devices
+    link: https://developer.android.com/studio/run/emulator-commandline
+    search_words:
+      - android
+      - emulator
+      - avd
+    supported_envs:
+      - darwin
+      - linux/amd64
+      - windows/amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v36.5.6"
+        url: https://dl.google.com/android/repository/emulator-{{.OS}}_{{.Arch}}-14945876.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x64
+          arm64: aarch64
+        files:
+          - name: emulator
+            src: emulator/emulator
+  - type: http
+    name: google/android-sdk-platform
+    description: Android SDK Platform providing android.jar and API data for building apps (no CLI executables)
+    link: https://developer.android.com/about/versions
+    search_words:
+      - android
+      - platform
+      - api
+    supported_envs:
+      - darwin
+      - linux
+      - windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v35"
+        url: https://dl.google.com/android/repository/platform-{{trimV .Version}}_r02.{{.Format}}
+        format: zip
+        files:
+          - name: android-sdk-platform-props
+            src: android-{{trimV .Version}}/source.properties
+      - version_constraint: Version == "v36"
+        url: https://dl.google.com/android/repository/platform-{{trimV .Version}}_r02.{{.Format}}
+        format: zip
+        files:
+          - name: android-sdk-platform-props
+            src: android-{{trimV .Version}}/source.properties
+      - version_constraint: Version == "v36.1"
+        url: https://dl.google.com/android/repository/platform-{{trimV .Version}}_r01.{{.Format}}
+        format: zip
+        files:
+          - name: android-sdk-platform-props
+            src: android-{{trimV .Version}}/source.properties
+  - type: http
+    name: google/android-sdk-platform-tools
+    url: https://dl.google.com/android/repository/platform-tools_r{{trimV .Version}}-{{.OS}}.{{.Format}}
+    format: zip
+    description: Android SDK Platform-Tools including adb and fastboot
+    link: https://developer.android.com/tools/releases/platform-tools
+    search_words:
+      - android
+      - adb
+      - fastboot
+    replacements:
+      windows: win
+    files:
+      - name: adb
+        src: platform-tools/adb
+      - name: fastboot
+        src: platform-tools/fastboot
+    supported_envs:
+      - darwin
+      - linux
+      - windows
   - type: github_release
     repo_owner: google
     repo_name: gke-policy-automation
