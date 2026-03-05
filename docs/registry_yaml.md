@@ -16,7 +16,10 @@ e.g. [winebarrel/cronplan](https://github.com/winebarrel/cronplan)
 - `winebarrel/cronplan/cronplan`
 - `winebarrel/cronplan/cronviz`
 
-Packages hosted outside GitHub should have naming that distinguishes them from GitHub.
+`aqua-renovate-config` assumes that if the package name does not contain a period, it begins with a GitHub repository name and attempts to obtain the version from GitHub Releases or Tags.
+Therefore, if there is no repository from which the version can be retrieved via GitHub Releases or Tags, the package name must include a period.
+This is a kind of workaround, but it works without any particular issues.
+
 `cargo` packages become [crates.io/{crate name}](../pkgs/crates.io).
 Platforms other than GitHub like GitLab are not actively supported, but some are supported as http type packages.
 [GitLab uses `gitlab.com/<repository name>`.](../pkgs/gitlab.com)
