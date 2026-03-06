@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: http
+    name: google/android-ndk
+    repo_owner: android
+    repo_name: ndk
+    url: https://dl.google.com/android/repository/android-ndk-r{{trimV .Version}}-{{.OS}}.{{.Format}}
+    format: zip
+    description: Android Native Development Kit (NDK) for building native code
+    link: https://developer.android.com/ndk
+    search_words:
+      - android
+      - ndk-build
+    version_prefix: "r"
+    version_filter: not (Version contains "beta" or Version contains "rc")
+    files:
+      - name: ndk-build
+        src: android-ndk-r{{trimV .Version}}/ndk-build
+    supported_envs:
+      - darwin
+      - linux
+      - windows
+    overrides:
+      - goos: windows
+        files:
+          - name: ndk-build
+            src: android-ndk-r{{trimV .Version}}/ndk-build.cmd

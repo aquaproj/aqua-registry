@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: http
+    name: google/android-sdk-cmdline-tools
+    description: Android SDK Command-line Tools including sdkmanager and avdmanager
+    link: https://developer.android.com/tools
+    search_words:
+      - android
+      - sdkmanager
+      - avdmanager
+    supported_envs:
+      - darwin
+      - linux
+      - windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v20.0"
+        url: https://dl.google.com/android/repository/commandlinetools-{{.OS}}-14742923_latest.{{.Format}}
+        format: zip
+        replacements:
+          darwin: mac
+          windows: win
+        files:
+          - name: sdkmanager
+            src: cmdline-tools/bin/sdkmanager
+          - name: avdmanager
+            src: cmdline-tools/bin/avdmanager
+        overrides:
+          - goos: windows
+            files:
+              - name: sdkmanager
+                src: cmdline-tools/bin/sdkmanager.bat
+              - name: avdmanager
+                src: cmdline-tools/bin/avdmanager.bat
