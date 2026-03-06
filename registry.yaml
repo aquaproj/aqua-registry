@@ -31145,19 +31145,6 @@ packages:
           - goos: darwin
             checksum:
               enabled: false # https://github.com/docker/buildx/issues/945
-  - type: github_release
-    repo_owner: docker
-    repo_name: cagent
-    description: Agent Builder and Runtime by Docker Engineering
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 1.3.4")
-        asset: cagent-{{.OS}}-{{.Arch}}
-        format: raw
-        windows_arm_emulation: true
-      - version_constraint: "true"
-        asset: cagent-{{.OS}}-{{.Arch}}
-        format: raw
   - type: http
     repo_owner: docker
     repo_name: cli
@@ -31372,6 +31359,21 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+  - type: github_release
+    repo_owner: docker
+    repo_name: docker-agent
+    aliases:
+      - name: docker/cagent
+    description: Agent Builder and Runtime by Docker Engineering
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.3.4")
+        asset: cagent-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+      - version_constraint: "true"
+        asset: cagent-{{.OS}}-{{.Arch}}
+        format: raw
   - type: github_release
     repo_owner: docker
     repo_name: hub-tool
