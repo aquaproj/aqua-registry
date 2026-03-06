@@ -74599,6 +74599,35 @@ packages:
     files:
       - name: spin
   - type: github_release
+    repo_owner: spinel-coop
+    repo_name: rv
+    description: An extremely fast Ruby version and gem manager
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: rv-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        files:
+          - name: rv
+            src: "{{.AssetWithoutExt}}/rv"
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: rv
+                src: rv.exe
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+  - type: github_release
     repo_owner: spotDL
     repo_name: spotify-downloader
     description: Download your Spotify playlists and songs along with album art and metadata (from YouTube if a match is found)
