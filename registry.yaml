@@ -82262,14 +82262,16 @@ packages:
           asset: docfresh_checksums.txt
           algorithm: sha256
           cosign:
-            opts:
-              - --certificate-identity-regexp
-              - "^https://github\\.com/suzuki-shunsuke/docfresh/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
-              - --certificate-oidc-issuer
-              - https://token.actions.githubusercontent.com
             bundle:
               type: github_release
               asset: docfresh_checksums.txt.bundle
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+        github_artifact_attestations:
+          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
