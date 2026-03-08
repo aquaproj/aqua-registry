@@ -72607,20 +72607,22 @@ packages:
           - windows
           - amd64
       - version_constraint: "true"
-        asset: age-plugin-se-{{.Version}}-{{.OS}}.{{.Format}}
+        asset: age-plugin-se-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
         replacements:
           darwin: macos
         overrides:
+          - goos: darwin
+            asset: age-plugin-se-{{.Version}}-{{.OS}}.{{.Format}}
           - goos: linux
             format: tgz
-            asset: age-plugin-se-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+            files:
+              - name: age-plugin-se
+                src: "{{.AssetWithoutExt}}/usr/bin/age-plugin-se"
             replacements:
               amd64: x86_64
               arm64: aarch64
-          - goos: windows
-            asset: age-plugin-se-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
   - type: github_release
     repo_owner: replicatedhq
     repo_name: kots
