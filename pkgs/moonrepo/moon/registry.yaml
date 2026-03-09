@@ -9,6 +9,7 @@ packages:
       - version_constraint: Version == "@moonrepo/cli@0.12.0"
         no_asset: true
       - version_constraint: semver("<= 0.1.0")
+        version_prefix: "@moonrepo/cli@"
         asset: moon-{{.Arch}}-{{.OS}}
         format: raw
         rosetta2: true
@@ -23,6 +24,7 @@ packages:
           - windows
           - amd64
       - version_constraint: semver("<= 0.11.1")
+        version_prefix: "@moonrepo/cli@"
         asset: moon-{{.Arch}}-{{.OS}}
         format: raw
         windows_arm_emulation: true
@@ -53,6 +55,11 @@ packages:
         asset: moon_cli-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
+        files:
+          - name: moon
+            src: "{{.AssetWithoutExt}}/moon"
+          - name: moonx
+            src: "{{.AssetWithoutExt}}/moonx"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -69,6 +76,9 @@ packages:
               amd64: amd64
           - goos: windows
             format: zip
+            files:
+              - name: moon
+              - name: moonx
         supported_envs:
           - linux
           - darwin/arm64
