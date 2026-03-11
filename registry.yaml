@@ -21052,6 +21052,25 @@ packages:
               - --certificate
               - https://github.com/caddyserver/caddy/releases/download/v{{trimV .Version}}/caddy_{{trimV .Version}}_checksums.txt.pem
   - type: github_release
+    repo_owner: callumalpass
+    repo_name: mdbase-lsp
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: mdbase-lsp-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
     repo_owner: cameron-martin
     repo_name: bazel-lsp
     description: A language server implementation for Bazel
