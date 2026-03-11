@@ -5,20 +5,6 @@
 Please add a newline at the end of file.
 Note that this doesn't mean add an empty line at the end of file.
 
-<img width="230" alt="image" src="https://github.com/user-attachments/assets/ae45e4c6-fadf-481f-9ad4-927ed296343c">
-
-The mark ⛔ means the file misses a newline at the end of file.
-
-<img width="345" alt="image" src="https://github.com/user-attachments/assets/f569c07b-ef02-4009-8f94-c0ed44506e11">
-
-> No newline at end of file
-
-If you use VSCode, we recommend setting `"files.insertFinalNewline": true`.
-
-https://stackoverflow.com/questions/44704968/visual-studio-code-insert-newline-at-the-end-of-files
-
-Reference: [Why should text files end with a newline?](https://stackoverflow.com/a/729795/6364492)
-
 # Guide
 
 ## Do Not Change the Source of Existing Packages to a Fork
@@ -149,7 +135,10 @@ e.g. [winebarrel/cronplan](https://github.com/winebarrel/cronplan)
 - `winebarrel/cronplan/cronplan`
 - `winebarrel/cronplan/cronviz`
 
-Packages hosted outside GitHub should have naming that distinguishes them from GitHub.
+`aqua-renovate-config` assumes that if the package name does not contain a period, it begins with a GitHub repository name and attempts to obtain the version from GitHub Releases or Tags.
+Therefore, if there is no repository from which the version can be retrieved via GitHub Releases or Tags, the package name must include a period.
+This is a kind of workaround, but it works without any particular issues.
+
 `cargo` packages become [crates.io/{crate name}](../pkgs/crates.io).
 Platforms other than GitHub like GitLab are not actively supported, but some are supported as http type packages.
 [GitLab uses `gitlab.com/<repository name>`.](../pkgs/gitlab.com)
