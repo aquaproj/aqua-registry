@@ -25207,12 +25207,15 @@ packages:
       - version_constraint: Version == "6.0.0"
         asset: cocogitto-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
-        rosetta2: true
         windows_arm_emulation: true
         files:
           - name: cog
             src: "{{.Arch}}-{{.OS}}/cog/cog"
         overrides:
+          - goos: darwin
+            goarch: arm64
+            replacements:
+              arm64: aarch64
           - goos: linux
             goarch: amd64
             replacements:
@@ -25233,7 +25236,6 @@ packages:
       - version_constraint: "true"
         asset: cocogitto-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
-        rosetta2: true
         windows_arm_emulation: true
         files:
           - name: cog
@@ -25243,6 +25245,10 @@ packages:
           darwin: apple-darwin
           windows: pc-windows-msvc
         overrides:
+          - goos: darwin
+            goarch: arm64
+            replacements:
+              arm64: aarch64
           - goos: linux
             goarch: amd64
             replacements:
