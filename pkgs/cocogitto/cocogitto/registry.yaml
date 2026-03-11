@@ -35,15 +35,12 @@ packages:
       - version_constraint: Version == "6.0.0"
         asset: cocogitto-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
+        rosetta2: true
         windows_arm_emulation: true
         files:
           - name: cog
             src: "{{.Arch}}-{{.OS}}/cog/cog"
         overrides:
-          - goos: darwin
-            goarch: arm64
-            replacements:
-              arm64: aarch64
           - goos: linux
             goarch: amd64
             replacements:
@@ -61,6 +58,32 @@ packages:
           amd64: x86_64
           darwin: apple-darwin
           windows: pc-windows-msvc
+      - version_constraint: semver("<= 6.3.0")
+        asset: cocogitto-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: cog
+            src: "{{.Arch}}-{{.OS}}/cog"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            files:
+              - name: cog
+                src: "{{.Arch}}-{{.OS}}/cog.exe"
       - version_constraint: "true"
         asset: cocogitto-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
