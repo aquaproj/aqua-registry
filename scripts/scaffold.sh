@@ -27,6 +27,7 @@ if [ -z "$config" ] && [ -f "pkgs/$pkg/scaffold.yaml" ]; then
 	docker cp "pkgs/$pkg/scaffold.yaml" "aqua-registry:/workspace/scaffold.yaml"
 fi
 # shellcheck disable=SC2086
+export MSYS2_ARG_CONV_EXCL=/workspace  # Disable Windows MSYS2 path mangling for specified args
 docker exec -w /workspace aqua-registry bash -c "rm pkg.yaml 2>/dev/null || :"
 docker exec -w /workspace aqua-registry bash -c "echo '# yaml-language-server: \$schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json' > registry.yaml"
 docker exec -w /workspace aqua-registry bash -c "aqua gr $opts --out-testdata pkg.yaml \"$pkg\" >> registry.yaml"
