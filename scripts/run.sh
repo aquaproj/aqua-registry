@@ -26,6 +26,7 @@ if [ "$(uname)" = Linux ] && docker version | grep -q Podman; then
 fi
 
 # shellcheck disable=SC2086
+export MSYS2_ARG_CONV_EXCL=/dev/null  # Disable Windows MSYS2 path mangling for specified args
 docker run $opts -d --name "$container_name" \
 	$envs aquaproj/aqua-registry \
 	tail -f /dev/null
