@@ -17155,6 +17155,26 @@ packages:
           - darwin
   - type: github_release
     repo_owner: bahdotsh
+    repo_name: mdterm
+    description: A terminal-based Markdown browser
+    search_words:
+      - markdown
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: mdterm-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
+    repo_owner: bahdotsh
     repo_name: wrkflw
     description: Validate and execute GitHub Actions workflows locally
     version_constraint: "false"
@@ -21051,6 +21071,25 @@ packages:
               - https://github.com/caddyserver/caddy/releases/download/v{{trimV .Version}}/caddy_{{trimV .Version}}_checksums.txt.sig
               - --certificate
               - https://github.com/caddyserver/caddy/releases/download/v{{trimV .Version}}/caddy_{{trimV .Version}}_checksums.txt.pem
+  - type: github_release
+    repo_owner: callumalpass
+    repo_name: mdbase-lsp
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: mdbase-lsp-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: cameron-martin
     repo_name: bazel-lsp
@@ -25230,7 +25269,7 @@ packages:
           amd64: x86_64
           darwin: apple-darwin
           windows: pc-windows-msvc
-      - version_constraint: "true"
+      - version_constraint: semver("<= 6.3.0")
         asset: cocogitto-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
@@ -25243,6 +25282,35 @@ packages:
           darwin: apple-darwin
           windows: pc-windows-msvc
         overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            files:
+              - name: cog
+                src: "{{.Arch}}-{{.OS}}/cog.exe"
+      - version_constraint: "true"
+        asset: cocogitto-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: cog
+            src: "{{.Arch}}-{{.OS}}/cog"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            replacements:
+              arm64: aarch64
           - goos: linux
             goarch: amd64
             replacements:
