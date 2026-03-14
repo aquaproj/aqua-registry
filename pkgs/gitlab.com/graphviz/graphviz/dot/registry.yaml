@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - name: gitlab.com/graphviz/graphviz/dot
+    type: http
+    link: https://gitlab.com/graphviz/graphviz
+    description: Graphviz dot command
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 13.1.2")
+        no_asset: true
+      - version_constraint: "true"
+        url: https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/{{.Version}}/Darwin_23.6.0_Graphviz-{{.Version}}-Darwin.zip
+        format: zip
+        files:
+          - name: dot
+            src: Graphviz-{{.Version}}-Darwin/bin/dot
+        supported_envs:
+          - darwin/arm64
+          - windows/amd64
+        checksum:
+          type: http
+          url: https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/{{.Version}}/Darwin_23.6.0_Graphviz-{{.Version}}-Darwin.zip.sha256
+          algorithm: sha256
+          file_format: regexp
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{64}\b)
+        overrides:
+          - goos: windows
+            url: https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/{{.Version}}/windows_10_cmake_Release_Graphviz-{{.Version}}-win64.zip
+            format: zip
+            files:
+              - name: dot
+                src: Graphviz-{{.Version}}-win64/bin/dot
+            checksum:
+              type: http
+              url: https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/{{.Version}}/windows_10_cmake_Release_Graphviz-{{.Version}}-win64.zip.sha256
+              algorithm: sha256
+              file_format: regexp
+              pattern:
+                checksum: ^(\b[A-Fa-f0-9]{64}\b)
