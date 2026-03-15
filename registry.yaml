@@ -42081,26 +42081,23 @@ packages:
     repo_owner: gopinath-langote
     repo_name: 1build
     description: Frictionless way of managing project-specific commands
-    asset: 1build_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-    supported_envs:
-      - linux/amd64
-      - darwin
-    rosetta2: true
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 1.2.0")
-    # 1build was migrated from Python to Go at v1.2.0
-    # https://github.com/gopinath-langote/1build/commit/a692bdce2643c726915950622ec46fbf4ce02816
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 1.2.0")
-        no_asset: true
+      - version_constraint: "true"
+        asset: 1build_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: 1build_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: goreleaser
     repo_name: goreleaser
@@ -51938,63 +51935,6 @@ packages:
           - linux/amd64
         checksum:
           enabled: false
-  - type: github_release
-    repo_owner: kaytu-io
-    repo_name: kaytu
-    description: The Kaytu CLI helps you save on cloud costs by finding the perfect server sizes. Kaytu analyzes historical usage and provides tailored recommendations, ensuring you only pay for the resources you need
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 0.0.7")
-        asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: kaytu_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: raw
-            asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}
-      - version_constraint: semver("<= 0.1.1")
-        asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: kaytu_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux
-          - darwin
-      - version_constraint: semver("<= 0.4.1")
-        asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: kaytu_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: "true"
-        asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: kaytu_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-            files:
-              - name: kaytu
-                src: "{{.AssetWithoutExt}}/kaytu.exe"
-            checksum:
-              type: github_release
-              asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}_checksum.txt
-              algorithm: sha256
   - type: github_release
     repo_owner: kcl-lang
     repo_name: cli
@@ -75508,36 +75448,51 @@ packages:
     repo_owner: sassman
     repo_name: t-rec-rs
     description: Blazingly fast terminal recorder that generates animated gif images for the web written in rust
-    asset: t-rec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      darwin: apple-darwin
-      linux: unknown-linux-musl
-    supported_envs:
-      - linux/amd64
-      - darwin
-    rosetta2: true
     files:
       - name: t-rec
-    version_constraint: semver(">= 0.7.3")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.7.2")
-        replacements:
-          amd64: x86_64
-          linux: unknown-linux-musl
-        supported_envs:
-          - linux/amd64
-        rosetta2: false
-      - version_constraint: semver(">= 0.7.1")
-      - version_constraint: semver(">= 0.7.0")
+      - version_constraint: Version == "v0.7.0"
+        asset: t-rec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
         replacements:
           amd64: x86_64
           darwin: apple-darwin
         supported_envs:
           - darwin
-      - version_constraint: semver("< 0.7.0")
+      - version_constraint: Version == "v0.7.1"
+        asset: t-rec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: Version == "v0.7.2"
+        asset: t-rec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.6.2")
         no_asset: true
+      - version_constraint: "true"
+        asset: t-rec-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
   - type: github_release
     repo_owner: satococoa
     repo_name: wtp
@@ -85609,8 +85564,7 @@ packages:
           - darwin
           - windows
           - amd64
-  - name: temporalio/cli
-    type: github_release
+  - type: github_release
     repo_owner: temporalio
     repo_name: cli
     description: Command-line interface for running Temporal Server and interacting with Workflows, Activities, Namespaces, and other parts of Temporal
