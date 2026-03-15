@@ -42081,26 +42081,27 @@ packages:
     repo_owner: gopinath-langote
     repo_name: 1build
     description: Frictionless way of managing project-specific commands
-    asset: 1build_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-    supported_envs:
-      - linux/amd64
-      - darwin
-    rosetta2: true
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 1.2.0")
-    # 1build was migrated from Python to Go at v1.2.0
-    # https://github.com/gopinath-langote/1build/commit/a692bdce2643c726915950622ec46fbf4ce02816
+    version_constraint: "false"
     version_overrides:
       - version_constraint: semver("< 1.2.0")
+        # 1build was migrated from Python to Go at v1.2.0
+        # https://github.com/gopinath-langote/1build/commit/a692bdce2643c726915950622ec46fbf4ce02816
         no_asset: true
+      - version_constraint: "true"
+        asset: 1build_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - linux/amd64
+          - darwin
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: goreleaser
     repo_name: goreleaser
@@ -51990,7 +51991,7 @@ packages:
             format: zip
             files:
               - name: kaytu
-                src: "{{.AssetWithoutExt}}/kaytu.exe"
+                src: "{{.AssetWithoutExt}}/kaytu"
             checksum:
               type: github_release
               asset: kaytu_{{trimV .Version}}_{{.OS}}_{{.Arch}}_checksum.txt
@@ -85609,8 +85610,7 @@ packages:
           - darwin
           - windows
           - amd64
-  - name: temporalio/cli
-    type: github_release
+  - type: github_release
     repo_owner: temporalio
     repo_name: cli
     description: Command-line interface for running Temporal Server and interacting with Workflows, Activities, Namespaces, and other parts of Temporal
