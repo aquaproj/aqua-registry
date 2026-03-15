@@ -2,7 +2,7 @@ package main
 
 import rego.v1
 
-# Rule 1: packages must not be empty
+# packages must not be empty
 deny contains msg if {
 	entry := input[_]
 	endswith(entry.path, "/pkg.yaml")
@@ -10,7 +10,7 @@ deny contains msg if {
 	msg := sprintf("%s: packages is empty", [entry.path])
 }
 
-# Rule 2: package name must match directory-derived name
+# package name must match directory-derived name
 deny contains msg if {
 	entry := input[_]
 	endswith(entry.path, "/pkg.yaml")

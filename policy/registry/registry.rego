@@ -32,7 +32,7 @@ all_files(pkg) := files if {
 	files := array.concat(array.concat(array.concat(top, override_files), vo_files), vo_override_files)
 }
 
-# Rule 1: packages must not be empty
+# packages must not be empty
 deny contains msg if {
 	entry := input[_]
 	endswith(entry.path, "/registry.yaml")
@@ -40,7 +40,7 @@ deny contains msg if {
 	msg := sprintf("%s: packages is empty", [entry.path])
 }
 
-# Rule 2: packages must include only one package
+# packages must include only one package
 deny contains msg if {
 	entry := input[_]
 	endswith(entry.path, "/registry.yaml")
@@ -48,7 +48,7 @@ deny contains msg if {
 	msg := sprintf("%s: packages must include only one package", [entry.path])
 }
 
-# Rule 3: package name must match directory path
+# package name must match directory path
 deny contains msg if {
 	entry := input[_]
 	endswith(entry.path, "/registry.yaml")
@@ -60,7 +60,7 @@ deny contains msg if {
 	msg := sprintf("%s: package name mismatch: expected %q but got %q", [entry.path, expected_name, get_name(pkg)])
 }
 
-# Rule 4: top-level version_constraints must be empty or "false"
+# top-level version_constraints must be empty or "false"
 deny contains msg if {
 	entry := input[_]
 	endswith(entry.path, "/registry.yaml")
@@ -72,7 +72,7 @@ deny contains msg if {
 	msg := sprintf("%s: the top level version_constraint must be either empty or \"false\"", [entry.path])
 }
 
-# Rule 5: files[].name must not end with .exe
+# files[].name must not end with .exe
 deny contains msg if {
 	entry := input[_]
 	endswith(entry.path, "/registry.yaml")
@@ -83,7 +83,7 @@ deny contains msg if {
 	msg := sprintf("%s: .files[].name must not end with .exe. Remove .exe from name", [entry.path])
 }
 
-# Rule 6: files[].src must not end with .exe
+# files[].src must not end with .exe
 deny contains msg if {
 	entry := input[_]
 	endswith(entry.path, "/registry.yaml")
@@ -94,7 +94,7 @@ deny contains msg if {
 	msg := sprintf("%s: .files[].src must not end with .exe. Remove .exe from src", [entry.path])
 }
 
-# Rule 7: omit files[].src if same as files[].name
+# omit files[].src if same as files[].name
 deny contains msg if {
 	entry := input[_]
 	endswith(entry.path, "/registry.yaml")
@@ -105,7 +105,7 @@ deny contains msg if {
 	msg := sprintf("%s: omit .files[].src if it's same with .files[].name", [entry.path])
 }
 
-# Rule 8: repo_owner/repo_name consistency
+# repo_owner/repo_name consistency
 deny contains msg if {
 	entry := input[_]
 	endswith(entry.path, "/registry.yaml")
@@ -126,7 +126,7 @@ deny contains msg if {
 	msg := sprintf("%s: repo_owner must be specified if repo_name is specified", [entry.path])
 }
 
-# Rule 9: package name without period requires repo_owner/repo_name
+# package name without period requires repo_owner/repo_name
 deny contains msg if {
 	entry := input[_]
 	endswith(entry.path, "/registry.yaml")
@@ -155,7 +155,7 @@ deny contains msg if {
 	msg := sprintf("%s: package name must start with repository full name if package name doesn't include period", [entry.path])
 }
 
-# Rule 10: omit name if same as repo_owner/repo_name
+# omit name if same as repo_owner/repo_name
 deny contains msg if {
 	entry := input[_]
 	endswith(entry.path, "/registry.yaml")
