@@ -7,6 +7,10 @@ tasks:
     short: s
     usage: "[DEPRECATED] Use argd scaffold instead"
     description: "[DEPRECATED] Use argd scaffold instead"
+    quiet: true
+    require:
+      exec:
+        - docker
     flags:
       - name: recreate
         short: r
@@ -24,7 +28,11 @@ tasks:
         type: string
     script: |
       echo "DEPRECATED: Use argd scaffold instead"
-      argd help scaffold
+      if ! command -v argd >/dev/null 2>&1; then
+        if command -v aqua >/dev/null 2>&1; then
+          aqua i -l
+        fi
+      fi
       exit 1
     args:
       - name: package
@@ -33,6 +41,10 @@ tasks:
     short: t
     usage: "[DEPRECATED] Use argd test instead"
     description: "[DEPRECATED] Use argd test instead"
+    quiet: true
+    require:
+      exec:
+        - docker
     flags:
       - name: recreate
         short: r
@@ -41,13 +53,21 @@ tasks:
       - name: package
     script: |
       echo "DEPRECATED: Use argd test instead"
-      argd help test
+      if ! command -v argd >/dev/null 2>&1; then
+        if command -v aqua >/dev/null 2>&1; then
+          aqua i -l
+        fi
+      fi
       exit 1
 
   - name: connect
     short: con
     usage: "[DEPRECATED] Use argd con instead"
     description: "[DEPRECATED] Use argd con instead"
+    quiet: true
+    require:
+      exec:
+        - docker
     args:
       - name: os
         required: false
@@ -56,24 +76,38 @@ tasks:
         required: false
     script: |
       echo "DEPRECATED: Use argd con instead"
-      argd help con
+      if ! command -v argd >/dev/null 2>&1; then
+        if command -v aqua >/dev/null 2>&1; then
+          aqua i -l
+        fi
+      fi
       exit 1
 
   - name: generate-registry
     short: gr
     usage: "[DEPRECATED] Use argd gr instead"
     description: "[DEPRECATED] Use argd gr instead"
+    quiet: true
     script: |
       echo "DEPRECATED: Use argd gr instead"
-      argd help gr
+      if ! command -v argd >/dev/null 2>&1; then
+        if command -v aqua >/dev/null 2>&1; then
+          aqua i -l
+        fi
+      fi
       exit 1
 
   - name: new
     usage: "[DEPRECATED] Use argd new instead"
     description: "[DEPRECATED] Use argd new instead"
+    quiet: true
     script: |
       echo "DEPRECATED: Use argd new instead"
-      argd help new
+      if ! command -v argd >/dev/null 2>&1; then
+        if command -v aqua >/dev/null 2>&1; then
+          aqua i -l
+        fi
+      fi
       exit 1
     args:
       - name: package
@@ -81,51 +115,88 @@ tasks:
   - name: stop
     usage: "[DEPRECATED] Use argd stop instead"
     description: "[DEPRECATED] Use argd stop instead"
+    quiet: true
+    require:
+      exec:
+        - docker
     script: |
       echo "DEPRECATED: Use argd stop instead"
-      argd help stop
+      if ! command -v argd >/dev/null 2>&1; then
+        if command -v aqua >/dev/null 2>&1; then
+          aqua i -l
+        fi
+      fi
       exit 1
 
   - name: remove
     short: rm
     usage: "[DEPRECATED] Use argd rm instead"
     description: "[DEPRECATED] Use argd rm instead"
+    quiet: true
+    require:
+      exec:
+        - docker
     script: |
       echo "DEPRECATED: Use argd remove instead"
-      argd help remove
+      if ! command -v argd >/dev/null 2>&1; then
+        if command -v aqua >/dev/null 2>&1; then
+          aqua i -l
+        fi
+      fi
       exit 1
 
   - name: remove-package
     short: rmp
     usage: "[DEPRECATED] Use argd rmp instead"
     description: "[DEPRECATED] Use argd rmp instead"
+    quiet: true
+    require:
+      exec:
+        - docker
     args:
       - name: package
     script: |
       echo "DEPRECATED: Use argd rmp instead"
-      argd help rmp
+      if ! command -v argd >/dev/null 2>&1; then
+        if command -v aqua >/dev/null 2>&1; then
+          aqua i -l
+        fi
+      fi
       exit 1
 
   - name: start
     usage: "[DEPRECATED] Use argd start instead"
     description: "[DEPRECATED] Use argd start instead"
+    quiet: true
+    require:
+      exec:
+        - docker
     flags:
       - name: recreate
         short: r
         type: bool
     script: |
       echo "DEPRECATED: Use argd start instead"
-      argd help start
+      if ! command -v argd >/dev/null 2>&1; then
+        if command -v aqua >/dev/null 2>&1; then
+          aqua i -l
+        fi
+      fi
       exit 1
 
   - name: resolve-conflict
     usage: "[DEPRECATED] Use argd resolve-conflict instead"
     description: "[DEPRECATED] Use argd resolve-conflict instead"
+    quiet: true
     args:
       - name: pr
     script: |
       echo "DEPRECATED: Use argd resolve-conflict instead"
-      argd help resolve-conflict
+      if ! command -v argd >/dev/null 2>&1; then
+        if command -v aqua >/dev/null 2>&1; then
+          aqua i -l
+        fi
+      fi
       exit 1
 
   - name: summarize

@@ -13119,11 +13119,15 @@ packages:
     repo_owner: aquaproj
     repo_name: registry-tool
     description: CLI to develop aqua Registry
+    files:
+      - name: argd
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.3.7-0"
         asset: registry-tool_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: aqua-registry
         checksum:
           type: github_release
           asset: registry-tool_{{trimV .Version}}_checksums.txt
@@ -13131,7 +13135,7 @@ packages:
           cosign:
             opts:
               - --certificate-identity-regexp
-              - "^https://github\\.com/aquaproj/registry-tool/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
             bundle:
@@ -13143,6 +13147,8 @@ packages:
       - version_constraint: Version == "v0.4.0-0"
         asset: argd_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: aqua-registry
         checksum:
           type: github_release
           asset: registry-tool_{{trimV .Version}}_checksums.txt
@@ -13150,7 +13156,7 @@ packages:
           cosign:
             opts:
               - --certificate-identity-regexp
-              - "^https://github\\.com/aquaproj/registry-tool/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
             bundle:
@@ -13162,6 +13168,8 @@ packages:
       - version_constraint: semver("<= 0.1.5")
         asset: registry-tool_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: aqua-registry
         checksum:
           type: github_release
           asset: registry-tool_{{trimV .Version}}_checksums.txt
@@ -13169,18 +13177,20 @@ packages:
       - version_constraint: semver("<= 0.3.6")
         asset: registry-tool_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: aqua-registry
         checksum:
           type: github_release
           asset: registry-tool_{{trimV .Version}}_checksums.txt
           algorithm: sha256
           cosign:
             opts:
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
               - --certificate
               - https://github.com/aquaproj/registry-tool/releases/download/{{.Version}}/registry-tool_{{trimV .Version}}_checksums.txt.pem
-              - --certificate-identity-regexp
-              - "^https://github\\.com/aquaproj/registry-tool/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
-              - --certificate-oidc-issuer
-              - https://token.actions.githubusercontent.com
               - --signature
               - https://github.com/aquaproj/registry-tool/releases/download/{{.Version}}/registry-tool_{{trimV .Version}}_checksums.txt.sig
         slsa_provenance:
@@ -13196,9 +13206,9 @@ packages:
           cosign:
             opts:
               - --certificate-identity-regexp
-              - "^https://github\\.com/aquaproj/registry-tool/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
               - --certificate-oidc-issuer
-              - https://token.actions.githubusercontent.com
+              - "https://token.actions.githubusercontent.com"
             bundle:
               type: github_release
               asset: argd_checksums.txt.bundle
