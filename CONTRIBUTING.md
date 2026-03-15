@@ -5,6 +5,7 @@
 - [Support Policy](docs/support_policy.md)
 - [Repository Structure](docs/structure.md)
 - [Development Tools](docs/tool.md)
+- [Linting](docs/lint.md)
 - [Common Style Guide](docs/common_style.md)
 - [Registry Style Guide](docs/registry_yaml.md)
 - [pkg.yaml Guide](docs/pkg_yaml.md)

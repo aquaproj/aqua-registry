@@ -50,6 +50,10 @@ If the branch name is `feat/<package name>`, you can omit the argument `<package
 `argd test` copies files `pkgs/<package name>/{pkg.yaml,registry.yaml}` in containers and test them.
 If the test succeeds, `registry.yaml` is updated.
 
+## Linting
+
+Please see [Lint pkgs/**/pkg.yaml and pkgs/**/registry.yaml.](lint.md)
+
 ## aqua-regsitry remove (rm) - Remove containers
 
 `argd remove` removes containers.
