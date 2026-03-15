@@ -29,27 +29,6 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
-      - version_constraint: Version == "v0.4.0-0"
-        asset: argd_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: aqua-registry
-        checksum:
-          type: github_release
-          asset: registry-tool_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-          cosign:
-            opts:
-              - --certificate-identity-regexp
-              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
-              - --certificate-oidc-issuer
-              - https://token.actions.githubusercontent.com
-            bundle:
-              type: github_release
-              asset: registry-tool_{{trimV .Version}}_checksums.txt.bundle
-        slsa_provenance:
-          type: github_release
-          asset: multiple.intoto.jsonl
       - version_constraint: semver("<= 0.1.5")
         asset: registry-tool_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
