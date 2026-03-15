@@ -1,5 +1,11 @@
 # Trouble shooting
 
+## cmdx tasks were removed
+
+cmdx tasks were migrated to argd commands.
+Please use `aqua-registry` commands.
+You can install argd by running `aqua i -l` in this repository.
+
 ## `cmdx new` fails to push a commit to the origin
 
 :::info

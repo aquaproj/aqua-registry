@@ -2,14 +2,14 @@
 
 There are several ways
 
-1. Execute a package in linux containers via `cmdx con`
+1. Execute a package in linux containers via `argd con`
 1. Import `pkgs/<package>/pkg.yaml` in [aqua.yaml](https://github.com/aquaproj/aqua-registry/blob/main/aqua.yaml)
 1. Add [aqua-all.yaml](https://github.com/aquaproj/aqua-registry/blob/main/aqua-all.yaml) in `$AQUA_GLOBAL_CONFIG`
 
-## 1. Execute a package in linux containers via `cmdx con`
+## 1. Execute a package in linux containers via `argd con`
 
 ```console
-$ cmdx con
+$ argd con
 + bash scripts/connect.sh
 [INFO] Connecting to the container aqua-registry (linux/arm64)
 ```
