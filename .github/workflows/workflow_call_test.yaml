@@ -12,6 +12,7 @@ jobs:
       check-files: ${{steps.changes.outputs.check-files}}
       json-schema: ${{steps.changes.outputs.json-schema}}
       test-docker: ${{steps.changes.outputs.test-docker}}
+      pkg-files: ${{steps.changes.outputs.pkg-files_files}}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -21,6 +22,7 @@ jobs:
       - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
         id: changes
         with:
+          list-files: shell
           filters: |
             renovate-config-validator:
               - renovate.json5
@@ -29,6 +31,9 @@ jobs:
               - pkgs/**/pkg.yaml
               - pkgs/**/registry.yaml
               - .github/workflows/wc-check-files.yaml
+            pkgs-files:
+              - pkgs/**/pkg.yaml
+              - pkgs/**/registry.yaml
             json-schema:
               - registry.yaml
               - .github/workflows/wc-json-schema.yaml
@@ -58,6 +63,14 @@ jobs:
     if: ${{needs.path-filter.outputs.json-schema == 'true'}}
     permissions:
       contents: read
+
+  lint:
+    uses: ./.github/workflows/wc-lint.yaml
+    needs: path-filter
+    permissions:
+      contents: read
+    with:
+      files: ${{needs.path-filter.outputs.pkg-files}}
 
   test-docker:
     uses: ./.github/workflows/wc-test-docker.yaml
