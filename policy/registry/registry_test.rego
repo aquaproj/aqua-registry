@@ -2,7 +2,7 @@ package main
 
 import rego.v1
 
-# Rule 1: packages must not be empty
+# packages must not be empty
 test_deny_empty_packages if {
 	result := deny with input as [{
 		"path": "pkgs/owner/repo/registry.yaml",
@@ -11,7 +11,7 @@ test_deny_empty_packages if {
 	result == {"pkgs/owner/repo/registry.yaml: packages is empty"}
 }
 
-# Rule 2: packages must include only one package
+# packages must include only one package
 test_deny_multiple_packages if {
 	result := deny with input as [{
 		"path": "pkgs/owner/repo/registry.yaml",
@@ -23,7 +23,7 @@ test_deny_multiple_packages if {
 	"pkgs/owner/repo/registry.yaml: packages must include only one package" in result
 }
 
-# Rule 3: package name must match directory path
+# package name must match directory path
 test_deny_name_mismatch if {
 	result := deny with input as [{
 		"path": "pkgs/owner/repo/registry.yaml",
@@ -55,7 +55,6 @@ test_allow_explicit_name if {
 			"repo_name": "repo",
 		}]},
 	}]
-	# This triggers rule 10 (omit name) but not rule 3
 	not "pkgs/owner/repo/registry.yaml: package name mismatch: expected \"owner/repo\" but got \"owner/repo\"" in result
 }
 
@@ -70,7 +69,7 @@ test_allow_go_install_path_name if {
 	count(result) == 0
 }
 
-# Rule 4: version_constraint must be empty or "false"
+# version_constraint must be empty or "false"
 test_deny_invalid_version_constraint if {
 	result := deny with input as [{
 		"path": "pkgs/owner/repo/registry.yaml",
@@ -95,7 +94,7 @@ test_allow_false_version_constraint if {
 	not "pkgs/owner/repo/registry.yaml: the top level version_constraint must be either empty or \"false\"" in result
 }
 
-# Rule 5: files[].name must not end with .exe
+# files[].name must not end with .exe
 test_deny_file_name_exe if {
 	result := deny with input as [{
 		"path": "pkgs/owner/repo/registry.yaml",
@@ -144,7 +143,7 @@ test_deny_file_name_exe_in_vo_overrides if {
 	"pkgs/owner/repo/registry.yaml: .files[].name must not end with .exe. Remove .exe from name" in result
 }
 
-# Rule 6: files[].src must not end with .exe
+# files[].src must not end with .exe
 test_deny_file_src_exe if {
 	result := deny with input as [{
 		"path": "pkgs/owner/repo/registry.yaml",
@@ -157,7 +156,7 @@ test_deny_file_src_exe if {
 	"pkgs/owner/repo/registry.yaml: .files[].src must not end with .exe. Remove .exe from src" in result
 }
 
-# Rule 7: omit files[].src if same as files[].name
+# omit files[].src if same as files[].name
 test_deny_file_src_same_as_name if {
 	result := deny with input as [{
 		"path": "pkgs/owner/repo/registry.yaml",
@@ -170,7 +169,7 @@ test_deny_file_src_same_as_name if {
 	"pkgs/owner/repo/registry.yaml: omit .files[].src if it's same with .files[].name" in result
 }
 
-# Rule 8: repo_owner/repo_name consistency
+# repo_owner/repo_name consistency
 test_deny_repo_owner_without_repo_name if {
 	result := deny with input as [{
 		"path": "pkgs/owner/repo/registry.yaml",
@@ -191,7 +190,7 @@ test_deny_repo_name_without_repo_owner if {
 	"pkgs/owner/repo/registry.yaml: repo_owner must be specified if repo_name is specified" in result
 }
 
-# Rule 9: package name without period requires repo_owner/repo_name
+# package name without period requires repo_owner/repo_name
 test_deny_no_period_without_repo if {
 	result := deny with input as [{
 		"path": "pkgs/owner/repo/registry.yaml",
@@ -226,7 +225,7 @@ test_allow_no_period_name_starting_with_repo if {
 	not "pkgs/owner/repo/tool/registry.yaml: package name must start with repository full name if package name doesn't include period" in result
 }
 
-# Rule 10: omit name if same as repo_owner/repo_name
+# omit name if same as repo_owner/repo_name
 test_deny_redundant_name if {
 	result := deny with input as [{
 		"path": "pkgs/owner/repo/registry.yaml",
