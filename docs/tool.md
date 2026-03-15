@@ -24,6 +24,35 @@ Please confirm that the docker command works.
 docker version
 ```
 
+## Summary
+
+### Requirements
+
+- aqua ([Install](https://aquaproj.github.io/docs/install))
+- docker
+- argd `aqua i -l`
+- prettier `npm i -g prettier`
+
+### GitHub Access Token
+
+1. AQUA_GITHUB_TOKEN
+1. GITHUB_TOKEN
+1. AQUA_GHTKN_ENABLED ([ghtkn integration](https://github.com/suzuki-shunsuke/ghtkn))
+
+### Commands
+
+```sh
+aqua gr --init <package name> # (Optional) Generate aqua-generate-registry.yaml, which is a config file for `argd s` command. The config file is optional.
+argd s [-c <config file path>] [-B] [-cmd <command name>] <package name> # Scaffold configuration and test it in containers
+argd t [<package name>] # Test a package in containers
+conftest test pkgs/<package name>/*.yaml
+prettier -w pkgs/<package name>/*.yaml
+argd rm # Remove containers
+argd rmp [<package>] # Remove installed packages from containers
+argd gr # Update registry.yaml by merging pkgs/**/registry.yaml
+argd con [<os>] [<arch>] # Connect a container by docker exec. This is useful for debugging.
+```
+
 ## Format with prettier
 
 https://prettier.io/
@@ -92,7 +121,7 @@ aqua supports various package types, but currently auto-generation mainly suppor
 When generating code for other packages like `http` package, specify `-l 1` to generate only a template and write the rest manually.
 
 ```sh
-aqua-regsitry s -l 1 "<package name>"
+argd s -l 1 "<package name>"
 ```
 
 ## GitHub Access Token
