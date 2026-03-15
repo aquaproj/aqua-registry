@@ -12,7 +12,7 @@ jobs:
       check-files: ${{steps.changes.outputs.check-files}}
       json-schema: ${{steps.changes.outputs.json-schema}}
       test-docker: ${{steps.changes.outputs.test-docker}}
-      pkg-files: ${{steps.changes.outputs.pkg-files_files}}
+      pkgs-files_files: ${{steps.changes.outputs.pkgs-files_files}}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -65,13 +65,13 @@ jobs:
       contents: read
 
   lint:
-    if: ${{needs.path-filter.outputs.pkg-files != ''}}
+    if: ${{needs.path-filter.outputs.pkgs-files_files != ''}}
     uses: ./.github/workflows/wc-lint.yaml
     needs: path-filter
     permissions:
       contents: read
     with:
-      files: ${{needs.path-filter.outputs.pkg-files}}
+      files: ${{needs.path-filter.outputs.pkgs-files_files}}
 
   test-docker:
     uses: ./.github/workflows/wc-test-docker.yaml
