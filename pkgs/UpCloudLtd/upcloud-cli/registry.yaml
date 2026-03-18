@@ -46,7 +46,7 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: "true"
+      - version_constraint: semver("< 3.31.0")
         asset: upcloud-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -57,6 +57,20 @@ packages:
           algorithm: sha256
         github_artifact_attestations:
           signer_workflow: UpCloudLtd/upcloud-cli/.github/workflows/publish.yml
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: upcloud-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: UpCloudLtd/workflows/.github/workflows/build-provenance.yaml
         overrides:
           - goos: windows
             format: zip
