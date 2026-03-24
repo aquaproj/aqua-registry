@@ -91352,6 +91352,33 @@ packages:
           - darwin
           - windows
           - amd64
+  - type: github_release
+    repo_owner: wasilibs
+    repo_name: go-yamllint
+    description: A distribution of yamllint that can be used with go run
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.35.1"
+        asset: go-yamllint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: go-yamllint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - name: wasmCloud/wasmCloud/wash
     type: github_release
     repo_owner: wasmCloud
