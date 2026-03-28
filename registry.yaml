@@ -7027,7 +7027,7 @@ packages:
     repo_name: maltmill
     asset: maltmill_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: zip
-    description: create and update Homebrew thrid party Formulae
+    description: create and update Homebrew third party Formulae
     overrides:
       - goos: linux
         format: tar.gz
@@ -10198,7 +10198,7 @@ packages:
   - type: github_release
     repo_owner: adhocteam
     repo_name: ssm
-    description: AWS SSM Paramater Store CLI
+    description: AWS SSM Parameter Store CLI
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.3.0"
@@ -25246,7 +25246,7 @@ packages:
   - type: github_release
     repo_owner: cnosuke
     repo_name: kushi
-    description: Auto SSH port-fowarding agent which gets forwarding configs from URL
+    description: Auto SSH port-forwarding agent which gets forwarding configs from URL
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.6.1")
@@ -32744,64 +32744,6 @@ packages:
           asset: SHASUMS256.txt
           algorithm: sha256
         github_immutable_release: true
-  - type: github_release
-    repo_owner: drager
-    repo_name: wasm-pack
-    aliases:
-      - name: rustwasm/wasm-pack
-    description: your favorite rust -> wasm workflow tool
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 0.2.0")
-        no_asset: true
-      - version_constraint: semver("<= 0.4.2")
-        asset: wasm-pack-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        files:
-          - name: wasm-pack
-            src: "{{.AssetWithoutExt}}/wasm-pack"
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          linux: unknown-linux-musl
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: semver("<= 0.10.1")
-        asset: wasm-pack-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        files:
-          - name: wasm-pack
-            src: "{{.AssetWithoutExt}}/wasm-pack"
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          linux: unknown-linux-musl
-          windows: pc-windows-msvc
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: "true"
-        asset: wasm-pack-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        files:
-          - name: wasm-pack
-            src: "{{.AssetWithoutExt}}/wasm-pack"
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          linux: unknown-linux-musl
-          windows: pc-windows-msvc
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: aarch64
   - type: github_release
     repo_owner: drlau
     repo_name: akashi
@@ -40379,7 +40321,7 @@ packages:
   - type: github_release
     repo_owner: goark
     repo_name: depm
-    description: Visualize depndency packages and modules
+    description: Visualize dependency packages and modules
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.3.1")
@@ -42129,7 +42071,7 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.21.0"
         asset: go-jsonnet_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -42137,6 +42079,13 @@ packages:
           darwin: Darwin
           linux: Linux
           windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: go-jsonnet_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         checksum:
           type: github_release
           asset: checksums.txt
@@ -47620,7 +47569,7 @@ packages:
   - type: github_release
     repo_owner: ipld
     repo_name: go-car
-    description: A content addressible archive utility
+    description: A content addressable archive utility
     asset: go-car_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: zip
     files:
@@ -63697,7 +63646,7 @@ packages:
   - type: github_release
     repo_owner: nao1215
     repo_name: sqly
-    description: eaisly execute SQL against CSV/TSV/LTSV/JSON and Microsoft Excel with shell
+    description: easily execute SQL against CSV/TSV/LTSV/JSON and Microsoft Excel with shell
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.0.4"
@@ -77198,7 +77147,7 @@ packages:
     repo_name: vivid
     asset: vivid-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     format: tar.gz
-    description: A themeable LS_COLORS generator with a rich filetype datebase
+    description: A themeable LS_COLORS generator with a rich filetype database
     replacements:
       amd64: x86_64
       arm64: aarch64
@@ -77220,7 +77169,7 @@ packages:
     files:
       - name: vivid
         src: vivid-{{.Version}}-{{.Arch}}-{{.OS}}/vivid
-    version_constraint: semver(">= 0.8.0")
+    version_constraint: "false"
     version_overrides:
       - version_constraint: semver("< 0.8.0")
         overrides: []
@@ -86400,6 +86349,8 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        github_artifact_attestations:
+          signer_workflow: terraprovider/statebridge/\.github/workflows/release\.yml
         overrides:
           - goos: windows
             format: zip
@@ -89599,6 +89550,30 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("<= 0.114.0")
+        asset: updatecli_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums.txt.sig
+            opts:
+              - --certificate-identity
+              - "https://github.com/updatecli/updatecli/.github/workflows/release.yaml@refs/tags/{{.Version}}"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: updatecli_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -89623,6 +89598,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          signer_workflow: updatecli/updatecli/\.github/workflows/release\.yaml
   - type: github_release
     repo_owner: uptrace
     repo_name: uptrace
@@ -91385,6 +91362,65 @@ packages:
         overrides:
           - goos: windows
             format: zip
+  - type: github_release
+    repo_owner: wasm-bindgen
+    repo_name: wasm-pack
+    aliases:
+      - name: rustwasm/wasm-pack
+      - name: drager/wasm-pack
+    description: your favorite rust -> wasm workflow tool
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.4.2")
+        asset: wasm-pack-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: wasm-pack
+            src: "{{.AssetWithoutExt}}/wasm-pack"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.10.1")
+        asset: wasm-pack-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: wasm-pack
+            src: "{{.AssetWithoutExt}}/wasm-pack"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: wasm-pack-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: wasm-pack
+            src: "{{.AssetWithoutExt}}/wasm-pack"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
   - name: wasmCloud/wasmCloud/wash
     type: github_release
     repo_owner: wasmCloud
@@ -94160,7 +94196,7 @@ packages:
     repo_name: microsandbox
     aliases:
       - name: microsandbox/microsandbox
-    description: Self-Hosted Plaform for Secure Execution of Untrusted User/AI Code
+    description: Self-Hosted Platform for Secure Execution of Untrusted User/AI Code
     files:
       - name: msb
     version_prefix: microsandbox-v
