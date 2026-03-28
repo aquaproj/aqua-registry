@@ -38,17 +38,6 @@ jobs:
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
         run: argd --version
-      - name: Fix registry.yaml
-        run: argd gr
-
-      - name: install keep-sorted
-        env:
-          AQUA_GITHUB_TOKEN: ${{github.token}}
-        run: |
-          keep-sorted --version
-      - name: keep-sorted
-        run: |
-          git grep -l " keep-sorted start" | grep -v autofix.yaml | xargs keep-sorted
 
       - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
         id: changes
@@ -62,5 +51,17 @@ jobs:
       - name: argd fix
         if: steps.changes.outputs.pkgs-files == 'true'
         run: argd fix ${{steps.changes.outputs.pkgs-files_files}}
+
+      - name: Fix registry.yaml
+        run: argd gr
+
+      - name: install keep-sorted
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+        run: |
+          keep-sorted --version
+      - name: keep-sorted
+        run: |
+          git grep -l " keep-sorted start" | grep -v autofix.yaml | xargs keep-sorted
 
       - uses: autofix-ci/action@7a166d7532b277f34e16238930461bf77f9d7ed8 # v1.3.3
