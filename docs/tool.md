@@ -83,7 +83,7 @@ If the test succeeds, `registry.yaml` is updated.
 
 Please see [Lint pkgs/**/pkg.yaml and pkgs/**/registry.yaml.](lint.md)
 
-## aqua-regsitry remove (rm) - Remove containers
+## aqua-registry remove (rm) - Remove containers
 
 `argd remove` removes containers.
 `argd scaffold` and `argd test` reuse containers, but if you want to test packages in clean environment, you can do it by removing containers.
