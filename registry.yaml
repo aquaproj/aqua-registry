@@ -37706,7 +37706,7 @@ packages:
               - name: assumego
                 src: granted
                 link: assumego
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.39.0"
         url: https://releases.granted.dev/granted/{{.Version}}/granted_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
@@ -37721,6 +37721,25 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: "true"
+        url: https://releases.granted.dev/granted/{{.Version}}/granted_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: granted
+          - name: assume
+          - name: assumego
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: darwin
+            files:
+              - name: granted
+              - name: assume
+              - name: assumego
+                src: granted
+                link: assumego
   - type: github_release
     repo_owner: g-plane
     repo_name: pnpm-shell-completion
