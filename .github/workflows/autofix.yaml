@@ -38,6 +38,20 @@ jobs:
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
         run: argd --version
+
+      - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
+        id: changes
+        with:
+          list-files: shell
+          filters: |
+            pkgs-files:
+              - added|modified: pkgs/**/pkg.yaml
+              - added|modified: pkgs/**/registry.yaml
+
+      - name: argd fix
+        if: steps.changes.outputs.pkgs-files == 'true'
+        run: argd fix ${{steps.changes.outputs.pkgs-files_files}}
+
       - name: Fix registry.yaml
         run: argd gr
 
