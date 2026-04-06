@@ -51,6 +51,7 @@ argd rm # Remove containers
 argd rmp [<package>] # Remove installed packages from containers
 argd gr # Update registry.yaml by merging pkgs/**/registry.yaml
 argd con [<os>] [<arch>] # Connect a container by docker exec. This is useful for debugging.
+argd lsa <owner/repo> <version> # List release assets of a GitHub Release
 ```
 
 ## Format with prettier
@@ -107,6 +108,11 @@ When you edit `pkgs/**/registry.yaml`, please run `argd gr` to reflect the updat
 `argd scaffold` and `argd test` tests packages in containers.
 `argd con` is useful to look into the trouble in containers.
 By default, `<os>` is `linux` and `<arch>` is CPU architecture of your machine.
+
+## argd list-assets (lsa) - List release assets
+
+`argd list-assets (lsa) <owner/repo> <version>` lists the asset names of a GitHub Release.
+This is useful when debugging asset name mismatches during package configuration.
 
 ## Code Auto-generation
 
