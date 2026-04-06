@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: max-sixty
+    repo_name: worktrunk
+    description: A CLI for git worktree management, designed for running AI agents in parallel
+    asset: worktrunk-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.xz
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+      windows: pc-windows-msvc
+    checksum:
+      type: github_release
+      asset: sha256.sum
+      algorithm: sha256
+    files:
+      - name: wt
+        src: worktrunk-{{.Arch}}-{{.OS}}/wt
+      - name: git-wt
+        src: worktrunk-{{.Arch}}-{{.OS}}/git-wt
+    supported_envs:
+      - darwin/amd64
+      - darwin/arm64
+      - linux/amd64
+      - linux/arm64
+      - windows/amd64
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: wt
+            src: wt
+          - name: git-wt
+            src: git-wt
