@@ -3,14 +3,24 @@ packages:
   - type: github_release
     repo_owner: temporalio
     repo_name: temporal
-    description: Temporal service and CLI
+    description: Temporal Server bundle (temporal-server, tdbg, and database tools)
     asset: temporal_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     overrides:
       - goos: windows
         format: zip
     files:
-      - name: tctl
+      - name: temporal-server
+      - name: temporal-cassandra-tool
+      - name: temporal-sql-tool
+    version_overrides:
+      - version_constraint: "semver(\">= 1.30.1\")"
+        files:
+          - name: temporal-server
+          - name: temporal-cassandra-tool
+          - name: temporal-sql-tool
+          - name: temporal-elasticsearch-tool
+          - name: tdbg
     checksum:
       type: github_release
       asset: checksums.txt
