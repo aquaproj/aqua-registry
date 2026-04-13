@@ -3731,50 +3731,42 @@ packages:
     description: Command line interface for IBM Cloud
     search_words:
       - ibmcloud
-      - ibm
       - bluemix
-    aliases:
-      - name: IBM-Cloud/ibmcloud
-    # binaries are hosted on IBM's CDN, not as GitHub Release assets
-    url: https://download.clis.cloud.ibm.com/ibm-cloud-cli-dn/{{trimV .Version}}/binaries/IBM_Cloud_CLI_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tgz
-    format: tar.gz
     files:
       - name: ibmcloud
         src: IBM_Cloud_CLI/ibmcloud
-    supported_envs:
-      - darwin/amd64
-      - darwin/arm64
-      - linux/amd64
-      - linux/arm64
-      - windows/amd64 # IBM does not publish Windows ARM64 binaries
-    replacements:
-      darwin: macos
-      linux: linux
-      windows: windows
-    version_constraint: semver(">= 2.38.0")
-    overrides:
-      # macOS x86_64 has no arch suffix in the filename
-      - goos: darwin
-        goarch: amd64
-        url: https://download.clis.cloud.ibm.com/ibm-cloud-cli-dn/{{trimV .Version}}/binaries/IBM_Cloud_CLI_{{trimV .Version}}_macos.tgz
-      # windows has a .zip archive rather than .tgz
-      - goos: windows
-        format: zip
-        url: https://download.clis.cloud.ibm.com/ibm-cloud-cli-dn/{{trimV .Version}}/binaries/IBM_Cloud_CLI_{{trimV .Version}}_windows_{{.Arch}}.zip
+    version_constraint: "false"
     version_overrides:
+      # distribution wasn't properly multi-arch until v2.5.0 and newer
+      - version_constraint: semver("< 2.5.0")
+        error_message: Please use v2.5.0 or later
       # the download base path changed from ibm-cloud-cli to ibm-cloud-cli-dn at v2.38.0
-      - version_constraint: semver(">= 2.5.0, < 2.38.0")
-        url: https://download.clis.cloud.ibm.com/ibm-cloud-cli/{{trimV .Version}}/binaries/IBM_Cloud_CLI_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tgz
+      - version_constraint: semver("< 2.38.0")
+        url: https://download.clis.cloud.ibm.com/ibm-cloud-cli/{{trimV .Version}}/binaries/IBM_Cloud_CLI_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
         overrides:
           - goos: darwin
             goarch: amd64
             url: https://download.clis.cloud.ibm.com/ibm-cloud-cli/{{trimV .Version}}/binaries/IBM_Cloud_CLI_{{trimV .Version}}_macos.tgz
           - goos: windows
             format: zip
-            url: https://download.clis.cloud.ibm.com/ibm-cloud-cli/{{trimV .Version}}/binaries/IBM_Cloud_CLI_{{trimV .Version}}_windows_{{.Arch}}.zip
-      # distribution wasn't properly multi-arch until v2.5.0 and newer
-      - version_constraint: semver("< 2.5.0")
-        error_message: Please use v2.5.0 or later
+      - version_constraint: "true"
+        # binaries are hosted on IBM's CDN, not as GitHub Release assets
+        url: https://download.clis.cloud.ibm.com/ibm-cloud-cli-dn/{{trimV .Version}}/binaries/IBM_Cloud_CLI_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        overrides:
+          # macOS x86_64 has no arch suffix in the filename
+          - goos: darwin
+            goarch: amd64
+            url: https://download.clis.cloud.ibm.com/ibm-cloud-cli-dn/{{trimV .Version}}/binaries/IBM_Cloud_CLI_{{trimV .Version}}_{{.OS}}.{{.Format}}
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: IBM-Cloud
     repo_name: redli
