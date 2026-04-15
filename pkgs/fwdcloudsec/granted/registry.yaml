@@ -6,13 +6,11 @@ packages:
     aliases:
       - name: common-fate/granted
     description: The easiest way to access your cloud
-    version_constraint: "false"
     files:
       - name: granted
       - name: assume
       - name: assumego
-    replacements:
-      amd64: x86_64
+    version_constraint: "false"
     version_overrides:
       # From version 0.35.0 forward, GitHub Release artifacts are also published.
       - version_constraint: semver("< 0.35.0")
@@ -20,21 +18,27 @@ packages:
         url: https://releases.commonfate.io/granted/{{.Version}}/granted_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         asset: granted_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        replacements:
+          amd64: x86_64
         overrides:
-        - goos: windows
-          format: zip
-        - goos: darwin
-          files:
-            - name: granted
-            - name: assume
-            - name: assumego
-              src: granted
-              link: assumego
+          - goos: windows
+            format: zip
+          - goos: darwin
+            files:
+              - name: granted
+              - name: assume
+              - name: assumego
+                src: granted
+                link: assumego
       # Version 0.39.0 did not publish prebuilt Darwin artifacts.
-      - version_constraint: semver("= 0.39.0")
-        type: github_release
+      - version_constraint: Version == "v0.39.0"
         asset: granted_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        replacements:
+          amd64: x86_64
         checksum:
           type: github_release
           asset: checksums.txt
@@ -42,11 +46,7 @@ packages:
         supported_envs:
           - linux
           - windows
-        overrides:
-        - goos: windows
-          format: zip
       - version_constraint: "true"
-        type: github_release
         asset: granted_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
@@ -54,12 +54,12 @@ packages:
           asset: checksums.txt
           algorithm: sha256
         overrides:
-        - goos: windows
-          format: zip
-        - goos: darwin
-          files:
-            - name: granted
-            - name: assume
-            - name: assumego
-              src: granted
-              link: assumego
+          - goos: windows
+            format: zip
+          - goos: darwin
+            files:
+              - name: granted
+              - name: assume
+              - name: assumego
+                src: granted
+                link: assumego
