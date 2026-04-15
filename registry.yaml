@@ -60113,6 +60113,65 @@ packages:
           - goos: linux
             format: tar.gz
   - type: github_release
+    repo_owner: max-sixty
+    repo_name: worktrunk
+    description: Worktrunk is a CLI for Git worktree management, designed for parallel AI agent workflows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.12")
+        asset: worktrunk-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: wt
+            src: "{{.AssetWithoutExt}}/wt"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: wt
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: worktrunk-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: wt
+            src: "{{.AssetWithoutExt}}/wt"
+          - name: git-wt
+            src: "{{.AssetWithoutExt}}/git-wt"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: wt
+              - name: git-wt
+  - type: github_release
     repo_owner: maxpert
     repo_name: marmot
     description: A distributed SQLite server with MySQL wire compatible interface
@@ -74544,6 +74603,19 @@ packages:
           - windows
           - amd64
   - type: github_release
+    repo_owner: rose-pine
+    repo_name: rose-pine-bloom
+    description: Generate Rosé Pine themes
+    files:
+      - name: bloom
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v3.0.0"
+        no_asset: true
+      - version_constraint: "true"
+        asset: rose-pine-bloom-{{.OS}}-{{.Arch}}
+        format: raw
+  - type: github_release
     repo_owner: rossmacarthur
     repo_name: sheldon
     description: ":bowtie: Fast, configurable, shell plugin manager"
@@ -75440,6 +75512,23 @@ packages:
               type: github_release
               asset: "{{.Asset}}.sha256"
               algorithm: sha256
+      - version_constraint: semver("<= 0.1.68")
+        asset: rumdl-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: rumdl-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -75457,6 +75546,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          signer_workflow: rvben/rumdl/\.github/workflows/release\.yml
   - type: github_release
     repo_owner: ryane
     repo_name: kfilt
@@ -76050,6 +76141,43 @@ packages:
             format: zip
         files:
           - name: jv
+  - type: github_release
+    repo_owner: santosr2
+    repo_name: TerraTidy
+    description: A comprehensive quality platform for Terraform and Terragrunt
+    files:
+      - name: terratidy
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.0-alpha.3")
+        asset: terratidy-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: terratidy-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/santosr2/TerraTidy/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+            bundle:
+              type: github_release
+              asset: checksums.txt.bundle
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: sarub0b0
     repo_name: kubetui
