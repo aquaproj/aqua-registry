@@ -37817,24 +37817,80 @@ packages:
     aliases:
       - name: common-fate/granted
     description: The easiest way to access your cloud
-    url: https://releases.commonfate.io/granted/{{.Version}}/granted_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    files:
-      - name: granted
-      - name: assume
-      - name: assumego
-    replacements:
-      amd64: x86_64
-    overrides:
-      - goos: windows
-        format: zip
-      - goos: darwin
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 0.37.0")
+        url: https://releases.commonfate.io/granted/{{.Version}}/granted_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         files:
           - name: granted
           - name: assume
           - name: assumego
-            src: granted
-            link: assumego
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: darwin
+            files:
+              - name: granted
+              - name: assume
+              - name: assumego
+                src: granted
+                link: assumego
+      - version_constraint: semver("< 0.39.0")
+        url: https://releases.granted.dev/granted/{{.Version}}/granted_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: granted
+          - name: assume
+          - name: assumego
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: darwin
+            files:
+              - name: granted
+              - name: assume
+              - name: assumego
+                src: granted
+                link: assumego
+      - version_constraint: Version == "v0.39.0"
+        url: https://releases.granted.dev/granted/{{.Version}}/granted_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: granted
+          - name: assume
+          - name: assumego
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux
+          - windows
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        url: https://releases.granted.dev/granted/{{.Version}}/granted_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: granted
+          - name: assume
+          - name: assumego
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: darwin
+            files:
+              - name: granted
+              - name: assume
+              - name: assumego
+                src: granted
+                link: assumego
   - type: github_release
     repo_owner: g-plane
     repo_name: pnpm-shell-completion
