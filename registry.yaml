@@ -50863,27 +50863,74 @@ packages:
     type: github_release
     repo_owner: jreleaser
     repo_name: jreleaser
-    description: Release projects quickly and easily with JReleaser
-    rosetta2: true
-    replacements:
-      amd64: x86_64
-      darwin: osx
-      linux: linux_musl
-      arm64: aarch64
-    asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.zip
+    description: ":rocket: Release projects quickly and easily with JReleaser"
     files:
       - name: jreleaser
-        src: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/jreleaser
-      - name: java
-        src: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/java
-      - name: keytool
-        src: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/keytool
-      - name: rmiregistry
-        src: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}/bin/rmiregistry
-    checksum:
-      type: github_release
-      asset: checksums_sha256.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "early-access"
+        checksum:
+          type: github_release
+          asset: checksums_sha256.txt
+          algorithm: sha256
+      - version_constraint: Version == "v0.3.0"
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.2.0")
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.5.0")
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: checksums_sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.8.0")
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: checksums_sha256.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: checksums_rmd160.txt
+          algorithm: sha256
   - type: github_release
     repo_owner: jscaltreto
     repo_name: eks-auth
