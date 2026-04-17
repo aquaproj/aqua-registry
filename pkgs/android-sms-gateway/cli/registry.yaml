@@ -4,16 +4,10 @@ packages:
     repo_owner: android-sms-gateway
     repo_name: cli
     description: A command-line interface for working with SMS Gateway for Android
-    version_constraint: "false"
     files:
       - name: smsgate
       - name: smsgate-ca
-    overrides:
-      - goos: windows
-        format: zip
-        files:
-          - name: smsgate
-          - name: smsgate-ca
+    version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.0.3"
         no_asset: true
@@ -60,6 +54,9 @@ packages:
       - version_constraint: "true"
         asset: smsgate_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
         replacements:
           amd64: x86_64
           darwin: Darwin
