@@ -5,6 +5,15 @@ packages:
     repo_name: cli
     description: A command-line interface for working with SMS Gateway for Android
     version_constraint: "false"
+    files:
+      - name: smsgate
+      - name: smsgate-ca
+    overrides:
+      - goos: windows
+        format: zip
+        files:
+          - name: smsgate.exe
+          - name: smsgate-ca.exe
     version_overrides:
       - version_constraint: Version == "v0.0.3"
         no_asset: true
@@ -23,6 +32,12 @@ packages:
         overrides:
           - goos: windows
             format: zip
+            files:
+              - name: smsgate.exe
+                src: cli.exe
+          - files:
+              - name: smsgate
+                src: cli
       - version_constraint: Version == "v0.0.2"
         asset: smsgate_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -38,6 +53,10 @@ packages:
         overrides:
           - goos: windows
             format: zip
+            files:
+              - name: smsgate.exe
+          - files:
+              - name: smsgate
       - version_constraint: "true"
         asset: smsgate_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -50,6 +69,3 @@ packages:
           type: github_release
           asset: smsgate_{{trimV .Version}}_checksums.txt
           algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
