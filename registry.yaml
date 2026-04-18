@@ -79563,9 +79563,9 @@ packages:
   - type: github_release
     repo_owner: skim-rs
     repo_name: skim
-    description: Fuzzy Finder in rust
     aliases:
       - name: lotabout/skim
+    description: Fuzzy Finder in rust
     files:
       - name: sk
     version_constraint: "false"
@@ -79602,14 +79602,8 @@ packages:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux-gnu
-        overrides:
-          - goos: linux
-            goarch: arm64
-            asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}eabi.{{.Format}}
-            replacements:
-              arm64: arm
         supported_envs:
-          - linux
+          - linux/amd64
           - darwin
       - version_constraint: semver("<= 0.9.3")
         asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
@@ -79623,14 +79617,8 @@ packages:
             goarch: amd64
             replacements:
               linux: unknown-linux-musl
-          - goos: linux
-            goarch: arm64
-            asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-            replacements:
-              arm64: arm
-              linux: unknown-linux-gnueabi
         supported_envs:
-          - linux
+          - linux/amd64
           - darwin
       - version_constraint: semver("<= 0.10.4")
         no_asset: true
@@ -79658,7 +79646,7 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: "true"
+      - version_constraint: semver("<= 4.0.1")
         asset: skim-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         files:
@@ -79684,6 +79672,28 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: "true"
+        asset: skim-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: sk
+            src: "{{.AssetWithoutExt}}/sk"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: sk
   - type: github_release
     repo_owner: sl1pm4t
     repo_name: k2tf
