@@ -3,6 +3,8 @@ packages:
   - type: github_release
     repo_owner: skim-rs
     repo_name: skim
+    aliases:
+      - name: lotabout/skim
     description: Fuzzy Finder in rust
     files:
       - name: sk
@@ -40,14 +42,8 @@ packages:
           amd64: x86_64
           darwin: apple-darwin
           linux: unknown-linux-gnu
-        overrides:
-          - goos: linux
-            goarch: arm64
-            asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}eabi.{{.Format}}
-            replacements:
-              arm64: arm
         supported_envs:
-          - linux
+          - linux/amd64
           - darwin
       - version_constraint: semver("<= 0.9.3")
         asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
@@ -61,14 +57,8 @@ packages:
             goarch: amd64
             replacements:
               linux: unknown-linux-musl
-          - goos: linux
-            goarch: arm64
-            asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}eabi.{{.Format}}
-            replacements:
-              arm64: arm
-              linux: unknown-linux-gnu
         supported_envs:
-          - linux
+          - linux/amd64
           - darwin
       - version_constraint: semver("<= 0.10.4")
         no_asset: true
@@ -99,6 +89,9 @@ packages:
       - version_constraint: semver("<= 4.0.1")
         asset: skim-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
+        files:
+          - name: sk
+            src: "{{.AssetWithoutExt}}/sk"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -123,6 +116,9 @@ packages:
         asset: skim-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
+        files:
+          - name: sk
+            src: "{{.AssetWithoutExt}}/sk"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -136,3 +132,5 @@ packages:
         overrides:
           - goos: windows
             format: zip
+            files:
+              - name: sk
