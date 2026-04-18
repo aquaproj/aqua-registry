@@ -79564,8 +79564,6 @@ packages:
     repo_owner: skim-rs
     repo_name: skim
     description: Fuzzy Finder in rust
-    aliases:
-      - name: lotabout/skim
     files:
       - name: sk
     version_constraint: "false"
@@ -79625,10 +79623,10 @@ packages:
               linux: unknown-linux-musl
           - goos: linux
             goarch: arm64
-            asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+            asset: skim-{{.Version}}-{{.Arch}}-{{.OS}}eabi.{{.Format}}
             replacements:
               arm64: arm
-              linux: unknown-linux-gnueabi
+              linux: unknown-linux-gnu
         supported_envs:
           - linux
           - darwin
@@ -79658,12 +79656,9 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: "true"
+      - version_constraint: semver("<= 4.0.1")
         asset: skim-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
-        files:
-          - name: sk
-            src: "{{.AssetWithoutExt}}/sk"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -79684,6 +79679,23 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: "true"
+        asset: skim-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: sl1pm4t
     repo_name: k2tf
