@@ -34143,6 +34143,47 @@ packages:
       - linux
       - amd64
   - type: github_release
+    repo_owner: endevco
+    repo_name: aube
+    description: A fast Node.js package manager
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.0.0-beta.1"
+        asset: aube-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - linux/amd64
+          - darwin
+          - windows
+      - version_constraint: "true"
+        asset: aube-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: amd64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows
+  - type: github_release
     repo_owner: enokawa
     repo_name: taskdiff
     description: Diff tool for ECS Task Definition
