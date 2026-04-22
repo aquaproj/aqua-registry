@@ -27444,6 +27444,16 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 0.19.0")
         no_asset: true
+      - version_constraint: semver("<= 0.46.0")
+        asset: flux-operator-mcp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: flux-operator_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: flux-operator-mcp_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -27454,6 +27464,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          signer_workflow: controlplaneio-fluxcd/flux-operator/\.github/workflows/release\.yaml
   - type: github_release
     repo_owner: controlplaneio
     repo_name: kubectl-kubesec
