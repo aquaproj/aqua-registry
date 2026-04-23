@@ -34075,20 +34075,6 @@ packages:
           - goos: windows
             format: zip
   - type: github_release
-    repo_owner: elixir-lang
-    repo_name: expert
-    description: Official Elixir Language Server Protocol implementation
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: "true"
-        asset: expert_{{.OS}}_{{.Arch}}
-        format: raw
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: expert_checksums.txt
-          algorithm: sha256
-  - type: github_release
     repo_owner: elkowar
     repo_name: pipr
     description: A tool to interactively write shell pipelines
@@ -35519,6 +35505,22 @@ packages:
             asset: exoscale-cli_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
           - goos: windows
             format: zip
+  - type: github_release
+    repo_owner: expert-lsp
+    repo_name: expert
+    aliases:
+      - name: elixir-lang/expert
+    description: Official Elixir Language Server Protocol implementation
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: expert_{{.OS}}_{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: expert_checksums.txt
+          algorithm: sha256
   - name: external-secrets/external-secrets/esoctl
     type: github_release
     repo_owner: external-secrets
@@ -43624,6 +43626,37 @@ packages:
         overrides:
           - goos: windows
             asset: alloy-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+  - type: github_release
+    repo_owner: grafana
+    repo_name: gcx
+    description: A CLI for managing Grafana Cloud resources. Optimized for agentic usage
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.2.0"
+        asset: gcx_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: gcx_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: gcx_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: gcx_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: grafana
     repo_name: grafana-kiosk
@@ -74660,6 +74693,27 @@ packages:
     repo_name: glice
     description: Go license and dependency checker
     path: github.com/ribice/glice/v2/cmd/glice
+  - type: github_release
+    repo_owner: ricoberger
+    repo_name: grafana-kubernetes-plugin
+    description: The Grafana Kubernetes Plugin allows you to explore your Kubernetes resources and logs directly within Grafana
+    files:
+      - name: kubectl-grafana
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.4.0")
+        asset: kubectl-grafana.tar.gz
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: kubectl-grafana
+            src: kubectl-grafana-{{.OS}}-{{.Arch}}
+      - version_constraint: "true"
+        asset: kubectl-grafana-{{.OS}}-{{.Arch}}.tar.gz
+        format: tar.gz
+        windows_arm_emulation: true
   - type: github_release
     repo_owner: rlmcpherson
     repo_name: s3gof3r
