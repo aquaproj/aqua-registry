@@ -14,7 +14,8 @@ e.g.
 argd s cli/cli
 ```
 
-For package types other than github_release, specify `-l 1`.
+Auto-generation currently supports only `github_release` and `cargo`.
+For package types other than `github_release` and `cargo`, specify `-l 1` to generate only a template and write the rest manually.
 
 ```sh
 argd s -l 1 "<package name>"
@@ -117,12 +118,13 @@ Especially, we don't accept pull requests not using `argd s`.
 Standard Registry must support not only the latest version but also almost all versions and [various platforms](#supported-os-and-cpu-architecture).
 Many tools have so many versions that people can't check all of them manually.
 So we can't trust the code not using `argd s`.
-`argd s` checks all GitHub Releases and generates code supporting all of them (Strictly speaking, if there are too many GitHub Releases we have to restrict the number of GitHub Releases, though `argd s` can still check over 200 versions).
+For `github_release` packages, `argd s` checks all GitHub Releases and generates code supporting all of them (Strictly speaking, if there are too many GitHub Releases we have to restrict the number of GitHub Releases, though `argd s` can still check over 200 versions).
 `argd s` generates much better code than us.
 
 `argd s` isn't perfect and sometimes `argd s` causes errors and generates invalid code.
 Then you have to fix the code according to the error message.
-`argd s` supports only `github_release` type packages, so for other package types you have to fix the code.
+Code auto-generation currently supports only `github_release` and `cargo`.
+For package types other than `github_release` and `cargo`, `argd s -l 1` generates a template, and you have to fix the code.
 Even if so, you must still use `argd s`.
 `argd s` guarantees the quality of code.
 
