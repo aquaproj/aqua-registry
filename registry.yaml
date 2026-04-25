@@ -50749,23 +50749,16 @@ packages:
       - version_constraint: semver("<= 0.4.1")
         no_asset: true
       - version_constraint: "true"
-        asset: xmllint_{{.OS}}-x86-64
+        asset: xmllint_{{.OS}}-{{.Arch}}
         format: raw
+        windows_arm_emulation: true
+        replacements:
+          arm64: aarch64
+          amd64: x86-64
         checksum:
           type: github_release
           asset: SHA256SUMS
           algorithm: sha256
-        supported_envs:
-          - linux
-          - darwin
-          - windows/amd64
-        overrides:
-          - goos: linux
-            goarch: arm64
-            asset: xmllint_{{.OS}}-aarch64
-          - goos: darwin
-            goarch: arm64
-            asset: xmllint_{{.OS}}-aarch64
   - type: github_release
     repo_owner: jorgelbg
     repo_name: pinentry-touchid
