@@ -90043,7 +90043,26 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: semver(">= 0.14.0")
+      - version_constraint: semver("< 0.14.0")
+        asset: lnav-{{trimV .Version}}-{{.OS}}-musl-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: lnav
+            src: lnav-{{trimV .Version}}/lnav
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: darwin
+            asset: lnav-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+          - goos: windows
+            asset: lnav-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+            files:
+              - name: lnav
+                src: lnav-{{trimV .Version}}/bin/lnav
+      - version_constraint: "true"
         asset: lnav-{{trimV .Version}}-{{.OS}}-musl-{{.Arch}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
@@ -90067,25 +90086,6 @@ packages:
           - linux
           - darwin/arm64
           - windows
-      - version_constraint: "true"
-        asset: lnav-{{trimV .Version}}-{{.OS}}-musl-{{.Arch}}.{{.Format}}
-        format: zip
-        rosetta2: true
-        windows_arm_emulation: true
-        files:
-          - name: lnav
-            src: lnav-{{trimV .Version}}/lnav
-        replacements:
-          amd64: x86_64
-          darwin: macos
-        overrides:
-          - goos: darwin
-            asset: lnav-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-          - goos: windows
-            asset: lnav-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-            files:
-              - name: lnav
-                src: lnav-{{trimV .Version}}/bin/lnav
   - type: github_release
     repo_owner: tuist
     repo_name: tuist
