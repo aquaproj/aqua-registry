@@ -50739,6 +50739,34 @@ packages:
       asset: checksums.txt
       algorithm: sha256
   - type: github_release
+    repo_owner: jonwiggins
+    repo_name: xmloxide
+    description: A pure Rust reimplementation of libxml2
+    files:
+      - name: xmllint
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.4.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: xmllint_{{.OS}}-x86-64
+        format: raw
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+          - windows/amd64
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: xmllint_{{.OS}}-aarch64
+          - goos: darwin
+            goarch: arm64
+            asset: xmllint_{{.OS}}-aarch64
+  - type: github_release
     repo_owner: jorgelbg
     repo_name: pinentry-touchid
     description: Custom GPG pinentry program for macOS that allows using Touch ID for fetching the password from the macOS keychain
