@@ -7,26 +7,26 @@ packages:
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 1.19.2")
-      - version_constraint: semver("<= 1.25.2")
-        asset: google-java-format_{{.OS}}-x86-64
+        asset: google-java-format-{{trimV .Version}}-all-deps.jar
         format: raw
-        overrides:
-          - goos: darwin
-            asset: google-java-format_{{.OS}}-{{.Arch}}
+        complete_windows_ext: false
+      - version_constraint: semver("<= 1.25.2")
+        asset: google-java-format_{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86-64
         supported_envs:
           - linux/amd64
           - darwin/arm64
-          - windows/amd64
+          - windows
       - version_constraint: "true"
-        asset: google-java-format_{{.OS}}-x86-64
+        asset: google-java-format_{{.OS}}-{{.Arch}}
+        windows_arm_emulation: true
         format: raw
-        overrides:
-          - goos: linux
-            goarch: arm64
-            asset: google-java-format_{{.OS}}-{{.Arch}}
-          - goos: darwin
-            asset: google-java-format_{{.OS}}-{{.Arch}}
+        replacements:
+          amd64: x86-64
         supported_envs:
           - linux
           - darwin/arm64
-          - windows/amd64
+          - windows
