@@ -25811,10 +25811,28 @@ packages:
             files:
               - name: cog
                 src: "{{.Arch}}-{{.OS}}/cog.exe"
-  - name: codeberg.org/itiquette/gommitlint
-    type: github_release
-    repo_owner: codeberg.org
-    repo_name: itiquette
+  - type: http
+    name: codeberg.org/itiquette/gommitlint
+    description: Git commit message linter and validator with Conventional Commits support
+    link: https://codeberg.org/itiquette/gommitlint
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        url: https://codeberg.org/itiquette/gommitlint/releases/download/{{.Version}}/gommitlint-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz
+        format: tar.gz
+        files:
+          - name: gommitlint
+            src: gommitlint-{{trimV .Version}}-{{.OS}}-{{.Arch}}/gommitlint
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: http
+          url: https://codeberg.org/itiquette/gommitlint/releases/download/{{.Version}}/gommitlint_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin/arm64
+          - linux/amd64
+          - linux/arm64
   - type: http
     name: codeberg.org/mergiraf/mergiraf
     description: A syntax-aware git merge driver for a growing collection of programming languages and file formats
