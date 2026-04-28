@@ -71368,7 +71368,7 @@ packages:
           amd64: x64
           darwin: macos
           windows: win
-      - version_constraint: "true"
+      - version_constraint: semver("< 11.0.0")
         asset: pnpm-{{.OS}}-{{.Arch}}
         format: raw
         windows_arm_emulation: true
@@ -71380,6 +71380,19 @@ packages:
           amd64: x64
           darwin: macos
           windows: win
+        github_immutable_release: true
+      - version_constraint: "true"
+        asset: pnpm-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: pnpm
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
         github_immutable_release: true
   - type: github_release
     repo_owner: po3rin
