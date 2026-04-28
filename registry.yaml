@@ -3193,6 +3193,53 @@ packages:
         format: raw
         windows_arm_emulation: true
   - type: github_release
+    repo_owner: Feel-ix-343
+    repo_name: markdown-oxide
+    description: PKM Markdown Language Server
+    version_constraint: "false"
+    files:
+      - name: markdown-oxide
+        src: "{{.AssetWithoutExt}}/markdown-oxide"
+    version_overrides:
+      - version_constraint: Version == "v0.0.9"
+        asset: markdown-oxide-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.0.11")
+        asset: markdown-oxide-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: markdown-oxide-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: FiloSottile
     repo_name: age
     description: A simple, modern and secure encryption tool (and Go library) with small explicit keys, no config options, and UNIX-style composability
