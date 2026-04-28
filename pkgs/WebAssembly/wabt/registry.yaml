@@ -17,7 +17,7 @@ packages:
       type: github_release
       asset: "{{.Asset}}.sha256"
       algorithm: sha256
-    files:
+    files: &wabt_files_2
       - name: spectest-interp
         src: wabt-{{.Version}}/bin/spectest-interp
       - name: wasm-decompile
@@ -44,6 +44,23 @@ packages:
         src: wabt-{{.Version}}/bin/wat2wasm
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver(">= 1.0.39")
+        asset: wabt-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: false
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+          amd64: x64
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        files: *wabt_files_2
       - version_constraint: semver(">= 1.0.35")
         asset: wabt-{{.Version}}-{{.OS}}.{{.Format}}
         format: tar.gz
