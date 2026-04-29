@@ -23,23 +23,20 @@ argd s -l 1 "<package name>"
 
 `argd s` generates a branch `feat/<package name>`, code, and commit, and tests using containers.
 
-:::caution
-`argd s` creates a commit, but please don't edit the commit by `git commit --amend`, `git rebase`, or somehow.
-`argd s` creates a commit to distinguish scaffolded code from manual changes.
-Please add new commits if you update code.
-:::
+> [!CAUTION]
+> `argd s` creates a commit, but please don't edit the commit by `git commit --amend`, `git rebase`, or somehow.
+> `argd s` creates a commit to distinguish scaffolded code from manual changes.
+> Please add new commits if you update code.
 
-:::info
-This command may sometimes fail tests and output a large amount of error messages, but don't be overwhelmed by those error messages.
-Test failures are expected.
-:::
+> [!NOTE]
+> This command may sometimes fail tests and output a large amount of error messages, but don't be overwhelmed by those error messages.
+> Test failures are expected.
 
 ## Customizing argd s with Configuration File
 
-:::note
-In many cases, this is unnecessary.
-Also, you should not use this feature carelessly.
-:::
+> [!NOTE]
+> In many cases, this is unnecessary.
+> Also, you should not use this feature carelessly.
 
 Sometimes `argd s` generation doesn't work in one go.
 For github_release packages, `argd s` gets lists of GitHub Releases and assets via GitHub API and auto-generates configuration based on that.
@@ -64,18 +61,16 @@ However, using this feature carelessly can exclude things that shouldn't be excl
 `all_assets_filter` in particular requires caution. This is because it can accidentally exclude checksum files like `SHA256SUM` or `checksums.txt`, and it's difficult to notice if you've excluded them.
 Therefore, you should first generate code without exclusion settings, and if unnecessary things are mixed in the generated code, write settings that explicitly exclude only those (without making the scope too broad to avoid excluding extra things).
 
-:::caution
-Note that `version_filter` is not a feature for dropping support for old versions.
-`version_constraint`, `no_asset`, and `error_message` are used for dropping support for old versions.
-
-https://github.com/aquaproj/aqua-registry/blob/191f2136c10b1eb962dd43c8f421af417b1b3a16/pkgs/Shopify/ejson/registry.yaml#L8-L10
-:::
+> [!CAUTION]
+> Note that `version_filter` is not a feature for dropping support for old versions.
+> `version_constraint`, `no_asset`, and `error_message` are used for dropping support for old versions.
+>
+> https://github.com/aquaproj/aqua-registry/blob/191f2136c10b1eb962dd43c8f421af417b1b3a16/pkgs/Shopify/ejson/registry.yaml#L8-L10
 
 ## Retrying `argd s` Until It Works
 
-:::note
-In many cases, this is unnecessary.
-:::
+> [!NOTE]
+> In many cases, this is unnecessary.
 
 As mentioned earlier, code generation with `argd s` doesn't always work on the first try.
 Sometimes you need to repeat it several times.
@@ -103,13 +98,12 @@ Repeat modification and confirmation until it can be installed.
 
 When you're done with modifications, or if you're not sure how to fix it, submit a Pull Request.
 
-:::note
-The `cmdx new` command has been removed from the standard procedure.
-However, the command itself remains and can still be used.
-This command has large environment dependencies and didn't work well for some users, making troubleshooting and support difficult.
-Since you can create Pull Requests without using `cmdx new`, we decided to remove it from the standard procedure.
-[See also changelog.](/docs/products/aqua-registry/changelog#why-did-we-remove-cmdx-new-from-the-guide)
-:::
+> [!NOTE]
+> The `cmdx new` command has been removed from the standard procedure.
+> However, the command itself remains and can still be used.
+> This command has large environment dependencies and didn't work well for some users, making troubleshooting and support difficult.
+> Since you can create Pull Requests without using `cmdx new`, we decided to remove it from the standard procedure.
+> [See also changelog.](/docs/products/aqua-registry/changelog#why-did-we-remove-cmdx-new-from-the-guide)
 
 ## Use `argd s` definitely
 
@@ -132,20 +126,18 @@ Even if so, you must still use `argd s`.
 
 You can ignore some assets and versions to scaffold better configuration files.
 
-:::caution
-Be careful to use this feature as it may exclude assets and versions unexpectedly.
-Especially, `all_assets_filter` may exclude assets such as checksum files.
-We recommend to scaffold codes without this feature first.
-Then if `argd s` can't scaffold good codes due to some noisy versions or assets, you should re-scaffold code using this feature.
-About `all_assets_filter`, we recommend specifying patterns to exclude assets (deny list) rather than specifying patterns to include assets (allow list).
-
-e.g.
-
-```yaml
-all_assets_filter: not (Asset contains "static")
-```
-
-:::
+> [!CAUTION]
+> Be careful to use this feature as it may exclude assets and versions unexpectedly.
+> Especially, `all_assets_filter` may exclude assets such as checksum files.
+> We recommend to scaffold codes without this feature first.
+> Then if `argd s` can't scaffold good codes due to some noisy versions or assets, you should re-scaffold code using this feature.
+> About `all_assets_filter`, we recommend specifying patterns to exclude assets (deny list) rather than specifying patterns to include assets (allow list).
+>
+> e.g.
+>
+> ```yaml
+> all_assets_filter: not (Asset contains "static")
+> ```
 
 1. Create `aqua-generate-registry.yaml` by `aqua gr --init` command:
 
