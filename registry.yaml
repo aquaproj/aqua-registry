@@ -43887,6 +43887,31 @@ packages:
             asset: alloy-{{.OS}}-{{.Arch}}.exe.{{.Format}}
   - type: github_release
     repo_owner: grafana
+    repo_name: flint
+    description: Flint is a fast linter runner that keeps local and CI checks consistent with one binary, one config, and only the tools your repo declares
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.9.2")
+        no_asset: true
+      - version_constraint: "true"
+        asset: flint-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
+    repo_owner: grafana
     repo_name: gcx
     description: A CLI for managing Grafana Cloud resources. Optimized for agentic usage
     version_constraint: "false"
