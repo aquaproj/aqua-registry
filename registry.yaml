@@ -3006,6 +3006,14 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+      - version_constraint: semver("< 3.12.0")
+        asset: nova_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: nova_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -3014,6 +3022,13 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+            opts:
+              - --key
+              - https://artifacts.fairwinds.com/cosign-p256.pub
   - type: github_release
     repo_owner: FairwindsOps
     repo_name: pluto
