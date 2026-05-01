@@ -155,7 +155,8 @@ jobs:
     steps:
       # Error: JavaScript Actions in Alpine containers are only supported on x64 Linux runners. Detected Linux Arm64
       # https://github.com/aquaproj/aqua-registry/actions/runs/25200221593/job/73889479345?pr=52945
-      - run: apk add bash curl git
+      - run: apk add bash curl git github-cli
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - run: git init
       - run: git remote add origin https://github.com/aquaproj/aqua-registry
       - run: gh auth setup-git
