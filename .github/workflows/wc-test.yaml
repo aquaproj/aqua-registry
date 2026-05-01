@@ -153,15 +153,25 @@ jobs:
           - runs-on: ubuntu-24.04
           - runs-on: ubuntu-24.04-arm
     steps:
+      # Error: JavaScript Actions in Alpine containers are only supported on x64 Linux runners. Detected Linux Arm64
+      # https://github.com/aquaproj/aqua-registry/actions/runs/25200221593/job/73889479345?pr=52945
       - run: apk add bash curl git
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          persist-credentials: false
+      - run: git init
+      - run: git remote add origin https://github.com/aquaproj/aqua-registry
+      - run: gh auth setup-git
+        env:
+          GH_HOST: github.com
+      - run: git fetch origin --depth 1 "$GITHUB_SHA"
+        env:
+          GH_TOKEN: ${{github.token}}
+      - run: git checkout "$GITHUB_SHA"
+        env:
+          GH_TOKEN: ${{github.token}}
 
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          name: test.yaml
-          path: aqua
+      - run: gh run download -R "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" -n test.yaml
+        working-directory: aqua
+        env:
+          GH_TOKEN: ${{github.token}}
 
       - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
         with:
@@ -173,11 +183,14 @@ jobs:
       - name: Install Go
         if: |
           ! contains(needs.list.outputs.image, 'go')
-        uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
-        with:
-          go-version: 1.26.2
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+        run: |
+          aqua g -i golang/go
+          aqua i -l
+          go version
 
       - name: Install packages for testing
         run: aqua i
         env:
-          AQUA_CONFIG: aqua/test.yaml
+          AQUA_GITHUB_TOKEN: ${{github.token}}
