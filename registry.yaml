@@ -34408,6 +34408,25 @@ packages:
           - linux
           - darwin/arm64
           - windows
+      - version_constraint: semver("<= 1.1.0")
+        asset: aube-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: amd64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows
       - version_constraint: "true"
         asset: aube-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -34427,6 +34446,8 @@ packages:
           - linux
           - darwin/arm64
           - windows
+        github_artifact_attestations:
+          signer_workflow: endevco/aube/\.github/workflows/release\.yml
   - type: github_release
     repo_owner: endevco
     repo_name: pitchfork
