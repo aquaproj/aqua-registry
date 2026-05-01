@@ -1954,29 +1954,59 @@ packages:
     repo_owner: CircleCI-Public
     repo_name: circleci-cli
     description: Use CircleCI from the command line
-    rosetta2: true
-    asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
     files:
       - name: circleci
-        src: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}/circleci
-    version_constraint: semver(">= 0.1.17554")
+        src: "{{.AssetWithoutExt}}/circleci"
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.1.28363"
+        asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: circleci-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.1.17522")
+        asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: circleci-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
         supported_envs:
           - darwin
+          - windows
           - amd64
-    checksum:
-      type: github_release
-      asset: circleci-cli_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+      - version_constraint: semver("<= 0.1.28434")
+        asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: circleci-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: circleci-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: circleci-cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: ClementTsang
     repo_name: bottom
@@ -43867,6 +43897,31 @@ packages:
             asset: alloy-{{.OS}}-{{.Arch}}.exe.{{.Format}}
   - type: github_release
     repo_owner: grafana
+    repo_name: flint
+    description: Flint is a fast linter runner that keeps local and CI checks consistent with one binary, one config, and only the tools your repo declares
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.9.2")
+        no_asset: true
+      - version_constraint: "true"
+        asset: flint-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
+    repo_owner: grafana
     repo_name: gcx
     description: A CLI for managing Grafana Cloud resources. Optimized for agentic usage
     version_constraint: "false"
@@ -70861,6 +70916,122 @@ packages:
           - linux
           - darwin
   - type: github_release
+    repo_owner: phrase
+    repo_name: phrase-cli
+    description: CLI for the Phrase API
+    files:
+      - name: phrase
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2.0.14")
+        asset: phrase_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        files:
+          - name: phrase
+            src: phrase_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: darwin
+            files:
+              - name: phrase
+          - goos: windows
+            format: zip
+            asset: phrase_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "2.0.15-alpine-alpha9"
+        no_asset: true
+      - version_constraint: semver("<= 2.0.28")
+        asset: phrase_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        files:
+          - name: phrase
+            src: phrase_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: darwin
+            files:
+              - name: phrase
+          - goos: windows
+            format: zip
+            asset: phrase_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "2.1.1"
+        asset: phrase_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        files:
+          - name: phrase
+            src: phrase_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            format: raw
+            asset: phrase_{{.OS}}_{{.Arch}}
+          - goos: darwin
+            files:
+              - name: phrase
+          - goos: windows
+            format: zip
+            asset: phrase_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.4.1")
+        asset: phrase_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        files:
+          - name: phrase
+            src: phrase_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: darwin
+            files:
+              - name: phrase
+          - goos: windows
+            format: zip
+            asset: phrase_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: phrase_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        files:
+          - name: phrase
+            src: phrase_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: linux
+            goarch: arm64
+            format: raw
+            asset: phrase_{{.OS}}_{{.Arch}}
+          - goos: darwin
+            files:
+              - name: phrase
+          - goos: windows
+            format: zip
+            asset: phrase_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+  - type: github_release
     repo_owner: pimalaya
     repo_name: himalaya
     aliases:
@@ -90618,6 +90789,28 @@ packages:
       - version_constraint: "true"
         asset: tailpipe.{{.OS}}.{{.Arch}}.{{.Format}}
         format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
+    repo_owner: tursodatabase
+    repo_name: turso-cli
+    description: Command line interface to the Turso Cloud
+    files:
+      - name: turso
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: turso-cli_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
         checksum:
           type: github_release
           asset: checksums.txt
