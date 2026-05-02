@@ -71,8 +71,8 @@ packages:
           - goos: windows
             format: raw
             asset: lychee-{{.Version}}-{{.OS}}-{{.Arch}}
-      - version_constraint: "true"
-        version_prefix: lychee-
+      - version_constraint: semver("< 0.19.0")
+        version_prefix: lychee-v
         asset: lychee-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -98,3 +98,62 @@ packages:
           - linux
           - windows/amd64
           - darwin/arm64
+      - version_constraint: semver("< 0.24.0")
+        version_prefix: lychee-v
+        asset: lychee-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              arm64: aarch64
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: raw
+            asset: lychee-{{.Arch}}-{{.OS}}
+        supported_envs:
+          - linux
+          - windows
+          - darwin/arm64
+      - version_constraint: Version == "lychee-v0.24.0"
+        version_prefix: lychee-v
+        asset: lychee-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: lychee
+            src: "{{.AssetWithoutExt}}/lychee"
+      - version_constraint: "true"
+        version_prefix: lychee-v
+        asset: lychee-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: lychee
+            src: "{{.AssetWithoutExt}}/lychee"

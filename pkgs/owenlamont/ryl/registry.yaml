@@ -3,12 +3,12 @@ packages:
   - type: github_release
     repo_owner: owenlamont
     repo_name: ryl
-    description: Personal project to learn Rust and create a yaml linter
+    description: Re-implementation of yamllint in Rust
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.2.0")
         no_asset: true
-      - version_constraint: semver("< 0.3.2")
+      - version_constraint: semver("<= 0.3.1")
         asset: ryl-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -29,8 +29,12 @@ packages:
           darwin: apple-darwin
           linux: unknown-linux-musl
           windows: pc-windows-msvc
+        github_artifact_attestations:
+          signer_workflow: owenlamont/ryl/.github/workflows/release.yml
         overrides:
           - goos: windows
             format: zip
-        github_artifact_attestations:
-          signer_workflow: owenlamont/ryl/.github/workflows/release.yml
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows

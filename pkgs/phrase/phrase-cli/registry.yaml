@@ -1,0 +1,118 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: phrase
+    repo_name: phrase-cli
+    description: CLI for the Phrase API
+    files:
+      - name: phrase
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2.0.14")
+        asset: phrase_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        files:
+          - name: phrase
+            src: phrase_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: darwin
+            files:
+              - name: phrase
+          - goos: windows
+            format: zip
+            asset: phrase_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "2.0.15-alpine-alpha9"
+        no_asset: true
+      - version_constraint: semver("<= 2.0.28")
+        asset: phrase_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        files:
+          - name: phrase
+            src: phrase_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: darwin
+            files:
+              - name: phrase
+          - goos: windows
+            format: zip
+            asset: phrase_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "2.1.1"
+        asset: phrase_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        files:
+          - name: phrase
+            src: phrase_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            format: raw
+            asset: phrase_{{.OS}}_{{.Arch}}
+          - goos: darwin
+            files:
+              - name: phrase
+          - goos: windows
+            format: zip
+            asset: phrase_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 2.4.1")
+        asset: phrase_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        files:
+          - name: phrase
+            src: phrase_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: darwin
+            files:
+              - name: phrase
+          - goos: windows
+            format: zip
+            asset: phrase_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: phrase_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macosx
+        files:
+          - name: phrase
+            src: phrase_{{.OS}}_{{.Arch}}
+        overrides:
+          - goos: linux
+            goarch: arm64
+            format: raw
+            asset: phrase_{{.OS}}_{{.Arch}}
+          - goos: darwin
+            files:
+              - name: phrase
+          - goos: windows
+            format: zip
+            asset: phrase_{{.OS}}_{{.Arch}}.exe.{{.Format}}
