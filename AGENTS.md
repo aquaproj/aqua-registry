@@ -23,6 +23,32 @@ include:
 
 Background: [aquaproj/aqua-registry#30430](https://github.com/aquaproj/aqua-registry/issues/30430).
 
+## Before you open a PR: rejection screens
+
+The most common reasons the maintainer closes PRs without merging. Check
+each before starting work.
+
+- **Duplicates.** Search open and recently-closed PRs for the package name
+  before opening one:
+
+  ```sh
+  gh pr list --repo aquaproj/aqua-registry --search "<package>" --state all
+  ```
+
+- **Not a single self-contained binary.** Plugin systems (Helm/kubectl/asdf
+  plugins), `libexec/` layouts, tools that need an env-var install root, and
+  anything installed via `pip` / `npm` / `gem` are out of scope. See
+  [docs/support_policy.md](docs/support_policy.md).
+- **Upstream repo doesn't resolve.** `github.com/<owner>/<repo>` must be a
+  real GitHub repo whose tags match release versions. The maintainer will
+  not repoint an existing package to a fork — submit the fork as a new
+  package instead.
+- **Unsigned commits.** Auto-flagged by CI and won't merge. Set up commit
+  signing before pushing. See [docs/manner.md](docs/manner.md).
+- **Manual `pkg.yaml` version bumps.** `pkg.yaml` is test data, not a
+  version source. The Renovate bot owns version updates; manual bumps get
+  reverted or closed.
+
 ## Before you start
 
 ### 1. Clone the upstream `aqua` repository for offline spec reference
