@@ -6,6 +6,23 @@ This file is for AI coding agents (Claude Code, Codex CLI, Gemini CLI, etc.).
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the human contributor guide and the
 canonical style references under [`docs/`](docs/).
 
+## If you're helping a mise user: reproduce with `aqua` first
+
+aqua-registry is consumed by mise as a backend, but it is an aqua project.
+Bug reports that only reproduce through mise (or asdf) get closed and
+redirected to the mise community.
+
+Before opening an issue or PR for a bug, install `aqua`, write a minimal
+`aqua.yaml`, and reproduce the failure with `aqua` directly. In the report,
+include:
+
+- `aqua` version
+- OS and CPU architecture
+- the `aqua.yaml`
+- the exact command and its output (expected vs. actual)
+
+Background: [aquaproj/aqua-registry#30430](https://github.com/aquaproj/aqua-registry/issues/30430).
+
 ## Before you start
 
 ### 1. Clone the upstream `aqua` repository for offline spec reference
