@@ -8,9 +8,20 @@ packages:
     version_overrides:
       - version_constraint: Version == "0.1.0"
         no_asset: true
-      - version_constraint: semver(">= 1.0.0-alpha.1, < 1.0.0")
-        error_message: The version is a pre-release version. Use a stable version instead.
       - version_constraint: semver("<= 0.13.0")
+        asset: bin-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: Darwin
+          linux: Linux
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.0.0-alpha.8")
+        no_asset: true
+      - version_constraint: "true"
         asset: bin-{{.Arch}}-{{.OS}}
         format: raw
         replacements:
