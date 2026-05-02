@@ -223,25 +223,26 @@ tasks:
 
   - name: ls-assets
     short: lsa
-    description: List asset names
-    usage: List asset names
+    usage: "[DEPRECATED] Use argd lsa instead"
+    description: "[DEPRECATED] Use argd lsa instead"
+    quiet: true
     flags:
       - name: repo
         short: r
         type: string
         usage: Repo name
-        script_envs:
-          - REPO
     args:
       - name: version
         required: true
-        script_envs:
-          - VERSION
     script: |
-      REPO=${REPO#https://github.com/}
-      repo=$(bash scripts/get_test_pkg.sh "$REPO")
-
-      gh release view --json assets --jq ".assets[].name" -R "$repo" "$VERSION"
+      echo "DEPRECATED: Use argd lsa instead" >&2
+      echo "Please see docs/tool.md" >&2
+      if ! command -v argd >/dev/null 2>&1; then
+        if command -v aqua >/dev/null 2>&1; then
+          aqua i -l
+        fi
+      fi
+      exit 1
 
   - name: generate-copilot-instruction
     short: gci
