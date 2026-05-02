@@ -35,10 +35,14 @@ each before starting work.
   gh pr list --repo aquaproj/aqua-registry --search "<package>" --state all
   ```
 
-- **Not a single self-contained binary.** Plugin systems (Helm/kubectl/asdf
-  plugins), `libexec/` layouts, tools that need an env-var install root, and
-  anything installed via `pip` / `npm` / `gem` are out of scope. See
-  [docs/support_policy.md](docs/support_policy.md).
+- **Doesn't install as a single binary on `$PATH`.** aqua installs commands
+  into `AQUA_ROOT_DIR/bin`. Out of scope: tools that expect a different
+  install location (e.g., Helm plugins, Vim/Neovim plugins, Gauge plugins),
+  `libexec/` layouts, env-var-based install roots, and anything installed
+  via `pip` / `npm` / `gem`. **In scope:** standalone binaries that act as
+  plugins for another tool by naming convention — e.g., `kubectl-foo`
+  binaries are supported because kubectl just looks for `kubectl-*` on
+  `$PATH`. See [docs/support_policy.md](docs/support_policy.md).
 - **Upstream repo doesn't resolve.** `github.com/<owner>/<repo>` must be a
   real GitHub repo whose tags match release versions. The maintainer will
   not repoint an existing package to a fork — submit the fork as a new
