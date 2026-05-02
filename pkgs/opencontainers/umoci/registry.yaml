@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: opencontainers
+    repo_name: umoci
+    description: umoci modifies Open Container images
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.1")
+      - version_constraint: semver("<= 0.4.7")
+        checksum:
+          type: github_release
+          asset: umoci.sha256sum
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: umoci.{{.OS}}.{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: umoci.sha256sum
+          algorithm: sha256
+        supported_envs:
+          - linux
