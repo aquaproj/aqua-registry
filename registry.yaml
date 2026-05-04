@@ -71816,7 +71816,7 @@ packages:
           darwin: macos
           windows: win
         github_immutable_release: true
-      - version_constraint: "true"
+      - version_constraint: semver("<= 11.0.4")
         asset: pnpm-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
@@ -71828,6 +71828,24 @@ packages:
           - goos: windows
             format: zip
         github_immutable_release: true
+      - version_constraint: "true"
+        asset: pnpm-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: pnpm
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
+        github_artifact_attestations:
+          signer_workflow: pnpm/pnpm/\.github/workflows/release\.yml
+        github_immutable_release: true
+        supported_envs:
+          - linux
+          - windows
+          - darwin/arm64
   - type: github_release
     repo_owner: po3rin
     repo_name: github_link_creator
