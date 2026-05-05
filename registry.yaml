@@ -73921,9 +73921,31 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
-  - type: github_release
-    repo_owner: racket-lang.org
-    repo_name: racket-minimal
+  - type: http
+    name: racket-lang.org/racket-minimal
+    url: https://download.racket-lang.org/releases/{{.Version}}/installers/racket-minimal-{{.Version}}-{{.Arch}}-{{.OS}}-cs.tgz
+    format: tgz
+    description: Minimal Racket distribution
+    files:
+      - name: racket
+        src: racket/bin/racket
+      - name: raco
+        src: racket/bin/raco
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: macosx
+      linux: linux-buster
+      windows: win32
+    overrides:
+      - goos: windows
+        replacements:
+          arm64: arm64
+        files:
+          - name: Racket
+            src: racket/Racket
+          - name: raco
+            src: racket/raco
   - type: github_release
     repo_owner: rajatjindal
     repo_name: krew-release-bot
