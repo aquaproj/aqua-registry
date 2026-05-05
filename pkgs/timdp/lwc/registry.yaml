@@ -4,19 +4,40 @@ packages:
     repo_owner: timdp
     repo_name: lwc
     description: A live-updating version of the UNIX wc command
-    rosetta2: true
-    asset: lwc-{{trimV .Version}}-{{.OS}}-{{.Arch}}.tar.gz
-    version_constraint: semver(">= 0.4.5")
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: Version == "v0.1.0"
+        asset: lwc-golang_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: lwc-golang_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
         supported_envs:
           - darwin
+          - windows
           - amd64
-    checksum:
-      type: github_release
-      asset: lwc-checksums.txt
-      algorithm: sha256
+      - version_constraint: semver("<= 0.4.4")
+        asset: lwc-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: lwc-checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: lwc-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: lwc-checksums.txt
+          algorithm: sha256

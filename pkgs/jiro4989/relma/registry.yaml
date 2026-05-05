@@ -3,13 +3,18 @@ packages:
   - type: github_release
     repo_owner: jiro4989
     repo_name: relma
-    asset: relma-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: tar.gz
     description: GitHub Releases Management cli
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: relma-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64

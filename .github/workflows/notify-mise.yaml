@@ -1,0 +1,46 @@
+---
+name: Check issues and issue comments
+on:
+  issues:
+    types: [opened, edited]
+  issue_comment:
+env:
+  NUMBER: ${{contains(github.event_name, 'issue') && github.event.issue.number || github.event.pull_request.number}}
+jobs:
+  check-issue:
+    if: |
+      github.actor != 'suzuki-shunsuke' &&
+      !(contains(github.event.issue.labels.*.name, 'mise') ||
+        contains(github.event.pull_request.labels.*.name, 'mise')) &&
+      (contains(github.event.issue.body, ' mise ') ||
+       contains(github.event.issue.title, ' mise ') ||
+       contains(github.event.comment.body, ' mise '))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - env:
+          GH_TOKEN: ${{github.token}}
+          BODY: |
+            # Dear mise users
+
+            This comment was posted because `mise` was mentioned.
+            If you use mise, please see the following issue first.
+
+            - https://github.com/aquaproj/aqua-registry/issues/30430
+
+            If this is not related to mise, please ignore this comment.
+
+            Thank you.
+
+            ---
+
+            [workflow](${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}})
+        run: |
+          gh issue comment -R "$GITHUB_REPOSITORY" "$NUMBER" --body "$BODY"
+      - env:
+          GH_TOKEN: ${{github.token}}
+        run: |
+          gh issue edit -R "$GITHUB_REPOSITORY" "$NUMBER" --add-label mise

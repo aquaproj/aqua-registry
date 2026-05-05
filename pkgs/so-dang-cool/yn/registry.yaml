@@ -3,24 +3,24 @@ packages:
   - type: github_release
     repo_owner: so-dang-cool
     repo_name: yn
-    asset: yn-{{.Arch}}-{{.OS}}.{{.Format}}
-    format: tgz
     files:
       - name: Yn
       - name: yN
-    overrides:
-      - goos: darwin
-        files:
-          - name: Yn
-      - goos: linux
-        goarch: arm64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: yn-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tgz
         replacements:
-          linux: linux-musleabi
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-      linux: linux-musl
-      darwin: macos-none
-    supported_envs:
-      - linux
-      - darwin
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+          linux: linux-gnu
+        overrides:
+          - goos: darwin
+            asset: yn-{{.Arch}}-{{.OS}}-none.{{.Format}}
+            files:
+              - name: Yn
+        supported_envs:
+          - linux
+          - darwin

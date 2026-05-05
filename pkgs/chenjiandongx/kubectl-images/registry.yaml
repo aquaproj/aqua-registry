@@ -3,33 +3,35 @@ packages:
   - type: github_release
     repo_owner: chenjiandongx
     repo_name: kubectl-images
-    asset: kubectl-images_{{.OS}}_{{.Arch}}.tar.gz
     description: Show container images used in the cluster
-    version_constraint: semver(">= 0.3.6")
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: kubectl-images_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.3.4")
-        # linux/arm64 is supported
-        checksum:
-          enabled: false
-      - version_constraint: semver(">= 0.3.3")
-        # darwin/arm64 is supported
-        checksum:
-          enabled: false
+      - version_constraint: Version == "v0.3.3"
+        asset: kubectl-images_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         supported_envs:
           - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "v0.3.4"
+        asset: kubectl-images_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+      - version_constraint: semver("<= 0.3.2")
+        asset: kubectl-images_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
           - amd64
       - version_constraint: "true"
+        asset: kubectl-images_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
         checksum:
-          enabled: false
-        rosetta2: true
-        supported_envs:
-          - darwin
-          - amd64
+          type: github_release
+          asset: kubectl-images_{{trimV .Version}}_checksums.txt
+          algorithm: sha256

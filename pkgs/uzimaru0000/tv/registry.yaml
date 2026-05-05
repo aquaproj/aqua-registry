@@ -3,17 +3,23 @@ packages:
   - type: github_release
     repo_owner: uzimaru0000
     repo_name: tv
-    asset: tv-{{.Arch}}-{{.OS}}.zip
     description: Format json into table view
-    replacements:
-      amd64: x86_64
-      darwin: apple-darwin
-      linux: unknown-linux-gnu
-      windows: pc-windows-gnu
-    supported_envs:
-      - darwin
-      - amd64
-    rosetta2: true
-    files:
-      - name: tv
-        src: tv-{{.Arch}}-{{.OS}}/tv
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: tv-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: tv
+            src: "{{.AssetWithoutExt}}/tv"
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-gnu
+        supported_envs:
+          - darwin
+          - windows
+          - amd64

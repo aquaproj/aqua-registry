@@ -4,33 +4,37 @@ packages:
     repo_owner: keisku
     repo_name: kubectl-explore
     description: A better kubectl explain with the fuzzy finder
-    asset: kubectl-explore_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: kubectl-explore_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.3.2")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.3.0")
+      - version_constraint: semver("<= 0.3.0")
         asset: kubectl-explore_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         replacements:
           amd64: x86_64
-        supported_envs:
-          - linux
-          - darwin
-      - version_constraint: semver("< 0.3.0")
-        asset: kubectl-explore_{{.OS}}_{{.Arch}}.{{.Format}}
-        replacements:
-          amd64: x86_64
-        supported_envs:
-          - linux
-          - darwin
         checksum:
           type: github_release
           asset: kubectl-explore_{{.Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.3.1")
+        asset: kubectl-explore_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: kubectl-explore_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: kubectl-explore_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: kubectl-explore_{{trimV .Version}}_checksums.txt
           algorithm: sha256

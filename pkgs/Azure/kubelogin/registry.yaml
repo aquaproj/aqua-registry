@@ -4,47 +4,93 @@ packages:
     repo_owner: Azure
     repo_name: kubelogin
     description: A Kubernetes credential (exec) plugin implementing azure authentication
-    asset: kubelogin-{{.OS}}-{{.Arch}}.{{.Format}}
-    format: zip
-    replacements:
-      windows: win
-    files:
-      - name: kubelogin
-        src: bin/{{.OS}}_{{.Arch}}/kubelogin
-    overrides:
-      - goos: windows
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.8"
+        no_asset: true
+      - version_constraint: Version == "v0.0.10"
+        asset: kubelogin-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
         files:
           - name: kubelogin
-            src: bin/windows_{{.Arch}}/kubelogin.exe
-    checksum:
-      type: github_release
-      asset: "{{.Asset}}.sha256"
-      algorithm: sha256
-    version_constraint: semver(">= 0.0.27")
-    version_overrides:
-      - version_constraint: semver(">= 0.0.11")
+            src: bin/{{.OS}}_{{.Arch}}/kubelogin
+        overrides:
+          - goos: windows
+            asset: kubelogin-win-{{.Arch}}.{{.Format}}
         supported_envs:
           - darwin
-          - linux
+          - windows
           - amd64
-      - version_constraint: semver(">= 0.0.10")
-        supported_envs:
-          - darwin
-          - amd64
+      - version_constraint: Version == "v0.1.9"
+        asset: kubelogin-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        files:
+          - name: kubelogin
+            src: bin/{{.OS}}_{{.Arch}}/kubelogin
         checksum:
-          enabled: false
-      - version_constraint: semver(">= 0.0.5")
-        supported_envs:
-          - darwin
-          - amd64
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kubelogin-win-{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 0.0.4")
+        no_asset: true
+      - version_constraint: semver("<= 0.0.9")
+        asset: kubelogin-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
         rosetta2: true
-        checksum:
-          enabled: false
-      - version_constraint: semver("< 0.0.5")
-        asset: kubelogin.zip
+        windows_arm_emulation: true
+        files:
+          - name: kubelogin
+            src: bin/{{.OS}}_{{.Arch}}/kubelogin
+        overrides:
+          - goos: windows
+            asset: kubelogin-win-{{.Arch}}.{{.Format}}
         supported_envs:
           - darwin
+          - windows
           - amd64
-        rosetta2: true
+      - version_constraint: semver("<= 0.0.26")
+        asset: kubelogin-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: kubelogin
+            src: bin/{{.OS}}_{{.Arch}}/kubelogin
         checksum:
-          enabled: false
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kubelogin-win-{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 0.1.7")
+        asset: kubelogin-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        files:
+          - name: kubelogin
+            src: bin/{{.OS}}_{{.Arch}}/kubelogin
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kubelogin-win-{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 0.2.6")
+        no_asset: true
+      - version_constraint: "true"
+        asset: kubelogin-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        files:
+          - name: kubelogin
+            src: bin/{{.OS}}_{{.Arch}}/kubelogin
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: kubelogin-win-{{.Arch}}.{{.Format}}

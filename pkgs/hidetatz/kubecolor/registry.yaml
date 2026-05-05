@@ -4,26 +4,75 @@ packages:
     repo_owner: hidetatz
     repo_name: kubecolor
     description: colorizes kubectl output
-    asset: kubecolor_{{trimV .Version}}_{{title .OS}}_{{.Arch}}.{{.Format}}
-    replacements:
-      amd64: x86_64
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: github_release
-      asset: checksums.txt
-      algorithm: sha256
-    version_constraint: semver(">= 0.0.23")
-    # Windows build was excluded temporarily.
-    # https://github.com/hidetatz/kubecolor/commit/30802265cfd3819d8fc771edaf5dae353cf15f17
-    supported_envs:
-      - darwin
-      - linux
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.0.23")
+      - version_constraint: Version == "v0.0.17"
+        asset: kubecolor_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.0.6")
+        no_asset: true
+      - version_constraint: semver("<= 0.0.16")
+        asset: kubecolor_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
         supported_envs:
           - darwin
-          - linux
+          - windows
           - amd64
+      - version_constraint: semver("<= 0.0.20")
+        asset: kubecolor_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: kubecolor_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin

@@ -13,3 +13,12 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums.txt.cosign.bundle
+            opts:
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --certificate-identity
+              - https://github.com/cert-manager/cmctl/.github/workflows/release.yaml@refs/tags/{{.Version}}

@@ -4,14 +4,15 @@ packages:
     repo_owner: projectdiscovery
     repo_name: pdtm
     description: ProjectDiscovery's Open Source Tool Manager
-    asset: pdtm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
-    replacements:
-      darwin: macOS
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    checksum:
-      type: github_release
-      asset: pdtm_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: pdtm_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: pdtm_{{trimV .Version}}_checksums.txt
+          algorithm: sha256

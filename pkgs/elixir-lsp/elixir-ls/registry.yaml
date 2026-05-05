@@ -1,0 +1,68 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: elixir-lsp
+    repo_name: elixir-ls
+    description: A frontend-independent IDE "smartness" server for Elixir. Implements the "Language Server Protocol" standard and provides debugger support via the "Debug Adapter Protocol"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.14.6")
+        asset: elixir-ls.{{.Format}}
+        format: zip
+        files:
+          - name: elixir-ls
+            src: language_server.sh
+          - name: elixir-debug-adapter
+            src: debugger.sh
+        overrides:
+          - goos: windows
+            files:
+              - name: elixir-ls
+                src: language_server.bat
+              - name: elixir-debug-adapter
+                src: debugger.bat
+      - version_constraint: semver("<= 0.17.10")
+        asset: elixir-ls-{{.Version}}.{{.Format}}
+        format: zip
+        files:
+          - name: elixir-ls
+            src: language_server.sh
+          - name: elixir-debug-adapter
+            src: debugger.sh
+        overrides:
+          - goos: windows
+            files:
+              - name: elixir-ls
+                src: language_server.bat
+              - name: elixir-debug-adapter
+                src: debugger.bat
+      - version_constraint: Version == "v0.29.0"
+        asset: elixir-ls.{{.Format}}
+        format: zip
+        files:
+          - name: elixir-ls
+            src: language_server.sh
+          - name: elixir-debug-adapter
+            src: debug_adapter.sh
+        overrides:
+          - goos: windows
+            files:
+              - name: elixir-ls
+                src: language_server.bat
+              - name: elixir-debug-adapter
+                src: debug_adapter.bat
+      - version_constraint: "true"
+        asset: elixir-ls-{{.Version}}.{{.Format}}
+        format: zip
+        files:
+          - name: elixir-ls
+            src: language_server.sh
+          - name: elixir-debug-adapter
+            src: debug_adapter.sh
+        overrides:
+          - goos: windows
+            files:
+              - name: elixir-ls
+                src: language_server.bat
+              - name: elixir-debug-adapter
+                src: debug_adapter.bat

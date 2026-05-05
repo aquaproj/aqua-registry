@@ -3,14 +3,19 @@ packages:
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: durl
-    asset: durl_{{trimV .Version}}_{{.OS}}_amd64.tar.gz
-    supported_envs:
-      - windows
-      - darwin
-      - linux/amd64
-    rosetta2: true
-    description: CLI to check whether dead urls are included in files
-    checksum:
-      type: github_release
-      asset: durl_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    description: "[DEPRECATED] Use https://github.com/lycheeverse/lychee"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: durl_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: durl_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
