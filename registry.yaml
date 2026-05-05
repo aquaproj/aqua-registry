@@ -67956,6 +67956,41 @@ packages:
           asset: "{{.Asset}}.sha256sum"
           algorithm: sha256
   - type: github_release
+    repo_owner: openclaw
+    repo_name: gogcli
+    aliases:
+      - name: steipete/gogcli
+    description: "Google Suite CLI: Gmail, GCal, GDrive, GContacts"
+    files:
+      - name: gog
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.5.0")
+        asset: gogcli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: gog
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: gogcli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: gog
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: opencontainers
     repo_name: runc
     description: CLI tool for spawning and running containers according to the OCI specification
@@ -83184,39 +83219,6 @@ packages:
         slsa_provenance:
           type: github_release
           asset: timoni_{{trimV .Version}}_provenance.intoto.jsonl
-  - type: github_release
-    repo_owner: steipete
-    repo_name: gogcli
-    description: "Google Suite CLI: Gmail, GCal, GDrive, GContacts"
-    files:
-      - name: gog
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 0.5.0")
-        asset: gogcli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        files:
-          - name: gog
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: "true"
-        asset: gogcli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: gog
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
   - type: github_release
     repo_owner: stepchowfun
     repo_name: docuum
