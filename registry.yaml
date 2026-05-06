@@ -28348,6 +28348,12 @@ packages:
     repo_name: tfocus
     description: Terminal UI for Terraform workspace management
     crate: tfocus
+  - name: crates.io/wasmi_cli
+    type: cargo
+    repo_owner: wasmi-labs
+    repo_name: wasmi
+    description: WebAssembly interpreter
+    crate: wasmi_cli
   - name: crates.io/zizmor
     type: cargo
     repo_owner: zizmorcore
@@ -51333,20 +51339,92 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
-  - name: jreleaser/jreleaser
-    type: github_release
+  - type: github_release
     repo_owner: jreleaser
     repo_name: jreleaser
-    description: Release projects quickly and easily with JReleaser
-    complete_windows_ext: false
-    asset: jreleaser-{{trimV .Version}}.zip
-    files:
-      - name: jreleaser
-        src: jreleaser-{{trimV .Version}}/bin/jreleaser
-    checksum:
-      type: github_release
-      asset: jreleaser-{{trimV .Version}}.zip.sha256
-      algorithm: sha256
+    description: ":rocket: Release projects quickly and easily with JReleaser"
+    version_filter: not (Version == "early-access")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.0")
+        no_asset: true
+      - version_constraint: semver("<= 1.2.0")
+        asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        files:
+          - name: jreleaser
+            src: "{{.AssetWithoutExt}}/bin/jreleaser"
+        replacements:
+          amd64: x86_64
+          darwin: osx
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.5.1")
+        asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        windows_arm_emulation: true
+        files:
+          - name: jreleaser
+            src: "{{.AssetWithoutExt}}/bin/jreleaser"
+        replacements:
+          amd64: x86_64
+          darwin: osx
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.10.0")
+        asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        files:
+          - name: jreleaser
+            src: "{{.AssetWithoutExt}}/bin/jreleaser"
+        replacements:
+          amd64: x86_64
+          darwin: osx
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 1.16.0")
+        asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: jreleaser
+            src: "{{.AssetWithoutExt}}/bin/jreleaser"
+        replacements:
+          amd64: x86_64
+          darwin: osx
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: jreleaser
+            src: "{{.AssetWithoutExt}}/bin/jreleaser"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        overrides:
+          - goos: windows
+            replacements: {}
+        slsa_provenance:
+          type: github_release
+          asset: jreleaser-all-{{trimV .Version}}.intoto.jsonl
+          source_tag: "-"
   - name: jreleaser/jreleaser/standalone
     type: github_release
     repo_owner: jreleaser
@@ -67956,6 +68034,41 @@ packages:
           asset: "{{.Asset}}.sha256sum"
           algorithm: sha256
   - type: github_release
+    repo_owner: openclaw
+    repo_name: gogcli
+    aliases:
+      - name: steipete/gogcli
+    description: "Google Suite CLI: Gmail, GCal, GDrive, GContacts"
+    files:
+      - name: gog
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.5.0")
+        asset: gogcli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: gog
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: gogcli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: gog
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: opencontainers
     repo_name: runc
     description: CLI tool for spawning and running containers according to the OCI specification
@@ -73921,6 +74034,31 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
+  - type: http
+    name: racket-lang.org/racket-minimal
+    url: https://download.racket-lang.org/releases/{{.Version}}/installers/racket-minimal-{{.Version}}-{{.Arch}}-{{.OS}}-cs.tgz
+    format: tgz
+    description: Minimal Racket distribution
+    files:
+      - name: racket
+        src: racket/bin/racket
+      - name: raco
+        src: racket/bin/raco
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: macosx
+      linux: linux-buster
+      windows: win32
+    overrides:
+      - goos: windows
+        replacements:
+          arm64: arm64
+        files:
+          - name: racket
+            src: racket/Racket
+          - name: raco
+            src: racket/raco
   - type: github_release
     repo_owner: rajatjindal
     repo_name: krew-release-bot
@@ -83236,39 +83374,6 @@ packages:
         slsa_provenance:
           type: github_release
           asset: timoni_{{trimV .Version}}_provenance.intoto.jsonl
-  - type: github_release
-    repo_owner: steipete
-    repo_name: gogcli
-    description: "Google Suite CLI: Gmail, GCal, GDrive, GContacts"
-    files:
-      - name: gog
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 0.5.0")
-        asset: gogcli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        files:
-          - name: gog
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: "true"
-        asset: gogcli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        files:
-          - name: gog
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
   - type: github_release
     repo_owner: stepchowfun
     repo_name: docuum
