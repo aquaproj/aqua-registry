@@ -76196,6 +76196,59 @@ packages:
           - goos: windows
             format: zip
   - type: github_release
+    repo_owner: runs-on
+    repo_name: cli
+    description: CLI for RunsOn
+    files:
+      - name: roc
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.4"
+        no_asset: true
+      - version_constraint: Version == "v0.1.5"
+        asset: cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: roc
+            src: cli
+        checksum:
+          type: github_release
+          asset: cli_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 0.1.3")
+        asset: roc-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 2.12.6")
+        asset: roc_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 3.0.1")
+        asset: roc_{{.Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: semver("<= 3.0.4")
+        no_asset: true
+      - version_constraint: "true"
+        asset: roc_{{.Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+  - type: github_release
     repo_owner: rust-cross
     repo_name: cargo-zigbuild
     description: Compile Cargo project with zig as linker
