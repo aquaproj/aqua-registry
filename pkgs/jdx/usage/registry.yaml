@@ -13,13 +13,25 @@ packages:
         format: tar.gz
         replacements:
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
         overrides:
           - goos: linux
             asset: usage-{{.Arch}}-{{.OS}}.{{.Format}}
             replacements:
               amd64: x86_64
               arm64: aarch64
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            asset: usage-{{.Arch}}-{{.OS}}.{{.Format}}
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
         supported_envs:
           - linux
           - darwin
@@ -30,12 +42,23 @@ packages:
         format: tar.gz
         replacements:
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
         overrides:
           - goos: linux
             replacements:
               amd64: x86_64
               arm64: aarch64
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
           - goos: darwin
             asset: usage-universal-{{.OS}}.{{.Format}}
         supported_envs:
@@ -46,12 +69,23 @@ packages:
         format: tar.gz
         replacements:
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
         overrides:
           - goos: linux
             replacements:
               amd64: x86_64
               arm64: aarch64
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
           - goos: darwin
             asset: usage-universal-{{.OS}}.{{.Format}}
         supported_envs:
@@ -65,11 +99,21 @@ packages:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
           windows: pc-windows-msvc
         overrides:
           - goos: darwin
             asset: usage-universal-{{.OS}}.{{.Format}}
           - goos: windows
             format: zip
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            replacements:
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
         github_immutable_release: true

@@ -49509,6 +49509,36 @@ packages:
       algorithm: sha256
   - type: github_release
     repo_owner: jdx
+    repo_name: fnox
+    description: encrypted/remote secret manager
+    asset: fnox-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+      windows: pc-windows-msvc
+    overrides:
+      - goos: windows
+        format: zip
+      - goos: linux
+        variants:
+          - key: libc
+            value: glibc
+      - goos: linux
+        replacements:
+          linux: unknown-linux-musl
+        variants:
+          - key: libc
+            value: musl
+    supported_envs:
+      - linux
+      - darwin
+      - windows
+    github_immutable_release: true
+  - type: github_release
+    repo_owner: jdx
     repo_name: hk
     description: git hook and pre-commit lint manager
     version_constraint: "false"
@@ -49563,6 +49593,16 @@ packages:
               amd64: amd64
           - goos: windows
             format: zip
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            replacements:
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
         supported_envs:
           - linux
           - darwin/arm64
@@ -49598,6 +49638,9 @@ packages:
         overrides:
           - goos: linux
             asset: rtx-{{.Version}}-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+            variants:
+              - key: libc
+                value: musl
         replacements:
           amd64: x64
           darwin: macos
@@ -49607,12 +49650,21 @@ packages:
       - version_constraint: semver(">= 2025.7.13, <= 2025.7.15")
         no_asset: true
       - version_constraint: semver("<= 2025.8.21")
-        asset: mise-{{.Version}}-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+        asset: mise-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
           - name: mise
             src: mise/bin/mise
         overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            asset: mise-{{.Version}}-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+            variants:
+              - key: libc
+                value: musl
           - goos: darwin
             asset: mise-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         replacements:
@@ -49622,12 +49674,21 @@ packages:
           - linux
           - darwin
       - version_constraint: "true"
-        asset: mise-{{.Version}}-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+        asset: mise-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
           - name: mise
             src: mise/bin/mise
         overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            asset: mise-{{.Version}}-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+            variants:
+              - key: libc
+                value: musl
           - goos: darwin
             asset: mise-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         replacements:
@@ -49650,13 +49711,25 @@ packages:
         format: tar.gz
         replacements:
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
         overrides:
           - goos: linux
             asset: usage-{{.Arch}}-{{.OS}}.{{.Format}}
             replacements:
               amd64: x86_64
               arm64: aarch64
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            asset: usage-{{.Arch}}-{{.OS}}.{{.Format}}
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
         supported_envs:
           - linux
           - darwin
@@ -49667,12 +49740,23 @@ packages:
         format: tar.gz
         replacements:
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
         overrides:
           - goos: linux
             replacements:
               amd64: x86_64
               arm64: aarch64
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
           - goos: darwin
             asset: usage-universal-{{.OS}}.{{.Format}}
         supported_envs:
@@ -49683,12 +49767,23 @@ packages:
         format: tar.gz
         replacements:
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
         overrides:
           - goos: linux
             replacements:
               amd64: x86_64
               arm64: aarch64
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
           - goos: darwin
             asset: usage-universal-{{.OS}}.{{.Format}}
         supported_envs:
@@ -49702,13 +49797,23 @@ packages:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
           windows: pc-windows-msvc
         overrides:
           - goos: darwin
             asset: usage-universal-{{.OS}}.{{.Format}}
           - goos: windows
             format: zip
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            replacements:
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
         github_immutable_release: true
   - type: github_release
     repo_owner: jedisct1
