@@ -12806,13 +12806,15 @@ packages:
     repo_owner: anthropics
     repo_name: anthropic-cli
     description: The CLI for the Claude API
+    files:
+      - name: ant
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v1.3.0"
         no_asset: true
       - version_constraint: "true"
         asset: ant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: zip
+        format: tar.gz
         replacements:
           darwin: macos
         checksum:
@@ -12820,9 +12822,10 @@ packages:
           asset: ant_{{trimV .Version}}_checksums.txt
           algorithm: sha256
         overrides:
-          - goos: linux
-            format: tar.zst
-            asset: ant_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pkg.{{.Format}}
+          - goos: darwin
+            format: zip
+          - goos: windows
+            format: zip
   - type: http
     repo_owner: anthropics
     repo_name: claude-code
