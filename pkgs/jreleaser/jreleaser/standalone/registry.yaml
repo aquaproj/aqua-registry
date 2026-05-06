@@ -91,6 +91,17 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: semver("< 1.13.0")
+        asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        checksum:
+          type: github_release
+          asset: checksums_sha256.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: jreleaser-standalone-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
@@ -102,3 +113,7 @@ packages:
           type: github_release
           asset: checksums_sha256.txt
           algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: jreleaser-all-{{trimV .Version}}.intoto.jsonl
+          source_tag: "-"
