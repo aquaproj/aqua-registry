@@ -92977,6 +92977,191 @@ packages:
             checksum:
               enabled: false
   - type: github_release
+    repo_owner: vectordotdev
+    repo_name: vector
+    description: A high-performance observability data pipeline
+    version_filter: not (Version startsWith "vdev-")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.3.0"
+        asset: vector-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        files:
+          - name: vector
+            src: vector-{{trimV .Version}}/bin/vector
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.5.0")
+        asset: vector-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        files:
+          - name: vector
+            src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.10.0")
+        asset: vector-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: vector
+            src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: vector
+                src: bin/vector.exe
+      - version_constraint: semver("<= 0.33.0")
+        asset: vector-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: vector
+            src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: vector
+                src: bin/vector.exe
+      - version_constraint: semver("<= 0.42.0")
+        asset: vector-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: vector
+            src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        checksum:
+          type: github_release
+          asset: vector-{{trimV .Version}}-SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: vector
+                src: bin/vector.exe
+      - version_constraint: semver("<= 0.43.1")
+        asset: vector-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: vector
+            src: bin/vector.exe
+        checksum:
+          type: github_release
+          asset: vector-{{trimV .Version}}-SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            replacements:
+              arm64: aarch64
+            files:
+              - name: vector
+                src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: semver("<= 0.50.0")
+        asset: vector-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: vector
+            src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        checksum:
+          type: github_release
+          asset: vector-{{trimV .Version}}-SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: vector
+                src: bin/vector.exe
+      - version_constraint: "true"
+        asset: vector-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: vector
+            src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        checksum:
+          type: github_release
+          asset: vector-{{trimV .Version}}-SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: vector
+                src: bin/vector.exe
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64
+  - type: github_release
     repo_owner: veeso
     repo_name: termscp
     asset: termscp-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
