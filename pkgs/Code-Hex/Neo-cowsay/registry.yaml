@@ -3,18 +3,26 @@ packages:
   - type: github_release
     repo_owner: Code-Hex
     repo_name: Neo-cowsay
-    description: cowsay is reborn. Neo Cowsay has written in Go
+    description: Cowsay reborn in Go
+    files:
+      - name: cowsay
+      - name: cowthink
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.0.5")
         asset: cowsay_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: cowsay
+            src: "{{.OS}}_{{.Arch}}/cowsay"
+          - name: cowthink
+            src: "{{.OS}}_{{.Arch}}/cowthink"
         rosetta2: true
         windows_arm_emulation: true
         supported_envs:
-          - darwin
-          - windows
-          - amd64
+          - darwin/amd64
+          - linux/amd64
+          - windows/amd64
       - version_constraint: semver("<= 1.0.1")
         asset: cowsay_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -33,9 +41,9 @@ packages:
           - goos: windows
             format: zip
         supported_envs:
-          - darwin
-          - windows
-          - amd64
+          - darwin/amd64
+          - linux/amd64
+          - windows/amd64
       - version_constraint: semver("<= 1.0.4")
         asset: cowsay_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
