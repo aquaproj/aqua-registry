@@ -3,10 +3,26 @@ packages:
   - type: github_release
     repo_owner: jfernandez
     repo_name: bpftop
-    description: bpftop provides a dynamic real-time view of running eBPF programs. It displays the average runtime, events per second, and estimated total CPU % for each program
+    description: A dynamic real-time view of running eBPF programs
+    files:
+      - name: bpftop
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.5.1")
+      - version_constraint: semver("<= 0.5.0")
+        asset: bpftop
+        format: raw
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "v0.5.1"
+        asset: bpftop
+        format: raw
+        overrides:
+          - goos: linux
+            goarch: arm64
+            asset: bpftop_aarch64
+        supported_envs:
+          - linux/amd64
+          - linux/arm64
       - version_constraint: "true"
         asset: bpftop-{{.Arch}}-{{.OS}}
         format: raw
@@ -15,4 +31,5 @@ packages:
           arm64: aarch64
           linux: unknown-linux-gnu
         supported_envs:
-          - linux
+          - linux/amd64
+          - linux/arm64
