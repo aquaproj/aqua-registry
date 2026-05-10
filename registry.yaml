@@ -34079,6 +34079,56 @@ packages:
               - name: zencode-exec
                 src: zenroom-{{.OS}}/zencode-exec
   - type: github_release
+    repo_owner: earendil-works
+    repo_name: pi
+    aliases:
+      - name: earendil-works/pi-mono
+      - name: badlogic/pi-mono
+    description: Interactive coding agent CLI
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 0.12.0")
+        no_asset: true
+      - version_constraint: Version == "v0.12.0"
+        asset: pi-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: pi
+            src: pi-{{.OS}}-{{.Arch}}
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: pi
+                src: pi-{{.OS}}-{{.Arch}}.exe
+      - version_constraint: semver("< 0.46.0")
+        asset: pi-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: pi-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: pi
+            src: pi/pi
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: pi
+                src: pi.exe
+  - type: github_release
     repo_owner: earthly
     repo_name: earthly
     description: Repeatable builds
@@ -70013,7 +70063,7 @@ packages:
     version_overrides:
       - version_constraint: semver(">= 1.17.0")
         error_message: |
-          aqua can't support oxlint 1.17.0 or later. 
+          aqua can't support oxlint 1.17.0 or later.
           > Newer versions of Oxlint require node.js. There isn’t a native executable alternative anymore.
           https://github.com/oxc-project/oxc/discussions/14452#discussioncomment-14631344
       - version_constraint: semver("<= 0.0.8")
