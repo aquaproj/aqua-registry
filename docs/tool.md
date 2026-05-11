@@ -51,6 +51,7 @@ argd rm # Remove containers
 argd rmp [<package>] # Remove installed packages from containers
 argd gr # Update registry.yaml by merging pkgs/**/registry.yaml
 argd con [<os>] [<arch>] # Connect a container by docker exec. This is useful for debugging.
+argd lsa <owner/repo> <version> # List release assets of a GitHub Release
 ```
 
 ## Format with prettier
@@ -108,6 +109,11 @@ When you edit `pkgs/**/registry.yaml`, please run `argd gr` to reflect the updat
 `argd con` is useful to look into the trouble in containers.
 By default, `<os>` is `linux` and `<arch>` is CPU architecture of your machine.
 
+## argd list-assets (lsa) - List release assets
+
+`argd list-assets (lsa) <owner/repo> <version>` lists the asset names of a GitHub Release.
+This is useful when debugging asset name mismatches during package configuration.
+
 ## Code Auto-generation
 
 Writing configuration files for each package from scratch is difficult and has quality issues.
@@ -117,8 +123,8 @@ Code written manually from scratch is not quality assured, so Pull Requests will
 However, code auto-generation is not perfect and often generates incomplete code.
 In that case, you need to manually fix the generated code.
 
-aqua supports various package types, but currently auto-generation mainly supports only `github_release` and `cargo`.
-When generating code for other packages like `http` package, specify `-l 1` to generate only a template and write the rest manually.
+aqua supports various package types, but auto-generation currently supports only `github_release` and `cargo`.
+When generating code for package types other than `github_release` and `cargo`, such as `http`, specify `-l 1` to generate only a template and write the rest manually.
 
 ```sh
 argd s -l 1 "<package name>"

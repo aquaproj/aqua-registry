@@ -14,4 +14,4 @@ pkg.yaml is just test data. You can install versions not included in this file.
 
 There is also a registry.yaml at the repository root, which is a huge YAML file merging all registry.yaml files under `pkgs`.
 When specifying Standard Registry in aqua.yaml, this repository root registry.yaml is referenced.
-To modify the repository root registry.yaml, modify the registry.yaml under pkgs and run the `cmdx gr` command.
+To modify the repository root registry.yaml, modify the registry.yaml under pkgs and run the `argd gr` command.
