@@ -89,6 +89,9 @@ packages:
         format: tar.gz
         files:
           - name: pnpm
+          - name: pn
+            src: pnpm
+            link: pn
         replacements:
           amd64: x64
           windows: win32
@@ -97,11 +100,44 @@ packages:
             format: zip
         github_immutable_release: true
         github_release_attestations: true
+      - version_constraint: semver("<= 11.0.6")
+        asset: pnpm-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: pnpm
+          - name: pn
+            src: pnpm
+            link: pn
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
+        github_artifact_attestations:
+          signer_workflow: pnpm/pnpm/\.github/workflows/release\.yml
+        github_immutable_release: true
+        github_release_attestations: true
+        supported_envs:
+          - linux
+          - windows
+          - darwin/arm64
       - version_constraint: "true"
         asset: pnpm-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
           - name: pnpm
+          - name: pn
+            src: pnpm
+            link: pn
+          - name: pnpx
+            src: pnpm
+            link: pnpx
+            hard: true
+          - name: pnx
+            src: pnpm
+            link: pnx
+            hard: true
         replacements:
           amd64: x64
           windows: win32
