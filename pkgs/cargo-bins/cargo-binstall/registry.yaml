@@ -70,6 +70,18 @@ packages:
         overrides:
           - goos: linux
             format: tgz
+      - version_constraint: semver("< 1.19.0")
+        asset: cargo-binstall-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            format: tgz
       - version_constraint: "true"
         asset: cargo-binstall-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
@@ -82,3 +94,5 @@ packages:
         overrides:
           - goos: linux
             format: tgz
+        github_artifact_attestations:
+          signer_workflow: cargo-bins/cargo-binstall/\.github/workflows/release-cli\.yml

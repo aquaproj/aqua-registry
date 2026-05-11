@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: modem-dev
+    repo_name: hunk
+    description: Review-first terminal diff viewer for agentic coders
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.6.1")
+        asset: hunkdiff-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: hunk
+            src: "{{.AssetWithoutExt}}/hunk"
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: hunkdiff-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: hunk
+            src: "{{.AssetWithoutExt}}/hunk"
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux
+          - darwin

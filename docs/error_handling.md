@@ -20,15 +20,10 @@ You may or may not add `no_asset` and `error_message`.
 
 When an asset cannot be found, either the asset name is wrong or the asset hasn't been released.
 
-Running the `cmdx lsa [-r <repository name>] "<version>"` command outputs a list of assets, which is convenient.
+Running `argd lsa <owner/repo> <version>` outputs a list of assets, which is convenient.
 
 ```console
-$ cmdx lsa -repo suzuki-shunsuke/pinact v3.0.0
-+ REPO=${REPO#https://github.com/}
-repo=$(bash scripts/get_test_pkg.sh "$REPO")
-
-gh release view --json assets --jq ".assets[].name" -R "$repo" "$VERSION"
-
+$ argd lsa suzuki-shunsuke/pinact v3.0.0
 multiple.intoto.jsonl
 pinact_3.0.0_checksums.txt
 pinact_3.0.0_checksums.txt.pem

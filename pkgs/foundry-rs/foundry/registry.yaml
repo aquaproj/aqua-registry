@@ -20,6 +20,15 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: Version startsWith "rc-" || semver("<= 1.7.0")
+        asset: foundry_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: foundry_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -29,3 +38,15 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          predicate_type: https://spdx.dev/Document/v2.3
+          signer_workflow: foundry-rs/foundry/\.github/workflows/release\.yml
+        cosign:
+          bundle:
+            type: github_release
+            asset: "{{.AssetWithoutExt}}.sigstore.json"
+          opts:
+            - --certificate-identity
+            - "https://github.com/foundry-rs/foundry/.github/workflows/release.yml@refs/tags/{{.Version}}"
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
