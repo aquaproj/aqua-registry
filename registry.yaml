@@ -7074,14 +7074,38 @@ packages:
             files:
               - name: sonar-scanner.bat
                 src: sonar-scanner-{{.SemVer}}-{{.OS}}-{{.Arch}}/bin/sonar-scanner.bat
-  - type: github_release
+  - type: http
     repo_owner: SonarSource
     repo_name: sonarqube-cli
     description: CLI tool to provide access to Sonar features
+    files:
+      - name: sonar
+    supported_envs:
+      - darwin/arm64
+      - linux
+      - windows/amd64
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.5.0.409")
         no_asset: true
+      - version_constraint: semver("< 0.10.0.1266")
+        url: https://binaries.sonarsource.com/Distribution/sonarqube-cli/{{.Version}}/{{.OS}}/sonarqube-cli-{{.Version}}-{{.OS}}-{{.Arch}}.exe
+        format: raw
+        complete_windows_ext: false
+        replacements:
+          darwin: macos
+          amd64: x86-64
+        supported_envs:
+          - darwin/arm64
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: "true"
+        url: https://binaries.sonarsource.com/Distribution/sonarqube-cli/{{.Version}}/{{.OS}}/sonarqube-cli-{{.Version}}-{{.OS}}-{{.Arch}}.exe
+        format: raw
+        complete_windows_ext: false
+        replacements:
+          darwin: macos
+          amd64: x86-64
   - type: github_release
     repo_owner: Songmu
     repo_name: ecschedule
