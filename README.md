@@ -5,7 +5,7 @@
 [aqua](https://aquaproj.github.io/)'s Standard Registry
 
 - [Document](https://aquaproj.github.io/docs/products/aqua-registry)
-- [How to contribute](https://aquaproj.github.io/docs/products/aqua-registry/contributing)
+- [How to contribute](./CONTRIBUTING.md)
 - [Change Log](https://github.com/aquaproj/aqua-registry/releases)
 
 ## Contributors

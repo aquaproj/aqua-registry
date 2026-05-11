@@ -2126,6 +2126,88 @@ packages:
           signer_workflow: ClementTsang/bottom/.github/workflows/build_releases.yml
   - type: github_release
     repo_owner: Code-Hex
+    repo_name: Neo-cowsay
+    description: Cowsay reborn in Go
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.5")
+        asset: cowsay_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: cowsay
+            src: "{{.OS}}_{{.Arch}}/cowsay"
+          - name: cowthink
+            src: "{{.OS}}_{{.Arch}}/cowthink"
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin/amd64
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: semver("<= 1.0.1")
+        asset: cowsay_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: cowsay
+          - name: cowthink
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: cowsay_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin/amd64
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: semver("<= 1.0.4")
+        asset: cowsay_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: cowsay
+          - name: cowthink
+        replacements:
+          amd64: x86_64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: cowsay_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            replacements:
+              arm64: arm
+      - version_constraint: "true"
+        asset: cowsay_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: cowsay
+          - name: cowthink
+        replacements:
+          amd64: x86_64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: cowsay_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
+    repo_owner: Code-Hex
     repo_name: gqldoc
     description: The easiest way to make API documents for GraphQL
     version_constraint: "false"
@@ -21812,6 +21894,27 @@ packages:
             asset: svu_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
           - goos: windows
             format: zip
+      - version_constraint: Version == "v3.4.1"
+        asset: svu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity
+              - https://github.com/caarlos0/svu/.github/workflows/release.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+        overrides:
+          - goos: darwin
+            asset: svu_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: svu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -30049,7 +30152,7 @@ packages:
           type: github_release
           asset: pup_{{trimV .Version}}_checksums.txt
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.58.0")
         asset: pup_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -30064,6 +30167,29 @@ packages:
             opts:
               - --certificate-identity-regexp
               - "^https://github\\.com/datadog-labs/pup/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+            bundle:
+              type: github_release
+              asset: pup_{{trimV .Version}}_checksums.txt.sigstore.json
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: pup_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: pup_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/DataDog/pup/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
             bundle:
@@ -47139,6 +47265,20 @@ packages:
         overrides:
           - goos: windows
             format: zip
+  - type: github_release
+    repo_owner: hylo-lang
+    repo_name: hylo-new
+    description: The Hylo programming language
+    files:
+      - name: hc
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: hylo-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.zst
+        replacements:
+          amd64: x64
+          darwin: macos
   - type: github_release
     repo_owner: hytromo
     repo_name: mimosa
@@ -72101,6 +72241,9 @@ packages:
         format: tar.gz
         files:
           - name: pnpm
+          - name: pn
+            src: pnpm
+            link: pn
         replacements:
           amd64: x64
           windows: win32
@@ -72109,11 +72252,44 @@ packages:
             format: zip
         github_immutable_release: true
         github_release_attestations: true
+      - version_constraint: semver("<= 11.0.6")
+        asset: pnpm-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: pnpm
+          - name: pn
+            src: pnpm
+            link: pn
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
+        github_artifact_attestations:
+          signer_workflow: pnpm/pnpm/\.github/workflows/release\.yml
+        github_immutable_release: true
+        github_release_attestations: true
+        supported_envs:
+          - linux
+          - windows
+          - darwin/arm64
       - version_constraint: "true"
         asset: pnpm-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
           - name: pnpm
+          - name: pn
+            src: pnpm
+            link: pn
+          - name: pnpx
+            src: pnpm
+            link: pnpx
+            hard: true
+          - name: pnx
+            src: pnpm
+            link: pnx
+            hard: true
         replacements:
           amd64: x64
           windows: win32
@@ -80909,7 +81085,9 @@ packages:
   - type: http
     name: slack.com/slack-cli
     description: Slack CLI allows you to interact with your workflow apps via the command line
-    link: https://api.slack.com/automation/cli/commands
+    repo_owner: slackapi
+    repo_name: slack-cli
+    link: https://docs.slack.dev/tools/slack-cli/
     url: https://downloads.slack-edge.com/slack-cli/slack_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
     format: tar.gz
     rosetta2: true
@@ -94267,6 +94445,37 @@ packages:
           - darwin
           - windows
           - amd64
+  - type: github_release
+    repo_owner: wasilibs
+    repo_name: go-yamllint
+    description: A distribution of yamllint that can be used with go run
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.35.1"
+        asset: go-yamllint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: yamllint
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: go-yamllint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: yamllint
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: wasm-bindgen
     repo_name: wasm-pack
