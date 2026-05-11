@@ -21,6 +21,29 @@ packages:
           type: github_release
           asset: pup_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+      - version_constraint: semver("<= 0.58.0")
+        asset: pup_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: pup_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/datadog-labs/pup/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+            bundle:
+              type: github_release
+              asset: pup_{{trimV .Version}}_checksums.txt.sigstore.json
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: pup_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
