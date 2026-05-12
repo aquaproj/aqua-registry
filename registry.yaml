@@ -81161,29 +81161,48 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-  - type: http
-    name: slack.com/slack-cli
-    description: Slack CLI allows you to interact with your workflow apps via the command line
+  - type: github_release
     repo_owner: slackapi
     repo_name: slack-cli
-    link: https://docs.slack.dev/tools/slack-cli/
-    url: https://downloads.slack-edge.com/slack-cli/slack_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    rosetta2: true
-    windows_arm_emulation: true
+    aliases:
+      - name: slack.com/slack-cli
+    description: Create, develop, and deploy Slack apps from the command-line
     files:
       - name: slack
         src: bin/slack
-    replacements:
-      amd64: 64-bit
-      darwin: macOS
-    overrides:
-      - goos: windows
-        format: zip
-    supported_envs:
-      - linux/amd64
-      - windows
-      - darwin
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "dev-build"
+        error_message: This version is not supported
+      - version_constraint: semver("<= 3.2.0")
+        asset: slack_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: slack_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64-bit
+          darwin: macOS
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
   - type: github_release
     repo_owner: slackhq
     repo_name: nebula
