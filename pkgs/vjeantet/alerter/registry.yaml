@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: vjeantet
+    repo_name: alerter
+    description: Send User Alert Notification on MacOS from the command-line
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 4.0.0")
+        asset: alerter_v{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        supported_envs:
+          - darwin
+      - version_constraint: "true"
+        asset: alerter-{{trimV .Version}}.{{.Format}}
+        format: zip
+        supported_envs:
+          - darwin/arm64
