@@ -8,9 +8,14 @@ packages:
     version_overrides:
       - version_constraint: Version in ["0.15.0", "0.24.0", "0.48.0", "0.61.3", "0.68.0", "0.93.0", "0.102.0"]
         no_asset: true
+      - version_constraint: Version in ["publish-testing"]
+        error_message: This version isn't supported.
       - version_constraint: Version == "0.13.1"
         asset: xsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
+        files:
+          - name: qsv
+            src: xsv
         rosetta2: true
         windows_arm_emulation: true
         replacements:
@@ -62,10 +67,17 @@ packages:
       - version_constraint: Version == "0.16.1"
         asset: qsv-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
+        files:
+          - name: qsv
+            src: target/release/qsv
         rosetta2: true
         windows_arm_emulation: true
         replacements:
           darwin: macos
+        overrides:
+          - goos: windows
+            files:
+              - name: qsv
         supported_envs:
           - darwin
           - windows
@@ -73,6 +85,9 @@ packages:
       - version_constraint: Version == "0.16.2"
         asset: qsv-{{.OS}}.{{.Format}}
         format: zip
+        files:
+          - name: qsv
+            src: target/release/qsv
         replacements:
           darwin: macos
         supported_envs:
@@ -82,6 +97,9 @@ packages:
       - version_constraint: Version == "0.23.0"
         asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
+        files:
+          - name: qsv
+            src: qsv-{{.Version}}/qsv
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
@@ -255,6 +273,9 @@ packages:
       - version_constraint: semver("<= 0.20.0")
         asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
+        files:
+          - name: qsv
+            src: target/{{.Arch}}-{{.OS}}/release/qsv
         rosetta2: true
         windows_arm_emulation: true
         replacements:
@@ -269,6 +290,9 @@ packages:
       - version_constraint: semver("<= 0.22.2")
         asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
+        files:
+          - name: qsv
+            src: qsv-{{.Version}}/qsv
         rosetta2: true
         windows_arm_emulation: true
         replacements:
@@ -353,9 +377,10 @@ packages:
           - linux
           - darwin/arm64
           - windows/amd64
-      - version_constraint: semver("<= 20.0.0")
+      - version_constraint: "true"
         asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
+        windows_arm_emulation: true
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -377,21 +402,3 @@ packages:
           - linux
           - darwin/arm64
           - windows
-      - version_constraint: "true"
-        asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}-testing.{{.Format}}
-        format: zip
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          windows: pc-windows-msvc
-        overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              linux: unknown-linux-musl
-          - goos: linux
-            goarch: arm64
-            replacements:
-              linux: unknown-linux-gnu
