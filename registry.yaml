@@ -30252,7 +30252,7 @@ packages:
     version_overrides:
       - version_constraint: Version in ["0.15.0", "0.24.0", "0.48.0", "0.61.3", "0.68.0", "0.93.0", "0.102.0"]
         no_asset: true
-      - version_constraint: Version in ["publish-testing"]
+      - version_constraint: Version in ["publish-testing", "0.26.0", "0.131.1"]
         error_message: This version isn't supported.
       - version_constraint: Version == "0.13.1"
         asset: xsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
@@ -30338,7 +30338,24 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: Version == "0.23.0"
+      - version_constraint: Version in ["0.22.0", "0.22.1", "0.22.2"]
+        asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        files:
+          - name: qsv
+            src: qsv-{{.Version}}/qsv
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+      - version_constraint: Version in ["0.23.0", "0.24.1", "0.25.2-beta"]
         asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
         files:
@@ -30514,7 +30531,7 @@ packages:
           - linux
           - darwin/arm64
           - windows/amd64
-      - version_constraint: semver("<= 0.20.0")
+      - version_constraint: semver("<= 0.21.0")
         asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
         files:
@@ -30531,23 +30548,6 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: semver("<= 0.22.2")
-        asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: zip
-        files:
-          - name: qsv
-            src: qsv-{{.Version}}/qsv
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: aarch64
       - version_constraint: semver("<= 0.40.3")
         asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
@@ -30558,6 +30558,29 @@ packages:
           darwin: apple-darwin
           linux: unknown-linux-gnu
           windows: pc-windows-msvc
+      - version_constraint: Version in ["0.65.0", "0.66.0", "0.67.0", "0.70.0", "0.72.0"]
+        asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: darwin
+            goarch: arm64
+            files:
+              - name: qsv
+                src: qsv-{{.Version}}-{{.Arch}}-{{.OS}}/qsv
       - version_constraint: semver("<= 0.75.0")
         asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
@@ -30624,7 +30647,6 @@ packages:
       - version_constraint: "true"
         asset: qsv-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
-        windows_arm_emulation: true
         replacements:
           amd64: x86_64
           arm64: aarch64
