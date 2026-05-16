@@ -41101,25 +41101,44 @@ packages:
         github_artifact_attestations:
           predicate_type: https://spdx.dev/Document/v2.3
           signer_workflow: gleam-lang/gleam/\.github/workflows/release\.yaml
-  - type: http
-    name: glossia.ai/cli
+  - type: github_release
+    repo_owner: glossia
+    repo_name: cli
+    aliases:
+      - name: glossia.ai/cli
     description: Localize like you ship software
-    link: https://glossia.ai/docs/reference/cli
-    version_prefix: cli-v
-    windows_arm_emulation: true
-    url: https://glossia-releases.t3.storage.dev/cli/{{.SemVer}}/glossia-{{.OS}}-{{.Arch}}.{{.Format}}
     files:
       - name: glossia
-    replacements:
-      amd64: x64
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: http
-      url: https://glossia-releases.t3.storage.dev/cli/{{.SemVer}}/SHA256SUMS
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 0.15.1")
+        version_prefix: cli-v
+        type: http
+        windows_arm_emulation: true
+        url: https://glossia-releases.t3.storage.dev/cli/{{.SemVer}}/glossia-{{.OS}}-{{.Arch}}.{{.Format}}
+        replacements:
+          amd64: x64
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          type: http
+          url: https://glossia-releases.t3.storage.dev/cli/{{.SemVer}}/SHA256SUMS
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: glossia-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: go-acme
     repo_name: lego
