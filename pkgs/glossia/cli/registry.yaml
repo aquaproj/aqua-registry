@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: glossia
+    repo_name: cli
+    description: Glossia's CLI
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: glossia-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: SHA512SUMS
+          algorithm: sha512
+        overrides:
+          - goos: windows
+            format: zip
