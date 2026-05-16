@@ -40891,6 +40891,21 @@ packages:
       - name: glossia
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("< 0.15.1")
+        version_prefix: cli-v
+        type: http
+        windows_arm_emulation: true
+        url: https://glossia-releases.t3.storage.dev/cli/{{.SemVer}}/glossia-{{.OS}}-{{.Arch}}.{{.Format}}
+        replacements:
+          amd64: x64
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          type: http
+          url: https://glossia-releases.t3.storage.dev/cli/{{.SemVer}}/SHA256SUMS
+          algorithm: sha256
       - version_constraint: "true"
         asset: glossia-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
