@@ -1,0 +1,97 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: julian7
+    repo_name: redact
+    description: Data encryptor for git
+    files:
+      - name: redact
+      - name: redact-ext-aws
+      - name: redact-ext-azure
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.3.0"
+        asset: redact-{{.OS}}-{{.Arch}}-{{.Version}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.2.0")
+        asset: redact-{{.OS}}-{{.Arch}}-{{.Version}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.4.1")
+        no_asset: true
+      - version_constraint: semver("<= 0.6.0")
+        asset: redact-{{.OS}}-{{.Arch}}-{{trimV .Version}}
+        format: raw
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.redact-{{trimV .Version}}
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.7.1")
+        asset: redact-{{.OS}}-{{.Arch}}-{{trimV .Version}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.redact-{{trimV .Version}}
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: redact-{{.OS}}-all-{{trimV .Version}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 0.9.0")
+        asset: redact-{{.OS}}-{{.Arch}}-{{trimV .Version}}
+        format: raw
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.redact-{{trimV .Version}}
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: redact-{{.OS}}-all-{{trimV .Version}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: redact-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.redact-{{trimV .Version}}
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: redact-{{.OS}}-all-{{trimV .Version}}.{{.Format}}
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
