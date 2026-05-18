@@ -95314,9 +95314,30 @@ packages:
     repo_owner: wasmCloud
     repo_name: wasmCloud
     description: wasmCloud is an open source Cloud Native Computing Foundation (CNCF) project that enables teams to build, manage, and scale polyglot apps across any cloud, K8s, or edge
-    version_prefix: wash-v
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("< 2.0.0")
+        version_prefix: wash-v
+        asset: wash-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+      - version_constraint: semver("<= 2.0.1")
+        asset: wash-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
       - version_constraint: "true"
         asset: wash-{{.Arch}}-{{.OS}}
         format: raw
@@ -95327,6 +95348,10 @@ packages:
           darwin: apple-darwin
           linux: unknown-linux-musl
           windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            asset: wash-{{.Arch}}-{{.OS}}.{{.Format}}
   - type: github_release
     repo_owner: wasmerio
     repo_name: wapm-cli
