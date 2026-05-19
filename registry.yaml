@@ -95371,6 +95371,24 @@ packages:
           darwin: apple-darwin
           linux: unknown-linux-musl
           windows: pc-windows-msvc
+        github_artifact_attestations:
+          signer_workflow: wasmCloud/wasmCloud/\.github/workflows/wash\.yml
+      - version_constraint: semver("<= 2.0.5")
+        asset: wash-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            asset: wash-{{.Arch}}-{{.OS}}.{{.Format}}
+        github_artifact_attestations:
+          signer_workflow: wasmCloud/wasmCloud/\.github/workflows/wash\.yml
       - version_constraint: "true"
         asset: wash-{{.Arch}}-{{.OS}}
         format: raw
@@ -95385,6 +95403,8 @@ packages:
           - goos: windows
             format: zip
             asset: wash-{{.Arch}}-{{.OS}}.{{.Format}}
+        github_artifact_attestations:
+          signer_workflow: wasmCloud/wasmCloud/\.github/workflows/release-tag\.yml
   - type: github_release
     repo_owner: wasmerio
     repo_name: wapm-cli
