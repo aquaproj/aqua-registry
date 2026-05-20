@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: openclaw
+    repo_name: wacli
+    description: WhatsApp in your terminal
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.9.2")
+        asset: wacli-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: wacli
+        checksum:
+          type: github_release
+          asset: checksums-linux-windows.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - linux/amd64
+          - linux/arm64
+          - windows
+        overrides:
+          - goos: darwin
+            asset: wacli-macos-universal.{{.Format}}
+            checksum:
+              type: github_release
+              asset: checksums.txt
+              algorithm: sha256
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: wacli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: wacli
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
