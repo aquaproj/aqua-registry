@@ -95465,6 +95465,22 @@ packages:
             asset: wash-{{.Arch}}-{{.OS}}.{{.Format}}
         github_artifact_attestations:
           signer_workflow: wasmCloud/wasmCloud/\.github/workflows/wash\.yml
+      - version_constraint: semver("< 2.1.0")
+        asset: wash-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            asset: wash-{{.Arch}}-{{.OS}}.{{.Format}}
+        github_artifact_attestations:
+          signer_workflow: wasmCloud/wasmCloud/\.github/workflows/release-tag\.yml
       - version_constraint: "true"
         asset: wash-{{.Arch}}-{{.OS}}
         format: raw
@@ -95479,6 +95495,15 @@ packages:
           - goos: windows
             format: zip
             asset: wash-{{.Arch}}-{{.OS}}.{{.Format}}
+        cosign:
+          bundle:
+            type: github_release
+            asset: wash.sigstore.json
+          opts:
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
+            - --certificate-identity
+            - https://github.com/wasmCloud/wasmCloud/.github/workflows/release-tag.yml@refs/heads/main
         github_artifact_attestations:
           signer_workflow: wasmCloud/wasmCloud/\.github/workflows/release-tag\.yml
   - type: github_release
