@@ -43282,79 +43282,42 @@ packages:
     name: google.com/antigravity-cli
     description: Google's agentic development platform CLI companion
     link: https://antigravity.google/download
-    url: https://storage.googleapis.com/antigravity-public/antigravity-cli/{{.Version}}/linux-x64/cli_linux_x64.tar.gz
     format: tar.gz
     files:
       - name: agy
         src: antigravity
     checksum:
       type: http
-      url: https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/linux_amd64.json
+      url: https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/{{.OS}}_{{.Arch}}.json
       file_format: regexp
       algorithm: sha512
       pattern:
         checksum: '"sha512": "([0-9a-f]{128})"'
     overrides:
       - goos: linux
+        goarch: amd64
+        url: https://storage.googleapis.com/antigravity-public/antigravity-cli/{{.Version}}/linux-x64/cli_linux_x64.tar.gz
+      - goos: linux
         goarch: arm64
         url: https://storage.googleapis.com/antigravity-public/antigravity-cli/{{.Version}}/linux-arm/cli_linux_arm64.tar.gz
-        checksum:
-          type: http
-          url: https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/linux_arm64.json
-          file_format: regexp
-          algorithm: sha512
-          pattern:
-            checksum: '"sha512": "([0-9a-f]{128})"'
       - goos: darwin
         goarch: amd64
         url: https://storage.googleapis.com/antigravity-public/antigravity-cli/{{.Version}}/darwin-x64/cli_mac_x64.tar.gz
-        checksum:
-          type: http
-          url: https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/darwin_amd64.json
-          file_format: regexp
-          algorithm: sha512
-          pattern:
-            checksum: '"sha512": "([0-9a-f]{128})"'
       - goos: darwin
         goarch: arm64
         url: https://storage.googleapis.com/antigravity-public/antigravity-cli/{{.Version}}/darwin-arm/cli_mac_arm64.tar.gz
-        checksum:
-          type: http
-          url: https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/darwin_arm64.json
-          file_format: regexp
-          algorithm: sha512
-          pattern:
-            checksum: '"sha512": "([0-9a-f]{128})"'
       - goos: windows
         goarch: amd64
         url: https://storage.googleapis.com/antigravity-public/antigravity-cli/{{.Version}}/windows-x64/cli_windows_x64.exe
         format: raw
         files:
           - name: agy
-        checksum:
-          type: http
-          url: https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/windows_amd64.json
-          file_format: regexp
-          algorithm: sha512
-          pattern:
-            checksum: '"sha512": "([0-9a-f]{128})"'
       - goos: windows
         goarch: arm64
         url: https://storage.googleapis.com/antigravity-public/antigravity-cli/{{.Version}}/windows-arm/cli_windows_arm64.exe
         format: raw
         files:
           - name: agy
-        checksum:
-          type: http
-          url: https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/windows_arm64.json
-          file_format: regexp
-          algorithm: sha512
-          pattern:
-            checksum: '"sha512": "([0-9a-f]{128})"'
-    supported_envs:
-      - linux
-      - darwin
-      - windows
   - type: github_release
     repo_owner: google
     repo_name: addlicense
