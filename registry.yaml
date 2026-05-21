@@ -68925,6 +68925,25 @@ packages:
           - goos: windows
             format: zip
   - type: github_release
+    repo_owner: openclaw
+    repo_name: wacli
+    description: WhatsApp in your terminal
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 0.10.0")
+        error_message: Please upgrade to version 0.10.0 or higher
+      - version_constraint: "true"
+        asset: wacli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: opencontainers
     repo_name: runc
     description: CLI tool for spawning and running containers according to the OCI specification
