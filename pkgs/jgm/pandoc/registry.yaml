@@ -15,11 +15,21 @@ packages:
         replacements:
           darwin: macOS
         overrides:
+          - goos: linux
+            files:
+              - name: pandoc
+                src: "pandoc-{{.Version}}/bin/pandoc"
           - goos: darwin
-            format: pkg
+            format: zip
             asset: pandoc-{{.Version}}-{{.OS}}.{{.Format}}
+            files:
+              - name: pandoc
+                src: "pandoc-{{.Version}}/bin/pandoc"
           - goos: windows
             format: zip
+            files:
+              - name: pandoc
+                src: "pandoc-{{.Version}}/pandoc"
             replacements:
               amd64: x86_64
       - version_constraint: "true"
@@ -33,7 +43,17 @@ packages:
           - goos: linux
             format: tar.gz
             asset: pandoc-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+            files:
+              - name: pandoc
+                src: "pandoc-{{.Version}}/bin/pandoc"
             replacements:
               amd64: amd64
+          - goos: darwin
+            files:
+              - name: pandoc
+                src: "pandoc-{{.Version}}-{{.Arch}}/bin/pandoc"
           - goos: windows
             asset: pandoc-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+            files:
+              - name: pandoc
+                src: "pandoc-{{.Version}}/pandoc"
