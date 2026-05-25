@@ -26482,27 +26482,6 @@ packages:
       - name: cc-test-reporter
         src: test-reporter
   - type: github_release
-    repo_owner: coder3101
-    repo_name: protols
-    description: Language Server for protocol buffers
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 0.2.1")
-        no_asset: true
-      - version_constraint: "true"
-        asset: protols-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        overrides:
-          - goos: windows
-            format: zip
-  - type: github_release
     repo_owner: coder
     repo_name: coder
     description: Provision remote development environments via Terraform
@@ -26557,6 +26536,27 @@ packages:
             format: tar.gz
         github_artifact_attestations:
           signer_workflow: coder/coder/\.github/workflows/release\.yaml
+  - type: github_release
+    repo_owner: coder3101
+    repo_name: protols
+    description: Language Server for protocol buffers
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: protols-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: codesenberg
     repo_name: bombardier
@@ -30265,6 +30265,126 @@ packages:
   - type: github_release
     repo_owner: databricks
     repo_name: cli
+    description: Databricks CLI
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "snapshot"
+        asset: databricks_cli_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+      - version_constraint: Version in ["v0.210.4", "v0.211.1", "v0.212.5", "v0.213.1", "v0.214.2", "v0.215.1", "v0.216.1", "v0.217.2", "v0.218.2", "v0.219.1", "v0.220.1", "v0.221.2", "v0.222.1", "v0.223.3", "v0.224.2", "v0.225.1", "v0.226.1", "v0.227.2", "v0.228.2", "v0.229.1", "v0.230.1", "v0.231.1", "v0.232.2", "v0.233.1", "v0.234.1", "v0.235.1", "v0.236.1", "v0.238.1", "v0.239.2", "v0.240.1", "v0.241.3", "v0.242.1", "v0.243.1", "v0.244.1", "v0.245.1", "v0.246.1", "v0.247.2", "v0.248.1", "v0.249.1", "v0.250.1", "v0.251.1", "v0.252.1", "v0.253.1", "v0.254.1", "v0.255.1", "v0.256.1", "v0.257.1", "v0.258.1", "v0.259.1", "v0.260.1", "v0.261.1", "v0.262.1", "v0.263.1", "v0.264.3", "v0.265.1", "v0.266.1", "v0.267.1", "v0.268.1", "v0.269.1", "v0.270.1", "v0.271.1", "v0.272.1", "v0.273.1", "v0.274.1", "v0.275.1", "v0.276.1", "v0.277.1", "v0.278.1", "v0.279.1", "v0.280.1", "v0.281.1", "v0.282.1", "v0.283.1", "v0.284.1", "v0.285.1", "v0.286.1", "v0.287.1", "v0.288.1", "v0.289.2", "v0.290.2", "v0.291.1", "v0.293.1", "v0.294.1"]
+        asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: databricks_cli_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+      - version_constraint: Version in ["v0.211.0", "v0.213.0", "v0.215.0", "v0.216.0", "v0.218.1", "v0.219.0", "v0.220.0", "v0.221.0", "v0.237.1"]
+        asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: databricks_cli_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+      - version_constraint: Version in ["v0.218.0", "v0.221.1", "v0.222.0", "v0.225.0", "v0.226.0", "v0.229.0", "v0.230.0", "v0.231.0", "v0.233.0", "v0.234.0", "v0.235.0", "v0.236.0", "v0.237.0", "v0.238.0", "v0.240.0", "v0.242.0", "v0.243.0"]
+        asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: databricks_cli_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}-signed.{{.Format}}
+      - version_constraint: Version in ["v0.244.0", "v0.245.0", "v0.246.0", "v0.248.0", "v0.249.0", "v0.250.0", "v0.251.0", "v0.252.0", "v0.253.0", "v0.254.0", "v0.255.0", "v0.256.0", "v0.257.0", "v0.258.0", "v0.259.0", "v0.260.0", "v0.261.0", "v0.262.0", "v0.263.0", "v0.265.0", "v0.266.0", "v0.267.0", "v0.268.0", "v0.269.0", "v0.270.0", "v0.271.0", "v0.272.0", "v0.273.0", "v0.274.0", "v0.275.0", "v0.276.0"]
+        asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: databricks_cli_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}-signed.{{.Format}}
+      - version_constraint: Version in ["v0.277.0", "v0.278.0", "v0.279.0", "v0.280.0", "v0.281.0", "v0.282.0", "v0.283.0", "v0.284.0", "v0.285.0", "v0.286.0", "v0.287.0", "v0.288.0", "v0.289.1", "v0.291.0", "v0.294.0", "v0.295.0"]
+        asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: databricks_cli_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.0.1")
+        asset: bricks_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: bricks_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.0.32")
+        asset: bricks_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: bricks_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+      - version_constraint: semver("<= 0.217.1")
+        asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: databricks_cli_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+      - version_constraint: semver("<= 0.239.1")
+        asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: databricks_cli_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}-signed.{{.Format}}
+      - version_constraint: semver("<= 0.241.2")
+        asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: databricks_cli_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+      - version_constraint: semver("<= 0.264.2")
+        asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: databricks_cli_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}-signed.{{.Format}}
+      - version_constraint: semver("<= 0.293.0")
+        asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: databricks_cli_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: databricks_cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: databricks_cli_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
   - type: github_release
     repo_owner: databricks
     repo_name: click
