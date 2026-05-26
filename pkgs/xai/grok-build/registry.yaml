@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: http
+    repo_owner: xai
+    repo_name: grok-build
+    description: Grok CLI
+    format: raw
+    url: https://x.ai/cli/grok-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+    files:
+      - name: grok
+        src: grok-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+      - name: agent
+        src: grok-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+    replacements:
+      darwin: macos
+      amd64: x86_64
+      arm64: aarch64
+    supported_envs:
+      - darwin
+      - linux
+      - windows
+    overrides:
+      - goos: windows
+        url: https://x.ai/cli/grok-{{trimV .Version}}-{{.OS}}-{{.Arch}}.exe
+        files:
+          - name: grok
+            src: grok-{{trimV .Version}}-{{.OS}}-{{.Arch}}
+          - name: agent
+            src: grok-{{trimV .Version}}-{{.OS}}-{{.Arch}}
