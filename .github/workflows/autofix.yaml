@@ -8,17 +8,21 @@ jobs:
     permissions: {}
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - run: echo "AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${PWD}/aqua-all.yaml" >> "$GITHUB_ENV"
       - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
         with:
-          aqua_version: v2.55.1
+          aqua_version: v2.59.0
           aqua_opts: -l -a
           policy_allow: "true"
 
+      - name: install nllint
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+        run: nllint -v
       - name: Fix newlines
         run: git ls-files | xargs nllint -f -s
 
@@ -30,7 +34,34 @@ jobs:
       - name: Format code by prettier
         run: prettier -w .
 
-      - name: Fix registry.yaml
-        run: cmdx gr
+      - name: install argd
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+        run: argd --version
 
-      - uses: autofix-ci/action@635ffb0c9798bd160680f18fd73371e355b85f27 # v1.3.2
+      - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
+        id: changes
+        with:
+          list-files: shell
+          filters: |
+            pkgs-files:
+              - added|modified: pkgs/**/pkg.yaml
+              - added|modified: pkgs/**/registry.yaml
+
+      - name: argd fix
+        if: steps.changes.outputs.pkgs-files == 'true'
+        run: argd fix ${{steps.changes.outputs.pkgs-files_files}}
+
+      - name: Fix registry.yaml
+        run: argd gr
+
+      - name: install keep-sorted
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+        run: |
+          keep-sorted --version
+      - name: keep-sorted
+        run: |
+          git grep -l " keep-sorted start" | grep -v autofix.yaml | xargs keep-sorted
+
+      - uses: autofix-ci/action@c5b2d67aa2274e7b5a18224e8171550871fc7e4a # v1.3.4

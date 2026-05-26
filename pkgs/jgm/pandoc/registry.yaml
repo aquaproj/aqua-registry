@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: jgm
+    repo_name: pandoc
+    description: Universal markup converter
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 3.0.0")
+        error_message: This version is too old. Please upgrade to 3.0.0 or a newer version.
+      - version_constraint: semver("<= 3.1.1")
+        asset: pandoc-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: macOS
+        overrides:
+          - goos: linux
+            files:
+              - name: pandoc
+                src: "pandoc-{{.Version}}/bin/pandoc"
+          - goos: darwin
+            format: zip
+            asset: pandoc-{{.Version}}-{{.OS}}.{{.Format}}
+            files:
+              - name: pandoc
+                src: "pandoc-{{.Version}}/bin/pandoc"
+          - goos: windows
+            format: zip
+            files:
+              - name: pandoc
+                src: "pandoc-{{.Version}}/pandoc"
+            replacements:
+              amd64: x86_64
+      - version_constraint: "true"
+        asset: pandoc-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macOS
+        overrides:
+          - goos: linux
+            format: tar.gz
+            files:
+              - name: pandoc
+                src: "pandoc-{{.Version}}/bin/pandoc"
+            replacements:
+              amd64: amd64
+          - goos: darwin
+            asset: pandoc-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+            files:
+              - name: pandoc
+                src: "pandoc-{{.Version}}-{{.Arch}}/bin/pandoc"
+          - goos: windows
+            files:
+              - name: pandoc
+                src: "pandoc-{{.Version}}/pandoc"

@@ -1,11 +1,11 @@
 # aqua-registry
 
-[![GitHub last commit](https://img.shields.io/github/last-commit/aquaproj/aqua-registry.svg)](https://github.com/aquaproj/aqua-registry) [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/aquaproj/aqua-registry/main/LICENSE)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/aquaproj/aqua-registry)
 
 [aqua](https://aquaproj.github.io/)'s Standard Registry
 
 - [Document](https://aquaproj.github.io/docs/products/aqua-registry)
-- [How to contribute](https://aquaproj.github.io/docs/products/aqua-registry/contributing)
+- [How to contribute](./CONTRIBUTING.md)
 - [Change Log](https://github.com/aquaproj/aqua-registry/releases)
 
 ## Contributors

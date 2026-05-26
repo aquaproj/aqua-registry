@@ -33,6 +33,16 @@ packages:
         overrides:
           - goos: linux
             format: tar
+      - version_constraint: semver("< 2.33.0")
+        asset: coder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: coder_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
       - version_constraint: "true"
         asset: coder_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
@@ -43,3 +53,5 @@ packages:
         overrides:
           - goos: linux
             format: tar.gz
+        github_artifact_attestations:
+          signer_workflow: coder/coder/\.github/workflows/release\.yaml

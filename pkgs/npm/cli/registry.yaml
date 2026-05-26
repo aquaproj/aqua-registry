@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: http
+    repo_owner: npm
+    repo_name: cli
+    description: the package manager for JavaScript
+    version_filter: Version matches "^v[0-9]+\\.[0-9]+\\.[0-9]+$"
+    url: https://registry.npmjs.org/npm/-/npm-{{trimV .Version}}.tgz
+    format: tar.gz
+    files:
+      - name: npm
+        src: package/bin/npm-cli.js
+      - name: npx
+        src: package/bin/npx-cli.js
+    overrides:
+      - goos: windows
+        files:
+          - name: npm
+            src: package/bin/npm.cmd
+          - name: npx
+            src: package/bin/npx.cmd
