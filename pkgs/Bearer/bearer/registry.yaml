@@ -6,40 +6,8 @@ packages:
     description: Code security scanning tool (SAST) to discover, filter and prioritize security and privacy risks
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v0.20.1"
-        asset: curio_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: curio_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
-      - version_constraint: semver("<= 0.21.1")
-        asset: curio_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
-          - darwin
       - version_constraint: semver("<= 0.24.0")
-        asset: curio_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            format: tar.zst
-            asset: curio_{{trimV .Version}}_{{.OS}}-{{.Arch}}.pkg.{{.Format}}
-        supported_envs:
-          - linux/amd64
-          - darwin
+        no_asset: true
       - version_constraint: semver("<= 1.43.4")
         asset: bearer_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -51,6 +19,9 @@ packages:
           - goos: linux
             format: tar.zst
             asset: bearer_{{trimV .Version}}_{{.OS}}-{{.Arch}}.pkg.{{.Format}}
+            files:
+              - name: bearer
+                src: usr/bin/bearer
         supported_envs:
           - linux/amd64
           - darwin
@@ -65,6 +36,9 @@ packages:
           - goos: linux
             format: tar.zst
             asset: bearer_{{trimV .Version}}_{{.OS}}-{{.Arch}}.pkg.{{.Format}}
+            files:
+              - name: bearer
+                src: usr/bin/bearer
         supported_envs:
           - linux
           - darwin
