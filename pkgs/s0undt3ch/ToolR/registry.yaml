@@ -6,34 +6,20 @@ packages:
     description: In-project CLI tooling support
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 0.11.1")
-        asset: toolr-{{trimV .Version}}-cp311-cp311-many{{.OS}}_2_28_{{.Arch}}.whl
-        format: raw
-        windows_arm_emulation: true
-        complete_windows_ext: false
-        replacements:
-          amd64: x86_64
-          darwin: macosx
-          windows: win
-        overrides:
-          - goos: linux
-            replacements:
-              arm64: aarch64
-          - goos: darwin
-            asset: toolr-{{trimV .Version}}-cp311-cp311-{{.OS}}_11_0_{{.Arch}}.whl
-          - goos: windows
-            asset: toolr-{{trimV .Version}}-cp311-cp311-{{.OS}}_{{.Arch}}.whl
-            replacements:
-              amd64: amd64
+      - version_constraint: semver("< 0.20.0")
+        error_message: Standalone binaries are available from v0.20.0; please use v0.20.0 or later
       - version_constraint: "true"
         asset: toolr-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: toolr
+            src: toolr-{{trimV .Version}}-{{.Arch}}-{{.OS}}/toolr
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
           windows: pc-windows-msvc
         checksum:
           type: github_release
