@@ -78129,6 +78129,48 @@ packages:
       asset: smap_{{.Version}}--sha256_checksums.txt
       algorithm: sha256
   - type: github_release
+    repo_owner: s0undt3ch
+    repo_name: ToolR
+    description: In-project CLI tooling support
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.11.1")
+        asset: toolr-{{trimV .Version}}-cp311-cp311-many{{.OS}}_2_28_{{.Arch}}.whl
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        replacements:
+          amd64: x86_64
+          darwin: macosx
+          windows: win
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: darwin
+            asset: toolr-{{trimV .Version}}-cp311-cp311-{{.OS}}_11_0_{{.Arch}}.whl
+          - goos: windows
+            asset: toolr-{{trimV .Version}}-cp311-cp311-{{.OS}}_{{.Arch}}.whl
+            replacements:
+              amd64: amd64
+      - version_constraint: "true"
+        asset: toolr-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: sachaos
     repo_name: go-life
     description: Terminal based Conway's Game of Life. Implemented in Go
