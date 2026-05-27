@@ -102,6 +102,27 @@ packages:
             asset: svu_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
           - goos: windows
             format: zip
+      - version_constraint: Version == "v3.4.1"
+        asset: svu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity
+              - https://github.com/caarlos0/svu/.github/workflows/release.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+        overrides:
+          - goos: darwin
+            asset: svu_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: svu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
