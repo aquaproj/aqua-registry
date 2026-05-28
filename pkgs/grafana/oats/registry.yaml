@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: grafana
+    repo_name: oats
+    description: OpenTelemetry Acceptance Tests (OATs), or OATs for short, is a test framework for OpenTelemetry
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.6.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: oats_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        github_artifact_attestations:
+          signer_workflow: grafana/oats/.github/workflows/release.yml
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
