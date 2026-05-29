@@ -1,5 +1,5 @@
 ---
-name: Fetch aqua Document
+name: fetch-aqua-document
 description: Fetch the document of aqua from the other repository aquaproj/aqua. This skill is useful when you want to know the specification of aqua.
 ---
 
