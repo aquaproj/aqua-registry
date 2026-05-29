@@ -34,6 +34,26 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: semver("<= 1.2.0")
+        asset: validator.{{.OS}}-{{.Arch}}
+        format: raw
+        overrides:
+          - goos: windows
+            asset: validator
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: semver("<= 2.1.0")
+        asset: validator-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: Version == "v2.2.0"
         asset: validator-v2.2-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -56,28 +76,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: semver("<= 1.2.0")
-        asset: validator.{{.OS}}-{{.Arch}}
-        format: raw
-        overrides:
-          - goos: windows
-            asset: validator
-        supported_envs:
-          - linux/amd64
-          - windows/amd64
-      - version_constraint: semver("<= 2.1.0")
-        asset: validator-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: "{{.Asset}}.md5"
-          algorithm: md5
-        overrides:
-          - goos: windows
-            format: zip
       - version_constraint: "true"
-        asset: validator-v2.2-{{.OS}}-{{.Arch}}.{{.Format}}
+        asset: validator-v{{(semver .Version).Major}}.{{(semver .Version).Minor}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
         checksum:
