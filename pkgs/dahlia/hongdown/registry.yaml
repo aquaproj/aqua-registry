@@ -6,12 +6,26 @@ packages:
     description: A Markdown formatter that enforces Hong Minhee's Markdown style conventions
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.4.2")
         asset: hongdown-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.bz2
         files:
           - name: hongdown
             src: hongdown-{{.Arch}}-{{.OS}}/hongdown
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: hongdown-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.bz2
+        files:
+          - name: hongdown
         replacements:
           amd64: x86_64
           arm64: aarch64
