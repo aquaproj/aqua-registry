@@ -132,6 +132,11 @@ jobs:
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
 
+      - if: matrix.env.runs-on == 'macos-26-intel' || matrix.env.runs-on == 'macos-26'
+        run: aqua g -i golang/go
+        env:
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+
       - name: Install packages for testing
         run: aqua i
         env:
