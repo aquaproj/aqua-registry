@@ -55229,6 +55229,47 @@ packages:
             goarch: arm64
             asset: zprint{{.OS}}a-{{.Version}}
   - type: github_release
+    repo_owner: klauspost
+    repo_name: asmfmt
+    description: Go Assembler Formatter
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.3.1"
+        no_asset: true
+      - version_constraint: Version == "v1.3.0"
+        asset: asmfmt-{{.OS}}_{{.Arch}}_{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: OSX
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.2.3")
+        no_asset: true
+      - version_constraint: "true"
+        asset: asmfmt-{{.OS}}_{{.Arch}}_{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: OSX
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: kluctl
     repo_name: kluctl
     description: The missing glue to put together large Kubernetes deployments, composed of multiple smaller parts (Helm/Kustomize/...)  in a manageable and unified way
