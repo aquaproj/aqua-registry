@@ -95360,6 +95360,108 @@ packages:
       - linux
       - darwin
   - type: github_release
+    repo_owner: visioncortex
+    repo_name: vtracer
+    description: Raster to Vector Graphics Converter
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.1.0"
+        asset: vtracer
+        format: raw
+        supported_envs:
+          - windows/amd64
+      - version_constraint: Version == "0.1.1"
+        asset: vtracer-{{.OS}}
+        format: raw
+        replacements:
+          darwin: mac
+          windows: win
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "0.2.0"
+        asset: vtracer-{{.OS}}
+        format: raw
+        overrides:
+          - goos: windows
+            asset: vtracer
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: Version == "0.2.1"
+        no_asset: true
+      - version_constraint: Version == "0.3.0"
+        asset: vtracer-{{.OS}}
+        format: raw
+        replacements:
+          darwin: mac
+        overrides:
+          - goos: windows
+            asset: vtracer
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "0.4.0"
+        asset: vtracer-{{.OS}}
+        format: raw
+        replacements:
+          darwin: mac
+        overrides:
+          - goos: darwin
+            asset: vtracer-{{.OS}}-intel
+          - goos: windows
+            asset: vtracer
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "0.5.0"
+        asset: vtracer-{{.OS}}
+        format: raw
+        replacements:
+          darwin: mac
+        overrides:
+          - goos: darwin
+            asset: vtracer-{{.OS}}-m1
+          - goos: windows
+            asset: vtracer
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: Version == "0.6.0"
+        asset: vtracer-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          darwin: mac
+          windows: win
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: x64
+          - goos: windows
+            asset: vtracer-{{.OS}}-32
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: Version == "0.6.1"
+        no_asset: true
+      - version_constraint: "true"
+        asset: vtracer-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: visma-prodsec
     repo_name: confused
     description: Tool to check for dependency confusion vulnerabilities in multiple package management systems
