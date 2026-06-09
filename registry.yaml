@@ -35539,49 +35539,6 @@ packages:
         github_artifact_attestations:
           signer_workflow: endevco/aube/\.github/workflows/release\.yml
   - type: github_release
-    repo_owner: endevco
-    repo_name: pitchfork
-    aliases:
-      - name: jdx/pitchfork
-    description: Daemons with DX
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: Version == "v0.1.1"
-        no_asset: true
-      - version_constraint: semver("<= 0.1.3")
-        asset: pitchfork-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-        overrides:
-          - goos: linux
-            replacements:
-              amd64: x86_64
-        supported_envs:
-          - linux
-          - darwin/arm64
-      - version_constraint: "true"
-        asset: pitchfork-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        overrides:
-          - goos: darwin
-            replacements:
-              amd64: amd64
-          - goos: windows
-            format: zip
-        supported_envs:
-          - linux
-          - darwin/arm64
-          - windows
-  - type: github_release
     repo_owner: enokawa
     repo_name: taskdiff
     description: Diff tool for ECS Task Definition
@@ -50832,6 +50789,50 @@ packages:
             asset: SHASUMS512.txt.minisig
             # https://github.com/jdx/mise/blob/main/minisign.pub
             public_key: RWTC3g8W3z4RZK3V3qv7fa1QY4JEWyBtqIHW+85QlJpZc5yG+uNYNBSZ
+  - type: github_release
+    repo_owner: jdx
+    repo_name: pitchfork
+    aliases:
+      - name: jdx/pitchfork
+      - name: endevco/pitchfork
+    description: Daemons with DX
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.1"
+        no_asset: true
+      - version_constraint: semver("<= 0.1.3")
+        asset: pitchfork-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - linux
+          - darwin/arm64
+      - version_constraint: "true"
+        asset: pitchfork-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: amd64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows
   - type: github_release
     repo_owner: jdx
     repo_name: usage
