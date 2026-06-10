@@ -10,6 +10,18 @@ packages:
       - vue
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 0.106.0")
+        asset: vize-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: vize-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -22,3 +34,12 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        cosign:
+          bundle:
+            type: github_release
+            asset: "{{.Asset}}.cosign.bundle"
+          opts:
+            - --certificate-identity
+            - https://github.com/ubugeeei-prod/vize/.github/workflows/release.yml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
