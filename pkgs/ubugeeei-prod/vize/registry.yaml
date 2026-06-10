@@ -22,3 +22,12 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        cosign:
+          bundle:
+            type: github_release
+            asset: "{{.Asset}}.cosign.bundle"
+          opts:
+            - --certificate-identity
+            - https://github.com/ubugeeei-prod/vize/.github/workflows/release.yml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
