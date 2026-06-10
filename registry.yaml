@@ -7375,12 +7375,22 @@ packages:
           - darwin/arm64
           - linux/amd64
           - windows
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.14.0.2224")
         url: https://binaries.sonarsource.com/Distribution/sonarqube-cli/{{.Version}}/{{.OS}}/sonarqube-cli-{{.Version}}-{{.OS}}-{{.Arch}}.exe
         format: raw
         replacements:
           darwin: macos
           amd64: x86-64
+      - version_constraint: "true"
+        url: https://binaries.sonarsource.com/Distribution/sonarqube-cli/{{.Version}}/{{.OS}}/sonarqube-cli-{{.Version}}-{{.OS}}-{{.Arch}}.bin
+        format: raw
+        complete_windows_ext: false
+        replacements:
+          darwin: macos
+          amd64: x86-64
+        overrides:
+          - goos: windows
+            url: https://binaries.sonarsource.com/Distribution/sonarqube-cli/{{.Version}}/{{.OS}}/sonarqube-cli-{{.Version}}-{{.OS}}-{{.Arch}}.exe
   - type: github_release
     repo_owner: Songmu
     repo_name: ecschedule
