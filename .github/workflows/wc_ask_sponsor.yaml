@@ -1,0 +1,73 @@
+---
+on:
+  workflow_dispatch:
+    inputs:
+      author:
+        required: true
+      pr_number:
+        required: true
+  workflow_call:
+    inputs:
+      author:
+        type: string
+        required: true
+      pr_number:
+        type: string
+        required: true
+jobs:
+  ask_sponsor:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pull-requests: write
+    steps:
+      - env:
+          GH_TOKEN: ${{github.token}}
+          AUTHOR: ${{inputs.author}}
+          PR_NUMBER: ${{inputs.pr_number}}
+          BODY: |
+            # Sponsor Our Project
+
+            We dedicate a significant amount of time every day to maintaining aqua and aqua-registry.
+            Today, aqua-registry is used not only by aqua itself, but also by projects such as mise and Docker Agent.
+            If you find these projects useful, please consider supporting us through GitHub Sponsors.
+
+            https://github.com/sponsors/aquaproj
+        run: |
+          set -eu
+
+          is_sponsor=$(gh api graphql \
+            -F "sponsorable=aquaproj" \
+            -F "author=$AUTHOR" \
+            -q '.data.organization.isSponsoredBy' \
+            -f query='
+              query($sponsorable: String!, $author: String!) {
+                organization(login: $sponsorable) {
+                  isSponsoredBy(accountLogin: $author)
+                }
+              }')
+          if [ "$is_sponsor" = "true" ]; then
+            echo "::notice:: @$AUTHOR is a sponsor of aquaproj"
+            exit 0
+          fi
+
+          is_sponsor=$(gh api graphql \
+            -F "sponsorable=suzuki-shunsuke" \
+            -F "author=$AUTHOR" \
+            -q '.data.user.isSponsoredBy' \
+            -f query='
+              query($sponsorable: String!, $author: String!) {
+                user(login: $sponsorable) {
+                  isSponsoredBy(accountLogin: $author)
+                }
+              }')
+          if [ "$is_sponsor" = "true" ]; then
+            echo "::notice:: @$AUTHOR is a sponsor of suzuki-shunsuke"
+            exit 0
+          fi
+
+          echo "::notice:: @$AUTHOR is NOT a (public) sponsor of aquaproj or suzuki-shunsuke"
+          gh pr comment \
+            -R "$GITHUB_REPOSITORY" \
+            --body "$BODY" \
+            "$PR_NUMBER"
