@@ -71592,15 +71592,16 @@ packages:
     repo_owner: oxc-project
     repo_name: oxc
     description: The linter for oxc
+    version_filter: 'Version matches "^apps_v" || Version matches "^oxlint_v"'
+    files:
+      - name: oxlint
+        src: "{{.AssetWithoutExt}}"
     version_constraint: "false"
-    version_prefix: oxlint_v
     version_overrides:
-      - version_constraint: semver(">= 1.17.0")
-        error_message: |
-          aqua can't support oxlint 1.17.0 or later. 
-          > Newer versions of Oxlint require node.js. There isn’t a native executable alternative anymore.
-          https://github.com/oxc-project/oxc/discussions/14452#discussioncomment-14631344
+      - version_constraint: Version in ["apps_v1.47.0", "oxlint_v0.0.9", "oxlint_v0.1.1"]
+        no_asset: true
       - version_constraint: semver("<= 0.0.8")
+        version_prefix: oxlint_v
         asset: oxlint-{{.OS}}-{{.Arch}}
         files:
           - name: oxlint
@@ -71608,9 +71609,8 @@ packages:
         replacements:
           amd64: x64
           windows: win32
-      - version_constraint: Version == "oxlint_v0.0.9"
-        no_asset: true
       - version_constraint: semver("<= 0.0.19")
+        version_prefix: oxlint_v
         asset: oxlint-{{.OS}}-{{.Arch}}
         files:
           - name: oxlint
@@ -71618,9 +71618,8 @@ packages:
         replacements:
           amd64: x64
           windows: win32
-      - version_constraint: Version == "oxlint_v0.1.1"
-        no_asset: true
       - version_constraint: semver("<= 0.2.2")
+        version_prefix: oxlint_v
         asset: oxlint-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
@@ -71632,7 +71631,8 @@ packages:
         replacements:
           amd64: x64
           windows: win32
-      - version_constraint: "true"
+      - version_constraint: semver("< 1.17.0")
+        version_prefix: oxlint_v
         asset: oxlint-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
@@ -71649,6 +71649,62 @@ packages:
         replacements:
           amd64: x64
           windows: win32
+      - version_constraint: semver(">= 1.17.0")
+        version_prefix: oxlint_v
+        error_message: |
+          This version is unavailable.
+          < 1.17.0: The version prefix is oxlint_v e.g. oxlint_v1.16.0
+          >= 1.17.0, < 1.28.0: These versions are unavailable
+          >= 1.28.0: The version prefix is apps_v e.g. apps_v1.28.0
+      - version_constraint: semver("< 1.28.0")
+        version_prefix: apps_v
+        error_message: |
+          The version was too old. Please ugrade to 1.28.0 or later.
+          < 1.17.0: The version prefix is oxlint_v
+          >= 1.17.0, < 1.28.0: These versions are unavailable
+          >= 1.28.0: The version prefix is apps_v
+      - version_constraint: semver("<= 1.43.0")
+        version_prefix: apps_v
+        asset: oxlint-{{.OS}}-{{.Arch}}-gnu.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: darwin
+            asset: oxlint-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: oxlint-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: semver("<= 1.51.0")
+        version_prefix: apps_v
+        asset: oxlint-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.53.0")
+        version_prefix: apps_v
+        no_asset: true
+      - version_constraint: "true"
+        version_prefix: apps_v
+        asset: oxlint-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: oxipng
     repo_name: oxipng
