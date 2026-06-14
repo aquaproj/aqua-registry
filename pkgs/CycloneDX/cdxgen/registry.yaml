@@ -4,10 +4,17 @@ packages:
     repo_owner: CycloneDX
     repo_name: cdxgen
     description: Creates CycloneDX Bill of Materials (BOM) from source code and container images
-    version_filter: (Version startsWith "v12.") and not (Version contains "-")
+    version_filter: (semver(">= 11.5.0")) and not (Version contains "-")
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v12.0.0"
+      - version_constraint: semver("<= 11.9.0")
+        asset: cdxgen-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+      - version_constraint: semver("<= 12.0.0")
         asset: cdxgen-{{.OS}}-{{.Arch}}
         format: raw
         checksum:
