@@ -2,6 +2,8 @@
 
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/aquaproj/aqua-registry)
 
+test
+
 [aqua](https://aquaproj.github.io/)'s Standard Registry
 
 - [Document](https://aquaproj.github.io/docs/products/aqua-registry)
