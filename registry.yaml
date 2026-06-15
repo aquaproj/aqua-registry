@@ -5320,9 +5320,13 @@ packages:
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.7.0-alpha.1"
+        no_asset: true
       - version_constraint: "true"
         asset: merman-cli-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
+        files:
+          - name: merman
+            src: "{{.AssetWithoutExt}}/merman-cli"
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
@@ -5339,6 +5343,9 @@ packages:
               arm64: aarch64
           - goos: windows
             format: zip
+            files:
+              - name: merman
+                src: merman-cli.exe
         supported_envs:
           - darwin
           - windows
