@@ -1,5 +1,7 @@
 # aqua-registry
 
+test
+
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/aquaproj/aqua-registry)
 
 [aqua](https://aquaproj.github.io/)'s Standard Registry
