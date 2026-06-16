@@ -87629,11 +87629,19 @@ packages:
     repo_owner: suzuki-shunsuke
     repo_name: ghtkn
     description: A CLI to create GitHub App User Access Token for secure local development
+    asset: ghtkn_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    slsa_provenance:
+      type: github_release
+      asset: multiple.intoto.jsonl
+    github_artifact_attestations:
+      signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
+    overrides:
+      - goos: windows
+        format: zip
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
-        asset: ghtkn_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
+      - version_constraint: semver("<= 0.2.2")
         checksum:
           type: github_release
           asset: ghtkn_checksums.txt
@@ -87648,14 +87656,34 @@ packages:
               - https://token.actions.githubusercontent.com
               - --signature
               - https://github.com/suzuki-shunsuke/ghtkn/releases/download/{{.Version}}/ghtkn_checksums.txt.sig
-        slsa_provenance:
+      - version_constraint: semver("<= 0.2.5")
+        checksum:
           type: github_release
-          asset: multiple.intoto.jsonl
-        github_artifact_attestations:
-          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
-        overrides:
-          - goos: windows
-            format: zip
+          asset: ghtkn_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: ghtkn_checksums.txt.bundle
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.+$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+      - version_constraint: "true"
+        checksum:
+          type: github_release
+          asset: ghtkn_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: ghtkn_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.+$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
   - type: github_release
     repo_owner: suzuki-shunsuke
     repo_name: git-rm-branch
