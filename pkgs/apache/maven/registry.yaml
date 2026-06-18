@@ -13,11 +13,11 @@ packages:
         format: tar.gz
         checksum:
           type: http
-          url: https://archive.apache.org/dist/maven/maven-{{(semver .SemVer).Major}}/{{.SemVer}}/binaries/apache-maven-{{.SemVer}}-bin.{{.Format}}.sha512
+          url: https://archive.apache.org/dist/maven/maven-{{(semver .SemVer).Major}}/{{.SemVer}}/binaries/apache-maven-{{.SemVer}}-bin.{{.Format}}.sha1
           file_format: regexp
-          algorithm: sha512
+          algorithm: sha1
           pattern:
-            checksum: ^(\b[A-Fa-f0-9]{128}\b)
+            checksum: ^(\b[A-Fa-f0-9]{40}\b)
         files:
           - name: mvn
             src: apache-maven-{{.SemVer}}/bin/mvn
@@ -26,6 +26,24 @@ packages:
             files:
               - name: mvn
                 src: apache-maven-{{.SemVer}}/bin/mvn.bat
+      - version_constraint: semver("<= 3.3.1")
+        url: https://archive.apache.org/dist/maven/maven-{{(semver .SemVer).Major}}/{{.SemVer}}/binaries/apache-maven-{{.SemVer}}-bin.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: http
+          url: https://archive.apache.org/dist/maven/maven-{{(semver .SemVer).Major}}/{{.SemVer}}/binaries/apache-maven-{{.SemVer}}-bin.{{.Format}}.sha1
+          file_format: regexp
+          algorithm: sha1
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{40}\b)
+        files:
+          - name: mvn
+            src: apache-maven-{{.SemVer}}/bin/mvn
+        overrides:
+          - goos: windows
+            files:
+              - name: mvn
+                src: apache-maven-{{.SemVer}}/bin/mvn.cmd
       - version_constraint: "true"
         url: https://archive.apache.org/dist/maven/maven-{{(semver .SemVer).Major}}/{{.SemVer}}/binaries/apache-maven-{{.SemVer}}-bin.{{.Format}}
         format: tar.gz
