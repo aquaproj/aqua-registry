@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: VirusTotal
+    repo_name: vt-cli
+    description: VirusTotal Command Line Interface
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "1.1.0"
+        no_asset: true
+      - version_constraint: "true"
+        asset: "{{.OS}}32.{{.Format}}"
+        format: zip
+        replacements:
+          darwin: MacOSX
+          linux: Linux
+          windows: Windows
+        overrides:
+          - goos: linux
+            asset: "{{.OS}}64.{{.Format}}"
+            replacements:
+              amd64: x64
+          - goos: darwin
+            asset: "{{.OS}}.{{.Format}}"
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
