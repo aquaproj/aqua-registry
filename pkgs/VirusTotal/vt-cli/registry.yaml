@@ -9,20 +9,20 @@ packages:
       - version_constraint: Version == "1.1.0"
         no_asset: true
       - version_constraint: "true"
-        asset: "{{.OS}}32.{{.Format}}"
+        asset: "{{.OS}}{{.Arch}}.{{.Format}}"
         format: zip
+        files:
+          - name: vt
         replacements:
           darwin: MacOSX
           linux: Linux
           windows: Windows
+          amd64: "64"
+          "386": "32"
         overrides:
-          - goos: linux
-            asset: "{{.OS}}64.{{.Format}}"
-            replacements:
-              amd64: x64
           - goos: darwin
             asset: "{{.OS}}.{{.Format}}"
         supported_envs:
-          - darwin
-          - windows
-          - amd64
+          - darwin/amd64
+          - linux/amd64
+          - windows/amd64
