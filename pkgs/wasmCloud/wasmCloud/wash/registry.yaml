@@ -5,9 +5,64 @@ packages:
     repo_owner: wasmCloud
     repo_name: wasmCloud
     description: wasmCloud is an open source Cloud Native Computing Foundation (CNCF) project that enables teams to build, manage, and scale polyglot apps across any cloud, K8s, or edge
-    version_prefix: wash-v
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("< 2.0.0")
+        version_prefix: wash-v
+        asset: wash-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+      - version_constraint: semver("<= 2.0.1")
+        asset: wash-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        complete_windows_ext: false
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        github_artifact_attestations:
+          signer_workflow: wasmCloud/wasmCloud/\.github/workflows/wash\.yml
+      - version_constraint: semver("<= 2.0.5")
+        asset: wash-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            asset: wash-{{.Arch}}-{{.OS}}.{{.Format}}
+        github_artifact_attestations:
+          signer_workflow: wasmCloud/wasmCloud/\.github/workflows/wash\.yml
+      - version_constraint: semver("< 2.1.0")
+        asset: wash-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            asset: wash-{{.Arch}}-{{.OS}}.{{.Format}}
+        github_artifact_attestations:
+          signer_workflow: wasmCloud/wasmCloud/\.github/workflows/release-tag\.yml
       - version_constraint: "true"
         asset: wash-{{.Arch}}-{{.OS}}
         format: raw
@@ -18,3 +73,18 @@ packages:
           darwin: apple-darwin
           linux: unknown-linux-musl
           windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            asset: wash-{{.Arch}}-{{.OS}}.{{.Format}}
+        cosign:
+          bundle:
+            type: github_release
+            asset: wash.sigstore.json
+          opts:
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
+            - --certificate-identity
+            - https://github.com/wasmCloud/wasmCloud/.github/workflows/release-tag.yml@refs/heads/main
+        github_artifact_attestations:
+          signer_workflow: wasmCloud/wasmCloud/\.github/workflows/release-tag\.yml

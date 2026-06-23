@@ -38,16 +38,27 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: Version == "v1.3.1"
+        # https://github.com/FiloSottile/age/pull/676
+        # https://github.com/FiloSottile/age/commit/10561a774f9f6de47c8d23ddc58537b6a18b083d
+        asset: age-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        github_artifact_attestations:
+          signer_workflow: FiloSottile/age/.github/workflows/build.yml
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: darwin
+            goarch: amd64
+            github_artifact_attestations:
+              signer_workflow: FiloSottile/age/.github/workflows/darwin-amd64-backfill.yml
       - version_constraint: "true"
         asset: age-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
+        github_artifact_attestations:
+          signer_workflow: FiloSottile/age/.github/workflows/build.yml
         overrides:
           - goos: windows
             format: zip
-        supported_envs:
-          - linux
-          - darwin/arm64
-          - windows
-        github_artifact_attestations:
-          signer_workflow: FiloSottile/age/.github/workflows/build.yml

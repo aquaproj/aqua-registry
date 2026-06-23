@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: earendil-works
+    repo_name: pi
+    description: Interactive coding agent CLI
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 0.12.0")
+        no_asset: true
+      - version_constraint: Version == "v0.12.0"
+        asset: pi-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: pi
+            src: pi-{{.OS}}-{{.Arch}}
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("< 0.46.0")
+        asset: pi-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: pi-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: pi
+            src: pi/pi
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: pi

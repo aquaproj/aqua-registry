@@ -6,7 +6,7 @@ packages:
     description: A security layer for Git repositories
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.12.0")
         asset: gittuf_{{trimV .Version}}_{{.OS}}_{{.Arch}}
         format: raw
         checksum:
@@ -35,3 +35,23 @@ packages:
             - https://github.com/gittuf/gittuf/releases/download/{{.Version}}/gittuf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.sig
             - --certificate
             - https://github.com/gittuf/gittuf/releases/download/{{.Version}}/gittuf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pem
+      - version_constraint: Version == "v0.13.0"
+        no_asset: true
+      - version_constraint: "true"
+        asset: gittuf_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+            opts:
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --certificate-identity
+              - "https://github.com/gittuf/gittuf/.github/workflows/release.yml@refs/tags/{{.Version}}"
+        github_artifact_attestations:
+          signer_workflow: gittuf/gittuf/\.github/workflows/release\.yml

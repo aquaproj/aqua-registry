@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: google
+    repo_name: google-java-format
+    description: Reformats Java source code to comply with Google Java Style
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.19.2")
+        asset: google-java-format-{{trimV .Version}}-all-deps.jar
+        format: raw
+        complete_windows_ext: false
+      - version_constraint: semver("<= 1.25.2")
+        asset: google-java-format_{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86-64
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
+          - windows
+      - version_constraint: "true"
+        asset: google-java-format_{{.OS}}-{{.Arch}}
+        windows_arm_emulation: true
+        format: raw
+        replacements:
+          amd64: x86-64
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows

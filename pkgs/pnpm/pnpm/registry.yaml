@@ -70,7 +70,7 @@ packages:
           amd64: x64
           darwin: macos
           windows: win
-      - version_constraint: "true"
+      - version_constraint: semver("< 11.0.0")
         asset: pnpm-{{.OS}}-{{.Arch}}
         format: raw
         windows_arm_emulation: true
@@ -82,4 +82,65 @@ packages:
           amd64: x64
           darwin: macos
           windows: win
-        github_immutable_release: true
+      - version_constraint: semver("<= 11.0.4")
+        asset: pnpm-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: pnpm
+          - name: pn
+            src: pnpm
+            link: pn
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 11.0.6")
+        asset: pnpm-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: pnpm
+          - name: pn
+            src: pnpm
+            link: pn
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
+        github_artifact_attestations:
+          signer_workflow: pnpm/pnpm/\.github/workflows/release\.yml
+        supported_envs:
+          - linux
+          - windows
+          - darwin/arm64
+      - version_constraint: "true"
+        asset: pnpm-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: pnpm
+          - name: pn
+            src: pnpm
+            link: pn
+          - name: pnpx
+            src: pnpm
+            link: pnpx
+            hard: true
+          - name: pnx
+            src: pnpm
+            link: pnx
+            hard: true
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
+        github_artifact_attestations:
+          signer_workflow: pnpm/pnpm/\.github/workflows/release\.yml
+        supported_envs:
+          - linux
+          - windows
+          - darwin/arm64

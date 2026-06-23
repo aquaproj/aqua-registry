@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: Code-Hex
+    repo_name: Neo-cowsay
+    description: Cowsay reborn in Go
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.0.5")
+        asset: cowsay_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: cowsay
+            src: "{{.OS}}_{{.Arch}}/cowsay"
+          - name: cowthink
+            src: "{{.OS}}_{{.Arch}}/cowthink"
+        rosetta2: true
+        windows_arm_emulation: true
+        supported_envs:
+          - darwin/amd64
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: semver("<= 1.0.1")
+        asset: cowsay_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: cowsay
+          - name: cowthink
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: cowsay_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin/amd64
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: semver("<= 1.0.4")
+        asset: cowsay_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: cowsay
+          - name: cowthink
+        replacements:
+          amd64: x86_64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: cowsay_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            replacements:
+              arm64: arm
+      - version_constraint: "true"
+        asset: cowsay_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: cowsay
+          - name: cowthink
+        replacements:
+          amd64: x86_64
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: cowsay_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip

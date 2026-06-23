@@ -23,38 +23,33 @@ jobs:
     permissions:
       packages: write
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
       - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
         with:
-          aqua_version: v2.57.1
+          aqua_version: v2.60.1
           policy_allow: "true"
           aqua_opts: -l -a
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
       - name: Generate token
-        id: generate_token
-        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        id: token
         with:
-          app_id: ${{secrets.APP_ID}}
-          private_key: ${{secrets.APP_PRIVATE_KEY}}
-          repositories: >-
-            ["${{github.event.repository.name}}"]
-          permissions: >-
-            {
-              "contents": "write",
-              "pull_requests": "write"
-            }
+          client-id: ${{vars.APP_CLIENT_ID}}
+          private-key: ${{secrets.APP_PRIVATE_KEY}}
+          permission-contents: write
+          permission-pull-requests: write
       - run: aqua-registry-updater
         if: inputs.package == ''
         env:
           AQUA_REGISTRY_UPDATER_CONTAINER_REGISTRY_TOKEN: ${{github.token}}
-          GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
+          GITHUB_TOKEN: ${{steps.token.outputs.token}}
 
       - run: aqua-registry-updater "$PKG"
         if: inputs.package != ''
         env:
           AQUA_REGISTRY_UPDATER_CONTAINER_REGISTRY_TOKEN: ${{github.token}}
-          GITHUB_TOKEN: ${{steps.generate_token.outputs.token}}
+          GITHUB_TOKEN: ${{steps.token.outputs.token}}
           PKG: ${{inputs.package}}
