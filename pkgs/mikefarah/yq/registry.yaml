@@ -13,6 +13,17 @@ packages:
     version_overrides:
       - version_constraint: semver("< 4.35.1")
         rosetta2: true
+      - version_constraint: semver("< 4.53.0")
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: checksums-bsd
+          file_format: regexp
+          algorithm: sha512
+          pattern:
+            # rhash bsd format, https://rhash.sourceforge.io/manpage.php#sect6
+            checksum: ^SHA512\s+\([^)]+\)\s+=\s+([A-Fa-f0-9]{128})$
+            file: ^SHA512\s+\(([^)]+)\)\s+=\s+[A-Fa-f0-9]{128}$
       - version_constraint: "true"
         rosetta2: true
         checksum:
@@ -24,3 +35,12 @@ packages:
             # rhash bsd format, https://rhash.sourceforge.io/manpage.php#sect6
             checksum: ^SHA512\s+\([^)]+\)\s+=\s+([A-Fa-f0-9]{128})$
             file: ^SHA512\s+\(([^)]+)\)\s+=\s+[A-Fa-f0-9]{128}$
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums-bsd.bundle
+            opts:
+              - --certificate-identity
+              - https://github.com/mikefarah/yq/.github/workflows/release.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
