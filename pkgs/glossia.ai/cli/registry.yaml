@@ -2,20 +2,30 @@
 packages:
   - type: http
     name: glossia.ai/cli
+    aliases:
+      - name: glossia/cli
+    link: https://glossia.ai/en/docs/reference/cli/
     description: Localize like you ship software
-    link: https://glossia.ai/docs/reference/cli
-    version_prefix: cli-v
-    windows_arm_emulation: true
-    url: https://glossia-releases.t3.storage.dev/cli/{{.SemVer}}/glossia-{{.OS}}-{{.Arch}}.{{.Format}}
     files:
       - name: glossia
-    replacements:
-      amd64: x64
-    format: tar.gz
-    overrides:
-      - goos: windows
-        format: zip
-    checksum:
-      type: http
-      url: https://glossia-releases.t3.storage.dev/cli/{{.SemVer}}/SHA256SUMS
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version startsWith "cli-v" or Version startsWith "v"
+        error_message: Remove the prefix "cli-v" from the version
+      - version_constraint: Version startsWith "v"
+        error_message: Remove the prefix "v" from the version
+      - version_constraint: semver("<= 0.14.0")
+        error_message: The version is too old. Please upgrade to 0.16.0 or later.
+      - version_constraint: "true"
+        windows_arm_emulation: true
+        url: https://releases.glossia.ai/cli/{{.Version}}/glossia-{{.OS}}-{{.Arch}}.{{.Format}}
+        replacements:
+          amd64: x64
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          type: http
+          url: https://releases.glossia.ai/cli/{{.Version}}/SHA256SUMS
+          algorithm: sha256

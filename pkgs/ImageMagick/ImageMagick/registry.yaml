@@ -1,0 +1,71 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: ImageMagick
+    repo_name: ImageMagick
+    description: ImageMagick is a free and open-source software suite for displaying, creating, converting, modifying, and editing raster images
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 7.1.2-18")
+        supported_envs:
+          - windows/amd64
+        overrides:
+          - goos: linux
+            format: raw
+            asset: ImageMagick-{{.Version}}-gcc-x86_64.AppImage
+            files:
+              - name: magick
+          - goos: windows
+            asset: ImageMagick-{{.Version}}-portable-Q16-HDRI-x64.{{.Format}}
+            format: 7z
+            files:
+              - name: compare
+              - name: composite
+              - name: conjure
+              - name: identify
+              - name: magick
+              - name: mogrify
+              - name: montage
+              - name: stream
+      - version_constraint: Version == "7.1.2-19"
+        github_artifact_attestations:
+          signer_workflow: ImageMagick/ImageMagick/.github/workflows/release.yml
+        supported_envs:
+          - windows/amd64
+        overrides:
+          - goos: windows
+            asset: ImageMagick-{{.Version}}-portable-Q16-HDRI-x64.{{.Format}}
+            format: 7z
+            files:
+              - name: compare
+              - name: composite
+              - name: conjure
+              - name: identify
+              - name: magick
+              - name: mogrify
+              - name: montage
+              - name: stream
+      - version_constraint: "true"
+        github_artifact_attestations:
+          signer_workflow: ImageMagick/ImageMagick/.github/workflows/release.yml
+        supported_envs:
+          - windows/amd64
+          - linux/amd64
+        overrides:
+          - goos: linux
+            format: raw
+            asset: ImageMagick-{{.Version}}-gcc-x86_64.AppImage
+            files:
+              - name: magick
+          - goos: windows
+            asset: ImageMagick-{{.Version}}-portable-Q16-HDRI-x64.{{.Format}}
+            format: 7z
+            files:
+              - name: compare
+              - name: composite
+              - name: conjure
+              - name: identify
+              - name: magick
+              - name: mogrify
+              - name: montage
+              - name: stream

@@ -16,7 +16,7 @@ You can install any versions not listed in `pkgs/**/pkg.yaml`.
 packages: []
 ```
 
-If `cmdx s` fails to fetch versions, packages may become empty.
+If `argd s` fails to fetch versions, packages may become empty.
 
 ## Test multiple versions
 

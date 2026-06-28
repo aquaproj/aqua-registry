@@ -9,6 +9,19 @@ packages:
       - name: age-plugin-yubikey
         src: age-plugin-yubikey/age-plugin-yubikey
     version_overrides:
+      - version_constraint: Version == "v0.5.0"
+        asset: age-plugin-yubikey-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
+          - windows/amd64
       - version_constraint: semver("<= 0.3.0")
         asset: age-plugin-yubikey-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -23,18 +36,18 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: semver("<= 0.4.0")
+      - version_constraint: Version == "v0.5.1"
         asset: age-plugin-yubikey-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
+        format: zip
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
         overrides:
-          - goos: windows
-            format: zip
+          - goos: darwin
+            format: tar.gz
         supported_envs:
           - darwin
-          - amd64
+          - windows/amd64
       - version_constraint: "true"
         asset: age-plugin-yubikey-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -45,6 +58,6 @@ packages:
           - goos: windows
             format: zip
         supported_envs:
-          - darwin/arm64
-          - linux/amd64
+          - darwin
           - windows
+          - amd64

@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: sholdee
+    repo_name: crd-schema-publisher
+    description: Browsable CRD docs and IDE validation schemas, straight from your Kubernetes cluster
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2026.424.75813")
+        no_asset: true
+      - version_constraint: "true"
+        asset: crd-schema-publisher-{{.OS}}-{{.Arch}}
+        format: raw
+        github_artifact_attestations:
+          signer_workflow: sholdee/crd-schema-publisher/.github/workflows/release.yaml
+        checksum:
+          type: github_release
+          asset: checksums-sha256.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity
+              - https://github.com/sholdee/crd-schema-publisher/.github/workflows/release.yaml@refs/heads/main
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+            bundle:
+              type: github_release
+              asset: checksums-sha256.txt.sigstore.json
+        supported_envs:
+          - linux
+          - darwin

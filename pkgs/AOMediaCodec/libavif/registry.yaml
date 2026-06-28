@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: AOMediaCodec
+    repo_name: libavif
+    description: Library for encoding and decoding AVIF files
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.1.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: "{{.OS}}-artifacts.{{.Format}}"
+        format: zip
+        replacements:
+          darwin: macOS
+        supported_envs:
+          - linux/amd64
+          - darwin/arm64
+          - windows/amd64
+        files:
+          - name: avifenc
+          - name: avifdec
+          - name: avifgainmaputil

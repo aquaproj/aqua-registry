@@ -15,7 +15,7 @@ packages:
             format: zip
             files:
               - name: edit
-                src: "{{.AssetWithoutExt}}/edit.exe"
+                src: "{{.AssetWithoutExt}}/edit"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -38,11 +38,11 @@ packages:
             format: zip
             files:
               - name: edit
-                src: "{{.AssetWithoutExt}}/edit.exe"
+                src: "{{.AssetWithoutExt}}/edit"
         supported_envs:
           - linux
           - windows
-      - version_constraint: "true"
+      - version_constraint: semver("< 2.0.0")
         asset: edit-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.zst
         overrides:
@@ -50,11 +50,29 @@ packages:
             format: zip
             files:
               - name: edit
-                src: "{{.AssetWithoutExt}}/edit.exe"
+                src: "{{.AssetWithoutExt}}/edit"
         replacements:
           amd64: x86_64
           arm64: aarch64
           linux: linux-gnu
         supported_envs:
+          - linux
+          - windows
+      - version_constraint: "true"
+        asset: edit-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: edit
+                src: "{{.AssetWithoutExt}}/edit"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: linux-gnu
+        supported_envs:
+          - darwin/arm64
           - linux
           - windows

@@ -6,7 +6,7 @@ packages:
     description: A free and open source Java framework for building Semantic Web and Linked Data applications (CLI tools)
     version_source: github_tag
     version_prefix: jena-
-    version_filter: Version matches "^jena-\\d+"
+    version_filter: Version matches "^jena-\\d+\\.\\d+\\.\\d+$"
     files:
       - name: arq
         src: apache-jena-{{.SemVer}}/bin/arq
@@ -129,6 +129,8 @@ packages:
             src: apache-jena-{{.SemVer}}/bat/tdbdump.bat
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("< 3.13.0")
+        error_message: apache/jena is supported from jena-3.13.0 because older archives use different command sets or checksum files
       - version_constraint: "true"
         url: https://archive.apache.org/dist/jena/binaries/apache-jena-{{.SemVer}}.tar.gz
         format: tgz
