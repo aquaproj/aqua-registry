@@ -76266,6 +76266,33 @@ packages:
           - name: raco
             src: racket/raco
   - type: github_release
+    repo_owner: radiosilence
+    repo_name: fastmail-cli
+    description: CLI and MCP server for Fastmail — email, contacts, masked email, attachments, text extraction. JMAP + CardDAV + GraphQL
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.6.0")
+        asset: fastmail-cli-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: fastmail-cli-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux/amd64
+          - darwin
+  - type: github_release
     repo_owner: rajatjindal
     repo_name: krew-release-bot
     description: bot to bump version of plugin in krew-index on new releases
