@@ -96494,6 +96494,48 @@ packages:
           - goos: windows
             format: zip
   - type: github_release
+    repo_owner: voidzero-dev
+    repo_name: vite-plus
+    description: Vite+ is the unified toolchain and entry point for web development. It manages your runtime, package manager, and frontend toolchain in one place
+    files:
+      - name: vp
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.21-alpha.5"
+        no_asset: true
+      - version_constraint: Version == "v0.1.16-alpha.3"
+        asset: vp-setup-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          windows: pc-windows-msvc
+        supported_envs:
+          - windows
+      - version_constraint: semver("<= 0.1.16")
+        no_asset: true
+      - version_constraint: semver("<= 0.1.22")
+        asset: vp-setup-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          windows: pc-windows-msvc
+        supported_envs:
+          - windows
+      - version_constraint: "true"
+        asset: vp-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: volta-cli
     repo_name: volta
     description: "Volta: JS Toolchains as Code"
