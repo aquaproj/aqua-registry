@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: Mic92
+    repo_name: nixfmt-rs
+    description: A from-scratch Rust reimplementation of nixfmt that produces byte-identical output to the Haskell original
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.1.1"
+        no_asset: true
+      - version_constraint: "true"
+        asset: nixfmt-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          arm64: aarch64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - linux
+          - darwin/arm64
