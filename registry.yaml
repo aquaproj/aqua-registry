@@ -59020,6 +59020,13 @@ packages:
           - linux/amd64
           - darwin
           - windows
+      - version_constraint: semver("< 4.0.10")
+        asset: kubescape_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.sha256
+          algorithm: sha256
       - version_constraint: "true"
         asset: kubescape_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -59027,6 +59034,8 @@ packages:
           type: github_release
           asset: checksums.sha256
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: kubescape/kubescape/.github/workflows/02-release.yaml
   - type: github_release
     repo_owner: kubeshark
     repo_name: kubeshark
