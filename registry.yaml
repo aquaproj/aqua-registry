@@ -78580,27 +78580,32 @@ packages:
     repo_owner: russellbanks
     repo_name: Komac
     description: The Community Manifest Creator for WinGet
-    version_filter: Version startsWith "v2"
+    files:
+      - name: komac
+    version_filter: semver(">= 2.0.0")
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("< 2.0.0")
+        no_asset: true
       - version_constraint: Version == "v2.0.0"
         asset: KomacPortable-{{.OS}}-nightly-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: komac
+            src: KomacPortable-{{.OS}}-nightly-{{.Arch}}
         replacements:
           amd64: x64
           darwin: macos
         overrides:
           - goos: windows
-            goarch: amd64
-            format: raw
-            asset: KomacPortable-nightly-x86
-          - goos: windows
-            goarch: arm64
             format: raw
             asset: KomacPortable-nightly-{{.Arch}}
       - version_constraint: Version == "v2.0.3"
         asset: KomacPortable-{{.OS}}-{{trimV .Version}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: komac
+            src: KomacPortable-{{.OS}}-{{trimV .Version}}-{{.Arch}}
         replacements:
           amd64: x64
           darwin: macos
@@ -78611,6 +78616,9 @@ packages:
       - version_constraint: Version == "v2.2.1"
         asset: KomacPortable-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: komac
+            src: KomacPortable-{{.OS}}-{{.Arch}}
         replacements:
           amd64: x64
           darwin: macos
@@ -78620,11 +78628,6 @@ packages:
           algorithm: sha256
         overrides:
           - goos: windows
-            goarch: amd64
-            format: raw
-            asset: KomacPortable-x86
-          - goos: windows
-            goarch: arm64
             format: raw
             asset: KomacPortable-{{.Arch}}
         supported_envs:
@@ -78647,6 +78650,9 @@ packages:
       - version_constraint: semver("<= 2.0.2")
         asset: KomacPortable-{{.OS}}-{{.Version}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: komac
+            src: KomacPortable-{{.OS}}-{{.Version}}-{{.Arch}}
         replacements:
           amd64: x64
           darwin: macos
@@ -78657,6 +78663,9 @@ packages:
       - version_constraint: semver("<= 2.2.0")
         asset: KomacPortable-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: komac
+            src: KomacPortable-{{.OS}}-{{.Arch}}
         replacements:
           amd64: x64
           darwin: macos
@@ -78666,11 +78675,6 @@ packages:
           algorithm: sha256
         overrides:
           - goos: windows
-            goarch: amd64
-            format: raw
-            asset: KomacPortable-x86
-          - goos: windows
-            goarch: arm64
             format: raw
             asset: KomacPortable-{{.Arch}}
       - version_constraint: semver("<= 2.12.1")
