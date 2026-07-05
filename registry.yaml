@@ -78577,6 +78577,137 @@ packages:
           asset: checksums.txt
           algorithm: sha256
   - type: github_release
+    repo_owner: russellbanks
+    repo_name: Komac
+    description: The Community Manifest Creator for WinGet
+    version_filter: Version startsWith "v2"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v2.0.0"
+        asset: KomacPortable-{{.OS}}-nightly-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+          darwin: macos
+        overrides:
+          - goos: windows
+            goarch: amd64
+            format: raw
+            asset: KomacPortable-nightly-x86
+          - goos: windows
+            goarch: arm64
+            format: raw
+            asset: KomacPortable-nightly-{{.Arch}}
+      - version_constraint: Version == "v2.0.3"
+        asset: KomacPortable-{{.OS}}-{{trimV .Version}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+          darwin: macos
+        overrides:
+          - goos: windows
+            format: raw
+            asset: KomacPortable-{{trimV .Version}}-{{.Arch}}
+      - version_constraint: Version == "v2.2.1"
+        asset: KomacPortable-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            goarch: amd64
+            format: raw
+            asset: KomacPortable-x86
+          - goos: windows
+            goarch: arm64
+            format: raw
+            asset: KomacPortable-{{.Arch}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+          - windows
+      - version_constraint: Version == "v2.13.0"
+        asset: komac-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: raw
+            asset: komac-{{trimV .Version}}-{{.Arch}}-{{.OS}}
+      - version_constraint: semver("<= 2.0.2")
+        asset: KomacPortable-{{.OS}}-{{.Version}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+          darwin: macos
+        overrides:
+          - goos: windows
+            format: raw
+            asset: KomacPortable-{{.Version}}-{{.Arch}}
+      - version_constraint: semver("<= 2.2.0")
+        asset: KomacPortable-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            goarch: amd64
+            format: raw
+            asset: KomacPortable-x86
+          - goos: windows
+            goarch: arm64
+            format: raw
+            asset: KomacPortable-{{.Arch}}
+      - version_constraint: semver("<= 2.12.1")
+        asset: komac-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: raw
+            asset: komac-{{trimV .Version}}-{{.Arch}}-{{.OS}}
+      - version_constraint: "true"
+        asset: komac-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: raw
+            asset: komac-{{trimV .Version}}-{{.Arch}}-{{.OS}}
+  - type: github_release
     repo_owner: rust-cross
     repo_name: cargo-zigbuild
     description: Compile Cargo project with zig as linker
