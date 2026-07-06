@@ -70016,7 +70016,7 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.133.0-alpha.1")
         asset: codex-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zst
         windows_arm_emulation: true
@@ -70032,6 +70032,19 @@ packages:
         overrides:
           - goos: windows
             asset: codex-{{.Arch}}-{{.OS}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: codex-package-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: codex
+            src: bin/codex
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
   - type: github_release
     repo_owner: openai
     repo_name: tart
