@@ -26937,6 +26937,27 @@ packages:
       - name: cc-test-reporter
         src: test-reporter
   - type: github_release
+    repo_owner: coder3101
+    repo_name: protols
+    description: Language Server for protocol buffers
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: protols-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: coder
     repo_name: boo
     description: A GNU screen style terminal multiplexer built on libghostty
@@ -27027,27 +27048,6 @@ packages:
             format: tar.gz
         github_artifact_attestations:
           signer_workflow: coder/coder/\.github/workflows/release\.yaml
-  - type: github_release
-    repo_owner: coder3101
-    repo_name: protols
-    description: Language Server for protocol buffers
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 0.2.1")
-        no_asset: true
-      - version_constraint: "true"
-        asset: protols-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        overrides:
-          - goos: windows
-            format: zip
   - type: github_release
     repo_owner: codesenberg
     repo_name: bombardier
@@ -63961,6 +63961,53 @@ packages:
         overrides:
           - goos: linux
             format: tar.gz
+  - type: github_release
+    repo_owner: microsoft
+    repo_name: winappCli
+    description: winapp, the Windows App Development CLI, is a single command-line interface for managing Windows SDKs, packaging, generating app identity, manifests, certificates, and using build tools with any app framework
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        asset: "{{.OS}}appcli-{{.Arch}}.{{.Format}}"
+        format: zip
+        replacements:
+          amd64: x64
+          windows: win
+        supported_envs:
+          - windows
+      - version_constraint: Version == "v0.1.1-gui"
+        asset: "{{.OS}}app-GUI_0.1.1.0_{{.Arch}}.msix"
+        format: raw
+        complete_windows_ext: false
+        replacements:
+          amd64: x64
+          windows: win
+        supported_envs:
+          - windows
+      - version_constraint: Version == "v0.1.1"
+        asset: "{{.OS}}appcli-{{.Arch}}.{{.Format}}"
+        format: zip
+        replacements:
+          amd64: x64
+          windows: win
+        supported_envs:
+          - windows
+      - version_constraint: semver("<= 0.1.7")
+        asset: "{{.OS}}appcli-{{trimV .Version}}-{{.Arch}}.{{.Format}}"
+        format: zip
+        replacements:
+          amd64: x64
+          windows: win
+        supported_envs:
+          - windows
+      - version_constraint: "true"
+        asset: "{{.OS}}appcli-{{.Arch}}.{{.Format}}"
+        format: zip
+        replacements:
+          amd64: x64
+          windows: win
+        supported_envs:
+          - windows
   - type: github_release
     repo_owner: mike-engel
     repo_name: jwt-cli
