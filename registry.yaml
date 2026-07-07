@@ -63985,6 +63985,35 @@ packages:
           - goos: linux
             format: tar.gz
   - type: github_release
+    repo_owner: microsoft
+    repo_name: winappCli
+    description: winapp, the Windows App Development CLI, is a single command-line interface for managing Windows SDKs, packaging, generating app identity, manifests, certificates, and using build tools with any app framework
+    files:
+      - name: winapp
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.1.0", "v0.1.1"]
+        asset: winappcli-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x64
+        supported_envs:
+          - windows
+      - version_constraint: semver("<= 0.1.7")
+        asset: winappcli-{{trimV .Version}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x64
+        supported_envs:
+          - windows
+      - version_constraint: "true"
+        asset: winappcli-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x64
+        supported_envs:
+          - windows
+  - type: github_release
     repo_owner: mike-engel
     repo_name: jwt-cli
     description: A super fast CLI tool to decode and encode JWTs built in Rust
