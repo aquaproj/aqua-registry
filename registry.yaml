@@ -19982,15 +19982,38 @@ packages:
       darwin: macos
     supported_envs:
       - darwin
-      - amd64
+      - linux
+      - windows/amd64
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 2025.5.0")
+        supported_envs:
+          - darwin
+          - linux/amd64
+          - windows/amd64
         checksum:
           type: github_release
           asset: bw-{{.OS}}-sha256-{{.SemVer}}.txt
           algorithm: sha256
+        overrides:
+          - goarch: arm64
+            asset: bw-{{.OS}}-arm64-{{.SemVer}}.zip
+            checksum:
+              type: github_release
+              asset: bw-{{.OS}}-arm64-sha256-{{.SemVer}}.txt
+              algorithm: sha256
+      - version_constraint: semver("<= 2026.1.999")
+        supported_envs:
+          - darwin
+          - linux/amd64
+          - windows/amd64
+        overrides:
+          - goarch: arm64
+            asset: bw-{{.OS}}-arm64-{{.SemVer}}.zip
       - version_constraint: "true"
+        overrides:
+          - goarch: arm64
+            asset: bw-{{.OS}}-arm64-{{.SemVer}}.zip
   - type: github_release
     repo_owner: bitwarden
     repo_name: sdk-sm
