@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: mpyw
+    repo_name: suve
+    description: Git-like CLI/GUI for AWS Parameter Store / Secrets Manager, Google Cloud Secret Manager, and Azure Key Vault / App Configuration
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver(">= 1.3.3")
+        asset: suve_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          # The Linux GUI build links against webkit2gtk at runtime, so it can't
+          # run on headless machines. Ship the dependency-free CLI-only static
+          # build on Linux instead (the archive still exposes a `suve` binary).
+          - goos: linux
+            asset: suve-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+          - goos: windows
+            format: zip
