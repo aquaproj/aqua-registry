@@ -8,14 +8,14 @@ jobs:
     permissions: {}
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - run: echo "AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${PWD}/aqua-all.yaml" >> "$GITHUB_ENV"
-      - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
+      - uses: aquaproj/aqua-installer@96a9bc20066c5bf5e275b41019cfc165b25f4e2e # v4.0.5
         with:
-          aqua_version: v2.60.1
+          aqua_version: v2.60.2
           aqua_opts: -l -a
           policy_allow: "true"
 
@@ -39,7 +39,7 @@ jobs:
           AQUA_GITHUB_TOKEN: ${{github.token}}
         run: argd --version
 
-      - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
+      - uses: dorny/paths-filter@7b450fff21473bca461d4b92ce414b9d0420d706 # v4.0.2
         id: changes
         with:
           list-files: shell
