@@ -72320,6 +72320,22 @@ packages:
               arm64: aarch64
           - goos: windows
             format: zip
+      - version_constraint: semver("< 0.8.0")
+        asset: ouch-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: ouch
+            src: "{{.AssetWithoutExt}}/ouch"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: ouch-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -72336,6 +72352,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          signer_workflow: ouch-org/ouch/\.github/workflows/draft-release-automatic-trigger\.yml
   - type: github_release
     repo_owner: out-of-cheese-error
     repo_name: the-way
