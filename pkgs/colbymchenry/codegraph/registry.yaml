@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: colbymchenry
+    repo_name: codegraph
+    description: Pre-indexed code knowledge graph for coding agents
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.8.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.9.3")
+        asset: codegraph-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: codegraph
+            src: "{{.AssetWithoutExt}}/bin/codegraph"
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: codegraph
+                src: "{{.AssetWithoutExt}}/bin/codegraph.cmd"
+      - version_constraint: "true"
+        asset: codegraph-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: codegraph
+            src: "{{.AssetWithoutExt}}/bin/codegraph"
+        replacements:
+          amd64: x64
+          windows: win32
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: codegraph
+                src: "{{.AssetWithoutExt}}/bin/codegraph.cmd"
