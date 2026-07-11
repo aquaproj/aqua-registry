@@ -90174,6 +90174,16 @@ packages:
           - goos: linux
             replacements:
               arm64: aarch64
+      - version_constraint: semver("<= 0.8.4")
+        asset: cargo-llvm-cov-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
       - version_constraint: "true"
         asset: cargo-llvm-cov-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -90184,6 +90194,8 @@ packages:
           darwin: apple-darwin
           linux: unknown-linux-musl
           windows: pc-windows-msvc
+        github_artifact_attestations:
+          signer-workflow: taiki-e/github-actions/\.github/workflows/rust-release\.yml
   - type: github_release
     repo_owner: tailor-platform
     repo_name: patterner
