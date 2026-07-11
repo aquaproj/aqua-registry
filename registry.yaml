@@ -82389,6 +82389,21 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 0.4.1") || Version == "v2.1.0"
         no_asset: true
+      - version_constraint: semver("<= 3.0.4")
+        asset: gomarklint_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: gomarklint_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: gomarklint_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -82404,6 +82419,9 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
   - type: github_release
     repo_owner: shini4i
     repo_name: argo-compare
