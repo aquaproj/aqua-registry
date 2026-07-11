@@ -3933,6 +3933,50 @@ packages:
         github_artifact_attestations:
           signer_workflow: GitGuardian/ggshield/\.github/workflows/tag\.yml
   - type: github_release
+    repo_owner: GitTools
+    repo_name: GitVersion
+    aliases:
+      - name: gittools/gitversion
+    description: From git log to SemVer in no time
+    files:
+      - name: gitversion
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 6.0.3")
+        asset: gitversion-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        supported_envs:
+          - linux
+          - darwin
+          - windows
+        replacements:
+          amd64: x64
+          darwin: osx
+          windows: win
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          enabled: false
+      - version_constraint: "true"
+        asset: gitversion-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        supported_envs:
+          - linux
+          - darwin
+          - windows
+        replacements:
+          amd64: x64
+          darwin: osx
+          windows: win
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          enabled: false
+        github_artifact_attestations:
+          signer_workflow: GitTools/GitVersion/\.github/workflows/ci\.yml
+  - type: github_release
     repo_owner: GoTestTools
     repo_name: gotestfmt
     description: go test output for humans
@@ -41624,50 +41668,6 @@ packages:
         overrides:
           - goos: windows
             format: zip
-  - type: github_release
-    repo_owner: GitTools
-    repo_name: GitVersion
-    aliases:
-      - name: gittools/gitversion
-    description: From git log to SemVer in no time
-    files:
-      - name: gitversion
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 6.0.3")
-        asset: gitversion-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
-        format: tar.gz
-        supported_envs:
-          - linux
-          - darwin
-          - windows
-        replacements:
-          amd64: x64
-          darwin: osx
-          windows: win
-        overrides:
-          - goos: windows
-            format: zip
-        checksum:
-          enabled: false
-      - version_constraint: "true"
-        asset: gitversion-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
-        format: tar.gz
-        supported_envs:
-          - linux
-          - darwin
-          - windows
-        replacements:
-          amd64: x64
-          darwin: osx
-          windows: win
-        overrides:
-          - goos: windows
-            format: zip
-        checksum:
-          enabled: false
-        github_artifact_attestations:
-          signer_workflow: GitTools/GitVersion/\.github/workflows/ci\.yml
   - type: github_release
     repo_owner: gittower
     repo_name: git-flow-next
