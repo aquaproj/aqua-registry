@@ -86713,6 +86713,30 @@ packages:
           asset: checksums.txt
           algorithm: sha256
   - type: github_release
+    repo_owner: sters
+    repo_name: diffnest
+    description: A diff tool for structured data files like YAML, JSON
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.2.0"
+        no_asset: true
+      - version_constraint: semver("<= 1.4.0")
+        asset: diffnest_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: diffnest_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: diffnest_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          arm64: aarch64
+        checksum:
+          type: github_release
+          asset: diffnest_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+  - type: github_release
     repo_owner: stoplightio
     repo_name: spectral
     description: A flexible JSON/YAML linter for creating automated style guides, with baked in support for OpenAPI (v3.1, v3.0, and v2.0), Arazzo v1.0, as well as AsyncAPI v2.x
