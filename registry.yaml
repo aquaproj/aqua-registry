@@ -88940,16 +88940,18 @@ packages:
           algorithm: sha256
           cosign:
             opts:
-              - --certificate-identity-regexp
-              - "^https://github\\.com/suzuki-shunsuke/langcheck/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
+              - --certificate-identity-regexp
+              - "^https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.+$"
             bundle:
               type: github_release
               asset: langcheck_checksums.txt.sigstore.json
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        github_artifact_attestations:
+          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
         overrides:
           - goos: windows
             format: zip
