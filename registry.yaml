@@ -61418,15 +61418,14 @@ packages:
           asset: lintnet_{{trimV .Version}}_checksums.txt
           algorithm: sha256
           cosign:
+            bundle:
+              type: github_release
+              asset: lintnet_{{trimV .Version}}_checksums.txt.bundle
             opts:
               - --certificate-identity-regexp
               - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
               - --certificate-oidc-issuer
               - "https://token.actions.githubusercontent.com"
-              - --signature
-              - https://github.com/lintnet/lintnet/releases/download/{{.Version}}/lintnet_{{trimV .Version}}_checksums.txt.sig
-              - --certificate
-              - https://github.com/lintnet/lintnet/releases/download/{{.Version}}/lintnet_{{trimV .Version}}_checksums.txt.pem
   - type: github_release
     repo_owner: linuxkit
     repo_name: linuxkit
