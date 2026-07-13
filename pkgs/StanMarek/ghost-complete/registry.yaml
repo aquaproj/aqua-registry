@@ -6,6 +6,22 @@ packages:
     description: Terminal autocomplete engine with a PTY proxy and shell specifications for Ghostty
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 0.8.1")
+        asset: ghost-complete-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        files:
+          - name: ghost-complete
+            src: ghost-complete-{{.Arch}}-{{.OS}}/ghost-complete
+        supported_envs:
+          - darwin
       - version_constraint: "true"
         asset: ghost-complete-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
@@ -22,3 +38,5 @@ packages:
             src: ghost-complete-{{.Arch}}-{{.OS}}/ghost-complete
         supported_envs:
           - darwin
+        github_artifact_attestations:
+          signer_workflow: StanMarek/ghost-complete/\.github/workflows/release\.yml
