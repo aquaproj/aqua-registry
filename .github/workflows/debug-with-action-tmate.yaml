@@ -22,10 +22,11 @@ jobs:
           ref: ${{inputs.ref}}
           persist-credentials: false
 
-      - run: gh pr checkout "${{inputs.pr_number}}"
+      - run: gh pr checkout "$PR"
         if: inputs.pr_number != ''
         env:
           GITHUB_TOKEN: ${{github.token}}
+          PR: ${{inputs.pr_number}}
       - uses: aquaproj/aqua-installer@96a9bc20066c5bf5e275b41019cfc165b25f4e2e # v4.0.5
         with:
           aqua_version: v2.61.0
