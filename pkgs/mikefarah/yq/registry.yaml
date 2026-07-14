@@ -3,137 +3,43 @@ packages:
   - type: github_release
     repo_owner: mikefarah
     repo_name: yq
-    description: yq is a portable command-line YAML, JSON, XML, CSV, TOML, HCL  and properties processor
+    description: yq is a portable command-line YAML processor
+    asset: yq_{{.OS}}_{{.Arch}}
+    supported_envs:
+      - darwin
+      - linux
+      - amd64
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 1.3.0")
-        asset: yaml_{{.OS}}_{{.Arch}}
-        format: raw
+      - version_constraint: semver("< 4.9.6")
         rosetta2: true
-        windows_arm_emulation: true
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: semver("<= 1.13.1")
-        asset: yaml_{{.OS}}_{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          arm64: arm
-      - version_constraint: semver("<= 2.1.0")
-        asset: yq_{{.OS}}_{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        replacements:
-          arm64: arm
-      - version_constraint: semver("<= 3.2.0")
-        asset: yq_{{.OS}}_{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-      - version_constraint: semver("<= 4.0.0")
-        asset: yq_{{.OS}}_{{.Arch}}
-        format: raw
-        rosetta2: true
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: checksums
-          algorithm: sha256
-      - version_constraint: semver("<= 4.9.5")
-        asset: yq_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: checksums
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 4.16.1")
-        asset: yq_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: checksums
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 4.34.2")
-        asset: yq_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: checksums_hashes_order
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 4.45.1")
-        asset: yq_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: checksums
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 4.48.1")
-        asset: yq_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: checksums
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 4.52.2")
-        asset: yq_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
+      - version_constraint: semver("< 4.35.1")
+      - version_constraint: semver("< 4.53.0")
         checksum:
           type: github_release
           asset: checksums-bsd
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
-      - version_constraint: semver("<= 4.52.5")
-        asset: yq_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: checksums
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
+          file_format: regexp
+          algorithm: sha512
+          pattern:
+            # rhash bsd format, https://rhash.sourceforge.io/manpage.php#sect6
+            checksum: ^SHA512\s+\([^)]+\)\s+=\s+([A-Fa-f0-9]{128})$
+            file: ^SHA512\s+\(([^)]+)\)\s+=\s+[A-Fa-f0-9]{128}$
       - version_constraint: "true"
-        asset: yq_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
         checksum:
           type: github_release
-          asset: checksums
-          algorithm: sha256
+          asset: checksums-bsd
+          file_format: regexp
+          algorithm: sha512
+          pattern:
+            # rhash bsd format, https://rhash.sourceforge.io/manpage.php#sect6
+            checksum: ^SHA512\s+\([^)]+\)\s+=\s+([A-Fa-f0-9]{128})$
+            file: ^SHA512\s+\(([^)]+)\)\s+=\s+[A-Fa-f0-9]{128}$
           cosign:
-            opts:
-              - --certificate-identity-regexp
-              - "^https://github\\.com/mikefarah/yq/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
-              - --certificate-oidc-issuer
-              - https://token.actions.githubusercontent.com
             bundle:
               type: github_release
-              asset: checksums.bundle
-        overrides:
-          - goos: windows
-            format: zip
+              asset: checksums-bsd.bundle
+            opts:
+              - --certificate-identity
+              - https://github.com/mikefarah/yq/.github/workflows/release.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
