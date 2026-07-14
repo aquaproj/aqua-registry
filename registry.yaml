@@ -94993,20 +94993,6 @@ packages:
     description: Manage your dotfiles across multiple diverse machines, securely
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v2.0.7"
-        asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: chezmoi_{{trimV .Version}}_{{.OS}}-glibc_{{.Arch}}.{{.Format}}
-          - goos: windows
-            format: zip
       - version_constraint: semver("<= 0.0.5")
         asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -95091,11 +95077,36 @@ packages:
       - version_constraint: semver("<= 2.1.5")
         asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-        replacements:
-          arm64: arm
+        windows_arm_emulation: true
         checksum:
           type: github_release
           asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: chezmoi_{{trimV .Version}}_{{.OS}}-glibc_{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 2.13.1")
+        asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: chezmoi_{{trimV .Version}}_{{.OS}}-glibc_{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 2.21.1")
+        asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: chezmoi_{{trimV .Version}}_checksums.txt
           algorithm: sha256
         overrides:
           - goos: linux
@@ -95128,12 +95139,15 @@ packages:
             goarch: arm64
             format: tar.zst
             asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pkg.{{.Format}}
+            files:
+              - name: chezmoi
+                src: usr/bin/chezmoi
           - goos: darwin
             asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
           - goos: windows
             format: zip
             asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-      - version_constraint: semver("<= 2.64.0")
+      - version_constraint: semver("<= 2.66.1")
         asset: chezmoi_{{trimV .Version}}_{{.OS}}-glibc_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
@@ -95142,43 +95156,23 @@ packages:
           algorithm: sha256
           cosign:
             opts:
-              - --key
-              - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_cosign.pub
               - --signature
               - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_{{trimV .Version}}_checksums.txt.sig
+              - --key
+              - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_cosign.pub
         overrides:
           - goos: linux
             goarch: arm64
             format: tar.zst
             asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pkg.{{.Format}}
+            files:
+              - name: chezmoi
+                src: usr/bin/chezmoi
           - goos: darwin
             asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
           - goos: windows
             format: zip
             asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-      - version_constraint: semver("<= 2.66.0")
-        asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: chezmoi_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-          cosign:
-            opts:
-              - --key
-              - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_cosign.pub
-              - --signature
-              - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_{{trimV .Version}}_checksums.txt.sig
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: chezmoi_{{trimV .Version}}_{{.OS}}-glibc_{{.Arch}}.{{.Format}}
-          - goos: linux
-            goarch: arm64
-            format: tar.zst
-            asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pkg.{{.Format}}
-          - goos: windows
-            format: zip
       - version_constraint: semver("<= 2.67.1")
         asset: chezmoi_{{trimV .Version}}_{{.OS}}-glibc_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -95188,15 +95182,18 @@ packages:
           algorithm: sha256
           cosign:
             opts:
-              - --key
-              - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_cosign.pub
               - --signature
               - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_{{trimV .Version}}_checksums.txt.sig
+              - --key
+              - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_cosign.pub
         overrides:
           - goos: linux
             goarch: arm64
             format: tar.zst
             asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pkg.{{.Format}}
+            files:
+              - name: chezmoi
+                src: usr/bin/chezmoi
           - goos: darwin
             asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
           - goos: windows
@@ -95210,26 +95207,27 @@ packages:
           asset: chezmoi_{{trimV .Version}}_checksums.txt
           algorithm: sha256
           cosign:
-            opts:
-              - --certificate-identity-regexp
-              - "^https://github\\.com/twpayne/chezmoi/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
-              - --certificate-oidc-issuer
-              - https://token.actions.githubusercontent.com
             bundle:
               type: github_release
-              asset: chezmoi_{{trimV .Version}}_checksums.txt.sigstore.json
+              asset: "chezmoi_{{trimV .Version}}_checksums.txt.sigstore.json"
+            opts:
+              - --key
+              - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_cosign.pub
         overrides:
           - goos: linux
             goarch: arm64
             format: tar.zst
             asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pkg.{{.Format}}
+            files:
+              - name: chezmoi
+                src: usr/bin/chezmoi
           - goos: darwin
             asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
           - goos: windows
             format: zip
             asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
       - version_constraint: semver("<= 2.70.5")
-        asset: chezmoi_{{trimV .Version}}_{{.OS}}-glibc_{{.Arch}}.{{.Format}}
+        asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
           type: github_release
@@ -95242,41 +95240,25 @@ packages:
               - --signature
               - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_{{trimV .Version}}_checksums.txt.sig
         overrides:
-          - goos: linux
-            goarch: arm64
-            format: tar.zst
-            asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pkg.{{.Format}}
-          - goos: darwin
-            asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
           - goos: windows
             format: zip
-            asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
       - version_constraint: "true"
-        asset: chezmoi_{{trimV .Version}}_{{.OS}}-glibc_{{.Arch}}.{{.Format}}
+        asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
           type: github_release
           asset: chezmoi_{{trimV .Version}}_checksums.txt
           algorithm: sha256
           cosign:
-            opts:
-              - --certificate-identity-regexp
-              - "^https://github\\.com/twpayne/chezmoi/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
-              - --certificate-oidc-issuer
-              - https://token.actions.githubusercontent.com
             bundle:
               type: github_release
               asset: chezmoi_{{trimV .Version}}_checksums.txt.sigstore.json
+            opts:
+              - --key
+              - https://github.com/twpayne/chezmoi/releases/download/{{.Version}}/chezmoi_cosign.pub
         overrides:
-          - goos: linux
-            goarch: arm64
-            format: tar.zst
-            asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pkg.{{.Format}}
-          - goos: darwin
-            asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
           - goos: windows
             format: zip
-            asset: chezmoi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
   - type: github_release
     repo_owner: txn2
     repo_name: kubefwd
