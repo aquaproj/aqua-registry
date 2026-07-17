@@ -55770,6 +55770,29 @@ packages:
           - linux
           - darwin
   - type: github_release
+    repo_owner: kbrdn1
+    repo_name: gwm-cli
+    description: git worktree manager — Rust CLI + ratatui TUI, native libgit2, per-repo bootstrap via .gwm.toml
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: gwm-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: kcl-lang
     repo_name: cli
     description: The KCL Command Line Interface (CLI)
