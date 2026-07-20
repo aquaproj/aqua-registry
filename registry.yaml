@@ -88064,6 +88064,19 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 0.80.0-alpha.4")
         no_asset: true
+      - version_constraint: semver("<= 0.104.0")
+        asset: nika-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: nika-{{.OS}}-{{.Arch}}-{{trimV .Version}}.{{.Format}}
         format: tar.gz
@@ -88074,6 +88087,8 @@ packages:
           type: github_release
           asset: SHA256SUMS
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: supernovae-st/nika/\.github/workflows/release\.yml
         supported_envs:
           - linux
           - darwin
