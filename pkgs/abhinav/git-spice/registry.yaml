@@ -9,6 +9,8 @@ packages:
       - version_constraint: semver("<= 0.1.0-beta4")
         asset: git-spice.{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: gs
         replacements:
           amd64: x86_64
           darwin: Darwin
@@ -23,6 +25,8 @@ packages:
       - version_constraint: semver("<= 0.5.2")
         asset: git-spice.{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: gs
         replacements:
           amd64: x86_64
           darwin: Darwin
@@ -38,9 +42,29 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: semver("<= 0.23.0")
+        asset: git-spice.{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: gs
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
       - version_constraint: "true"
         asset: git-spice.{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: git-spice
         replacements:
           amd64: x86_64
           darwin: Darwin
