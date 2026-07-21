@@ -7,12 +7,14 @@ packages:
     description: Manages Envoy Proxy as a Standalone or Kubernetes-based Application Gateway
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v0.1.0"
+      - version_constraint: semver("< 1.2.0")
         no_asset: true
-      - version_constraint: semver("<= 1.2.0-rc.1")
       - version_constraint: "true"
         asset: envoy-gateway_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: envoy-gateway
+            src: bin/{{.OS}}/{{.Arch}}/envoy-gateway
         supported_envs:
           - linux
           - darwin
