@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - name: envoyproxy/gateway/envoy-gateway
+    type: github_release
+    repo_owner: envoyproxy
+    repo_name: gateway
+    description: Manages Envoy Proxy as a Standalone or Kubernetes-based Application Gateway
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        no_asset: true
+      - version_constraint: semver("<= 1.2.0-rc.1")
+      - version_constraint: "true"
+        asset: envoy-gateway_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        supported_envs:
+          - linux
+          - darwin
