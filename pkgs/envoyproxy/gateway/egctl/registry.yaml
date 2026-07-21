@@ -1,0 +1,23 @@
+packages:
+  - name: envoyproxy/gateway/egctl
+    type: github_release
+    repo_owner: envoyproxy
+    repo_name: gateway
+    asset: egctl_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+    version_prefix: v
+    description: CLI tool for Envoy Gateway
+    version_constraint: semver("< 0.4.0")
+    no_asset: true
+    version_overrides:
+      - version_constraint: semver(">= 0.4.0")
+        files:
+          - name: egctl
+            src: bin/{{.OS}}/{{.Arch}}/egctl
+        supported_envs:
+          - darwin
+          - linux
+          - windows/amd64
