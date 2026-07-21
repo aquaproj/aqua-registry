@@ -7,12 +7,14 @@ packages:
     description: Manages Envoy Proxy as a Standalone or Kubernetes-based Application Gateway
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "v0.1.0"
-        no_asset: true
       - version_constraint: semver("<= 0.3.0")
+        no_asset: true
       - version_constraint: semver("<= 1.3.3")
         asset: egctl_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: egctl
+            src: bin/{{.OS}}/{{.Arch}}/egctl
         supported_envs:
           - linux
           - darwin
@@ -20,6 +22,9 @@ packages:
         asset: egctl_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
+        files:
+          - name: egctl
+            src: bin/{{.OS}}/{{.Arch}}/egctl
         overrides:
           - goos: windows
             format: zip
