@@ -41065,6 +41065,16 @@ packages:
           type: github_release
           asset: sops-{{.Version}}.checksums.txt
           algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/getsops/sops/releases/download/{{.Version}}/sops-{{.Version}}.checksums.pem
+              - --signature
+              - https://github.com/getsops/sops/releases/download/{{.Version}}/sops-{{.Version}}.checksums.sig
+              - --certificate-identity-regexp
+              - https://github.com/getsops
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
         slsa_provenance:
           type: github_release
           asset: provenance.intoto.jsonl
