@@ -36198,7 +36198,7 @@ packages:
     description: Remove all the resources from an AWS account
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version in ["v3.0.0-beta.25", "v3.0.0-beta.44", "v3.0.0-beta.56", "v3.46.0"]
+      - version_constraint: Version in ["v3.0.0-beta.25", "v3.0.0-beta.44", "v3.0.0-beta.56", "v3.46.0", "v3.64.3"]
         no_asset: true
       - version_constraint: Version == "v2.17.0-ek.1"
         asset: aws-nuke-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
@@ -36247,6 +36247,26 @@ packages:
               - https://github.com/ekristen/aws-nuke/releases/download/{{.Version}}/cosign.pub
               - --signature
               - https://github.com/ekristen/aws-nuke/releases/download/{{.Version}}/checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver(">= 3.64.4")
+        asset: aws-nuke-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity
+              - "https://github.com/ekristen/aws-nuke/.github/workflows/goreleaser.yml@refs/tags/{{.Version}}"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
         overrides:
           - goos: windows
             format: zip
