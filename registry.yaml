@@ -53882,6 +53882,9 @@ packages:
         asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
         rosetta2: true
+        files:
+          - name: jreleaser
+            src: "{{.AssetWithoutExt}}/bin/jreleaser"
         replacements:
           amd64: x86_64
           darwin: osx
@@ -53893,6 +53896,9 @@ packages:
         format: zip
         rosetta2: true
         windows_arm_emulation: true
+        files:
+          - name: jreleaser
+            src: "{{.AssetWithoutExt}}/bin/jreleaser"
         replacements:
           amd64: x86_64
           darwin: osx
@@ -53904,6 +53910,9 @@ packages:
         asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
         rosetta2: true
+        files:
+          - name: jreleaser
+            src: "{{.AssetWithoutExt}}/bin/jreleaser"
         replacements:
           amd64: x86_64
           darwin: osx
@@ -53914,6 +53923,9 @@ packages:
         asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
+        files:
+          - name: jreleaser
+            src: "{{.AssetWithoutExt}}/bin/jreleaser"
         replacements:
           amd64: x86_64
           darwin: osx
@@ -53925,10 +53937,13 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.24.0")
         asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
+        files:
+          - name: jreleaser
+            src: "{{.AssetWithoutExt}}/bin/jreleaser"
         replacements:
           amd64: x86_64
           arm64: aarch64
@@ -53936,6 +53951,28 @@ packages:
         overrides:
           - goos: windows
             replacements: {}
+        slsa_provenance:
+          type: github_release
+          asset: jreleaser-all-{{trimV .Version}}.intoto.jsonl
+          source_tag: "-"
+      - version_constraint: "true"
+        asset: jreleaser-native-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: jreleaser
+            src: "{{.AssetWithoutExt}}/bin/{{.AssetWithoutExt}}"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: osx
+        overrides:
+          - goos: windows
+            replacements: {}
+        slsa_provenance:
+          type: github_release
+          asset: jreleaser-all-{{trimV .Version}}.intoto.jsonl
+          source_tag: "-"
   - name: jreleaser/jreleaser/standalone
     type: github_release
     repo_owner: jreleaser
