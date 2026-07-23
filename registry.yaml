@@ -83542,6 +83542,23 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 0.0.1-alpha")
         no_asset: true
+      - version_constraint: semver("<= 0.14.0")
+        asset: gitsign_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        cosign:
+          opts:
+            - --certificate
+            - https://github.com/sigstore/gitsign/releases/download/{{.Version}}/{{.Asset}}.pem
+            - --certificate-identity
+            - https://github.com/sigstore/gitsign/.github/workflows/release.yml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
+            - --signature
+            - https://github.com/sigstore/gitsign/releases/download/{{.Version}}/{{.Asset}}.sig
       - version_constraint: "true"
         asset: gitsign_{{trimV .Version}}_{{.OS}}_{{.Arch}}
         format: raw
@@ -83549,6 +83566,15 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+        cosign:
+          bundle:
+            type: github_release
+            asset: "{{.Asset}}.bundle"
+          opts:
+            - --certificate-identity
+            - https://github.com/sigstore/gitsign/.github/workflows/release.yml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
   - type: github_release
     repo_owner: sigstore
     repo_name: rekor
