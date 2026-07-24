@@ -23,6 +23,25 @@ packages:
             files:
               - name: codegraph
                 src: "{{.AssetWithoutExt}}/bin/codegraph.cmd"
+      - version_constraint: semver("< 1.5.0")
+        asset: codegraph-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: codegraph
+            src: "{{.AssetWithoutExt}}/bin/codegraph"
+        replacements:
+          amd64: x64
+          windows: win32
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: codegraph
+                src: "{{.AssetWithoutExt}}/bin/codegraph.cmd"
       - version_constraint: "true"
         asset: codegraph-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -36,6 +55,8 @@ packages:
           type: github_release
           asset: SHA256SUMS
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: colbymchenry/codegraph/\.github/workflows/release\.yml
         overrides:
           - goos: windows
             format: zip
