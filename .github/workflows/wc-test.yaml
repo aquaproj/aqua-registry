@@ -138,6 +138,17 @@ jobs:
           AQUA_GITHUB_TOKEN: ${{github.token}}
 
       - name: Install packages for testing
+        if: runner.os != 'Windows'
+        run: aqua i
+        env:
+          AQUA_GOOS: ${{ matrix.env.goos }}
+          AQUA_GOARCH: ${{ matrix.env.goarch }}
+          AQUA_CONFIG: aqua/test.yaml
+          AQUA_GITHUB_TOKEN: ${{github.token}}
+
+      - name: Install packages for testing
+        if: runner.os == 'Windows'
+        shell: cmd
         run: aqua i
         env:
           AQUA_GOOS: ${{ matrix.env.goos }}
