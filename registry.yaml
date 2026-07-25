@@ -50885,6 +50885,29 @@ packages:
       asset: go-car_{{trimV .Version}}_checksums.txt
       algorithm: sha256
   - type: github_release
+    repo_owner: isksss
+    repo_name: isksh
+    description: A cross-platform POSIX-oriented shell written in Rust
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: isksh-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+        supported_envs:
+          - linux
+          - windows/amd64
+  - type: github_release
     repo_owner: ismaelgv
     repo_name: rnr
     description: A command-line tool to batch rename files and directories
