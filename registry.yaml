@@ -76349,6 +76349,28 @@ packages:
     overrides:
       - goos: windows
         asset: protoc-{{trimV .Version}}-{{.OS}}.{{.Format}}
+  - type: http
+    name: proton/drive-cli
+    repo_owner: ProtonDriveApps
+    repo_name: sdk
+    description: Manage your Proton Drive files from the CLI
+    link: https://proton.me/support/drive-cli
+    version_source: github_tag
+    version_prefix: cli/
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        url: https://proton.me/download/drive/cli/{{trimV .SemVer}}/{{.OS}}-{{.Arch}}/proton-drive
+        format: raw
+        files:
+          - name: proton-drive
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: windows
+            url: https://proton.me/download/drive/cli/{{trimV .SemVer}}/{{.OS}}-{{.Arch}}/proton-drive.exe
+            files:
+              - name: proton-drive.exe
   - name: psastras/sarif-rs/clang-tidy-sarif
     type: github_release
     repo_owner: psastras
