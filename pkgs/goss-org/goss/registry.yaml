@@ -3,39 +3,30 @@ packages:
   - type: github_release
     repo_owner: goss-org
     repo_name: goss
+    aliases:
+      - name: aelsabbahy/goss
     description: Quick and Easy server testing/validation
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v0.3.11"
         asset: goss-{{.OS}}-{{.Arch}}
         format: raw
-        replacements:
-          arm64: arm
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
         supported_envs:
-          - linux
-      - version_constraint: semver("<= 0.3.4")
-        asset: goss-{{.OS}}-{{.Arch}}
-        format: raw
-        supported_envs:
           - linux/amd64
       - version_constraint: semver("<= 0.3.10")
         asset: goss-{{.OS}}-{{.Arch}}
         format: raw
-        replacements:
-          arm64: arm
         supported_envs:
-          - linux
+          - linux/amd64
       - version_constraint: semver("<= 0.3.16")
         asset: goss-alpha-{{.OS}}-{{.Arch}}
         format: raw
         rosetta2: true
         windows_arm_emulation: true
-        replacements:
-          arm64: arm
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
@@ -43,6 +34,10 @@ packages:
         overrides:
           - goos: linux
             asset: goss-{{.OS}}-{{.Arch}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+          - windows
       - version_constraint: semver("<= 0.3.23")
         asset: goss-alpha-{{.OS}}-{{.Arch}}
         format: raw
