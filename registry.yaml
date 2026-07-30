@@ -48047,7 +48047,7 @@ packages:
             format: zip
             url: https://downloads.haskell.org/~cabal/cabal-install-{{.SemVer}}/cabal-install-{{.SemVer}}-{{.Arch}}-{{.OS}}.{{.Format}}
             replacements: {}
-      - version_constraint: "true"
+      - version_constraint: semver("<= 3.16.1.0")
         url: https://downloads.haskell.org/~cabal/cabal-install-{{.SemVer}}/cabal-install-{{.SemVer}}-{{.Arch}}-{{.OS}}-alpine3_12.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
@@ -48068,6 +48068,23 @@ packages:
             format: zip
             url: https://downloads.haskell.org/~cabal/cabal-install-{{.SemVer}}/cabal-install-{{.SemVer}}-{{.Arch}}-{{.OS}}.{{.Format}}
             replacements: {}
+      - version_constraint: "true"
+        url: https://downloads.haskell.org/~cabal/cabal-install-{{.SemVer}}/cabal-install-{{.SemVer}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: linux-unknown
+          windows: mingw64
+        checksum:
+          type: http
+          url: https://downloads.haskell.org/~cabal/cabal-install-{{.SemVer}}/SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: http
     repo_owner: haskell
     repo_name: ghcup-hs
