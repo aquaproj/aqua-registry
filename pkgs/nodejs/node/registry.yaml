@@ -54,6 +54,16 @@ packages:
           - name: npx
             src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npx
         overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            variants:
+              - key: libc
+                value: musl
+            type: http
+            url: https://unofficial-builds.nodejs.org/download/release/{{.Version}}/node-{{.Version}}-linux-{{.Arch}}-musl.tar.gz
           - goos: windows
             format: zip
             files:
