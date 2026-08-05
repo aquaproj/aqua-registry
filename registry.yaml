@@ -53952,6 +53952,41 @@ packages:
         no_asset: true
   - type: github_release
     repo_owner: jolars
+    repo_name: arity
+    description: Language server, formatter, and linter for R
+    version_filter: Version startsWith "v"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.8.0")
+        asset: arity-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: arity-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
+    repo_owner: jolars
     repo_name: panache
     description: Language server, formatter, and linter for Markdown, Quarto, and R Markdown
     version_filter: Version startsWith "v"
