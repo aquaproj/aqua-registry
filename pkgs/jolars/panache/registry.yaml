@@ -20,6 +20,18 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("<= 2.60.0")
+        asset: panache-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: semver("<= 2.61.0")
         asset: panache-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -32,6 +44,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          signer_workflow: jolars/panache/.github/workflows/packages.yml
       - version_constraint: "true"
         asset: panache-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -48,3 +62,5 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          signer_workflow: jolars/panache/.github/workflows/packages.yml
