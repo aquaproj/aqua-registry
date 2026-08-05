@@ -3751,6 +3751,82 @@ packages:
           asset: checksums.txt
           algorithm: sha256
   - type: github_release
+    repo_owner: Genymobile
+    repo_name: scrcpy
+    description: Display and control your Android device
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.5-fixversion"
+        asset: scrcpy-{{.OS}}-v1.5.{{.Format}}
+        format: zip
+        replacements:
+          windows: win32
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        supported_envs:
+          - windows/amd64
+      - version_constraint: Version == "v3.0"
+        asset: scrcpy-{{.OS}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: macos
+          windows: win32
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: semver("<= 1.1.0")
+        asset: scrcpy-{{.OS}}-with-deps-{{.Version}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        supported_envs:
+          - windows/amd64
+      - version_constraint: semver("<= 2.7.0")
+        asset: scrcpy-{{.OS}}-{{.Version}}.{{.Format}}
+        format: zip
+        replacements:
+          windows: win32
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        supported_envs:
+          - windows/amd64
+      - version_constraint: "true"
+        asset: scrcpy-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: macos
+          windows: win32
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            asset: scrcpy-{{.OS}}-{{.Version}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
     repo_owner: Getdeck
     repo_name: getdeck
     description: A CLI that creates reproducible Kubernetes environments for development and testing
