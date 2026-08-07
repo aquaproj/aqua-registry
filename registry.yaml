@@ -64232,6 +64232,19 @@ packages:
     description: Explain any lockfile change before you merge it — bumps, breaking jumps, new vulns, release ages & deprecations across 30 lockfile formats + SBOMs. CLI, GitHub Action, browser playground, and MCP server so AI assistants can vet PRs too
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 0.4.4")
+        asset: lockvet_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        files:
+          - name: lockvet
+            src: lockvet_{{.Version}}_{{.OS}}_{{.Arch}}/lockvet
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: lockvet_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -64245,6 +64258,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          signer_workflow: matteo-sung/lockvet/\.github/workflows/release\.yml
   - type: github_release
     repo_owner: mattermost
     repo_name: mmctl
