@@ -98678,6 +98678,52 @@ packages:
             goarch: amd64
             asset: agent-browser-{{.OS}}-musl-{{.Arch}}
   - type: github_release
+    repo_owner: vercel-labs
+    repo_name: native
+    description: Toolkit for building native desktop apps
+    version_prefix: v
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        no_asset: true
+      - version_constraint: Version == "v0.1.1"
+        asset: zero-native-{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: CHECKSUMS.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin/arm64
+      - version_constraint: semver("<= 0.3.0")
+        asset: zero-native-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x64
+          windows: win32
+        checksum:
+          type: github_release
+          asset: CHECKSUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: zero-native-{{.OS}}-musl-{{.Arch}}
+      - version_constraint: "true"
+        asset: native-sdk-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x64
+          windows: win32
+        checksum:
+          type: github_release
+          asset: CHECKSUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: native-sdk-{{.OS}}-musl-{{.Arch}}
+  - type: github_release
     repo_owner: version-fox
     repo_name: vfox
     description: A cross-platform and extendable version manager with support for Java, Node.js, Golang, Python, Flutter, .NET & more
