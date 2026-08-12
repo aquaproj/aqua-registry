@@ -6333,6 +6333,29 @@ packages:
         format: raw
         complete_windows_ext: false
   - type: github_release
+    repo_owner: OpenRouterLabs
+    repo_name: ori-releases
+    description: Ori CLI release repo
+    version_filter: not (Version matches "-alpha")
+    version_prefix: cli-
+    files:
+      - name: ori
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "cli-0.0.0-b98cd74"
+      - version_constraint: "true"
+        asset: ori-{{.OS}}-{{.Arch}}
+        format: raw
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: Orange-OpenSource
     repo_name: hurl
     description: Hurl, run and test HTTP requests with plain text
