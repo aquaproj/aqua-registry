@@ -64172,6 +64172,14 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: Version == "v4.3.0"
+        asset: github-nippou_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: github-nippou_{{.Version}}_checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: github-nippou_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
@@ -64180,6 +64188,8 @@ packages:
           type: github_release
           asset: github-nippou_{{.Version}}_checksums.txt
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: masutaka/github-nippou/\.github/workflows/release\.yml
   - type: github_release
     repo_owner: mathew-fleisch
     repo_name: bashbot
