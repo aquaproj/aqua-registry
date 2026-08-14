@@ -64,6 +64,32 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: semver("< 0.70.0")
+        asset: trivy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          arm64: ARM64
+          darwin: macOS
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: trivy_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: trivy_{{trimV .Version}}_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity
+              - https://github.com/aquasecurity/trivy/.github/workflows/reusable-release.yaml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+        overrides:
+          - goos: windows
+            format: zip
+            replacements: {}
       - version_constraint: "true"
         asset: trivy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -86,6 +112,8 @@ packages:
               - https://github.com/aquasecurity/trivy/.github/workflows/reusable-release.yaml@refs/tags/{{.Version}}
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
+        github_artifact_attestations:
+          signer_workflow: aquasecurity/trivy/.github/workflows/reusable-release.yaml
         overrides:
           - goos: windows
             format: zip
