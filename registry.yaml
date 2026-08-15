@@ -3759,8 +3759,11 @@ packages:
       - version_constraint: Version == "v1.5-fixversion"
         asset: scrcpy-{{.OS}}-v1.5.{{.Format}}
         format: zip
+        files:
+          - name: scrcpy
+            src: scrcpy-{{.OS}}/scrcpy.exe
         replacements:
-          windows: win32
+          windows: win64
         checksum:
           type: github_release
           asset: SHA256SUMS.txt
@@ -3768,25 +3771,25 @@ packages:
         supported_envs:
           - windows/amd64
       - version_constraint: Version == "v3.0"
-        asset: scrcpy-{{.OS}}-{{.Version}}.{{.Format}}
-        format: tar.gz
+        asset: scrcpy-{{.OS}}-{{.Version}}.zip
+        format: zip
+        files:
+          - name: scrcpy
+            src: "{{.AssetWithoutExt}}/scrcpy.exe"
         replacements:
-          darwin: macos
-          windows: win32
+          windows: win64
         checksum:
           type: github_release
           asset: SHA256SUMS.txt
           algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
         supported_envs:
-          - darwin
-          - windows
-          - amd64
+          - windows/amd64
       - version_constraint: semver("<= 1.1.0")
         asset: scrcpy-{{.OS}}-with-deps-{{.Version}}.{{.Format}}
         format: zip
+        files:
+          - name: scrcpy
+            src: scrcpy-windows-{{.Version}}/scrcpy.exe
         checksum:
           type: github_release
           asset: SHA256SUMS.txt
@@ -3796,8 +3799,11 @@ packages:
       - version_constraint: semver("<= 2.7.0")
         asset: scrcpy-{{.OS}}-{{.Version}}.{{.Format}}
         format: zip
+        files:
+          - name: scrcpy
+            src: "{{.AssetWithoutExt}}/scrcpy.exe"
         replacements:
-          windows: win32
+          windows: win64
         checksum:
           type: github_release
           asset: SHA256SUMS.txt
@@ -3807,10 +3813,13 @@ packages:
       - version_constraint: "true"
         asset: scrcpy-{{.OS}}-{{.Arch}}-{{.Version}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: scrcpy
+            src: "{{.AssetWithoutExt}}/scrcpy"
         replacements:
           amd64: x86_64
           darwin: macos
-          windows: win32
+          windows: win64
         checksum:
           type: github_release
           asset: SHA256SUMS.txt
@@ -3822,10 +3831,13 @@ packages:
           - goos: windows
             format: zip
             asset: scrcpy-{{.OS}}-{{.Version}}.{{.Format}}
+            files:
+              - name: scrcpy
+                src: "{{.AssetWithoutExt}}/scrcpy.exe"
         supported_envs:
           - darwin
-          - windows
-          - amd64
+          - linux/amd64
+          - windows/amd64
   - type: github_release
     repo_owner: Getdeck
     repo_name: getdeck
