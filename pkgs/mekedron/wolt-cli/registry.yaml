@@ -6,6 +6,19 @@ packages:
     description: "Free & Open Source CLI for Wolt: discover venues, inspect menus and options, manage carts, and preview checkout from the terminal"
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 2.4.0")
+        asset: wolt_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: wolt
+          - name: wolt-mcp
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: wolt_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -19,3 +32,5 @@ packages:
         supported_envs:
           - linux
           - darwin
+        github_artifact_attestations:
+          signer_workflow: mekedron/wolt-cli/\.github/workflows/release\.yml
