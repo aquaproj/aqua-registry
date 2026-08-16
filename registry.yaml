@@ -97794,6 +97794,7 @@ packages:
     repo_owner: uutils
     repo_name: sed
     description: Rewrite of sed in Rust
+    version_filter: not (Version == "latest-commit")
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "0.1.1"
@@ -97809,6 +97810,9 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        files:
+          - name: sed
+            src: "{{.AssetWithoutExt}}/sed"
         overrides:
           - goos: linux
             goarch: amd64
@@ -97820,14 +97824,8 @@ packages:
               linux: unknown-linux-gnu
           - goos: windows
             format: zip
-      - version_constraint: "true"
-        asset: sed-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.zst
-        replacements:
-          amd64: x86_64
-          linux: unknown-linux-gnu
-        supported_envs:
-          - linux/amd64
+            files:
+              - name: sed
   - type: github_release
     repo_owner: uw-labs
     repo_name: strongbox
