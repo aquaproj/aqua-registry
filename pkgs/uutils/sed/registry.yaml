@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: uutils
+    repo_name: sed
+    description: Rewrite of sed in Rust
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "latest-commit"
+        error_message: The version 'latest-commit' is not supported
+      - version_constraint: Version == "0.1.1"
+        asset: sed-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        files:
+          - name: sed
+            src: "{{.AssetWithoutExt}}/sed"
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+            files:
+              - name: sed
