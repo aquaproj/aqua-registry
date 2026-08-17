@@ -26957,6 +26957,34 @@ packages:
           linux: Linux
           amd64: x86_64
           windows: Windows
+  - type: github_release
+    repo_owner: cloudsmith-io
+    repo_name: cloudsmith-cli
+    description: Cloudsmith Command Line Interface (CLI)
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.8.7")
+      - version_constraint: semver("<= 1.9.2")
+        no_asset: true
+      - version_constraint: semver("<= 1.19.0")
+      - version_constraint: "true"
+        asset: cloudsmith-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: cloudsmith-{{trimV .Version}}-{{.OS}}-{{.Arch}}-gnu.{{.Format}}
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
   - type: go_install
     repo_owner: cloudspannerecosystem
     repo_name: spanner-cli
