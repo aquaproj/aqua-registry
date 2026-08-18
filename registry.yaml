@@ -16877,15 +16877,25 @@ packages:
       - version_constraint: semver("<= 0.1.7")
         asset: ruff-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
           windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            replacements:
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
+          - goos: windows
+            format: zip
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
@@ -16893,15 +16903,25 @@ packages:
       - version_constraint: semver("<= 0.4.10")
         asset: ruff-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
-        overrides:
-          - goos: windows
-            format: zip
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
           windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            replacements:
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
+          - goos: windows
+            format: zip
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
@@ -16912,17 +16932,27 @@ packages:
         files:
           - name: ruff
             src: "{{.AssetWithoutExt}}/ruff"
-        overrides:
-          - goos: windows
-            format: zip
-            files:
-              - name: ruff
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
           windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            replacements:
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
+          - goos: windows
+            format: zip
+            files:
+              - name: ruff
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
@@ -16933,17 +16963,27 @@ packages:
         files:
           - name: ruff
             src: "{{.AssetWithoutExt}}/ruff"
-        overrides:
-          - goos: windows
-            format: zip
-            files:
-              - name: ruff
         replacements:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
           windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            replacements:
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
+          - goos: windows
+            format: zip
+            files:
+              - name: ruff
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
