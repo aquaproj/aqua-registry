@@ -7329,12 +7329,20 @@ packages:
         supported_envs:
           - darwin
           - linux
+      - version_constraint: Version == "v1.5.0"
+        asset: ejson_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+        checksum:
+          type: github_release
+          asset: ejson_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: ejson_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
         checksum:
           type: github_release
           asset: ejson_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: Shopify/ejson/\.github/workflows/release\.yml
   - type: github_release
     repo_owner: Shopify
     repo_name: kubeaudit
