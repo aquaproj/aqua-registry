@@ -93599,41 +93599,31 @@ packages:
   - type: github_release
     repo_owner: temporalio
     repo_name: temporal
-    description: Temporal service
+    description: Temporal Server bundle (temporal-server + database tools)
+    files:
+      - name: temporal-server
+      - name: temporal-cassandra-tool
+      - name: temporal-sql-tool
+      - name: temporal-elasticsearch-tool
+      - name: tdbg
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version in ["v0.10.0", "v1.0.1", "v1.1.2", "v1.2.3", "v1.3.3", "v1.20.5", "v1.21.6", "v1.22.3", "v1.28.3.1", "v1.29.4.1", "v1.29.6.1", "v1.30.4.1"]
         no_asset: true
-      - version_constraint: semver("<= 1.4.2")
-      - version_constraint: semver("<= 1.4.4")
+      - version_constraint: semver("> 1.4.2, <= 1.4.4")
         no_asset: true
-      - version_constraint: semver("<= 1.5.1")
-      - version_constraint: semver("<= 1.7.3")
+      - version_constraint: semver("> 1.5.1, <= 1.7.3")
         no_asset: true
-      - version_constraint: semver("<= 1.8.2")
+      - version_constraint: semver("<= 1.30.1")
         asset: temporal_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        supported_envs:
-          - darwin
-          - windows
-          - amd64
-      - version_constraint: semver("<= 1.12.4")
-        asset: temporal_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-      - version_constraint: semver("<= 1.14.6")
-        asset: temporal_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: temporal-server
+          - name: temporal-cassandra-tool
+          - name: temporal-sql-tool
         checksum:
           type: github_release
           asset: checksums.txt
@@ -93641,13 +93631,13 @@ packages:
       - version_constraint: "true"
         asset: temporal_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
         checksum:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
   - type: github_release
     repo_owner: tenable
     repo_name: terrascan
