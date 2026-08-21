@@ -52362,6 +52362,38 @@ packages:
           signer_workflow: jdx/aube/\.github/workflows/release\.yml
   - type: github_release
     repo_owner: jdx
+    repo_name: fnox
+    description: encrypted/remote secret manager
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.27.0"
+        no_asset: true
+      - version_constraint: semver("<= 1.23.0")
+        asset: fnox-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: fnox-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
+    repo_owner: jdx
     repo_name: hk
     description: git hook and pre-commit lint manager
     version_constraint: "false"
