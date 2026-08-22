@@ -78571,6 +78571,29 @@ packages:
           - name: raco
             src: racket/raco
   - type: github_release
+    repo_owner: rafaelespinoza
+    repo_name: godfish
+    description: a db migration management CLI and library
+    version_filter: semver(">= 0.18.0")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: godfish_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/rafaelespinoza/godfish/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+  - type: github_release
     repo_owner: rajatjindal
     repo_name: krew-release-bot
     description: bot to bump version of plugin in krew-index on new releases
