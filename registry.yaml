@@ -103942,6 +103942,54 @@ packages:
           - windows
           - amd64
   - type: github_release
+    repo_owner: zwasm
+    repo_name: zwasm
+    description: A fast, spec-compliant WebAssembly runtime written in Zig
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.11.1"
+        no_asset: true
+      - version_constraint: semver("<= 1.5.0")
+        asset: zwasm-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          arm64: aarch64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - linux
+          - darwin/arm64
+      - version_constraint: "true"
+        asset: zwasm-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: amd64
+          - goos: windows
+            format: zip
+            replacements: {}
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64
+  - type: github_release
     repo_owner: zyedidia
     repo_name: eget
     description: Easily install prebuilt binaries from GitHub
