@@ -21,12 +21,22 @@ packages:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-musl
+          linux: unknown-linux-gnu
           windows: pc-windows-msvc
         checksum:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
         overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            replacements:
+              linux: unknown-linux-musl
+            variants:
+              - key: libc
+                value: musl
           - goos: windows
             format: zip
