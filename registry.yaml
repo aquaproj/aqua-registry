@@ -30625,14 +30625,20 @@ packages:
           - amd64
   - type: http
     repo_owner: crossplane
-    repo_name: crossplane
-    format: raw
-    url: https://releases.crossplane.io/stable/{{.Version}}/bin/{{.OS}}_{{.Arch}}/crank
-    description: The Crossplane CLI extends kubectl with functionality to build, push, and install Crossplane packages
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
+    repo_name: cli
+    description: The CLI for Crossplane
+    aliases:
+      - name: crossplane/crossplane
+    files:
+      - name: crossplane
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 2.3.0")
+        url: https://releases.crossplane.io/stable/{{.Version}}/bin/{{.OS}}_{{.Arch}}/crank
+        windows_arm_emulation: true
+      - version_constraint: "true"
+        url: https://cli.crossplane.io/stable/{{.Version}}/bin/{{.OS}}_{{.Arch}}/crossplane
+        windows_arm_emulation: true
   - type: github_release
     repo_owner: cswank
     repo_name: kcli
