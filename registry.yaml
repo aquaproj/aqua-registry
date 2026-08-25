@@ -100331,6 +100331,9 @@ packages:
       - name: rustwasm/wasm-pack
       - name: drager/wasm-pack
     description: your favorite rust -> wasm workflow tool
+    files:
+      - name: wasm-pack
+        src: "{{.AssetWithoutExt}}/wasm-pack"
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.2.0")
@@ -100339,9 +100342,6 @@ packages:
         asset: wasm-pack-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
-        files:
-          - name: wasm-pack
-            src: "{{.AssetWithoutExt}}/wasm-pack"
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -100354,9 +100354,6 @@ packages:
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
-        files:
-          - name: wasm-pack
-            src: "{{.AssetWithoutExt}}/wasm-pack"
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -100366,14 +100363,11 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.13.1")
         asset: wasm-pack-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
         windows_arm_emulation: true
-        files:
-          - name: wasm-pack
-            src: "{{.AssetWithoutExt}}/wasm-pack"
         replacements:
           amd64: x86_64
           darwin: apple-darwin
@@ -100383,6 +100377,16 @@ packages:
           - goos: linux
             replacements:
               arm64: aarch64
+      - version_constraint: "true"
+        asset: wasm-pack-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
   - name: wasmCloud/wasmCloud/wash
     type: github_release
     repo_owner: wasmCloud
