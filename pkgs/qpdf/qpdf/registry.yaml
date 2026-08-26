@@ -6,23 +6,17 @@ packages:
     description: "qpdf: A content-preserving PDF document transformer"
     version_constraint: "false"
     version_overrides:
+      - version_constraint: Version == "release-qpdf-8.0.rc3"
+        checksum:
+          type: github_release
+          asset: qpdf-8.0.0.md5
+          algorithm: md5
+      - version_constraint: Version == "release-qpdf-9.1.rc1"
+        checksum:
+          type: github_release
+          asset: qpdf-9.1.rc1.md5
+          algorithm: md5
       - version_constraint: Version == "vcpkg-cache-v1"
-      - version_constraint: semver("<= 10.0.1")
-        checksum:
-          type: github_release
-          asset: qpdf-{{.SemVer}}.sha1
-          algorithm: sha1
-      - version_constraint: semver("<= 10.6.3")
-        asset: qpdf-{{.SemVer}}-bin-{{.OS}}-{{.Arch}}.{{.Format}}
-        format: zip
-        replacements:
-          amd64: x86_64
-        checksum:
-          type: github_release
-          asset: qpdf-{{.SemVer}}.sha256
-          algorithm: sha256
-        supported_envs:
-          - linux/amd64
       - version_constraint: Version == "release-qpdf-10.6.3.0cmake1"
         asset: qpdf-{{.SemVer}}-bin-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
@@ -48,18 +42,46 @@ packages:
       - version_constraint: Version == "release-qpdf-8.0.rc1"
         checksum:
           type: github_release
-          asset: qpdf-8.0.rc1.sha1
+          asset: qpdf-8.0.rc1.md5
+          algorithm: md5
+      - version_constraint: Version == "release-qpdf-8.0.rc2"
+        checksum:
+          type: github_release
+          asset: qpdf-8.0.0.sha1
           algorithm: sha1
-      - version_constraint: Version in ["release-qpdf-8.0.rc3", "release-qpdf-8.0.rc3"]
+      - version_constraint: semver("<= 10.0.1")
         checksum:
           type: github_release
-          asset: qpdf-8.0.0.md5
+          asset: qpdf-{{.SemVer}}.md5
           algorithm: md5
-      - version_constraint: Version == "release-qpdf-9.1.rc1"
+      - version_constraint: semver("<= 10.6.3")
+        asset: qpdf-{{.SemVer}}-bin-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
         checksum:
           type: github_release
-          asset: qpdf-9.1.rc1.md5
-          algorithm: md5
+          asset: qpdf-{{.SemVer}}.sha256
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 12.2.0")
+        asset: qpdf-{{trimV .Version}}-bin-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: qpdf-{{trimV .Version}}.sha256
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+          - goos: windows
+            format: raw
+            asset: qpdf-{{trimV .Version}}-mingw32
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
       - version_constraint: "true"
         asset: qpdf-{{trimV .Version}}-bin-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
@@ -67,6 +89,15 @@ packages:
           type: github_release
           asset: qpdf-{{trimV .Version}}.sha256
           algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/qpdf/qpdf/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+            bundle:
+              type: github_release
+              asset: qpdf-{{trimV .Version}}.sha256.sigstore
         overrides:
           - goos: linux
             replacements:
