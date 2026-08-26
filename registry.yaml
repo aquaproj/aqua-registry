@@ -78293,19 +78293,9 @@ packages:
     repo_owner: qpdf
     repo_name: qpdf
     description: "qpdf: A content-preserving PDF document transformer"
+    version_filter: Version startsWith "release-qpdf-" or Version matches "^v[0-9]"
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "release-qpdf-8.0.rc3"
-        checksum:
-          type: github_release
-          asset: qpdf-8.0.0.md5
-          algorithm: md5
-      - version_constraint: Version == "release-qpdf-9.1.rc1"
-        checksum:
-          type: github_release
-          asset: qpdf-9.1.rc1.md5
-          algorithm: md5
-      - version_constraint: Version == "vcpkg-cache-v1"
       - version_constraint: Version == "release-qpdf-10.6.3.0cmake1"
         asset: qpdf-{{.SemVer}}-bin-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
@@ -78333,11 +78323,21 @@ packages:
           type: github_release
           asset: qpdf-8.0.rc1.md5
           algorithm: md5
-      - version_constraint: Version == "release-qpdf-8.0.rc2"
+      - version_constraint: Version == "release-qpdf-9.1.rc1"
         checksum:
           type: github_release
-          asset: qpdf-8.0.0.sha1
-          algorithm: sha1
+          asset: qpdf-9.1.rc1.md5
+          algorithm: md5
+      - version_constraint: semver("<= 8.0.2")
+        checksum:
+          type: github_release
+          asset: qpdf-{{.SemVer}}.md5
+          algorithm: md5
+      - version_constraint: Version in ["release-qpdf-8.0.rc3", "release-qpdf-8.0.rc3"]
+        checksum:
+          type: github_release
+          asset: qpdf-8.0.0.md5
+          algorithm: md5
       - version_constraint: semver("<= 10.0.1")
         checksum:
           type: github_release
