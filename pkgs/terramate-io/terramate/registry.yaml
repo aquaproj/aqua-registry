@@ -83,11 +83,26 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("<= 0.3.0")
+        asset: terramate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: semver("<= 0.9.0")
         asset: terramate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
           amd64: x86_64
+        files:
+          - name: terramate
+          - name: terramate-ls
         checksum:
           type: github_release
           asset: checksums.txt
@@ -100,6 +115,9 @@ packages:
         format: tar.gz
         replacements:
           amd64: x86_64
+        files:
+          - name: terramate
+          - name: terramate-ls
         checksum:
           type: github_release
           asset: checksums.txt
