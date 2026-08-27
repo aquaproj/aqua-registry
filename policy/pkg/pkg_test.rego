@@ -34,6 +34,41 @@ test_allow_name_with_version if {
 	count(result) == 0
 }
 
+test_deny_short_syntax_for_old_version if {
+	result := deny_old_version_short_syntax with input as [{
+		"path": "pkgs/owner/repo/pkg.yaml",
+		"contents": {"packages": [
+			{"name": "owner/repo@v2.0.0"},
+			{"name": "owner/repo@v1.0.0"},
+		]},
+	}]
+	result == {{
+		"msg": "pkgs/owner/repo/pkg.yaml: package entry 2 uses short syntax for an old version; use separate name and version fields (https://github.com/aquaproj/aqua-registry/blob/main/docs/pkg_yaml.md#dont-use-the-short-syntax-package-nameversion-for-the-old-versions)",
+		"_loc": {"file": "pkgs/owner/repo/pkg.yaml", "line": 1},
+	}}
+}
+
+test_allow_short_syntax_for_latest_version if {
+	result := deny_old_version_short_syntax with input as [{
+		"path": "pkgs/owner/repo/pkg.yaml",
+		"contents": {"packages": [
+			{"name": "owner/repo@v2.0.0"},
+		]},
+	}]
+	count(result) == 0
+}
+
+test_allow_long_syntax_for_old_version if {
+	result := deny_old_version_short_syntax with input as [{
+		"path": "pkgs/owner/repo/pkg.yaml",
+		"contents": {"packages": [
+			{"name": "owner/repo@v2.0.0"},
+			{"name": "owner/repo", "version": "v1.0.0"},
+		]},
+	}]
+	count(result) == 0
+}
+
 test_deny_partial_mismatch if {
 	result := deny with input as [{
 		"path": "pkgs/owner/repo/pkg.yaml",
