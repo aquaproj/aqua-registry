@@ -53,6 +53,8 @@ jobs:
         run: argd fix ${{steps.changes.outputs.pkgs-files_files}}
 
       - name: Test pkg.yaml fixer
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
         run: python3 -m unittest scripts/test_fix_pkg_yaml.py
 
       - name: Fix short syntax for old versions in pkg.yaml
