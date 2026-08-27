@@ -78290,6 +78290,64 @@ packages:
           linux: unknown-linux-musl
           windows: pc-windows-msvc
   - type: github_release
+    repo_owner: qpdf
+    repo_name: qpdf
+    description: Content-preserving PDF document transformer
+    version_filter: Version startsWith "release-qpdf-" or Version matches "^v[0-9]"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "vcpkg-cache-v1"
+        no_asset: true
+      - version_constraint: Version startsWith "release-qpdf-"
+        error_message: Please use v11.0.0 or later
+      - version_constraint: semver("<= 12.2.0")
+        asset: qpdf-{{trimV .Version}}-bin-linux-x86_64.{{.Format}}
+        format: zip
+        files:
+          - name: qpdf
+            src: bin/qpdf
+        checksum:
+          type: github_release
+          asset: qpdf-{{trimV .Version}}.sha256
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            asset: qpdf-{{trimV .Version}}-mingw64.{{.Format}}
+            files:
+              - name: qpdf
+                src: qpdf-{{trimV .Version}}-mingw64/bin/qpdf
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+      - version_constraint: "true"
+        asset: qpdf-{{trimV .Version}}-bin-linux-x86_64.{{.Format}}
+        format: zip
+        files:
+          - name: qpdf
+            src: bin/qpdf
+        checksum:
+          type: github_release
+          asset: qpdf-{{trimV .Version}}.sha256
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: qpdf-{{trimV .Version}}.sha256.sigstore
+            opts:
+              - --certificate-identity-regexp
+              - ^(ejb@ql\.org|m\.holger@qpdf\.org)$
+              - --certificate-oidc-issuer
+              - https://github.com/login/oauth
+        overrides:
+          - goos: windows
+            asset: qpdf-{{trimV .Version}}-mingw64.{{.Format}}
+            files:
+              - name: qpdf
+                src: qpdf-{{trimV .Version}}-mingw64/bin/qpdf
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+  - type: github_release
     repo_owner: quantumsheep
     repo_name: sshs
     description: Terminal user interface for SSH
