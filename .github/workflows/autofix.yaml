@@ -52,6 +52,13 @@ jobs:
         if: steps.changes.outputs.pkgs-files == 'true'
         run: argd fix ${{steps.changes.outputs.pkgs-files_files}}
 
+      - name: Test pkg.yaml fixer
+        run: python3 -m unittest scripts/test_fix_pkg_yaml.py
+
+      - name: Fix short syntax for old versions in pkg.yaml
+        if: steps.changes.outputs.pkgs-files == 'true'
+        run: python3 scripts/fix_pkg_yaml.py ${{steps.changes.outputs.pkgs-files_files}}
+
       - name: Fix registry.yaml
         run: argd gr
 
