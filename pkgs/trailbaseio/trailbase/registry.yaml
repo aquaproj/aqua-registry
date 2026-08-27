@@ -4,17 +4,58 @@ packages:
     repo_owner: trailbaseio
     repo_name: trailbase
     description: An open, sub-millisecond, single-executable Firebase alternative with type-safe APIs, built-in WebAssembly runtime, realtime subscriptions, auth, MCP and admin UI built on Rust, SQLite (PG) & Wasmtime
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("< 0.33.4")
-        error_message: Please use v0.33.4 or later
-    asset: trailbase_{{.Version}}_{{.Arch}}_{{.OS}}.{{.Format}}
-    format: zip
-    windows_arm_emulation: true
-    files:
-      - name: trailbase
-        src: trail
-    overrides:
-      - goos: darwin
-        asset: trailbase_{{.Version}}_{{.Arch}}_apple_{{.OS}}.{{.Format}}
-    replacements:
-      amd64: x86_64
+      - version_constraint: Version == "v0.22.2"
+        asset: trailbase_{{.Version}}_{{.Arch}}_{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: darwin
+            asset: trailbase_{{.Version}}_{{.Arch}}_apple_{{.OS}}.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v0.25.3"
+        asset: trailbase_{{.Version}}_{{.Arch}}_{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: semver("<= 0.3.2")
+        asset: trailbase_{{.Version}}_{{.Arch}}_{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: darwin
+            asset: trailbase_{{.Version}}_{{.Arch}}_apple_{{.OS}}.{{.Format}}
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.21.10")
+        asset: trailbase_{{.Version}}_{{.Arch}}_{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: darwin
+            asset: trailbase_{{.Version}}_{{.Arch}}_apple_{{.OS}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: trailbase_{{.Version}}_{{.Arch}}_{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: darwin
+            asset: trailbase_{{.Version}}_{{.Arch}}_apple_{{.OS}}.{{.Format}}
