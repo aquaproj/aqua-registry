@@ -49496,14 +49496,23 @@ packages:
     repo_owner: homeport
     repo_name: dyff
     description: A diff tool for YAML files, and sometimes JSON
-    supported_envs:
-      - darwin
-      - linux
     asset: dyff_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
     checksum:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      # Windows assets are published since v1.5.7
+      - version_constraint: semver("< 1.5.7")
+        supported_envs:
+          - darwin
+          - linux
+      - version_constraint: "true"
+        supported_envs:
+          - darwin
+          - linux
+          - windows
   - type: github_release
     repo_owner: homeport
     repo_name: havener
