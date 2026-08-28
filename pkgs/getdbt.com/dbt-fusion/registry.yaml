@@ -7,17 +7,17 @@ packages:
     description: The next-generation engine for dbt
     link: https://docs.getdbt.com/docs/local/install-dbt
     version_source: github_tag
-    url: https://public.cdn.getdbt.com/fs/cli/fs-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz
+    url: https://public.cdn.getdbt.com/fs/cli/fs-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     format: tar.gz
+    windows_arm_emulation: true
     replacements:
       linux: unknown-linux-gnu
       darwin: apple-darwin
+      windows: pc-windows-msvc
       amd64: x86_64
       arm64: aarch64
-    supported_envs:
-      - linux/amd64
-      - linux/arm64
-      - darwin/amd64
-      - darwin/arm64
     files:
       - name: dbt
+    overrides:
+      - goos: windows
+        format: zip
