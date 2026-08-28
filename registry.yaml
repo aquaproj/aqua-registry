@@ -65189,15 +65189,74 @@ packages:
     repo_owner: mercari
     repo_name: tfnotify
     description: A CLI command to parse Terraform execution result and notify it to GitHub
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - linux/amd64
-    asset: tfnotify_{{.OS}}_{{.Arch}}.tar.gz
-    checksum:
-      type: github_release
-      asset: tfnotify_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.8.0"
+        asset: tfnotify_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfnotify_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.3.1")
+        asset: tfnotify_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        files:
+          - name: tfnotify
+            src: tfnotify_{{.Version}}_{{.OS}}_{{.Arch}}/tfnotify
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.5.0")
+        asset: tfnotify_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: tfnotify_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.7.0")
+        asset: tfnotify_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: tfnotify_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.7.5")
+        asset: tfnotify_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        checksum:
+          type: github_release
+          asset: tfnotify_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: tfnotify_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tfnotify_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: mergestat
     repo_name: mergestat-lite
@@ -87228,12 +87287,12 @@ packages:
   - type: github_release
     repo_owner: specstoryai
     repo_name: getspecstory
-    description: Install our local first extensions for your favorite AI IDE or Terminal Agent. Process your histories into reusable skills with Lore. Sync your conversations to the cloud. File issues and requests
+    description: Install our extensions for GH Copilot, Cursor and Claude Code. Try BearClaude. File issues and requests
     files:
       - name: specstory
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 2.8.0")
+      - version_constraint: "true"
         asset: SpecStoryCLI_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -87247,21 +87306,6 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: "true"
-        asset: SpecStoryCLI_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          darwin: Darwin
-          linux: Linux
-          windows: Windows
-        checksum:
-          type: github_release
-          asset: SpecStoryCLI_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: windows
-            format: zip
   - type: go_install
     repo_owner: spf13
     repo_name: cobra-cli
