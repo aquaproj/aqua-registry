@@ -17322,14 +17322,16 @@ packages:
     description: Software to interact with Atlassian Cloud from the terminal
     link: https://developer.atlassian.com/cloud/acli/
     version_source: github_tag
-    url: https://acli.atlassian.com/{{.OS}}/{{.Version}}/acli_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    url: https://acli.atlassian.com/{{.OS}}/{{.Version}}/acli_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz
     format: tar.gz
     files:
       - name: acli
         src: acli_{{.Version}}_{{.OS}}_{{.Arch}}/acli
-    overrides:
-      - goos: windows
-        format: zip
+    supported_envs:
+      - linux/amd64
+      - linux/arm64
+      - darwin/amd64
+      - darwin/arm64
   - type: github_release
     repo_owner: atuinsh
     repo_name: atuin
@@ -41280,20 +41282,20 @@ packages:
     description: The next-generation engine for dbt
     link: https://docs.getdbt.com/docs/local/install-dbt
     version_source: github_tag
-    url: https://public.cdn.getdbt.com/fs/cli/fs-{{.Version}}-{{.Arch}}-{{.OS}}.tar.gz
+    url: https://public.cdn.getdbt.com/fs/cli/fs-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     format: tar.gz
+    windows_arm_emulation: true
     replacements:
       linux: unknown-linux-gnu
       darwin: apple-darwin
+      windows: pc-windows-msvc
       amd64: x86_64
       arm64: aarch64
-    supported_envs:
-      - linux/amd64
-      - linux/arm64
-      - darwin/amd64
-      - darwin/arm64
     files:
       - name: dbt
+    overrides:
+      - goos: windows
+        format: zip
   - type: github_release
     repo_owner: getgauge
     repo_name: gauge
