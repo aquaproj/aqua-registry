@@ -81029,19 +81029,19 @@ packages:
   - type: github_release
     repo_owner: rui314
     repo_name: mold
-    description: "Mold: A Modern Linker"
+    description: "mold: A Modern Linker"
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 1.0.3") || Version == "v1.6.0-pre.1"
+      - version_constraint: Version == "v1.6.0-pre.1"
         no_asset: true
-      - version_constraint: semver("<= 1.5.1")
+      - version_constraint: semver("<= 1.0.3")
+        no_asset: true
+      - version_constraint: semver("<= 2.40.2")
         asset: mold-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         replacements:
           amd64: x86_64
           arm64: aarch64
-        supported_envs:
-          - linux
         files:
           - name: mold
             src: mold-{{trimV .Version}}-{{.Arch}}-{{.OS}}/bin/mold
@@ -81049,19 +81049,36 @@ packages:
             src: mold-{{trimV .Version}}-{{.Arch}}-{{.OS}}/bin/mold
           - name: ld64.mold
             src: mold-{{trimV .Version}}-{{.Arch}}-{{.OS}}/bin/mold
-      - version_constraint: "true"
-        asset: mold-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
         supported_envs:
           - linux
+      - version_constraint: "true"
+        asset: mold-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
         files:
           - name: mold
-            src: mold-{{trimV .Version}}-{{.Arch}}-{{.OS}}/bin/mold
+            src: bin/mold
           - name: ld.mold
-            src: mold-{{trimV .Version}}-{{.Arch}}-{{.OS}}/bin/mold
+            src: bin/mold
+          - name: ld64.mold
+            src: bin/mold
+        overrides:
+          - goos: linux
+            format: tar.gz
+            replacements:
+              arm64: aarch64
+            files:
+              - name: mold
+                src: mold-{{trimV .Version}}-{{.Arch}}-{{.OS}}/bin/mold
+              - name: ld.mold
+                src: mold-{{trimV .Version}}-{{.Arch}}-{{.OS}}/bin/mold
+              - name: ld64.mold
+                src: mold-{{trimV .Version}}-{{.Arch}}-{{.OS}}/bin/mold
+        supported_envs:
+          - linux
+          - windows/amd64
   - type: github_release
     repo_owner: runatlantis
     repo_name: atlantis
