@@ -3,7 +3,7 @@ packages:
   - type: github_release
     repo_owner: Lifailon
     repo_name: lazyjournal
-    description: TUI for journalctl, file system logs, as well Docker and Podman containers for quick viewing and filtering with fuzzy find, regex support (like fzf and grep) and coloring the output, written in Go with the gocui library
+    description: TUI for viewing logs from journald, auditd, file system, Docker and Podman containers, Compose stacks and Kubernetes pods with support for log highlighting and several filtering modes
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 0.4.0")
@@ -11,9 +11,12 @@ packages:
         format: raw
         supported_envs:
           - linux
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.6.0")
         asset: lazyjournal-{{.Version}}-{{.OS}}-{{.Arch}}
         format: raw
         supported_envs:
           - linux
           - darwin
+      - version_constraint: "true"
+        asset: lazyjournal-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
