@@ -6537,7 +6537,19 @@ packages:
     version_overrides:
       - version_constraint: Version in ["cli-0.0.0-02e9757", "cli-0.0.0-1b829d5", "cli-0.0.0-1c71b5b", "cli-0.0.0-1f610f5", "cli-0.0.0-2f0a249", "cli-0.0.0-34641b1", "cli-0.0.0-3d9c01d", "cli-0.0.0-47f0103", "cli-0.0.0-50b0d25", "cli-0.0.0-5302a93", "cli-0.0.0-592965f", "cli-0.0.0-944fc7a", "cli-0.0.0-9645986", "cli-0.0.0-b5fd984", "cli-0.0.0-b98cd74", "cli-0.0.0-cebea8b", "cli-0.0.0-d68ced1", "cli-0.0.0-d9bbd76", "cli-0.0.0-e701796", "cli-0.0.0-faa36d3"]
         no_asset: true
-      - version_constraint: "true"
+      # ori-windows-x64.exe exists in this release but not in cli-0.11.0-fe98906,
+      # which sorts after it, so it can't be expressed as a range.
+      - version_constraint: Version == "cli-0.11.0-alpha-c8f51ad"
+        asset: ori-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+      - version_constraint: semver("<= 0.11.0-fe98906")
         asset: ori-{{.OS}}-{{.Arch}}
         format: raw
         replacements:
@@ -6549,6 +6561,16 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: "true"
+        asset: ori-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
   - type: github_release
     repo_owner: Orange-OpenSource
     repo_name: hurl
