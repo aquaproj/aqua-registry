@@ -5,18 +5,44 @@ packages:
     repo_owner: grafana
     repo_name: mimir
     description: Grafana Mimir provides horizontally scalable, highly available, multi-tenant, long-term storage for Prometheus
-    asset: mimirtool-{{.OS}}-{{.Arch}}
-    format: raw
     version_prefix: mimir-
     version_constraint: "false"
     version_overrides:
-      # mimirtool Windows assets are missing only in these releases
-      - version_constraint: Version in ["mimir-3.1.0-rc.0", "mimir-3.1.0", "mimir-3.1.1", "mimir-3.1.2"]
+      - version_constraint: Version == "mimir-3.2.0-rc.0"
+        no_asset: true
+      - version_constraint: Version == "mimir-2.2.0-rc.0"
+        asset: mimir-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "mimir-3.1.0-rc.0"
+        asset: mimir-{{.OS}}-{{.Arch}}
+        format: raw
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "mimir-3.1.0-rc.1"
+        asset: mimir-{{.OS}}-{{.Arch}}
+        format: raw
+        overrides:
+          - goos: windows
+            asset: mimirtool-{{.OS}}-{{.Arch}}
+      - version_constraint: semver("<= 3.0.9")
+        asset: mimir-{{.OS}}-{{.Arch}}
+        format: raw
+        overrides:
+          - goos: windows
+            asset: mimirtool-{{.OS}}-{{.Arch}}
+      - version_constraint: semver("<= 3.1.2")
+        asset: mimir-{{.OS}}-{{.Arch}}
+        format: raw
         supported_envs:
           - linux
           - darwin
       - version_constraint: "true"
-        supported_envs:
-          - linux
-          - darwin
-          - windows
+        asset: mimir-{{.OS}}-{{.Arch}}
+        format: raw
+        overrides:
+          - goos: windows
+            asset: mimirtool-{{.OS}}-{{.Arch}}
