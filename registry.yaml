@@ -46767,9 +46767,18 @@ packages:
     asset: mimirtool-{{.OS}}-{{.Arch}}
     format: raw
     version_prefix: mimir-
-    supported_envs:
-      - linux
-      - darwin
+    version_constraint: "false"
+    version_overrides:
+      # mimirtool Windows assets are missing only in these releases
+      - version_constraint: Version in ["mimir-3.1.0-rc.0", "mimir-3.1.0", "mimir-3.1.1", "mimir-3.1.2"]
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        supported_envs:
+          - linux
+          - darwin
+          - windows
   - name: grafana/mimir/query-tee
     type: github_release
     repo_owner: grafana
