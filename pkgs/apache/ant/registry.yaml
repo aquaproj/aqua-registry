@@ -8,8 +8,26 @@ packages:
     version_prefix: rel/
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("< 1.8.0")
+        error_message: Please use 1.8.0 or later
       - version_constraint: semver("<= 1.10.0")
-        error_message: Please use 1.10.1 or later
+        url: https://archive.apache.org/dist/ant/binaries/apache-ant-{{.SemVer}}-bin.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: http
+          url: https://archive.apache.org/dist/ant/binaries/apache-ant-{{.SemVer}}-bin.{{.Format}}.sha512
+          file_format: regexp
+          algorithm: sha512
+          pattern:
+            checksum: ^(\b[A-Fa-f0-9]{128}\b)
+        files:
+          - name: ant
+            src: apache-ant-{{.SemVer}}/bin/ant
+        overrides:
+          - goos: windows
+            files:
+              - name: ant
+                src: apache-ant-{{.SemVer}}/bin/ant.bat
       - version_constraint: "true"
         url: https://archive.apache.org/dist/ant/binaries/apache-ant-{{.SemVer}}-bin.{{.Format}}
         format: tar.xz
