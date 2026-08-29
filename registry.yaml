@@ -34377,6 +34377,28 @@ packages:
           - goos: darwin
             checksum:
               enabled: false # https://github.com/docker/buildx/issues/945
+      - version_constraint: semver("< 0.36.0-rc2")
+        asset: buildx-{{.Version}}.{{.OS}}-{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        cosign:
+          bundle:
+            type: github_release
+            asset: "buildx-{{.Version}}.{{.OS}}-{{.Arch}}.sigstore.json"
+          opts:
+            - --certificate-identity-regexp
+            - "^https://github\\.com/docker/github-builder/\\.github/workflows/bake\\.yml@.+$"
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
+        overrides:
+          - goos: darwin
+            checksum:
+              enabled: false # https://github.com/docker/buildx/issues/945
+            cosign:
+              enabled: false
       - version_constraint: "true"
         asset: buildx-{{.Version}}.{{.OS}}-{{.Arch}}
         format: raw
@@ -34399,6 +34421,9 @@ packages:
               enabled: false # https://github.com/docker/buildx/issues/945
             cosign:
               enabled: false
+          - goos: windows
+            cosign:
+              enabled: false # binaries are code-signed instead from v0.36.0
   - type: github_release
     repo_owner: docker
     repo_name: cagent
