@@ -99405,11 +99405,9 @@ packages:
     supported_envs:
       - darwin
       - amd64
-    version_constraint: semver(">= 0.8.1")
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver(">= 0.6.1")
-        rosetta2: true
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.6.1")
         asset: termscp-{{.OS}}.{{.Format}}
         rosetta2: true
         replacements:
@@ -99425,6 +99423,16 @@ packages:
           - goos: windows
             format: zip
             asset: termscp-{{trimV .Version}}-{{.OS}}.{{.Format}}
+      - version_constraint: semver("< 0.8.1")
+        rosetta2: true
+      - version_constraint: semver("< 1.0.0")
+      - version_constraint: "true"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
   - type: github_release
     repo_owner: vektra
     repo_name: mockery
