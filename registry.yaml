@@ -13315,7 +13315,7 @@ packages:
       - version_constraint: semver("<= 0.0.1")
         no_asset: true
       - version_constraint: "true"
-        asset: portr_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        asset: portr_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
         replacements:
           amd64: x86_64
@@ -21141,6 +21141,8 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 3.2.1")
         no_asset: true
+      - version_constraint: Version in ["v8.5.1", "v8.5.3", "v8.6.0", "v8.6.1", "v8.6.2"]
+        no_asset: true
       - version_constraint: semver("< 8.3.0")
         asset: ggc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -21158,7 +21160,7 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: "true"
+      - version_constraint: semver("< 8.4.1")
         asset: ggc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
@@ -21175,6 +21177,45 @@ packages:
               - https://token.actions.githubusercontent.com
               - --signature
               - https://github.com/bmf-san/ggc/releases/download/{{.Version}}/checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("< 8.6.3")
+        asset: ggc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/bmf-san/ggc/releases/download/{{.Version}}/checksums.txt.pem
+              - --certificate-identity
+              - https://github.com/bmf-san/ggc/.github/workflows/release.yml@refs/heads/main
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/bmf-san/ggc/releases/download/{{.Version}}/checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: ggc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums.txt.bundle
+            opts:
+              - --certificate-identity
+              - "https://github.com/bmf-san/ggc/.github/workflows/release.yml@refs/tags/{{.Version}}"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
         overrides:
           - goos: windows
             format: zip
@@ -42360,11 +42401,41 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: "true"
+      - version_constraint: Version == "v1.1.7"
         asset: gh-ost-binary-{{.OS}}-{{.Arch}}-20241219160321.{{.Format}}
         format: tar.gz
         replacements:
           darwin: osx
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v1.1.8"
+        asset: gh-ost-binary-{{.OS}}-{{.Arch}}-20260310200531.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v1.1.9"
+        asset: gh-ost-binary-{{.OS}}-{{.Arch}}-20260501022029.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: Version == "v1.1.10"
+        asset: gh-ost-binary-{{.OS}}-{{.Arch}}-20260604164252.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: osx
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: gh-ost-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
         supported_envs:
           - linux
           - darwin
@@ -50846,7 +50917,7 @@ packages:
           type: github_release
           asset: witness_{{trimV .Version}}_checksums.txt
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.10.2-rc1")
         asset: witness_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
@@ -50863,6 +50934,22 @@ packages:
               - https://token.actions.githubusercontent.com
               - --signature
               - https://github.com/in-toto/witness/releases/download/{{.Version}}/witness_{{trimV .Version}}_checksums.txt.sig
+      - version_constraint: "true"
+        asset: witness_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: witness_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: witness_{{trimV .Version}}_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity
+              - "https://github.com/in-toto/witness/.github/workflows/release.yml@refs/tags/{{.Version}}"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
   - type: github_release
     repo_owner: incu6us
     repo_name: goimports-reviser
@@ -51370,7 +51457,7 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("<= 2.0.3")
         asset: sbomqs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -51392,6 +51479,27 @@ packages:
             - https://github.com/interlynk-io/sbomqs/releases/download/{{.Version}}/{{.Asset}}.pem
             - --signature
             - https://github.com/interlynk-io/sbomqs/releases/download/{{.Version}}/{{.Asset}}.sig
+      - version_constraint: "true"
+        asset: sbomqs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        cosign:
+          bundle:
+            type: github_release
+            asset: "{{.Asset}}.sigstore.json"
+          opts:
+            - --certificate-identity
+            - https://github.com/interlynk-io/sbomqs/.github/workflows/release.yml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
   - type: github_release
     repo_owner: iovisor
     repo_name: kubectl-trace
@@ -60117,7 +60225,7 @@ packages:
               - https://github.com/kubernetes-sigs/zeitgeist/releases/download/{{.Version}}/checksums.txt.sig
               - --certificate
               - https://github.com/kubernetes-sigs/zeitgeist/releases/download/{{.Version}}/checksums.txt.pem
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.6.2")
         asset: zeitgeist-{{.Arch}}-{{.OS}}
         format: raw
         supported_envs:
@@ -60138,6 +60246,26 @@ packages:
               - https://github.com/kubernetes-sigs/zeitgeist/releases/download/{{.Version}}/checksums.txt.sig
               - --certificate
               - https://github.com/kubernetes-sigs/zeitgeist/releases/download/{{.Version}}/checksums.txt.pem
+      - version_constraint: "true"
+        asset: zeitgeist-{{.Arch}}-{{.OS}}
+        format: raw
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/kubernetes-sigs/zeitgeist/\\.github/workflows/release\\.yml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
   - name: kubernetes/cloud-provider-gcp/gke-gcloud-auth-plugin
     type: go_build
     repo_owner: kubernetes
@@ -86584,7 +86712,7 @@ packages:
         src: step-ca_{{.OS}}_{{.Arch}}/step-ca
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version in ["v0.15.1", "v0.17.5"]
+      - version_constraint: Version in ["v0.15.1", "v0.17.5", "v0.30.0"]
         no_asset: true
       - version_constraint: semver("<= 0.13.3")
         asset: step-certificates_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
@@ -86692,7 +86820,7 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.30.0-rc2")
         asset: step-ca_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -86710,6 +86838,26 @@ packages:
               - https://token.actions.githubusercontent.com
               - --signature
               - https://github.com/smallstep/certificates/releases/download/{{.Version}}/checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: step-ca_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity
+              - https://github.com/smallstep/workflows/.github/workflows/goreleaser.yml@refs/heads/main
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
         overrides:
           - goos: windows
             format: zip
@@ -98967,7 +99115,7 @@ packages:
         files:
           - name: coreutils
             src: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}/coreutils
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.10.0")
         asset: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -98984,6 +99132,21 @@ packages:
               windows: pc-windows-gnu
           - goos: windows
             goarch: arm64
+            format: zip
+        files:
+          - name: coreutils
+            src: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}/coreutils
+      - version_constraint: "true"
+        asset: coreutils-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
             format: zip
         files:
           - name: coreutils
@@ -104715,7 +104878,7 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 1.1.0")
         no_asset: true
-      - version_constraint: "true"
+      - version_constraint: semver("< 3.7.0")
         asset: zlint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         rosetta2: true
@@ -104736,6 +104899,24 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: "true"
+        asset: zlint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        files:
+          - name: zlint
+            src: "{{.AssetWithoutExt}}/{{.FileName}}"
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: zlint_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - linux/amd64
   - type: github_release
     repo_owner: zmwangx
     repo_name: ets
