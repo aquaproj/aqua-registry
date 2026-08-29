@@ -73349,10 +73349,22 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha1
+      - version_constraint: semver("< 2.0.0") and not (Version startsWith "v2.0.0-rc")
+        asset: zrok_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.sha256.txt
+          algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: openziti/zrok/.github/workflows/release.yml
       - version_constraint: "true"
         asset: zrok_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
+        files:
+          - name: zrok2
         checksum:
           type: github_release
           asset: checksums.sha256.txt
