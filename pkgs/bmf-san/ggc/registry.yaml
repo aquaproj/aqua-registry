@@ -27,7 +27,7 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: semver("< 8.6.3")
+      - version_constraint: semver("< 8.4.1")
         asset: ggc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
@@ -40,6 +40,26 @@ packages:
               - https://github.com/bmf-san/ggc/releases/download/{{.Version}}/checksums.txt.pem
               - --certificate-identity
               - "https://github.com/bmf-san/ggc/.github/workflows/release.yml@refs/tags/{{.Version}}"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/bmf-san/ggc/releases/download/{{.Version}}/checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("< 8.6.3")
+        asset: ggc_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/bmf-san/ggc/releases/download/{{.Version}}/checksums.txt.pem
+              - --certificate-identity
+              - https://github.com/bmf-san/ggc/.github/workflows/release.yml@refs/heads/main
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
               - --signature
