@@ -8,10 +8,10 @@ packages:
       - name: dlv
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 1.26.1")
+      - version_constraint: semver("<= 1.26.1") or Version in ["v1.27.0", "v1.27.1"]
         type: go_install
         path: github.com/go-delve/delve/cmd/dlv
-      - version_constraint: semver("< 1.27.0")
+      - version_constraint: "true"
         asset: dlv_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
@@ -31,6 +31,3 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: "true"
-        type: go_install
-        path: github.com/go-delve/delve/cmd/dlv
