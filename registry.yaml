@@ -84244,9 +84244,21 @@ packages:
     repo_owner: segmentio
     repo_name: topicctl
     description: Tool for declarative management of Kafka topics
-    path: github.com/segmentio/topicctl/cmd/topicctl
     search_words:
       - kafka
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 2.0.0")
+        type: go_install
+        path: github.com/segmentio/topicctl/cmd/topicctl
+      # go.mod still declares `module github.com/segmentio/topicctl` at the v2 tags, so
+      # `go install` can't resolve them. Build from the repository archive instead.
+      - version_constraint: "true"
+        type: go_build
+        files:
+          - name: topicctl
+            src: ./cmd/topicctl
+            dir: topicctl-{{trimV .Version}}
   - type: github_release
     repo_owner: self-actuated
     repo_name: actuated-cli
