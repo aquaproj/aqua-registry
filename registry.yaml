@@ -75764,10 +75764,20 @@ packages:
     overrides:
       - goos: windows
         format: zip
-    checksum:
-      type: github_release
-      asset: checksums.pgrok.txt
-      algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 1.5.0")
+        checksum:
+          type: github_release
+          asset: checksums.pgrok.txt
+          algorithm: sha256
+      - version_constraint: semver("< 1.6.0-rc.1")
+      - version_constraint: "true"
+        overrides:
+          - goos: windows
+            format: zip
+          - goos: darwin
+            format: zip
   - name: pgrok/pgrok/pgrokd
     type: github_release
     repo_owner: pgrok
