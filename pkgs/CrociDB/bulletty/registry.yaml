@@ -25,7 +25,7 @@ packages:
           - goos: windows
             format: zip
             replacements: {}
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.2.2")
         asset: bulletty-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -37,3 +37,30 @@ packages:
           - goos: windows
             format: zip
             replacements: {}
+      - version_constraint: "true"
+        asset: bulletty-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: bulletty
+            src: "{{.AssetWithoutExt}}/bulletty"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              amd64: x86_64
+              linux: unknown-linux-musl
+          - goos: windows
+            format: zip
+            files:
+              - name: bulletty
