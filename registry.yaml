@@ -35856,7 +35856,7 @@ packages:
     version_overrides:
       - version_constraint: Version == "v0.1.0"
         error_message: This version isn't support because assets are broken.
-      - version_constraint: "true"
+      - version_constraint: semver("< 2.0.0")
         asset: tforganize-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -35864,6 +35864,17 @@ packages:
           type: github_release
           asset: "{{.Asset}}.md5"
           algorithm: md5
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: tforganize_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
         overrides:
           - goos: windows
             format: zip
