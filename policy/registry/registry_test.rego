@@ -258,3 +258,15 @@ test_ignore_non_registry_yaml if {
 	}]
 	count(result) == 0
 }
+
+test_allow_go_sub_package_name if {
+	result := deny with input as [{
+		"path": "pkgs/_go/sigsum.org/sigsum-go/cmd/sigsum-key/registry.yaml",
+		"contents": {"packages": [{
+			"name": "_go/sigsum.org/sigsum-go#cmd/sigsum-key",
+			"type": "go_install",
+			"path": "sigsum.org/sigsum-go/cmd/sigsum-key",
+		}]},
+	}]
+	count(result) == 0
+}

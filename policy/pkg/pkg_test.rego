@@ -44,3 +44,11 @@ test_deny_partial_mismatch if {
 	}]
 	result == {"pkgs/owner/repo/pkg.yaml: package name mismatch: expected \"owner/repo\" but got \"other/tool\""}
 }
+
+test_allow_go_sub_package_name if {
+	result := deny with input as [{
+		"path": "pkgs/_go/sigsum.org/sigsum-go/cmd/sigsum-key/pkg.yaml",
+		"contents": {"packages": [{"name": "_go/sigsum.org/sigsum-go#cmd/sigsum-key@v0.9.1"}]},
+	}]
+	count(result) == 0
+}

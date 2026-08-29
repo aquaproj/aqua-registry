@@ -21,6 +21,9 @@ deny contains msg if {
 	# pkg.name may include "@version", extract name part
 	name_parts := split(pkg.name, "@")
 	pkg_name := name_parts[0]
-	pkg_name != expected_name
+	# Go sub-package names separate the module from the command path with "#",
+	# while the directory uses "/": "_go/sigsum.org/sigsum-go#cmd/sigsum-key"
+	# lives in "pkgs/_go/sigsum.org/sigsum-go/cmd/sigsum-key".
+	replace(pkg_name, "#", "/") != expected_name
 	msg := sprintf("%s: package name mismatch: expected %q but got %q", [entry.path, expected_name, pkg_name])
 }
