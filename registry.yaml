@@ -101433,8 +101433,15 @@ packages:
         src: bin/wasmer
       - name: wasmer-headless
         src: bin/wasmer-headless
-    version_constraint: semver(">= 3.0.0-beta")
+    version_constraint: "false"
     version_overrides:
+      # https://github.com/wasmerio/wasmer/pull/6506 dropped the x86_64-darwin target.
+      - version_constraint: semver(">= 7.2.0-alpha.2")
+        supported_envs:
+          - darwin/arm64
+          - linux
+          - windows/amd64
+      - version_constraint: semver(">= 3.0.0-beta")
       - version_constraint: semver(">= 3.0.0-alpha")
         overrides:
           - goos: linux
@@ -101463,11 +101470,11 @@ packages:
           - goos: windows
             files:
               - name: wapm
-                src: bin/wapm.exe
+                src: bin/wapm
               - name: wasmer-headless
-                src: bin/wasmer-headless.exe
+                src: bin/wasmer-headless
               - name: wasmer
-                src: bin/wasmer.exe
+                src: bin/wasmer
       - version_constraint: semver(">= 2.0.0-rc1")
         replacements: {}
         supported_envs:
