@@ -60079,7 +60079,7 @@ packages:
               - https://github.com/kubernetes-sigs/zeitgeist/releases/download/{{.Version}}/checksums.txt.sig
               - --certificate
               - https://github.com/kubernetes-sigs/zeitgeist/releases/download/{{.Version}}/checksums.txt.pem
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.6.2")
         asset: zeitgeist-{{.Arch}}-{{.OS}}
         format: raw
         supported_envs:
@@ -60100,6 +60100,26 @@ packages:
               - https://github.com/kubernetes-sigs/zeitgeist/releases/download/{{.Version}}/checksums.txt.sig
               - --certificate
               - https://github.com/kubernetes-sigs/zeitgeist/releases/download/{{.Version}}/checksums.txt.pem
+      - version_constraint: "true"
+        asset: zeitgeist-{{.Arch}}-{{.OS}}
+        format: raw
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/kubernetes-sigs/zeitgeist/\\.github/workflows/release\\.yml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
   - name: kubernetes/cloud-provider-gcp/gke-gcloud-auth-plugin
     type: go_build
     repo_owner: kubernetes
