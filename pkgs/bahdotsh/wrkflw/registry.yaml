@@ -6,7 +6,7 @@ packages:
     description: Validate and execute GitHub Actions workflows locally
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.8.0")
         asset: wrkflw-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -15,3 +15,20 @@ packages:
         supported_envs:
           - linux/amd64
           - darwin
+      - version_constraint: "true"
+        asset: wrkflw-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - linux
+          - windows
