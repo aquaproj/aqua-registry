@@ -1,0 +1,124 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: containers
+    repo_name: podman
+    description: "Podman: A tool for managing OCI containers and pods"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 2.0.0")
+        error_message: The version is too old. Please upgrade to a newer version.
+      - version_constraint: Version == "v5.0.0-rc7"
+        asset: podman-remote-release-{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: shasums
+          algorithm: sha256
+        supported_envs:
+          - windows/amd64
+      - version_constraint: semver("<= 3.1.2")
+        asset: podman-remote-release-{{.OS}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: shasums
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: podman-remote-static.{{.Format}}
+            files:
+              - name: podman
+                src: podman-remote-static
+        supported_envs:
+          - linux/amd64
+          - darwin
+          - windows
+      - version_constraint: semver("<= 3.2.0-rc3")
+        no_asset: true
+      - version_constraint: semver("<= 3.4.4")
+        asset: podman-remote-release-{{.OS}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: shasums
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: podman-remote-static.{{.Format}}
+            files:
+              - name: podman
+                src: podman-remote-static
+          - goos: darwin
+            files:
+              - name: podman
+                src: podman-{{trimV .Version}}/podman
+          - goos: windows
+            files:
+              - name: podman
+                src: podman-{{trimV .Version}}/podman.exe
+        supported_envs:
+          - linux/amd64
+          - darwin
+          - windows
+      - version_constraint: semver("<= 4.0.1")
+        no_asset: true
+      - version_constraint: semver("<= 4.3.1")
+        asset: podman-remote-release-{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: shasums
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: podman-remote-static.{{.Format}}
+            files:
+              - name: podman
+                src: podman-remote-static
+          - goos: windows
+            files:
+              - name: podman
+                src: podman-{{trimV .Version}}/usr/bin/podman.exe
+          - goos: darwin
+            files:
+              - name: podman
+                src: podman-{{trimV .Version}}/usr/bin/podman
+        supported_envs:
+          - darwin
+          - windows/amd64
+          - linux/amd64
+      - version_constraint: "true"
+        asset: podman-remote-release-{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: shasums
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            asset: podman-remote-static-{{.OS}}_{{.Arch}}.{{.Format}}
+            files:
+              - name: podman
+                src: bin/{{.AssetWithoutExt}}
+          - goos: windows
+            files:
+              - name: podman
+                src: podman-{{trimV .Version}}/usr/bin/podman.exe
+              # - name: gvproxy
+              #   src: podman-{{trimV .Version}}/usr/bin/gvproxy.exe
+              # - name: win-sshproxy
+              #   src: podman-{{trimV .Version}}/usr/bin/win-sshproxy.exe
+          - goos: darwin
+            files:
+              - name: podman
+                src: podman-{{trimV .Version}}/usr/bin/podman
+              - name: podman-mac-helper
+                src: podman-{{trimV .Version}}/usr/bin/podman-mac-helper
