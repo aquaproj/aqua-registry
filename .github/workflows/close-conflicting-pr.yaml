@@ -22,21 +22,41 @@ jobs:
 
           bot=app/aquaproj-aqua-registry
 
-          info "searching pull requests"
-          numbers=$(gh -R "$GITHUB_REPOSITORY" pr list \
-            --json number,mergeable \
-            -S "author:$bot is:open" \
-            -L 100 \
-            -q '.[] | select(.mergeable == "CONFLICTING") | .number')
-
-          info "found pull requests: $numbers"
-
           workflow_run_url=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
 
-          for number in $numbers; do
-              info "closing a pull request #$number"
-              gh -R "$GITHUB_REPOSITORY" pr close "$number" -d \
-                -c "[Workflow]($workflow_run_url) Close this pull request because this is created by app/aquaproj-aqua-registry and it has conflicts"
+          # GitHub computes `mergeable` lazily. The first request returns UNKNOWN and starts the
+          # computation, so a single query would silently skip most pull requests.
+          attempts=5
+          closed=
+          for i in $(seq 1 "$attempts"); do
+              info "searching pull requests (attempt $i)"
+              prs=$(gh -R "$GITHUB_REPOSITORY" pr list \
+                --json number,mergeable \
+                -S "author:$bot is:open" \
+                -L 1000)
+
+              numbers=$(echo "$prs" | jq -r '.[] | select(.mergeable == "CONFLICTING") | .number')
+              if [ -n "$closed" ]; then
+                  # The search index can still list pull requests closed in earlier attempts as open.
+                  numbers=$(echo "$numbers" | grep -vxF "$closed" || true)
+              fi
+
+              info "found pull requests: $numbers"
+              for number in $numbers; do
+                  info "closing a pull request #$number"
+                  gh -R "$GITHUB_REPOSITORY" pr close "$number" -d \
+                    -c "[Workflow]($workflow_run_url) Close this pull request because this is created by app/aquaproj-aqua-registry and it has conflicts"
+                  closed=$(printf '%s\n%s' "$closed" "$number")
+              done
+
+              unknown=$(echo "$prs" | jq '[.[] | select(.mergeable == "UNKNOWN")] | length')
+              if [ "$unknown" -eq 0 ]; then
+                  break
+              fi
+              info "$unknown pull requests aren't computed yet"
+              if [ "$i" -ne "$attempts" ]; then
+                  sleep 10
+              fi
           done
         env:
           GITHUB_TOKEN: ${{github.token}}
