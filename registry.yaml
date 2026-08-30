@@ -77283,30 +77283,97 @@ packages:
     repo_owner: projectdiscovery
     repo_name: naabu
     description: A fast port scanner written in go with a focus on reliability and simplicity. Designed to be used in combination with other tools for attack surface discovery in bug bounties and pentests
-    rosetta2: true
-    asset: naabu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
-    replacements:
-      darwin: macOS
-    version_constraint: semver(">= 2.0.9")
-    supported_envs:
-      - darwin
-      - amd64
+    version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("= 2.0.8")
+      - version_constraint: Version == "v2.0.8"
+        rosetta2: true
+        asset: naabu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: naabu-{{.OS}}-checksums.txt
+          algorithm: sha256
+          replacements:
+            darwin: mac
         supported_envs:
           - darwin
           - linux/amd64
-      - version_constraint: "true"
+      - version_constraint: semver("< 2.0.9")
+        rosetta2: true
+        asset: naabu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: naabu-{{.OS}}-checksums.txt
+          algorithm: sha256
+          replacements:
+            darwin: mac
         supported_envs:
           - windows
           - darwin
           - linux/amd64
-    checksum:
-      type: github_release
-      asset: naabu-{{.OS}}-checksums.txt
-      algorithm: sha256
-      replacements:
-        darwin: mac
+      - version_constraint: semver("<= 2.3.5")
+        rosetta2: true
+        asset: naabu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: naabu-{{.OS}}-checksums.txt
+          algorithm: sha256
+          replacements:
+            darwin: mac
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: Version == "v2.3.6"
+        rosetta2: true
+        asset: naabu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: naabu-{{.OS}}-checksums.txt
+          algorithm: sha256
+          replacements:
+            darwin: mac
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 2.5.0")
+        rosetta2: true
+        asset: naabu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: naabu-{{.OS}}-checksums.txt
+          algorithm: sha256
+          replacements:
+            darwin: mac
+        overrides:
+          - goos: linux
+            checksum:
+              type: github_release
+              asset: naabu-{{.OS}}-{{.Arch}}-checksums.txt
+              algorithm: sha256
+        supported_envs:
+          - darwin
+          - amd64
+      - version_constraint: "true"
+        rosetta2: true
+        asset: naabu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.zip
+        replacements:
+          darwin: macOS
+        checksum:
+          type: github_release
+          asset: naabu-checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - amd64
   - type: github_release
     repo_owner: projectdiscovery
     repo_name: nuclei
