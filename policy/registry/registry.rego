@@ -48,6 +48,13 @@ deny contains msg if {
 	msg := sprintf("%s: packages must include only one package", [entry.path])
 }
 
+# Helper: Go sub-package names separate the module from the command path with "#",
+# while the directory uses "/": "_go/sigsum.org/sigsum-go#cmd/sigsum-key" lives in
+# "pkgs/_go/sigsum.org/sigsum-go/cmd/sigsum-key". Only "_go" packages use "#".
+normalize_go_sub_package(name) := replace(name, "#", "/") if {
+	startswith(name, "_go/")
+} else := name
+
 # package name must match directory path
 deny contains msg if {
 	entry := input[_]
@@ -56,10 +63,7 @@ deny contains msg if {
 	pkg := entry.contents.packages[0]
 	trimmed := trim_prefix(entry.path, "pkgs/")
 	expected_name := trim_suffix(trimmed, "/registry.yaml")
-	# Go sub-package names separate the module from the command path with "#",
-	# while the directory uses "/": "_go/sigsum.org/sigsum-go#cmd/sigsum-key"
-	# lives in "pkgs/_go/sigsum.org/sigsum-go/cmd/sigsum-key".
-	replace(get_name(pkg), "#", "/") != expected_name
+	normalize_go_sub_package(get_name(pkg)) != expected_name
 	msg := sprintf("%s: package name mismatch: expected %q but got %q", [entry.path, expected_name, get_name(pkg)])
 }
 

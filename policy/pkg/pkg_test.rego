@@ -52,3 +52,11 @@ test_allow_go_sub_package_name if {
 	}]
 	count(result) == 0
 }
+
+test_deny_hash_outside_go_package if {
+	result := deny with input as [{
+		"path": "pkgs/owner/repo/sub/pkg.yaml",
+		"contents": {"packages": [{"name": "owner/repo#sub"}]},
+	}]
+	result == {"pkgs/owner/repo/sub/pkg.yaml: package name mismatch: expected \"owner/repo/sub\" but got \"owner/repo#sub\""}
+}
