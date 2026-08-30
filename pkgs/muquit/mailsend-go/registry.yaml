@@ -49,7 +49,7 @@ packages:
         files:
           - name: mailsend-go
             src: mailsend-go-dir/mailsend-go
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.0.11")
         asset: mailsend-go-{{.Version}}-{{.OS}}-{{.Arch}}.d.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -63,3 +63,17 @@ packages:
         files:
           - name: mailsend-go
             src: "{{.AssetWithoutExt}}/mailsend-go-{{.Version}}-{{.OS}}-{{.Arch}}"
+      - version_constraint: "true"
+        asset: mailsend-go-{{.Version}}-{{.OS}}-{{.Arch}}.d.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: mailsend-go-{{.Version}}-checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: mailsend-go
+            src: mailsend-go-{{.Version}}-{{.OS}}-{{.Arch}}
