@@ -83,6 +83,19 @@ deny contains msg if {
 	msg := sprintf("%s: .files[].name must not end with .exe. Remove .exe from name", [entry.path])
 }
 
+# Helper: does the src embed the package version?
+# aqua completes .exe only when osfile.Ext returns "" for the *rendered* src, and that
+# check first strips the version string from it. Whether completion happens therefore
+# depends on the rendered value, which this policy can't compute, so a version-embedding
+# src is exempt from the .exe rule below.
+version_templated(src) if {
+	contains(src, ".Version")
+}
+
+version_templated(src) if {
+	contains(src, ".SemVer")
+}
+
 # files[].src must not end with .exe
 deny contains msg if {
 	entry := input[_]
@@ -90,7 +103,9 @@ deny contains msg if {
 	count(entry.contents.packages) == 1
 	pkg := entry.contents.packages[0]
 	file := all_files(pkg)[_]
-	endswith(object.get(file, "src", ""), ".exe")
+	src := object.get(file, "src", "")
+	endswith(src, ".exe")
+	not version_templated(src)
 	msg := sprintf("%s: .files[].src must not end with .exe. Remove .exe from src", [entry.path])
 }
 
