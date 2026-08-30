@@ -78854,6 +78854,17 @@ packages:
               - darwin/arm64
               - linux/arm64
             asset: "{{.OS}}_czkawka_cli_arm"
+      - version_constraint: semver("<= 11.0.1")
+        asset: "{{.OS}}_czkawka_cli_{{.Arch}}"
+        format: raw
+        overrides:
+          - goos: windows
+            asset: "{{.OS}}_czkawka_cli"
+        replacements:
+          amd64: x86_64
+          darwin: mac
+      # https://github.com/qarmin/czkawka/blob/12.0.0/.github/workflows/mac.yml stopped
+      # building on the macos-15-intel runner, so macOS Intel binaries aren't released.
       - version_constraint: "true"
         asset: "{{.OS}}_czkawka_cli_{{.Arch}}"
         format: raw
@@ -78863,6 +78874,10 @@ packages:
         replacements:
           amd64: x86_64
           darwin: mac
+        supported_envs:
+          - darwin/arm64
+          - linux
+          - windows/amd64
   - type: github_release
     repo_owner: qdrant
     repo_name: qdrant
