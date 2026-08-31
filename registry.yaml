@@ -57393,12 +57393,30 @@ packages:
       darwin: osx
     supported_envs:
       - darwin
-    rosetta2: true
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version in ["3.0.29", "3.1.14"]
+      - version_constraint: Version in ["3.0.29", "3.1.14", "v3.2.1"]
         no_asset: true
-      - version_constraint: semver("< 3.1.14")
+      - version_constraint: semver(">= 3.3.0")
+        asset: terraform-module-versions_{{.OS}}_{{.Arch}}.{{.Format}}
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          type: github_release
+          asset: terraform-module-versions_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - linux
+          - windows
+      - version_constraint: semver("< 3.3.0")
+        rosetta2: true
         overrides:
           - goos: windows
             format: zip
