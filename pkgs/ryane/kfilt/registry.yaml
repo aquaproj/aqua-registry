@@ -19,7 +19,7 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: semver("< 1.0.0")
         asset: kfilt_{{trimV .Version}}_{{.OS}}_{{.Arch}}
         format: raw
         checksum:
@@ -29,3 +29,13 @@ packages:
         overrides:
           - goos: darwin
             asset: kfilt_{{trimV .Version}}_{{.OS}}_all
+      - version_constraint: "true"
+        asset: kfilt_{{.OS}}_{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: kfilt_{{.OS}}_all
