@@ -102144,13 +102144,22 @@ packages:
         src: csview-{{.Version}}-{{.Arch}}-{{.OS}}/csview
     replacements:
       amd64: x86_64
+      arm64: aarch64
       darwin: apple-darwin
       windows: pc-windows-msvc
-    supported_envs:
-      - darwin
-      - linux
-      - amd64
-    rosetta2: true
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver(">= 1.3.4")
+        supported_envs:
+          - darwin/arm64
+          - linux
+          - windows/amd64
+      - version_constraint: "true"
+        supported_envs:
+          - darwin
+          - linux
+          - amd64
+        rosetta2: true
   - type: github_release
     repo_owner: whalebrew
     repo_name: whalebrew
