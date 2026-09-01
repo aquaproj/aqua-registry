@@ -8,7 +8,7 @@ packages:
       - csv
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.7.0")
         asset: tennis_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
@@ -20,4 +20,13 @@ packages:
             src: tennis_{{trimV .Version}}_{{.OS}}_{{.Arch}}/tennis
         supported_envs:
           - linux
+          - darwin/arm64
+      - version_constraint: "true"
+        asset: tennis_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: tennis
+            src: tennis_{{trimV .Version}}_{{.OS}}_{{.Arch}}/tennis
+        supported_envs:
+          - linux/amd64
           - darwin/arm64

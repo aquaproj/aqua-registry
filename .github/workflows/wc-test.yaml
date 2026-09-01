@@ -143,7 +143,9 @@ jobs:
         env:
           AQUA_GOOS: ${{ matrix.env.goos }}
           AQUA_GOARCH: ${{ matrix.env.goarch }}
-          AQUA_CONFIG: aqua/test.yaml
+          # `go_build` runs `go` from the extracted source directory. If `go` is an aqua proxy,
+          # it resolves AQUA_CONFIG from that directory, so the path must be absolute.
+          AQUA_CONFIG: ${{ github.workspace }}/aqua/test.yaml
           AQUA_GITHUB_TOKEN: ${{github.token}}
 
       - name: Install packages for testing

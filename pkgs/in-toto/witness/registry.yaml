@@ -23,7 +23,7 @@ packages:
           type: github_release
           asset: witness_{{trimV .Version}}_checksums.txt
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.10.2-rc1")
         asset: witness_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
@@ -40,3 +40,19 @@ packages:
               - https://token.actions.githubusercontent.com
               - --signature
               - https://github.com/in-toto/witness/releases/download/{{.Version}}/witness_{{trimV .Version}}_checksums.txt.sig
+      - version_constraint: "true"
+        asset: witness_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: witness_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: witness_{{trimV .Version}}_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity
+              - "https://github.com/in-toto/witness/.github/workflows/release.yml@refs/tags/{{.Version}}"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com

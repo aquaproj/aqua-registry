@@ -6,7 +6,7 @@ packages:
     description: Ensure consistent code style when using log/slog
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("< 0.12.0")
         asset: sloglint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -21,3 +21,15 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: "true"
+        asset: sloglint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: sloglint_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - darwin
+          - linux
+          - windows

@@ -61,7 +61,7 @@ packages:
     version_prefix: graal-
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("< 34.0.0")
         asset: truffleruby-{{.SemVer}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -74,3 +74,16 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: "true"
+        asset: truffleruby-{{.SemVer}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          arm64: aarch64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin/arm64
