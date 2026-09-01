@@ -57386,26 +57386,36 @@ packages:
     repo_owner: keilerkonzept
     repo_name: terraform-module-versions
     description: "CLI tool that checks Terraform code for module updates. Single binary, no dependencies. linux, osx, windows. #golang #cli #terraform"
-    asset: terraform-module-versions_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      darwin: osx
-    supported_envs:
-      - darwin
-    rosetta2: true
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version in ["3.0.29", "3.1.14"]
+      - version_constraint: Version in ["v3.2.1", "3.1.14", "3.0.29"]
         no_asset: true
-      - version_constraint: semver("< 3.1.14")
+      - version_constraint: semver("<= 3.2.1")
+        asset: terraform-module-versions_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: osx
         overrides:
           - goos: windows
             format: zip
-        supported_envs:
-          - darwin
-          - linux
-          - amd64
+      - version_constraint: "true"
+        asset: terraform-module-versions_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: terraform-module-versions_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: keisku
     repo_name: kubectl-explore
