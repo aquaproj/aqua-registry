@@ -36461,7 +36461,7 @@ packages:
         overrides:
           - goos: windows
             asset: ec-{{.OS}}-{{.Arch}}.exe.{{.Format}}
-      - version_constraint: "true"
+      - version_constraint: semver("< 4.0.0")
         asset: ec-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
@@ -36472,6 +36472,20 @@ packages:
           asset: checksums.txt
           algorithm: sha256
         overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: editorconfig-checker-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: editorconfig-checker
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: editorconfig-checker-{{.OS}}-all.{{.Format}}
           - goos: windows
             format: zip
   - type: github_release
