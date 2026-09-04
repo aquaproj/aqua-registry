@@ -98695,6 +98695,26 @@ packages:
             format: raw
             asset: dug
   - type: github_release
+    repo_owner: unikraft
+    repo_name: kraftkit
+    description: Build and use highly customized and ultra-lightweight unikernel VMs
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: kraft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: kraftkit_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            asset: runu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: updatecli
     repo_name: updatecli
     description: A Declarative Dependency Management tool
