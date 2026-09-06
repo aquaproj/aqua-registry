@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: unikraft-cloud
+    repo_name: cli
+    description: Command-line interface for Unikraft Cloud
+    version_filter: not (Version contains "-staging.")
+    asset: unikraft-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: unikraft
+    checksum:
+      type: github_release
+      asset: cli_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+    supported_envs:
+      - linux
+      - darwin
