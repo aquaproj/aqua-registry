@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: unikraft
+    repo_name: kraftkit
+    description: Build and use highly customized and ultra-lightweight unikernel VMs
+    version_filter: not (Version matches "-\\d+-g[0-9a-f]+$")
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.6.4")
+        asset: kraftkit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: kraft
+        checksum:
+          type: github_release
+          asset: kraftkit_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux/amd64
+      - version_constraint: semver("<= 0.7.0")
+        asset: kraftkit_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: kraft
+        checksum:
+          type: github_release
+          asset: kraftkit_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: kraft_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: kraft
+          - name: kraftld
+        checksum:
+          type: github_release
+          asset: kraftkit_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
