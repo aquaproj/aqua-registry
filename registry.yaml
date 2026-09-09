@@ -4753,6 +4753,30 @@ packages:
           - linux
           - darwin
   - type: github_release
+    repo_owner: Jamf-Concepts
+    repo_name: Notifier
+    aliases:
+      - name: jamf/Notifier
+    description: Swift project which can post macOS alert or banner notifications on 10.15+ clients
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2.3.0")
+        asset: dataJAR-Notifier-{{.Version}}.{{.Format}}
+        format: pkg
+        files:
+          - name: Notifier
+            src: Payload/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier
+        supported_envs:
+          - darwin
+      - version_constraint: "true"
+        asset: Notifier-{{.Version}}.{{.Format}}
+        format: pkg
+        files:
+          - name: Notifier
+            src: Payload/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier
+        supported_envs:
+          - darwin
+  - type: github_release
     repo_owner: JanDeDobbeleer
     repo_name: oh-my-posh
     description: The most customisable and low-latency cross platform/shell prompt renderer
@@ -36461,7 +36485,7 @@ packages:
         overrides:
           - goos: windows
             asset: ec-{{.OS}}-{{.Arch}}.exe.{{.Format}}
-      - version_constraint: "true"
+      - version_constraint: semver("< 4.0.0")
         asset: ec-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
@@ -36472,6 +36496,20 @@ packages:
           asset: checksums.txt
           algorithm: sha256
         overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: editorconfig-checker-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: editorconfig-checker
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: editorconfig-checker-{{.OS}}-all.{{.Format}}
           - goos: windows
             format: zip
   - type: github_release
@@ -52537,28 +52575,6 @@ packages:
     repo_name: desk
     path: desk
     description: A lightweight workspace manager for the shell
-  - type: github_release
-    repo_owner: jamf
-    repo_name: Notifier
-    description: Swift project which can post macOS alert or banner notifications on 10.15+ clients
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 2.3.0")
-        asset: dataJAR-Notifier-{{.Version}}.{{.Format}}
-        format: pkg
-        files:
-          - name: Notifier
-            src: Payload/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier
-        supported_envs:
-          - darwin
-      - version_constraint: "true"
-        asset: Notifier-{{.Version}}.{{.Format}}
-        format: pkg
-        files:
-          - name: Notifier
-            src: Payload/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier
-        supported_envs:
-          - darwin
   - type: github_release
     repo_owner: jamietsao
     repo_name: random-winner
@@ -71083,6 +71099,49 @@ packages:
           asset: SHA256SUMS.txt
           algorithm: sha256
   - type: github_release
+    repo_owner: nklmilojevic
+    repo_name: sofka
+    description: "A Kubernetes TUI, reimagined in Rust - built on kube-rs and ratatui, async-first from the ground up"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.13.4"
+        asset: sofka-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.23.0")
+        asset: sofka-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: sofka-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: nmstate
     repo_name: nmstate
     description: Nmstate is a library with an accompanying command line tool that manages host networking settings in a declarative manner
@@ -77135,7 +77194,7 @@ packages:
           - linux
           - windows
           - darwin/arm64
-      - version_constraint: "true"
+      - version_constraint: semver("< 12.0.0")
         asset: pnpm-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
@@ -77172,6 +77231,43 @@ packages:
           - linux
           - windows
           - darwin/arm64
+      - version_constraint: "true"
+        asset: pnpm-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: pnpm
+          - name: pn
+            src: pnpm
+            link: pn
+          - name: pnpx
+            src: pnpm
+            link: pnpx
+            hard: true
+          - name: pnx
+            src: pnpm
+            link: pnx
+            hard: true
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            asset: pnpm-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+            variants:
+              - key: libc
+                value: musl
+          - goos: windows
+            format: zip
+        github_artifact_attestations:
+          signer_workflow: pnpm/pnpm/.github/workflows/release.yml
+        supported_envs:
+          - linux
+          - windows
+          - darwin
   - type: github_release
     repo_owner: po3rin
     repo_name: github_link_creator
@@ -98694,6 +98790,22 @@ packages:
           - goos: windows
             format: raw
             asset: dug
+  - type: github_release
+    repo_owner: unikraft-cloud
+    repo_name: cli
+    description: Command-line interface for Unikraft Cloud
+    version_filter: not (Version contains "-staging.")
+    asset: unikraft-cli_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: unikraft
+    checksum:
+      type: github_release
+      asset: cli_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+    supported_envs:
+      - linux
+      - darwin
   - type: github_release
     repo_owner: unikraft
     repo_name: kraftkit
