@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: Bearer
+    repo_name: bearer
+    description: Code security scanning tool (SAST) to discover, filter and prioritize security and privacy risks
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.24.0")
+        no_asset: true
+      - version_constraint: semver("<= 1.43.4")
+        asset: bearer_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.zst
+            asset: bearer_{{trimV .Version}}_{{.OS}}-{{.Arch}}.pkg.{{.Format}}
+            files:
+              - name: bearer
+                src: usr/bin/bearer
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: "true"
+        asset: bearer_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.zst
+            asset: bearer_{{trimV .Version}}_{{.OS}}-{{.Arch}}.pkg.{{.Format}}
+            files:
+              - name: bearer
+                src: usr/bin/bearer
+        supported_envs:
+          - linux
+          - darwin

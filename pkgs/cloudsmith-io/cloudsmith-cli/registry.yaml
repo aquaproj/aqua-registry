@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: cloudsmith-io
+    repo_name: cloudsmith-cli
+    description: Cloudsmith Command Line Interface (CLI)
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.19.0")
+        no_asset: true
+      - version_constraint: "true"
+        asset: cloudsmith-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: cloudsmith
+            src: cloudsmith/cloudsmith
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: cloudsmith-{{trimV .Version}}-{{.OS}}-{{.Arch}}-gnu.{{.Format}}
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip

@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: tidewave-ai
+    repo_name: tidewave_app
+    description: Tidewave is the coding agent for full-stack web app development
+    files:
+      - name: tidewave
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: tidewave-cli-{{.Arch}}-{{.OS}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc

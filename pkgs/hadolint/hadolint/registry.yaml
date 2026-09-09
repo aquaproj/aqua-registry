@@ -66,7 +66,7 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("<= 2.14.0")
         asset: hadolint-{{.OS}}-{{.Arch}}
         format: raw
         windows_arm_emulation: true
@@ -77,3 +77,16 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+      - version_constraint: "true"
+        asset: hadolint-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: checksums.sha256
+          algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: hadolint/hadolint/.github/workflows/release.yml

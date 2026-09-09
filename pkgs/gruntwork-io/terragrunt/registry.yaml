@@ -50,7 +50,7 @@ packages:
         overrides:
           - goos: windows
             asset: terragrunt_{{.OS}}_{{.Arch}}.exe.{{.Format}}
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.0.3")
         asset: terragrunt_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -67,6 +67,30 @@ packages:
               - https://github.com/gruntwork-io/terragrunt/releases/download/{{.Version}}/SHA256SUMS.pem
               - --certificate-identity-regexp
               - "^https://github\\.com/gruntwork-io/terragrunt/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/gruntwork-io/terragrunt/releases/download/{{.Version}}/SHA256SUMS.sig
+        overrides:
+          - goos: windows
+            asset: terragrunt_{{.OS}}_{{.Arch}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: terragrunt_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: terragrunt
+            src: "{{.AssetWithoutExt}}"
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/gruntwork-io/terragrunt/releases/download/{{.Version}}/SHA256SUMS.pem
+              - --certificate-identity
+              - https://github.com/gruntwork-io/terragrunt/.github/workflows/release.yml@refs/heads/main
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
               - --signature

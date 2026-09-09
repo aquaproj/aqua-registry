@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: google-antigravity
+    repo_name: antigravity-cli
+    aliases:
+      - name: google.com/antigravity-cli
+    description: Google Antigravity CLI companion
+    files:
+      - name: agy
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 1.0.4")
+        error_message: The version is old. Please upgrade to 1.0.4 or later.
+      - version_constraint: "true"
+        asset: agy_cli_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: agy
+            src: antigravity
+        replacements:
+          amd64: x64
+          darwin: mac
+        overrides:
+          - goos: windows
+            format: zip

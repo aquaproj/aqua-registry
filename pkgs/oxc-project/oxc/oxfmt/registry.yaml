@@ -1,0 +1,54 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - name: oxc-project/oxc/oxfmt
+    type: github_release
+    repo_owner: oxc-project
+    repo_name: oxc
+    description: A collection of high-performance JavaScript tools
+    version_filter: Version matches "^apps_v"
+    version_prefix: apps_v
+    files:
+      - name: oxfmt
+        src: "{{.AssetWithoutExt}}"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.43.0")
+        asset: oxfmt-{{.OS}}-{{.Arch}}-gnu.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x64
+          windows: win32
+        overrides:
+          - goos: darwin
+            asset: oxfmt-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: oxfmt-{{.OS}}-{{.Arch}}.{{.Format}}
+      - version_constraint: semver("= 1.47.0")
+        no_asset: true
+      - version_constraint: semver("<= 1.51.0")
+        asset: oxfmt-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.53.0")
+        no_asset: true
+      - version_constraint: "true"
+        asset: oxfmt-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip

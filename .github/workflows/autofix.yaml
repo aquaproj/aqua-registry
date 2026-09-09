@@ -8,14 +8,14 @@ jobs:
     permissions: {}
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - run: echo "AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${PWD}/aqua-all.yaml" >> "$GITHUB_ENV"
-      - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
+      - uses: aquaproj/aqua-installer@96a9bc20066c5bf5e275b41019cfc165b25f4e2e # v4.0.5
         with:
-          aqua_version: v2.56.5
+          aqua_version: v2.62.3
           aqua_opts: -l -a
           policy_allow: "true"
 
@@ -34,12 +34,26 @@ jobs:
       - name: Format code by prettier
         run: prettier -w .
 
-      - name: install cmdx
+      - name: install argd
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
-        run: cmdx --version
+        run: argd --version
+
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: changes
+        with:
+          list-files: shell
+          filters: |
+            pkgs-files:
+              - added|modified: pkgs/**/pkg.yaml
+              - added|modified: pkgs/**/registry.yaml
+
+      - name: argd fix
+        if: steps.changes.outputs.pkgs-files == 'true'
+        run: argd fix ${{steps.changes.outputs.pkgs-files_files}}
+
       - name: Fix registry.yaml
-        run: cmdx gr
+        run: argd gr
 
       - name: install keep-sorted
         env:
@@ -50,4 +64,4 @@ jobs:
         run: |
           git grep -l " keep-sorted start" | grep -v autofix.yaml | xargs keep-sorted
 
-      - uses: autofix-ci/action@635ffb0c9798bd160680f18fd73371e355b85f27 # v1.3.2
+      - uses: autofix-ci/action@c5b2d67aa2274e7b5a18224e8171550871fc7e4a # v1.3.4

@@ -1,0 +1,198 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: vectordotdev
+    repo_name: vector
+    description: A high-performance observability data pipeline
+    # Periodically, a `vdev-` release is cut for internal(?) use.
+    version_filter: not (Version startsWith "vdev-")
+    version_constraint: "false"
+    # The wall-of-text below is a lot. Briefly:
+    #  - v0.3.0: assets used vector-0.3.0-... names, extracted into vector-0.3.0/bin/vector.
+    #  - <= v0.5.0: assets dropped the version from the asset name and used vector-<arch>-<os>/bin/vector.
+    #  - <= v0.10.0: similar layout, but Windows zip support appears.
+    #  - <= v0.33.0: assets start including the version again: vector-{{trimV .Version}}-....
+    #  - <= v0.42.0: checksum files appear, so checksum verification is configured.
+    #  - <= v0.43.1: macOS assets disappeared for that range, so supported_envs is limited to Linux and Windows.
+    #  - <= v0.50.0: macOS assets are back.
+    # Note: The last x86_64-apple-darwin release was 0.50.0, only arm64-apple-darwin releases were made after that.
+    ##
+    version_overrides:
+      - version_constraint: Version == "v0.3.0"
+        asset: vector-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        files:
+          - name: vector
+            src: vector-{{trimV .Version}}/bin/vector
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.5.0")
+        asset: vector-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        files:
+          - name: vector
+            src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        supported_envs:
+          - linux/amd64
+          - darwin
+      - version_constraint: semver("<= 0.10.0")
+        asset: vector-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: vector
+            src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: vector
+                src: bin/vector
+      - version_constraint: semver("<= 0.33.0")
+        asset: vector-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: vector
+            src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: vector
+                src: bin/vector
+      - version_constraint: semver("<= 0.42.0")
+        asset: vector-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: vector
+            src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        checksum:
+          type: github_release
+          asset: vector-{{trimV .Version}}-SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: vector
+                src: bin/vector
+      - version_constraint: semver("<= 0.43.1")
+        asset: vector-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: vector
+            src: bin/vector
+        checksum:
+          type: github_release
+          asset: vector-{{trimV .Version}}-SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+            replacements:
+              arm64: aarch64
+            files:
+              - name: vector
+                src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: semver("<= 0.50.0")
+        asset: vector-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: vector
+            src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        checksum:
+          type: github_release
+          asset: vector-{{trimV .Version}}-SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: vector
+                src: bin/vector
+      - version_constraint: "true"
+        asset: vector-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        files:
+          - name: vector
+            src: vector-{{.Arch}}-{{.OS}}/bin/vector
+        checksum:
+          type: github_release
+          asset: vector-{{trimV .Version}}-SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: vector
+                src: bin/vector
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64

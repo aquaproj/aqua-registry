@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - name: gohugoio/hugo/hugo-extended-withdeploy
+    type: github_release
+    repo_owner: gohugoio
+    repo_name: hugo
+    description: The world’s fastest framework for building websites
+    files:
+      - name: hugo
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.139.5"
+        no_asset: true
+      - version_constraint: semver("< 0.137.0")
+        no_asset: true
+      - version_constraint: Version == "v0.137.0"
+        asset: hugo_extended_withdeploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: hugo_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: hugo_extended_withdeploy_{{trimV .Version}}_{{.OS}}-universal.{{.Format}}
+        supported_envs:
+          - darwin
+          - linux/amd64
+      - version_constraint: semver("<= 0.138.0")
+        asset: hugo_extended_withdeploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: hugo_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: hugo_extended_withdeploy_{{trimV .Version}}_{{.OS}}-universal.{{.Format}}
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - linux/amd64
+          - windows
+      - version_constraint: semver("<= 0.152.2")
+        asset: hugo_extended_withdeploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: hugo_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: hugo_extended_withdeploy_{{trimV .Version}}_{{.OS}}-universal.{{.Format}}
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: hugo_extended_withdeploy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: hugo_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            format: pkg
+            asset: hugo_extended_withdeploy_{{trimV .Version}}_{{.OS}}-universal.{{.Format}}
+            files:
+              - name: hugo
+                src: Payload/hugo
+          - goos: windows
+            format: zip

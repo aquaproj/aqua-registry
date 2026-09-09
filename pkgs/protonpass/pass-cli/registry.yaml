@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: protonpass
+    repo_name: pass-cli
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: pass-cli-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: pass-cli-{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements: {}

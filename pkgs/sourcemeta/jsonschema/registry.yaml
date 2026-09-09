@@ -47,6 +47,15 @@ packages:
           - goos: linux
             replacements:
               arm64: aarch64
+      - version_constraint: semver("<= 15.6.2")
+        asset: jsonschema-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        files:
+          - name: jsonschema
+            src: "{{.AssetWithoutExt}}/bin/jsonschema"
+        replacements:
+          amd64: x86_64
       - version_constraint: "true"
         asset: jsonschema-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
@@ -56,3 +65,13 @@ packages:
             src: "{{.AssetWithoutExt}}/bin/jsonschema"
         replacements:
           amd64: x86_64
+        overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            asset: jsonschema-{{trimV .Version}}-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+            variants:
+              - key: libc
+                value: musl

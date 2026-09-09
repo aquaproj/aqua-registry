@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: http
+    repo_owner: SonarSource
+    repo_name: sonarqube-cli
+    description: CLI tool to provide access to Sonar features
+    files:
+      - name: sonar
+    supported_envs:
+      - darwin/arm64
+      - linux
+      - windows/amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.5.0.409")
+        no_asset: true
+      - version_constraint: semver("< 0.10.0.1266")
+        url: https://binaries.sonarsource.com/Distribution/sonarqube-cli/{{.Version}}/{{.OS}}/sonarqube-cli-{{.Version}}-{{.OS}}-{{.Arch}}.exe
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+          amd64: x86-64
+        supported_envs:
+          - darwin/arm64
+          - linux/amd64
+          - windows
+      - version_constraint: semver("< 0.14.0.2224")
+        url: https://binaries.sonarsource.com/Distribution/sonarqube-cli/{{.Version}}/{{.OS}}/sonarqube-cli-{{.Version}}-{{.OS}}-{{.Arch}}.exe
+        format: raw
+        replacements:
+          darwin: macos
+          amd64: x86-64
+      - version_constraint: "true"
+        url: https://binaries.sonarsource.com/Distribution/sonarqube-cli/{{.Version}}/{{.OS}}/sonarqube-cli-{{.Version}}-{{.OS}}-{{.Arch}}.bin
+        format: raw
+        complete_windows_ext: false
+        replacements:
+          darwin: macos
+          amd64: x86-64
+        overrides:
+          - goos: windows
+            url: https://binaries.sonarsource.com/Distribution/sonarqube-cli/{{.Version}}/{{.OS}}/sonarqube-cli-{{.Version}}-{{.OS}}-{{.Arch}}.exe

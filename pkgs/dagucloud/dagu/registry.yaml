@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: dagucloud
+    repo_name: dagu
+    aliases:
+      - name: yohamta/dagu
+      - name: hotaruswarm/dagu
+      - name: dagu-dev/dagu
+      - name: daguflow/dagu
+      - name: dagu-org/dagu
+    description: Self-hosted workflow engine for scripts, cron jobs, containers, and ops automation. YAML workflows, retries, logs, approvals, and optional distributed workers
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.2")
+        # https://github.com/dagu-dev/dagu/pull/15
+        # Rename jobctl to dagu
+        error_message: The version is too old. Please upgrade to a newer version.
+      - version_constraint: semver("<= 1.10.5")
+        asset: dagu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.17.3")
+        asset: dagu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: dagu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256

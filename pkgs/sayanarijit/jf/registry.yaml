@@ -8,7 +8,7 @@ packages:
     version_overrides:
       - version_constraint: Version in ["v0.1.1", "v0.2.3"]
         no_asset: true
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.6.2")
         asset: jf-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         rosetta2: true
@@ -25,3 +25,22 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: "true"
+        asset: jf-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: amd64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows

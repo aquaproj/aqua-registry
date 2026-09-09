@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: dahlia
+    repo_name: gukhanmun
+    description: Convert mixed-script Korean text into hangul-only text
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.1")
+        asset: gukhanmun-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.bz2
+        files:
+          - name: gukhanmun
+            src: gukhanmun-{{.Version}}-{{.Arch}}-{{.OS}}/gukhanmun
+          - name: gukhanmun-mkdict
+            src: gukhanmun-{{.Version}}-{{.Arch}}-{{.OS}}/gukhanmun-mkdict
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: gukhanmun-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.bz2
+        files:
+          - name: gukhanmun
+          - name: gukhanmun-mkdict
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip

@@ -8,16 +8,17 @@ packages:
     link: https://code.visualstudio.com/
     search_words:
       - visual studio code
-    url: https://update.code.visualstudio.com/{{trimV .Version}}/cli-{{.OS}}-{{.Arch}}/stable
-    replacements:
-      windows: win32
-      amd64: x64
-    format: tar.gz
-    append_ext: false
-    overrides:
-      - goos: windows
-        format: zip
-    version_constraint: semver(">= 1.73.0")
+    version_constraint: "false"
     version_overrides:
       - version_constraint: semver("< 1.73.0")
         no_asset: true
+      - version_constraint: "true"
+        url: https://update.code.visualstudio.com/{{trimV .Version}}/cli-{{.OS}}-{{.Arch}}/stable
+        replacements:
+          windows: win32
+          amd64: x64
+        format: zip
+        append_ext: false
+        overrides:
+          - goos: linux
+            format: tar.gz

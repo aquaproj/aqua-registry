@@ -20,25 +20,35 @@ packages:
           windows: win
         files:
           - name: corepack
-            src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/corepack
+            src: "{{.AssetWithoutExt}}/bin/corepack"
           - name: node
-            src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/node
+            src: "{{.AssetWithoutExt}}/bin/node"
           - name: npm
-            src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npm
+            src: "{{.AssetWithoutExt}}/bin/npm"
           - name: npx
-            src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npx
+            src: "{{.AssetWithoutExt}}/bin/npx"
         overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            variants:
+              - key: libc
+                value: musl
+            type: http
+            url: https://unofficial-builds.nodejs.org/download/release/{{.Version}}/node-{{.Version}}-linux-{{.Arch}}-musl.tar.gz
           - goos: windows
             format: zip
             files:
               - name: corepack
-                src: node-{{.Version}}-{{.OS}}-{{.Arch}}/corepack.cmd
+                src: "{{.AssetWithoutExt}}/corepack.cmd"
               - name: node
-                src: node-{{.Version}}-{{.OS}}-{{.Arch}}/node
+                src: "{{.AssetWithoutExt}}/node"
               - name: npm
-                src: node-{{.Version}}-{{.OS}}-{{.Arch}}/npm.cmd
+                src: "{{.AssetWithoutExt}}/npm.cmd"
               - name: npx
-                src: node-{{.Version}}-{{.OS}}-{{.Arch}}/npx.cmd
+                src: "{{.AssetWithoutExt}}/npx.cmd"
       - version_constraint: "true"
         url: https://nodejs.org/dist/{{.Version}}/node-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -48,18 +58,28 @@ packages:
           windows: win
         files:
           - name: node
-            src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/node
+            src: "{{.AssetWithoutExt}}/bin/node"
           - name: npm
-            src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npm
+            src: "{{.AssetWithoutExt}}/bin/npm"
           - name: npx
-            src: node-{{.Version}}-{{.OS}}-{{.Arch}}/bin/npx
+            src: "{{.AssetWithoutExt}}/bin/npx"
         overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            variants:
+              - key: libc
+                value: musl
+            type: http
+            url: https://unofficial-builds.nodejs.org/download/release/{{.Version}}/node-{{.Version}}-linux-{{.Arch}}-musl.tar.gz
           - goos: windows
             format: zip
             files:
               - name: node
-                src: node-{{.Version}}-{{.OS}}-{{.Arch}}/node
+                src: "{{.AssetWithoutExt}}/node"
               - name: npm
-                src: node-{{.Version}}-{{.OS}}-{{.Arch}}/npm.cmd
+                src: "{{.AssetWithoutExt}}/npm.cmd"
               - name: npx
-                src: node-{{.Version}}-{{.OS}}-{{.Arch}}/npx.cmd
+                src: "{{.AssetWithoutExt}}/npx.cmd"
