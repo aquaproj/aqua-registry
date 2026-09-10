@@ -103715,6 +103715,25 @@ packages:
           - name: yarn
             src: "{{.AssetWithoutExt}}/bin/yarn"
   - type: github_release
+    repo_owner: yarnpkg
+    repo_name: zpm
+    description: Safe, stable, reproducible projects
+    files:
+      - name: yarn
+    asset: yarn-{{.Arch}}-{{.OS}}.{{.Format}}
+    format: zip
+    overrides:
+      - goos: linux
+        replacements:
+          amd64: x86_64
+    replacements:
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-musl
+    supported_envs:
+      - linux
+      - darwin/arm64
+  - type: github_release
     repo_owner: yashikota
     repo_name: exiftool-go
     description: Pure Go ExifTool wrapper powered by WebAssembly
