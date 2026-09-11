@@ -6,16 +6,17 @@ packages:
     aliases:
       - name: MHNightCat/superfile
     description: Pretty fancy and modern terminal file manager
-    files:
-      - name: spf
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version == "v1.0.0"
         asset: spf
         format: raw
+        files:
+          - name: spf
         supported_envs:
           - linux/amd64
-      - version_constraint: "true"
+      # Windows assets are missing only in this release. v1.1.7.1 has them.
+      - version_constraint: Version == "v1.1.7"
         asset: superfile-{{.OS}}-{{.Version}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         files:
@@ -24,3 +25,34 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: semver("<= 1.1.1")
+        asset: superfile-{{.OS}}-{{.Version}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: spf
+            src: dist/{{.AssetWithoutExt}}/spf
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 1.6.0-rc1")
+        asset: superfile-{{.OS}}-{{.Version}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: spf
+            src: dist/{{.AssetWithoutExt}}/spf
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: superfile-{{.OS}}-{{.Version}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: spf
+            src: dist/{{.AssetWithoutExt}}/spf
+        checksum:
+          type: github_release
+          asset: superfile-{{.Version}}-checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip

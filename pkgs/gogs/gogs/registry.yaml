@@ -150,8 +150,18 @@ packages:
           - amd64
       - version_constraint: semver("<= 0.13.4-rc.3")
         no_asset: true
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.14.1")
         asset: gogs_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: http
+          url: https://dl.gogs.io/{{trimV .Version}}/checksum_sha256.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: "true"
+        asset: gogs_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
         checksum:
           type: http
