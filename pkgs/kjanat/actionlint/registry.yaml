@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: kjanat
+    repo_name: actionlint
+    description: Find problems in your GitHub Actions workflows
+    search_words:
+      - lint
+      - linter
+      - workflow
+      - ci
+      - github-actions
+    asset: actionlint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+    format: tar.gz
+    checksum:
+      type: github_release
+      asset: actionlint_{{trimV .Version}}_checksums.txt
+      algorithm: sha256
+    overrides:
+      - goos: windows
+        format: zip
+    github_artifact_attestations:
+      enabled: true
+    build:
+      type: go_install
+      path: actionlint.kjanat.dev/cmd/actionlint
