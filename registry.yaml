@@ -80196,6 +80196,62 @@ packages:
           type: http
           url: https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/{{.Version}}/odo-{{.OS}}-{{.Arch}}.exe.sha256
           algorithm: sha256
+  - type: github_release
+    repo_owner: redhat-et
+    repo_name: ripwire
+    description: A zero-dependency CLI and MCP server for finding context in codebases
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.1.0"
+        no_asset: true
+      - version_constraint: semver("<= 0.2.2")
+        asset: ripwire-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: ripwire
+            src: ripwire-{{trimV .Version}}-{{.OS}}-{{.Arch}}/ripwire
+        replacements:
+          amd64: x64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.3.5")
+        asset: ripwire-0.2.2-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: ripwire
+            src: ripwire-0.2.2-{{.OS}}-{{.Arch}}/ripwire
+        replacements:
+          amd64: x64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        asset: ripwire-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: ripwire
+            src: ripwire-{{trimV .Version}}-{{.OS}}-{{.Arch}}/ripwire
+        replacements:
+          amd64: x64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
   - name: redhat.com/openshift-install
     type: http
     url: https://mirror.openshift.com/pub/openshift-v4/{{.Arch}}/clients/ocp/{{trimV .Version}}/openshift-install-{{.OS}}.tar.gz
