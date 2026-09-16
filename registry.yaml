@@ -35873,6 +35873,19 @@ packages:
           type: github_release
           asset: SHASUMS256.txt
           algorithm: sha256
+      - version_constraint: semver("<= 0.57.0")
+        asset: dprint-{{.Arch}}-{{.OS}}.zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHASUMS256.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: dprint-{{.Arch}}-{{.OS}}.zip
         windows_arm_emulation: true
@@ -35886,6 +35899,8 @@ packages:
           type: github_release
           asset: SHASUMS256.txt
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: dprint/dprint/.github/workflows/ci.generated.yml
   - type: github_release
     repo_owner: drlau
     repo_name: akashi
