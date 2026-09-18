@@ -5902,9 +5902,10 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
-        slsa_provenance:
-          type: github_release
-          asset: hol-guard-{{.Version}}.intoto.jsonl
+        # Disable slsa_provenance
+        # FAILED: SLSA verification failed: untrusted reusable workflow: https://github.com/hashgraph-online/hol-guard/.github/workflows/publish.yml with builderID provided: false
+        github_artifact_attestations:
+          signer_workflow: hashgraph-online/hol-guard/.github/workflows/publish.yml
         overrides:
           - goos: darwin
             goarch: amd64
