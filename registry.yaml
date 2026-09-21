@@ -71643,7 +71643,7 @@ packages:
       Please see https://aquaproj.github.io/docs/reference/nodejs-support
     version_constraint: "false"
     version_overrides:
-      - version_constraint: semver("<= 24.10.0")
+      - version_constraint: semver(">= 20.19.6, < 21.0.0") or semver(">= 22.21.1, < 23.0.0")
         url: https://nodejs.org/dist/{{.Version}}/node-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -71668,7 +71668,44 @@ packages:
             variants:
               - key: libc
                 value: musl
-            type: http
+            url: https://unofficial-builds.nodejs.org/download/release/{{.Version}}/node-{{.Version}}-linux-{{.Arch}}-musl.tar.gz
+          - goos: windows
+            format: zip
+            files:
+              - name: corepack
+                src: "{{.AssetWithoutExt}}/corepack.cmd"
+              - name: node
+                src: "{{.AssetWithoutExt}}/node"
+              - name: npm
+                src: "{{.AssetWithoutExt}}/npm.cmd"
+              - name: npx
+                src: "{{.AssetWithoutExt}}/npx.cmd"
+      - version_constraint: semver("<= 24.10.0")
+        url: https://nodejs.org/dist/{{.Version}}/node-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+          windows: win
+        files:
+          - name: corepack
+            src: "{{.AssetWithoutExt}}/bin/corepack"
+          - name: node
+            src: "{{.AssetWithoutExt}}/bin/node"
+          - name: npm
+            src: "{{.AssetWithoutExt}}/bin/npm"
+          - name: npx
+            src: "{{.AssetWithoutExt}}/bin/npx"
+        overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            goarch: amd64
+            variants:
+              - key: libc
+                value: musl
             url: https://unofficial-builds.nodejs.org/download/release/{{.Version}}/node-{{.Version}}-linux-{{.Arch}}-musl.tar.gz
           - goos: windows
             format: zip
@@ -71704,7 +71741,6 @@ packages:
             variants:
               - key: libc
                 value: musl
-            type: http
             url: https://unofficial-builds.nodejs.org/download/release/{{.Version}}/node-{{.Version}}-linux-{{.Arch}}-musl.tar.gz
           - goos: windows
             format: zip
