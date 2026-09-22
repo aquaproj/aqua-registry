@@ -173,3 +173,18 @@ deny contains msg if {
 	pkg.name == concat("/", [pkg.repo_owner, pkg.repo_name])
 	msg := sprintf("%s: omit .name if it's same with repo_owner/repo_name", [entry.path])
 }
+
+# version_overrides are only read when the top level says it is not a candidate.
+#
+# aqua evaluates version_constraint at the top level first and, when there is none,
+# returns the top level without looking at version_overrides at all. An entry written
+# without one is therefore never applied, and nothing says so: XcodesOrg/xcodes
+# carried an override for a version that has never been installed with it.
+deny contains msg if {
+	entry := input[_]
+	endswith(entry.path, "/registry.yaml")
+	pkg := entry.contents.packages[_]
+	count(object.get(pkg, "version_overrides", [])) > 0
+	object.get(pkg, "version_constraint", "") == ""
+	msg := sprintf("%s: version_overrides are ignored without a top-level version_constraint", [entry.path])
+}
