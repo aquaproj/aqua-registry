@@ -282,3 +282,34 @@ test_deny_hash_outside_go_package if {
 	}]
 	"pkgs/owner/repo/sub/registry.yaml: package name mismatch: expected \"owner/repo/sub\" but got \"owner/repo#sub\"" in result
 }
+
+test_deny_version_overrides_without_version_constraint if {
+	result := deny with input as [{
+		"path": "pkgs/owner/repo/registry.yaml",
+		"contents": {"packages": [{
+			"name": "owner/repo",
+			"version_overrides": [{"version_constraint": "true"}],
+		}]},
+	}]
+	result[_] == "pkgs/owner/repo/registry.yaml: version_overrides are ignored without a top-level version_constraint"
+}
+
+test_allow_version_overrides_with_version_constraint if {
+	result := deny with input as [{
+		"path": "pkgs/owner/repo/registry.yaml",
+		"contents": {"packages": [{
+			"name": "owner/repo",
+			"version_constraint": "false",
+			"version_overrides": [{"version_constraint": "true"}],
+		}]},
+	}]
+	count([m | m := result[_]; contains(m, "version_overrides are ignored")]) == 0
+}
+
+test_allow_no_version_overrides if {
+	result := deny with input as [{
+		"path": "pkgs/owner/repo/registry.yaml",
+		"contents": {"packages": [{"name": "owner/repo"}]},
+	}]
+	count([m | m := result[_]; contains(m, "version_overrides are ignored")]) == 0
+}
