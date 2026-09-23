@@ -46,6 +46,10 @@ packages:
               - https://github.com/suzuki-shunsuke/ci-info/releases/download/{{.Version}}/ci-info_{{trimV .Version}}_checksums.txt.sig
               - --certificate
               - https://github.com/suzuki-shunsuke/ci-info/releases/download/{{.Version}}/ci-info_{{trimV .Version}}_checksums.txt.pem
+              - --certificate-github-workflow-repository
+              - suzuki-shunsuke/ci-info
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
       - version_constraint: "true"
         asset: ci-info_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -65,3 +69,7 @@ packages:
               - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
               - --certificate-oidc-issuer
               - "https://token.actions.githubusercontent.com"
+              - --certificate-github-workflow-repository
+              - suzuki-shunsuke/ci-info
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
