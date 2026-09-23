@@ -57,6 +57,10 @@ packages:
             - https://token.actions.githubusercontent.com
             - --signature
             - https://github.com/fission/fission/releases/download/{{.Version}}/{{.Asset}}.sig
+            - --certificate-github-workflow-repository
+            - fission/fission
+            - --certificate-github-workflow-ref
+            - refs/tags/{{.Version}}
       - version_constraint: "true"
         asset: fission-{{.Version}}-{{.OS}}-{{.Arch}}
         format: raw
@@ -74,6 +78,10 @@ packages:
               - https://token.actions.githubusercontent.com
               - --certificate-identity
               - https://github.com/fission/fission/.github/workflows/release.yaml@refs/tags/{{.Version}}
+              - --certificate-github-workflow-repository
+              - fission/fission
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
         cosign:
           bundle:
             type: github_release
@@ -83,5 +91,9 @@ packages:
             - https://token.actions.githubusercontent.com
             - --certificate-identity
             - https://github.com/fission/fission/.github/workflows/release.yaml@refs/tags/{{.Version}}
+            - --certificate-github-workflow-repository
+            - fission/fission
+            - --certificate-github-workflow-ref
+            - refs/tags/{{.Version}}
         github_artifact_attestations:
           signer_workflow: fission/fission/.github/workflows/release.yaml
