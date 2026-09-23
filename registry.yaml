@@ -43173,6 +43173,10 @@ packages:
                 - https://github.com/gittuf/gittuf/releases/download/{{.Version}}/gittuf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.exe.sig
                 - --certificate
                 - https://github.com/gittuf/gittuf/releases/download/{{.Version}}/gittuf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.exe.pem
+                - --certificate-github-workflow-repository
+                - gittuf/gittuf
+                - --certificate-github-workflow-ref
+                - refs/tags/{{.Version}}
         cosign:
           opts:
             - --certificate-identity-regexp
@@ -43183,6 +43187,10 @@ packages:
             - https://github.com/gittuf/gittuf/releases/download/{{.Version}}/gittuf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.sig
             - --certificate
             - https://github.com/gittuf/gittuf/releases/download/{{.Version}}/gittuf_{{trimV .Version}}_{{.OS}}_{{.Arch}}.pem
+            - --certificate-github-workflow-repository
+            - gittuf/gittuf
+            - --certificate-github-workflow-ref
+            - refs/tags/{{.Version}}
       - version_constraint: Version == "v0.13.0"
         no_asset: true
       - version_constraint: "true"
@@ -43201,6 +43209,10 @@ packages:
               - https://token.actions.githubusercontent.com
               - --certificate-identity
               - "https://github.com/gittuf/gittuf/.github/workflows/release.yml@refs/tags/{{.Version}}"
+              - --certificate-github-workflow-repository
+              - gittuf/gittuf
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
         github_artifact_attestations:
           signer_workflow: gittuf/gittuf/.github/workflows/release.yml
   - type: github_release
