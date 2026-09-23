@@ -73773,6 +73773,10 @@ packages:
               - https://token.actions.githubusercontent.com
               - --signature
               - https://github.com/openbao/openbao/releases/download/{{.Version}}/checksums-{{.OS}}.txt.sig
+              - --certificate-github-workflow-repository
+              - openbao/openbao
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
         overrides:
           - goos: windows
             format: zip
@@ -73809,6 +73813,10 @@ packages:
               - '^https://github\.com/openbao/openbao/\.github/workflows/release\.yml@refs/tags/.*$'
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
+              - --certificate-github-workflow-repository
+              - openbao/openbao
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
             bundle:
               type: github_release
               asset: checksums-{{.OS}}.txt.sigstore.json
@@ -73828,6 +73836,8 @@ packages:
               - '^https://github\.com/openbao/openbao/\.github/workflows/release\.yml@refs/(tags/.*|heads/release/.*)$'
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
+              - --certificate-github-workflow-repository
+              - openbao/openbao
             bundle:
               type: github_release
               asset: checksums.txt.sigstore.json
