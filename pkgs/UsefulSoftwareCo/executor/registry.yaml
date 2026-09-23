@@ -3,13 +3,16 @@ packages:
   - type: github_release
     repo_owner: UsefulSoftwareCo
     repo_name: executor
-    description: The missing integration layer for AI agents. Let them call any OpenAPI / MCP / GraphQL / custom js functions in secure environment
+    description: Connect AI agents to OpenAPI, MCP, and GraphQL services
     version_filter: Version != "graph-slices"
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 1.1.9")
         asset: executor-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: executor
+            src: "{{.AssetWithoutExt}}/executor"
         replacements:
           amd64: x64
           windows: win
@@ -20,7 +23,11 @@ packages:
         overrides:
           - goos: windows
             format: zip
+            files:
+              - name: executor
+                src: "{{.AssetWithoutExt}}/executor.cmd"
       - version_constraint: semver("<= 1.3.0-beta.5")
+        no_asset: true
       - version_constraint: "true"
         asset: executor-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
@@ -28,5 +35,13 @@ packages:
           amd64: x64
         overrides:
           - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+            format: tar.gz
+          - goos: linux
+            variants:
+              - key: libc
+                value: musl
             format: tar.gz
             asset: executor-{{.OS}}-{{.Arch}}-musl.{{.Format}}
