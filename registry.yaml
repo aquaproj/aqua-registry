@@ -96632,25 +96632,30 @@ packages:
     asset: tfmigrator_{{.OS}}_amd64.tar.gz
     files:
       - name: tfmigrator
-    version_constraint: semver(">= 0.2.2")
-    slsa_provenance:
-      type: github_release
-      asset: multiple.intoto.jsonl
-    checksum:
-      type: github_release
-      asset: tfmigrator_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-      cosign:
-        opts:
-          - --certificate-identity-regexp
-          - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
-          - --certificate-oidc-issuer
-          - "https://token.actions.githubusercontent.com"
-          - --signature
-          - https://github.com/tfmigrator/cli/releases/download/{{.Version}}/tfmigrator_{{trimV .Version}}_checksums.txt.sig
-          - --certificate
-          - https://github.com/tfmigrator/cli/releases/download/{{.Version}}/tfmigrator_{{trimV .Version}}_checksums.txt.pem
+    version_constraint: "false"
     version_overrides:
+      - version_constraint: semver(">= 0.2.2")
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
+        checksum:
+          type: github_release
+          asset: tfmigrator_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --signature
+              - https://github.com/tfmigrator/cli/releases/download/{{.Version}}/tfmigrator_{{trimV .Version}}_checksums.txt.sig
+              - --certificate
+              - https://github.com/tfmigrator/cli/releases/download/{{.Version}}/tfmigrator_{{trimV .Version}}_checksums.txt.pem
+              - --certificate-github-workflow-repository
+              - tfmigrator/cli
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
       - version_constraint: "true"
         slsa_provenance:
           enabled: false
