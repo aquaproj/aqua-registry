@@ -10336,7 +10336,7 @@ packages:
           - darwin
           - windows
           - amd64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.12.0")
         asset: csvlens-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
         windows_arm_emulation: true
@@ -10364,6 +10364,32 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: "true"
+        asset: csvlens-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: csvlens
+            src: csvlens-{{.Arch}}-{{.OS}}/csvlens
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: csvlens
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
   - type: github_release
     repo_owner: Zxilly
     repo_name: go-size-analyzer
