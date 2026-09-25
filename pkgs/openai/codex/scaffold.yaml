@@ -6,4 +6,12 @@
 name: openai/codex
 # version_filter: not (Version matches "-rc$")
 version_prefix: rust-
-# all_assets_filter: not (Asset matches "-cli")
+# A release carries about 180 assets for a dozen programs: bwrap, codex-app-server,
+# codex-responses-api-proxy, codex-windows-sandbox-service and others. Which of them is
+# codex changed: codex-<triple> until 0.133, and codex-package-<triple> after it, whose
+# archive holds the binary at bin/codex rather than at the root.
+version_overrides:
+  - version_constraint: semver("> 0.133.0-alpha.1")
+    all_assets_filter: Asset matches "^codex-package-"
+  - version_constraint: "true"
+    all_assets_filter: Asset matches "^codex-(x86_64|aarch64)-"
