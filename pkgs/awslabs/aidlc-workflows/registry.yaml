@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: awslabs
+    repo_name: aidlc-workflows
+    description: AI-Driven Life Cycle (AI-DLC) adaptive workflow steering rules for AI coding agents
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v2.7.0"
+        no_asset: true
+      - version_constraint: semver("<= 1.0.1")
+      - version_constraint: semver("<= 2.8.3-preview.20260914.1")
+        asset: aidlc-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: aidlc-release.intoto.jsonl
+      - version_constraint: "true"
+        asset: aidlc-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        slsa_provenance:
+          type: github_release
+          asset: aidlc-release.intoto.jsonl
