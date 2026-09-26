@@ -18213,6 +18213,29 @@ packages:
       - darwin
     search_words:
       - macOS Only
+  - type: github_release
+    repo_owner: awslabs
+    repo_name: aidlc-workflows
+    description: AI-Driven Life Cycle (AI-DLC) adaptive workflow steering rules for AI coding agents
+    files:
+      - name: aidlc
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2.7.0")
+        no_asset: true
+      - version_constraint: "true"
+        asset: aidlc-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        # Disable slsa_provenance
+        # FAILED: SLSA verification failed: untrusted reusable workflow: https://github.com/awslabs/aidlc-workflows/.github/workflows/release.yml with builderID provided: false
+        # GitHub Artifact Attestations aren't provided either, so the checksum is used
   - type: http
     repo_owner: awslabs
     repo_name: amazon-ecr-credential-helper
