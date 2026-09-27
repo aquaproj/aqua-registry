@@ -250,13 +250,18 @@ test_allow_different_name if {
 	not "pkgs/owner/repo/tool/registry.yaml: omit .name if it's same with repo_owner/repo_name" in result
 }
 
-# Test: non-registry.yaml files are ignored
+# Test: the rules about a registry.yaml say nothing about a pkg.yaml
+#
+# It used to ask for no denials at all, which stopped being true when pkg.yaml got rules
+# of its own: an empty one is denied by them, and rightly. What this is about is the
+# registry.yaml rules, so it asks about those.
 test_ignore_non_registry_yaml if {
 	result := deny with input as [{
 		"path": "pkgs/owner/repo/pkg.yaml",
 		"contents": {"packages": []},
 	}]
-	count(result) == 0
+	not "pkgs/owner/repo/pkg.yaml: packages must include only one package" in result
+	not "pkgs/owner/repo/pkg.yaml: package name mismatch: expected \"owner/repo\" but got \"\"" in result
 }
 
 test_allow_go_sub_package_name if {

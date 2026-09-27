@@ -70,7 +70,12 @@ jobs:
     permissions:
       contents: read
     with:
-      files: ${{needs.path-filter.outputs.pkgs-files_files}}
+      # registry.yaml whether or not it changed, because the rules about the aliases are
+      # about the whole registry: an alias is wrong when another package answers to the
+      # same name, and a package's own file says nothing about the rest of them. It is
+      # regenerated from the changed files by autofix, so it is the registry this pull
+      # request would leave behind.
+      files: ${{needs.path-filter.outputs.pkgs-files_files}} registry.yaml
 
   test-docker:
     uses: ./.github/workflows/wc-test-docker.yaml
