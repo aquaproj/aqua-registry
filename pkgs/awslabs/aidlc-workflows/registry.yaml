@@ -10,6 +10,18 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 2.7.0")
         no_asset: true
+      - version_constraint: Version contains "-preview."
+        asset: aidlc-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: awslabs/aidlc-workflows/.github/workflows/preview-release.yml
       - version_constraint: "true"
         asset: aidlc-{{.OS}}-{{.Arch}}
         format: raw
@@ -20,6 +32,5 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-        # Disable slsa_provenance
-        # FAILED: SLSA verification failed: untrusted reusable workflow: https://github.com/awslabs/aidlc-workflows/.github/workflows/release.yml with builderID provided: false
-        # GitHub Artifact Attestations aren't provided either, so the checksum is used
+        github_artifact_attestations:
+          signer_workflow: awslabs/aidlc-workflows/.github/workflows/release.yml
