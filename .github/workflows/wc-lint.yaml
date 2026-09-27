@@ -23,4 +23,7 @@ jobs:
       - run: conftest -v
         env:
           AQUA_GITHUB_TOKEN: ${{github.token}}
+      # The rules are tested before they are trusted. One of them had stopped saying what
+      # its test said and nothing noticed, because nothing ran them.
+      - run: conftest verify --policy policy
       - run: conftest test --combine ${{ inputs.files }}
