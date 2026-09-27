@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: XTLS
+    repo_name: Xray-core
+    description: Xray, Penetrates Everything. Also the best v2ray-core
+    files:
+      - name: xray
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.2.1")
+        asset: Xray-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        rosetta2: true
+        replacements:
+          darwin: macos
+          amd64: "64"
+          arm64: arm64-v8a
+        overrides:
+          - goos: windows
+            goarch: arm64
+            asset: Xray-{{.OS}}-arm32-v7a.{{.Format}}
+      - version_constraint: semver("<= 1.4.5")
+        asset: Xray-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macos
+          amd64: "64"
+          arm64: arm64-v8a
+        overrides:
+          - goos: windows
+            goarch: arm64
+            asset: Xray-{{.OS}}-arm32-v7a.{{.Format}}
+      - version_constraint: "true"
+        asset: Xray-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macos
+          amd64: "64"
+          arm64: arm64-v8a
