@@ -1,0 +1,109 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: MitMaro
+    repo_name: git-interactive-rebase-tool
+    description: Native cross-platform full feature terminal-based sequence editor for git interactive rebase
+    files:
+      - name: interactive-rebase-tool
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "0.1.0"
+        asset: "{{.OS}}-git-interactive-tool"
+        format: raw
+        replacements:
+          darwin: osx
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "0.2.0"
+        asset: "{{.OS}}-git-interactive-tool"
+        format: raw
+        replacements:
+          darwin: OSX
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "0.4.0"
+        asset: "{{.OS}}-interactive-rebase-tool.{{.Format}}"
+        format: zip
+        replacements:
+          darwin: osx
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "0.6.0"
+        asset: "{{.OS}}-git-interactive-rebase-tool"
+        format: raw
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+      - version_constraint: Version == "0.7.0"
+        asset: git-interactive-rebase-tool-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            format: raw
+            asset: "{{.OS}}-interactive-rebase-tool"
+          - goos: windows
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: Version == "1.0.0-rc.2"
+        asset: "{{.OS}}-interactive-rebase-tool"
+        format: raw
+        replacements:
+          darwin: macos
+        supported_envs:
+          - darwin
+      - version_constraint: semver("<= 1.2.1")
+        asset: git-interactive-rebase-tool-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          darwin: macos
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            format: raw
+            asset: "{{.OS}}-interactive-rebase-tool"
+          - goos: windows
+            replacements:
+              amd64: x86_64
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: semver("<= 2.3.0")
+        asset: interactive-rebase-tool
+        format: raw
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: darwin
+            asset: "{{.OS}}-interactive-rebase-tool"
+        supported_envs:
+          - darwin
+          - windows/amd64
+      - version_constraint: "true"
+        asset: git-interactive-rebase-tool-{{.Version}}-{{.OS}}-12_intel
+        format: raw
+        replacements:
+          darwin: macos
+        overrides:
+          - goos: darwin
+            goarch: arm64
+            asset: git-interactive-rebase-tool-{{.Version}}-{{.OS}}-12_{{.Arch}}
+            replacements:
+              arm64: arm
+          - goos: windows
+            asset: git-interactive-rebase-tool-{{.Version}}-{{.OS}}-_{{.Arch}}
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+        supported_envs:
+          - darwin
+          - windows
