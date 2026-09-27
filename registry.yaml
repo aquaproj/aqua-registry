@@ -35541,6 +35541,43 @@ packages:
             src: dolt-{{.OS}}-{{.Arch}}/bin/git-dolt
           - name: git-dolt-smudge
             src: dolt-{{.OS}}-{{.Arch}}/bin/git-dolt-smudge
+  - type: github_release
+    repo_owner: domcyrus
+    repo_name: rustnet
+    description: Per-process network monitoring for your terminal with deep packet inspection. Cross-platform, sandboxed
+    files:
+      - name: rustnet
+        src: "{{.AssetWithoutExt}}/rustnet"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.10.0")
+        no_asset: true
+      - version_constraint: semver("<= 0.17.0")
+        asset: rustnet-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: rustnet-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
   - name: dominikh/go-tools/staticcheck
     type: github_release
     repo_owner: dominikh
