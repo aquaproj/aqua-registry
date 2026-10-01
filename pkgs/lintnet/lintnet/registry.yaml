@@ -64,7 +64,7 @@ packages:
               - refs/tags/{{.Version}}
         github_artifact_attestations:
           signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.0.0")
         asset: lintnet_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         overrides:
@@ -73,6 +73,31 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        checksum:
+          type: github_release
+          asset: lintnet_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: lintnet_{{trimV .Version}}_checksums.txt.bundle
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --certificate-github-workflow-repository
+              - lintnet/lintnet
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+        github_artifact_attestations:
+          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
+      - version_constraint: "true"
+        asset: lintnet_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
         checksum:
           type: github_release
           asset: lintnet_{{trimV .Version}}_checksums.txt

@@ -6,7 +6,7 @@ packages:
     description: CLI for aqua registry g2
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.5.1")
         asset: ar2_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
@@ -29,5 +29,27 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        github_artifact_attestations:
+          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
+      - version_constraint: "true"
+        asset: ar2_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: ar2_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --certificate-github-workflow-repository
+              - aquaproj/ar2
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+            bundle:
+              type: github_release
+              asset: ar2_checksums.txt.sigstore.json
         github_artifact_attestations:
           signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml

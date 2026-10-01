@@ -36,12 +36,33 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
-      - version_constraint: "true"
+      - version_constraint: semver("<= 6.4.1")
         asset: github-comment_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        checksum:
+          type: github_release
+          asset: github-comment_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --signature
+              - https://github.com/suzuki-shunsuke/github-comment/releases/download/{{.Version}}/github-comment_{{trimV .Version}}_checksums.txt.sig
+              - --certificate
+              - https://github.com/suzuki-shunsuke/github-comment/releases/download/{{.Version}}/github-comment_{{trimV .Version}}_checksums.txt.pem
+              - --certificate-github-workflow-repository
+              - suzuki-shunsuke/github-comment
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+      - version_constraint: "true"
+        asset: github-comment_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
         checksum:
           type: github_release
           asset: github-comment_{{trimV .Version}}_checksums.txt

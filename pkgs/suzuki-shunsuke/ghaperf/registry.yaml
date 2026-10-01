@@ -32,7 +32,7 @@ packages:
         supported_envs:
           - linux
           - darwin/arm64
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.0.1")
         asset: ghaperf_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
@@ -55,6 +55,29 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        supported_envs:
+          - linux
+          - darwin/arm64
+      - version_constraint: "true"
+        asset: ghaperf_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: ghaperf_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --certificate-github-workflow-repository
+              - suzuki-shunsuke/ghaperf
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+            bundle:
+              type: github_release
+              asset: ghaperf_checksums.txt.sigstore.json
         supported_envs:
           - linux
           - darwin/arm64
