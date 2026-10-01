@@ -59,7 +59,7 @@ packages:
               - suzuki-shunsuke/nllint
               - --certificate-github-workflow-ref
               - refs/tags/{{.Version}}
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.2.0")
         asset: nllint_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         overrides:
@@ -68,6 +68,29 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        checksum:
+          type: github_release
+          asset: nllint_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: nllint_{{trimV .Version}}_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --certificate-github-workflow-repository
+              - suzuki-shunsuke/nllint
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+      - version_constraint: "true"
+        asset: nllint_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
         checksum:
           type: github_release
           asset: nllint_{{trimV .Version}}_checksums.txt

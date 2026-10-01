@@ -53,7 +53,27 @@ packages:
               - suzuki-shunsuke/ghtkn
               - --certificate-github-workflow-ref
               - refs/tags/{{.Version}}
+      - version_constraint: semver("<= 0.4.1")
+        checksum:
+          type: github_release
+          asset: ghtkn_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: ghtkn_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.+$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --certificate-github-workflow-repository
+              - suzuki-shunsuke/ghtkn
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
       - version_constraint: "true"
+        slsa_provenance:
+          enabled: false
         checksum:
           type: github_release
           asset: ghtkn_checksums.txt

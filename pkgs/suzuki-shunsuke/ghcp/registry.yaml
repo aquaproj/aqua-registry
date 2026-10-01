@@ -6,7 +6,7 @@ packages:
     description: Tool to fork a repository, commit files, create a pull request and upload assets using GitHub API
     version_constraint: "false"
     version_overrides:
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.16.0")
         asset: ghcp_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         overrides:
@@ -15,6 +15,30 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        checksum:
+          type: github_release
+          asset: ghcp_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --signature
+              - https://github.com/suzuki-shunsuke/ghcp/releases/download/{{.Version}}/ghcp_{{trimV .Version}}_checksums.txt.sig
+              - --certificate
+              - https://github.com/suzuki-shunsuke/ghcp/releases/download/{{.Version}}/ghcp_{{trimV .Version}}_checksums.txt.pem
+              - --certificate-github-workflow-repository
+              - suzuki-shunsuke/ghcp
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+      - version_constraint: "true"
+        asset: ghcp_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        overrides:
+          - goos: windows
+            format: zip
         checksum:
           type: github_release
           asset: ghcp_{{trimV .Version}}_checksums.txt
