@@ -85,6 +85,13 @@ packages:
           algorithm: sha256
       - version_constraint: Version == "v1.19.0"
         no_asset: true
+      - version_constraint: semver("<= 1.227.0")
+        asset: atmos_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: atmos_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
       - version_constraint: "true"
         asset: atmos_{{trimV .Version}}_{{.OS}}_{{.Arch}}
         format: raw
@@ -92,3 +99,12 @@ packages:
           type: github_release
           asset: atmos_{{trimV .Version}}_SHA256SUMS
           algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: atmos_{{trimV .Version}}_SHA256SUMS.sigstore.json
+            opts:
+              - --certificate-identity-regexp
+              - ^https://github\.com/cloudposse/\.github/\.github/workflows/shared-go-auto-release\.yml@
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
