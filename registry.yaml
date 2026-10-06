@@ -65885,6 +65885,26 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("<= 1.16.0")
+        asset: mage_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        rosetta2: true
+        windows_arm_emulation: true
+        replacements:
+          amd64: 64bit
+          darwin: macOS
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: mage_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: ARM64
+          - goos: windows
+            format: zip
       - version_constraint: Version == "v1.17.0"
         asset: mage_{{trimV .Version}}_{{.OS}}_{{.Arch}}Linux-64bit.{{.Format}}
         format: tar.gz
@@ -65913,10 +65933,9 @@ packages:
       - version_constraint: "true"
         asset: mage_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
-        rosetta2: true
-        windows_arm_emulation: true
         replacements:
           amd64: 64bit
+          arm64: ARM64
           darwin: macOS
           linux: Linux
           windows: Windows
@@ -65925,9 +65944,6 @@ packages:
           asset: mage_{{trimV .Version}}_checksums.txt
           algorithm: sha256
         overrides:
-          - goos: linux
-            replacements:
-              arm64: ARM64
           - goos: windows
             format: zip
   - type: go_install
