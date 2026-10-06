@@ -61,6 +61,20 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("<= 0.230.0")
+        asset: eksctl_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: eksctl_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: eksctl_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -72,6 +86,15 @@ packages:
           type: github_release
           asset: eksctl_checksums.txt
           algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: eksctl_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity
+              - https://github.com/eksctl-io/eksctl/.github/workflows/publish-release.yaml@refs/tags/{{trimV .Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
         overrides:
           - goos: windows
             format: zip
