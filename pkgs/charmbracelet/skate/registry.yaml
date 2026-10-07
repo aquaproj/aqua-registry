@@ -33,6 +33,20 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/charmbracelet/skate/releases/download/{{.Version}}/checksums.txt.pem
+              - --signature
+              - https://github.com/charmbracelet/skate/releases/download/{{.Version}}/checksums.txt.sig
+              - --certificate-github-workflow-repository
+              - charmbracelet/skate
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+              - --certificate-identity
+              - https://github.com/charmbracelet/meta/.github/workflows/goreleaser.yml@refs/heads/main
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
         overrides:
           - goos: windows
             format: zip
@@ -49,6 +63,53 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/charmbracelet/skate/releases/download/{{.Version}}/checksums.txt.pem
+              - --signature
+              - https://github.com/charmbracelet/skate/releases/download/{{.Version}}/checksums.txt.sig
+              - --certificate-github-workflow-repository
+              - charmbracelet/skate
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+              - --certificate-identity
+              - https://github.com/charmbracelet/meta/.github/workflows/goreleaser.yml@refs/heads/main
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("< 1.1.0")
+        asset: skate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: skate
+            src: "{{.AssetWithoutExt}}/skate"
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/charmbracelet/skate/releases/download/{{.Version}}/checksums.txt.pem
+              - --signature
+              - https://github.com/charmbracelet/skate/releases/download/{{.Version}}/checksums.txt.sig
+              - --certificate-github-workflow-repository
+              - charmbracelet/skate
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+              - --certificate-identity
+              - https://github.com/charmbracelet/meta/.github/workflows/goreleaser.yml@refs/heads/main
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
         overrides:
           - goos: windows
             format: zip
@@ -68,6 +129,19 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+            opts:
+              - --certificate-github-workflow-repository
+              - charmbracelet/skate
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+              - --certificate-identity
+              - https://github.com/charmbracelet/meta/.github/workflows/goreleaser.yml@refs/heads/main
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
         overrides:
           - goos: windows
             format: zip
