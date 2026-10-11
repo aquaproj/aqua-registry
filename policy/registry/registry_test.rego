@@ -156,6 +156,33 @@ test_deny_file_src_exe if {
 	"pkgs/owner/repo/registry.yaml: .files[].src must not end with .exe. Remove .exe from src" in result
 }
 
+test_allow_file_src_exe_with_version_template if {
+	result := deny with input as [{
+		"path": "pkgs/owner/repo/registry.yaml",
+		"contents": {"packages": [{
+			"repo_owner": "owner",
+			"repo_name": "repo",
+			"files": [{
+				"name": "tool",
+				"src": "tool_{{trimPrefix \"tool-\" .Version}}_{{.OS}}_{{.Arch}}.exe",
+			}],
+		}]},
+	}]
+	not "pkgs/owner/repo/registry.yaml: .files[].src must not end with .exe. Remove .exe from src" in result
+}
+
+test_allow_file_src_exe_with_semver_template if {
+	result := deny with input as [{
+		"path": "pkgs/owner/repo/registry.yaml",
+		"contents": {"packages": [{
+			"repo_owner": "owner",
+			"repo_name": "repo",
+			"files": [{"name": "tool", "src": "tool-{{.SemVer}}.exe"}],
+		}]},
+	}]
+	not "pkgs/owner/repo/registry.yaml: .files[].src must not end with .exe. Remove .exe from src" in result
+}
+
 # omit files[].src if same as files[].name
 test_deny_file_src_same_as_name if {
 	result := deny with input as [{
