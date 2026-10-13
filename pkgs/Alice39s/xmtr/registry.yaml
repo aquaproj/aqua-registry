@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: Alice39s
+    repo_name: xmtr
+    description: Concurrent traceroute built on trippy that publishes routes
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: xmtr-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: darwin
+            format: tar.gz
+          - goos: windows
+            goarch: arm64
+            asset: xmtr-{{.Arch}}-{{.OS}}llvm.{{.Format}}
