@@ -34,6 +34,31 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: semver("< 0.80.0")
+        asset: worktrunk-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        windows_arm_emulation: true
+        files:
+          - name: wt
+            src: "{{.AssetWithoutExt}}/wt"
+          - name: git-wt
+            src: "{{.AssetWithoutExt}}/git-wt"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: wt
+              - name: git-wt
       - version_constraint: "true"
         asset: worktrunk-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
@@ -53,6 +78,15 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        cosign:
+          bundle:
+            type: github_release
+            asset: packslip.sigstore.json
+          opts:
+            - --certificate-identity
+            - https://github.com/max-sixty/worktrunk/.github/workflows/release.yaml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
         overrides:
           - goos: windows
             format: zip
