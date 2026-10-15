@@ -77234,20 +77234,22 @@ packages:
         replacements:
           amd64: x64
           windows: win32
-      - version_constraint: semver(">= 1.17.0")
+      - version_constraint: semver(">= 1.17.0") && semver("< 1.85.0")
         version_prefix: oxlint_v
         error_message: |
           This version is unavailable.
           < 1.17.0: The version prefix is oxlint_v e.g. oxlint_v1.16.0
           >= 1.17.0, < 1.28.0: These versions are unavailable
-          >= 1.28.0: The version prefix is apps_v e.g. apps_v1.28.0
+          >= 1.28.0, < 1.85.0: The version prefix is apps_v e.g. apps_v1.28.0
+          >= 1.85.0: The version prefix is again oxlint_v
       - version_constraint: semver("< 1.28.0")
         version_prefix: apps_v
         error_message: |
           The version was too old. Please ugrade to 1.28.0 or later.
           < 1.17.0: The version prefix is oxlint_v
           >= 1.17.0, < 1.28.0: These versions are unavailable
-          >= 1.28.0: The version prefix is apps_v
+          >= 1.28.0, < 1.85.0: The version prefix is apps_v
+          >= 1.85.0: The version prefix is oxlint_v
       - version_constraint: semver("<= 1.43.0")
         version_prefix: apps_v
         asset: oxlint-{{.OS}}-{{.Arch}}-gnu.{{.Format}}
@@ -77277,8 +77279,21 @@ packages:
       - version_constraint: semver("<= 1.53.0")
         version_prefix: apps_v
         no_asset: true
-      - version_constraint: "true"
+      - version_constraint: semver("< 1.85.0")
         version_prefix: apps_v
+        asset: oxlint-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        version_prefix: oxlint_v
         asset: oxlint-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         replacements:
