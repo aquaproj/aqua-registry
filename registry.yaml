@@ -77125,14 +77125,15 @@ packages:
     repo_owner: oxc-project
     repo_name: oxc
     description: A collection of high-performance JavaScript tools
-    version_filter: Version matches "^apps_v"
-    version_prefix: apps_v
+    version_filter: Version matches "^oxfmt_v"
+    version_prefix: oxfmt_v
     files:
       - name: oxfmt
         src: "{{.AssetWithoutExt}}"
     version_constraint: "false"
     version_overrides:
       - version_constraint: semver("<= 1.43.0")
+        version_prefix: apps_v
         asset: oxfmt-{{.OS}}-{{.Arch}}-gnu.{{.Format}}
         format: tar.gz
         replacements:
@@ -77145,8 +77146,10 @@ packages:
             format: zip
             asset: oxfmt-{{.OS}}-{{.Arch}}.{{.Format}}
       - version_constraint: semver("= 1.47.0")
+        version_prefix: apps_v
         no_asset: true
       - version_constraint: semver("<= 1.51.0")
+        version_prefix: apps_v
         asset: oxfmt-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -77159,7 +77162,27 @@ packages:
           - goos: windows
             format: zip
       - version_constraint: semver("<= 1.53.0")
+        version_prefix: apps_v
         no_asset: true
+      - version_constraint: semver("<= 1.84.0")
+        version_prefix: apps_v
+        asset: oxfmt-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("< 0.70.0")
+        error_message: |
+          This version is unavailable.
+          oxfmt < 0.70.0 was released together with oxlint, and its version is the version of oxlint with the prefix apps_v.
+          e.g. oxfmt 0.69.0 => apps_v1.84.0
+          oxfmt >= 0.70.0 has its own version with the prefix oxfmt_v e.g. oxfmt_v0.70.0
       - version_constraint: "true"
         asset: oxfmt-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
