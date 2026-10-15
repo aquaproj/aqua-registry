@@ -96936,6 +96936,25 @@ packages:
         overrides:
           - goos: windows
             format: zip
+  - type: github_release
+    repo_owner: tailscale
+    repo_name: tailcat
+    description: like netcat, but over Tailscale's data plane, without Tailscale's control plane
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: tailcat_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux
+          - windows
   - type: http
     repo_owner: tailscale
     repo_name: tailscale
