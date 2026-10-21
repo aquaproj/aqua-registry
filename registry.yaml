@@ -48485,6 +48485,16 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("< 1.7.0")
+        asset: gcx_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: gcx_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: gcx_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -48492,6 +48502,15 @@ packages:
           type: github_release
           asset: gcx_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: gcx_{{trimV .Version}}_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity
+              - https://github.com/grafana/gcx/.github/workflows/release.yaml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
         overrides:
           - goos: windows
             format: zip
