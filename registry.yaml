@@ -3804,6 +3804,58 @@ packages:
           - linux/amd64
           - darwin/arm64
   - type: github_release
+    repo_owner: Future-Element
+    repo_name: pinset
+    description: A predictable, local-first runtime version manager for multilingual projects
+    files:
+      - name: pinset
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2.15.0")
+        no_asset: true
+      - version_constraint: semver("<= 2.16.2")
+        asset: pinset-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: amd64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64
+      - version_constraint: "true"
+        asset: pinset-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: amd64
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64
+  - type: github_release
     repo_owner: Gaurav-Gosain
     repo_name: tuios
     description: Terminal UI OS (Terminal Multiplexer)
@@ -29130,6 +29182,27 @@ packages:
       - name: cc-test-reporter
         src: test-reporter
   - type: github_release
+    repo_owner: coder3101
+    repo_name: protols
+    description: Language Server for protocol buffers
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: protols-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: coder
     repo_name: boo
     description: A GNU screen style terminal multiplexer built on libghostty
@@ -29220,27 +29293,6 @@ packages:
             format: tar.gz
         github_artifact_attestations:
           signer_workflow: coder/coder/.github/workflows/release.yaml
-  - type: github_release
-    repo_owner: coder3101
-    repo_name: protols
-    description: Language Server for protocol buffers
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 0.2.1")
-        no_asset: true
-      - version_constraint: "true"
-        asset: protols-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        overrides:
-          - goos: windows
-            format: zip
   - type: github_release
     repo_owner: codesenberg
     repo_name: bombardier
