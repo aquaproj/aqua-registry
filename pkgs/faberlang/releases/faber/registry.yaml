@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: faberlang
+    repo_name: releases
+    name: faberlang/releases/faber
+    description: Faber (Faber Romanus), an experimental programming language designed to be written by language models and read by people
+    version_prefix: faber-v
+    asset: faber-v{{.SemVer}}-{{.Arch}}-{{.OS}}.tar.gz
+    format: tar.gz
+    files:
+      - name: faber
+        src: bin/faber
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: apple-darwin
+      linux: unknown-linux-gnu
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      algorithm: sha256
+    supported_envs:
+      - darwin/arm64
+      - linux/amd64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: SemVer == "1.5.1"
+        supported_envs:
+          - darwin/arm64
+      - version_constraint: "true"

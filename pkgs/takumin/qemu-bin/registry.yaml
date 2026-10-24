@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: takumin
+    repo_name: qemu-bin
+    description: Prebuilt binaries of `qemu` built with zig cc
+    files:
+      - name: qemu-edid
+        src: bin/qemu-edid
+      - name: qemu-img
+        src: bin/qemu-img
+      - name: qemu-io
+        src: bin/qemu-io
+      - name: qemu-nbd
+        src: bin/qemu-nbd
+      - name: qemu-pr-helper
+        src: bin/qemu-pr-helper
+      - name: qemu-storage-daemon
+        src: bin/qemu-storage-daemon
+      - name: qemu-system-aarch64
+        src: bin/qemu-system-aarch64
+      - name: qemu-system-x86_64
+        src: bin/qemu-system-x86_64
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: qemu-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          linux: linux-gnu
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity
+              - https://github.com/takumin/qemu-bin/.github/workflows/wc-sign.yml@refs/heads/main
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --certificate-github-workflow-repository
+              - takumin/qemu-bin
+            bundle:
+              type: github_release
+              asset: SHA256SUMS.sigstore.json
+        github_artifact_attestations:
+          signer_workflow: takumin/qemu-bin/.github/workflows/wc-sign.yml
+        overrides:
+          - goarch: amd64
+            files:
+              - name: qemu-edid
+                src: bin/qemu-edid
+              - name: qemu-img
+                src: bin/qemu-img
+              - name: qemu-io
+                src: bin/qemu-io
+              - name: qemu-nbd
+                src: bin/qemu-nbd
+              - name: qemu-pr-helper
+                src: bin/qemu-pr-helper
+              - name: qemu-storage-daemon
+                src: bin/qemu-storage-daemon
+              - name: qemu-system-aarch64
+                src: bin/qemu-system-aarch64
+              - name: qemu-system-x86_64
+                src: bin/qemu-system-x86_64
+              - name: qemu-vmsr-helper
+                src: bin/qemu-vmsr-helper
+        supported_envs:
+          - linux
