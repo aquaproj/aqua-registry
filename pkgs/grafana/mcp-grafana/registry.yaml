@@ -3,17 +3,44 @@ packages:
     repo_owner: grafana
     repo_name: mcp-grafana
     description: MCP server for Grafana
-    asset: mcp-grafana_{{.OS}}_{{.Arch}}.{{.Format}}
-    format: tar.gz
-    replacements:
-      amd64: x86_64
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-    checksum:
-      type: github_release
-      asset: mcp-grafana_{{trimV .Version}}_checksums.txt
-      algorithm: sha256
-    overrides:
-      - goos: windows
-        format: zip
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 2.1.0")
+        asset: mcp-grafana_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: mcp-grafana_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: mcp-grafana_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: mcp-grafana_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: mcp-grafana_{{trimV .Version}}_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity
+              - https://github.com/grafana/mcp-grafana/.github/workflows/release.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+        overrides:
+          - goos: windows
+            format: zip
