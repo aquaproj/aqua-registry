@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: yashikota
+    repo_name: tlc-static
+    description: Native, JVM-free TLA+ TLC. Fully static on Linux
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: tlc-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        replacements:
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: darwin
+            format: tar.gz
+          - goos: windows
+            goarch: arm64
+            asset: tlc-{{.OS}}-{{.Arch}}-emulated.{{.Format}}
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows
