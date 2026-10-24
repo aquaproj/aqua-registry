@@ -22686,6 +22686,44 @@ packages:
       - linux
       - amd64
   - type: github_release
+    repo_owner: bronto-community
+    repo_name: bronto-cli
+    description: "A community command-line client for the Bronto observability platform. It wraps Bronto's REST and ingestion APIs in a single scriptable binary: search and tail logs, explore OpenTelemetry traces, send events, and manage resources (datasets, monitors, dashboards, parsers, exports, API keys)"
+    files:
+      - name: bronto
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.1")
+        asset: bronto_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: bronto_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/bronto-community/bronto-cli/releases/download/{{.Version}}/checksums.txt.pem
+              - --certificate-identity-regexp
+              - "^https://github\\.com/bronto-community/bronto-cli/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/bronto-community/bronto-cli/releases/download/{{.Version}}/checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: bronze1man
     repo_name: yaml2json
     description: a command line tool convert from yaml to json
