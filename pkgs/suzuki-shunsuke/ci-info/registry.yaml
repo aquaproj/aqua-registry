@@ -83,7 +83,7 @@ packages:
           cosign:
             bundle:
               type: github_release
-              asset: ci-info_{{trimV .Version}}_checksums.txt.bundle
+              asset: ci-info_{{trimV .Version}}_checksums.txt.sigstore.json
             opts:
               - --certificate-identity-regexp
               - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
@@ -93,3 +93,5 @@ packages:
               - suzuki-shunsuke/ci-info
               - --certificate-github-workflow-ref
               - refs/tags/{{.Version}}
+        github_artifact_attestations:
+          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
