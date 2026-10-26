@@ -11,13 +11,24 @@ packages:
         src: "{{.AssetWithoutExt}}/tailscale"
       - name: tailscaled
         src: "{{.AssetWithoutExt}}/tailscaled"
-    overrides:
-      - goos: darwin
-        url: https://pkgs.tailscale.com/stable/Tailscale-{{trimV .Version}}-macos.{{.Format}}
-        format: pkg
-        files:
-          - name: tailscale
-            src: Distribution.pkg/Payload/Contents/MacOS/Tailscale
     supported_envs:
       - linux
       - darwin
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.102.4")
+        overrides:
+          - goos: darwin
+            url: https://pkgs.tailscale.com/stable/Tailscale-{{trimV .Version}}-macos.{{.Format}}
+            format: pkg
+            files:
+              - name: tailscale
+                src: Distribution.pkg/Payload/Contents/MacOS/Tailscale
+      - version_constraint: "true"
+        overrides:
+          - goos: darwin
+            url: https://pkgs.tailscale.com/stable/Tailscale-{{trimV .Version}}-macos.{{.Format}}
+            format: pkg
+            files:
+              - name: tailscale
+                src: Distribution.pkg/Payload/Tailscale.app/Contents/MacOS/Tailscale
