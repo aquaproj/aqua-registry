@@ -137,11 +137,15 @@ packages:
           asset: cmdx_{{trimV .Version}}_checksums.txt
           algorithm: sha256
           cosign:
-            opts:
-              - --certificate-identity-regexp
-              - "^https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@refs/tags/\\Q{{.Version}}\\E$"
-              - --certificate-oidc-issuer
-              - https://token.actions.githubusercontent.com
             bundle:
               type: github_release
               asset: cmdx_{{trimV .Version}}_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.+$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --certificate-github-workflow-repository
+              - suzuki-shunsuke/cmdx
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
