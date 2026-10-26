@@ -28420,7 +28420,7 @@ packages:
           type: github_release
           asset: atmos_{{trimV .Version}}_SHA256SUMS
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("< 1.233.2-0")
         asset: atmos_{{trimV .Version}}_{{.OS}}_{{.Arch}}
         format: raw
         checksum:
@@ -28434,6 +28434,22 @@ packages:
             opts:
               - --certificate-identity-regexp
               - ^https://github\.com/cloudposse/\.github/\.github/workflows/shared-go-auto-release\.yml@
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+      - version_constraint: "true"
+        asset: atmos_{{trimV .Version}}_{{.OS}}_{{.Arch}}
+        format: raw
+        checksum:
+          type: github_release
+          asset: atmos_{{trimV .Version}}_SHA256SUMS
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: atmos_{{trimV .Version}}_SHA256SUMS.sigstore.json
+            opts:
+              - --certificate-identity
+              - https://github.com/cloudposse/atmos/.github/workflows/release-pipeline.yml@refs/heads/main
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
   - type: github_release
