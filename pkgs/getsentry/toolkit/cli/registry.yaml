@@ -15,22 +15,21 @@ packages:
     version_constraint: "false"
     version_overrides:
       # getsentry/cli was archived and the CLI moved to getsentry/toolkit at cli@0.46.0.
-      # Older versions are downloaded from getsentry/cli with http rather than github_release,
-      # because aqua looks up new versions in the repository of the pinned version's override
-      # and aqua update must find the cli@ releases in getsentry/toolkit.
-      # scaffold.yaml doesn't generate them.
+      # scaffold.yaml doesn't generate these overrides.
       - version_constraint: semver("<= 0.10.3")
-        type: http
-        url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}
+        repo_owner: getsentry
+        repo_name: cli
         version_prefix: ""
+        asset: sentry-{{.OS}}-{{.Arch}}
         format: raw
         windows_arm_emulation: true
         replacements:
           amd64: x64
       - version_constraint: semver("<= 0.27.0")
-        type: http
-        url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}.{{.Format}}
+        repo_owner: getsentry
+        repo_name: cli
         version_prefix: ""
+        asset: sentry-{{.OS}}-{{.Arch}}.{{.Format}}
         format: gz
         windows_arm_emulation: true
         files:
@@ -40,11 +39,12 @@ packages:
           amd64: x64
         overrides:
           - goos: windows
-            url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+            asset: sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
       - version_constraint: semver("<= 0.34.0")
-        type: http
-        url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}.{{.Format}}
+        repo_owner: getsentry
+        repo_name: cli
         version_prefix: ""
+        asset: sentry-{{.OS}}-{{.Arch}}.{{.Format}}
         format: gz
         windows_arm_emulation: true
         files:
@@ -58,16 +58,17 @@ packages:
               - key: libc
                 value: glibc
           - goos: linux
-            url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+            asset: sentry-{{.OS}}-{{.Arch}}-musl.{{.Format}}
             variants:
               - key: libc
                 value: musl
           - goos: windows
-            url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+            asset: sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
       - version_constraint: semver("<= 0.45.0")
-        type: http
-        url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}.{{.Format}}
+        repo_owner: getsentry
+        repo_name: cli
         version_prefix: ""
+        asset: sentry-{{.OS}}-{{.Arch}}.{{.Format}}
         format: gz
         windows_arm_emulation: true
         files:
@@ -77,7 +78,7 @@ packages:
           amd64: x64
         overrides:
           - goos: windows
-            url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+            asset: sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
       - version_constraint: "true"
         asset: sentry-{{.OS}}-{{.Arch}}.{{.Format}}
         format: gz
