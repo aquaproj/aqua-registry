@@ -4,44 +4,50 @@ packages:
     type: github_release
     repo_owner: getsentry
     repo_name: toolkit
-    aliases:
-      - name: getsentry/cli
     description: Sentry command-line tool for error monitoring and debugging
     version_prefix: cli@
+    # getsentry/toolkit also publishes MCP server releases with unprefixed tags
+    version_filter: Version startsWith "cli@"
     files:
       - name: sentry
-        src: "{{.AssetWithoutExt}}"
     version_constraint: "false"
     version_overrides:
-      # getsentry/cli was archived and the CLI moved to getsentry/toolkit at cli@0.46.0
+      # getsentry/cli was archived and the CLI moved to getsentry/toolkit at cli@0.46.0.
+      # Older versions are downloaded from getsentry/cli with http rather than github_release,
+      # because aqua looks up new versions in the repository of the pinned version's override
+      # and aqua update must find the cli@ releases in getsentry/toolkit.
+      # scaffold.yaml doesn't generate them.
       - version_constraint: semver("<= 0.10.3")
-        repo_owner: getsentry
-        repo_name: cli
+        type: http
+        url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}
         version_prefix: ""
-        asset: sentry-{{.OS}}-{{.Arch}}
         format: raw
         windows_arm_emulation: true
         replacements:
           amd64: x64
       - version_constraint: semver("<= 0.27.0")
-        repo_owner: getsentry
-        repo_name: cli
+        type: http
+        url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}.{{.Format}}
         version_prefix: ""
-        asset: sentry-{{.OS}}-{{.Arch}}.{{.Format}}
         format: gz
         windows_arm_emulation: true
+        files:
+          - name: sentry
+            src: "{{.AssetWithoutExt}}"
         replacements:
           amd64: x64
         overrides:
           - goos: windows
-            asset: sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+            url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
       - version_constraint: semver("<= 0.34.0")
-        repo_owner: getsentry
-        repo_name: cli
+        type: http
+        url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}.{{.Format}}
         version_prefix: ""
-        asset: sentry-{{.OS}}-{{.Arch}}.{{.Format}}
         format: gz
         windows_arm_emulation: true
+        files:
+          - name: sentry
+            src: "{{.AssetWithoutExt}}"
         replacements:
           amd64: x64
         overrides:
@@ -50,29 +56,33 @@ packages:
               - key: libc
                 value: glibc
           - goos: linux
-            asset: sentry-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+            url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}-musl.{{.Format}}
             variants:
               - key: libc
                 value: musl
           - goos: windows
-            asset: sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
-      # Bounded because getsentry/toolkit also publishes MCP server releases with unprefixed tags
+            url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
       - version_constraint: semver("<= 0.45.0")
-        repo_owner: getsentry
-        repo_name: cli
+        type: http
+        url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}.{{.Format}}
         version_prefix: ""
-        asset: sentry-{{.OS}}-{{.Arch}}.{{.Format}}
         format: gz
         windows_arm_emulation: true
+        files:
+          - name: sentry
+            src: "{{.AssetWithoutExt}}"
         replacements:
           amd64: x64
         overrides:
           - goos: windows
-            asset: sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+            url: https://github.com/getsentry/cli/releases/download/{{.Version}}/sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
       - version_constraint: "true"
         asset: sentry-{{.OS}}-{{.Arch}}.{{.Format}}
         format: gz
         windows_arm_emulation: true
+        files:
+          - name: sentry
+            src: "{{.AssetWithoutExt}}"
         replacements:
           amd64: x64
         overrides:
