@@ -81,7 +81,7 @@ packages:
         overrides:
           - goos: windows
             format: zip
-      - version_constraint: "true"
+      - version_constraint: semver("<= 1.5.6")
         asset: ghalint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         checksum:
@@ -98,6 +98,29 @@ packages:
               - https://token.actions.githubusercontent.com
               - --signature
               - https://github.com/suzuki-shunsuke/ghalint/releases/download/{{.Version}}/ghalint_{{trimV .Version}}_checksums.txt.sig
+              - --certificate-github-workflow-repository
+              - suzuki-shunsuke/ghalint
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: ghalint_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: ghalint_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: ghalint_{{trimV .Version}}_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.+$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
               - --certificate-github-workflow-repository
               - suzuki-shunsuke/ghalint
               - --certificate-github-workflow-ref
