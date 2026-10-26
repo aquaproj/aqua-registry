@@ -51682,7 +51682,7 @@ packages:
   - type: github_release
     repo_owner: home-operations
     repo_name: flate
-    description: A Flux resource validator and inflator ⇄
+    description: Render and diff Flux GitOps repositories offline, without a cluster
     version_constraint: "false"
     version_overrides:
       - version_constraint: Version in ["0.1.23", "v0.4.13"]
@@ -51697,6 +51697,43 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        cosign:
+          bundle:
+            type: github_release
+            asset: "{{.Asset}}.sigstore.json"
+          opts:
+            - --certificate-identity
+            - https://github.com/home-operations/flate/.github/workflows/release.yaml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
+            - --certificate-github-workflow-repository
+            - home-operations/flate
+            - --certificate-github-workflow-ref
+            - refs/tags/{{.Version}}
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.4.12")
+        asset: flate_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        cosign:
+          bundle:
+            type: github_release
+            asset: "{{.Asset}}.sigstore.json"
+          opts:
+            - --certificate-identity
+            - https://github.com/home-operations/flate/.github/workflows/release.yaml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
+            - --certificate-github-workflow-repository
+            - home-operations/flate
+            - --certificate-github-workflow-ref
+            - refs/tags/{{.Version}}
         overrides:
           - goos: windows
             format: zip
@@ -51708,6 +51745,19 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        cosign:
+          bundle:
+            type: github_release
+            asset: "{{.Asset}}.sigstore.json"
+          opts:
+            - --certificate-identity
+            - https://github.com/home-operations/flate/.github/workflows/goreleaser.yaml@refs/tags/{{.Version}}
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
+            - --certificate-github-workflow-repository
+            - home-operations/flate
+            - --certificate-github-workflow-ref
+            - refs/tags/{{.Version}}
         overrides:
           - goos: windows
             format: zip
