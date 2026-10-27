@@ -41,15 +41,14 @@ packages:
           asset: ghproj_{{trimV .Version}}_checksums.txt
           algorithm: sha256
           cosign:
+            bundle:
+              type: github_release
+              asset: ghproj_{{trimV .Version}}_checksums.txt.sigstore.json
             opts:
               - --certificate-identity-regexp
-              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - "^https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.+$"
               - --certificate-oidc-issuer
-              - "https://token.actions.githubusercontent.com"
-              - --signature
-              - https://github.com/suzuki-shunsuke/ghproj/releases/download/{{.Version}}/ghproj_{{trimV .Version}}_checksums.txt.sig
-              - --certificate
-              - https://github.com/suzuki-shunsuke/ghproj/releases/download/{{.Version}}/ghproj_{{trimV .Version}}_checksums.txt.pem
+              - https://token.actions.githubusercontent.com
               - --certificate-github-workflow-repository
               - suzuki-shunsuke/ghproj
               - --certificate-github-workflow-ref
