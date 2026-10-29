@@ -39876,54 +39876,6 @@ packages:
           asset: checksums.txt
           algorithm: sha256
   - type: github_release
-    repo_owner: facebook
-    repo_name: buck2
-    description: Build system, successor to Buck
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: Version == "latest"
-        error_message: |
-          aqua doesn't support mutable versions such as "latest". Please change the version
-      - version_constraint: semver("<= 2023-07-11")
-        asset: buck2-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: zst
-        windows_arm_emulation: true
-        files:
-          - name: buck2
-            src: buck2-{{.Arch}}-{{.OS}}
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          windows: pc-windows-msvc
-        overrides:
-          - goos: linux
-            goarch: amd64
-            replacements:
-              linux: unknown-linux-gnu
-          - goos: linux
-            goarch: arm64
-            replacements:
-              linux: unknown-linux-musl
-          - goos: windows
-            asset: buck2-{{.Arch}}-{{.OS}}.exe.{{.Format}}
-      - version_constraint: "true"
-        asset: buck2-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: zst
-        windows_arm_emulation: true
-        files:
-          - name: buck2
-            src: buck2-{{.Arch}}-{{.OS}}
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-musl
-          windows: pc-windows-msvc
-        overrides:
-          - goos: windows
-            asset: buck2-{{.Arch}}-{{.OS}}.exe.{{.Format}}
-  - type: github_release
     repo_owner: fallow-rs
     repo_name: fallow
     description: "Codebase intelligence for TypeScript and JavaScript. Free static layer: unused code, duplication, circular deps, complexity hotspots, architecture boundaries. Optional paid runtime layer: hot-path review and cold-path deletion evidence from real production traffic. Rust-native, sub-second, zero-config framework support"
@@ -67952,6 +67904,56 @@ packages:
             asset: mindthegap_{{.Version}}_{{.OS}}_all.{{.Format}}
           - goos: windows
             format: zip
+  - type: github_release
+    repo_owner: meta
+    repo_name: buck2
+    aliases:
+      - name: facebook/buck2
+    description: Build system, successor to Buck
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "latest"
+        error_message: |
+          aqua doesn't support mutable versions such as "latest". Please change the version
+      - version_constraint: semver("<= 2023-07-11")
+        asset: buck2-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zst
+        windows_arm_emulation: true
+        files:
+          - name: buck2
+            src: buck2-{{.Arch}}-{{.OS}}
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: windows
+            asset: buck2-{{.Arch}}-{{.OS}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: buck2-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zst
+        windows_arm_emulation: true
+        files:
+          - name: buck2
+            src: buck2-{{.Arch}}-{{.OS}}
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            asset: buck2-{{.Arch}}-{{.OS}}.exe.{{.Format}}
   - type: github_release
     repo_owner: metalbear-co
     repo_name: mirrord
