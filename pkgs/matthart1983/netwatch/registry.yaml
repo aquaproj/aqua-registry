@@ -24,7 +24,7 @@ packages:
             format: zip
             asset: netwatch-{{.OS}}-{{.Arch}}.exe.{{.Format}}
             replacements: {}
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.31.0")
         asset: netwatch-{{.OS}}-{{.Arch}}-static.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
@@ -35,6 +35,19 @@ packages:
         overrides:
           - goos: darwin
             asset: netwatch-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: netwatch-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+            replacements: {}
+      - version_constraint: "true"
+        asset: netwatch-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        overrides:
           - goos: windows
             format: zip
             asset: netwatch-{{.OS}}-{{.Arch}}.exe.{{.Format}}
