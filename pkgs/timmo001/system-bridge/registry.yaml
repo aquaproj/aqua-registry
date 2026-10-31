@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: timmo001
+    repo_name: system-bridge
+    description: A bridge for your systems
+    version_constraint: "false"
+    version_overrides:
+      # Releases before 5.20.0 ship OS packages, installers and app bundles, but no standalone executable
+      - version_constraint: semver("<= 5.19.0")
+        no_asset: true
+      - version_constraint: "true"
+        asset: system-bridge-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux/amd64
+          - windows/amd64
+        github_artifact_attestations:
+          signer_workflow: timmo001/system-bridge/.github/workflows/build-and-package-application.yml
