@@ -8,7 +8,6 @@ jobs:
   path-filter:
     # Get changed files to filter jobs
     outputs:
-      renovate-config-validator: ${{steps.changes.outputs.renovate-config-validator}}
       check-files: ${{steps.changes.outputs.check-files}}
       json-schema: ${{steps.changes.outputs.json-schema}}
       test-docker: ${{steps.changes.outputs.test-docker}}
@@ -24,9 +23,6 @@ jobs:
         with:
           list-files: shell
           filters: |
-            renovate-config-validator:
-              - renovate.json5
-              - .github/workflows/wc-renovate-config-validator.yaml
             check-files:
               - pkgs/**/pkg.yaml
               - pkgs/**/registry.yaml
@@ -42,12 +38,14 @@ jobs:
               - scripts/**
               - .github/workflows/wc-test-docker.yaml
 
-  renovate-config-validator:
-    uses: ./.github/workflows/wc-renovate-config-validator.yaml
-    needs: path-filter
-    if: ${{needs.path-filter.outputs.renovate-config-validator == 'true'}}
+  test-workflow:
+    # renovate-config-validator, ghalint, and typos
+    uses: suzuki-shunsuke/test-workflow/.github/workflows/test.yaml@0b89b9b4314282810bc944364380568708208eaa # v0.0.2
+    with:
+      aqua_version: v2.65.2
     permissions:
       contents: read
+      pull-requests: read
 
   check-files:
     uses: ./.github/workflows/wc-check-files.yaml
