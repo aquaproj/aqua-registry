@@ -1,0 +1,93 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - name: getsentry/toolkit/cli
+    type: github_release
+    repo_owner: getsentry
+    repo_name: toolkit
+    description: Sentry command-line tool for error monitoring and debugging
+    version_prefix: cli@
+    # getsentry/toolkit also publishes MCP server releases with unprefixed tags.
+    # version_prefix alone doesn't keep them out of aqua g and aqua update,
+    # because the getsentry/cli overrides set version_prefix: "".
+    version_filter: Version startsWith "cli@"
+    files:
+      - name: sentry
+    version_constraint: "false"
+    version_overrides:
+      # getsentry/cli was archived and the CLI moved to getsentry/toolkit at cli@0.46.0.
+      # scaffold.yaml doesn't generate these overrides.
+      - version_constraint: semver("<= 0.10.3")
+        repo_owner: getsentry
+        repo_name: cli
+        version_prefix: ""
+        asset: sentry-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+      - version_constraint: semver("<= 0.27.0")
+        repo_owner: getsentry
+        repo_name: cli
+        version_prefix: ""
+        asset: sentry-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        files:
+          - name: sentry
+            src: "{{.AssetWithoutExt}}"
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: windows
+            asset: sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 0.34.0")
+        repo_owner: getsentry
+        repo_name: cli
+        version_prefix: ""
+        asset: sentry-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        files:
+          - name: sentry
+            src: "{{.AssetWithoutExt}}"
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: linux
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            asset: sentry-{{.OS}}-{{.Arch}}-musl.{{.Format}}
+            variants:
+              - key: libc
+                value: musl
+          - goos: windows
+            asset: sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: semver("<= 0.45.0")
+        repo_owner: getsentry
+        repo_name: cli
+        version_prefix: ""
+        asset: sentry-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        files:
+          - name: sentry
+            src: "{{.AssetWithoutExt}}"
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: windows
+            asset: sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+      - version_constraint: "true"
+        asset: sentry-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: gz
+        windows_arm_emulation: true
+        files:
+          - name: sentry
+            src: "{{.AssetWithoutExt}}"
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: windows
+            asset: sentry-{{.OS}}-{{.Arch}}.exe.{{.Format}}
