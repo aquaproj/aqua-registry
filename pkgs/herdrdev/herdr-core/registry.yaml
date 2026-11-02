@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: http
+    repo_owner: herdrdev
+    repo_name: herdr-core
+    description: Terminals for coding agents
+    version_source: github_tag
+    url: https://releases.herdr.dev/core/{{trimV .Version}}/herdr-core-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    files:
+      - name: herdr-core
+    replacements:
+      amd64: x86_64
+      arm64: aarch64
+      darwin: macos
+    supported_envs:
+      - linux
+      - darwin
+      - windows/amd64
+    overrides:
+      - goos: windows
+        format: zip
