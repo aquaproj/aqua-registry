@@ -17,10 +17,10 @@ jobs:
       image: ${{ steps.image.outputs.value }}
       use_alpine: ${{ steps.alpine_required.outputs.value }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
-      - uses: aquaproj/aqua-installer@611554c6f0137ba41c8dd15aca8bee82504ea461 # v4.1.1
+      - uses: aquaproj/aqua-installer@v4.1.1
         with:
           aqua_version: v2.66.0
           policy_allow: "true"
@@ -73,7 +73,7 @@ jobs:
           fi
 
       - if: steps.changed.outputs.value == 'true'
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: aqua-test.yaml
           path: aqua/test.yaml
@@ -116,16 +116,16 @@ jobs:
             goos: ""
             goarch: arm64
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+      - uses: actions/download-artifact@v8.0.2
         with:
           name: aqua-test.yaml
           path: aqua
 
-      - uses: aquaproj/aqua-installer@611554c6f0137ba41c8dd15aca8bee82504ea461 # v4.1.1
+      - uses: aquaproj/aqua-installer@v4.1.1
         with:
           aqua_version: v2.66.0
           policy_allow: "true"
@@ -198,7 +198,7 @@ jobs:
         env:
           GH_TOKEN: ${{github.token}}
 
-      - uses: aquaproj/aqua-installer@611554c6f0137ba41c8dd15aca8bee82504ea461 # v4.1.1
+      - uses: aquaproj/aqua-installer@v4.1.1
         with:
           aqua_version: v2.66.0
           policy_allow: "true"
