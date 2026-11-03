@@ -99753,6 +99753,9 @@ packages:
     description: PostgreSQL binaries for Linux, MacOS and Windows
     files:
       - name: psql
+      - name: pg_dump
+      - name: pg_dumpall
+      - name: pg_restore
     version_constraint: "false"
     version_overrides:
       - version_constraint: "true"
@@ -99761,6 +99764,12 @@ packages:
         files:
           - name: psql
             src: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}/bin/psql
+          - name: pg_dump
+            src: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}/bin/pg_dump
+          - name: pg_dumpall
+            src: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}/bin/pg_dumpall
+          - name: pg_restore
+            src: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}/bin/pg_restore
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
@@ -99770,9 +99779,6 @@ packages:
           windows: pc-windows-msvc
         overrides:
           - goos: windows
-            files:
-              - name: psql
-                src: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}/bin/psql.exe
             checksum:
               # Skip because the contents of the provided file cannot be handled
               enabled: false
