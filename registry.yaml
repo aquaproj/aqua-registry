@@ -74213,6 +74213,35 @@ packages:
           - darwin
   - type: github_release
     repo_owner: nushell
+    repo_name: nufmt
+    description: An AST-based formatter for Nushell scripts, built on Nushell's own parser
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: nufmt-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+  - type: github_release
+    repo_owner: nushell
     repo_name: nushell
     asset: nu-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
     format: tar.gz
