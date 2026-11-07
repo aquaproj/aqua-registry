@@ -19,7 +19,7 @@ packages:
           algorithm: sha256
         supported_envs:
           - darwin
-      - version_constraint: semver("<= 0.1.12")
+      - version_constraint: semver("<= 0.9.4")
         asset: agent-desktop-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -32,25 +32,6 @@ packages:
           algorithm: sha256
         supported_envs:
           - darwin
-      - version_constraint: semver("<= 0.9.4")
-        asset: agent-desktop-ffi-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: darwin
-            asset: agent-desktop-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
-          - goos: windows
-            format: zip
       - version_constraint: semver("<= 0.10.1")
         asset: agent-desktop-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -58,15 +39,14 @@ packages:
           amd64: x86_64
           arm64: aarch64
           darwin: apple-darwin
-          linux: unknown-linux-gnu
           windows: pc-windows-msvc
         checksum:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-        overrides:
-          - goos: linux
-            asset: agent-desktop-ffi-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        supported_envs:
+          - darwin
+          - windows
       - version_constraint: "true"
         asset: agent-desktop-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
