@@ -44123,9 +44123,14 @@ packages:
     version_overrides:
       - version_constraint: Version == "v0.0.1"
         no_asset: true
+      - version_constraint: semver("<= 0.0.9")
+        asset: "{{.OS}}-{{.Arch}}"
+        format: raw
       - version_constraint: "true"
         asset: "{{.OS}}-{{.Arch}}"
         format: raw
+        github_artifact_attestations:
+          signer_workflow: github/gh-actions-lock/.github/workflows/release.yml
   - type: github_release
     repo_owner: github
     repo_name: gh-ost
