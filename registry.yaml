@@ -30239,6 +30239,33 @@ packages:
     files:
       - name: protoc-gen-connect-go
   - type: github_release
+    repo_owner: connectrpc
+    repo_name: protoc-gen-connect-openapi
+    aliases:
+      - name: sudorandom/protoc-gen-connect-openapi
+    description: Plugin for generating OpenAPIv3 from protobufs matching the Connect RPC interface
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.8.3")
+        no_asset: true
+      - version_constraint: semver("<= 0.13.0")
+        asset: protoc-gen-connect-openapi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: protoc-gen-connect-openapi_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: protoc-gen-connect-openapi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            asset: protoc-gen-connect-openapi_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
+  - type: github_release
     repo_owner: container-tools
     repo_name: spectrum
     description: A lightweight super-fast container image builder
@@ -93753,31 +93780,6 @@ packages:
         supported_envs:
           - linux
           - darwin
-  - type: github_release
-    repo_owner: sudorandom
-    repo_name: protoc-gen-connect-openapi
-    description: Plugin for generating OpenAPIv3 from protobufs matching the Connect RPC interface
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 0.8.3")
-        no_asset: true
-      - version_constraint: semver("<= 0.13.0")
-        asset: protoc-gen-connect-openapi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: protoc-gen-connect-openapi_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-      - version_constraint: "true"
-        asset: protoc-gen-connect-openapi_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
-        format: tar.gz
-        checksum:
-          type: github_release
-          asset: checksums.txt
-          algorithm: sha256
-        overrides:
-          - goos: darwin
-            asset: protoc-gen-connect-openapi_{{trimV .Version}}_{{.OS}}_all.{{.Format}}
   - type: github_release
     repo_owner: sue445
     repo_name: plant_erd
