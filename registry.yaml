@@ -49894,6 +49894,31 @@ packages:
           - linux
           - windows/amd64
   - type: github_release
+    repo_owner: guarnz
+    repo_name: deadvalues
+    description: "Find unused and dead Helm values: typos, keys a chart dropped, keys your AI agent made up, and the ones a chart upgrade silently breaks. CLI, Helm plugin and GitHub Action for Argo CD, Flux and plain values"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: deadvalues_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/guarnz/deadvalues/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: guptarohit
     repo_name: asciigraph
     description: Go package to make lightweight ASCII line graph ╭┈╯ in command line apps with no other dependencies

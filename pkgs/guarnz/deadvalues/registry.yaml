@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: guarnz
+    repo_name: deadvalues
+    description: "Find unused and dead Helm values: typos, keys a chart dropped, keys your AI agent made up, and the ones a chart upgrade silently breaks. CLI, Helm plugin and GitHub Action for Argo CD, Flux and plain values"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: deadvalues_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/guarnz/deadvalues/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+        overrides:
+          - goos: windows
+            format: zip
