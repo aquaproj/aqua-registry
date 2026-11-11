@@ -4,23 +4,41 @@ packages:
     name: kiro.dev/kiro-cli
     description: Kiro CLI is an agentic coding tool that lives in your terminal
     link: https://kiro.dev/docs/cli/installation/
-    url: https://prod.download.cli.kiro.dev/stable/{{.Version}}/kirocli-{{.Arch}}-linux-musl.zip
-    format: zip
-    files:
-      - name: kiro-cli
-        src: kirocli/bin/kiro-cli
-      - name: kiro-cli-chat
-        src: kirocli/bin/kiro-cli-chat
-    replacements:
-      amd64: x86_64
-      arm64: aarch64
-    overrides:
-      - goos: darwin
-        url: https://prod.download.cli.kiro.dev/stable/{{.Version}}/Kiro%20CLI.dmg
-        format: dmg
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 3.0.0")
+        url: https://prod.download.cli.kiro.dev/stable/{{.Version}}/kirocli-{{.Arch}}-linux-musl.zip
+        format: zip
         files:
           - name: kiro-cli
-            src: Kiro CLI.app/Contents/MacOS/kiro-cli
-    supported_envs:
-      - linux
-      - darwin
+            src: kirocli/bin/kiro-cli
+          - name: kiro-cli-chat
+            src: kirocli/bin/kiro-cli-chat
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        overrides:
+          - goos: darwin
+            url: https://prod.download.cli.kiro.dev/stable/{{.Version}}/Kiro%20CLI.dmg
+            format: dmg
+            files:
+              - name: kiro-cli
+                src: Kiro CLI.app/Contents/MacOS/kiro-cli
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: "true"
+        url: https://prod.download.cli.kiro.dev/stable/{{.Version}}/kirocli-{{.Arch}}-linux-musl.zip
+        format: zip
+        files:
+          - name: kiro-cli
+            src: kirocli/bin/kiro-cli
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        overrides:
+          - goos: darwin
+            url: https://prod.download.cli.kiro.dev/stable/{{.Version}}/kirocli-universal-darwin.zip
+        supported_envs:
+          - linux
+          - darwin
