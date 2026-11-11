@@ -38647,6 +38647,44 @@ packages:
           - goos: windows
             format: zip
   - type: github_release
+    repo_owner: emanuele-em
+    repo_name: proxelar
+    description: Scriptable local traffic workbench for inspecting, intercepting, replaying, and rewriting HTTP/HTTPS and WebSocket traffic
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.1.6")
+        no_asset: true
+      - version_constraint: semver("<= 0.4.8")
+        asset: proxelar-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: proxelar-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: emirozer
     repo_name: kubectl-doctor
     description: kubectl cluster triage plugin for k8s - (brew doctor equivalent)
