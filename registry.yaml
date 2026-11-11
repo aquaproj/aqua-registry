@@ -44027,6 +44027,8 @@ packages:
               - https://github.com/git-bug/git-bug/.github/workflows/release.yml@refs/tags/{{.Version}}
               - --certificate-oidc-issuer
               - https://token.actions.githubusercontent.com
+        github_artifact_attestations:
+          signer_workflow: git-bug/git-bug/.github/workflows/release.yml
   - type: github_release
     repo_owner: git-chglog
     repo_name: git-chglog
@@ -51402,6 +51404,13 @@ packages:
     description: Declaratively deploy your Kubernetes manifests, Kustomize configs, and Charts as Helm releases. Generate all-in-one manifests for use with ArgoCD
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("< 1.8.1")
+        asset: helmfile_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: helmfile_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: helmfile_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -51409,6 +51418,8 @@ packages:
           type: github_release
           asset: helmfile_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: helmfile/helmfile/.github/workflows/releaser.yaml
   - type: github_release
     repo_owner: helmfile
     repo_name: vals
@@ -67834,6 +67845,21 @@ packages:
             format: zip
             asset: netwatch-{{.OS}}-{{.Arch}}.exe.{{.Format}}
             replacements: {}
+      - version_constraint: semver("< 0.38.0")
+        asset: netwatch-{{.OS}}-{{.Arch}}-static.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: macos
+        overrides:
+          - goos: darwin
+            asset: netwatch-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: netwatch-{{.OS}}-{{.Arch}}.exe.{{.Format}}
+            replacements: {}
       - version_constraint: "true"
         asset: netwatch-{{.OS}}-{{.Arch}}-static.{{.Format}}
         format: tar.gz
@@ -67849,6 +67875,8 @@ packages:
             format: zip
             asset: netwatch-{{.OS}}-{{.Arch}}.exe.{{.Format}}
             replacements: {}
+        github_artifact_attestations:
+          signer_workflow: matthart1983/netwatch/.github/workflows/release.yml
   - type: github_release
     repo_owner: mattn
     repo_name: algia
@@ -70685,6 +70713,18 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: semver("< 0.19.0")
+        asset: hunkdiff-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: hunk
+            src: "{{.AssetWithoutExt}}/hunk"
+        replacements:
+          amd64: x64
+        supported_envs:
+          - linux
+          - darwin
+          - windows/amd64
       - version_constraint: "true"
         asset: hunkdiff-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -70697,6 +70737,8 @@ packages:
           - linux
           - darwin
           - windows/amd64
+        github_artifact_attestations:
+          signer_workflow: modem-dev/hunk/.github/workflows/release-prebuilt-npm.yml
   - type: github_release
     repo_owner: momaek
     repo_name: authy
