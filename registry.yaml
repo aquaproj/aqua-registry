@@ -11452,6 +11452,65 @@ packages:
       - linux
       - amd64
   - type: github_release
+    repo_owner: acelot
+    repo_name: termtastic
+    description: Feature-rich handmade Meshtastic console client written in Rust
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.0-beta1")
+        asset: termtastic-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.0.0-preview-202605220948")
+        asset: termtastic-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: termtastic-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: acheronfail
     repo_name: repgrep
     description: An interactive replacer for ripgrep that makes it easy to find and replace across files on the command line
