@@ -34581,6 +34581,19 @@ packages:
     version_overrides:
       - version_constraint: Version in ["v1.25.0", "v1.33.0"]
         no_asset: true
+      - version_constraint: semver("<= 1.62.1")
+        asset: dependabot-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.md5"
+          algorithm: md5
+        overrides:
+          - goos: windows
+            format: zip
+        files:
+          - name: dependabot
       - version_constraint: "true"
         asset: dependabot-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -34594,6 +34607,8 @@ packages:
             format: zip
         files:
           - name: dependabot
+        github_artifact_attestations:
+          signer_workflow: dependabot/cli/.github/workflows/release.yml
   - type: github_release
     repo_owner: dependency-check
     repo_name: DependencyCheck
