@@ -106207,6 +106207,53 @@ packages:
             asset: volta-{{trimV .Version}}-{{.OS}}-arm64.{{.Format}}
             format: zip
   - type: github_release
+    repo_owner: vshulcz
+    repo_name: deja-vu
+    description: Shared local memory, cross-agent handoff, and code recovery across 43 coding agents. One Go binary; every session stays on disk
+    files:
+      - name: deja
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.21.4")
+        asset: deja-vu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate
+              - https://github.com/vshulcz/deja-vu/releases/download/{{.Version}}/checksums.txt.pem
+              - --certificate-identity-regexp
+              - "^https://github\\.com/vshulcz/deja-vu/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --signature
+              - https://github.com/vshulcz/deja-vu/releases/download/{{.Version}}/checksums.txt.sig
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: deja-vu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/vshulcz/deja-vu/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: wader
     repo_name: fq
     description: "jq for binary formats - tool, language and decoders for working with binary and text formats"
