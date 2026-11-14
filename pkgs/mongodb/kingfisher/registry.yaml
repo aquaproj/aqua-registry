@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: mongodb
+    repo_name: kingfisher
+    description: Detect secrets. Validate them live. Map blast radius. Revoke fast. Run the CLI or embed in Rust, Python, or Node.js
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.85.0")
+        asset: kingfisher-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tgz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 1.90.0")
+        asset: kingfisher-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tgz
+        replacements:
+          amd64: x64
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: kingfisher-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tgz
+        replacements:
+          amd64: x64
+        github_artifact_attestations:
+          signer_workflow: mongodb/kingfisher/.github/workflows/release.yml
+        overrides:
+          - goos: windows
+            format: zip
