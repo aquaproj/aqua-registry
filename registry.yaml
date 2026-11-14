@@ -100692,6 +100692,40 @@ packages:
           algorithm: sha256
   - type: github_release
     repo_owner: timmo001
+    repo_name: kestrel
+    description: "One app for your cameras and recorders: live view, recordings, events and health, through a small server on your own network"
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.0")
+        no_asset: true
+      - version_constraint: "true"
+        asset: kestrel-nvr-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: timmo001/kestrel/.github/workflows/desktop.yml
+        files:
+          - name: kestrel
+            src: kestrel-nvr-{{.Version}}-{{.OS}}-{{.Arch}}/bin/kestrel.cmd
+        overrides:
+          - goos: linux
+            format: tar.gz
+            replacements:
+              arm64: aarch64
+            files:
+              - name: kestrel
+                src: kestrel-nvr-{{.Version}}-{{.OS}}-{{.Arch}}/bin/kestrel
+        supported_envs:
+          - linux
+          - windows/amd64
+  - type: github_release
+    repo_owner: timmo001
     repo_name: system-bridge
     description: A bridge for your systems
     version_constraint: "false"
