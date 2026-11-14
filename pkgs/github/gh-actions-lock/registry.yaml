@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: github
+    repo_name: gh-actions-lock
+    description: A gh CLI extension that generates and verifies the GitHub Actions dependency lockfile, pinning every action your workflows use to an exact commit
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v0.0.1"
+        no_asset: true
+      - version_constraint: semver("<= 0.0.9")
+        asset: "{{.OS}}-{{.Arch}}"
+        format: raw
+      - version_constraint: "true"
+        asset: "{{.OS}}-{{.Arch}}"
+        format: raw
+        github_artifact_attestations:
+          signer_workflow: github/gh-actions-lock/.github/workflows/release.yml
