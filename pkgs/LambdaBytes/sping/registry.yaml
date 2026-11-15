@@ -1,0 +1,65 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: LambdaBytes
+    repo_name: sping
+    description: A modern, cross-platform ping with real-time diagnostics, network context, quality scoring, and multi-target monitoring
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.5.5")
+        asset: sping-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: darwin
+            replacements:
+              amd64: amd64
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64
+      - version_constraint: "true"
+        asset: sping-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+            variants:
+              - key: libc
+                value: glibc
+          - goos: linux
+            asset: sping-{{.Version}}-{{.OS}}-{{.Arch}}-musl
+            replacements:
+              arm64: aarch64
+            variants:
+              - key: libc
+                value: musl
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: darwin
+            replacements:
+              amd64: amd64
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64
