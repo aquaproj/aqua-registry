@@ -6072,7 +6072,7 @@ packages:
   - type: github_release
     repo_owner: Mattbusel
     repo_name: polymarket-agent
-    description: "Polymarket for AI agents: one Rust CLI + MCP server (search, books, attributed CLOB v2 orders)"
+    description: Polymarket CLI and MCP server that lets AI agents search markets, read books and place orders
     files:
       - name: polymarket-agent
     version_constraint: "false"
@@ -6080,6 +6080,9 @@ packages:
       - version_constraint: "true"
         asset: polymarket-agent-{{.Version}}-{{.OS}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: polymarket-agent
+            src: "{{.AssetWithoutExt}}/polymarket-agent"
         checksum:
           type: github_release
           asset: SHA256SUMS.txt
@@ -6087,6 +6090,8 @@ packages:
         overrides:
           - goos: windows
             format: zip
+            files:
+              - name: polymarket-agent
         supported_envs:
           - darwin
           - windows
