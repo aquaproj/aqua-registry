@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: Mattbusel
+    repo_name: corescout
+    description: Local-first Rust service that watches how your machine and your AI coding agent work together, tests what it notices with randomized trials, and serves the verified lessons back to any AI over MCP. Windows desktop app
+    files:
+      - name: corescout
+      - name: corescout-mcp
+      - name: corescout-service
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: corescout-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
