@@ -109293,6 +109293,9 @@ packages:
       - version_constraint: semver("<= 0.2.2")
         asset: sqrail-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: sqrail
+            src: "{{.AssetWithoutExt}}/bin/sqrail"
         replacements:
           amd64: x86_64
           darwin: macos
@@ -109300,12 +109303,17 @@ packages:
           type: github_release
           asset: SHA256SUMS
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: yhay81/sqrail/.github/workflows/release.yml
         supported_envs:
           - linux
           - darwin
       - version_constraint: "true"
         asset: sqrail-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: sqrail
+            src: "{{.AssetWithoutExt}}/bin/sqrail"
         replacements:
           amd64: x86_64
           darwin: macos
@@ -109313,6 +109321,8 @@ packages:
           type: github_release
           asset: SHA256SUMS
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: yhay81/sqrail/.github/workflows/release.yml
         overrides:
           - goos: windows
             format: zip
