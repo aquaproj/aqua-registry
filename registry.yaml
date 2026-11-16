@@ -6071,6 +6071,47 @@ packages:
             format: zip
   - type: github_release
     repo_owner: Mattbusel
+    repo_name: Every-Other-Token
+    description: See how sure an LLM is about each word
+    files:
+      - name: every-other-token
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 4.0.0")
+        no_asset: true
+      - version_constraint: semver("<= 4.1.2")
+        asset: every-other-token
+        format: raw
+        supported_envs:
+          - windows/amd64
+      - version_constraint: "true"
+        asset: every-other-token-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: every-other-token
+            src: "{{.AssetWithoutExt}}/every-other-token"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
+    repo_owner: Mattbusel
     repo_name: llm-cost-dashboard
     description: Prices every LLM call from your logs
     files:
