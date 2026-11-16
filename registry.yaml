@@ -6242,6 +6242,33 @@ packages:
             format: zip
   - type: github_release
     repo_owner: Mattbusel
+    repo_name: polymarket-agent
+    description: Polymarket CLI and MCP server that lets AI agents search markets, read books and place orders
+    files:
+      - name: polymarket-agent
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: polymarket-agent-{{.Version}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: polymarket-agent
+            src: "{{.AssetWithoutExt}}/polymarket-agent"
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            files:
+              - name: polymarket-agent
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
+    repo_owner: Mattbusel
     repo_name: prompt-observatory
     description: Local dashboard that streams an LLM response and flags latency, hallucination risk and cost
     files:
