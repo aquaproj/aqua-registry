@@ -1,5 +1,26 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
 packages:
-  - type: github_release
-    repo_owner: macstadium.com
-    repo_name: orka
+  - type: http
+    name: macstadium.com/orka
+    description: CLI for the Orka 4.x virtualization platform on Apple hardware
+    link: https://docs.macstadium.com/orka/orka-overview/tools-integrations
+    url: https://cli-builds-public.s3.eu-west-1.amazonaws.com/official/{{.Version}}/orka/{{.OS}}/{{.Arch}}/orka.{{.Format}}
+    replacements:
+      darwin: macos
+    overrides:
+      - goos: darwin
+        format: pkg
+        files:
+          - name: orka
+            src: orka.pkg/Payload/orka
+      - goos: linux
+        format: tar.gz
+        files:
+          - name: orka
+      - goos: windows
+        url: https://cli-builds-public.s3.eu-west-1.amazonaws.com/official/{{.Version}}/orka/{{.OS}}/{{.Arch}}/orka.exe
+        format: raw
+    supported_envs:
+      - darwin
+      - linux
+      - windows/amd64
