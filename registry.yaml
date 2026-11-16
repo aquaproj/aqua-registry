@@ -110727,6 +110727,29 @@ packages:
           asset: checksums.txt
           algorithm: sha256
   - type: github_release
+    repo_owner: zavoloklom
+    repo_name: docker-compose-linter
+    description: A command-line tool for validating and enforcing best practices in Docker Compose files
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        format: raw
+        files:
+          - name: dclint
+        supported_envs:
+          - linux
+        overrides:
+          - goos: linux
+            asset: dclint-alpine-{{.Arch}}
+            variants:
+              - key: libc
+                value: musl
+          - goos: linux
+            asset: dclint-bullseye-{{.Arch}}
+            variants:
+              - key: libc
+                value: glibc
+  - type: github_release
     repo_owner: zegl
     repo_name: kube-score
     description: Kubernetes object analysis with recommendations for improved reliability and security. kube-score actively prevents downtime and bugs in your Kubernetes YAML and Charts. Static code analysis for Kubernetes
