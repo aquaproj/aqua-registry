@@ -6109,6 +6109,74 @@ packages:
           - windows
           - amd64
   - type: github_release
+    repo_owner: Mattbusel
+    repo_name: tokio-prompt-orchestrator
+    description: LLM API proxy. Same prompt twice costs one call
+    files:
+      - name: orchestrator
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.0.0"
+        no_asset: true
+      - version_constraint: Version == "v0.1.0"
+        asset: orchestrator
+        format: raw
+        supported_envs:
+          - windows/amd64
+      - version_constraint: Version == "v1.1.0"
+        asset: orchestrator
+        format: raw
+        supported_envs:
+          - windows/amd64
+      - version_constraint: semver("<= 1.4.1")
+        asset: orchestrator-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: orchestrator
+            src: "{{.AssetWithoutExt}}/orchestrator"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: orchestrator-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: orchestrator
+            src: "{{.AssetWithoutExt}}/orchestrator"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
     repo_owner: MaybeJustJames
     repo_name: zephyr
     description: Tree shaking breeze for PureScript CoreFn AST
