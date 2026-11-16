@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/registry.json
+packages:
+  - type: github_release
+    repo_owner: Mattbusel
+    repo_name: prompt-observatory
+    description: Local dashboard that streams an LLM response and flags latency, hallucination risk and cost
+    files:
+      - name: prompt-observatory
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: prompt-observatory-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: prompt-observatory
+            src: "{{.AssetWithoutExt}}/prompt-observatory"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
