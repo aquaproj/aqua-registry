@@ -6070,6 +6070,45 @@ packages:
           - goos: windows
             format: zip
   - type: github_release
+    repo_owner: Mattbusel
+    repo_name: tft-synapse
+    description: Free TFT helper. Tells you when to save, level or roll
+    files:
+      - name: tft-synapse
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.5.0")
+        asset: tft-synapse
+        format: raw
+        supported_envs:
+          - windows/amd64
+      - version_constraint: "true"
+        asset: tft-synapse-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: tft-synapse
+            src: "{{.AssetWithoutExt}}/tft-synapse"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
     repo_owner: MaybeJustJames
     repo_name: zephyr
     description: Tree shaking breeze for PureScript CoreFn AST
