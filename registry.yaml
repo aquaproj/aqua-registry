@@ -6071,6 +6071,177 @@ packages:
             format: zip
   - type: github_release
     repo_owner: Mattbusel
+    repo_name: Every-Other-Token
+    description: See how sure an LLM is about each word
+    files:
+      - name: every-other-token
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 4.0.0")
+        no_asset: true
+      - version_constraint: semver("<= 4.1.2")
+        asset: every-other-token
+        format: raw
+        supported_envs:
+          - windows/amd64
+      - version_constraint: "true"
+        asset: every-other-token-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: every-other-token
+            src: "{{.AssetWithoutExt}}/every-other-token"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
+    repo_owner: Mattbusel
+    repo_name: corescout
+    description: Learns how your machine and AI coding agents work together and serves it over MCP
+    files:
+      - name: corescout
+      - name: corescout-mcp
+      - name: corescout-service
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: corescout-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: corescout
+            src: "{{.AssetWithoutExt}}/corescout"
+          - name: corescout-mcp
+            src: "{{.AssetWithoutExt}}/corescout-mcp"
+          - name: corescout-service
+            src: "{{.AssetWithoutExt}}/corescout-service"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
+    repo_owner: Mattbusel
+    repo_name: llm-bench
+    description: Benchmark OpenAI and Anthropic APIs for p50/p99 latency, tokens per second and cost
+    files:
+      - name: llm-bench
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: llm-bench-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: llm-bench
+            src: "{{.AssetWithoutExt}}/llm-bench"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
+    repo_owner: Mattbusel
+    repo_name: llm-cost-dashboard
+    description: Prices every LLM call from your logs
+    files:
+      - name: llm-dash
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.0.0"
+        no_asset: true
+      - version_constraint: semver("<= 1.2.1")
+        asset: llm-cost-dashboard-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: llm-dash
+            src: "{{.AssetWithoutExt}}/llm-dash"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: llm-cost-dashboard-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: llm-dash
+            src: "{{.AssetWithoutExt}}/llm-dash"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
+    repo_owner: Mattbusel
     repo_name: prompt-observatory
     description: Local dashboard that streams an LLM response and flags latency, hallucination risk and cost
     files:
@@ -6092,6 +6263,171 @@ packages:
           asset: SHA256SUMS.txt
           algorithm: sha256
         overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
+    repo_owner: Mattbusel
+    repo_name: reckoner
+    description: Deterministic entity resolution for company and agency names, with a receipt for every merge
+    files:
+      - name: reckoner
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: reckoner-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: reckoner
+            src: "{{.AssetWithoutExt}}/reckoner"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
+    repo_owner: Mattbusel
+    repo_name: tft-synapse
+    description: Free TFT helper. Tells you when to save, level or roll
+    files:
+      - name: tft-synapse
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.5.0")
+        asset: tft-synapse
+        format: raw
+        supported_envs:
+          - windows/amd64
+      - version_constraint: "true"
+        asset: tft-synapse-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: tft-synapse
+            src: "{{.AssetWithoutExt}}/tft-synapse"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
+    repo_owner: Mattbusel
+    repo_name: tokenviz
+    description: Count prompt tokens with tiktoken and rank lines by token cost
+    files:
+      - name: tokenviz
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: tokenviz-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: tokenviz
+            src: "{{.AssetWithoutExt}}/tokenviz"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
+    repo_owner: Mattbusel
+    repo_name: tokio-prompt-orchestrator
+    description: LLM API proxy. Same prompt twice costs one call
+    files:
+      - name: orchestrator
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version == "v1.0.0"
+        no_asset: true
+      - version_constraint: Version == "v0.1.0"
+        asset: orchestrator
+        format: raw
+        supported_envs:
+          - windows/amd64
+      - version_constraint: Version == "v1.1.0"
+        asset: orchestrator
+        format: raw
+        supported_envs:
+          - windows/amd64
+      - version_constraint: semver("<= 1.4.1")
+        asset: orchestrator-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: orchestrator
+            src: "{{.AssetWithoutExt}}/orchestrator"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+      - version_constraint: "true"
+        asset: orchestrator-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: orchestrator
+            src: "{{.AssetWithoutExt}}/orchestrator"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
           - goos: windows
             format: zip
         supported_envs:
@@ -29481,27 +29817,6 @@ packages:
       - name: cc-test-reporter
         src: test-reporter
   - type: github_release
-    repo_owner: coder3101
-    repo_name: protols
-    description: Language Server for protocol buffers
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 0.2.1")
-        no_asset: true
-      - version_constraint: "true"
-        asset: protols-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        overrides:
-          - goos: windows
-            format: zip
-  - type: github_release
     repo_owner: coder
     repo_name: boo
     description: A GNU screen style terminal multiplexer built on libghostty
@@ -29592,6 +29907,27 @@ packages:
             format: tar.gz
         github_artifact_attestations:
           signer_workflow: coder/coder/.github/workflows/release.yaml
+  - type: github_release
+    repo_owner: coder3101
+    repo_name: protols
+    description: Language Server for protocol buffers
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: protols-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
   - type: github_release
     repo_owner: codesenberg
     repo_name: bombardier
