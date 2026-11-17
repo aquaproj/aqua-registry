@@ -6152,6 +6152,37 @@ packages:
           - amd64
   - type: github_release
     repo_owner: Mattbusel
+    repo_name: crypto-orderbook
+    description: Rust service that keeps a correctly sequenced Binance order book in memory (REST snapshot plus WebSocket diffs, gap detection, resync) and serves best bid/ask, depth, micro-price, imbalance and VWAP over Axum REST, WebSocket and Prometheus
+    files:
+      - name: crypto-orderbook
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: crypto-orderbook-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
+    repo_owner: Mattbusel
     repo_name: llm-bench
     description: Benchmark OpenAI and Anthropic APIs for p50/p99 latency, tokens per second and cost
     files:
@@ -29844,6 +29875,27 @@ packages:
       - name: cc-test-reporter
         src: test-reporter
   - type: github_release
+    repo_owner: coder3101
+    repo_name: protols
+    description: Language Server for protocol buffers
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.1")
+        no_asset: true
+      - version_constraint: "true"
+        asset: protols-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+  - type: github_release
     repo_owner: coder
     repo_name: boo
     description: A GNU screen style terminal multiplexer built on libghostty
@@ -29934,27 +29986,6 @@ packages:
             format: tar.gz
         github_artifact_attestations:
           signer_workflow: coder/coder/.github/workflows/release.yaml
-  - type: github_release
-    repo_owner: coder3101
-    repo_name: protols
-    description: Language Server for protocol buffers
-    version_constraint: "false"
-    version_overrides:
-      - version_constraint: semver("<= 0.2.1")
-        no_asset: true
-      - version_constraint: "true"
-        asset: protols-{{.Arch}}-{{.OS}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x86_64
-          arm64: aarch64
-          darwin: apple-darwin
-          linux: unknown-linux-gnu
-          windows: pc-windows-msvc
-        overrides:
-          - goos: windows
-            format: zip
   - type: github_release
     repo_owner: codesenberg
     repo_name: bombardier
