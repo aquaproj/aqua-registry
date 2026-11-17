@@ -26152,10 +26152,27 @@ packages:
           linux: unknown-linux-musl
         supported_envs:
           - linux/amd64
+      - version_constraint: semver("<= 1.36.0")
+        asset: just-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: just-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
         windows_arm_emulation: true
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
         replacements:
           amd64: x86_64
           arm64: aarch64
