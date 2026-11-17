@@ -6152,6 +6152,40 @@ packages:
           - amd64
   - type: github_release
     repo_owner: Mattbusel
+    repo_name: crypto-orderbook
+    description: Keep a sequenced Binance order book in memory and serve depth, micro-price and VWAP over REST, WebSocket and Prometheus
+    files:
+      - name: crypto-orderbook
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: "true"
+        asset: crypto-orderbook-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: crypto-orderbook
+            src: "{{.AssetWithoutExt}}/crypto-orderbook"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
+    repo_owner: Mattbusel
     repo_name: llm-bench
     description: Benchmark OpenAI and Anthropic APIs for p50/p99 latency, tokens per second and cost
     files:
