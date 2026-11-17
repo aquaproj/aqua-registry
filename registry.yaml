@@ -6112,6 +6112,42 @@ packages:
           - amd64
   - type: github_release
     repo_owner: Mattbusel
+    repo_name: HelixRouter-adaptive-async-compute-router-
+    description: Adaptive Tokio job router that picks inline, spawn, CPU pool, batch or drop per job from cost and live pressure
+    files:
+      - name: helixrouter
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.0.0")
+        no_asset: true
+      - version_constraint: "true"
+        asset: helixrouter-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: helixrouter
+            src: "{{.AssetWithoutExt}}/helixrouter"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: SHA256SUMS.txt
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
+  - type: github_release
+    repo_owner: Mattbusel
     repo_name: corescout
     description: Learns how your machine and AI coding agents work together and serves it over MCP
     files:
