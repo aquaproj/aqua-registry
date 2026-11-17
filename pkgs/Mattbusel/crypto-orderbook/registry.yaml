@@ -3,7 +3,7 @@ packages:
   - type: github_release
     repo_owner: Mattbusel
     repo_name: crypto-orderbook
-    description: Rust service that keeps a correctly sequenced Binance order book in memory (REST snapshot plus WebSocket diffs, gap detection, resync) and serves best bid/ask, depth, micro-price, imbalance and VWAP over Axum REST, WebSocket and Prometheus
+    description: Keep a sequenced Binance order book in memory and serve depth, micro-price and VWAP over REST, WebSocket and Prometheus
     files:
       - name: crypto-orderbook
     version_constraint: "false"
@@ -11,6 +11,9 @@ packages:
       - version_constraint: "true"
         asset: crypto-orderbook-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
+        files:
+          - name: crypto-orderbook
+            src: "{{.AssetWithoutExt}}/crypto-orderbook"
         windows_arm_emulation: true
         replacements:
           amd64: x86_64
