@@ -25466,6 +25466,119 @@ packages:
         github_artifact_attestations:
           signer_workflow: cargo-bins/cargo-binstall/.github/workflows/release-cli.yml
   - type: github_release
+    repo_owner: cargo-lambda
+    repo_name: cargo-lambda
+    description: Cargo Lambda is a Cargo subcommand to help you work with AWS Lambda
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: Version in ["v0.10.0", "v0.10.1", "v0.11.0"]
+        asset: cargo-lambda-{{.Version}}.{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: cargo-lambda
+            src: cargo-lambda/cargo-lambda
+        replacements:
+          linux: unknown-linux-musl
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: cargo-lambda-{{.Version}}.{{.Arch}}-{{.OS}}.{{.Format}}
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+          - goos: darwin
+            replacements:
+              darwin: apple-darwin
+        supported_envs:
+          - linux
+          - darwin
+      - version_constraint: semver("<= 0.8.0")
+        asset: cargo-lambda-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: darwin
+            asset: cargo-lambda-{{.Version}}-{{.OS}}.{{.Format}}
+          - goos: windows
+            format: zip
+      - version_constraint: semver("<= 0.9.0")
+        asset: cargo-lambda-{{.Version}}.{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: cargo-lambda-{{.Version}}.{{.Arch}}-{{.OS}}.{{.Format}}
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+          - goos: windows
+            asset: cargo-lambda-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements:
+              amd64: x64
+            checksum:
+              enabled: false
+      - version_constraint: semver("<= 1.0.3")
+        asset: cargo-lambda-{{.Version}}.{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          linux: unknown-linux-musl
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              amd64: x86_64
+              arm64: aarch64
+          - goos: darwin
+            asset: cargo-lambda-{{.Version}}.{{.OS}}.{{.Format}}
+            replacements:
+              darwin: apple-darwin
+          - goos: windows
+            format: zip
+            asset: cargo-lambda-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements:
+              amd64: x64
+      - version_constraint: "true"
+        asset: cargo-lambda-{{.Version}}.{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
+            asset: cargo-lambda-{{.Version}}.{{.OS}}-{{.Arch}}.{{.Format}}
+            replacements:
+              amd64: x64
+  - type: github_release
     repo_owner: carthage-software
     repo_name: mago
     description: Mago is a toolchain for PHP that aims to provide a set of tools to help developers write better code
