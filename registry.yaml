@@ -79712,6 +79712,39 @@ packages:
           url: https://repo.maven.apache.org/maven2/com/palantir/conjure/typescript/conjure-typescript/{{.Version}}/conjure-typescript-{{.Version}}.{{.Format}}.sha256
           algorithm: sha256
   - type: github_release
+    repo_owner: palantir
+    repo_name: policy-bot
+    description: A GitHub App that enforces approval policies on pull requests
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.27.4")
+        asset: policy-bot-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        files:
+          - name: policy-bot
+            src: policy-bot-{{trimV .Version}}/bin/{{.OS}}-{{.Arch}}/policy-bot
+        supported_envs:
+          - linux/amd64
+      - version_constraint: Version == "v1.38.1"
+        no_asset: true
+      - version_constraint: semver("<= 1.41.1")
+        asset: policy-bot-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        files:
+          - name: policy-bot
+            src: policy-bot-{{trimV .Version}}/bin/{{.OS}}-{{.Arch}}/policy-bot
+        supported_envs:
+          - linux
+      - version_constraint: "true"
+        asset: policy-bot-{{trimV .Version}}.{{.Format}}
+        format: tgz
+        files:
+          - name: policy-bot
+            src: policy-bot-{{trimV .Version}}/bin/{{.OS}}-{{.Arch}}/policy-bot
+        supported_envs:
+          - darwin
+          - linux
+  - type: github_release
     repo_owner: pamburus
     repo_name: hl
     description: A fast and powerful log viewer and processor that translates JSON or logfmt logs into a pretty human-readable format
