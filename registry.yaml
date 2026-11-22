@@ -33733,13 +33733,25 @@ packages:
     repo_name: d2
     aliases:
       - name: terrastruct/d2
-    asset: d2-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
     description: D2 is a modern diagram scripting language that turns text to diagrams
-    replacements:
-      darwin: macos
-    files:
-      - name: d2
-        src: d2-{{.Version}}/bin/d2
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 0.8.2")
+        asset: d2-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
+        replacements:
+          darwin: macos
+        files:
+          - name: d2
+            src: d2-{{.Version}}/bin/d2
+      - version_constraint: "true"
+        asset: d2-{{.Version}}-{{.OS}}-{{.Arch}}.tar.gz
+        replacements:
+          darwin: macos
+        files:
+          - name: d2
+            src: d2-{{.Version}}/bin/d2
+        github_artifact_attestations:
+          signer_workflow: d2lang/d2/.github/workflows/release-archives.yml
   - type: github_release
     repo_owner: dadav
     repo_name: helm-schema
