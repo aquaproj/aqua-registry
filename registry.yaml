@@ -12809,6 +12809,58 @@ packages:
           type: github_release
           asset: diffsitter-{{.Arch}}-{{.OS}}.sha256
           algorithm: sha256
+  - type: github_release
+    repo_owner: agavra
+    repo_name: tuicr
+    description: a code review TUI with vim keybindings
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.7.2")
+        asset: tuicr-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: darwin
+            replacements:
+              amd64: amd64
+          - goos: windows
+            format: zip
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64
+      - version_constraint: semver("<= 0.21.0")
+        asset: tuicr-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+      - version_constraint: "true"
+        asset: tuicr-{{trimV .Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
   - name: agentgateway/agentgateway/agctl
     type: github_release
     repo_owner: agentgateway
