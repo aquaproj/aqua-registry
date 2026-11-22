@@ -75445,6 +75445,21 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: semver("<= 0.27.2")
+        asset: sofka-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: sofka-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -75460,6 +75475,8 @@ packages:
         supported_envs:
           - linux
           - darwin
+        github_artifact_attestations:
+          signer_workflow: nklmilojevic/sofka/.github/workflows/release.yaml
   - type: github_release
     repo_owner: nmstate
     repo_name: nmstate
