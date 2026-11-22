@@ -44105,6 +44105,16 @@ packages:
     description: A maintained fork of zmwangx's command output timestamper
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 0.3.1")
+        asset: ets_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: ets_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: ets_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -44115,6 +44125,8 @@ packages:
         supported_envs:
           - linux
           - darwin
+        github_artifact_attestations:
+          signer_workflow: gdubicki/ets/.github/workflows/release.yml
   - type: github_release
     repo_owner: gefyrahq
     repo_name: gefyra
