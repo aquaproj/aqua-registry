@@ -6,6 +6,16 @@ packages:
     description: The command that searches the current directory or parent directories for a specific file and returns the closest path
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("< 2.0.0")
+        asset: closest_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: closest_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: closest_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -16,3 +26,5 @@ packages:
         supported_envs:
           - linux
           - darwin
+        github_artifact_attestations:
+          signer_workflow: corrupt952/closest/.github/workflows/release.yaml
