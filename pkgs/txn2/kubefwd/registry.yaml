@@ -136,6 +136,35 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("<= 1.25.16")
+        asset: kubefwd_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: kubefwd_checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: kubefwd_checksums.txt.sigstore.json
+            opts:
+              - --certificate-identity
+              - https://github.com/txn2/kubefwd/.github/workflows/release.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+              - --certificate-github-workflow-repository
+              - txn2/kubefwd
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: kubefwd_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -165,3 +194,5 @@ packages:
         overrides:
           - goos: windows
             format: zip
+        github_artifact_attestations:
+          signer_workflow: txn2/kubefwd/.github/workflows/release.yml
