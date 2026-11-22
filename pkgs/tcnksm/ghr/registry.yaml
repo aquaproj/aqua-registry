@@ -4,15 +4,33 @@ packages:
     repo_owner: tcnksm
     repo_name: ghr
     description: Upload multiple artifacts to GitHub Release in parallel
-    rosetta2: true
-    supported_envs:
-      - darwin
-      - amd64
-    asset: ghr_{{.Version}}_{{.OS}}_amd64.{{.Format}}
-    files:
-      - name: ghr
-        src: ghr_{{.Version}}_{{.OS}}_amd64/ghr
-    format: zip
-    overrides:
-      - goos: linux
-        format: tar.gz
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 0.18.5")
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        asset: ghr_{{.Version}}_{{.OS}}_amd64.{{.Format}}
+        files:
+          - name: ghr
+            src: ghr_{{.Version}}_{{.OS}}_amd64/ghr
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+      - version_constraint: "true"
+        rosetta2: true
+        supported_envs:
+          - darwin
+          - amd64
+        asset: ghr_{{.Version}}_{{.OS}}_amd64.{{.Format}}
+        files:
+          - name: ghr
+            src: ghr_{{.Version}}_{{.OS}}_amd64/ghr
+        format: zip
+        overrides:
+          - goos: linux
+            format: tar.gz
+        github_artifact_attestations:
+          signer_workflow: tcnksm/ghr/.github/workflows/release-build.yaml
