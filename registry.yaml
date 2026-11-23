@@ -101827,6 +101827,39 @@ packages:
       - name: pg_restore
     version_constraint: "false"
     version_overrides:
+      - version_constraint: >-
+          semver(">=18.0.0, < 18.7.0") or
+          semver(">=16.0.0, < 16.16.0") or
+          semver(">=17.0.0, < 17.12.0") or
+          semver(">=15.0.0, < 15.20.0") or
+          semver("< 14.25.0")
+        asset: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: psql
+            src: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}/bin/psql
+          - name: pg_dump
+            src: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}/bin/pg_dump
+          - name: pg_dumpall
+            src: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}/bin/pg_dumpall
+          - name: pg_restore
+            src: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}/bin/pg_restore
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu # https://github.com/aquaproj/aqua-registry/issues/34136
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            checksum:
+              # Skip because the contents of the provided file cannot be handled
+              enabled: false
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
       - version_constraint: "true"
         asset: postgresql-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -101855,6 +101888,8 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: theseus-rs/postgresql-binaries/.github/workflows/build.yml
   - type: github_release
     repo_owner: thestormforge
     repo_name: optimize-controller
