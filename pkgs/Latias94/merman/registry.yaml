@@ -8,6 +8,34 @@ packages:
     version_overrides:
       - version_constraint: Version == "v0.7.0-alpha.1"
         no_asset: true
+      - version_constraint: semver("<= 0.8.0-alpha.3")
+        asset: merman-cli-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.xz
+        files:
+          - name: merman-cli
+            src: "{{.AssetWithoutExt}}/merman-cli"
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: apple-darwin
+          linux: unknown-linux-gnu
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: darwin
+            replacements:
+              arm64: aarch64
+          - goos: windows
+            format: zip
+            files:
+              - name: merman-cli
+        supported_envs:
+          - darwin
+          - windows
+          - amd64
       - version_constraint: "true"
         asset: merman-cli-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.xz
@@ -36,3 +64,5 @@ packages:
           - darwin
           - windows
           - amd64
+        github_artifact_attestations:
+          signer_workflow: Latias94/merman/.github/workflows/release.yml
