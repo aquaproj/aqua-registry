@@ -16,3 +16,22 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      # checksums.txt is signed from knative-v1.8.0, keyless, by Knative's release service account.
+      - version_constraint: semverWithVersion(">= 1.8.0", trimPrefix(Version, "knative-"))
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity
+              - signer@knative-releases.iam.gserviceaccount.com
+              - --certificate-oidc-issuer
+              - https://accounts.google.com
+              - --signature
+              - https://github.com/knative/client/releases/download/{{.Version}}/checksums.txt.sig
+              - --certificate
+              - https://github.com/knative/client/releases/download/{{.Version}}/checksums.txt.pem
+      - version_constraint: "true"
