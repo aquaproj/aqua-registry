@@ -9348,6 +9348,22 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 0.0.1")
         no_asset: true
+      - version_constraint: semver("<= 0.0.7")
+        asset: r2sync_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: zip
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+        supported_envs:
+          - linux
+          - darwin
+        files:
+          - name: r2sync
+            src: r2sync_{{.Version}}_{{.OS}}_{{.Arch}}/r2sync
       - version_constraint: "true"
         asset: r2sync_{{.Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: zip
@@ -9364,6 +9380,8 @@ packages:
         files:
           - name: r2sync
             src: r2sync_{{.Version}}_{{.OS}}_{{.Arch}}/r2sync
+        github_artifact_attestations:
+          signer_workflow: Songmu/r2sync/.github/workflows/release-build.yaml
   - type: github_release
     repo_owner: Songmu
     repo_name: tagpr
