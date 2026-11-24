@@ -6,6 +6,27 @@ packages:
     description: Concurrent traceroute built on trippy that publishes routes
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 0.2.1")
+        asset: xmtr-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: zip
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-gnu
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            format: tar.gz
+          - goos: darwin
+            format: tar.gz
+          - goos: windows
+            goarch: arm64
+            asset: xmtr-{{.Arch}}-{{.OS}}llvm.{{.Format}}
       - version_constraint: "true"
         asset: xmtr-{{.Arch}}-{{.OS}}.{{.Format}}
         format: zip
@@ -27,3 +48,5 @@ packages:
           - goos: windows
             goarch: arm64
             asset: xmtr-{{.Arch}}-{{.OS}}llvm.{{.Format}}
+        github_artifact_attestations:
+          signer_workflow: Alice39s/xmtr/.github/workflows/release.yml
