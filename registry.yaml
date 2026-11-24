@@ -33971,6 +33971,13 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: semver("< 2.18.0")
+        asset: dagu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
       - version_constraint: "true"
         asset: dagu_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -33978,6 +33985,8 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+        github_artifact_attestations:
+          signer_workflow: dagucloud/dagu/.github/workflows/release.yaml
   - type: github_release
     repo_owner: dahlia
     repo_name: gukhanmun
