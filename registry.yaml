@@ -82024,6 +82024,31 @@ packages:
           asset: SHA256SUMS
           algorithm: sha256
   - type: github_release
+    repo_owner: plumlang
+    repo_name: plumlang
+    description: Small, fast, memory-safe programming language with a plain-English syntax
+    version_constraint: "false"
+    files:
+      - name: plum
+        src: "{{.AssetWithoutExt}}/plum"
+    version_overrides:
+      - version_constraint: "true"
+        asset: plum-{{trimV .Version}}-{{.OS}}-universal.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            asset: plum-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+          - goos: windows
+            format: zip
+            asset: plum-{{trimV .Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+  - type: github_release
     repo_owner: pluveto
     repo_name: upgit
     description: Another upload hub that supports clipboard. It works well with Typora, Snipaste, VSCode
