@@ -3234,6 +3234,23 @@ packages:
           - goos: windows
             format: zip
             asset: treemd-{{.Arch}}-{{.OS}}.exe.{{.Format}}
+      - version_constraint: semver("< 0.10.0")
+        asset: treemd-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: treemd
+            src: "{{.AssetWithoutExt}}"
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+          windows: pc-windows-msvc
+        overrides:
+          - goos: windows
+            format: zip
+            asset: treemd-{{.Arch}}-{{.OS}}.exe.{{.Format}}
       - version_constraint: "true"
         asset: treemd-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -3251,6 +3268,8 @@ packages:
           - goos: windows
             format: zip
             asset: treemd-{{.Arch}}-{{.OS}}.exe.{{.Format}}
+        github_artifact_attestations:
+          signer_workflow: Epistates/treemd/.github/workflows/release.yml
   - type: github_release
     repo_owner: F1bonacc1
     repo_name: process-compose
