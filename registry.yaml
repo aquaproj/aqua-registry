@@ -11384,7 +11384,7 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.3.1020")
         asset: templ_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
         replacements:
@@ -11400,6 +11400,25 @@ packages:
             opts:
               - --signature
               - https://github.com/a-h/templ/releases/download/{{.Version}}/checksums.txt.sig
+              - --key
+              - https://raw.githubusercontent.com/a-h/templ/refs/tags/{{.Version}}/cosign.pub
+      - version_constraint: "true"
+        asset: templ_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          darwin: Darwin
+          linux: Linux
+          windows: Windows
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: checksums.txt.sigstore.json
+            opts:
               - --key
               - https://raw.githubusercontent.com/a-h/templ/refs/tags/{{.Version}}/cosign.pub
   - type: github_release
