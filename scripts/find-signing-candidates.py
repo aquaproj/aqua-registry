@@ -381,7 +381,7 @@ def main() -> int:
         type=Path,
         default=DEFAULT_EXCLUDE_FILE,
         help="File of `pkgs/<path>/registry.yaml <type> [comments]` lines to exclude from output. "
-        "Defaults to .cache/signing-exclusions.txt; a missing file is not an error.",
+        "Defaults to .cache/signing-candidates-exclusions.txt; a missing file is not an error.",
     )
     args = parser.parse_args()
 
