@@ -16068,6 +16068,8 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        github_artifact_attestations:
+          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
       - version_constraint: semver("<= 0.1.5")
         asset: registry-tool_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -16077,6 +16079,32 @@ packages:
           type: github_release
           asset: registry-tool_{{trimV .Version}}_checksums.txt
           algorithm: sha256
+      - version_constraint: semver("<= 0.3.0")
+        asset: registry-tool_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        files:
+          - name: aqua-registry
+        checksum:
+          type: github_release
+          asset: registry-tool_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-oidc-issuer
+              - "https://token.actions.githubusercontent.com"
+              - --certificate-identity-regexp
+              - "https://github\\.com/suzuki-shunsuke/go-release-workflow/\\.github/workflows/release\\.yaml@.*"
+              - --certificate
+              - https://github.com/aquaproj/registry-tool/releases/download/{{.Version}}/registry-tool_{{trimV .Version}}_checksums.txt.pem
+              - --signature
+              - https://github.com/aquaproj/registry-tool/releases/download/{{.Version}}/registry-tool_{{trimV .Version}}_checksums.txt.sig
+              - --certificate-github-workflow-repository
+              - aquaproj/registry-tool
+              - --certificate-github-workflow-ref
+              - refs/tags/{{.Version}}
+        slsa_provenance:
+          type: github_release
+          asset: multiple.intoto.jsonl
       - version_constraint: semver("<= 0.3.6")
         asset: registry-tool_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -16103,6 +16131,8 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        github_artifact_attestations:
+          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
       - version_constraint: semver("<= 0.5.4")
         asset: argd_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -16126,6 +16156,8 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        github_artifact_attestations:
+          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
       - version_constraint: semver("<= 0.5.9")
         asset: argd_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -16149,6 +16181,8 @@ packages:
         slsa_provenance:
           type: github_release
           asset: multiple.intoto.jsonl
+        github_artifact_attestations:
+          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
       - version_constraint: "true"
         asset: argd_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -16169,6 +16203,8 @@ packages:
               - aquaproj/registry-tool
               - --certificate-github-workflow-ref
               - refs/tags/{{.Version}}
+        github_artifact_attestations:
+          signer_workflow: suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
   - type: github_release
     repo_owner: aquasecurity
     repo_name: chain-bench
