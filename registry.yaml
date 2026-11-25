@@ -58217,6 +58217,41 @@ packages:
         windows_arm_emulation: true
         complete_windows_ext: false
   - type: github_release
+    repo_owner: jnsahaj
+    repo_name: lumen
+    description: Beautiful git diff viewer, generate commits with AI, get summary of changes, all from the CLI
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 2.4.0")
+        asset: lumen.{{.Format}}
+        format: tar.gz
+        supported_envs:
+          - darwin/arm64
+      - version_constraint: semver("<= 2.30.0")
+        asset: lumen-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+        supported_envs:
+          - darwin
+      - version_constraint: "true"
+        asset: lumen-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          linux: unknown-linux-musl
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
+  - type: github_release
     repo_owner: joehillen
     repo_name: sysz
     description: An fzf  terminal UI for systemctl
