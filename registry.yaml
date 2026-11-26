@@ -16629,36 +16629,6 @@ packages:
         supported_envs:
           - linux
           - darwin
-      - version_constraint: semver("< 0.70.0")
-        asset: trivy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: 64bit
-          arm64: ARM64
-          darwin: macOS
-          linux: Linux
-        checksum:
-          type: github_release
-          asset: trivy_{{trimV .Version}}_checksums.txt
-          algorithm: sha256
-          cosign:
-            bundle:
-              type: github_release
-              asset: trivy_{{trimV .Version}}_checksums.txt.sigstore.json
-            opts:
-              - --certificate-identity
-              - https://github.com/aquasecurity/trivy/.github/workflows/reusable-release.yaml@refs/tags/{{.Version}}
-              - --certificate-oidc-issuer
-              - https://token.actions.githubusercontent.com
-              - --certificate-github-workflow-repository
-              - aquasecurity/trivy
-              - --certificate-github-workflow-ref
-              - refs/tags/{{.Version}}
-        overrides:
-          - goos: windows
-            format: zip
-            replacements: {}
       - version_constraint: "true"
         asset: trivy_{{trimV .Version}}_{{.OS}}-{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -16689,8 +16659,6 @@ packages:
           - goos: windows
             format: zip
             replacements: {}
-        github_artifact_attestations:
-          signer_workflow: aquasecurity/trivy/.github/workflows/reusable-release.yaml
   - type: github_release
     repo_owner: arcanist-sh
     repo_name: hx
