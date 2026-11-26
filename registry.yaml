@@ -68239,6 +68239,41 @@ packages:
     repo_name: goda
     description: Go Dependency Analysis toolkit
   - type: github_release
+    repo_owner: losfair
+    repo_name: zeroserve
+    description: Zero-config, fast `io_uring`-based HTTPS server
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 0.2.12-alpha.12")
+        asset: zeroserve-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        supported_envs:
+          - linux
+      - version_constraint: "true"
+        asset: zeroserve-{{.Arch}}-{{.OS}}
+        format: raw
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+          cosign:
+            opts:
+              - --certificate-identity-regexp
+              - "^https://github\\.com/losfair/zeroserve/\\.github/workflows/.+\\.ya?ml@refs/tags/\\Q{{.Version}}\\E$"
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+            bundle:
+              type: github_release
+              asset: SHA256SUMS.sigstore.json
+        supported_envs:
+          - linux
+  - type: github_release
     repo_owner: lotabout
     repo_name: rargs
     description: "xargs + awk with pattern matching support. `ls *.bak | rargs -p '(.*)\\.bak' mv {0} {1}`"
