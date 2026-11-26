@@ -51742,6 +51742,39 @@ packages:
           - goos: windows
             format: zip
   - type: github_release
+    repo_owner: gumlet
+    repo_name: cli
+    description: Command line interface for Gumlet
+    files:
+      - name: gumlet
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("<= 1.2.1")
+        asset: gumlet_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+      - version_constraint: "true"
+        asset: gumlet_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        replacements:
+          amd64: x86_64
+        overrides:
+          - goos: windows
+            format: zip
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+  - type: github_release
     repo_owner: guptarohit
     repo_name: asciigraph
     description: Go package to make lightweight ASCII line graph ╭┈╯ in command line apps with no other dependencies
