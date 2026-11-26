@@ -102789,7 +102789,7 @@ packages:
     version_overrides:
       - version_constraint: semver("<= 0.2.0")
         no_asset: true
-      - version_constraint: "true"
+      - version_constraint: semver("<= 0.5.12")
         asset: kestrel-nvr-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
         format: zip
         windows_arm_emulation: true
@@ -102801,6 +102801,41 @@ packages:
           algorithm: sha256
         github_artifact_attestations:
           signer_workflow: timmo001/kestrel/.github/workflows/desktop.yml
+        files:
+          - name: kestrel
+            src: kestrel-nvr-{{.Version}}-{{.OS}}-{{.Arch}}/bin/kestrel.cmd
+        overrides:
+          - goos: linux
+            format: tar.gz
+            replacements:
+              arm64: aarch64
+            files:
+              - name: kestrel
+                src: kestrel-nvr-{{.Version}}-{{.OS}}-{{.Arch}}/bin/kestrel
+        supported_envs:
+          - linux
+          - windows/amd64
+      - version_constraint: "true"
+        asset: kestrel-nvr-{{.Version}}-{{.OS}}-{{.Arch}}.{{.Format}}
+        format: zip
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+          cosign:
+            bundle:
+              type: github_release
+              asset: kestrel-nvr-{{trimV .Version}}.sigstore.json
+            opts:
+              - --certificate-identity
+              - https://github.com/timmo001/kestrel/.github/workflows/build.yml@refs/tags/{{.Version}}
+              - --certificate-oidc-issuer
+              - https://token.actions.githubusercontent.com
+        github_artifact_attestations:
+          signer_workflow: timmo001/kestrel/.github/workflows/build.yml
         files:
           - name: kestrel
             src: kestrel-nvr-{{.Version}}-{{.OS}}-{{.Arch}}/bin/kestrel.cmd
