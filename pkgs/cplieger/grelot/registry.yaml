@@ -15,3 +15,12 @@ packages:
           type: github_release
           asset: "{{.Asset}}.sha256"
           algorithm: sha256
+        cosign:
+          bundle:
+            type: github_release
+            asset: "{{.Asset}}.sigstore.json"
+          opts:
+            - --certificate-identity-regexp
+            - ^https://github\.com/cplieger/ci/\.github/workflows/docker-release\.yaml@
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
