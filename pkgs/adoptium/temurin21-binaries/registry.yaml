@@ -15,6 +15,8 @@ packages:
       - windows/arm64
     asset: OpenJDK21U-jdk_{{.Arch}}_{{.OS}}_hotspot_{{.SemVer | replace "+" "_"}}.{{.Format}}
     format: tar.gz
+    # Windows ARM64 builds are published days or weeks after each release, so always use the x64 build.
+    windows_arm_emulation: true
     replacements:
       amd64: x64
       arm64: aarch64
@@ -23,13 +25,6 @@ packages:
       type: github_release
       asset: "{{.Asset}}.sha256.txt"
       algorithm: sha256
-    version_constraint: "false"
-    version_overrides:
-      # Native Windows ARM64 builds were published in this release range.
-      - version_constraint: semver(">= 21.0.5, < 21.0.13")
-        windows_arm_emulation: false
-      - version_constraint: "true"
-        windows_arm_emulation: true
     files:
       - name: jar
         src: "{{.Version}}/bin/{{.FileName}}"
