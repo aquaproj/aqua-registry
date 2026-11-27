@@ -9,3 +9,16 @@ packages:
       type: github_release
       asset: checksums.txt
       algorithm: sha256
+    version_constraint: "false"
+    version_overrides:
+      - version_constraint: semver("< 3.0.0")
+      - version_constraint: "true"
+        cosign:
+          bundle:
+            type: github_release
+            asset: packslip.sigstore.json
+          opts:
+            - --certificate-identity
+            - https://github.com/kayac/ecspresso/.github/workflows/tagpr-release.yml@refs/heads/v3
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
