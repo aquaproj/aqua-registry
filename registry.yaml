@@ -33120,6 +33120,16 @@ packages:
         overrides:
           - goos: windows
             format: zip
+      - version_constraint: semver("< 4.34.0")
+        asset: diun_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: checksums.txt
+          algorithm: sha256
+        overrides:
+          - goos: windows
+            format: zip
       - version_constraint: "true"
         asset: diun_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -33127,6 +33137,15 @@ packages:
           type: github_release
           asset: checksums.txt
           algorithm: sha256
+        cosign:
+          bundle:
+            type: github_release
+            asset: diun_{{trimV .Version}}_{{.OS}}_{{.Arch}}.sigstore.json
+          opts:
+            - --certificate-identity-regexp
+            - ^https://github\.com/docker/github-builder/\.github/workflows/bake\.yml@
+            - --certificate-oidc-issuer
+            - https://token.actions.githubusercontent.com
         overrides:
           - goos: windows
             format: zip
