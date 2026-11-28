@@ -1586,6 +1586,35 @@ packages:
           - darwin
           - windows
           - amd64
+      - version_constraint: semver("< 16.0.0")
+        asset: ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
+        format: tar.gz
+        windows_arm_emulation: true
+        files:
+          - name: rg
+            src: ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}/rg
+        replacements:
+          amd64: x86_64
+          arm64: aarch64
+          darwin: apple-darwin
+          windows: pc-windows-msvc
+        checksum:
+          type: github_release
+          asset: "{{.Asset}}.sha256"
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            goarch: amd64
+            replacements:
+              linux: unknown-linux-musl
+          - goos: linux
+            goarch: arm64
+            replacements:
+              linux: unknown-linux-gnu
+          - goos: windows
+            format: zip
+            checksum:
+              enabled: false
       - version_constraint: "true"
         asset: ripgrep-{{.Version}}-{{.Arch}}-{{.OS}}.{{.Format}}
         format: tar.gz
@@ -1615,6 +1644,8 @@ packages:
             format: zip
             checksum:
               enabled: false
+        github_artifact_attestations:
+          signer_workflow: BurntSushi/ripgrep/.github/workflows/release.yml
   - type: github_release
     repo_owner: BurntSushi
     repo_name: xsv
