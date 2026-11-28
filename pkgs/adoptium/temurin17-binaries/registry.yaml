@@ -3,653 +3,376 @@ packages:
   - type: github_release
     repo_owner: adoptium
     repo_name: temurin17-binaries
-    description: Temurin 17 binaries
-    version_filter: not (Version matches "-beta$")
+    description: Eclipse Temurin JDK 17
+    search_words:
+      - jdk
+      - openjdk
+    version_filter: Version matches "^jdk-17\\.[\\d.]+\\+\\d+$"
     version_prefix: jdk-
+    asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_{{.SemVer | replace "+" "_"}}.{{.Format}}
+    format: tar.gz
+    # Temurin doesn't publish Windows ARM64 builds of JDK 17, so use the x64 build.
+    windows_arm_emulation: true
+    replacements:
+      amd64: x64
+      arm64: aarch64
+      darwin: mac
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256.txt"
+      algorithm: sha256
+    files:
+      - name: jar
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jarsigner
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: java
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: javac
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: javadoc
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: javap
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jcmd
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jconsole
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jdb
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jdeprscan
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jdeps
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jfr
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jhsdb
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jimage
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jinfo
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jlink
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jmap
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jmod
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jpackage
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jps
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jrunscript
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jshell
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jstack
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jstat
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: jstatd
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: keytool
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: rmiregistry
+        src: "{{.Version}}/bin/{{.FileName}}"
+      - name: serialver
+        src: "{{.Version}}/bin/{{.FileName}}"
+    overrides:
+      - goos: linux
+        variants:
+          - key: libc
+            value: glibc
+      # JDK 17 releases have no Alpine build for aarch64, so musl on arm64 uses the glibc build.
+      - goos: linux
+        goarch: amd64
+        variants:
+          - key: libc
+            value: musl
+        replacements:
+          linux: alpine-linux
+        # Alpine builds are headless, so jconsole can't run on them.
+        files:
+          - name: jar
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jarsigner
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: java
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: javac
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: javadoc
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: javap
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jcmd
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jdb
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jdeprscan
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jdeps
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jfr
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jhsdb
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jimage
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jinfo
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jlink
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jmap
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jmod
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jpackage
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jps
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jrunscript
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jshell
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jstack
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jstat
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jstatd
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: keytool
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: rmiregistry
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: serialver
+            src: "{{.Version}}/bin/{{.FileName}}"
+      - goos: darwin
+        files:
+          - name: jar
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jarsigner
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: java
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: javac
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: javadoc
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: javap
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jcmd
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jconsole
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jdb
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jdeprscan
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jdeps
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jfr
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jhsdb
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jimage
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jinfo
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jlink
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jmap
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jmod
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jpackage
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jps
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jrunscript
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jshell
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jstack
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jstat
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: jstatd
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: keytool
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: rmiregistry
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+          - name: serialver
+            src: "{{.Version}}/Contents/Home/bin/{{.FileName}}"
+      - goos: windows
+        format: zip
+        files:
+          - name: jabswitch
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jaccessinspector
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jaccesswalker
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jar
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jarsigner
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: java
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: javac
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: javadoc
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: javap
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: javaw
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jcmd
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jconsole
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jdb
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jdeprscan
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jdeps
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jfr
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jhsdb
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jimage
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jinfo
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jlink
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jmap
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jmod
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jpackage
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jps
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jrunscript
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jshell
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jstack
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jstat
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: jstatd
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: keytool
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: kinit
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: klist
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: ktab
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: rmiregistry
+            src: "{{.Version}}/bin/{{.FileName}}"
+          - name: serialver
+            src: "{{.Version}}/bin/{{.FileName}}"
     version_constraint: "false"
     version_overrides:
-      - version_constraint: Version == "jdk-17.0.4.1+1"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.4.1_1.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
+      - version_constraint: Version == "jdk-17+35"
+        asset: OpenJDK17-jdk_{{.Arch}}_{{.OS}}_hotspot_{{.SemVer | replace "+" "_"}}.{{.Format}}
+      # The aarch64 Linux archive of 17.0.2+8 has no .sha256.txt file, so read the checksum from the metadata file of each archive.
+      - version_constraint: Version == "jdk-17.0.2+8"
         checksum:
           type: github_release
-          asset: OpenJDK17U-static-libs_{{.Arch}}_{{.OS}}_hotspot_17.0.4.1_1.tar.gz.sha256.txt
+          asset: "{{.Asset}}.json"
           algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.4.1_1.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.4.1_1.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.4.1_1.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.5+8"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.5_8.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.5_8.msi.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.5_8.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.5_8.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.5_8.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.6+10"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.6_10.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-debugimage_{{.Arch}}_{{.OS}}_hotspot_17.0.6_10.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.6_10.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.6_10.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.6_10.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.7+7"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.7_7.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-jre_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.7_7.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.7_7.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.7_7.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.7_7.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.8+7"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.8_7.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.8_7.msi.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.8_7.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.8_7.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.8_7.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.8.1+1"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.8.1_1.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-jre_{{.Arch}}_{{.OS}}_hotspot_17.0.8.1_1.pkg.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.8.1_1.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.8.1_1.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.8.1_1.{{.Format}}
-          - goos: windows
-            format: zip
+          file_format: regexp
+          pattern:
+            checksum: '"sha256": "([0-9a-f]{64})"'
+      # The Windows x64 build of 17.0.9+9 was published as jdk-17.0.9+9.1.
       - version_constraint: Version == "jdk-17.0.9+9"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.9_9.{{.Format}}
-        format: tar.gz
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-debugimage_{{.Arch}}_{{.OS}}_hotspot_17.0.9_9.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.9_9.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.9_9.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.9_9.{{.Format}}
-          - goos: windows
-            format: zip
-            asset: OpenJDK17U-jdk_x86-32_{{.OS}}_hotspot_17.0.9_9.{{.Format}}
-            replacements:
-              amd64: amd64
-              arm64: arm64
+        supported_envs:
+          - darwin
+          - linux
+      # The respin keeps the asset names and the directory of 17.0.9+9.
       - version_constraint: Version == "jdk-17.0.9+9.1"
         asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.9_9.{{.Format}}
-        format: zip
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.9_9.msi.sha256.txt
-          algorithm: sha256
         supported_envs:
-          - windows/amd64
-      - version_constraint: Version == "jdk-17.0.10+7"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.10_7.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-testimage_{{.Arch}}_{{.OS}}_hotspot_17.0.10_7.tar.gz.sha256.txt
-          algorithm: sha256
+          - windows
         overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.10_7.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.10_7.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.10_7.{{.Format}}
           - goos: windows
             format: zip
-      - version_constraint: Version == "jdk-17.0.11+9"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.11_9.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-debugimage_{{.Arch}}_{{.OS}}_hotspot_17.0.11_9.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.11_9.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.11_9.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.11_9.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.12+7"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.12_7.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-testimage_x86-32_{{.OS}}_hotspot_17.0.12_7.zip.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.12_7.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.12_7.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.12_7.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.13+11"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.13_11.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-debugimage_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.13_11.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.13_11.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.13_11.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.13_11.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.14+7"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.14_7.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.14_7.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.14_7.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.14_7.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.14_7.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.15+6"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.15_6.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-jre_{{.Arch}}_{{.OS}}_hotspot_17.0.15_6.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.15_6.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.15_6.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.15_6.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.16+8"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.16_8.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-jre_{{.Arch}}_{{.OS}}_hotspot_17.0.16_8.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.16_8.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.16_8.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.16_8.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.17+10"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.17_10.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-static-libs-glibc_{{.Arch}}_{{.OS}}_hotspot_17.0.17_10.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.17_10.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.17_10.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.17_10.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.18+8"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.18_8.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.18_8.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.18_8.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.18_8.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.18_8.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.19+10"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.19_10.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-jre_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.19_10.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.19_10.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.19_10.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.19_10.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.20+8"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.20_8.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-jre_{{.Arch}}_{{.OS}}_hotspot_17.0.20_8.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.20_8.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.20_8.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.20_8.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.20.1+1"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.20.1_1.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-debugimage_{{.Arch}}_{{.OS}}_hotspot_17.0.20.1_1.zip.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.20.1_1.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.20.1_1.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.20.1_1.{{.Format}}
-          - goos: windows
-            format: zip
-      - version_constraint: Version == "jdk-17.0.21+9"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.21_9.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-debugimage_{{.Arch}}_{{.OS}}_hotspot_17.0.21_9.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.21_9.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.21_9.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.21_9.{{.Format}}
-          - goos: windows
-            format: zip
+            files:
+              - name: jabswitch
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jaccessinspector
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jaccesswalker
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jar
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jarsigner
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: java
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: javac
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: javadoc
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: javap
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: javaw
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jcmd
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jconsole
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jdb
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jdeprscan
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jdeps
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jfr
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jhsdb
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jimage
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jinfo
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jlink
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jmap
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jmod
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jpackage
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jps
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jrunscript
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jshell
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jstack
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jstat
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: jstatd
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: keytool
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: kinit
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: klist
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: ktab
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: rmiregistry
+                src: jdk-17.0.9+9/bin/{{.FileName}}
+              - name: serialver
+                src: jdk-17.0.9+9/bin/{{.FileName}}
       - version_constraint: "true"
-        asset: OpenJDK17U-jdk_{{.Arch}}_{{.OS}}_hotspot_17.0.21.1_2.{{.Format}}
-        format: tar.gz
-        windows_arm_emulation: true
-        replacements:
-          amd64: x64
-          arm64: aarch64
-          darwin: mac
-        checksum:
-          type: github_release
-          asset: OpenJDK17U-testimage_{{.Arch}}_{{.OS}}_hotspot_17.0.21.1_2.tar.gz.sha256.txt
-          algorithm: sha256
-        overrides:
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.21.1_2.{{.Format}}
-            variants:
-              - key: libc
-                value: glibc
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-static-libs-musl_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.21.1_2.{{.Format}}
-            variants:
-              - key: libc
-                value: musl
-          - goos: linux
-            goarch: amd64
-            asset: OpenJDK17U-jdk_{{.Arch}}_alpine-{{.OS}}_hotspot_17.0.21.1_2.{{.Format}}
-          - goos: windows
-            format: zip
