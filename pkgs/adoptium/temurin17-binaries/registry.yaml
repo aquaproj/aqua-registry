@@ -83,7 +83,8 @@ packages:
         variants:
           - key: libc
             value: glibc
-      # JDK 17 releases have no Alpine build for aarch64, so musl on arm64 uses the glibc build.
+      # JDK 17 has no Alpine build for aarch64. On musl arm64, aqua installs the glibc build,
+      # which needs /lib/ld-linux-aarch64.so.1 and doesn't run on a standard Alpine system.
       - goos: linux
         goarch: amd64
         variants:
