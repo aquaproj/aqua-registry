@@ -112917,6 +112917,16 @@ packages:
         supported_envs:
           - linux
           - darwin
+      - version_constraint: semver("< 0.9.0")
+        asset: tcpulse_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
+        format: tar.gz
+        checksum:
+          type: github_release
+          asset: tcpulse_{{trimV .Version}}_checksums.txt
+          algorithm: sha256
+        supported_envs:
+          - linux
+          - darwin
       - version_constraint: "true"
         asset: tcpulse_{{trimV .Version}}_{{.OS}}_{{.Arch}}.{{.Format}}
         format: tar.gz
@@ -112927,6 +112937,8 @@ packages:
         supported_envs:
           - linux
           - darwin
+        github_artifact_attestations:
+          signer_workflow: yuuki/tcpulse/.github/workflows/release.yml
   - type: github_release
     repo_owner: yuyaban
     repo_name: gitlab-comment
