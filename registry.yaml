@@ -5975,6 +5975,28 @@ packages:
     description: A modern, cross-platform ping with real-time diagnostics, network context, quality scoring, and multi-target monitoring
     version_constraint: "false"
     version_overrides:
+      - version_constraint: semver("<= 1.5.4")
+        asset: sping-{{.Version}}-{{.OS}}-{{.Arch}}
+        format: raw
+        windows_arm_emulation: true
+        replacements:
+          amd64: x86_64
+          darwin: macos
+        checksum:
+          type: github_release
+          asset: SHA256SUMS
+          algorithm: sha256
+        overrides:
+          - goos: linux
+            replacements:
+              arm64: aarch64
+          - goos: darwin
+            replacements:
+              amd64: amd64
+        supported_envs:
+          - linux
+          - darwin/arm64
+          - windows/amd64
       - version_constraint: semver("<= 1.5.5")
         asset: sping-{{.Version}}-{{.OS}}-{{.Arch}}
         format: raw
@@ -5997,6 +6019,8 @@ packages:
           - linux
           - darwin/arm64
           - windows/amd64
+        github_artifact_attestations:
+          signer_workflow: LambdaBytes/sping/.github/workflows/release.yml
       - version_constraint: "true"
         asset: sping-{{.Version}}-{{.OS}}-{{.Arch}}
         format: raw
@@ -6032,6 +6056,8 @@ packages:
           - linux
           - darwin/arm64
           - windows/amd64
+        github_artifact_attestations:
+          signer_workflow: LambdaBytes/sping/.github/workflows/release.yml
   - type: github_release
     repo_owner: LargeModGames
     repo_name: spotatui
